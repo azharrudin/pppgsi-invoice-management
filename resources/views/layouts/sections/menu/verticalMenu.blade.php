@@ -2,16 +2,14 @@
 $configData = Helper::appClasses();
 @endphp
 
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+<aside id="layout-menu" class="layout-menu menu-vertical menu " style="background: rgb(97,73,206);
+background: linear-gradient(3deg, rgba(97,73,206,1) 0%, rgba(156,98,244,1) 100%); color:white;" >
 
   <!-- ! Hide app brand if navbar-full -->
   @if(!isset($navbarFull))
-  <div class="app-brand demo">
+  <div class="app-brand demo" style="height: 136px;">
     <a href="{{url('/')}}" class="app-brand-link">
-      <span class="app-brand-logo demo">
-        @include('_partials.macros',["height"=>20])
-      </span>
-      <span class="app-brand-text demo menu-text fw-bold">{{config('variables.templateName')}}</span>
+      <img alt="Logo" src="assets/img/logo.png" />
     </a>
 
     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">

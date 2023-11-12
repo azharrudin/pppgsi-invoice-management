@@ -2,36 +2,143 @@
   "menu": [
     {
       "url": "/",
-      "name": "Home",
-      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "name": "Dashboard",
+      "icon": "icon-home",
       "slug": "pages-home"
     },
     {
-      "url": "page-2",
-      "icon": "menu-icon tf-icons ti ti-file",
-      "name": "Page 2",
-      "slug": "pages-page-2"
+      "name": "Invoice",
+      "icon": "icon-invoice",
+      "slug": "pages-invoice",
+      "submenu": [
+        {
+          "url": "/list-invoive",
+          "name": "List Invoice",
+          "slug": "pages-list-invoive"
+        },
+        {
+          "url": "/list-tanda-terima",
+          "name": "List Tanda Terima",
+          "slug": "pages-list-tanda-terima"
+        }
+      ]
     },
     {
-      "url": "pages/misc-error",
-      "name": "Error",
-      "icon": "menu-icon tf-icons ti ti-alert-triangle",
-      "slug": "pages-misc-error",
-      "target": "_blank"
+      "name": "Complain",
+      "icon": "icon-complain",
+      "slug": "pages-complain",
+      "submenu": [
+        {
+          "url": "/list-ticket",
+          "name": "List Ticket",
+          "slug": "pages-list-ticket"
+        },
+        {
+          "url": "/list-laporan-kerusakan",
+          "name": "List Laporan Kerusakan",
+          "slug": "pages-list-laporan-kerusakan"
+        },
+        {
+          "url": "/list-work-order",
+          "name": "List Work Order",
+          "slug": "pages-list-work-order"
+        }
+      ]
     },
     {
-      "url": "auth/login-basic",
-      "name": "Login",
-      "icon": "menu-icon tf-icons ti ti-login",
-      "slug": "auth-login-basic",
-      "target": "_blank"
+      "name": "Request",
+      "icon": "icon-request",
+      "slug": "pages-request",
+      "submenu": [
+        {
+          "url": "/list-material-request",
+          "name": "List Material Request",
+          "slug": "pages-list-material-request"
+        },
+        {
+          "url": "/list-purchase-request",
+          "name": "List Purchase Request",
+          "slug": "pages-purchase-request"
+        },
+        {
+          "url": "/list-purchase-order",
+          "name": "List Purchase Order",
+          "slug": "pages-list-purchase-order"
+        }
+      ]
     },
     {
-      "url": "auth/register-basic",
-      "name": "Register",
-      "icon": "menu-icon tf-icons ti ti-user",
-      "slug": "auth-register-basic",
-      "target": "_blank"
+      "name": "Vendor",
+      "icon": "icon-vendor",
+      "slug": "pages-vendor",
+      "submenu": [
+        {
+          "url": "/list-tagihan-vendor",
+          "name": "List Tagihan Vendor",
+          "slug": "pages-list-tagihan-vendor"
+        }
+      ]
+    },
+    {
+      "name": "Client",
+      "icon": "icon-client",
+      "slug": "pages-client",
+      "submenu": [
+        {
+          "url": "/list-tenant",
+          "name": "List Tenant",
+          "slug": "pages-list-tenant"
+        },
+        {
+          "url": "/list-vendor",
+          "name": "List Vendor",
+          "slug": "pages-list-vendor"
+        }
+      ]
+    },
+    {
+      "name": "Report",
+      "icon": "icon-report",
+      "slug": "pages-report",
+      "submenu": [
+        {
+          "url": "/report-invoice",
+          "name": "Report Invoice",
+          "slug": "pages-report-invoice"
+        },
+        {
+          "url": "/report-tanda-terima",
+          "name": "Report Tanda Terima",
+          "slug": "pages-report-tenda-terima"
+        },
+        {
+          "url": "/report-tagihan",
+          "name": "Report Tagihan",
+          "slug": "pages-report-tagihan"
+        }
+      ]
+    },
+    {
+      "name": "Settings",
+      "icon": "icon-setting",
+      "slug": "pages-setting",
+      "submenu": [
+        {
+          "url": "/list-bank",
+          "name": "List Bank",
+          "slug": "pages-list-bank"
+        },
+        {
+          "url": "/list-user",
+          "name": "List User",
+          "slug": "pages-list-user"
+        },
+        {
+          "url": "/tax-rates",
+          "name": "Tax Rates",
+          "slug": "pages-tax-rates"
+        }
+      ]
     }
   ]
 }
