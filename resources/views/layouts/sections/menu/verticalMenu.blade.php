@@ -9,7 +9,7 @@ background: linear-gradient(3deg, rgba(97,73,206,1) 0%, rgba(156,98,244,1) 100%)
   @if(!isset($navbarFull))
   <div class="app-brand demo" style="height: 136px;">
     <a href="{{url('/')}}" class="app-brand-link">
-      <img alt="Logo" src="assets/img/logo.png" />
+      <img alt="Logo" src="{{ asset('assets/img/logo.png') }}" />
     </a>
 
     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
