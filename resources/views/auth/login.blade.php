@@ -78,7 +78,7 @@ background: linear-gradient(3deg, rgba(97,73,206,1) 0%, rgba(156,98,244,1) 100%)
                 </a>
               </div>
             </div>
-            <button class="btn btn-primary d-grid w-90 mx-auto" type="submit">Login</button>
+            <button class="btn btn-primary d-grid w-90 mx-auto" type="submit" style="padding: 10px 50px;">Login</button>
           </form>
         </div>
         <div></div>

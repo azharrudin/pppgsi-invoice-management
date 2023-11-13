@@ -17,7 +17,7 @@
           "slug": "pages-list-invoive"
         },
         {
-          "url": "/list-tanda-terima",
+          "url": "/tanda-terima",
           "name": "List Tanda Terima",
           "slug": "pages-list-tanda-terima"
         }
