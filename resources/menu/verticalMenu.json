@@ -12,9 +12,9 @@
       "slug": "pages-invoice",
       "submenu": [
         {
-          "url": "/list-invoive",
+          "url": "/list-invoice",
           "name": "List Invoice",
-          "slug": "pages-list-invoive"
+          "slug": "pages-list-invoice"
         },
         {
           "url": "/list-tanda-terima",
