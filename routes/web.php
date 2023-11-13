@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\complain\TicketListController;
 use App\Http\Controllers\invoice\InvoiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\language\LanguageController;
@@ -23,7 +24,17 @@ use App\Http\Controllers\authentications\RegisterBasic;
 // Main Page Route
 Route::get('/', [HomePage::class, 'index'])->name('pages-home');
 Route::get('/page-2', [Page2::class, 'index'])->name('pages-page-2');
-Route::get('/list-invoice', [InvoiceController::class, 'index'])->name('pages-list-invoice');
+
+// Invoice
+Route::group(['prefix' => 'invoice'], function () {
+    Route::get('/list-invoice', [InvoiceController::class, 'index'])->name('pages-list-invoice');
+});
+
+// Complain
+Route::group(['prefix' => 'complain'], function () {
+    Route::get('/list-ticket', [TicketListController::class, 'index'])->name('pages-list-ticket');
+});
+
 
 // locale
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);

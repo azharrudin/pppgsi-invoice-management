@@ -4,14 +4,14 @@
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'Invoice')
+@section('title', 'Complain')
 
 @section('content')
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-style1">
             <li class="breadcrumb-item">
-                <a href="#">Invoice</a>
+                <a href="#">Ticket</a>
             </li>
             <li class="breadcrumb-item active">
                 <a href="#">List</a>
@@ -24,11 +24,10 @@
             <table class="datatables-basic table">
                 <thead>
                     <tr>
-                        <th>No. Invoice</th>
-                        <th>Tenant</th>
-                        <th>Total</th>
-                        <th>Tgl Invoice</th>
-                        <th>Tgl Jatuh Tempo</th>
+                        <th>No. Ticket</th>
+                        <th>Nama Pelapor</th>
+                        <th>Perusahaan</th>
+                        <th>Judul Laporan</th>
                         <th>Status</th>
                         <th>Tanggapan</th>
                     </tr>

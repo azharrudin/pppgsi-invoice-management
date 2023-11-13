@@ -12,7 +12,7 @@
       "slug": "pages-invoice",
       "submenu": [
         {
-          "url": "/list-invoice",
+          "url": "invoice/list-invoice",
           "name": "List Invoice",
           "slug": "pages-list-invoice"
         },
@@ -29,7 +29,7 @@
       "slug": "pages-complain",
       "submenu": [
         {
-          "url": "/list-ticket",
+          "url": "complain/list-ticket",
           "name": "List Ticket",
           "slug": "pages-list-ticket"
         },
