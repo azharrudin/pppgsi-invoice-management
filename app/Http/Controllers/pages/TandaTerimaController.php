@@ -12,7 +12,7 @@ class TandaTerimaController extends Controller
      */
     public function index()
     {
-        return view('content.pages.tanda-terima.index');
+        return view('content.pages.tanda-terima.list');
     }
 
     /**
@@ -20,7 +20,7 @@ class TandaTerimaController extends Controller
      */
     public function create()
     {
-        //
+        return view('content.pages.tanda-terima.add');
     }
 
     /**

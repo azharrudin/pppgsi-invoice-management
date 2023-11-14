@@ -33,6 +33,7 @@ Route::get('/pages/misc-error', [MiscError::class, 'index'])->name('pages-misc-e
 
 Route::prefix('tanda-terima')->group(function () {
     Route::get('/', [TandaTerimaController::class, 'index'])->name('pages-list-tanda-terima'); 
+    Route::get('/add', [TandaTerimaController::class, 'create'])->name('pages-create-tanda-terima'); 
 });
 // authentication
 Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
