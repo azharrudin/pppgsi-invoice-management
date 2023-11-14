@@ -36,7 +36,7 @@ $configData = Helper::appClasses();
                                 <dd class="col-sm-6 d-flex justify-content-md-end pe-0 ps-0 ps-sm-2">
                                     <div class="mb-3">
                                         <label for="note" class="form-label fw-medium">No Tanda Terima:</label>
-                                        <input type="text" class="form-control w-px-150 " placeholder="" />
+                                        <input type="text" class="form-control w-px-150 " value="13131" disabled />
                                     </div>
                                 </dd>
                             </dl>
@@ -48,61 +48,75 @@ $configData = Helper::appClasses();
                         <div class="col-md-6 mb-md-0 mb-3">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">No Invoice</label>
-                                <select class="form-select w-px-250 item-details mb-3">
-                                    <option selected disabled>Nomor</option>
-                                </select>
+                                <div class="form-label">INV/2023/0001</div>
                             </div>
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">No. Cek/Giro</label>
-                                <input type="text" class="form-control w-px-250 " placeholder="Nomor" />
+                                <div class="form-label">
+                                    <br>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">Bank</label>
-                                <input type="text" class="form-control w-px-250 " placeholder="Bank" />
+                                <div class="form-label">
+                                    <br>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6 d-flex justify-content-end">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">Nama Tenant</label>
-                                <select class="form-select w-px-250 item-details mb-3">
-                                    <option selected disabled>Nomor</option>
-                                </select>
+                                <div class="form-label">
+                                    PT. Focus Media Indonesia <br>
+                                    The Capitil Building Lt.1 <br>
+                                    Jl. Letjen S. Parman Kav. 73 Slipi <br>
+                                    Jakarta Barat <br> <br>
+
+                                    Up. Bp. Chrissandy Dave Winata
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row px-3 d-flex align-items-center mb-3">
+                    <div class="row px-3 d-flex align-items-center">
                         <div class="col-2">
                             <label for="salesperson" class="form-label  fw-medium">Total Invoice</label>
                         </div>
                         <div class="col-10">
-                            <input type="text" class="form-control " id="salesperson" placeholder="Total Invoice" fdprocessedid="yombzp">
+                            <span>Rp. 296.970,-</span>
                         </div>
                     </div>
+
+                    <hr>
                     <div class="row px-3 d-flex align-items-center mb-3">
                         <div class="col-2">
                             <label for="salesperson" class="form-label  fw-medium">Dibayarkan</label>
                         </div>
                         <div class="col-10">
-                            <input type="text" class="form-control " id="salesperson" placeholder="Dibayarkan" fdprocessedid="yombzp">
+                            <span>Rp. 296.970,-</span>
                         </div>
                     </div>
+                    <hr>
                     <div class="row px-3 d-flex align-items-center mb-3">
                         <div class="col-2">
                             <label for="salesperson" class="form-label  fw-medium">Sisa Tagihan</label>
                         </div>
                         <div class="col-10">
-                            <input type="text" class="form-control " id="salesperson" placeholder="Sisa Tagihan" fdprocessedid="yombzp">
+                            <span>Rp. 0-</span>
                         </div>
                     </div>
+                    <hr>
                     <div class="row px-3 d-flex align-items-center mb-3">
                         <div class="col-2">
                             <label for="salesperson" class="form-label  fw-medium">Terbilang</label>
                         </div>
                         <div class="col-10">
-                            <input type="text" class="form-control " id="salesperson" placeholder="Terbilang" fdprocessedid="yombzp">
+                            <div class="col-10">
+                                <span>Dua Ratus Sembilan Puluh Enam Ribu Sembilan Ratus Tujuh Puluh Ribu Rupiah</span>
+                            </div>
                         </div>
                     </div>
+                    <hr>
 
                     <div class="row py-3 px-3">
                         <div class="col-md-6 mb-md-0 mb-3">
@@ -117,17 +131,17 @@ $configData = Helper::appClasses();
                         <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">Tanda Tangan</label>
-                                <input type="text" class="form-control w-px-250 " placeholder="Tanggal" />
+                                <div class="form-label">
+                                    25 September 2023
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <form action="/upload" class="dropzone needsclick dz-clickable w-px-250" id="dropzone-basic">
-                                    <div class="dz-message needsclick">
-                                        <span class="note needsclick">Unggah Tanda Tangan</span>
-                                    </div>
-                                </form>
+                               <img src="" alt="">
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control w-px-250 " placeholder="Nama & Jabatan" />
+                                <div class="form-label">
+                                    Dina - Manager Operasional
+                                </div>
                             </div>
 
                         </div>
@@ -144,9 +158,10 @@ $configData = Helper::appClasses();
                     <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
                         <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Tanda Terima</span>
                     </button>
-                    <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
-                    <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
-                    <button type="button" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                    <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2" style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
+                    <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2">Download</button>
+                    <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2">Print</button>
+                    <button type="button" class="btn btn-label-secondary d-grid w-100">Edit Tanda Terima</button>
                 </div>
             </div>
         </div>

@@ -98,9 +98,6 @@ $configData = Helper::appClasses();
                 data: "tanggapan"
             }],
             columnDefs: [{
-                className: "control",
-                responsivePriority: 2,
-                searchable: !1,
                 targets: 0,
                 render: function(a, e, t, s) {
                     return ""
@@ -164,7 +161,7 @@ $configData = Helper::appClasses();
                 text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Create Invoice</span>',
                 className: "btn btn-primary",
                 action: function(a, e, t, s) {
-                    window.location = baseUrl + "app/invoice/add"
+                    window.location = baseUrl + "tanda-terima/add"
                 }
             }],
             responsive: {

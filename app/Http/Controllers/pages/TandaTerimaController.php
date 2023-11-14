@@ -22,6 +22,12 @@ class TandaTerimaController extends Controller
     {
         return view('content.pages.tanda-terima.add');
     }
+   
+    public function preview()
+    {
+        return view('content.pages.tanda-terima.preview');
+    }
+
 
     /**
      * Store a newly created resource in storage.
