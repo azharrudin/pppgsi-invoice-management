@@ -34,6 +34,8 @@ Route::group(['prefix' => 'invoice'], function () {
 // Complain
 Route::group(['prefix' => 'complain'], function () {
     Route::get('/list-ticket', [TicketListController::class, 'index'])->name('pages-list-ticket');
+    Route::get('/add-ticket', [TicketListController::class, 'add'])->name('pages-add-ticket');
+    Route::get('/preview-ticket', [TicketListController::class, 'preview'])->name('pages-preview-ticket');
 });
 
 
