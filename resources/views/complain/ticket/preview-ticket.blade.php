@@ -11,7 +11,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
 
         <div class="row ticket-add">
-            <!-- Ticket Add-->
+            <!-- Ticket Preview-->
             <div class="col-lg-9 col-12 mb-lg-0 mb-3">
                 <div class="card ticket-preview-card">
                     <div class="card-body">
@@ -85,7 +85,7 @@
                     </div>
                 </div>
             </div>
-            <!-- /Ticket Add-->
+            <!-- /Ticket Preview-->
 
             <!-- Ticket Actions -->
             <div class="col-lg-3 col-12 ticket-actions">
