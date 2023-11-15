@@ -34,7 +34,7 @@
           "slug": "pages-list-ticket"
         },
         {
-          "url": "/list-laporan-kerusakan",
+          "url": "/laporan-kerusakan",
           "name": "List Laporan Kerusakan",
           "slug": "pages-list-laporan-kerusakan"
         },
