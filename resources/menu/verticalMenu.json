@@ -34,12 +34,12 @@
           "slug": "pages-list-ticket"
         },
         {
-          "url": "/list-laporan-kerusakan",
+          "url": "/laporan-kerusakan",
           "name": "List Laporan Kerusakan",
           "slug": "pages-list-laporan-kerusakan"
         },
         {
-          "url": "/list-work-order",
+          "url": "/work-order",
           "name": "List Work Order",
           "slug": "pages-list-work-order"
         }

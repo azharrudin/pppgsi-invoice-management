@@ -4,7 +4,7 @@ $configData = Helper::appClasses();
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'Tanda Terima')
+@section('title', 'Laporan Kerusakan')
 
 @section('page-style')
 {{-- Page Css files --}}
@@ -15,7 +15,7 @@ $configData = Helper::appClasses();
 @section('content')
 
 <h4 class="py-3 mb-4">
-    <span class="text-muted fw-light">Tanda Terima /</span> List
+    <span class="text-muted fw-light">Laporan Kerusakan /</span> List
 </h4>
 
 <!-- Invoice List Widget -->
@@ -37,7 +37,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1">50</h3>
-                            <p class="mb-0">Tanda Terima Terkirim</p>
+                            <p class="mb-0">Laporan Kerusakan</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
@@ -45,8 +45,8 @@ $configData = Helper::appClasses();
                 <div class="col-sm-4 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
                         <div>
-                            <h3 class="mb-1">8</h3>
-                            <p class="mb-0">Tanda Terima Terkirim</p>
+                            <h3 class="mb-1">45</h3>
+                            <p class="mb-0">Laporan Selesai</p>
                         </div>
                     </div>
                 </div>
@@ -61,10 +61,11 @@ $configData = Helper::appClasses();
         <table class="invoice-list-table table">
             <thead>
                 <tr>
-                    <th>No Tanda Terima</th>
-                    <th>Tenant</th>
-                    <th>Total</th>
-                    <th>Tanggal Tanda Terima</th>
+                    <th>No Laporan Kerusakan</th>
+                    <th>Scope</th>
+                    <th>Classification</th>
+                    <th>Date</th>
+                    <th>Action Plan</th>
                     <th>Status</th>
                     <th>Tanggapan</th>
                 </tr>
@@ -85,49 +86,58 @@ $configData = Helper::appClasses();
         if (a.length) var e = a.DataTable({
             ajax: assetsPath + "json/invoice-list.json",
             columns: [{
-                data: "no_tanda_terima"
+                data: "no_lk"
             }, {
-                data: "tenant"
+                data: "scope"
             }, {
-                data: "total"
+                data: "classification"
             }, {
-                data: "tanggal_tanda_terima"
+                data: "date"
+            }, {}, {
+                data: "action_plan"
             }, {
                 data: "status"
             }, {
                 data: "tanggapan"
             }],
             columnDefs: [{
-                targets: 0,
-                render: function(a, e, t, s) {
-                    return ""
-                }
-            }, {
+                
+                    targets: 0,
+                    render: function(a, e, t, s) {
+                        return ""
+                    }
+                },{
                 targets: 1,
                 render: function(a, e, t, s) {
-                    var n = t.invoice_id;
-                    return '<a href="' + baseUrl + 'app/invoice/preview">#' + n + "</a>"
+                    var n = t.no_lap_kerusakan;
+                    return '<span class="d-none">' + n + "</span>$" + n
                 }
             }, {
                 targets: 2,
                 render: function(a, e, t, s) {
-                    var n = t.tenant;
+                    var n = t.scope;
+                    return '<a href="' + baseUrl + 'app/invoice/preview">#' + n + "</a>"
+                }
+            }, {
+                targets: 3,
+                render: function(a, e, t, s) {
+                    var n = t.classification;
                     return '<span class="d-none">' + n + "</span>$" + n
                 }
             }, {}, {
-                targets: 3,
-                render: function(a, e, t, s) {
-                    var n = t.total;
-                    return '<span class="d-none">' + n + "</span>$" + n
-                }
-            }, {
                 targets: 4,
                 render: function(a, e, t, s) {
-                    var n = new Date(t.tanggal_tanda_terima);
+                    var n = new Date(t.date);
                     return '<span class="d-none">' + moment(n).format("YYYYMMDD") + "</span>" + moment(n).format("DD MMM YYYY")
                 }
             }, {
                 targets: 5,
+                render: function(a, e, t, s) {
+                    var n = new Date(t.action_plan);
+                    return '<span class="d-none">' + moment(n).format("YYYYMMDD") + "</span>" + moment(n).format("DD MMM YYYY")
+                }
+            }, {
+                targets: 6,
                 orderable: !1,
                 render: function(a, e, t, s) {
                     var n = t.status;
@@ -137,7 +147,7 @@ $configData = Helper::appClasses();
                     return '<span class="d-none">' + n + "</span>" + n
                 }
             }, {
-                targets: 6,
+                targets: 7,
                 visible: !1
             }, {
                 targets: -1,
@@ -158,10 +168,10 @@ $configData = Helper::appClasses();
                 searchPlaceholder: "Search Invoice"
             },
             buttons: [{
-                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tanda Terima</span>',
+                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Laporan Kerusakan</span>',
                 className: "btn btn-primary",
                 action: function(a, e, t, s) {
-                    window.location = baseUrl + "tanda-terima/add"
+                    window.location = baseUrl + "laporan-kerusakan/add"
                 }
             }],
             responsive: {
