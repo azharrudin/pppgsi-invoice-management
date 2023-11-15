@@ -4,7 +4,7 @@ $configData = Helper::appClasses();
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'Home')
+@section('title', 'Laporan Kerusakan')
 
 @section('page-style')
 {{-- Page Css files --}}
@@ -22,7 +22,7 @@ $configData = Helper::appClasses();
                 <div class="card-body">
                     <div class="row m-sm-4 m-0">
                         <div class="col-md-7 mb-md-0 mb-4 ps-0">
-                            <h1 class="fw-700"><b>PPPGSI</b></h1>
+                            <h1 class="fw-700" style="margin: 0;"><b>PPPGSI</b></h1>
                             <h4><b>Building Management</b></h4>
                         </div>
                         <div class="col-md-5">
@@ -153,10 +153,9 @@ $configData = Helper::appClasses();
             <div class="card mb-4">
                 <div class="card-body">
                     <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
-                        <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Tanda Terima</span>
+                        <span class="d-flex align-items-center justify-content-center text-nowrap">Simpan</span>
                     </button>
                     <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
-                    <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
                     <button type="button" class="btn btn-label-secondary d-grid w-100">Batal</button>
                 </div>
             </div>
@@ -215,8 +214,8 @@ $configData = Helper::appClasses();
 
 @section('page-script')
 <script src="{{asset('assets/vendor/libs/dropzone/dropzone.js')}}"></script>
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/js/forms-file-upload.js"></script>
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+<script src="{{asset('assets/js/forms-file-upload.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
 <script>
     $(document).ready(function() {
         $('.repeater').repeater({

@@ -9,6 +9,7 @@ use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\authentications\RegisterBasic;
 use App\Http\Controllers\pages\LaporanKerusakanController;
 use App\Http\Controllers\pages\TandaTerimaController;
+use App\Http\Controllers\pages\WorkOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,12 @@ Route::prefix('laporan-kerusakan')->group(function () {
 Route::prefix('tanda-terima')->group(function () {
     Route::get('/', [TandaTerimaController::class, 'index'])->name('pages-list-tanda-terima'); 
     Route::get('/add', [TandaTerimaController::class, 'create'])->name('pages-create-tanda-terima'); 
+    Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima'); 
+});
+
+Route::prefix('work-order')->group(function () {
+    Route::get('/', [WorkOrderController::class, 'index'])->name('pages-list-work-order'); 
+    Route::get('/add', [WorkOrderController::class, 'create'])->name('pages-create-tanda-terima'); 
     Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima'); 
 });
 // authentication

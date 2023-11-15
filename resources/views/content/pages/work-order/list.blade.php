@@ -37,7 +37,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1">50</h3>
-                            <p class="mb-0">Laporan Kerusakan</p>
+                            <p class="mb-0">Tanda Terima</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
@@ -45,8 +45,8 @@ $configData = Helper::appClasses();
                 <div class="col-sm-4 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
                         <div>
-                            <h3 class="mb-1">45</h3>
-                            <p class="mb-0">Laporan Selesai</p>
+                            <h3 class="mb-1">Rp. 20.000.000</h3>
+                            <p class="mb-0">Terbayarkan</p>
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@ $configData = Helper::appClasses();
         <table class="invoice-list-table table">
             <thead>
                 <tr>
-                    <th>No Laporan Kerusakan</th>
+                    <th>No Work Order</th>
                     <th>Scope</th>
                     <th>Classification</th>
                     <th>Date</th>
@@ -168,10 +168,10 @@ $configData = Helper::appClasses();
                 searchPlaceholder: "Search Invoice"
             },
             buttons: [{
-                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Laporan Kerusakan</span>',
+                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Work Order</span>',
                 className: "btn btn-primary",
                 action: function(a, e, t, s) {
-                    window.location = baseUrl + "laporan-kerusakan/add"
+                    window.location = baseUrl + "work-order/add"
                 }
             }],
             responsive: {

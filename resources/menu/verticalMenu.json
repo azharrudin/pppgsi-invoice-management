@@ -39,7 +39,7 @@
           "slug": "pages-list-laporan-kerusakan"
         },
         {
-          "url": "/list-work-order",
+          "url": "/work-order",
           "name": "List Work Order",
           "slug": "pages-list-work-order"
         }
