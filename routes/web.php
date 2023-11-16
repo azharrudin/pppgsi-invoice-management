@@ -34,29 +34,32 @@ Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 Route::get('/pages/misc-error', [MiscError::class, 'index'])->name('pages-misc-error');
 
 
+Route::prefix('invoice')->group(function () {
+    Route::prefix('tanda-terima')->group(function () {
+        Route::get('/', [TandaTerimaController::class, 'index'])->name('pages-list-tanda-terima');
+        Route::get('/add', [TandaTerimaController::class, 'create']);
+        Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
+    });
+});
 Route::prefix('laporan-kerusakan')->group(function () {
-    Route::get('/', [LaporanKerusakanController::class, 'index'])->name('pages-list-laporan-kerusakan'); 
-    Route::get('/add', [LaporanKerusakanController::class, 'create']); 
-    Route::get('/preview', [LaporanKerusakanController::class, 'preview'])->name('pages-preview-laporan-kerusakan'); 
+    Route::get('/', [LaporanKerusakanController::class, 'index'])->name('pages-list-laporan-kerusakan');
+    Route::get('/add', [LaporanKerusakanController::class, 'create']);
+    Route::get('/preview', [LaporanKerusakanController::class, 'preview'])->name('pages-preview-laporan-kerusakan');
 });
 
-Route::prefix('tanda-terima')->group(function () {
-    Route::get('/', [TandaTerimaController::class, 'index'])->name('pages-list-tanda-terima'); 
-    Route::get('/add', [TandaTerimaController::class, 'create']); 
-    Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima'); 
-});
+
 
 Route::prefix('work-order')->group(function () {
-    Route::get('/', [WorkOrderController::class, 'index'])->name('pages-list-work-order'); 
-    Route::get('/add', [WorkOrderController::class, 'create'])->name('pages-create-tanda-terima'); 
-    Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima'); 
+    Route::get('/', [WorkOrderController::class, 'index'])->name('pages-list-work-order');
+    Route::get('/add', [WorkOrderController::class, 'create'])->name('pages-create-tanda-terima');
+    Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
 });
 
 
 Route::prefix('material-request')->group(function () {
-    Route::get('/', [MaterialRequestController::class, 'index'])->name('pages-list-material-request'); 
-    Route::get('/add', [MaterialRequestController::class, 'create'])->name('pages-create-tanda-terima'); 
-    Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima'); 
+    Route::get('/', [MaterialRequestController::class, 'index'])->name('pages-list-material-request');
+    Route::get('/add', [MaterialRequestController::class, 'create'])->name('pages-create-tanda-terima');
+    Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
 });
 // authentication
 Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
