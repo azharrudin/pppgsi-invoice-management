@@ -73,7 +73,7 @@
       "slug": "pages-vendor",
       "submenu": [
         {
-          "url": "/list-tagihan-vendor",
+          "url": "vendor/list-tagihan-vendor",
           "name": "List Tagihan Vendor",
           "slug": "pages-list-tagihan-vendor"
         }

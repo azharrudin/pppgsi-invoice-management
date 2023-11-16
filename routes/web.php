@@ -3,6 +3,7 @@
 use App\Http\Controllers\complain\TicketListController;
 use App\Http\Controllers\invoice\InvoiceController;
 use App\Http\Controllers\request\PurchaseRequestController;
+use App\Http\Controllers\vendor\VendorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\language\LanguageController;
 use App\Http\Controllers\pages\HomePage;
@@ -47,6 +48,11 @@ Route::group(['prefix' => 'complain'], function () {
 Route::group(['prefix' => 'request'], function () {
     Route::get('/list-purchase-request', [PurchaseRequestController::class, 'index'])->name('pages-purchase-request');
     Route::get('/add-purchase-request', [PurchaseRequestController::class, 'add'])->name('pages-add-purchase-request');
+});
+
+// Vendor
+Route::group(['prefix' => 'vendor'], function () {
+    Route::get('/list-tagihan-vendor', [VendorController::class, 'index'])->name('pages-list-tagihan-vendor');
 });
 
 
