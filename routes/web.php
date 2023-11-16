@@ -8,6 +8,7 @@ use App\Http\Controllers\pages\MiscError;
 use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\authentications\RegisterBasic;
 use App\Http\Controllers\pages\LaporanKerusakanController;
+use App\Http\Controllers\pages\MaterialRequestController;
 use App\Http\Controllers\pages\TandaTerimaController;
 use App\Http\Controllers\pages\WorkOrderController;
 
@@ -35,19 +36,26 @@ Route::get('/pages/misc-error', [MiscError::class, 'index'])->name('pages-misc-e
 
 Route::prefix('laporan-kerusakan')->group(function () {
     Route::get('/', [LaporanKerusakanController::class, 'index'])->name('pages-list-laporan-kerusakan'); 
-    Route::get('/add', [LaporanKerusakanController::class, 'create'])->name('pages-create-laporan-kerusakan'); 
+    Route::get('/add', [LaporanKerusakanController::class, 'create']); 
     Route::get('/preview', [LaporanKerusakanController::class, 'preview'])->name('pages-preview-laporan-kerusakan'); 
 });
 
 Route::prefix('tanda-terima')->group(function () {
     Route::get('/', [TandaTerimaController::class, 'index'])->name('pages-list-tanda-terima'); 
-    Route::get('/add', [TandaTerimaController::class, 'create'])->name('pages-create-tanda-terima'); 
+    Route::get('/add', [TandaTerimaController::class, 'create']); 
     Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima'); 
 });
 
 Route::prefix('work-order')->group(function () {
     Route::get('/', [WorkOrderController::class, 'index'])->name('pages-list-work-order'); 
     Route::get('/add', [WorkOrderController::class, 'create'])->name('pages-create-tanda-terima'); 
+    Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima'); 
+});
+
+
+Route::prefix('material-request')->group(function () {
+    Route::get('/', [MaterialRequestController::class, 'index'])->name('pages-list-material-request'); 
+    Route::get('/add', [MaterialRequestController::class, 'create'])->name('pages-create-tanda-terima'); 
     Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima'); 
 });
 // authentication

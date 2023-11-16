@@ -51,7 +51,7 @@
       "slug": "pages-request",
       "submenu": [
         {
-          "url": "/list-material-request",
+          "url": "/material-request",
           "name": "List Material Request",
           "slug": "pages-list-material-request"
         },
