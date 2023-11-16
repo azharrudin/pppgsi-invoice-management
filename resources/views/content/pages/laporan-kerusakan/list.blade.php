@@ -171,7 +171,7 @@ $configData = Helper::appClasses();
                 text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Laporan Kerusakan</span>',
                 className: "btn btn-primary",
                 action: function(a, e, t, s) {
-                    window.location = baseUrl + "laporan-kerusakan/add"
+                    window.location = baseUrl + "complain/laporan-kerusakan/add"
                 }
             }],
             responsive: {

@@ -17,7 +17,7 @@
           "slug": "pages-list-invoice"
         },
         {
-          "url": "/tanda-terima",
+          "url": "invoice/tanda-terima",
           "name": "List Tanda Terima",
           "slug": "pages-list-tanda-terima"
         }
@@ -34,12 +34,12 @@
           "slug": "pages-list-ticket"
         },
         {
-          "url": "/laporan-kerusakan",
+          "url": "complain/laporan-kerusakan",
           "name": "List Laporan Kerusakan",
           "slug": "pages-list-laporan-kerusakan"
         },
         {
-          "url": "/work-order",
+          "url": "complain/work-order",
           "name": "List Work Order",
           "slug": "pages-list-work-order"
         }
@@ -51,7 +51,7 @@
       "slug": "pages-request",
       "submenu": [
         {
-          "url": "/list-material-request",
+          "url": "request/material-request",
           "name": "List Material Request",
           "slug": "pages-list-material-request"
         },

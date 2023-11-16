@@ -4,7 +4,7 @@ $configData = Helper::appClasses();
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'Laporan Kerusakan')
+@section('title', 'Tanda Terima')
 
 @section('page-style')
 {{-- Page Css files --}}
@@ -15,7 +15,7 @@ $configData = Helper::appClasses();
 @section('content')
 
 <h4 class="py-3 mb-4">
-    <span class="text-muted fw-light">Laporan Kerusakan /</span> List
+    <span class="text-muted fw-light">Material Request /</span> List
 </h4>
 
 <!-- Invoice List Widget -->
@@ -28,7 +28,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1">300</h3>
-                            <p class="mb-0">Tenant</p>
+                            <p class="mb-0">Material Request</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none me-4">
@@ -37,7 +37,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1">50</h3>
-                            <p class="mb-0">Tanda Terima</p>
+                            <p class="mb-0">Sedang Berjalan</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
@@ -45,8 +45,8 @@ $configData = Helper::appClasses();
                 <div class="col-sm-4 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
                         <div>
-                            <h3 class="mb-1">Rp. 20.000.000</h3>
-                            <p class="mb-0">Terbayarkan</p>
+                            <h3 class="mb-1">8</h3>
+                            <p class="mb-0">Selesai</p>
                         </div>
                     </div>
                 </div>
@@ -61,11 +61,10 @@ $configData = Helper::appClasses();
         <table class="invoice-list-table table">
             <thead>
                 <tr>
-                    <th>No Work Order</th>
-                    <th>Scope</th>
-                    <th>Classification</th>
-                    <th>Date</th>
-                    <th>Action Plan</th>
+                    <th>No Material Request</th>
+                    <th>Requester</th>
+                    <th>Department</th>
+                    <th>Tanggal Request</th>
                     <th>Status</th>
                     <th>Tanggapan</th>
                 </tr>
@@ -86,58 +85,49 @@ $configData = Helper::appClasses();
         if (a.length) var e = a.DataTable({
             ajax: assetsPath + "json/invoice-list.json",
             columns: [{
-                data: "no_lk"
+                data: "no_material_request"
             }, {
-                data: "scope"
+                data: "requester"
             }, {
-                data: "classification"
+                data: "department"
             }, {
-                data: "date"
-            }, {}, {
-                data: "action_plan"
+                data: "tanggal_request"
             }, {
                 data: "status"
             }, {
                 data: "tanggapan"
             }],
             columnDefs: [{
-                
-                    targets: 0,
-                    render: function(a, e, t, s) {
-                        return ""
-                    }
-                },{
+                targets: 0,
+                render: function(a, e, t, s) {
+                    return ""
+                }
+            }, {
                 targets: 1,
                 render: function(a, e, t, s) {
-                    var n = t.no_lap_kerusakan;
-                    return '<span class="d-none">' + n + "</span>$" + n
+                    var n = t.invoice_id;
+                    return '<a href="' + baseUrl + 'app/invoice/preview">#' + n + "</a>"
                 }
             }, {
                 targets: 2,
                 render: function(a, e, t, s) {
-                    var n = t.scope;
-                    return '<a href="' + baseUrl + 'app/invoice/preview">#' + n + "</a>"
-                }
-            }, {
-                targets: 3,
-                render: function(a, e, t, s) {
-                    var n = t.classification;
+                    var n = t.tenant;
                     return '<span class="d-none">' + n + "</span>$" + n
                 }
             }, {}, {
+                targets: 3,
+                render: function(a, e, t, s) {
+                    var n = t.total;
+                    return '<span class="d-none">' + n + "</span>$" + n
+                }
+            }, {
                 targets: 4,
                 render: function(a, e, t, s) {
-                    var n = new Date(t.date);
+                    var n = new Date(t.tanggal_tanda_terima);
                     return '<span class="d-none">' + moment(n).format("YYYYMMDD") + "</span>" + moment(n).format("DD MMM YYYY")
                 }
             }, {
                 targets: 5,
-                render: function(a, e, t, s) {
-                    var n = new Date(t.action_plan);
-                    return '<span class="d-none">' + moment(n).format("YYYYMMDD") + "</span>" + moment(n).format("DD MMM YYYY")
-                }
-            }, {
-                targets: 6,
                 orderable: !1,
                 render: function(a, e, t, s) {
                     var n = t.status;
@@ -147,7 +137,7 @@ $configData = Helper::appClasses();
                     return '<span class="d-none">' + n + "</span>" + n
                 }
             }, {
-                targets: 7,
+                targets: 6,
                 visible: !1
             }, {
                 targets: -1,
@@ -168,10 +158,10 @@ $configData = Helper::appClasses();
                 searchPlaceholder: "Search Invoice"
             },
             buttons: [{
-                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Work Order</span>',
+                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Material Request</span>',
                 className: "btn btn-primary",
                 action: function(a, e, t, s) {
-                    window.location = baseUrl + "complain/work-order/add"
+                    window.location = baseUrl + "request/material-request/add"
                 }
             }],
             responsive: {
