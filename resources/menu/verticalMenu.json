@@ -56,7 +56,7 @@
           "slug": "pages-list-material-request"
         },
         {
-          "url": "/list-purchase-request",
+          "url": "request/list-purchase-request",
           "name": "List Purchase Request",
           "slug": "pages-purchase-request"
         },
