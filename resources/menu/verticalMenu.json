@@ -124,17 +124,17 @@
       "slug": "pages-setting",
       "submenu": [
         {
-          "url": "/list-bank",
+          "url": "settings/list-bank",
           "name": "List Bank",
           "slug": "pages-list-bank"
         },
         {
-          "url": "/list-user",
+          "url": "settings/list-user",
           "name": "List User",
           "slug": "pages-list-user"
         },
         {
-          "url": "/tax-rates",
+          "url": "settings/tax-rates",
           "name": "Tax Rates",
           "slug": "pages-tax-rates"
         }

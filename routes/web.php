@@ -8,6 +8,9 @@ use App\Http\Controllers\report\ReportInvoiceController;
 use App\Http\Controllers\report\ReportTagihanController;
 use App\Http\Controllers\report\ReportTandaTerimaController;
 use App\Http\Controllers\request\PurchaseRequestController;
+use App\Http\Controllers\settings\ListBankController;
+use App\Http\Controllers\settings\ListUserController;
+use App\Http\Controllers\settings\TaxRatesController;
 use App\Http\Controllers\vendor\VendorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\language\LanguageController;
@@ -128,6 +131,24 @@ Route::prefix('report')->group(function () {
     // Report Tagihan
     Route::prefix('/report-tagihan')->group(function () {
         Route::get('/', [ReportTagihanController::class, 'index'])->name('pages-report-tagihan');
+    });
+});
+
+// Settings
+Route::prefix('settings')->group(function () {
+    // List Tenant
+    Route::prefix('/list-bank')->group(function () {
+        Route::get('/', [ListBankController::class, 'index'])->name('pages-list-bank');
+    });
+
+    // List User
+    Route::prefix('/list-user')->group(function () {
+        Route::get('/', [ListUserController::class, 'index'])->name('pages-list-user');
+    });
+
+    // Tax Rates
+    Route::prefix('/tax-rates')->group(function () {
+        Route::get('/', [TaxRatesController::class, 'index'])->name('pages-tax-rates');
     });
 });
 
