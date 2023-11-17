@@ -61,7 +61,7 @@
           "slug": "pages-purchase-request"
         },
         {
-          "url": "/list-purchase-order",
+          "url": "/request/purchase-order",
           "name": "List Purchase Order",
           "slug": "pages-list-purchase-order"
         }

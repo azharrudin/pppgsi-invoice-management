@@ -4,7 +4,7 @@ $configData = Helper::appClasses();
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'Tanda Terima')
+@section('title', 'Purchase Order')
 
 @section('page-style')
 {{-- Page Css files --}}
@@ -15,7 +15,7 @@ $configData = Helper::appClasses();
 @section('content')
 
 <h4 class="py-3 mb-4">
-    <span class="text-muted fw-light">Material Request /</span> List
+    <span class="text-muted fw-light">Purchase Order /</span> List
 </h4>
 
 <!-- Invoice List Widget -->
@@ -24,31 +24,23 @@ $configData = Helper::appClasses();
     <div class="card-widget-separator-wrapper">
         <div class="card-body card-widget-separator">
             <div class="row gy-4 gy-sm-1">
-                <div class="col-sm-4 col-lg-4">
+                <div class="col-sm-6 col-lg-6">
                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1">300</h3>
-                            <p class="mb-0">Material Request</p>
+                            <p class="mb-0">Tenant</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none me-4">
                 </div>
-                <div class="col-sm-4 col-lg-4">
+                <div class="col-sm-6 col-lg-6">
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1">50</h3>
-                            <p class="mb-0">Sedang Berjalan</p>
+                            <p class="mb-0">Purchasing Order</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
-                </div>
-                <div class="col-sm-4 col-lg-4">
-                    <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
-                        <div>
-                            <h3 class="mb-1">8</h3>
-                            <p class="mb-0">Selesai</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -61,10 +53,11 @@ $configData = Helper::appClasses();
         <table class="invoice-list-table table">
             <thead>
                 <tr>
-                    <th>No Material Request</th>
-                    <th>Requester</th>
-                    <th>Department</th>
-                    <th>Tanggal Request</th>
+                    <th>No. PO</th>
+                    <th>Vendor</th>
+                    <th>Perihal</th>
+                    <th>Total</th>
+                    <th>Tanggal PO</th>
                     <th>Status</th>
                     <th>Tanggapan</th>
                 </tr>
@@ -85,69 +78,79 @@ $configData = Helper::appClasses();
         if (a.length) var e = a.DataTable({
             ajax: assetsPath + "json/invoice-list.json",
             columns: [{
-                data: "no_material_request"
+                data: "no_po"
             }, {
-                data: "requester"
+                data: "vendor"
             }, {
-                data: "department"
+                data: "perihal"
             }, {
-                data: "tanggal_request"
+                data: "total"
+            }, {
+                data: "tanggal_po"
             }, {
                 data: "status"
             }, {
                 data: "tanggapan"
             }],
             columnDefs: [{
-                targets: 0,
-                render: function(a, e, t, s) {
-                    return ""
-                }
-            }, {
-                targets: 1,
-                render: function(a, e, t, s) {
-                    var n = t.invoice_id;
-                    return '<a href="' + baseUrl + 'app/invoice/preview">#' + n + "</a>"
-                }
-            }, {
-                targets: 2,
-                render: function(a, e, t, s) {
-                    var n = t.tenant;
-                    return '<span class="d-none">' + n + "</span>$" + n
-                }
-            }, {}, {
-                targets: 3,
-                render: function(a, e, t, s) {
-                    var n = t.total;
-                    return '<span class="d-none">' + n + "</span>$" + n
-                }
-            }, {
-                targets: 4,
-                render: function(a, e, t, s) {
-                    var n = new Date(t.tanggal_tanda_terima);
-                    return '<span class="d-none">' + moment(n).format("YYYYMMDD") + "</span>" + moment(n).format("DD MMM YYYY")
-                }
-            }, {
-                targets: 5,
-                orderable: !1,
-                render: function(a, e, t, s) {
-                    var n = t.status;
-                    if (0 === n) {
-                        return '<span class="badge bg-label-success" text-capitalized> Paid </span>'
+
+                    targets: 0,
+                    render: function(a, e, t, s) {
+                        return ""
                     }
-                    return '<span class="d-none">' + n + "</span>" + n
+                }, {
+                    targets: 1,
+                    render: function(a, e, t, s) {
+                        var n = t.no_po;
+                        return '<span class="d-none">' + n + "</span>$" + n
+                    }
+                }, {
+                    targets: 2,
+                    render: function(a, e, t, s) {
+                        var n = t.vendor;
+                        return '<a href="' + baseUrl + 'app/invoice/preview">#' + n + "</a>"
+                    }
+                }, {
+                    targets: 3,
+                    render: function(a, e, t, s) {
+                        var n = t.perihal;
+                        return '<span class="d-none">' + n + "</span>$" + n
+                    }
+                }, {
+                    targets: 4,
+                    render: function(a, e, t, s) {
+                        var n = t.total;
+                        return '<span class="d-none">' + n + "</span>$" + n
+                    }
+                }, {
+                    targets: 5,
+                    render: function(a, e, t, s) {
+                        var n = new Date(t.tangga_po);
+                        return '<span class="d-none">' + moment(n).format("YYYYMMDD") + "</span>" + moment(n).format("DD MMM YYYY")
+                    }
+                }, {
+                    targets: 6,
+                    orderable: !1,
+                    render: function(a, e, t, s) {
+                        var n = t.status;
+                        if (0 === n) {
+                            return '<span class="badge bg-label-success" text-capitalized> Paid </span>'
+                        }
+                        return '<span class="d-none">' + n + "</span>" + n
+                    }
+                }, {
+                    targets: 7,
+                    visible: !1
+                }, {
+                    targets: -1,
+                    title: "Tanggapan",
+                    searchable: !1,
+                    orderable: !1,
+                    render: function(a, e, t, s) {
+                        return '<div class="d-flex align-items-center"><a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a><a href="' + baseUrl + 'app/invoice/preview" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="' + baseUrl + 'app/invoice/edit" class="dropdown-item">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>'
+                    }
                 }
-            }, {
-                targets: 6,
-                visible: !1
-            }, {
-                targets: -1,
-                title: "Tanggapan",
-                searchable: !1,
-                orderable: !1,
-                render: function(a, e, t, s) {
-                    return '<div class="d-flex align-items-center"><a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a><a href="' + baseUrl + 'app/invoice/preview" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="' + baseUrl + 'app/invoice/edit" class="dropdown-item">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>'
-                }
-            }],
+            ],
             order: [
                 [1, "desc"]
             ],
@@ -158,10 +161,10 @@ $configData = Helper::appClasses();
                 searchPlaceholder: "Search Invoice"
             },
             buttons: [{
-                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Material Request</span>',
+                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Purchasing Order</span>',
                 className: "btn btn-primary",
                 action: function(a, e, t, s) {
-                    window.location = baseUrl + "request/material-request/add"
+                    window.location = baseUrl + "request/purchase-order/add"
                 }
             }],
             responsive: {

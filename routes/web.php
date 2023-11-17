@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\complain\TicketListController;
 use App\Http\Controllers\invoice\InvoiceController;
+use App\Http\Controllers\pages\PurchaseOrderController;
 use App\Http\Controllers\report\ReportInvoiceController;
 use App\Http\Controllers\request\PurchaseRequestController;
 use App\Http\Controllers\vendor\VendorController;
@@ -71,6 +72,7 @@ Route::prefix('complain')->group(function () {
     });
 });
 
+// Request
 Route::prefix('request')->group(function () {
     // Purchase Request
     Route::prefix('/')->group(function () {
@@ -83,6 +85,13 @@ Route::prefix('request')->group(function () {
         Route::get('/', [MaterialRequestController::class, 'index'])->name('pages-list-material-request');
         Route::get('/add', [MaterialRequestController::class, 'create'])->name('pages-create-tanda-terima');
         Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
+    });
+
+    // Request Order
+    Route::prefix('purchase-order')->group(function () {
+        Route::get('/', [PurchaseOrderController::class, 'index'])->name('pages-list-material-request');
+        Route::get('/add', [PurchaseOrderController::class, 'create'])->name('pages-create-tanda-terima');
+        Route::get('/preview', [PurchaseOrderController::class, 'preview'])->name('pages-preview-tanda-terima');
     });
 });
 
@@ -97,7 +106,6 @@ Route::prefix('report')->group(function () {
         Route::get('/', [ReportInvoiceController::class, 'index'])->name('pages-report-invoice');
     });
 });
-
 
 // locale
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
