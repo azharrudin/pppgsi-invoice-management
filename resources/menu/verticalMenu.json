@@ -102,7 +102,7 @@
       "slug": "pages-report",
       "submenu": [
         {
-          "url": "/report-invoice",
+          "url": "report/report-invoice",
           "name": "Report Invoice",
           "slug": "pages-report-invoice"
         },

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\complain\TicketListController;
 use App\Http\Controllers\invoice\InvoiceController;
+use App\Http\Controllers\report\ReportInvoiceController;
 use App\Http\Controllers\request\PurchaseRequestController;
 use App\Http\Controllers\vendor\VendorController;
 use Illuminate\Support\Facades\Route;
@@ -88,6 +89,13 @@ Route::prefix('request')->group(function () {
 // Vendor
 Route::group(['prefix' => 'vendor'], function () {
     Route::get('/list-tagihan-vendor', [VendorController::class, 'index'])->name('pages-list-tagihan-vendor');
+});
+
+// Report
+Route::prefix('report')->group(function () {
+    Route::prefix('/report-invoice')->group(function () {
+        Route::get('/', [ReportInvoiceController::class, 'index'])->name('pages-report-invoice');
+    });
 });
 
 
