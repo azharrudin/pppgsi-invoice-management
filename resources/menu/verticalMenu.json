@@ -85,7 +85,7 @@
       "slug": "pages-client",
       "submenu": [
         {
-          "url": "/list-tenant",
+          "url": "client/list-tenant",
           "name": "List Tenant",
           "slug": "pages-list-tenant"
         },

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\client\ListTenantController;
 use App\Http\Controllers\complain\TicketListController;
 use App\Http\Controllers\invoice\InvoiceController;
 use App\Http\Controllers\pages\PurchaseOrderController;
@@ -101,6 +102,14 @@ Route::prefix('request')->group(function () {
 Route::prefix('vendor')->group(function () {
     Route::prefix('/list-tagihan-vendor')->group(function () {
         Route::get('/', [VendorController::class, 'index'])->name('pages-list-tagihan-vendor');
+    });
+});
+
+// Client
+Route::prefix('client')->group(function () {
+    // List Tenant
+    Route::prefix('/list-tenant')->group(function () {
+        Route::get('/', [ListTenantController::class, 'index'])->name('pages-list-tenant');
     });
 });
 
