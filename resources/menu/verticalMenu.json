@@ -112,7 +112,7 @@
           "slug": "pages-report-tenda-terima"
         },
         {
-          "url": "/report-tagihan",
+          "url": "report/report-tagihan",
           "name": "Report Tagihan",
           "slug": "pages-report-tagihan"
         }

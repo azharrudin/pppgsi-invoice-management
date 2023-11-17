@@ -4,6 +4,7 @@ use App\Http\Controllers\complain\TicketListController;
 use App\Http\Controllers\invoice\InvoiceController;
 use App\Http\Controllers\pages\PurchaseOrderController;
 use App\Http\Controllers\report\ReportInvoiceController;
+use App\Http\Controllers\report\ReportTagihanController;
 use App\Http\Controllers\report\ReportTandaTerimaController;
 use App\Http\Controllers\request\PurchaseRequestController;
 use App\Http\Controllers\vendor\VendorController;
@@ -97,8 +98,10 @@ Route::prefix('request')->group(function () {
 });
 
 // Vendor
-Route::group(['prefix' => 'vendor'], function () {
-    Route::get('/list-tagihan-vendor', [VendorController::class, 'index'])->name('pages-list-tagihan-vendor');
+Route::prefix('vendor')->group(function () {
+    Route::prefix('/list-tagihan-vendor')->group(function () {
+        Route::get('/', [VendorController::class, 'index'])->name('pages-list-tagihan-vendor');
+    });
 });
 
 // Report
@@ -111,6 +114,11 @@ Route::prefix('report')->group(function () {
     // Report Tanda Terima
     Route::prefix('/report-tanda-terima')->group(function () {
         Route::get('/', [ReportTandaTerimaController::class, 'index'])->name('pages-report-tenda-terima');
+    });
+
+    // Report Tagihan
+    Route::prefix('/report-tagihan')->group(function () {
+        Route::get('/', [ReportTagihanController::class, 'index'])->name('pages-report-tagihan');
     });
 });
 
