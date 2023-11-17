@@ -4,7 +4,7 @@
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'Purchase Request')
+@section('title', 'Report Invoice')
 
 @section('content')
 

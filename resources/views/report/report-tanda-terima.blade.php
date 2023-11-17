@@ -4,14 +4,14 @@
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'Tagihan Vendor')
+@section('title', 'Report Tanda Terima')
 
 @section('content')
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-style1">
             <li class="breadcrumb-item">
-                <a href="#">Tagihan Vendor</a>
+                <a href="#">Report Tanda Terima</a>
             </li>
             <li class="breadcrumb-item active">
                 <a href="#">List</a>
@@ -58,7 +58,7 @@
     {{-- Datatables --}}
     <div class="card">
         <div class="card-datatable table-responsive pt-0">
-            <table class="list-vendor-table table">
+            <table class="report-tanda-terima-table table">
                 <thead>
                     <tr>
                         <th>No. Tanda Terima</th>
@@ -80,7 +80,7 @@
     <script>
         "use strict";
         $((function() {
-            var a = $(".list-vendor-table");
+            var a = $(".report-tanda-terima-table");
             if (a.length) var e = a.DataTable({
                 ajax: assetsPath + "json/purchase-request-list.json",
                 columns: [{
@@ -166,7 +166,7 @@
                     searchPlaceholder: "Search Tanda Terima"
                 },
                 buttons: [{
-                    text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tagihan Vendor</span>',
+                    text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tanda Terima</span>',
                     className: "btn btn-primary",
                     action: function(a, e, t, s) {
                         window.location = '{{ route('pages-add-purchase-request') }}';
@@ -218,7 +218,7 @@
                             boundary: document.body
                         })
                     }))
-            })), $(".list-vendor-table tbody").on("click", ".delete-record", (function() {
+            })), $(".report-tanda-terima-table tbody").on("click", ".delete-record", (function() {
                 e.row($(this).parents("tr")).remove().draw()
             })), setTimeout((() => {
                 $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(

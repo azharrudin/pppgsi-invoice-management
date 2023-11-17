@@ -107,7 +107,7 @@
           "slug": "pages-report-invoice"
         },
         {
-          "url": "/report-tanda-terima",
+          "url": "report/report-tanda-terima",
           "name": "Report Tanda Terima",
           "slug": "pages-report-tenda-terima"
         },

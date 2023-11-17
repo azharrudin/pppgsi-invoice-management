@@ -4,6 +4,7 @@ use App\Http\Controllers\complain\TicketListController;
 use App\Http\Controllers\invoice\InvoiceController;
 use App\Http\Controllers\pages\PurchaseOrderController;
 use App\Http\Controllers\report\ReportInvoiceController;
+use App\Http\Controllers\report\ReportTandaTerimaController;
 use App\Http\Controllers\request\PurchaseRequestController;
 use App\Http\Controllers\vendor\VendorController;
 use Illuminate\Support\Facades\Route;
@@ -102,8 +103,14 @@ Route::group(['prefix' => 'vendor'], function () {
 
 // Report
 Route::prefix('report')->group(function () {
+    // Report Invoice
     Route::prefix('/report-invoice')->group(function () {
         Route::get('/', [ReportInvoiceController::class, 'index'])->name('pages-report-invoice');
+    });
+
+    // Report Tanda Terima
+    Route::prefix('/report-tanda-terima')->group(function () {
+        Route::get('/', [ReportTandaTerimaController::class, 'index'])->name('pages-report-tenda-terima');
     });
 });
 
