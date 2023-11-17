@@ -9,6 +9,7 @@ use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\authentications\RegisterBasic;
 use App\Http\Controllers\pages\LaporanKerusakanController;
 use App\Http\Controllers\pages\MaterialRequestController;
+use App\Http\Controllers\pages\PurchaseOrderController;
 use App\Http\Controllers\pages\TandaTerimaController;
 use App\Http\Controllers\pages\WorkOrderController;
 
@@ -41,26 +42,37 @@ Route::prefix('invoice')->group(function () {
         Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
     });
 });
-Route::prefix('laporan-kerusakan')->group(function () {
-    Route::get('/', [LaporanKerusakanController::class, 'index'])->name('pages-list-laporan-kerusakan');
-    Route::get('/add', [LaporanKerusakanController::class, 'create']);
-    Route::get('/preview', [LaporanKerusakanController::class, 'preview'])->name('pages-preview-laporan-kerusakan');
+
+Route::prefix('complain')->group(function () {
+    Route::prefix('laporan-kerusakan')->group(function () {
+        Route::get('/', [LaporanKerusakanController::class, 'index'])->name('pages-list-laporan-kerusakan');
+        Route::get('/add', [LaporanKerusakanController::class, 'create']);
+        Route::get('/preview', [LaporanKerusakanController::class, 'preview'])->name('pages-preview-laporan-kerusakan');
+    });
+
+    Route::prefix('work-order')->group(function () {
+        Route::get('/', [WorkOrderController::class, 'index'])->name('pages-list-work-order');
+        Route::get('/add', [WorkOrderController::class, 'create'])->name('pages-create-tanda-terima');
+        Route::get('/preview', [WorkOrderController::class, 'preview'])->name('pages-preview-tanda-terima');
+    });
+});
+
+
+Route::prefix('request')->group(function () {
+    Route::prefix('material-request')->group(function () {
+        Route::get('/', [MaterialRequestController::class, 'index'])->name('pages-list-material-request');
+        Route::get('/add', [MaterialRequestController::class, 'create'])->name('pages-create-tanda-terima');
+        Route::get('/preview', [MaterialRequestController::class, 'preview'])->name('pages-preview-tanda-terima');
+    });
+    Route::prefix('purchase-order')->group(function () {
+        Route::get('/', [PurchaseOrderController::class, 'index'])->name('pages-list-material-request');
+        Route::get('/add', [PurchaseOrderController::class, 'create'])->name('pages-create-tanda-terima');
+        Route::get('/preview', [PurchaseOrderController::class, 'preview'])->name('pages-preview-tanda-terima');
+    });
 });
 
 
 
-Route::prefix('work-order')->group(function () {
-    Route::get('/', [WorkOrderController::class, 'index'])->name('pages-list-work-order');
-    Route::get('/add', [WorkOrderController::class, 'create'])->name('pages-create-tanda-terima');
-    Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
-});
-
-
-Route::prefix('material-request')->group(function () {
-    Route::get('/', [MaterialRequestController::class, 'index'])->name('pages-list-material-request');
-    Route::get('/add', [MaterialRequestController::class, 'create'])->name('pages-create-tanda-terima');
-    Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
-});
 // authentication
 Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
 Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');

@@ -8,8 +8,8 @@ $configData = Helper::appClasses();
 
 @section('page-style')
 {{-- Page Css files --}}
-<link rel="stylesheet" href="assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
-<link rel="stylesheet" href="assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css')}}">
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css')}}">
 @endsection
 
 @section('content')
@@ -78,7 +78,7 @@ $configData = Helper::appClasses();
 @endsection
 
 @section('page-script')
-<script src="assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="{{asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')}}"></script>
 <script>
     "use strict";
     $((function() {
@@ -171,7 +171,7 @@ $configData = Helper::appClasses();
                 text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Laporan Kerusakan</span>',
                 className: "btn btn-primary",
                 action: function(a, e, t, s) {
-                    window.location = baseUrl + "laporan-kerusakan/add"
+                    window.location = baseUrl + "complain/laporan-kerusakan/add"
                 }
             }],
             responsive: {

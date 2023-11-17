@@ -34,12 +34,12 @@
           "slug": "pages-list-ticket"
         },
         {
-          "url": "/laporan-kerusakan",
+          "url": "complain/laporan-kerusakan",
           "name": "List Laporan Kerusakan",
           "slug": "pages-list-laporan-kerusakan"
         },
         {
-          "url": "/work-order",
+          "url": "complain/work-order",
           "name": "List Work Order",
           "slug": "pages-list-work-order"
         }
@@ -51,7 +51,7 @@
       "slug": "pages-request",
       "submenu": [
         {
-          "url": "/material-request",
+          "url": "request/material-request",
           "name": "List Material Request",
           "slug": "pages-list-material-request"
         },
@@ -61,7 +61,7 @@
           "slug": "pages-purchase-request"
         },
         {
-          "url": "/list-purchase-order",
+          "url": "/request/purchase-order",
           "name": "List Purchase Order",
           "slug": "pages-list-purchase-order"
         }
