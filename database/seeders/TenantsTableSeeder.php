@@ -13,8 +13,6 @@ class TenantsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Tenant::truncate();
-
         $faker = \Faker\Factory::create();
 
         for ($i = 0; $i < 10; $i++) {

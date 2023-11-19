@@ -13,8 +13,6 @@ class BanksTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Bank::truncate();
-
         $faker = \Faker\Factory::create();
 
         for ($i = 0; $i < 10; $i++) {
