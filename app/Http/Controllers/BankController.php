@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\CustomException;
-use App\Models\Tenant;
+use App\Models\Bank;
+use App\Services\BankService;
 use App\Services\CommonService;
-use App\Services\TenantService;
 use Illuminate\Http\Request;
 
-class TenantController extends Controller
+class BankController extends Controller
 {
     protected $CommonService;
-    protected $TenantService;
+    protected $BankService;
 
-    public function __construct(CommonService $CommonService, TenantService $tenantService)
+    public function __construct(CommonService $CommonService, BankService $bankService)
     {
         $this->CommonService = $CommonService;
-        $this->TenantService = $tenantService;
+        $this->BankService = $bankService;
     }
 
     /**
@@ -33,23 +33,19 @@ class TenantController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $tenantQuery = Tenant::where("deleted_at", null);
+            $bankQuery = Bank::where("deleted_at", null);
             if($value){
-                $tenantQuery->where(function ($query) use ($value) {
-                    $query->where('name', 'like', '%' . $value . '%')
-                        ->orWhere('email', 'like', '%' . $value . '%')
-                        ->orWhere('phone', 'like', '%' . $value . '%')
-                        ->orWhere('company', 'like', '%' . $value . '%')
-                        ->orWhere('floor', 'like', '%' . $value . '%');
+                $bankQuery->where(function ($query) use ($value) {
+                    $query->where('name', 'like', '%' . $value . '%');
                 });
             }
-            $getTenants = $tenantQuery->orderBy($order, $sort)->paginate($perPage);
-            $totalCount = $getTenants->total();
+            $getBanks = $bankQuery->orderBy($order, $sort)->paginate($perPage);
+            $totalCount = $getBanks->total();
 
-            $tenantArr = $this->CommonService->toArray($getTenants);
+            $bankArr = $this->CommonService->toArray($getBanks);
 
             return [
-                "data" => $tenantArr,
+                "data" => $bankArr,
                 "per_page" => $perPage,
                 "page" => $page,
                 "size" => $totalCount,
@@ -74,12 +70,12 @@ class TenantController extends Controller
     public function store(Request $request)
     {
         try{
-            $validateTenant = $this->TenantService->validateTenant($request);
-            if($validateTenant != "") throw new CustomException($validateTenant, 400);
+            $validateBank = $this->BankService->validateBank($request, true, "");
+            if($validateBank != "") throw new CustomException($validateBank, 400);
 
-            $tenant = Tenant::create($request->all());
+            $bank = Bank::create($request->all());
 
-            return response()->json($tenant, 201);
+            return response()->json($bank, 201);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
@@ -100,10 +96,10 @@ class TenantController extends Controller
     {
         try{
             $id = (int) $id;
-            $getTenant = Tenant::where("id", $id)->where("deleted_at", null)->first();
-            if (is_null($getTenant)) throw new CustomException("Tenant not found", 404);
+            $getBank = Bank::where("id", $id)->where("deleted_at", null)->first();
+            if (is_null($getBank)) throw new CustomException("Bank not found", 404);
 
-            return ["data" => $getTenant];
+            return ["data" => $getBank];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
@@ -124,16 +120,16 @@ class TenantController extends Controller
     {
         try{
             $id = (int) $id;
-            $getTenant = Tenant::where("id", $id)->where("deleted_at", null)->first();
-            if (is_null($getTenant)) throw new CustomException("Tenant not found", 404);
+            $getBank = Bank::where("id", $id)->where("deleted_at", null)->first();
+            if (is_null($getBank)) throw new CustomException("Bank not found", 404);
 
-            $validateTenant = $this->TenantService->validateTenant($request);
-            if($validateTenant != "") throw new CustomException($validateTenant, 400);
+            $validateBank = $this->BankService->validateBank($request, false, $id);
+            if($validateBank != "") throw new CustomException($validateBank, 400);
 
-            $update = Tenant::findOrFail($id)->update($request->all());
-            $tenant = Tenant::where("id", $id)->first();
+            $update = Bank::findOrFail($id)->update($request->all());
+            $bank = Bank::where("id", $id)->first();
 
-            return response()->json($tenant, 200);
+            return response()->json($bank, 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
@@ -154,12 +150,12 @@ class TenantController extends Controller
     {
         try{
             $id = (int) $id;
-            $getTenant = Tenant::where("id", $id)->where("deleted_at", null)->first();
-            if (is_null($getTenant)) throw new CustomException("Tenant not found", 404);
+            $getBank = Bank::where("id", $id)->where("deleted_at", null)->first();
+            if (is_null($getBank)) throw new CustomException("Bank not found", 404);
 
-            $deleteTenant = Tenant::findOrFail($id)->delete();
+            $deleteBank = Bank::findOrFail($id)->delete();
 
-            return response()->json(['message' => 'Tenant have been deleted'], 200);
+            return response()->json(['message' => 'Bank have been deleted'], 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
