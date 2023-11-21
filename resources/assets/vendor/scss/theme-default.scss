@@ -15,6 +15,70 @@ body {
   background: $body-bg !important;
 }
 
+.icon-home {
+  height: 20px;
+  width: 20px;
+  display: block;
+  margin-right: 10px;
+  background: url('../../../../assets/icon/home-icons.svg') no-repeat;
+}
+
+.icon-invoice {
+  height: 20px;
+  width: 20px;
+  display: block;
+  margin-right: 10px;
+  background: url('../../../../assets/icon/invoice.svg') no-repeat;
+}
+
+.icon-complain {
+  height: 20px;
+  width: 20px;
+  display: block;
+  margin-right: 10px;
+  background: url('../../../../assets/icon/complain.svg') no-repeat;
+}
+
+.icon-request {
+  height: 20px;
+  width: 20px;
+  display: block;
+  margin-right: 10px;
+  background: url('../../../../assets/icon/request.svg') no-repeat;
+}
+
+.icon-vendor {
+  height: 20px;
+  width: 20px;
+  display: block;
+  margin-right: 10px;
+  background: url('../../../../assets/icon/vendor.svg') no-repeat;
+}
+
+.icon-client {
+  height: 20px;
+  width: 20px;
+  display: block;
+  margin-right: 10px;
+  background: url('../../../../assets/icon/client.svg') no-repeat;
+}
+
+.icon-report {
+  height: 20px;
+  width: 20px;
+  display: block;
+  margin-right: 10px;
+  background: url('../../../../assets/icon/report.svg') no-repeat;
+}
+
+.icon-setting {
+  height: 20px;
+  width: 20px;
+  display: block;
+  margin-right: 10px;
+  background: url('../../../../assets/icon/setting.svg') no-repeat;
+}
+
 @include template-common-theme($primary-color);
 @include template-libs-theme($primary-color);
 @include template-pages-theme($primary-color);

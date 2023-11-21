@@ -60,7 +60,7 @@
     border-color: $background !important;
   }
   a {
-    color: $background;
+    color: $white;
     &:hover {
       color: tint-color($background, 10%);
     }
