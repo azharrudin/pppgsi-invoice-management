@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\TenantController;
 
 use Illuminate\Http\Request;
@@ -23,3 +24,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('tenant', TenantController::class);
 Route::resource('bank', BankController::class);
+Route::resource('invoice', InvoiceController::class);
