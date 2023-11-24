@@ -96,7 +96,7 @@ class BankController extends Controller
     {
         try{
             $id = (int) $id;
-            $getBank = Bank::where("id", $id)->where("deleted_at", null)->first();
+            $getBank = $this->CommonService->getDataById("App\Models\Bank", $id);
             if (is_null($getBank)) throw new CustomException("Bank not found", 404);
 
             return ["data" => $getBank];
@@ -120,7 +120,7 @@ class BankController extends Controller
     {
         try{
             $id = (int) $id;
-            $getBank = Bank::where("id", $id)->where("deleted_at", null)->first();
+            $getBank = $this->CommonService->getDataById("App\Models\Bank", $id);
             if (is_null($getBank)) throw new CustomException("Bank not found", 404);
 
             $validateBank = $this->BankService->validateBank($request, false, $id);
@@ -150,7 +150,7 @@ class BankController extends Controller
     {
         try{
             $id = (int) $id;
-            $getBank = Bank::where("id", $id)->where("deleted_at", null)->first();
+            $getBank = $this->CommonService->getDataById("App\Models\Bank", $id);
             if (is_null($getBank)) throw new CustomException("Bank not found", 404);
 
             $deleteBank = Bank::findOrFail($id)->delete();

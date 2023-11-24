@@ -100,7 +100,7 @@ class TenantController extends Controller
     {
         try{
             $id = (int) $id;
-            $getTenant = Tenant::where("id", $id)->where("deleted_at", null)->first();
+            $getTenant = $this->CommonService->getDataById("App\Models\Tenant", $id);
             if (is_null($getTenant)) throw new CustomException("Tenant not found", 404);
 
             return ["data" => $getTenant];
@@ -124,7 +124,7 @@ class TenantController extends Controller
     {
         try{
             $id = (int) $id;
-            $getTenant = Tenant::where("id", $id)->where("deleted_at", null)->first();
+            $getTenant = $this->CommonService->getDataById("App\Models\Tenant", $id);
             if (is_null($getTenant)) throw new CustomException("Tenant not found", 404);
 
             $validateTenant = $this->TenantService->validateTenant($request);
@@ -154,7 +154,7 @@ class TenantController extends Controller
     {
         try{
             $id = (int) $id;
-            $getTenant = Tenant::where("id", $id)->where("deleted_at", null)->first();
+            $getTenant = $this->CommonService->getDataById("App\Models\Tenant", $id);
             if (is_null($getTenant)) throw new CustomException("Tenant not found", 404);
 
             $deleteTenant = Tenant::findOrFail($id)->delete();
