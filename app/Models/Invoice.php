@@ -54,4 +54,9 @@ class Invoice extends Model
     {
         return $this->belongsTo(Bank::class, "bank_id");
     }
+
+    public function receipts(): HasMany
+    {
+        return $this->hasMany(Receipt::class, "invoice_id");
+    }
 }
