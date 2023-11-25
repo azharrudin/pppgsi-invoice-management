@@ -47,6 +47,7 @@ class InvoiceService{
             "required" => "The :attribute field is required",
             "string" => "The :attribute field must be string",
             "numeric" => "The :attribute field must be number",
+            "grand_total.gte" => "The :attribute field must be greater than or equal to 0",
             "invoice_date.after_or_equal" => "The :attribute field must be greater than or equal to today",
             "invoice_due_date.after_or_equal" => "The :attribute field must be greater than or equal to invoice date",
             "date" => "The :attribute field must be date",
@@ -64,8 +65,8 @@ class InvoiceService{
             $getTenant = $this->CommonService->getDataById("App\Models\Tenant", $request->input("tenant_id"));
             $getBank = $this->CommonService->getDataById("App\Models\Bank", $request->input("bank_id"));
 
-            if (is_null($getTenant)) $message = "Invalid tenant_id";
-            else if(is_null($getBank)) $message = "Invalid bank_id";
+            if (is_null($getTenant)) $message = "Tenant not found";
+            else if(is_null($getBank)) $message = "Bank not found";
         }
 
         return $message;
