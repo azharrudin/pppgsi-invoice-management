@@ -12,11 +12,11 @@ class TenantService{
      */
     public function validateTenant($request){
         $rules = [
-            "name" => "bail|required|string",
-            "email" => "bail|required|email",
-            "phone" => "bail|required|numeric",
-            "company" => "bail|required|string",
-            "floor" => "bail|required|string",
+            "name" => ["bail", "required", "string"],
+            "email" => ["bail", "required", "email"],
+            "phone" => ["bail", "required", "numeric"],
+            "company" => ["bail", "required", "string"],
+            "floor" => ["bail", "required", "string"],
         ];
         $errorMessages = [
             "required" => "The :attribute field is required",

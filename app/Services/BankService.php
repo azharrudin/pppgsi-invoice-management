@@ -15,7 +15,7 @@ class BankService{
      */
     public function validateBank($request, $isCreate = true, $id = "", ){
         $rules = [
-            "name" => "bail|required|string",
+            "name" => ["bail", "required", "string"],
         ];
         $errorMessages = [
             "required" => "The :attribute field is required",
