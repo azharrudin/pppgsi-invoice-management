@@ -27,7 +27,7 @@ return new class extends Migration
             $table->date("addendum_date");
             $table->string("grand_total_spelled");
             $table->date("materai_date")->nullable();
-            $table->string("materai_image")->nullable();
+            $table->text("materai_image")->nullable();
             $table->string("materai_name")->nullable();
             $table->text("term_and_conditions");
             $table->unsignedInteger("bank_id");
