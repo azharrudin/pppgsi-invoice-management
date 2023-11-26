@@ -35,7 +35,7 @@ class InvoiceController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $invoiceQuery = Invoice::with("invoiceDetail")->with("tenant")->with("bank")->where("deleted_at", null);
+            $invoiceQuery = Invoice::with("invoiceDetails")->with("tenant")->with("bank")->where("deleted_at", null);
             if($value){
                 $invoiceQuery->where(function ($query) use ($value) {
                     $query->whereHas('tenant', function ($tenantQuery) use ($value) {
@@ -92,7 +92,7 @@ class InvoiceController extends Controller
                 ]);
             }
 
-            $getInvoice = Invoice::with("invoiceDetail")
+            $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
                 ->with("bank")
                 ->where("id", $invoice->id)
@@ -120,7 +120,7 @@ class InvoiceController extends Controller
     {
         try{
             $id = (int) $id;
-            $getInvoice = Invoice::with("invoiceDetail")->
+            $getInvoice = Invoice::with("invoiceDetails")->
                 with("tenant")->
                 with("bank")->
                 where("id", $id)->
@@ -167,7 +167,7 @@ class InvoiceController extends Controller
                 ]);
             }
 
-            $getInvoice = Invoice::with("invoiceDetail")
+            $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
                 ->with("bank")
                 ->where("id", $id)

@@ -40,7 +40,7 @@ class Invoice extends Model
 
     public $timestamp = true;
 
-    public function invoiceDetail(): HasMany
+    public function invoiceDetails(): HasMany
     {
         return $this->hasMany(InvoiceDetail::class, "invoice_id");
     }
