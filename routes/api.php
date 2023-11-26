@@ -4,7 +4,7 @@ use App\Http\Controllers\BankController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\TenantController;
-
+use App\Http\Controllers\TicketController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +27,4 @@ Route::resource('tenant', TenantController::class);
 Route::resource('bank', BankController::class);
 Route::resource('invoice', InvoiceController::class);
 Route::resource('receipt', ReceiptController::class);
+Route::resource('ticket', TicketController::class);
