@@ -44,16 +44,16 @@ class InvoiceService{
             "bank_id" => ["bail", "required", "numeric"],
         ];
         $errorMessages = [
-            "required" => "The :attribute field is required",
-            "string" => "The :attribute field must be string",
-            "numeric" => "The :attribute field must be number",
-            "grand_total.gte" => "The :attribute field must be greater than or equal to 0",
-            "invoice_date.after_or_equal" => "The :attribute field must be greater than or equal to today",
-            "invoice_due_date.after_or_equal" => "The :attribute field must be greater than or equal to invoice date",
-            "date" => "The :attribute field must be date",
-            "array" => "The :attribute field must be an array",
-            "contract_date.after_or_equal" => "The :attribute field must be greater than or equal to today",
-            "addendum_date.after_or_equal" => "The :attribute field must be greater than or equal to today",
+            "required" => "Field :attribute harus diisi",
+            "string" => "Field :attribute harus diisi dengan string",
+            "numeric" => "Field :attribute harus diisi dengan angka",
+            "grand_total.gte" => "Field :attribute harus lebih besar dari sama dengan 0",
+            "invoice_date.after_or_equal" => "Field :attribute harus lebih dari atau sama dengan hari ini",
+            "invoice_due_date.after_or_equal" => "Field :attribute harus lebih besar dari atau sama dengan invoice date",
+            "date" => "Field :attribute harus diisi dengan tanggal",
+            "array" => "Field :attribute harus diisi dengan array",
+            "contract_date.after_or_equal" => "Field :attribute harus lebih dari atau sama dengan hari ini",
+            "addendum_date.after_or_equal" => "Field :attribute harus lebih dari atau sama dengan hari ini",
         ];
 
         $validator = Validator::make($request->all(), $rules, $errorMessages);
@@ -65,8 +65,8 @@ class InvoiceService{
             $getTenant = $this->CommonService->getDataById("App\Models\Tenant", $request->input("tenant_id"));
             $getBank = $this->CommonService->getDataById("App\Models\Bank", $request->input("bank_id"));
 
-            if (is_null($getTenant)) $message = "Tenant not found";
-            else if(is_null($getBank)) $message = "Bank not found";
+            if (is_null($getTenant)) $message = "Tenant tidak ditemukan";
+            else if(is_null($getBank)) $message = "Bank tidak ditemukan";
         }
 
         return $message;

@@ -97,7 +97,7 @@ class BankController extends Controller
         try{
             $id = (int) $id;
             $getBank = $this->CommonService->getDataById("App\Models\Bank", $id);
-            if (is_null($getBank)) throw new CustomException("Bank not found", 404);
+            if (is_null($getBank)) throw new CustomException("Bank tidak ditemukan", 404);
 
             return ["data" => $getBank];
         } catch (\Throwable $e) {
@@ -121,7 +121,7 @@ class BankController extends Controller
         try{
             $id = (int) $id;
             $getBank = $this->CommonService->getDataById("App\Models\Bank", $id);
-            if (is_null($getBank)) throw new CustomException("Bank not found", 404);
+            if (is_null($getBank)) throw new CustomException("Bank tidak ditemukan", 404);
 
             $validateBank = $this->BankService->validateBank($request, false, $id);
             if($validateBank != "") throw new CustomException($validateBank, 400);
@@ -151,7 +151,7 @@ class BankController extends Controller
         try{
             $id = (int) $id;
             $getBank = $this->CommonService->getDataById("App\Models\Bank", $id);
-            if (is_null($getBank)) throw new CustomException("Bank not found", 404);
+            if (is_null($getBank)) throw new CustomException("Bank tidak ditemukan", 404);
 
             $deleteBank = Bank::findOrFail($id)->delete();
 

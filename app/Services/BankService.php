@@ -18,8 +18,8 @@ class BankService{
             "name" => ["bail", "required", "string"],
         ];
         $errorMessages = [
-            "required" => "The :attribute field is required",
-            "string" => "The :attribute field must be string",
+            "required" => "Field :attribute harus diisi",
+            "string" => "Field :attribute harus diisi dengan string",
         ];
 
         $validator = Validator::make($request->all(), $rules, $errorMessages);

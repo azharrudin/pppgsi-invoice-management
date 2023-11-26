@@ -114,7 +114,7 @@ class ReceiptController extends Controller
                 with("bank")->
                 where("id", $id)->
                 where("deleted_at", null)->first();
-            if (is_null($getReceipt)) throw new CustomException("Receipt not found", 404);
+            if (is_null($getReceipt)) throw new CustomException("Receipt tidak ditemukan", 404);
 
             return ["data" => $getReceipt];
         } catch (\Throwable $e) {
@@ -138,7 +138,7 @@ class ReceiptController extends Controller
         try{
             $id = (int) $id;
             $receiptExist = $this->CommonService->getDataById("App\Models\Receipt", $id);
-            if(is_null($receiptExist)) throw new CustomException("Receipt not found", 404);
+            if(is_null($receiptExist)) throw new CustomException("Receipt tidak ditemukan", 404);
 
             $validateReceipt = $this->ReceiptService->validateReceipt($request);
             if($validateReceipt != "") throw new CustomException($validateReceipt, 400);
@@ -173,7 +173,7 @@ class ReceiptController extends Controller
         try{
             $id = (int) $id;
             $receiptExist = $this->CommonService->getDataById("App\Models\Receipt", $id);
-            if(is_null($receiptExist)) throw new CustomException("Receipt not found", 404);
+            if(is_null($receiptExist)) throw new CustomException("Receipt tidak ditemukan", 404);
 
             Receipt::findOrFail($id)->delete();
 

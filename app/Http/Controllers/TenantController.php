@@ -101,7 +101,7 @@ class TenantController extends Controller
         try{
             $id = (int) $id;
             $getTenant = $this->CommonService->getDataById("App\Models\Tenant", $id);
-            if (is_null($getTenant)) throw new CustomException("Tenant not found", 404);
+            if (is_null($getTenant)) throw new CustomException("Tenant tidak ditemukan", 404);
 
             return ["data" => $getTenant];
         } catch (\Throwable $e) {
@@ -125,7 +125,7 @@ class TenantController extends Controller
         try{
             $id = (int) $id;
             $getTenant = $this->CommonService->getDataById("App\Models\Tenant", $id);
-            if (is_null($getTenant)) throw new CustomException("Tenant not found", 404);
+            if (is_null($getTenant)) throw new CustomException("Tenant tidak ditemukan", 404);
 
             $validateTenant = $this->TenantService->validateTenant($request);
             if($validateTenant != "") throw new CustomException($validateTenant, 400);
@@ -155,7 +155,7 @@ class TenantController extends Controller
         try{
             $id = (int) $id;
             $getTenant = $this->CommonService->getDataById("App\Models\Tenant", $id);
-            if (is_null($getTenant)) throw new CustomException("Tenant not found", 404);
+            if (is_null($getTenant)) throw new CustomException("Tenant tidak ditemukan", 404);
 
             $deleteTenant = Tenant::findOrFail($id)->delete();
 

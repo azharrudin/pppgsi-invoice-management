@@ -36,14 +36,14 @@ class ReceiptService{
             "signature_name" => ["bail", "required", "string"],
         ];
         $errorMessages = [
-            "required" => "The :attribute field is required",
-            "string" => "The :attribute field must be string",
-            "numeric" => "The :attribute field must be number",
-            "gte" => "The :attribute field must be greater than or equal to 0",
-            "date" => "The :attribute field must be date",
-            "receipt_date.after_or_equal" => "The :attribute field must be greater than or equal to today",
-            "receipt_send_date.after_or_equal" => "The :attribute field must be greater than or equal to receipt date",
-            "signature_date.after_or_equal" => "The :attribute field must be greater than or equal to today",
+            "required" => "Field :attribute harus diisi",
+            "string" => "Field :attribute harus diisi dengan string",
+            "numeric" => "Field :attribute harus diisi dengan angka",
+            "gte" => "Field :attribute harus lebih besar dari sama dengan 0",
+            "date" => "Field :attribute harus diisi dengan tanggal",
+            "receipt_date.after_or_equal" => "Field :attribute harus lebih dari atau sama dengan hari ini",
+            "receipt_send_date.after_or_equal" => "Field :attribute harus lebih besar dari atau sama dengan receipt date",
+            "signature_date.after_or_equal" => "Field :attribute harus lebih dari atau sama dengan hari ini",
         ];
 
         $validator = Validator::make($request->all(), $rules, $errorMessages);
@@ -56,9 +56,9 @@ class ReceiptService{
             $getBank = $this->CommonService->getDataById("App\Models\Bank", $request->input("bank_id"));
             $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $request->input("invoice_id"));
 
-            if (is_null($getTenant)) $message = "Tenant not found";
-            else if(is_null($getBank)) $message = "Bank not found";
-            else if(is_null($getInvoice)) $message = "Invoice not found";
+            if (is_null($getTenant)) $message = "Tenant tidak ditemukan";
+            else if(is_null($getBank)) $message = "Bank tidak ditemukan";
+            else if(is_null($getInvoice)) $message = "Invoice tidak ditemukan";
         }
 
         return $message;
