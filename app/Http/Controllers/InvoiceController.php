@@ -43,6 +43,8 @@ class InvoiceController extends Controller
                     })
                     ->orwhere('invoice_number', 'like', '%' . $value . '%')
                     ->orWhere('grand_total', 'like', '%' . $value . '%')
+                    ->orWhere('invoice_date', 'like', '%' . $value . '%')
+                    ->orWhere('invoice_due_date', 'like', '%' . $value . '%')
                     ->orWhere('status', 'like', '%' . $value . '%');
                 });
             }
