@@ -155,7 +155,7 @@ class BankController extends Controller
 
             $deleteBank = Bank::findOrFail($id)->delete();
 
-            return response()->json(['message' => 'Bank have been deleted'], 200);
+            return response()->json(['message' => 'Bank berhasil dihapus'], 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;

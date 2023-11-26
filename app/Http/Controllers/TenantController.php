@@ -159,7 +159,7 @@ class TenantController extends Controller
 
             $deleteTenant = Tenant::findOrFail($id)->delete();
 
-            return response()->json(['message' => 'Tenant have been deleted'], 200);
+            return response()->json(['message' => 'Tenant berhasil dihapus'], 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;

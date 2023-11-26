@@ -177,7 +177,7 @@ class ReceiptController extends Controller
 
             Receipt::findOrFail($id)->delete();
 
-            return response()->json(['message' => 'Receipt have been deleted'], 200);
+            return response()->json(['message' => 'Receipt berhasil dihapus'], 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;

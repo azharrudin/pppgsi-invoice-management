@@ -203,7 +203,7 @@ class InvoiceController extends Controller
             Invoice::findOrFail($id)->delete();
             InvoiceDetail::where("invoice_id", $id)->where("deleted_at", null)->delete();
 
-            return response()->json(['message' => 'Invoice have been deleted'], 200);
+            return response()->json(['message' => 'Invoice berhasil dihapus'], 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
