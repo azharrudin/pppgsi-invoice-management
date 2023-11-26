@@ -39,6 +39,7 @@ class ReceiptController extends Controller
                     $query->whereHas('tenant', function ($tenantQuery) use ($value) {
                         $tenantQuery->where('name', 'like', '%' . $value . '%');
                     })
+                    ->orWhere('receipt_number', 'like', '%' . $value . '%')
                     ->orWhere('grand_total', 'like', '%' . $value . '%')
                     ->orWhere('status', 'like', '%' . $value . '%')
                     ->orWhere('receipt_date', 'like', '%' . $value . '%')
