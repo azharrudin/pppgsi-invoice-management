@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\DamageReportController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\TenantController;
@@ -28,3 +29,4 @@ Route::resource('bank', BankController::class);
 Route::resource('invoice', InvoiceController::class);
 Route::resource('receipt', ReceiptController::class);
 Route::resource('ticket', TicketController::class);
+Route::resource('damage-report', DamageReportController::class);
