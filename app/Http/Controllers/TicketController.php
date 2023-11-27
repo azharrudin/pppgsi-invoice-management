@@ -79,11 +79,13 @@ class TicketController extends Controller
             if($validateTicket != "") throw new CustomException($validateTicket, 400);
 
             $saveTicket = Ticket::create($request->all());
-            foreach($request->input("attachment") as $attachment){
-                TicketAttachment::create([
-                    "ticket_id" => $saveTicket->id,
-                    "attachment" => $attachment
-                ]);
+            if(!is_null($request->input("attachment"))){
+              foreach($request->input("attachment") as $attachment){
+                  TicketAttachment::create([
+                      "ticket_id" => $saveTicket->id,
+                      "attachment" => $attachment
+                  ]);
+              }
             }
 
             $getTicket = Ticket::with("ticketAttachments")->where("id", $saveTicket->id)->where("deleted_at", null)->first();
