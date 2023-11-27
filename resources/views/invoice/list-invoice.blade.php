@@ -68,15 +68,6 @@
         <div class="card-datatable table-responsive pt-0">
             <table class="invoice-list-table table">
                 <thead>
-                    <tr>
-                        <th>No. Invoice</th>
-                        <th>Tenant</th>
-                        <th>Total</th>
-                        <th>Tgl Invoice</th>
-                        <th>Tgl Jatuh Tempo</th>
-                        <th>Status</th>
-                        <th>Tanggapan</th>
-                    </tr>
                 </thead>
             </table>
         </div>
@@ -92,22 +83,35 @@
             if (a.length) var e = a.DataTable({
                 ajax: assetsPath + "json/invoice-list.json",
                 columns: [{
-                    data: "no_tanda_terima"
+                    data: "no_invoice",
+                    name: "no_invoice",
+                    title: "No. Invoice"
                 }, {
-                    data: "tenant"
+                    data: "tenant",
+                    name: "tenant",
+                    title: "Tenant"
                 }, {
-                    data: "total"
+                    data: "total",
+                    name: "total",
+                    title: "Total",
                 }, {
-                    data: "tanggal_tanda_terima"
+                    data: "tanggal_tanda_terima",
+                    name: "tanggal_tanda_terima",
+                    title: "Tanggal Invoice"
                 }, {
-                    data: "status"
+                    data: "tanggal_tanda_terima",
+                    name: "tanggal_tanda_terima",
+                    title: "Tanggal Jatuh Tempo"
                 }, {
-                    data: "tanggapan"
+                    data: "status",
+                    name: "status",
+                    title: "Status"
+                }, {
+                    data: "tanggapan",
+                    name: "tanggapan",
+                    title: "Tanggapan"
                 }],
                 columnDefs: [{
-                    className: "control",
-                    responsivePriority: 2,
-                    searchable: !1,
                     targets: 0,
                     render: function(a, e, t, s) {
                         return ""
