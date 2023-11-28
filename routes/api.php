@@ -35,4 +35,5 @@ Route::resource('receipt', ReceiptController::class);
 
 Route::resource('ticket', TicketController::class);
 
+Route::get("damage-report/select", [DamageReportController::class, "select"]);
 Route::resource('damage-report', DamageReportController::class);

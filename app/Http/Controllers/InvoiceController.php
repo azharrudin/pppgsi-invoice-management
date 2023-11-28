@@ -253,7 +253,6 @@ class InvoiceController extends Controller
                 "pagination" => $pagination,
             ];
         } catch (\Throwable $e) {
-            echo $e;
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 

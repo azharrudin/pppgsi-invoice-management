@@ -244,4 +244,52 @@ class DamageReportController extends Controller
             return response()->json(['message' => $errorMessage], $errorStatusCode);
         }
     }
+
+    public function select(Request $request)
+    {
+        try{
+            [
+                "page" => $page,
+                "value" => $value
+            ] = $this->CommonService->getQuery($request);
+
+            $perPage = 10;
+
+            $damageReportQuery = DamageReport::where("deleted_at", null);
+            if($value){
+                $damageReportQuery->where('damage_report_number', 'like', '%' . $value . '%');
+            }
+            $getDamageReports = $damageReportQuery->select("id", "damage_report_number")->paginate($perPage);
+            $totalCount = $getDamageReports->total();
+
+            $dataArr = [];
+            foreach($getDamageReports as $damageReportObj){
+                $dataObj = [
+                    "id" => $damageReportObj->id,
+                    "text" => $damageReportObj->damage_report_number,
+                ];
+                array_push($dataArr, $dataObj);
+            }
+
+            $pagination = ["more" => false];
+            if($totalCount > ($perPage * $page)) {
+                $pagination = ["more" => true];
+            }
+
+            return [
+                "data" => $dataArr,
+                "pagination" => $pagination,
+            ];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
 }
