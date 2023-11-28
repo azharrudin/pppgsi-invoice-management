@@ -25,8 +25,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('tenant', TenantController::class);
+
 Route::resource('bank', BankController::class);
+
+Route::get("invoice/select", [InvoiceController::class, "select"]);
 Route::resource('invoice', InvoiceController::class);
+
 Route::resource('receipt', ReceiptController::class);
+
 Route::resource('ticket', TicketController::class);
+
 Route::resource('damage-report', DamageReportController::class);
