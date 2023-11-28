@@ -83,79 +83,28 @@
             if (a.length) var e = a.DataTable({
                 ajax: assetsPath + "json/invoice-list.json",
                 columns: [{
-                    data: "no_invoice",
-                    name: "no_invoice",
+                    data: "invoice_number",
                     title: "No. Invoice"
                 }, {
-                    data: "tenant",
-                    name: "tenant",
+                    data: "tenant_id",
                     title: "Tenant"
                 }, {
                     data: "total",
-                    name: "total",
                     title: "Total",
                 }, {
                     data: "tanggal_tanda_terima",
-                    name: "tanggal_tanda_terima",
                     title: "Tanggal Invoice"
                 }, {
                     data: "tanggal_tanda_terima",
-                    name: "tanggal_tanda_terima",
                     title: "Tanggal Jatuh Tempo"
                 }, {
                     data: "status",
-                    name: "status",
                     title: "Status"
                 }, {
                     data: "tanggapan",
-                    name: "tanggapan",
                     title: "Tanggapan"
                 }],
                 columnDefs: [{
-                    targets: 0,
-                    render: function(a, e, t, s) {
-                        return ""
-                    }
-                }, {
-                    targets: 1,
-                    render: function(a, e, t, s) {
-                        var n = t.invoice_id;
-                        return '<a href="' + baseUrl + 'app/invoice/preview">#' + n +
-                            "</a>"
-                    }
-                }, {
-                    targets: 2,
-                    render: function(a, e, t, s) {
-                        var n = t.tenant;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {}, {
-                    targets: 3,
-                    render: function(a, e, t, s) {
-                        var n = t.total;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {
-                    targets: 4,
-                    render: function(a, e, t, s) {
-                        var n = new Date(t.tanggal_tanda_terima);
-                        return '<span class="d-none">' + moment(n).format("YYYYMMDD") +
-                            "</span>" + moment(n).format("DD MMM YYYY")
-                    }
-                }, {
-                    targets: 5,
-                    orderable: !1,
-                    render: function(a, e, t, s) {
-                        var n = t.status;
-                        if (0 === n) {
-                            return '<span class="badge bg-label-success" text-capitalized> Paid </span>'
-                        }
-                        return '<span class="d-none">' + n + "</span>" + n
-                    }
-                }, {
-                    targets: 6,
-                    visible: !1
-                }, {
                     targets: -1,
                     title: "Tanggapan",
                     searchable: !1,

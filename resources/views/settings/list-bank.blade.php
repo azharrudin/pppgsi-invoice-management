@@ -59,17 +59,7 @@
     <div class="card">
         <div class="card-datatable table-responsive pt-0">
             <table class="list-bank-table table">
-                <thead>
-                    <tr>
-                        <th>No. Tanda Terima</th>
-                        <th>Tenant</th>
-                        <th>Total</th>
-                        <th>Tgl Tanda Terima</th>
-                        <th>Tgl Kirim</th>
-                        <th>Status</th>
-                        <th>Tanggapan</th>
-                    </tr>
-                </thead>
+              
             </table>
         </div>
     </div>
@@ -82,68 +72,41 @@
         $((function() {
             var a = $(".list-bank-table");
             if (a.length) var e = a.DataTable({
-                ajax: assetsPath + "json/purchase-request-list.json",
-                columns: [{
-                    data: "no_tanda_terima"
-                }, {
-                    data: "tenant"
-                }, {
-                    data: "total"
-                }, {
-                    data: "tanggal_tanda_terima"
-                }, {
-                    data: "status"
-                }, {
-                    data: "tanggapan"
-                }],
-                columnDefs: [{
-                    className: "control",
-                    responsivePriority: 2,
-                    searchable: !1,
-                    targets: 0,
-                    render: function(a, e, t, s) {
-                        return ""
-                    }
-                }, {
-                    targets: 1,
-                    render: function(a, e, t, s) {
-                        var n = t.invoice_id;
-                        return '<a href="' + baseUrl + 'app/invoice/preview">#' + n +
-                            "</a>"
-                    }
-                }, {
-                    targets: 2,
-                    render: function(a, e, t, s) {
-                        var n = t.tenant;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {}, {
-                    targets: 3,
-                    render: function(a, e, t, s) {
-                        var n = t.total;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {
-                    targets: 4,
-                    render: function(a, e, t, s) {
-                        var n = new Date(t.tanggal_tanda_terima);
-                        return '<span class="d-none">' + moment(n).format("YYYYMMDD") +
-                            "</span>" + moment(n).format("DD MMM YYYY")
-                    }
-                }, {
-                    targets: 5,
-                    orderable: !1,
-                    render: function(a, e, t, s) {
-                        var n = t.status;
-                        if (0 === n) {
-                            return '<span class="badge bg-label-success" text-capitalized> Paid </span>'
+                ajax: {
+                    url : baseUrl+"api/bank"
+                },
+                columns: [
+                    {
+                        data: "name",
+                        title : "Nama Bank"
+                    },
+                    {
+                        title : "Tanggal Dibuat",
+                        data: "created_at",
+                        render: function(data, type, row) {
+                            if (data != null) {
+                                const date = new Date(data);
+                                const year = date.getUTCFullYear();
+                                const month = new Intl.DateTimeFormat('en-US', {
+                                    month: 'long'
+                                }).format(date);
+                                const day = date.getUTCDate();
+                                const formattedDate = `${day} ${month} ${year}`;
+                                return formattedDate;
+                            } else {
+                                return '';
+                            }
                         }
-                        return '<span class="d-none">' + n + "</span>" + n
-                    }
-                }, {
-                    targets: 6,
-                    visible: !1
-                }, {
+                    },
+                    {
+                        title:"Tanggapan",
+                        data: null
+                    },
+                ]
+
+                ,
+                columnDefs: [
+                    {
                     targets: -1,
                     title: "Tanggapan",
                     searchable: !1,
