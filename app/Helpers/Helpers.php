@@ -168,7 +168,7 @@ class Helpers
 
     // To hide/show display customizer UI, not js
     if ($layoutClasses['displayCustomizer'] == true) {
-      $layoutClasses['displayCustomizer'] = true;
+      $layoutClasses['displayCustomizer'] = false;
     } else {
       $layoutClasses['displayCustomizer'] = false;
     }
