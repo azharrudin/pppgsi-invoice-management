@@ -128,7 +128,7 @@ $configData = Helper::appClasses();
                                                         <input type="text" class="form-control  w-px-75" placeholder="Stock Out" />
                                                         <input type="text" class="form-control  w-px-75" placeholder="End Stock" />
                                                         <input type="text" class="form-control  w-px-75" placeholder="Min Stock" />
-
+                                                        
                                                     </div>
                                                 </div>
                                             </div>

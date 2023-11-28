@@ -164,11 +164,10 @@ $configData = Helper::appClasses();
                     <table class="invoice-list-table table">
                         <thead>
                             <tr>
-                                <th>No Work Order</th>
-                                <th>Scope</th>
-                                <th>Classification</th>
-                                <th>Date</th>
-                                <th>Action Plan</th>
+                                <th>No. Invoice</th>
+                                <th>Pelanggan</th>
+                                <th>Total</th>
+                                <th>Tgl Invoice</th>
                                 <th>Status</th>
                                 <th>Tanggapan</th>
                             </tr>
@@ -1251,126 +1250,8 @@ $configData = Helper::appClasses();
                 }]
             },
             s = (null !== r && new ApexCharts(r, n).render(), $(".datatable-invoice"));
-        s.length && s.DataTable({
-            ajax: assetsPath + "json/invoice-list.json",
-            columns: [{
-                data: ""
-            }, {
-                data: "invoice_id"
-            }, {
-                data: "invoice_status"
-            }, {
-                data: "total"
-            }, {
-                data: "issued_date"
-            }, {
-                data: "invoice_status"
-            }, {
-                data: "action"
-            }],
-            columnDefs: [{
-                className: "control",
-                responsivePriority: 2,
-                targets: 0,
-                render: function(e, t, o, a) {
-                    return ""
-                }
-            }, {
-                targets: 1,
-                render: function(e, t, o, a) {
-                    return '<a href="app-invoice-preview.html"><span>#' + o.invoice_id + "</span></a>"
-                }
-            }, {
-                targets: 2,
-                render: function(e, t, o, a) {
-                    var i = o.invoice_status,
-                        s = o.due_date;
-                    return "<span data-bs-toggle='tooltip' data-bs-html='true' title='<span>" + i + '<br> <span class="fw-medium">Balance:</span> ' + o.balance + '<br> <span class="fw-medium">Due Date:</span> ' + s + "</span>'>" + {
-                        Sent: '<span class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30"><i class="ti ti-circle-check ti-sm"></i></span>',
-                        Draft: '<span class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30"><i class="ti ti-device-floppy ti-sm"></i></span>',
-                        "Past Due": '<span class="badge badge-center rounded-pill bg-label-danger w-px-30 h-px-30"><i class="ti ti-info-circle ti-sm"></i></span>',
-                        "Partial Payment": '<span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30"><i class="ti ti-circle-half-2 ti-sm"></i></span>',
-                        Paid: '<span class="badge badge-center rounded-pill bg-label-warning w-px-30 h-px-30"><i class="ti ti-chart-pie ti-sm"></i></span>',
-                        Downloaded: '<span class="badge badge-center rounded-pill bg-label-info w-px-30 h-px-30"><i class="ti ti-arrow-down-circle ti-sm"></i></span>'
-                    } [i] + "</span>"
-                }
-            }, {
-                targets: 3,
-                render: function(e, t, o, a) {
-                    return "$" + o.total
-                }
-            }, {
-                targets: -1,
-                title: "Actions",
-                orderable: !1,
-                render: function(e, t, o, a) {
-                    return '<div class="d-flex align-items-center"><a href="javascript:;" class="text-body" data-bs-toggle="tooltip" title="Send Mail"><i class="ti ti-mail me-2 ti-sm"></i></a><a href="app-invoice-preview.html" class="text-body" data-bs-toggle="tooltip" title="Preview"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="d-inline-block"><a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm lh-1"></i></a><div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;" class="dropdown-item">Details</a><a href="javascript:;" class="dropdown-item">Archive</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item text-danger delete-record">Delete</a></div></div></div>'
-                }
-            }, {
-                targets: -2,
-                visible: !1
-            }],
-            order: [
-                [1, "asc"]
-            ],
-            dom: '<"row ms-2 me-3"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-2"f<"invoice_status mb-3 mb-md-0">>>t<"row d-flex align-items-center mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6 mt-1"p>>',
-            displayLength: 7,
-            lengthMenu: [7, 10, 25, 50, 75, 100],
-            language: {
-                sLengthMenu: "_MENU_",
-                search: "",
-                searchPlaceholder: "Search Invoice"
-            },
-            buttons: [{
-                text: '<i class="ti ti-plus me-md-2"></i><span class="d-md-inline-block d-none">Create Invoice</span>',
-                className: "btn btn-primary",
-                action: function(e, t, o, a) {
-                    window.location = "app-invoice-add.html"
-                }
-            }],
-            responsive: {
-                details: {
-                    display: $.fn.dataTable.Responsive.display.modal({
-                        header: function(e) {
-                            return "Details of " + e.data().full_name
-                        }
-                    }),
-                    type: "column",
-                    renderer: function(e, t, o) {
-                        o = $.map(o, function(e, t) {
-                            return "" !== e.title ? '<tr data-dt-row="' + e.rowIndex + '" data-dt-column="' + e.columnIndex + '"><td>' + e.title + ":</td> <td>" + e.data + "</td></tr>" : ""
-                        }).join("");
-                        return !!o && $('<table class="table"/><tbody />').append(o)
-                    }
-                }
-            },
-            initComplete: function() {
-                this.api().columns(5).every(function() {
-                    var t = this,
-                        o = $('<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>').appendTo(".invoice_status").on("change", function() {
-                            var e = $.fn.dataTable.util.escapeRegex($(this).val());
-                            t.search(e ? "^" + e + "$" : "", !0, !1).draw()
-                        });
-                    t.data().unique().sort().each(function(e, t) {
-                        o.append('<option value="' + e + '" class="text-capitalize">' + e + "</option>")
-                    })
-                })
-            }
-        }), s.on("draw.dt", function() {
-            [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map(function(e) {
-                return new bootstrap.Tooltip(e, {
-                    boundary: document.body
-                })
-            })
-        }), setTimeout(() => {
-            $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(".dataTables_length .form-select").removeClass("form-select-sm")
-        }, 300)
-    }();
-
-
-    $((function() {
-        var a = $(".invoice-list-table");
-        if (a.length) var e = a.DataTable({
+        a = $(".invoice-list-table");
+        if (a.length) e = a.DataTable({
             ajax: assetsPath + "json/invoice-list.json",
             columns: [{
                 data: "no_lk"
@@ -1380,7 +1261,7 @@ $configData = Helper::appClasses();
                 data: "classification"
             }, {
                 data: "date"
-            }, {}, {
+            }, {
                 data: "action_plan"
             }, {
                 data: "status"
@@ -1501,6 +1382,11 @@ $configData = Helper::appClasses();
         })), setTimeout((() => {
             $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(".dataTables_length .form-select").removeClass("form-select-sm")
         }), 300)
+    }();
+
+
+    $((function() {
+
     }));
 </script>
 
