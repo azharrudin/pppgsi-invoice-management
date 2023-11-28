@@ -12,12 +12,12 @@
       "slug": "pages-invoice",
       "submenu": [
         {
-          "url": "/list-invoive",
+          "url": "invoice/list-invoice",
           "name": "List Invoice",
-          "slug": "pages-list-invoive"
+          "slug": "pages-list-invoice"
         },
         {
-          "url": "/invoice/tanda-terima",
+          "url": "invoice/tanda-terima",
           "name": "List Tanda Terima",
           "slug": "pages-list-tanda-terima"
         }
@@ -29,7 +29,7 @@
       "slug": "pages-complain",
       "submenu": [
         {
-          "url": "/list-ticket",
+          "url": "complain/list-ticket",
           "name": "List Ticket",
           "slug": "pages-list-ticket"
         },
@@ -56,7 +56,7 @@
           "slug": "pages-list-material-request"
         },
         {
-          "url": "/list-purchase-request",
+          "url": "request/list-purchase-request",
           "name": "List Purchase Request",
           "slug": "pages-purchase-request"
         },
@@ -73,7 +73,7 @@
       "slug": "pages-vendor",
       "submenu": [
         {
-          "url": "/list-tagihan-vendor",
+          "url": "vendor/list-tagihan-vendor",
           "name": "List Tagihan Vendor",
           "slug": "pages-list-tagihan-vendor"
         }
@@ -85,7 +85,7 @@
       "slug": "pages-client",
       "submenu": [
         {
-          "url": "/list-tenant",
+          "url": "client/list-tenant",
           "name": "List Tenant",
           "slug": "pages-list-tenant"
         },
@@ -102,17 +102,17 @@
       "slug": "pages-report",
       "submenu": [
         {
-          "url": "/report-invoice",
+          "url": "report/report-invoice",
           "name": "Report Invoice",
           "slug": "pages-report-invoice"
         },
         {
-          "url": "/report-tanda-terima",
+          "url": "report/report-tanda-terima",
           "name": "Report Tanda Terima",
           "slug": "pages-report-tenda-terima"
         },
         {
-          "url": "/report-tagihan",
+          "url": "report/report-tagihan",
           "name": "Report Tagihan",
           "slug": "pages-report-tagihan"
         }
@@ -124,17 +124,17 @@
       "slug": "pages-setting",
       "submenu": [
         {
-          "url": "/list-bank",
+          "url": "settings/list-bank",
           "name": "List Bank",
           "slug": "pages-list-bank"
         },
         {
-          "url": "/list-user",
+          "url": "settings/list-user",
           "name": "List User",
           "slug": "pages-list-user"
         },
         {
-          "url": "/tax-rates",
+          "url": "settings/tax-rates",
           "name": "Tax Rates",
           "slug": "pages-tax-rates"
         }
