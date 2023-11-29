@@ -81,28 +81,58 @@
         $((function() {
             var a = $(".invoice-list-table");
             if (a.length) var e = a.DataTable({
-                ajax: assetsPath + "json/invoice-list.json",
+                ajax: {
+                    url : baseUrl+"api/invoice"
+                },
                 columns: [{
                     data: "invoice_number",
-                    title: "No. Invoice"
+                    title: "No. Invoice",
+                    className: 'text-center'
                 }, {
                     data: "tenant_id",
                     title: "Tenant"
                 }, {
-                    data: "total",
+                    data: "grand_total",
                     title: "Total",
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                           return new Intl.NumberFormat("id-ID", {
+                            style: "currency",
+                            currency: "IDR"
+                        }).format(data)
+                    }
                 }, {
-                    data: "tanggal_tanda_terima",
-                    title: "Tanggal Invoice"
+                    data: "invoice_date",
+                    title: "Tanggal Invoice",
+                    className: 'text-center'
                 }, {
-                    data: "tanggal_tanda_terima",
-                    title: "Tanggal Jatuh Tempo"
+                    data: "invoice_due_date",
+                    title: "Tanggal Jatuh Tempo",
+                    className: 'text-center'
                 }, {
                     data: "status",
-                    title: "Status"
+                    title: "Status",
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        console.log(data);
+                        if (data == 'Terbuat') {
+                            return '<span class="badge" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
+                        }else if (data == 'Disetujui KA') {
+                            return '<span class="badge" style="background-color : #4EC0D9; " text-capitalized> Disetujui KA </span>';
+                        }else if (data == 'Lunas') {
+                            return '<span class="badge" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
+                        }else if (data == 'Terkirim') {
+                            return '<span class="badge" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
+                        }else if (data == 'Disetujui BM') {
+                            return '<span class="badge" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
+                        }else{
+                            return data;
+                        }
+                    }
                 }, {
-                    data: "tanggapan",
-                    title: "Tanggapan"
+                    data: null,
+                    title: "Tanggapan",
+                    className: 'text-center'
                 }],
                 columnDefs: [{
                     targets: -1,
@@ -118,7 +148,7 @@
                     }
                 }],
                 order: [
-                    [1, "desc"]
+                    [0, "desc"]
                 ],
                 dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                 language: {
