@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('tenant/select', [TenantController::class, "select"]);
 Route::resource('tenant', TenantController::class);
 
 Route::resource('bank', BankController::class);
