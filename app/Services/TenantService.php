@@ -19,10 +19,10 @@ class TenantService{
             "floor" => ["bail", "required", "string"],
         ];
         $errorMessages = [
-            "required" => "The :attribute field is required",
-            "string" => "The :attribute field must be string",
-            "email" => "The :attribute field must be written using valid email format",
-            "numeric" => "The :attribute field must be written using number",
+            "required" => "Field :attribute harus diisi",
+            "string" => "Field :attribute harus diisi dengan string",
+            "email" => "Field :attribute harus ditulis dengan format email yang valid",
+            "numeric" => "Field :attribute harus diisi dengan angka",
         ];
 
         $validator = Validator::make($request->all(), $rules, $errorMessages);

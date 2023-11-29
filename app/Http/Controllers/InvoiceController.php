@@ -9,6 +9,7 @@ use App\Models\Tenant;
 use App\Services\CommonService;
 use App\Services\InvoiceService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
@@ -78,6 +79,8 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
+
         try{
             $validateInvoice = $this->InvoiceService->validateInvoice($request);
             if($validateInvoice != "") throw new CustomException($validateInvoice, 400);
@@ -94,6 +97,7 @@ class InvoiceController extends Controller
                 ]);
             }
 
+            DB::commit();
             $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
                 ->with("bank")
@@ -105,6 +109,7 @@ class InvoiceController extends Controller
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
@@ -127,7 +132,7 @@ class InvoiceController extends Controller
                 with("bank")->
                 where("id", $id)->
                 where("deleted_at", null)->first();
-            if (is_null($getInvoice)) throw new CustomException("Invoice not found", 404);
+            if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
 
             return ["data" => $getInvoice];
         } catch (\Throwable $e) {
@@ -148,10 +153,12 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
+        DB::beginTransaction();
+
         try{
             $id = (int) $id;
             $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
-            if (is_null($getInvoice)) throw new CustomException("Invoice not found", 404);
+            if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
 
             $validateInvoice = $this->InvoiceService->validateInvoice($request);
             if($validateInvoice != "") throw new CustomException($validateInvoice, 400);
@@ -169,6 +176,7 @@ class InvoiceController extends Controller
                 ]);
             }
 
+            DB::commit();
             $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
                 ->with("bank")
@@ -180,6 +188,7 @@ class InvoiceController extends Controller
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
@@ -195,15 +204,67 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
+        DB::beginTransaction();
+
         try{
             $id = (int) $id;
             $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
-            if (is_null($getInvoice)) throw new CustomException("Invoice not found", 404);
+            if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
 
             Invoice::findOrFail($id)->delete();
             InvoiceDetail::where("invoice_id", $id)->where("deleted_at", null)->delete();
 
-            return response()->json(['message' => 'Invoice have been deleted'], 200);
+            DB::commit();
+            return response()->json(['message' => 'Invoice berhasil dihapus'], 200);
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+            DB::rollBack();
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
+
+    public function select(Request $request)
+    {
+        try{
+            [
+                "page" => $page,
+                "value" => $value
+            ] = $this->CommonService->getQuery($request);
+
+            $perPage = 10;
+
+            $invoiceQuery = Invoice::where("deleted_at", null);
+            if($value){
+                $invoiceQuery->where('invoice_number', 'like', '%' . $value . '%');
+            }
+            $getInvoices = $invoiceQuery->select("id", "invoice_number")->paginate($perPage);
+            $totalCount = $getInvoices->total();
+
+            $dataArr = [];
+            foreach($getInvoices as $invoiceObj){
+                $dataObj = [
+                    "id" => $invoiceObj->id,
+                    "text" => $invoiceObj->invoice_number,
+                ];
+                array_push($dataArr, $dataObj);
+            }
+
+            $pagination = ["more" => false];
+            if($totalCount > ($perPage * $page)) {
+                $pagination = ["more" => true];
+            }
+
+            return [
+                "data" => $dataArr,
+                "pagination" => $pagination,
+            ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;

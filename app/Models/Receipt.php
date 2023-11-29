@@ -28,6 +28,7 @@ class Receipt extends Model
         "check_number",
         "bank_id",
         "paid",
+        "remaining",
         "grand_total_spelled",
         "note",
         "signature_date",

@@ -3,21 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\CustomException;
-use App\Models\Bank;
-use App\Services\BankService;
+use App\Models\Ticket;
+use App\Models\TicketAttachment;
 use App\Services\CommonService;
+use App\Services\TicketService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class BankController extends Controller
+class TicketController extends Controller
 {
     protected $CommonService;
-    protected $BankService;
+    protected $TicketService;
 
-    public function __construct(CommonService $CommonService, BankService $bankService)
+    public function __construct(CommonService $CommonService, TicketService $TicketService)
     {
         $this->CommonService = $CommonService;
-        $this->BankService = $bankService;
+        $this->TicketService = $TicketService;
     }
 
     /**
@@ -34,19 +35,23 @@ class BankController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $bankQuery = Bank::where("deleted_at", null);
+            $ticketQuery = Ticket::with("ticketAttachments")->where("deleted_at", null);
             if($value){
-                $bankQuery->where(function ($query) use ($value) {
-                    $query->where('name', 'like', '%' . $value . '%');
+                $ticketQuery->where(function ($query) use ($value) {
+                    $query->where('id', 'like', '%' . $value . '%')
+                    ->orWhere('reporter_name', 'like', '%' . $value . '%')
+                    ->orWhere('reporter_company', 'like', '%' . $value . '%')
+                    ->orWhere('ticket_title', 'like', '%' . $value . '%')
+                    ->orWhere('status', 'like', '%' . $value . '%');
                 });
             }
-            $getBanks = $bankQuery->orderBy($order, $sort)->paginate($perPage);
-            $totalCount = $getBanks->total();
+            $getTickets = $ticketQuery->orderBy($order, $sort)->paginate($perPage);
+            $totalCount = $getTickets->total();
 
-            $bankArr = $this->CommonService->toArray($getBanks);
+            $ticketArr = $this->CommonService->toArray($getTickets);
 
             return [
-                "data" => $bankArr,
+                "data" => $ticketArr,
                 "per_page" => $perPage,
                 "page" => $page,
                 "size" => $totalCount,
@@ -73,13 +78,23 @@ class BankController extends Controller
         DB::beginTransaction();
 
         try{
-            $validateBank = $this->BankService->validateBank($request, true, "");
-            if($validateBank != "") throw new CustomException($validateBank, 400);
+            $validateTicket = $this->TicketService->validateTicket($request);
+            if($validateTicket != "") throw new CustomException($validateTicket, 400);
+
+            $saveTicket = Ticket::create($request->all());
+            if(!is_null($request->input("attachment"))){
+              foreach($request->input("attachment") as $attachment){
+                  TicketAttachment::create([
+                      "ticket_id" => $saveTicket->id,
+                      "attachment" => $attachment
+                  ]);
+              }
+            }
 
             DB::commit();
-            $bank = Bank::create($request->all());
+            $getTicket = Ticket::with("ticketAttachments")->where("id", $saveTicket->id)->where("deleted_at", null)->first();
 
-            return response()->json($bank, 201);
+            return ["data" => $getTicket];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
@@ -101,10 +116,10 @@ class BankController extends Controller
     {
         try{
             $id = (int) $id;
-            $getBank = $this->CommonService->getDataById("App\Models\Bank", $id);
-            if (is_null($getBank)) throw new CustomException("Bank tidak ditemukan", 404);
+            $getTicket = Ticket::with("ticketAttachments")->where("id", $id)->where("deleted_at", null)->first();
+            if (is_null($getTicket)) throw new CustomException("Ticket tidak ditemukan", 404);
 
-            return ["data" => $getBank];
+            return ["data" => $getTicket];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
@@ -127,18 +142,25 @@ class BankController extends Controller
 
         try{
             $id = (int) $id;
-            $getBank = $this->CommonService->getDataById("App\Models\Bank", $id);
-            if (is_null($getBank)) throw new CustomException("Bank tidak ditemukan", 404);
+            $ticketExist = $this->CommonService->getDataById("App\Models\Ticket", $id);
+            if (is_null($ticketExist)) throw new CustomException("Ticket tidak ditemukan", 404);
 
-            $validateBank = $this->BankService->validateBank($request, false, $id);
-            if($validateBank != "") throw new CustomException($validateBank, 400);
+            $validateTicket = $this->TicketService->validateTicket($request);
+            if($validateTicket != "") throw new CustomException($validateTicket, 400);
 
-            Bank::findOrFail($id)->update($request->all());
+            Ticket::findOrFail($id)->update($request->all());
+            TicketAttachment::where("ticket_id", $id)->where("deleted_at", null)->delete();
+            foreach($request->input("attachment") as $attachment){
+                TicketAttachment::create([
+                    "ticket_id" => $id,
+                    "attachment" => $attachment
+                ]);
+            }
+
             DB::commit();
+            $getTicket = Ticket::with("ticketAttachments")->where("id", $id)->where("deleted_at", null)->first();
 
-            $bank = Bank::where("id", $id)->first();
-
-            return response()->json($bank, 200);
+            return ["data" => $getTicket];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
@@ -162,13 +184,14 @@ class BankController extends Controller
 
         try{
             $id = (int) $id;
-            $getBank = $this->CommonService->getDataById("App\Models\Bank", $id);
-            if (is_null($getBank)) throw new CustomException("Bank tidak ditemukan", 404);
+            $ticketExist = $this->CommonService->getDataById("App\Models\Ticket", $id);
+            if (is_null($ticketExist)) throw new CustomException("Ticket tidak ditemukan", 404);
 
-            Bank::findOrFail($id)->delete();
+            Ticket::findOrFail($id)->delete();
+            TicketAttachment::where("ticket_id", $id)->where("deleted_at", null)->delete();
             DB::commit();
 
-            return response()->json(['message' => 'Bank berhasil dihapus'], 200);
+            return response()->json(['message' => 'Ticket berhasil dihapus'], 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;

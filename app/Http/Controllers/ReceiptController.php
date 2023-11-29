@@ -7,6 +7,7 @@ use App\Models\Receipt;
 use App\Services\CommonService;
 use App\Services\ReceiptService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReceiptController extends Controller
 {
@@ -76,11 +77,15 @@ class ReceiptController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
+
         try{
             $validateReceipt = $this->ReceiptService->validateReceipt($request);
             if($validateReceipt != "") throw new CustomException($validateReceipt, 400);
 
             $receipt = Receipt::create($request->all());
+            DB::commit();
+
             $getReceipt = Receipt::with("invoice")
                 ->with("tenant")
                 ->with("bank")
@@ -92,6 +97,7 @@ class ReceiptController extends Controller
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
@@ -114,7 +120,7 @@ class ReceiptController extends Controller
                 with("bank")->
                 where("id", $id)->
                 where("deleted_at", null)->first();
-            if (is_null($getReceipt)) throw new CustomException("Receipt not found", 404);
+            if (is_null($getReceipt)) throw new CustomException("Tanda terima tidak ditemukan", 404);
 
             return ["data" => $getReceipt];
         } catch (\Throwable $e) {
@@ -135,15 +141,19 @@ class ReceiptController extends Controller
      */
     public function update(Request $request, $id)
     {
+        DB::beginTransaction();
+
         try{
             $id = (int) $id;
             $receiptExist = $this->CommonService->getDataById("App\Models\Receipt", $id);
-            if(is_null($receiptExist)) throw new CustomException("Receipt not found", 404);
+            if(is_null($receiptExist)) throw new CustomException("Tanda terima tidak ditemukan", 404);
 
             $validateReceipt = $this->ReceiptService->validateReceipt($request);
             if($validateReceipt != "") throw new CustomException($validateReceipt, 400);
 
             Receipt::findOrFail($id)->update($request->all());
+            DB::commit();
+
             $getReceipt = Receipt::with("invoice")
                 ->with("tenant")
                 ->with("bank")
@@ -155,6 +165,7 @@ class ReceiptController extends Controller
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
@@ -170,17 +181,21 @@ class ReceiptController extends Controller
      */
     public function destroy($id)
     {
+        DB::beginTransaction();
+
         try{
             $id = (int) $id;
             $receiptExist = $this->CommonService->getDataById("App\Models\Receipt", $id);
-            if(is_null($receiptExist)) throw new CustomException("Receipt not found", 404);
+            if(is_null($receiptExist)) throw new CustomException("Tanda terima tidak ditemukan", 404);
 
             Receipt::findOrFail($id)->delete();
+            DB::commit();
 
-            return response()->json(['message' => 'Receipt have been deleted'], 200);
+            return response()->json(['message' => 'Tanda terima berhasil dihapus'], 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();

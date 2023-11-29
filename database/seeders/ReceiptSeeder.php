@@ -34,6 +34,7 @@ class ReceiptSeeder extends Seeder
                 "check_number" => "CHE/GIR/O/{$count}",
                 "bank_id" => $count,
                 "paid" => $grandTotal,
+                "remaining" => 0,
                 "grand_total_spelled" => $spelled[$i],
                 "note" => $faker->text,
                 "signature_date" => $startDate,
