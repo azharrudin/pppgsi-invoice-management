@@ -8,6 +8,7 @@ use App\Models\TicketAttachment;
 use App\Services\CommonService;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
@@ -74,6 +75,8 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
+
         try{
             $validateTicket = $this->TicketService->validateTicket($request);
             if($validateTicket != "") throw new CustomException($validateTicket, 400);
@@ -88,12 +91,14 @@ class TicketController extends Controller
               }
             }
 
+            DB::commit();
             $getTicket = Ticket::with("ticketAttachments")->where("id", $saveTicket->id)->where("deleted_at", null)->first();
 
             return ["data" => $getTicket];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
@@ -133,6 +138,8 @@ class TicketController extends Controller
      */
     public function update(Request $request, $id)
     {
+        DB::beginTransaction();
+
         try{
             $id = (int) $id;
             $ticketExist = $this->CommonService->getDataById("App\Models\Ticket", $id);
@@ -150,12 +157,14 @@ class TicketController extends Controller
                 ]);
             }
 
+            DB::commit();
             $getTicket = Ticket::with("ticketAttachments")->where("id", $id)->where("deleted_at", null)->first();
 
             return ["data" => $getTicket];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
@@ -171,6 +180,8 @@ class TicketController extends Controller
      */
     public function destroy($id)
     {
+        DB::beginTransaction();
+
         try{
             $id = (int) $id;
             $ticketExist = $this->CommonService->getDataById("App\Models\Ticket", $id);
@@ -178,11 +189,13 @@ class TicketController extends Controller
 
             Ticket::findOrFail($id)->delete();
             TicketAttachment::where("ticket_id", $id)->where("deleted_at", null)->delete();
+            DB::commit();
 
             return response()->json(['message' => 'Ticket berhasil dihapus'], 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();

@@ -9,6 +9,7 @@ use App\Models\Tenant;
 use App\Services\CommonService;
 use App\Services\InvoiceService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
@@ -78,6 +79,8 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
+
         try{
             $validateInvoice = $this->InvoiceService->validateInvoice($request);
             if($validateInvoice != "") throw new CustomException($validateInvoice, 400);
@@ -94,6 +97,7 @@ class InvoiceController extends Controller
                 ]);
             }
 
+            DB::commit();
             $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
                 ->with("bank")
@@ -105,6 +109,7 @@ class InvoiceController extends Controller
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
@@ -148,6 +153,8 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
+        DB::beginTransaction();
+
         try{
             $id = (int) $id;
             $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
@@ -169,6 +176,7 @@ class InvoiceController extends Controller
                 ]);
             }
 
+            DB::commit();
             $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
                 ->with("bank")
@@ -180,6 +188,7 @@ class InvoiceController extends Controller
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
@@ -195,6 +204,8 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
+        DB::beginTransaction();
+
         try{
             $id = (int) $id;
             $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
@@ -203,10 +214,12 @@ class InvoiceController extends Controller
             Invoice::findOrFail($id)->delete();
             InvoiceDetail::where("invoice_id", $id)->where("deleted_at", null)->delete();
 
+            DB::commit();
             return response()->json(['message' => 'Invoice berhasil dihapus'], 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();

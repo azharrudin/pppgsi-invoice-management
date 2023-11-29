@@ -7,6 +7,7 @@ use App\Models\Tenant;
 use App\Services\CommonService;
 use App\Services\TenantService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TenantController extends Controller
 {
@@ -73,16 +74,20 @@ class TenantController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
+
         try{
             $validateTenant = $this->TenantService->validateTenant($request);
             if($validateTenant != "") throw new CustomException($validateTenant, 400);
 
             $tenant = Tenant::create($request->all());
+            DB::commit();
 
             return response()->json($tenant, 201);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
@@ -122,6 +127,8 @@ class TenantController extends Controller
      */
     public function update(Request $request, $id)
     {
+      DB::beginTransaction();
+
         try{
             $id = (int) $id;
             $getTenant = $this->CommonService->getDataById("App\Models\Tenant", $id);
@@ -131,12 +138,15 @@ class TenantController extends Controller
             if($validateTenant != "") throw new CustomException($validateTenant, 400);
 
             $update = Tenant::findOrFail($id)->update($request->all());
+            DB::commit();
+
             $tenant = Tenant::where("id", $id)->first();
 
             return response()->json($tenant, 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
@@ -152,17 +162,21 @@ class TenantController extends Controller
      */
     public function destroy($id)
     {
+        DB::beginTransaction();
+
         try{
             $id = (int) $id;
             $getTenant = $this->CommonService->getDataById("App\Models\Tenant", $id);
             if (is_null($getTenant)) throw new CustomException("Tenant tidak ditemukan", 404);
 
             $deleteTenant = Tenant::findOrFail($id)->delete();
+            DB::commit();
 
             return response()->json(['message' => 'Tenant berhasil dihapus'], 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();

@@ -7,6 +7,7 @@ use App\Models\Bank;
 use App\Services\BankService;
 use App\Services\CommonService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BankController extends Controller
 {
@@ -69,16 +70,20 @@ class BankController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
+
         try{
             $validateBank = $this->BankService->validateBank($request, true, "");
             if($validateBank != "") throw new CustomException($validateBank, 400);
 
+            DB::commit();
             $bank = Bank::create($request->all());
 
             return response()->json($bank, 201);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
@@ -118,6 +123,8 @@ class BankController extends Controller
      */
     public function update(Request $request, $id)
     {
+        DB::beginTransaction();
+
         try{
             $id = (int) $id;
             $getBank = $this->CommonService->getDataById("App\Models\Bank", $id);
@@ -126,13 +133,16 @@ class BankController extends Controller
             $validateBank = $this->BankService->validateBank($request, false, $id);
             if($validateBank != "") throw new CustomException($validateBank, 400);
 
-            $update = Bank::findOrFail($id)->update($request->all());
+            Bank::findOrFail($id)->update($request->all());
+            DB::commit();
+
             $bank = Bank::where("id", $id)->first();
 
             return response()->json($bank, 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
@@ -148,17 +158,21 @@ class BankController extends Controller
      */
     public function destroy($id)
     {
+        DB::beginTransaction();
+
         try{
             $id = (int) $id;
             $getBank = $this->CommonService->getDataById("App\Models\Bank", $id);
             if (is_null($getBank)) throw new CustomException("Bank tidak ditemukan", 404);
 
-            $deleteBank = Bank::findOrFail($id)->delete();
+            Bank::findOrFail($id)->delete();
+            DB::commit();
 
             return response()->json(['message' => 'Bank berhasil dihapus'], 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();

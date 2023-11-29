@@ -9,6 +9,7 @@ use App\Models\DamageReportSignature;
 use App\Services\CommonService;
 use App\Services\DamageReportService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DamageReportController extends Controller
 {
@@ -79,6 +80,8 @@ class DamageReportController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
+
         try{
             $validateDamageReport = $this->DamageReportService->validateDamageReport($request);
             if($validateDamageReport != "") throw new CustomException($validateDamageReport, 400);
@@ -107,6 +110,7 @@ class DamageReportController extends Controller
               }
             }
 
+            DB::commit();
             $getDamageReport = DamageReport::with("damageReportDetails")->
                 with("damageReportSignatures")->
                 with("ticket")->
@@ -118,6 +122,7 @@ class DamageReportController extends Controller
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
@@ -161,6 +166,8 @@ class DamageReportController extends Controller
      */
     public function update(Request $request, $id)
     {
+        DB::beginTransaction();
+
         try{
             $id = (int) $id;
             $damageReportExist = $this->CommonService->getDataById("App\Models\DamageReport", $id);
@@ -196,6 +203,7 @@ class DamageReportController extends Controller
               }
             }
 
+            DB::commit();
             $getDamageReport = DamageReport::with("damageReportDetails")->
                 with("damageReportSignatures")->
                 with("ticket")->
@@ -207,6 +215,7 @@ class DamageReportController extends Controller
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
@@ -222,6 +231,8 @@ class DamageReportController extends Controller
      */
     public function destroy($id)
     {
+        DB::beginTransaction();
+
         try{
             $id = (int) $id;
             $damageReportExist = $this->CommonService->getDataById("App\Models\DamageReport", $id);
@@ -231,10 +242,12 @@ class DamageReportController extends Controller
             DamageReportDetail::where("damage_report_id", $id)->where("deleted_at", null)->delete();
             DamageReportSignature::where("damage_report_id", $id)->where("deleted_at", null)->delete();
 
+            DB::commit();
             return response()->json(['message' => 'Laporan kerusakan berhasil dihapus'], 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
