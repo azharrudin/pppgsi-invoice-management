@@ -26,6 +26,7 @@ return new class extends Migration
             $table->unsignedInteger("bank_id");
             $table->foreign('bank_id')->references('id')->on('banks');
             $table->unsignedInteger("paid");
+            $table->unsignedInteger("remaining");
             $table->string("grand_total_spelled");
             $table->text("note")->nullable();
             $table->date("signature_date");

@@ -29,6 +29,7 @@ class ReceiptService{
             "check_number" => ["bail", "required", "string"],
             "bank_id" => ["bail", "required", "numeric"],
             "paid" => ["bail", "required", "numeric", "gte:0"],
+            "remaining" => ["bail", "required", "numeric"],
             "grand_total_spelled" => ["bail", "required", "string"],
             "note" => ["bail", "nullable", "string"],
             "signature_date" => ["bail", "required", "date", "after_or_equal:today"],
