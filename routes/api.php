@@ -6,6 +6,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\WorkOrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,3 +38,5 @@ Route::resource('ticket', TicketController::class);
 
 Route::get("damage-report/select", [DamageReportController::class, "select"]);
 Route::resource('damage-report', DamageReportController::class);
+
+Route::resource('work-order', WorkOrderController::class);
