@@ -83,32 +83,25 @@
             if (a.length) var e = a.DataTable({
                 ajax: assetsPath + "json/invoice-list.json",
                 columns: [{
-                    data: "no_invoice",
-                    name: "no_invoice",
+                    data: "invoice_number",
                     title: "No. Invoice"
                 }, {
-                    data: "tenant",
-                    name: "tenant",
+                    data: "tenant_id",
                     title: "Tenant"
                 }, {
                     data: "total",
-                    name: "total",
                     title: "Total",
                 }, {
                     data: "tanggal_tanda_terima",
-                    name: "tanggal_tanda_terima",
                     title: "Tanggal Invoice"
                 }, {
                     data: "tanggal_tanda_terima",
-                    name: "tanggal_tanda_terima",
                     title: "Tanggal Jatuh Tempo"
                 }, {
                     data: "status",
-                    name: "status",
                     title: "Status"
                 }, {
                     data: "tanggapan",
-                    name: "tanggapan",
                     title: "Tanggapan"
                 }],
                 columnDefs: [{
