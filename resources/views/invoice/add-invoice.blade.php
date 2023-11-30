@@ -6,6 +6,11 @@
 
 @section('title', 'Invoice')
 
+@section('page-style')
+{{-- Page Css files --}}
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}">
+@endsection
+
 @section('content')
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -26,8 +31,8 @@
                                         <label for="select2Primary">Kepada Yth,</label>
                                     </div>
                                     <div class="col-8 fw-bold fs-5">
-                                        <select class="form-select w-px-250 item-details mb-3">
-                                            <option selected disabled>Nomor</option>
+                                        <select name="tenant" id="tenant" required class="form-select w-px-250 item-details mb-3">
+                                           
                                         </select>
                                     </div>
                                 </div>
@@ -252,8 +257,26 @@
 @endsection
 
 @section('page-script')
+<script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
     <script>
+
         $(document).ready(function() {
+            $("#tenant").select2({
+                placeholder: 'Jenis Spesifikasi',
+                allowClear: true,
+                ajax: {
+                    url: '{{url('/')}}'+'/api/tenant',
+                    dataType: 'json',
+                    cache: true,
+                    data: function(params) {
+                        console.log(params.data);
+                        return {
+                            term: params.term || '',
+                            page: params.page || 1
+                        }
+                    },
+                }
+            });
             $('.repeater').repeater({
 
             })
