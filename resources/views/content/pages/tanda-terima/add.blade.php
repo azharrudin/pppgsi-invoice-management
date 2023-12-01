@@ -48,8 +48,7 @@ $configData = Helper::appClasses();
                         <div class="col-md-6 mb-md-0 mb-3">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">No Invoice</label>
-                                <select class="form-select w-px-250 item-details mb-3">
-                                    <option selected disabled>Nomor</option>
+                                <select class="form-select w-px-250 item-details mb-3 no-invoice">
                                 </select>
                             </div>
                             <div class="mb-3">
