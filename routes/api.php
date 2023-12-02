@@ -3,6 +3,7 @@
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\DamageReportController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\MaterialRequestController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\TicketController;
@@ -44,3 +45,6 @@ Route::resource('damage-report', DamageReportController::class);
 Route::resource('work-order', WorkOrderController::class);
 
 Route::resource('vendor', VendorController::class);
+
+Route::get('material-request/select', [MaterialRequestController::class, "select"]);
+Route::resource('material-request', MaterialRequestController::class);
