@@ -22,7 +22,7 @@ class ReceiptService{
             "receipt_number" => ["bail", "required", "string"],
             "grand_total" => ["bail", "required", "numeric", "gte:0"],
             "receipt_date" => ["bail", "required", "date", "after_or_equal:today"],
-            "receipt_send_date" => ["bail", "required", "date", "after_or_equal:receipt_date"],
+            "receipt_send_date" => ["bail", "nullable", "date", "after_or_equal:receipt_date"],
             "tenant_id" => ["bail", "required", "numeric"],
             "invoice_id" => ["bail", "required", "numeric"],
             "status" => ["bail", "required", "string"],

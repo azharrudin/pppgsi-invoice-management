@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("receipt_number");
             $table->unsignedInteger("grand_total");
             $table->date("receipt_date");
-            $table->date("receipt_send_date");
+            $table->date("receipt_send_date")->nullable();
             $table->unsignedInteger("tenant_id");
             $table->foreign('tenant_id')->references('id')->on('tenants');
             $table->unsignedInteger("invoice_id");
