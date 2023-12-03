@@ -14,7 +14,7 @@ class InvoiceController extends Controller
     
     public function add()
     {
-        return view('invoice.add-invoice');
+        return view('invoice.add');
     }
 
     public function preview()
