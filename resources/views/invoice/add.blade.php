@@ -9,6 +9,7 @@ $configData = Helper::appClasses();
 @section('page-style')
 {{-- Page Css files --}}
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}">
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}">
 @endsection
 
 @section('content')
@@ -44,7 +45,7 @@ $configData = Helper::appClasses();
                                 </div>
                                 <div class="mb-3 mx-2">
                                     <label for="note" class="form-label fw-medium">Tgl. Invoice</label>
-                                    <input type="text" class="form-control w-px-150 " placeholder="" />
+                                    <input type="text" class="form-control w-px-150 date" placeholder="" id="flatpickr-date" />
                                 </div>
                                 <div class="mb-3 mx-2">
                                     <label for="note" class="form-label fw-medium">No. Kontrak</label>
@@ -52,7 +53,7 @@ $configData = Helper::appClasses();
                                 </div>
                                 <div class="mb-3 mx-2">
                                     <label for="note" class="form-label fw-medium">Tanggal</label>
-                                    <input type="text" class="form-control w-px-150 " placeholder="" />
+                                    <input type="text" class="form-control w-px-150 date" placeholder="" id="flatpickr-date" />
                                 </div>
                                 <div class="mb-3 mx-2">
                                     <label for="note" class="form-label fw-medium">No. Addendum</label>
@@ -60,7 +61,7 @@ $configData = Helper::appClasses();
                                 </div>
                                 <div class="mb-3 mx-2">
                                     <label for="note" class="form-label fw-medium">Tanggal</label>
-                                    <input type="text" class="form-control w-px-150 " placeholder="" />
+                                    <input type="text" class="form-control w-px-150 date" placeholder="" id="flatpickr-date" />
                                 </div>
                             </dd>
                         </div>
@@ -142,7 +143,7 @@ $configData = Helper::appClasses();
                         </div>
                         <div class="col-md-8 d-flex align-items-center">
                             <label for="note" class="form-label fw-medium me-2">Jatuh Tempo Tanggal :</label>
-                            <input type="date" class="form-control w-px-250 " placeholder="Date" />
+                            <input type="text" class="form-control w-px-250 date" placeholder="Date" id="flatpickr-date" />
                         </div>
                     </div>
 
@@ -157,7 +158,7 @@ $configData = Helper::appClasses();
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">Tanda Tangan & Meterai
                                     (Opsional)</label>
-                                <input type="date" class="form-control w-px-250 " placeholder="Tanggal" />
+                                <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="flatpickr-date" />
                             </div>
                             <div class="mb-3">
                                 <form action="/upload" class="dropzone needsclick dz-clickable w-px-250" id="dropzone-basic">
@@ -244,28 +245,42 @@ $configData = Helper::appClasses();
 
 @section('page-script')
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script>
     $(document).ready(function() {
+        $('.date').flatpickr({
+                dateFormat: 'd-m-Y'
+            });
+
         $("#tenant").select2({
+            placeholder: 'Select Tenant',
             allowClear: true,
             ajax: {
-                url: "{{url('api/tenant')}}",
+                url: "{{ url('api/tenant/select') }}",
                 dataType: 'json',
                 cache: true,
-                data: function(term) {
-
-                },
-                processResults: function(data) {
+                data: function(params) {
                     return {
-                        results: $.map(data.data, function(item) {
-                            return {
-                                text: item.name,
-                                id: item.id
-                            }
-                        })
+                        term: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
                     };
                 }
             }
+
         });
 
         $('#tenant').on("change", (async function(e) {
