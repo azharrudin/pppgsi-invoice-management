@@ -4,6 +4,7 @@ use App\Http\Controllers\BankController;
 use App\Http\Controllers\DamageReportController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\MaterialRequestController;
+use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\PurchaseRequestController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\TenantController;
@@ -51,3 +52,5 @@ Route::get('material-request/select', [MaterialRequestController::class, "select
 Route::resource('material-request', MaterialRequestController::class);
 
 Route::resource('purchase-request', PurchaseRequestController::class);
+
+Route::resource('purchase-order', PurchaseOrderController::class);
