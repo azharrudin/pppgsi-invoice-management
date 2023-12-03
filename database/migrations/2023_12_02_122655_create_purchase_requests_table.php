@@ -60,5 +60,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('purchase_requests');
+        Schema::dropIfExists('purchase_request_detail');
+        Schema::dropIfExists('purchase_request_signature');
     }
 };
