@@ -22,7 +22,7 @@ class DamageReportService{
             "damage_report_number" => ["bail", "required", "string"],
             "scope" => ["bail", "required", "string"],
             "classification" => ["bail", "required", "string"],
-            "damage_report_date" => ["bail", "required", "date", "after_or_equal:today"],
+            "damage_report_date" => ["bail", "required", "date"],
             "action_plan_date" => ["bail", "required", "date", "after_or_equal:damage_report_date"],
             "status" => ["bail", "required", "string"],
             "ticket_id" => ["bail", "required", "numeric"],
@@ -36,13 +36,12 @@ class DamageReportService{
             "signatures.*.type" => ["bail", "required", "string"],
             "signatures.*.name" => ["bail", "required", "string"],
             "signatures.*.signature" => ["bail", "required", "string"],
-            "signatures.*.date" => ["bail", "required", "string", "after_or_equal:today"],
+            "signatures.*.date" => ["bail", "required", "string"],
         ];
         $errorMessages = [
             "required" => "Field :attribute harus diisi",
             "string" => "Field :attribute harus diisi dengan string",
             "date" => "Field :attribute harus diisi dengan tanggal",
-            "after_or_equal" => "Field :attribute harus diisi dengan tanggal yang lebih besar atau sama dengan hari ini",
             "action_plan_date.after_or_equal" => "Field :attribute harus diisi dengan tanggal yang lebih besar atau sama dengan tanggal laporan kerusakan",
             "numeric" => "Field :attribute harus diisi dengan angka",
             "array" => "Field :attribute harus diisi dengan array",

@@ -21,7 +21,7 @@ class WorkOrderService{
         $rules = [
             "scope" => ["bail", "required", "string"],
             "classification" => ["bail", "required", "string"],
-            "work_order_date" => ["bail", "required", "date", "after_or_equal:today"],
+            "work_order_date" => ["bail", "required", "date"],
             "action_plan_date" => ["bail", "required", "date", "after_or_equal:work_order_date"],
             "status" => ["bail", "required", "string"],
             "damage_report_id" => ["bail", "required", "numeric"],
@@ -38,13 +38,12 @@ class WorkOrderService{
             "signatures" => ["bail", "nullable", "array"],
             "signatures.*.name" => ["bail", "required", "string"],
             "signatures.*.signature" => ["bail", "required", "string"],
-            "signatures.*.date" => ["bail", "required", "date", "after_or_equal:today"],
+            "signatures.*.date" => ["bail", "required", "date"],
         ];
         $errorMessages = [
             "required" => "Field :attribute harus diisi",
             "string" => "Field :attribute harus diisi dengan string",
             "date" => "Field :attribute harus diisi dengan tanggal",
-            "after_or_equal" => "Field :attribute harus diisi dengan tanggal yang lebih besar atau sama dengan hari ini",
             "action_plan_date.after_or_equal" => "Field :attribute harus diisi dengan tanggal yang lebih besar atau sama dengan tanggal laporan kerusakan",
             "finish_plan.after_or_equal" => "Field :attribute harus diisi dengan tanggal yang lebih besar atau sama dengan tanggal action plan",
             "numeric" => "Field :attribute harus diisi dengan angka",

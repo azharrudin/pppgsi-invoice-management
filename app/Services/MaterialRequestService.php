@@ -21,7 +21,7 @@ class MaterialRequestService{
         $rules = [
             "requester" => ["bail", "required", "string"],
             "department" => ["bail", "required", "string"],
-            "request_date" => ["bail", "required", "date", "after_or_equal:today"],
+            "request_date" => ["bail", "required", "date"],
             "status" => ["bail", "required", "string"],
             "stock" => ["bail", "nullable", "numeric"],
             "purchase" => ["bail", "nullable", "string"],
@@ -41,13 +41,12 @@ class MaterialRequestService{
             "signatures.*.type" => ["bail", "required", "string"],
             "signatures.*.name" => ["bail", "required", "string"],
             "signatures.*.signature" => ["bail", "required", "string"],
-            "signatures.*.date" => ["bail", "required", "date", "after_or_equal:today"],
+            "signatures.*.date" => ["bail", "required", "date"],
         ];
         $errorMessages = [
             "required" => "Field :attribute harus diisi",
             "string" => "Field :attribute harus diisi dengan string",
             "date" => "Field :attribute harus diisi dengan tanggal",
-            "after_or_equal" => "Field :attribute harus diisi dengan tanggal yang lebih besar atau sama dengan hari ini",
             "numeric" => "Field :attribute harus diisi dengan angka",
             "array" => "Field :attribute harus diisi dengan array",
         ];
