@@ -6,6 +6,12 @@
 
 @section('title', 'Invoice')
 
+@section('page-style')
+    {{-- Page Css files --}}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
+@endsection
+
 @section('content')
 
     <nav aria-label="breadcrumb">
@@ -76,22 +82,31 @@
 @endsection
 
 @section('page-script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script>
         "use strict";
         $((function() {
             var a = $(".invoice-list-table");
             if (a.length) var e = a.DataTable({
-                ajax: {
-                    url : baseUrl+"api/invoice"
-                },
+                ajax: "{{ url('api/invoice') }}",
                 columns: [{
+                    name: "invoice_number",
                     data: "invoice_number",
                     title: "No. Invoice",
-                    className: 'text-center'
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                           return data;
+                    }
                 }, {
-                    data: "tenant_id",
-                    title: "Tenant"
+                    name: "tenant",
+                    data: "tenant",
+                    title: "Tenant",
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                           return data.name;
+                    }
                 }, {
+                    name: "grand_total",
                     data: "grand_total",
                     title: "Total",
                     className: 'text-center',
@@ -102,15 +117,43 @@
                         }).format(data)
                     }
                 }, {
+                    name: "invoice_date",
                     data: "invoice_date",
                     title: "Tanggal Invoice",
-                    className: 'text-center'
+                    className: 'text-center',
+                    render: function(data, type, full, meta) {
+                        var tanggalAwal = data;
+
+                        var bagianTanggal = tanggalAwal.split('-');
+                        var tahun = bagianTanggal[0];
+                        var bulan = bagianTanggal[1];
+                        var hari = bagianTanggal[2];
+
+                        var tanggalHasil = hari + '/' + bulan + '/' + tahun;
+
+                        return tanggalHasil;
+                    }
                 }, {
+                    name: "invoice_due_date",
                     data: "invoice_due_date",
                     title: "Tanggal Jatuh Tempo",
-                    className: 'text-center'
+                    className: 'text-center',
+                    render: function(data, type, full, meta) {
+                        var tanggalAwal = data;
+
+                        var bagianTanggal = tanggalAwal.split('-');
+                        var tahun = bagianTanggal[0];
+                        var bulan = bagianTanggal[1];
+                        var hari = bagianTanggal[2];
+
+                        var tanggalHasil = hari + '/' + bulan + '/' + tahun;
+
+                        return tanggalHasil;
+                    }
                 }, {
+                    class: "text-center",
                     data: "status",
+                    name: "status",
                     title: "Status",
                     className: 'text-center',
                     render: function(data, type, row) {
@@ -125,75 +168,17 @@
                             return '<span class="badge" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
                         }else if (data == 'Disetujui BM') {
                             return '<span class="badge" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
-                        }else{
-                            return data;
                         }
                     }
                 }, {
-                    data: null,
+                    data: "tanggapan",
+                    name: "tanggapan",
                     title: "Tanggapan",
-                    className: 'text-center'
-                }],
-                columnDefs: [{
-                    targets: 0,
-                    render: function(a, e, t, s) {
-                        return ""
-                    }
-                }, {
-                    targets: 1,
-                    render: function(a, e, t, s) {
-                        var n = t.invoice_id;
-                        return '<a href="' + baseUrl + 'app/invoice/preview">#' + n +
-                            "</a>"
-                    }
-                }, {
-                    targets: 2,
-                    render: function(a, e, t, s) {
-                        var n = t.tenant;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {}, {
-                    targets: 3,
-                    render: function(a, e, t, s) {
-                        var n = t.total;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {
-                    targets: 4,
-                    render: function(a, e, t, s) {
-                        var n = new Date(t.tanggal_tanda_terima);
-                        return '<span class="d-none">' + moment(n).format("YYYYMMDD") +
-                            "</span>" + moment(n).format("DD MMM YYYY")
-                    }
-                }, {
-                    targets: 5,
-                    orderable: !1,
-                    render: function(a, e, t, s) {
-                        var n = t.status;
-                        if (0 === n) {
-                            return '<span class="badge bg-label-success" text-capitalized> Paid </span>'
-                        }
-                        return '<span class="d-none">' + n + "</span>" + n
-                    }
-                }, {
-                    targets: 6,
-                    visible: !1
-                }, {
-                    targets: -1,
-                    title: "Tanggapan",
-                    searchable: !1,
-                    orderable: !1,
                     render: function(data, type, row) {
-                        console.log(row);
+                        console.log(data);
                         let editRow = '';
                         let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
-                        let previewRow = '<a href="{{ url("invoice/preview-invoice")}}/'+data.id+'" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
-
-                        
-
-
-                        
-
+                        let previewRow = '<a href="{{ url("invoice/preview-invoice")}}/'+data+'" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
                         return `<div class="d-flex align-items-center">
                         `+sendMailRow+previewRow+`
                         <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="` +
@@ -202,7 +187,7 @@
                     }
                 }],
                 order: [
-                    [0, "desc"]
+                    [1, "desc"]
                 ],
                 dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                 language: {
@@ -211,10 +196,10 @@
                     searchPlaceholder: "Search Invoice"
                 },
                 buttons: [{
-                    text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Invoice</span>',
+                    text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tanda Terima</span>',
                     className: "btn btn-primary",
                     action: function(a, e, t, s) {
-                        window.location = '{{ route("pages-add-invoice") }}';
+                        window.location = baseUrl + "invoice/tanda-terima/add"
                     }
                 }],
                 responsive: {
@@ -237,15 +222,16 @@
                     }
                 },
                 initComplete: function() {
-                    this.api().columns(7).every((function() {
+                    this.api().columns(5).every((function() {
                         var a = this,
                             e = $(
                                 '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
-                            ).appendTo(".invoice_status").on("change", (
+                                ).appendTo(".invoice_status").on("change", (
                                 function() {
                                     var e = $.fn.dataTable.util.escapeRegex($(
                                         this).val());
-                                    a.search(e ? "^" + e + "$" : "", !0, !1)
+                                        console.log(e);
+                                    a.search(e)
                                         .draw()
                                 }));
                         a.data().unique().sort().each((function(a, t) {
@@ -271,5 +257,7 @@
             }), 300)
         }));
     </script>
+
+ 
 
 @endsection

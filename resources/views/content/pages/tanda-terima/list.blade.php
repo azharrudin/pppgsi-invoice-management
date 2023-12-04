@@ -14,9 +14,16 @@
 
 @section('content')
 
-    <h4 class="py-3 mb-4">
-        <span class="text-muted fw-light">Tanda Terima /</span> List
-    </h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-style1">
+            <li class="breadcrumb-item">
+                <a href="#">Tanda Terima</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="#">List</a>
+            </li>
+        </ol>
+    </nav>
 
     <!-- Invoice List Widget -->
 
@@ -31,19 +38,17 @@
                                 <p class="mb-0">Tenant</p>
                             </div>
                         </div>
-                        <hr class="d-none d-sm-block d-lg-none me-4">
                     </div>
                     <div class="col-sm-4 col-lg-4">
-                        <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
+                        <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                             <div>
                                 <h3 class="mb-1">50</h3>
                                 <p class="mb-0">Tanda Terima Terkirim</p>
                             </div>
                         </div>
-                        <hr class="d-none d-sm-block d-lg-none">
                     </div>
                     <div class="col-sm-4 col-lg-4">
-                        <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
+                        <div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
                             <div>
                                 <h3 class="mb-1">8</h3>
                                 <p class="mb-0">Tanda Terima Terkirim</p>
@@ -77,6 +82,10 @@
             if (a.length) var e = a.DataTable({
                 ajax: "{{ url('api/receipt') }}",
                 columns: [{
+                    class: "d-none",
+                    data: "created_at",
+                    name: "created_at"
+                }, {
                     class: "text-center",
                     data: "receipt_number",
                     name: "receipt_number",
@@ -90,7 +99,19 @@
                     class: "text-center",
                     data: "grand_total",
                     name: "grand_total",
-                    title: "Total"
+                    title: "Total",
+                    render: function(data, type, row) {
+                        // Check if it is of type 'display'
+                        if (type === 'display') {
+                            return 'Rp. ' + parseFloat(data).toLocaleString('en-US', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
+                            });
+                        }
+
+                        // For other types (sorting, filtering, etc.), return the original data
+                        return data;
+                    }
                 }, {
                     class: "text-center",
                     data: "receipt_date",
@@ -113,15 +134,19 @@
                     data: "status",
                     name: "status",
                     title: "Status",
-                    render: function (data, type, full, meta) {
+                    render: function(data, type, full, meta) {
                         if (data == "Disetujui KA") {
-                            return '<span class="badge  bg-label-success">' + data +'</span>'
+                            return '<span class="badge  bg-label-success">' + data +
+                                '</span>'
                         } else if (data == "Disetujui BM") {
-                            return '<span class="badge  bg-label-info">' + data +'</span>'
+                            return '<span class="badge  bg-label-info">' + data +
+                                '</span>'
                         } else if (data == "Terbuat") {
-                            return '<span class="badge  bg-label-secondary">' + data +'</span>'
+                            return '<span class="badge  bg-label-secondary">' + data +
+                                '</span>'
                         } else if (data == "Terkirim") {
-                            return '<span class="badge  bg-label-danger">' + data +'</span>'
+                            return '<span class="badge  bg-label-danger">' + data +
+                                '</span>'
                         }
                     }
                 }, {
@@ -137,7 +162,7 @@
                     }
                 }],
                 order: [
-                    [1, "desc"]
+                    [0, "desc"]
                 ],
                 dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                 language: {
@@ -176,7 +201,7 @@
                         var a = this,
                             e = $(
                                 '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
-                                ).appendTo(".invoice_status").on("change", (
+                            ).appendTo(".invoice_status").on("change", (
                                 function() {
                                     var e = $.fn.dataTable.util.escapeRegex($(
                                         this).val());
