@@ -32,7 +32,6 @@ $configData = Helper::appClasses();
                                 </div>
                                 <div class="col-8 fs-5">
                                     <select name="tenant" id="tenant" required class="form-select w-px-250 item-details mb-3">
-
                                     </select>
                                 </div>
                             </div>
@@ -41,27 +40,27 @@ $configData = Helper::appClasses();
                             <dd class="d-flex justify-content-md-end flex-wrap pe-0 ps-0 ps-sm-2">
                                 <div class="mb-3 mx-2">
                                     <label for="note" class="form-label fw-medium">No. Invoice</label>
-                                    <input type="text" class="form-control w-px-150 " placeholder="" />
+                                    <input type="text" class="form-control w-px-150 " id="invoice_number" placeholder="" />
                                 </div>
                                 <div class="mb-3 mx-2">
                                     <label for="note" class="form-label fw-medium">Tgl. Invoice</label>
-                                    <input type="text" class="form-control w-px-150 date" placeholder="" id="flatpickr-date" />
+                                    <input type="text" class="form-control w-px-150 date" id="tgl_invoice" placeholder="" id="flatpickr-date" />
                                 </div>
                                 <div class="mb-3 mx-2">
                                     <label for="note" class="form-label fw-medium">No. Kontrak</label>
-                                    <input type="text" class="form-control w-px-150 " placeholder="" />
+                                    <input type="text" class="form-control w-px-150" id="contract_number" placeholder="" />
                                 </div>
                                 <div class="mb-3 mx-2">
                                     <label for="note" class="form-label fw-medium">Tanggal</label>
-                                    <input type="text" class="form-control w-px-150 date" placeholder="" id="flatpickr-date" />
+                                    <input type="text" class="form-control w-px-150 date" id="contract_date" placeholder="" id="flatpickr-date" />
                                 </div>
                                 <div class="mb-3 mx-2">
                                     <label for="note" class="form-label fw-medium">No. Addendum</label>
-                                    <input type="text" class="form-control w-px-150 " placeholder="" />
+                                    <input type="text" class="form-control w-px-150" id="addendum_number" placeholder="" />
                                 </div>
                                 <div class="mb-3 mx-2">
                                     <label for="note" class="form-label fw-medium">Tanggal</label>
-                                    <input type="text" class="form-control w-px-150 date" placeholder="" id="flatpickr-date" />
+                                    <input type="text" class="form-control w-px-150 date" id="addendum_date" placeholder="" id="flatpickr-date" />
                                 </div>
                             </dd>
                         </div>
@@ -125,7 +124,7 @@ $configData = Helper::appClasses();
                                     <p>Total</p>
                                 </div>
                                 <div>
-                                    <p class="final-total">0.00</p>
+                                    <p class="grand_total">0.00</p>
                                 </div>
                             </div>
                             {{-- Divider --}}
@@ -139,26 +138,33 @@ $configData = Helper::appClasses();
                     <div class="col-md-12 mb-5">
                         <div class="col-md-12 mb-2">
                             <label for="note" class="form-label fw-medium">Terbilang</label>
-                            <input type="text" class="form-control w-full terbilang" placeholder="Terbilang" />
+                            <input type="text" class="form-control w-full terbilang" id="grand_total_spelled" placeholder="Terbilang" />
                         </div>
                         <div class="col-md-8 d-flex align-items-center">
                             <label for="note" class="form-label fw-medium me-2">Jatuh Tempo Tanggal :</label>
-                            <input type="text" class="form-control w-px-250 date" placeholder="Date" id="flatpickr-date" />
+                            <input type="text" class="form-control w-px-250 date" placeholder="Jatuh Tanggal Tempo" id="flatpickr-date" />
                         </div>
                     </div>
 
 
                     <div class="row">
                         <div class="col-md-6 mb-md-0 mb-3">
-                            <label for="note" class="form-label fw-medium me-2">Syarat & Ketentuan</label>
-                            <textarea class="form-control" rows="11" id="note" placeholder="Termin pembayaran, garansi dll"></textarea>
-                        </div>
+                            <div class="mb-3">
+                                <label for="note" class="form-label fw-medium me-2">Syarat & Ketentuan</label>
+                                <textarea class="form-control" rows="11" id="term_and_conditions" placeholder="Termin pembayaran, garansi dll"></textarea>
 
+                            </div>
+                            <div class="mb-3">
+                                <label for="note" class="form-label fw-medium me-2">Bank</label>
+                                <select name="bank" id="bank" required class="form-select w-px-250 item-details mb-3">
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">Tanda Tangan & Meterai
                                     (Opsional)</label>
-                                <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="flatpickr-date" />
+                                <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" />
                             </div>
                             <div class="mb-3">
                                 <form action="/upload" class="dropzone needsclick dz-clickable w-px-250" id="dropzone-basic">
@@ -168,7 +174,7 @@ $configData = Helper::appClasses();
                                 </form>
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control w-px-250 " placeholder="Nama & Jabatan" />
+                                <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" />
                             </div>
 
                         </div>
@@ -196,7 +202,7 @@ $configData = Helper::appClasses();
 
     <!-- Offcanvas -->
     <!-- Send Invoice Sidebar -->
-    <div class="offcanvas offcanvas-end" id="sendInvoiceOffcanvas" aria-hidden="true">
+    <!-- <div class="offcanvas offcanvas-end" id="sendInvoiceOffcanvas" aria-hidden="true">
         <div class="offcanvas-header my-1">
             <h5 class="offcanvas-title">Send Invoice</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -234,7 +240,7 @@ $configData = Helper::appClasses();
                 </div>
             </form>
         </div>
-    </div>
+    </div> -->
     <!-- /Send Invoice Sidebar -->
     <!-- /Offcanvas -->
 
@@ -248,9 +254,35 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script>
     $(document).ready(function() {
+        let ttdFile = null;
+        const myDropzone = new Dropzone('#dropzone-basic', {
+            parallelUploads: 1,
+            maxFilesize: 10,
+            addRemoveLinks: true,
+            maxFiles: 1,
+            acceptedFiles: ".jpeg,.jpg,.png,.gif",
+            autoQueue: false,
+            init: function() {
+                this.on('addedfile', function(file) {
+                    while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
+                    console.log(file);
+                    ttdFile = file;
+                })
+                // this.on("addedfile", function(file) {
+                //     console.log(file);
+                // });
+                // this.on("removedfile", function(file) {
+                //     console.log('cui');
+                // });
+                // this.on("maxfilesexceeded", function(file) {
+                //     alert("No more files please!");
+                //     this.removeFile(file); 
+                // });
+            }
+        });
         $('.date').flatpickr({
-                dateFormat: 'd-m-Y'
-            });
+            dateFormat: 'd-m-Y'
+        });
 
         $("#tenant").select2({
             placeholder: 'Select Tenant',
@@ -283,10 +315,48 @@ $configData = Helper::appClasses();
 
         });
 
+        $("#bank").select2({
+            placeholder: 'Select Bank',
+            allowClear: true,
+            ajax: {
+                url: "{{ url('api/bank/select') }}",
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        term: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+
+        });
+
+
         $('#tenant').on("change", (async function(e) {
             var rekomendasi = $("#tenant").select2('data');
             var data = rekomendasi[0].id;
             $('#tenant').val(data);
+
+        }));
+        $('#tenant').on("change", (async function(e) {
+            var rekomendasi = $("#tenant").select2('data');
+            var data = rekomendasi[0].id;
+            $('#bank').val(data);
 
         }));
 
@@ -302,6 +372,11 @@ $configData = Helper::appClasses();
             // Tambahkan baris baru ke dalam tabel
             $lastRow.after($newRow);
         });
+
+        function tenantTemplate(data) {
+            return data;
+        }
+
 
         $(document).on('click', '.btn-remove-mg', function() {
             // Hapus baris yang ditekan tombol hapus
@@ -332,7 +407,7 @@ $configData = Helper::appClasses();
             for (let i = 0; i < totalArr.length; i++) {
                 sum += totalArr[i];
             }
-            $('.final-total').text(rupiah(sum));
+            $('.grand_total').text(rupiah(sum));
             $('.terbilang').val(terbilang(sum));
 
 
@@ -429,12 +504,14 @@ $configData = Helper::appClasses();
             }).format(number);
         }
 
-
-
-
-
         $(document).on('click', '#preview', function(event) {
             event.preventDefault();
+            console.log(ttdFile);
+
+            let tenant = $("#tenant").val();
+            let noInvoice = $("#no_invoice").val();
+            let grandTotal = $(".grand_total").val();
+
             var detail = [];
             $('.row-input').each(function(index) {
                 var input_name = $(this).attr('name');
@@ -452,9 +529,16 @@ $configData = Helper::appClasses();
                     detail[input_index].tax = input_value;
                 } else if (index % 5 == 4) {
                     detail[input_index].total_price = input_value;
-                    console.log($(this));
                 }
+                console.log($('img[data-dz-thumbnail]').attr('src'));
             });
+
+
+            let data = {
+                invoice_number: noInvoice,
+            }
+
+
 
 
             console.log(detail);
