@@ -10,7 +10,11 @@
 <script src="{{ asset(mix('assets/vendor/js/menu.js')) }}"></script>
 <script src="{{ asset(mix('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')) }}"></script>
 <script src="{{ asset(mix('assets/vendor/libs/jquery-repeater/jquery-repeater.js')) }}"></script>
+<<<<<<< HEAD
 <script src="{{ asset(mix('assets/vendor/libs/dropzone/dropzone.js')) }}"></script>
+=======
+<script src="{{ asset(mix('assets/vendor/libs/sweetalert2/sweetalert2.js')) }}"></script>
+>>>>>>> f4c4e8a2fa871510a50cde3d0732eafea250a1f8
 
 @yield('vendor-script')
 <!-- END: Page Vendor JS-->
