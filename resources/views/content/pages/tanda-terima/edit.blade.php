@@ -17,9 +17,9 @@
     <div class="container-xxl flex-grow-1 container-p-y">
 
         <div class="row invoice-add">
-            <!-- Invoice Add-->
+            <!-- Tanda Terima Edit-->
             <div class="col-lg-9 col-12 mb-lg-0 mb-3">
-                <div class="card invoice-preview-card" id="addTandaTerima">
+                <div class="card invoice-preview-card" id="editTandaTerima">
                     <div class="card-body">
                         <div
                             style="background-image: url('{{ asset('assets/img/header.png') }}'); height : 150px; background-size: contain; background-repeat: no-repeat;">
@@ -125,10 +125,22 @@
                             <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Tanda Tangan</label>
-                                    <input type="text" class="form-control w-px-250 date" id="receipt_date"
-                                        name="receipt_date" placeholder="Tanggal" />
+                                    <input type="text" class="form-control w-px-250 date" id="signature_date"
+                                        name="signature_date" placeholder="Tanggal" />
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3 prev">
+                                    <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                        <div class="dz-details">
+                                            <div class="dz-thumbnail"> <img class="prev-img"
+                                                    alt="" src="">
+                                                <span class="dz-nopreview">No preview</span>
+                                                <div class="dz-success-mark"></div>
+                                            </div>
+                                        </div><a class="dz-remove" href="javascript:undefined;" data-dz-remove="">Remove
+                                            file</a>
+                                    </div>
+                                </div>
+                                <div class="mb-3 click" style="display: none">
                                     <form action="/upload" class="dropzone needsclick dz-clickable w-px-250"
                                         id="dropzone-basic">
                                         <div class="dz-message needsclick">
@@ -159,8 +171,9 @@
                         </button>
                         <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview"
                             class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
-                        <button type="button" class="btn btn-label-secondary btn-save d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                        <button type="button"
+                            class="btn btn-label-secondary btn-update d-grid w-100 mb-2">Update</button>
+                        <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
                     </div>
                 </div>
             </div>
@@ -236,16 +249,82 @@
                 dateFormat: 'd-m-Y'
             });
 
-            // Save, Insert, and Create
-            $(".btn-save").on('click', function() {
+            Swal.fire({
+                title: 'Loading...',
+                text: "Please wait",
+                customClass: {
+                    confirmButton: 'd-none'
+                },
+                buttonsStyling: false
+            });
+
+            // Mendapatkan id dengan cara mengambil dari URL
+            var urlSegments = window.location.pathname.split('/');
+            var idIndex = urlSegments.indexOf('edit') + 1;
+            var id = urlSegments[idIndex];
+
+            getDataTandaTerima(id);
+
+            function getDataTandaTerima() {
+                $.ajax({
+                    url: "{{ url('api/receipt') }}/" + id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(res) {
+                        let response = res.data;
+                        $('#editTandaTerima').find('.form-control').each(function() {
+                            $("#" + $(this).attr('id')).val(response[$(this).attr(
+                                "name")]);
+                        });
+                        $('#signature_date').val(moment(response.signature_date, 'YYYY-MM-DD').format(
+                            'DD-MM-YYYY'));
+                        $(".select-tenant").empty().append('<option value="' + response.tenant_id +
+                                '">' + response.tenant.name + '</option>').val(response.tenant_id)
+                            .trigger("change");
+                        $(".select-invoice").empty().append('<option value="' + response.invoice_id +
+                                '">' + response.invoice.invoice_number + '</option>').val(response
+                                .invoice_id)
+                            .trigger("change");
+                        $(".select-bank").empty().append('<option value="' + response.bank_id +
+                                '">' + response.bank.name + '</option>').val(response.bank_id)
+                            .trigger("change");
+                        if (response.signature_image != '') {
+                            $('.prev-img').attr('src', response.signature_image);
+                        } else {
+                            $('.dz-nopreview').css('display', 'block');
+                            $('.dz-success-mark').css('display', 'none');
+                        }
+                        Swal.close();
+                    },
+                    error: function(errors) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: errors.responseJSON
+                                .message,
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        })
+                    }
+                });
+            }
+
+            // Update, Insert, and Create
+            $(".btn-update").on('click', function() {
                 let invoice = $('.select-invoice').val();
                 let tenant = $('.select-tenant').val();
                 let bank = $('.select-bank').val();
                 let date = $('.date').val();
 
+                if (!$('.dz-thumbnail img[data-dz-thumbnail]').hasClass('prev-img')) {
+                    console.log($('img[data-dz-thumbnail]').attr('src'));
+                }
+
                 let datas = {}
 
-                $('#addTandaTerima').find('.form-control').each(function() {
+                $('#editTandaTerima').find('.form-control').each(function() {
                     var inputId = $(this).attr('id');
                     var inputValue = $("#" + inputId).val();
 
@@ -265,12 +344,14 @@
                 datas.bank_id = parseInt(bank);
                 datas.status = 'Terbuat';
                 datas.receipt_date = moment().format('YYYY-MM-DD');
-                datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
+                if (!$('img[data-dz-thumbnail]').hasClass('prev-img')) {
+                    datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
+                }
                 datas.signature_date = moment(date, 'D-M-YYYY').format('YYYY-MM-DD');
 
                 $.ajax({
-                    url: "{{ url('api/receipt') }}",
-                    type: "POST",
+                    url: "{{ url('api/receipt') }}/" + id,
+                    type: "PATCH",
                     data: JSON.stringify(datas),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -279,7 +360,7 @@
                             title: 'Loading...',
                             text: "Please wait",
                             customClass: {
-                                confirmButton: 'd-none'
+                                confirmButton: 'btn btn-primary'
                             },
                             buttonsStyling: false
                         });
@@ -287,7 +368,7 @@
                     success: function(response) {
                         Swal.fire({
                             title: 'Berhasil',
-                            text: 'Berhasil menambahkan Tanda Terima',
+                            text: 'Berhasil update Tanda Terima',
                             icon: 'success',
                             customClass: {
                                 confirmButton: 'btn btn-primary'
@@ -313,6 +394,28 @@
                         })
                     }
                 });
+            });
+
+            // Cancel
+            $(".btn-cancel").on('click', function() {
+                window.location.href = '{{ route('pages-list-tanda-terima') }}';
+            })
+
+            $('.dz-remove').on('click', function() {
+                // Find the <img> element
+                var imgElement = $('.prev-img');
+
+                // Check if the imgElement exists
+                if (imgElement.length > 0) {
+                    // Remove the 'src' attribute
+                    imgElement.removeAttr('src');
+
+                    // Add the desired class
+                    $('.prev').hide();
+                    $('.click').show();
+
+                    imgElement.addClass('dropzone needsclick dz-clickable');
+                }
             });
 
             // Select 2 ajax function
