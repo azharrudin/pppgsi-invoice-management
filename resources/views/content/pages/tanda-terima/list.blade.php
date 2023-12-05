@@ -199,7 +199,7 @@
                     }
                 },
                 initComplete: function() {
-                    this.api().columns(4).every((function() {
+                    this.api().columns(5).every((function() {
                         var a = this,
                             e = $(
                                 '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
