@@ -23,18 +23,19 @@ class DamageReportSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 12; $i++) {
             $count = $i + 1;
             $firstDate = $faker->dateTimeBetween('-2 week', '-1 week');
             $secondDate = $faker->dateTimeBetween('+1 week', '+2 week');
+            $dataIndex = $i % 5;
 
             DamageReport::create([
                 "damage_report_number" => "LK00{$count}",
-                "scope" => $scope[$i],
-                "classification" => $classification[$i],
+                "scope" => $scope[$dataIndex],
+                "classification" => $classification[$dataIndex],
                 "damage_report_date" => $firstDate,
                 "action_plan_date" => $secondDate,
-                "status" => $status[$i],
+                "status" => $status[$dataIndex],
                 "ticket_id" => $count,
                 'deleted_at' => null,
             ]);

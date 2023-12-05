@@ -15,7 +15,7 @@ class TenantsTableSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             Tenant::create([
                 'name' => $faker->name,
                 'email' => $faker->email,

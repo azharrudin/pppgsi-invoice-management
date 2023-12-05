@@ -22,10 +22,11 @@ class InvoicesTableSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 12; $i++) {
             $count = $i + 1;
             $grandTotal = $count * 100000;
             $startDate = $faker->dateTimeBetween('-2 week', '-1 week');
+            $dataIndex = $i % 5;
 
             Invoice::create([
                 "invoice_number" => "INV/2023/{$count}",
@@ -33,13 +34,13 @@ class InvoicesTableSeeder extends Seeder
                 "grand_total" => $grandTotal,
                 "invoice_date" => $startDate,
                 "invoice_due_date" => $faker->dateTimeBetween('+1 week', '+2 week'),
-                "status" => $status[$i],
+                "status" => $status[$dataIndex],
                 "opening_paragraph" => $faker->text,
                 "contract_number" => "Contr/act/{$count}",
                 "contract_date" => $startDate,
                 "addendum_number" => "Add/en/dum/{$count}",
                 "addendum_date" => $startDate,
-                "grand_total_spelled" => $spelled[$i],
+                "grand_total_spelled" => $spelled[$dataIndex],
                 "materai_date" => $startDate,
                 "materai_image" => "",
                 "materai_name" => $faker->name,
