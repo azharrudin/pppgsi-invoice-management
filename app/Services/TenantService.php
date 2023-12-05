@@ -17,6 +17,7 @@ class TenantService{
             "phone" => ["bail", "required", "numeric"],
             "company" => ["bail", "required", "string"],
             "floor" => ["bail", "required", "string"],
+            "status" => ["bail", "required", "string"],
         ];
         $errorMessages = [
             "required" => "Field :attribute harus diisi",
