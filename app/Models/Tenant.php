@@ -23,6 +23,7 @@ class Tenant extends Model
         'phone',
         'company',
         'floor',
+        'status',
         'created_at',
         'updated_at',
         'deleted_at',
