@@ -199,7 +199,7 @@
                     text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tanda Terima</span>',
                     className: "btn btn-primary",
                     action: function(a, e, t, s) {
-                        window.location = baseUrl + "invoice/tanda-terima/add"
+                        window.location ="{{url('invoice/add-invoice')}}"
                     }
                 }],
                 responsive: {
