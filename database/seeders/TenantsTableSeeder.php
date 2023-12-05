@@ -22,6 +22,7 @@ class TenantsTableSeeder extends Seeder
                 'phone' => "080000123{$i}",
                 'company' => $faker->company,
                 'floor' => "Lantai {$i}",
+                'status' => "Active",
                 'deleted_at' => null,
             ]);
         }
