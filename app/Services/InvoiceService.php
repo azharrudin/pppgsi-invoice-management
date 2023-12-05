@@ -22,20 +22,22 @@ class InvoiceService{
             "invoice_number" => ["bail", "required", "string"],
             "tenant_id" => ["bail", "required", "numeric"],
             "grand_total" => ["bail", "required", "numeric", "gte:0"],
-            "invoice_date" => ["bail", "required", "date", "after_or_equal:today"],
+            "invoice_date" => ["bail", "required", "date"],
             "invoice_due_date" => ["bail", "required", "date", "after_or_equal:invoice_date"],
             "status" => ["bail", "required", "string"],
             "opening_paragraph" => ["bail", "required", "string"],
             "contract_number" => ["bail", "required", "string"],
-            "contract_date" => ["bail", "required", "date", "after_or_equal:today"],
+            "contract_date" => ["bail", "required", "date"],
             "addendum_number" => ["bail", "required", "string"],
-            "addendum_date" => ["bail", "required", "date", "after_or_equal:today"],
+            "addendum_date" => ["bail", "required", "date"],
+
             "details" => ["bail", "required", "array"],
             "details.*.item" => ["bail", "required", "string"],
             "details.*.description" => ["bail", "required", "string"],
             "details.*.price" => ["bail", "required", "numeric"],
             "details.*.tax" => ["bail", "required", "numeric"],
             "details.*.total_price" => ["bail", "required", "numeric"],
+
             "grand_total_spelled" => ["bail", "required", "string"],
             "materai_date" => ["bail", "nullable", "date"],
             "materai_image" => ["bail", "nullable", "string"],
@@ -48,12 +50,9 @@ class InvoiceService{
             "string" => "Field :attribute harus diisi dengan string",
             "numeric" => "Field :attribute harus diisi dengan angka",
             "grand_total.gte" => "Field :attribute harus lebih besar dari sama dengan 0",
-            "invoice_date.after_or_equal" => "Field :attribute harus lebih dari atau sama dengan hari ini",
             "invoice_due_date.after_or_equal" => "Field :attribute harus lebih besar dari atau sama dengan invoice date",
             "date" => "Field :attribute harus diisi dengan tanggal",
             "array" => "Field :attribute harus diisi dengan array",
-            "contract_date.after_or_equal" => "Field :attribute harus lebih dari atau sama dengan hari ini",
-            "addendum_date.after_or_equal" => "Field :attribute harus lebih dari atau sama dengan hari ini",
         ];
 
         $validator = Validator::make($request->all(), $rules, $errorMessages);

@@ -21,7 +21,7 @@ class ReceiptService{
         $rules = [
             "receipt_number" => ["bail", "required", "string"],
             "grand_total" => ["bail", "required", "numeric", "gte:0"],
-            "receipt_date" => ["bail", "required", "date", "after_or_equal:today"],
+            "receipt_date" => ["bail", "required", "date"],
             "receipt_send_date" => ["bail", "nullable", "date", "after_or_equal:receipt_date"],
             "tenant_id" => ["bail", "required", "numeric"],
             "invoice_id" => ["bail", "required", "numeric"],
@@ -32,7 +32,7 @@ class ReceiptService{
             "remaining" => ["bail", "required", "numeric"],
             "grand_total_spelled" => ["bail", "required", "string"],
             "note" => ["bail", "nullable", "string"],
-            "signature_date" => ["bail", "required", "date", "after_or_equal:today"],
+            "signature_date" => ["bail", "required", "date"],
             "signature_image" => ["bail", "required", "string"],
             "signature_name" => ["bail", "required", "string"],
         ];
@@ -42,9 +42,7 @@ class ReceiptService{
             "numeric" => "Field :attribute harus diisi dengan angka",
             "gte" => "Field :attribute harus lebih besar dari sama dengan 0",
             "date" => "Field :attribute harus diisi dengan tanggal",
-            "receipt_date.after_or_equal" => "Field :attribute harus lebih dari atau sama dengan hari ini",
             "receipt_send_date.after_or_equal" => "Field :attribute harus lebih besar dari atau sama dengan receipt date",
-            "signature_date.after_or_equal" => "Field :attribute harus lebih dari atau sama dengan hari ini",
         ];
 
         $validator = Validator::make($request->all(), $rules, $errorMessages);
