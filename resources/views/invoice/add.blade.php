@@ -574,9 +574,6 @@ $configData = Helper::appClasses();
             );
         });
 
-
-
-
         $(document).on('click', '#preview', function(event) {
             event.preventDefault();
             let tenant = $("#tenant").val();
@@ -637,7 +634,6 @@ $configData = Helper::appClasses();
             localStorage.setItem("invoice", JSON.stringify(datas));
             console.log(localStorage.getItem("invoice"));
             window.location.href = "/invoice/preview-invoice"
-           
         });
     });
 </script>

@@ -47,7 +47,7 @@ $configData = Helper::appClasses();
                                     </div>
                                     <div class="mb-3 mx-2">
                                         <label for="note" class="form-label fw-medium">Tgl. Invoice</label>
-                                        <input type="text" class="form-control w-px-150 date" name="invoice_date" id="invoice_date" placeholder="" readonly/>
+                                        <input type="text" class="form-control w-px-150 date" name="invoice_date" id="invoice_date" placeholder="" readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="mb-3 mx-2">
@@ -225,7 +225,7 @@ $configData = Helper::appClasses();
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
     $(document).ready(function() {
-        let data =JSON.parse(localStorage.getItem("invoice"));
+        let data = JSON.parse(localStorage.getItem("invoice"));
         console.log(typeof(data));
         $("#invoice_number").val(data.invoice_number);
         $("#invoice_date").val(data.invoice_date);
@@ -239,73 +239,9 @@ $configData = Helper::appClasses();
         $("#term_and_conditions").val(data.term_and_conditions);
         $("#materai_date").val(data.materai_date);
         $("#materai_name").val(data.materai_name);
+        
 
 
-
-
-
-        $(document).on('click', '#preview', function(event) {
-            event.preventDefault();
-            let tenant = $("#tenant").val();
-            let noInvoice = $("#invoice_number").val();
-            let tglInvoice = $("#invoice_date").val();
-            let noKontrak = $("#contract_number").val();
-            let tglKontrak = $("#contract_date").val();
-            let noAddendum = $("#addendum_number").val();
-            let tglAddendum = $("#addendum_date").val();
-            let terbilang = $("#grand_total_spelled").val();
-            let grandTotal = $(".grand_total").val();
-            let tglJatuhTempo = $("#invoice_due_date").val();
-            let syaratDanKententuan = $("#term_and_conditions").val();
-            let bank = $("#bank").val();
-            let tglTtd = $("#materai_date").val();
-            let nameTtd = $("#materai_name").val();
-            let fileTtd = ttdFile;
-
-            var detail = [];
-            $('.row-input').each(function(index) {
-                var input_name = $(this).attr('name');
-                var input_value = $(this).val();
-                var input_index = Math.floor(index / 5); // Membagi setiap 5 input menjadi satu objek pada array
-                if (index % 5 == 0) {
-                    detail[input_index] = {
-                        item: input_value
-                    };
-                } else if (index % 5 == 1) {
-                    detail[input_index].description = input_value;
-                } else if (index % 5 == 2) {
-                    detail[input_index].price = input_value;
-                } else if (index % 5 == 3) {
-                    detail[input_index].tax = input_value;
-                } else if (index % 5 == 4) {
-                    detail[input_index].total_price = input_value;
-                }
-            });
-
-            let datas = {};
-            $('.create-invoice').find('.form-control').each(function() {
-                var inputId = $(this).attr('id');
-                var inputValue = $("#" + inputId).val();
-                datas[$("#" + inputId).attr("name")] = inputValue;
-            });
-
-            datas.details = detail;
-            datas.tenant_id = tenant;
-            datas.bank_id = bank;
-            datas.bank_id = bank;
-            datas.status = 'Terbuat';
-            datas.contract_date = tglKontrak
-            datas.opening_paragraph = "Bapak/Ibu Qwerty";
-            datas.invoice_due_date = tglJatuhTempo;
-            datas.addendum_date = tglAddendum;
-            datas.invoice_date = tglInvoice;
-            datas.grand_total = parseInt(grandTotal);
-
-            localStorage.setItem("invoice", JSON.stringify(datas));
-            console.log(localStorage.getItem("invoice"));
-            window.location.href = "/invoice/preview-invoice"
-
-        });
     });
 </script>
 @endsection

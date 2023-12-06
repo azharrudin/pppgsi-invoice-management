@@ -149,6 +149,7 @@ Route::prefix('settings')->group(function () {
     // Tax Rates
     Route::prefix('/tax-rates')->group(function () {
         Route::get('/', [TaxRatesController::class, 'index'])->name('pages-tax-rates');
+        Route::get('/add', [TaxRatesController::class, 'create'])->name('pages-create-tax-rates');
     });
 });
 
