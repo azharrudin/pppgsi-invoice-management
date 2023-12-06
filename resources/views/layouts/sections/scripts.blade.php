@@ -10,6 +10,10 @@
 <script src="{{ asset(mix('assets/vendor/js/menu.js')) }}"></script>
 <script src="{{ asset(mix('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')) }}"></script>
 <script src="{{ asset(mix('assets/vendor/libs/jquery-repeater/jquery-repeater.js')) }}"></script>
+<<<<<<< HEAD
+=======
+<script src="{{ asset(mix('assets/vendor/libs/sweetalert2/sweetalert2.js')) }}"></script>
+>>>>>>> 2585f6487b7b390fbc042fbee83d9999087ff43b
 <script src="{{ asset(mix('assets/vendor/libs/dropzone/dropzone.js')) }}"></script>
 
 @yield('vendor-script')

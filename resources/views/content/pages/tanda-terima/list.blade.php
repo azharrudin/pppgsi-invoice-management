@@ -150,20 +150,22 @@
                         }
                     }
                 }, {
-                    data: "tanggapan",
-                    name: "tanggapan",
+                    data: null,
                     title: "Tanggapan",
-                    render: function(a, e, t, s) {
+                    render: function(data, type, row) {
                         return '<div class="d-flex align-items-center"><a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a><a href="' +
                             baseUrl +
-                            'app/invoice/preview" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="' +
-                            baseUrl +
-                            'app/invoice/edit" class="dropdown-item">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>'
+                            'app/invoice/preview" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="tanda-terima/edit/' +
+                            data.id + '" class="dropdown-item btn-edit" data-id="' +
+                            data.id +
+                            '">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>'
                     }
                 }],
                 order: [
                     [0, "desc"]
                 ],
+                paging: true,
+                pageSize: 10,
                 dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                 language: {
                     sLengthMenu: "Show _MENU_",
@@ -197,7 +199,7 @@
                     }
                 },
                 initComplete: function() {
-                    this.api().columns(4).every((function() {
+                    this.api().columns(5).every((function() {
                         var a = this,
                             e = $(
                                 '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
@@ -229,6 +231,7 @@
                 $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(
                     ".dataTables_length .form-select").removeClass("form-select-sm")
             }), 300)
+            
         }));
     </script>
 

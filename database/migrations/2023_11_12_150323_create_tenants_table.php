@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("phone", 15);
             $table->string("company");
             $table->string("floor");
+            $table->string("status");
             $table->timestamps();
             $table->date("deleted_at")->nullable();
         });

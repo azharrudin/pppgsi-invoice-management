@@ -32,9 +32,20 @@ $configData = Helper::appClasses();
                                         <label for="select2Primary" class="form-label">Kepada Yth,</label>
                                     </div>
                                     <div class="col-8 fs-5">
-                                        <select name="tenant" id="tenant" name="tenant" class="w-px-250 item-details mb-3" required>
-                                        </select>
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                        <div class="form-label">
+                                            PT. Focus Media Indonesia <br>
+                                            The Capitil Building Lt.1 <br>
+                                            Jl. Letjen S. Parman Kav. 73 Slipi <br>
+                                            Jakarta Barat <br> <br>
+
+                                            Up. Bp. Chrissandy Dave Winata
+                                        </div>
+                                        <div class="d-none">
+                                            <select name="tenant" id="tenant" name="tenant" class="w-px-250 item-details mb-3" required>
+                                            </select>
+                                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +53,7 @@ $configData = Helper::appClasses();
                                 <dd class="d-flex justify-content-md-end flex-wrap pe-0 ps-0 ps-sm-2">
                                     <div class="mb-3 mx-2">
                                         <label for="note" class="form-label fw-medium">No. Invoice</label>
-                                        <input type="text" class="form-control w-px-150" name="invoice_number" id="invoice_number" placeholder="" readonly />
+                                        <input type="text" class="form-control w-px-150" name="invoice_number" id="invoice_number" placeholder="" readonly disabled />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="mb-3 mx-2">
@@ -75,7 +86,7 @@ $configData = Helper::appClasses();
                         </div>
 
                         {{-- Repeater --}}
-                        <div class="repeater">
+                        <div class="repeater d-none">
                             <div class="" data-repeater-list="group-a">
                                 <div class="row-mg">
                                     <div class="col-12 d-flex align-items-center justify-content-between">
@@ -118,12 +129,12 @@ $configData = Helper::appClasses();
                         </div>
 
                         {{-- Divider --}}
-                        <div class="px-5">
+                        <div class="px-5 d-none">
                             <hr class="my-3 mx-n5">
                         </div>
 
                         {{-- Total --}}
-                        <div class="col-md-12 d-flex float-end px-5 mb-5">
+                        <div class="col-md-12 d-flex float-end px-5 mb-5 d-none">
                             <div class="col-6"></div>
                             <div class="col-6">
                                 {{-- Total --}}
@@ -142,7 +153,7 @@ $configData = Helper::appClasses();
                             </div>
                         </div>
 
-                        <div class="col-md-12 mb-5">
+                        <div class="col-md-12 mb-5 d-none">
                             <div class="col-md-12 mb-2">
                                 <label for="note" class="form-label fw-medium">Terbilang</label>
                                 <input type="text" class="form-control w-full terbilang" id="grand_total_spelled" name="grand_total_spelled" placeholder="Terbilang" disabled />
@@ -152,25 +163,109 @@ $configData = Helper::appClasses();
                                 <input type="text" class="form-control w-px-250 date" placeholder="Jatuh Tanggal Tempo" id="invoice_due_date" name="invoice_due_date" />
                             </div>
                         </div>
+                        <div class="row my-3 form-label">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Uraian</th>
+                                            <th>Keterangan</th>
+                                            <th>Dasar Pengenaan Pajak</th>
+                                            <th>Pajak</th>
+                                            <th>Total (Rp.).</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        <tr>
+                                            <td class="text-nowrap">Vuexy Admin Template</td>
+                                            <td class="text-nowrap">HTML Admin Template</td>
+                                            <td>$32</td>
+                                            <td>1</td>
+                                            <td>$32.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap">Frest Admin Template</td>
+                                            <td class="text-nowrap">Angular Admin Template</td>
+                                            <td>$22</td>
+                                            <td>1</td>
+                                            <td>$22.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap">Apex Admin Template</td>
+                                            <td class="text-nowrap">HTML Admin Template</td>
+                                            <td>$17</td>
+                                            <td>2</td>
+                                            <td>$34.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap">Robust Admin Template</td>
+                                            <td class="text-nowrap">React Admin Template</td>
+                                            <td>$66</td>
+                                            <td>1</td>
+                                            <td>$66.00</td>
+                                        </tr>
+                                        <tr>
+                                            <!-- <td colspan="" class="align-top px-4 py-4">
+                                                
+                                            </td> -->
+                                            <td colspan="2"></td>
+                                            <td class="">
+                                                <p class="mb-0 pb-3">Total:</p>
+                                            </td>
+                                            <td colspan="2">
+                                                <p class="fw-medium mb-0 pb-3">$204.25</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">Terbilang</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">Sepuluh Juta Dua Ratus Ribu Dua Puluh Dua Ribu Dua Ratus satu Rupiah</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">
+                                                <span>Jatuh Tempo Tanggal : </span> <span>21/09/2023</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
 
-                        <div class="row">
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row m-sm-2 m-0 ">
                             <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-3">
-                                    <label for="note" class="form-label fw-medium me-2">Syarat & Ketentuan</label>
-                                    <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll"></textarea>
+                                    <label for="note" class="form-label me-2">Syarat & Ketentuan</label>
+                                    <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll" hidden></textarea>
+                                    <br>
+                                    <div class="form-label">
+                                        Jika telah melakukan pembayaran mohon untuk konfirmasi bukti pembayaran melalui fax (021) 5265239 atau melalui email nidhaamoy@gmail.com, haqqani_ani@yahoo.com atau dinalestariekaputri@gmail.com
+                                    </div>
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="note" class="form-label fw-medium me-2">Bank</label>
-                                    <select name="bank" id="bank" name="bank" class="form-select w-px-250 item-details mb-3">
+                                    <label for="note" class="form-label me-2">Transfer Bank :</label>
+                                    <select name="bank" id="bank" name="bank" class="form-select w-px-250 item-details mb-3" hidden>
                                     </select>
+                                    <br>
+                                    <div class="form-label">
+                                        <span class="fw-bold">PPPGSI</span><br>
+                                        <span class="fw-bold">BANK MANDIRI</span><br>
+                                        <span>CABANG JAKARTA KRAKATAU STEEL</span><br>
+                                        <span>Account No. 070.000.713846-9</span>
+                                    </div>
+
+
                                 </div>
                             </div>
                             <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
                                 <div class="mb-3">
-                                    <label for="note" class="form-label fw-medium">Tanda Tangan & Meterai
+                                    <label for="note" class="form-label">Tanda Tangan & Meterai
                                         (Opsional)</label>
-                                    <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" name="materai_date" required />
+                                    <p class="form-label">25 September 2023</p>
                                 </div>
                                 <div class="mb-3">
                                     <div action="/upload" class="dropzone needsclick dz-clickable w-px-250" id="dropzone-basic">
@@ -180,7 +275,7 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" required />
+                                   <p class="form-label">Dina - Manager Operasional</p>
                                 </div>
                             </div>
                         </div>
@@ -239,7 +334,7 @@ $configData = Helper::appClasses();
         $("#term_and_conditions").val(data.term_and_conditions);
         $("#materai_date").val(data.materai_date);
         $("#materai_name").val(data.materai_name);
-        
+
 
 
     });

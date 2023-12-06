@@ -157,7 +157,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium me-2">Syarat & Ketentuan</label>
-                                    <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll"></textarea>
+                                    <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll" required></textarea>
 
                                 </div>
                                 <div class="mb-3">
