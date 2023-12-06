@@ -33,12 +33,9 @@ $configData = Helper::appClasses();
                                     </div>
                                     <div class="col-8 fs-5">
                                         <div class="form-label">
-                                            PT. Focus Media Indonesia <br>
-                                            The Capitil Building Lt.1 <br>
-                                            Jl. Letjen S. Parman Kav. 73 Slipi <br>
-                                            Jakarta Barat <br> <br>
-
-                                            Up. Bp. Chrissandy Dave Winata
+                                            <span id="company"></span><br>
+                                            <span id="floor"></span><br><br>
+                                            <span id="name_tenant"></span>
                                         </div>
                                         <div class="d-none">
                                             <select name="tenant" id="tenant" name="tenant" class="w-px-250 item-details mb-3" required>
@@ -85,7 +82,7 @@ $configData = Helper::appClasses();
                             </div>
                         </div>
 
-                        {{-- Repeater --}}
+                        <!-- {{-- Repeater --}}
                         <div class="repeater d-none">
                             <div class="" data-repeater-list="group-a">
                                 <div class="row-mg">
@@ -162,7 +159,7 @@ $configData = Helper::appClasses();
                                 <label for="note" class="form-label fw-medium me-2">Jatuh Tempo Tanggal :</label>
                                 <input type="text" class="form-control w-px-250 date" placeholder="Jatuh Tanggal Tempo" id="invoice_due_date" name="invoice_due_date" />
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row my-3 form-label">
                             <div class="table-responsive">
                                 <table class="table">
@@ -175,56 +172,26 @@ $configData = Helper::appClasses();
                                             <th>Total (Rp.).</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-border-bottom-0">
+                                    <tbody class="table-border-bottom-0" id="details">
+                                       
                                         <tr>
-                                            <td class="text-nowrap">Vuexy Admin Template</td>
-                                            <td class="text-nowrap">HTML Admin Template</td>
-                                            <td>$32</td>
-                                            <td>1</td>
-                                            <td>$32.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-nowrap">Frest Admin Template</td>
-                                            <td class="text-nowrap">Angular Admin Template</td>
-                                            <td>$22</td>
-                                            <td>1</td>
-                                            <td>$22.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-nowrap">Apex Admin Template</td>
-                                            <td class="text-nowrap">HTML Admin Template</td>
-                                            <td>$17</td>
-                                            <td>2</td>
-                                            <td>$34.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-nowrap">Robust Admin Template</td>
-                                            <td class="text-nowrap">React Admin Template</td>
-                                            <td>$66</td>
-                                            <td>1</td>
-                                            <td>$66.00</td>
-                                        </tr>
-                                        <tr>
-                                            <!-- <td colspan="" class="align-top px-4 py-4">
-                                                
-                                            </td> -->
                                             <td colspan="2"></td>
                                             <td class="">
-                                                <p class="mb-0 pb-3">Total:</p>
+                                                <p class="">Total:</p>
                                             </td>
                                             <td colspan="2">
-                                                <p class="fw-medium mb-0 pb-3">$204.25</p>
+                                                <p id="grand_total"></p>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="5">Terbilang</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5">Sepuluh Juta Dua Ratus Ribu Dua Puluh Dua Ribu Dua Ratus satu Rupiah</td>
+                                            <td colspan="5" id="grand_total_spelled"></td>
                                         </tr>
                                         <tr>
                                             <td colspan="5">
-                                                <span>Jatuh Tempo Tanggal : </span> <span>21/09/2023</span>
+                                                <span>Jatuh Tempo Tanggal : </span> <span id="invoice_due_date"></span>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -239,10 +206,8 @@ $configData = Helper::appClasses();
                             <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-3">
                                     <label for="note" class="form-label me-2">Syarat & Ketentuan</label>
-                                    <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll" hidden></textarea>
                                     <br>
-                                    <div class="form-label">
-                                        Jika telah melakukan pembayaran mohon untuk konfirmasi bukti pembayaran melalui fax (021) 5265239 atau melalui email nidhaamoy@gmail.com, haqqani_ani@yahoo.com atau dinalestariekaputri@gmail.com
+                                    <div class="form-label" id="term_and_conditions">
                                     </div>
 
                                 </div>
@@ -265,7 +230,7 @@ $configData = Helper::appClasses();
                                 <div class="mb-3">
                                     <label for="note" class="form-label">Tanda Tangan & Meterai
                                         (Opsional)</label>
-                                    <p class="form-label">25 September 2023</p>
+                                    <p class="form-label" id="materai_date">25 September 2023</p>
                                 </div>
                                 <div class="mb-3">
                                     <div action="/upload" class="dropzone needsclick dz-clickable w-px-250" id="dropzone-basic">
@@ -275,7 +240,7 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                   <p class="form-label">Dina - Manager Operasional</p>
+                                    <p class="form-label" id="materai_name">Dina - Manager Operasional</p>
                                 </div>
                             </div>
                         </div>
@@ -319,24 +284,63 @@ $configData = Helper::appClasses();
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
+
+    let data = JSON.parse(localStorage.getItem("invoice"));
     $(document).ready(function() {
-        let data = JSON.parse(localStorage.getItem("invoice"));
-        console.log(typeof(data));
         $("#invoice_number").val(data.invoice_number);
         $("#invoice_date").val(data.invoice_date);
         $("#contract_number").val(data.contract_number);
         $("#contract_date").val(data.contract_date);
         $("#addendum_number").val(data.addendum_number);
         $("#addendum_date").val(data.addendum_date);
-        $("#grand_total_spelled").val(data.grand_total_spelled);
-        $(".grand_total").val(data.grand_total);
-        $("#invoice_due_date").val(data.invoice_due_date);
-        $("#term_and_conditions").val(data.term_and_conditions);
-        $("#materai_date").val(data.materai_date);
-        $("#materai_name").val(data.materai_name);
-
-
-
+        $("#grand_total_spelled").text(data.grand_total_spelled);
+        $("#grand_total").val(data.grand_total);
+        $("#invoice_due_date").text(data.invoice_due_date);
+        $("#term_and_conditions").text(data.term_and_conditions);
+        $("#materai_date").text(data.materai_date);
+        $("#materai_name").text(data.materai_name);
+        getTenant();
+        getDetails();
     });
+
+    function getTenant() {
+        let idTenant = data.tenant_id;
+        $.ajax({
+            url: "{{url('api/tenant')}}/" + idTenant,
+            type: "GET",
+            success: function(response) {
+                let data = response.data;
+                console.log(data);
+                $("#company").text(data.company);
+                $("#floor").text(data.floor);
+                $("#name_tenant").text(data.name);
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function getDetails() {
+        console.log(data.details[0].item);
+        let details = data.details;
+        let getDetail = '';
+        let tem = '';
+        for (let i = 0; i < details.length; i++) {
+            tem = `<tr>
+                        <td class="text-nowrap">`+details[i].item+`</td>
+                        <td class="text-nowrap">`+details[i].description+`</td>
+                        <td>`+details[i].price+`</td>
+                        <td>`+details[i].tax+`</td>
+                        <td>`+details[i].total_price+`</td>
+                    </tr>
+            `;
+            getDetail = getDetail + tem;
+        }
+
+        $('#details').prepend(getDetail);
+        console.log(getDetail);
+
+    }
 </script>
 @endsection
