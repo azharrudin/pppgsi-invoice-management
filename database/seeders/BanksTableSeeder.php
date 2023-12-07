@@ -15,7 +15,7 @@ class BanksTableSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             Bank::create([
                 'name' => "Bank {$faker->colorName}",
                 'deleted_at' => null,

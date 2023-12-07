@@ -23,29 +23,30 @@ class WorkOrderSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 12; $i++) {
             $count = $i + 1;
             $firstDate = $faker->dateTimeBetween('-2 week', '-1 week');
             $secondDate = $faker->dateTimeBetween('+1 week', '+2 week');
             $thirdDate = $faker->dateTimeBetween('+2 week', '+3 week');
+            $dataIndex = $i % 5;
 
             WorkOrder::create([
-                "scope" => $scope[$i],
-                "classification" => $classification[$i],
+                "scope" => $scope[$dataIndex],
+                "classification" => $classification[$dataIndex],
                 "work_order_date" => $firstDate,
                 "action_plan_date" => $secondDate,
-                "status" => $status[$i],
+                "status" => $status[$dataIndex],
                 "damage_report_id" => $count,
                 "finish_plan" => $thirdDate,
                 "job_description" => $faker->text,
-                "klasifikasi" => $klasifikasi[$i],
+                "klasifikasi" => $klasifikasi[$dataIndex],
                 'deleted_at' => null,
             ]);
 
             for($j = 0; $j < 2; $j++){
                 WorkOrderDetail::create([
                     "work_order_id" => $count,
-                    "location" => "Lokasi {$i}",
+                    "location" => "Lokasi {$dataIndex}",
                     "material_request" => "Material {$count}",
                     "type" => "Tipe {$count}",
                     "quantity" => ($i + $j),

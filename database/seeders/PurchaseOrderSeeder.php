@@ -20,12 +20,13 @@ class PurchaseOrderSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 12; $i++) {
             $count = $i + 1;
             $firstDate = $faker->dateTimeBetween('-2 week', '-1 week');
             $grandTotal = $count * 100000000;
             $tax = $grandTotal / 10;
             $subtotal = $grandTotal - $tax;
+            $dataIndex = $i % 5;
 
             PurchaseOrder::create([
                 "purchase_order_number" => "PURCHASE/ORD/ER/{$count}",
@@ -33,12 +34,12 @@ class PurchaseOrderSeeder extends Seeder
                 "about" => $faker->colorName,
                 "grand_total" => $grandTotal,
                 "purchase_order_date" => $firstDate,
-                "status" => $status[$i],
+                "status" => $status[$dataIndex],
                 "tenant_id" => $count,
                 "note" => $faker->text,
                 "subtotal" => $subtotal,
                 "tax" => $tax,
-                "grand_total_spelled" => $grandTotalSpelled[$i],
+                "grand_total_spelled" => $grandTotalSpelled[$dataIndex],
                 "term_and_conditions" => $faker->text,
                 "signature" => $image,
                 "signature_name" => $faker->name,

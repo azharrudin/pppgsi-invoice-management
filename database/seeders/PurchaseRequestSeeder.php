@@ -27,13 +27,14 @@ class PurchaseRequestSeeder extends Seeder
             $firstDate = $faker->dateTimeBetween('-2 week', '-1 week');
             $totalBudget = 1000000;
             $proposedPurchasePrice = $count * 100000;
+            $dataIndex = $i % 5;
 
             PurchaseRequest::create([
                 "department" => "Department {$count}",
                 "proposed_purchase_price" => $proposedPurchasePrice,
-                "budget_status" => $budgetStatus[$i],
+                "budget_status" => $budgetStatus[$dataIndex],
                 "request_date" => $firstDate,
-                "status" => $status[$i],
+                "status" => $status[$dataIndex],
                 "requester" => $faker->name,
                 "total_budget" => $totalBudget,
                 "remaining_budget" => ($totalBudget - $proposedPurchasePrice),

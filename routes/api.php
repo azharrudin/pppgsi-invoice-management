@@ -9,6 +9,7 @@ use App\Http\Controllers\PurchaseRequestController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WorkOrderController;
 use Illuminate\Http\Request;
@@ -55,3 +56,6 @@ Route::resource('material-request', MaterialRequestController::class);
 Route::resource('purchase-request', PurchaseRequestController::class);
 
 Route::resource('purchase-order', PurchaseOrderController::class);
+
+Route::post('user/login', [UserController::class, "login"]);
+Route::resource('user', UserController::class);

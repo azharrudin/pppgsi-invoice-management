@@ -19,16 +19,17 @@ class TicketSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 12; $i++) {
             $count = $i + 1;
+            $dataIndex = $i % 5;
 
             Ticket::create([
                 "reporter_name" => $faker->name,
-                "reporter_phone" => "080000123{$i}",
+                "reporter_phone" => "080000123{$dataIndex}",
                 "reporter_company" => $faker->company,
-                "ticket_title" => $ticketTitle[$i],
+                "ticket_title" => $ticketTitle[$dataIndex],
                 "ticket_body" => $faker->text,
-                "status" => $status[$i],
+                "status" => $status[$dataIndex],
                 'deleted_at' => null,
             ]);
 
