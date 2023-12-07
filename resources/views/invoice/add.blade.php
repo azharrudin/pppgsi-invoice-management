@@ -199,7 +199,7 @@ $configData = Helper::appClasses();
                         </button>
                         <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
                         <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
                     </div>
                 </div>
             </div>
@@ -626,7 +626,6 @@ $configData = Helper::appClasses();
             datas.details = detail;
             datas.tenant_id = tenant;
             datas.bank_id = bank;
-            datas.bank_id = bank;
             datas.status = 'Terbuat';
             datas.contract_date = tglKontrak
             datas.opening_paragraph = "Bapak/Ibu Qwerty";
@@ -639,6 +638,12 @@ $configData = Helper::appClasses();
             localStorage.setItem("invoice", JSON.stringify(datas));
             console.log(localStorage.getItem("invoice"));
             window.location.href = "/invoice/preview-invoice"
+        });
+
+        $(document).on('click', '#batal', function(event){
+            event.preventDefault();
+            localStorage.removeItem('invoice');
+            window.location.href = "/invoice/list-invoice"
         });
     });
 </script>

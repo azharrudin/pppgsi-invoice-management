@@ -252,7 +252,7 @@ $configData = Helper::appClasses();
                         </button>
                         <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
                         <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
                     </div>
                 </div>
             </div>
@@ -299,7 +299,7 @@ $configData = Helper::appClasses();
         $("#materai-image").css("height", `200px`);
         $("#materai-image").css("width", `200px`);
         $("#materai-image").css("background-position",`center`);
-        
+
         getTenant();
         getBank();
         getDetails();
@@ -360,5 +360,12 @@ $configData = Helper::appClasses();
         console.log(getDetail);
 
     }
+
+
+    $(document).on('click', '#batal', function(event){
+            event.preventDefault();
+            localStorage.removeItem('invoice');
+            window.location.href = "/invoice/list-invoice"
+        });
 </script>
 @endsection
