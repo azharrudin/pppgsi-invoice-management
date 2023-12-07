@@ -61,12 +61,9 @@
             <table class="tax-rates-table table">
                 <thead>
                     <tr>
-                        <th>No. Tanda Terima</th>
-                        <th>Tenant</th>
-                        <th>Total</th>
-                        <th>Tgl Tanda Terima</th>
-                        <th>Tgl Kirim</th>
-                        <th>Status</th>
+                        <th>Nama</th>
+                        <th>Rates</th>
+                        <th>Keterangan</th>
                         <th>Tanggapan</th>
                     </tr>
                 </thead>
@@ -169,7 +166,7 @@
                     text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tax Rates</span>',
                     className: "btn btn-primary",
                     action: function(a, e, t, s) {
-                        window.location = '{{ route('pages-add-purchase-request') }}';
+                        window.location = '{{ route('pages-create-tax-rates') }}';
                     }
                 }],
                 responsive: {

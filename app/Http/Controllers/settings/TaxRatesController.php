@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 class TaxRatesController extends Controller
 {
     public function index() {
-        return view("settings.tax-rates");
+        return view("settings.tax-rates.list");
     }
+    
+    public function create()
+    {
+        return view('settings.tax-rates.add');
+    }    
 }

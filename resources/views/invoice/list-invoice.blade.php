@@ -89,6 +89,8 @@
             var a = $(".invoice-list-table");
             if (a.length) var e = a.DataTable({
                 ajax: "{{ url('api/invoice') }}",
+                pageLength : 10,
+                paging : true,
                 columns: [{
                     name: "invoice_number",
                     data: "invoice_number",
