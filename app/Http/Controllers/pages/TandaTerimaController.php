@@ -22,8 +22,8 @@ class TandaTerimaController extends Controller
     {
         return view('content.pages.tanda-terima.add');
     }
-   
-    public function preview()
+
+    public function preview(string $id)
     {
         return view('content.pages.tanda-terima.preview');
     }

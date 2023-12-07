@@ -51,7 +51,7 @@ Route::prefix('invoice')->group(function () {
         Route::get('/', [TandaTerimaController::class, 'index'])->name('pages-list-tanda-terima');
         Route::get('/add', [TandaTerimaController::class, 'create']);
         Route::get('/edit/{id}', [TandaTerimaController::class, 'edit']);
-        Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
+        Route::get('/preview/{id}', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
     });
 });
 
