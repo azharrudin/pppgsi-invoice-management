@@ -218,9 +218,7 @@ $configData = Helper::appClasses();
                                     <br>
                                     <div class="form-label">
                                         <span class="fw-bold">PPPGSI</span><br>
-                                        <span class="fw-bold">BANK MANDIRI</span><br>
-                                        <span>CABANG JAKARTA KRAKATAU STEEL</span><br>
-                                        <span>Account No. 070.000.713846-9</span>
+                                        <span class="fw-bold" id="bank-name"></span><br>
                                     </div>
 
 
@@ -233,11 +231,7 @@ $configData = Helper::appClasses();
                                     <p class="form-label" id="materai_date">25 September 2023</p>
                                 </div>
                                 <div class="mb-3">
-                                    <div action="/upload" class="dropzone needsclick dz-clickable w-px-250" id="dropzone-basic">
-                                        <div class="dz-message needsclick">
-                                            <span class="note needsclick">Unggah Tanda Tangan</span>
-                                        </div>
-                                    </div>
+                                    <div id="materai-image"></div>
                                 </div>
                                 <div class="mb-3">
                                     <p class="form-label" id="materai_name">Dina - Manager Operasional</p>
@@ -294,12 +288,20 @@ $configData = Helper::appClasses();
         $("#addendum_number").val(data.addendum_number);
         $("#addendum_date").val(data.addendum_date);
         $("#grand_total_spelled").text(data.grand_total_spelled);
-        $("#grand_total").val(data.grand_total);
+        $("#grand_total").text(data.grand_total);
         $("#invoice_due_date").text(data.invoice_due_date);
         $("#term_and_conditions").text(data.term_and_conditions);
         $("#materai_date").text(data.materai_date);
         $("#materai_name").text(data.materai_name);
+
+        $("#materai-image").css('background-img','black');
+        $("#materai-image").css("background-image", `url('`+data.materai_image.dataURL + `')`);
+        $("#materai-image").css("height", `200px`);
+        $("#materai-image").css("width", `200px`);
+        $("#materai-image").css("background-position",`center`);
+        
         getTenant();
+        getBank();
         getDetails();
     });
 
@@ -314,6 +316,22 @@ $configData = Helper::appClasses();
                 $("#company").text(data.company);
                 $("#floor").text(data.floor);
                 $("#name_tenant").text(data.name);
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+   
+    function getBank() {
+        let idBank = data.bank_id;
+        $.ajax({
+            url: "{{url('api/bank')}}/" + idBank,
+            type: "GET",
+            success: function(response) {
+                let data = response.data;
+                console.log(data);
+                $("#bank-name").text(data.name)
             },
             error: function(xhr, status, error) {
                 console.log(error);

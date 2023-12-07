@@ -182,6 +182,7 @@ $configData = Helper::appClasses();
                                 <div class="mb-3">
                                     <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" required />
                                 </div>
+                                <img src="" alt="" id="img-prev">
                             </div>
                         </div>
                     </div>
@@ -584,7 +585,7 @@ $configData = Helper::appClasses();
             let noAddendum = $("#addendum_number").val();
             let tglAddendum = $("#addendum_date").val();
             let terbilang = $("#grand_total_spelled").val();
-            let grandTotal = $(".grand_total").val();
+            let grandTotal = $(".grand_total").text();
             let tglJatuhTempo = $("#invoice_due_date").val();
             let syaratDanKententuan = $("#term_and_conditions").val();
             let bank = $("#bank").val();
@@ -612,6 +613,9 @@ $configData = Helper::appClasses();
                 }
             });
 
+
+            $('#img-prev').attr('src', URL.createObjectURL(ttdFile))
+
             let datas = {};
             $('.create-invoice').find('.form-control').each(function() {
                 var inputId = $(this).attr('id');
@@ -629,7 +633,8 @@ $configData = Helper::appClasses();
             datas.invoice_due_date = tglJatuhTempo;
             datas.addendum_date = tglAddendum;
             datas.invoice_date = tglInvoice;
-            datas.grand_total = parseInt(grandTotal);
+            datas.grand_total = grandTotal;
+            datas.materai_image = fileTtd;
            
             localStorage.setItem("invoice", JSON.stringify(datas));
             console.log(localStorage.getItem("invoice"));
