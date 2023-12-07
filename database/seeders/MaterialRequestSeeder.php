@@ -21,15 +21,16 @@ class MaterialRequestSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 12; $i++) {
             $count = $i + 1;
             $firstDate = $faker->dateTimeBetween('-2 week', '-1 week');
+            $dataIndex = $i % 5;
 
             MaterialRequest::create([
                 "requester" => $faker->name,
                 "department" => "Department {$count}",
                 "request_date" => $firstDate,
-                "status" => $status[$i],
+                "status" => $status[$dataIndex],
                 "stock" => null,
                 "purchase" => null,
                 "note" => $faker->text,
