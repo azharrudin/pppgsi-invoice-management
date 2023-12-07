@@ -44,7 +44,7 @@ Route::prefix('invoice')->group(function () {
     Route::prefix('/')->group(function () {
         Route::get('/list-invoice', [InvoiceController::class, 'index'])->name('pages-list-invoice');
         Route::get('/add-invoice', [InvoiceController::class, 'add'])->name('pages-add-invoice');
-        Route::get('/preview-invoice/{id}', [InvoiceController::class, 'preview'])->name('pages-preview-invoice');
+        Route::get('/preview-invoice', [InvoiceController::class, 'preview'])->name('pages-preview-invoice');
     });
 
     Route::prefix('tanda-terima')->group(function () {
@@ -150,6 +150,7 @@ Route::prefix('settings')->group(function () {
     // Tax Rates
     Route::prefix('/tax-rates')->group(function () {
         Route::get('/', [TaxRatesController::class, 'index'])->name('pages-tax-rates');
+        Route::get('/add', [TaxRatesController::class, 'create'])->name('pages-create-tax-rates');
     });
 });
 

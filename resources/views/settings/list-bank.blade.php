@@ -108,7 +108,7 @@ $configData = Helper::appClasses();
         <form class="modal-content edit-bank" id="edit-bank" novalidate>
             <input type="hidden" id="preview_id">
             <div class="modal-header">
-                <h5 class="modal-title" id="backDropModalTitle">Edit Bank</h5>
+                <h5 class="modal-title" id="backDropModalTitle">Preview Bank</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

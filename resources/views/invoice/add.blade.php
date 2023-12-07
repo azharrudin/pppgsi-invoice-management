@@ -81,19 +81,19 @@ $configData = Helper::appClasses();
                                     <div class="col-12 d-flex align-items-center justify-content-between">
                                         <div class="col-sm-2 mb-3 mx-2">
                                             <label for="note" class="form-label fw-medium">Uraian</label>
-                                            <input type="text" name="uraian" class="form-control w-px-150 row-input" placeholder="" name="item[]" />
+                                            <input type="text" name="uraian" class="form-control w-px-150 row-input" placeholder="" name="item[]" required />
                                         </div>
                                         <div class="col-sm-2 mb-3 mx-2">
                                             <label for="note" class="form-label fw-medium">Keterangan</label>
-                                            <input type="text" class="form-control w-px-150 row-input" placeholder="" name="description[]" />
+                                            <input type="text" class="form-control w-px-150 row-input" placeholder="" name="description[]" required />
                                         </div>
                                         <div class="col-sm-2 mb-3 mx-2">
                                             <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                                            <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" />
+                                            <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required />
                                         </div>
                                         <div class="col-sm-1 mb-3 mx-2">
                                             <label for="note" class="form-label fw-medium">Pajak</label>
-                                            <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" />
+                                            <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
                                         </div>
                                         <div class="col-sm-2 mb-3 mx-2">
                                             <label for="note" class="form-label fw-medium">Total (Rp.)</label>
@@ -145,20 +145,19 @@ $configData = Helper::appClasses();
                         <div class="col-md-12 mb-5">
                             <div class="col-md-12 mb-2">
                                 <label for="note" class="form-label fw-medium">Terbilang</label>
-                                <input type="text" class="form-control w-full terbilang" id="grand_total_spelled" name="grand_total_spelled" placeholder="Terbilang" />
+                                <input type="text" class="form-control w-full terbilang" id="grand_total_spelled" name="grand_total_spelled" placeholder="Terbilang" disabled />
                             </div>
                             <div class="col-md-8 d-flex align-items-center">
                                 <label for="note" class="form-label fw-medium me-2">Jatuh Tempo Tanggal :</label>
                                 <input type="text" class="form-control w-px-250 date" placeholder="Jatuh Tanggal Tempo" id="invoice_due_date" name="invoice_due_date" />
                             </div>
-                            <img src="" alt="" id="img">
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium me-2">Syarat & Ketentuan</label>
-                                    <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll"></textarea>
+                                    <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll" required></textarea>
 
                                 </div>
                                 <div class="mb-3">
@@ -171,7 +170,7 @@ $configData = Helper::appClasses();
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Tanda Tangan & Meterai
                                         (Opsional)</label>
-                                    <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" name="materai_date" />
+                                    <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" name="materai_date" required />
                                 </div>
                                 <div class="mb-3">
                                     <div action="/upload" class="dropzone needsclick dz-clickable w-px-250" id="dropzone-basic">
@@ -181,7 +180,7 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" />
+                                    <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" required />
                                 </div>
                             </div>
                         </div>
@@ -486,23 +485,10 @@ $configData = Helper::appClasses();
                     if (!form.checkValidity()) {
                         event.preventDefault();
                         event.stopPropagation();
+
                     } else {
                         // Submit your form
                         event.preventDefault();
-                        let tenant = $("#tenant").val();
-                        let noInvoice = $("#invoice_number").val();
-                        let tglInvoice = $("#invoice_date").val();
-                        let noKontrak = $("#contract_number").val();
-                        let tglKontrak = $("#contract_date").val();
-                        let noAddendum = $("#addendum_number").val();
-                        let tglAddendum = $("#addendum_date").val();
-                        let terbilang = $("#grand_total_spelled").val();
-                        let grandTotal = $(".grand_total").text();
-                        let tglJatuhTempo = $("#invoice_due_date").val();
-                        let syaratDanKententuan = $("#term_and_conditions").val();
-                        let bank = $("#bank").val();
-                        let tglTtd = $("#materai_date").val();
-                        let nameTtd = $("#materai_name").val();
                         let fileTtd = ttdFile;
 
                         var detail = [];
@@ -527,26 +513,6 @@ $configData = Helper::appClasses();
 
 
                         let datas = {};
-                        // data = {
-                        //     invoice_number: noInvoice,
-                        //     tenant_id: tenant,
-                        //     grand_total: parseInt(grandTotal),
-                        //     invoice_date: tglInvoice,
-                        //     invoice_due_date: tglJatuhTempo,
-                        //     status: "Terbuat",
-                        //     opening_paragraph: "Bapak/Ibu Qwerty",
-                        //     contract_number: noKontrak,
-                        //     contract_date: tglKontrak,
-                        //     addendum_number: noAddendum,
-                        //     addendum_date: tglAddendum,
-                        //     invoice_detail: detail,
-                        //     grand_total_spelled: terbilang,
-                        //     term_and_conditions: syaratDanKententuan,
-                        //     bank_id: bank,
-                        //     materai_date: tglTtd,
-                        //     materai_image: 'j',
-                        //     materai_name: nameTtd
-                        // };
                         $('.create-invoice').find('.form-control').each(function() {
                             var inputId = $(this).attr('id');
                             var inputValue = $("#" + inputId).val();
@@ -579,7 +545,7 @@ $configData = Helper::appClasses();
 
                                 Swal.fire({
                                     title: 'Berhasil',
-                                    text: 'Berhasil menambahkan Bank',
+                                    text: 'Berhasil menambahkan Invoice',
                                     icon: 'success',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'
@@ -607,14 +573,6 @@ $configData = Helper::appClasses();
                 false
             );
         });
-
-
-
-
-
-
-
-
 
         $(document).on('click', '#preview', function(event) {
             event.preventDefault();
@@ -653,6 +611,29 @@ $configData = Helper::appClasses();
                     detail[input_index].total_price = input_value;
                 }
             });
+
+            let datas = {};
+            $('.create-invoice').find('.form-control').each(function() {
+                var inputId = $(this).attr('id');
+                var inputValue = $("#" + inputId).val();
+                datas[$("#" + inputId).attr("name")] = inputValue;
+            });
+
+            datas.details = detail;
+            datas.tenant_id = tenant;
+            datas.bank_id = bank;
+            datas.bank_id = bank;
+            datas.status = 'Terbuat';
+            datas.contract_date = tglKontrak
+            datas.opening_paragraph = "Bapak/Ibu Qwerty";
+            datas.invoice_due_date = tglJatuhTempo;
+            datas.addendum_date = tglAddendum;
+            datas.invoice_date = tglInvoice;
+            datas.grand_total = parseInt(grandTotal);
+           
+            localStorage.setItem("invoice", JSON.stringify(datas));
+            console.log(localStorage.getItem("invoice"));
+            window.location.href = "/invoice/preview-invoice"
         });
     });
 </script>
