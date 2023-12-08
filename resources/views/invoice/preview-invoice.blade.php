@@ -173,7 +173,7 @@ $configData = Helper::appClasses();
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0" id="details">
-                                       
+
                                         <tr>
                                             <td colspan="2"></td>
                                             <td class="">
@@ -294,15 +294,30 @@ $configData = Helper::appClasses();
         $("#materai_date").text(data.materai_date);
         $("#materai_name").text(data.materai_name);
 
-        $("#materai-image").css('background-img','black');
-        $("#materai-image").css("background-image", `url('`+data.materai_image.dataURL + `')`);
-        $("#materai-image").css("height", `200px`);
-        $("#materai-image").css("width", `200px`);
-        $("#materai-image").css("background-position",`center`);
-
-        getTenant();
-        getBank();
+        if (data.tenant_id) {
+            getTenant();
+        }
+        if (data.bank_id) {
+            getBank();
+        }
         getDetails();
+
+        if (data.materai_image) {
+            $("#materai-image").css('background-img', 'black');
+            $("#materai-image").css("background-image", `url('` + data.materai_image.dataURL + `')`);
+            $("#materai-image").css("height", `200px`);
+            $("#materai-image").css("width", `200px`);
+            $("#materai-image").css("background-position", `center`);
+        }
+
+
+    });
+
+    $(window).on('popstate', function(e) {
+        var state = e.originalEvent.state;
+        if (state !== null) {
+            alert('a');
+        }
     });
 
     function getTenant() {
@@ -322,7 +337,7 @@ $configData = Helper::appClasses();
             }
         });
     }
-   
+
     function getBank() {
         let idBank = data.bank_id;
         $.ajax({
@@ -346,11 +361,11 @@ $configData = Helper::appClasses();
         let tem = '';
         for (let i = 0; i < details.length; i++) {
             tem = `<tr>
-                        <td class="text-nowrap">`+details[i].item+`</td>
-                        <td class="text-nowrap">`+details[i].description+`</td>
-                        <td>`+details[i].price+`</td>
-                        <td>`+details[i].tax+`</td>
-                        <td>`+details[i].total_price+`</td>
+                        <td class="text-nowrap">` + details[i].item + `</td>
+                        <td class="text-nowrap">` + details[i].description + `</td>
+                        <td>` + details[i].price + `</td>
+                        <td>` + details[i].tax + `</td>
+                        <td>` + details[i].total_price + `</td>
                     </tr>
             `;
             getDetail = getDetail + tem;
@@ -362,10 +377,29 @@ $configData = Helper::appClasses();
     }
 
 
-    $(document).on('click', '#batal', function(event){
-            event.preventDefault();
-            localStorage.removeItem('invoice');
-            window.location.href = "/invoice/list-invoice"
-        });
+    $(document).on('click', '#batal', function(event) {
+        event.preventDefault();
+        localStorage.removeItem('invoice');
+        window.location.href = "/invoice/list-invoice"
+    });
+
+    window.addEventListener('popstate', function(event) {
+        // The popstate event is fired each time when the current history entry changes.
+
+        var r = confirm("You pressed a Back button! Are you sure?!");
+
+        if (r == true) {
+            // Call Back button programmatically as per user confirmation.
+            history.back();
+            // Uncomment below line to redirect to the previous page instead.
+            // window.location = document.referrer // Note: IE11 is not supporting this.
+        } else {
+            // Stay on the current page.
+            history.pushState(null, null, window.location.pathname);
+        }
+
+        history.pushState(null, null, window.location.pathname);
+
+    }, false);
 </script>
 @endsection

@@ -182,7 +182,7 @@ $configData = Helper::appClasses();
                                 <div class="mb-3">
                                     <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" required />
                                 </div>
-                                <img src="" alt="" id="img-prev">
+
                             </div>
                         </div>
                     </div>
@@ -251,6 +251,13 @@ $configData = Helper::appClasses();
                 // });
             }
         });
+
+        window.addEventListener("pageshow", function(event) {
+            var historyTraversal = event.persisted || (typeof window.performance !== "undefined" && window.performance.getEntriesByType("navigation")[0].type === "back_forward");
+            if (historyTraversal) {
+                location.reload(); // Reload the page
+            }
+        });
         $('.date').flatpickr({
             dateFormat: 'Y-m-d'
         });
@@ -264,7 +271,7 @@ $configData = Helper::appClasses();
                 cache: true,
                 data: function(params) {
                     return {
-                        term: params.term || '',
+                        value: params.term || '',
                         page: params.page || 1
                     }
                 },
@@ -295,7 +302,7 @@ $configData = Helper::appClasses();
                 cache: true,
                 data: function(params) {
                     return {
-                        term: params.term || '',
+                        value: params.term || '',
                         page: params.page || 1
                     }
                 },
@@ -614,8 +621,6 @@ $configData = Helper::appClasses();
             });
 
 
-            $('#img-prev').attr('src', URL.createObjectURL(ttdFile))
-
             let datas = {};
             $('.create-invoice').find('.form-control').each(function() {
                 var inputId = $(this).attr('id');
@@ -634,13 +639,11 @@ $configData = Helper::appClasses();
             datas.invoice_date = tglInvoice;
             datas.grand_total = grandTotal;
             datas.materai_image = fileTtd;
-           
             localStorage.setItem("invoice", JSON.stringify(datas));
-            console.log(localStorage.getItem("invoice"));
             window.location.href = "/invoice/preview-invoice"
         });
 
-        $(document).on('click', '#batal', function(event){
+        $(document).on('click', '#batal', function(event) {
             event.preventDefault();
             localStorage.removeItem('invoice');
             window.location.href = "/invoice/list-invoice"
