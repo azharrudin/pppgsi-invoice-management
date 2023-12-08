@@ -225,6 +225,7 @@ $configData = Helper::appClasses();
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
+    let dataLocal = JSON.parse(localStorage.getItem("invoice"));
     $(document).ready(function() {
         let ttdFile = null;
         const myDropzone = new Dropzone('#dropzone-basic', {
@@ -258,6 +259,10 @@ $configData = Helper::appClasses();
                 location.reload(); // Reload the page
             }
         });
+
+
+
+
         $('.date').flatpickr({
             dateFormat: 'Y-m-d'
         });
@@ -482,6 +487,11 @@ $configData = Helper::appClasses();
             }).format(number);
         }
 
+
+        if (dataLocal) {
+            console.log('kui');
+        }
+
         var saveInvoice = $('.create-invoice');
 
         Array.prototype.slice.call(saveInvoice).forEach(function(form) {
@@ -497,7 +507,21 @@ $configData = Helper::appClasses();
                     } else {
                         // Submit your form
                         event.preventDefault();
-                        let fileTtd = ttdFile;
+                        let fileTtd = ttdFile.dataURL;
+                        let tenant = $("#tenant").val();
+                        let noInvoice = $("#invoice_number").val();
+                        let tglInvoice = $("#invoice_date").val();
+                        let noKontrak = $("#contract_number").val();
+                        let tglKontrak = $("#contract_date").val();
+                        let noAddendum = $("#addendum_number").val();
+                        let tglAddendum = $("#addendum_date").val();
+                        let terbilang = $("#grand_total_spelled").val();
+                        let grandTotal = $(".grand_total").text();
+                        let tglJatuhTempo = $("#invoice_due_date").val();
+                        let syaratDanKententuan = $("#term_and_conditions").val();
+                        let bank = $("#bank").val();
+                        let tglTtd = $("#materai_date").val();
+                        let nameTtd = $("#materai_name").val();
 
                         var detail = [];
                         $('.row-input').each(function(index) {
@@ -538,6 +562,7 @@ $configData = Helper::appClasses();
                         datas.addendum_date = tglAddendum;
                         datas.invoice_date = tglInvoice;
                         datas.grand_total = parseInt(grandTotal);
+                        datas.materai_image = fileTtd
                         console.log(datas);
 
                         $.ajax({
@@ -560,6 +585,9 @@ $configData = Helper::appClasses();
                                     },
                                     buttonsStyling: false
                                 })
+
+                                localStorage.removeItem('invoice');
+                                window.location.href = "/invoice/list-invoice"
 
                             },
                             error: function(xhr, status, error) {
