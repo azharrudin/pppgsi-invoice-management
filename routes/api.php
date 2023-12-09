@@ -7,6 +7,7 @@ use App\Http\Controllers\MaterialRequestController;
 use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\PurchaseRequestController;
 use App\Http\Controllers\ReceiptController;
+use App\Http\Controllers\TaxController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
@@ -59,3 +60,5 @@ Route::resource('purchase-order', PurchaseOrderController::class);
 
 Route::post('user/login', [UserController::class, "login"]);
 Route::resource('user', UserController::class);
+
+Route::resource('tax', TaxController::class);
