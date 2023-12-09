@@ -604,7 +604,6 @@ $configData = Helper::appClasses();
 
                                 localStorage.removeItem('invoice');
                                 window.location.href = "/invoice/list-invoice"
-
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({

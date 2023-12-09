@@ -304,7 +304,7 @@ $configData = Helper::appClasses();
 
         if (data.materai_image) {
             $("#materai-image").css('background-img', 'black');
-            $("#materai-image").css("background-image", `url('` + data.materai_image.dataURL + `')`);
+            $("#materai-image").css("background-image", `url('` + data.materai_image.dataURL+ `')`);
             $("#materai-image").css("height", `200px`);
             $("#materai-image").css("width", `200px`);
             $("#materai-image").css("background-position", `center`);
@@ -313,12 +313,6 @@ $configData = Helper::appClasses();
 
     });
 
-    $(window).on('popstate', function(e) {
-        var state = e.originalEvent.state;
-        if (state !== null) {
-            alert('a');
-        }
-    });
 
     function getTenant() {
         let idTenant = data.tenant_id;
@@ -381,23 +375,47 @@ $configData = Helper::appClasses();
         window.location.href = "/invoice/list-invoice"
     });
 
-    window.addEventListener('popstate', function(event) {
-        // The popstate event is fired each time when the current history entry changes.
+    $(document).on('click', '#save', function(event) {
+        event.preventDefault();
+        const newData = { ...data, materai_image: data.materai_image.dataURL }
+        $.ajax({
+            url: baseUrl + "api/invoice/",
+            type: "POST",
+            data: JSON.stringify(newData),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
 
-        var r = confirm("You pressed a Back button! Are you sure?!");
+            success: function(response) {
+                $('.indicator-progress').show();
+                $('.indicator-label').hide();
 
-        if (r == true) {
-            // Call Back button programmatically as per user confirmation.
-            history.back();
-            // Uncomment below line to redirect to the previous page instead.
-            // window.location = document.referrer // Note: IE11 is not supporting this.
-        } else {
-            // Stay on the current page.
-            history.pushState(null, null, window.location.pathname);
-        }
+                Swal.fire({
+                    title: 'Berhasil',
+                    text: 'Berhasil menambahkan Invoice',
+                    icon: 'success',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false
+                });
 
-        history.pushState(null, null, window.location.pathname);
+                // localStorage.removeItem('invoice');
+                // window.location.href = "/invoice/list-invoice"
 
-    }, false);
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Semua field harus diisi',
+                    icon: 'error',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false
+                })
+            }
+        });
+        // window.location.href = "/invoice/list-invoice"
+    });
 </script>
 @endsection
