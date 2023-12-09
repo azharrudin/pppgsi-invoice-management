@@ -57,7 +57,7 @@ $configData = Helper::appClasses();
                                     </div>
                                     <div class="mb-3 mx-2">
                                         <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control w-px-150 date" name="contract_number" id="contract_date" placeholder="" required />
+                                        <input type="text" class="form-control w-px-150 date" name="contract_date" id="contract_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="mb-3 mx-2">
@@ -227,29 +227,33 @@ $configData = Helper::appClasses();
                                 </div>`;
     let dataLocal = JSON.parse(localStorage.getItem("invoice"));
     $(document).ready(function() {
-        let ttdFile = null;
+        let ttdFile = dataLocal ? dataLocal.materai_image : null;
         const myDropzone = new Dropzone('#dropzone-basic', {
             parallelUploads: 1,
-            maxFilesize: 10,
+            maxFilesize: 3,
             addRemoveLinks: true,
             maxFiles: 1,
             acceptedFiles: ".jpeg,.jpg,.png,.gif",
             autoQueue: false,
+            url: "../uploads/logo",
             init: function() {
+                if (dataLocal.materai_image) {
+                    // Add a preloaded file to the dropzone with a preview
+                    var mockFile = dataLocal.materai_image;
+                    this.options.addedfile.call(this, mockFile);
+                    this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
+
+                    // Optional: Handle the removal of the file
+                    mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+                        // Handle removal logic here
+                    });
+                }
+
+
                 this.on('addedfile', function(file) {
                     while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
                     ttdFile = file;
                 })
-                // this.on("addedfile", function(file) {
-                //     console.log(file);
-                // });
-                // this.on("removedfile", function(file) {
-                //     console.log('cui');
-                // });
-                // this.on("maxfilesexceeded", function(file) {
-                //     alert("No more files please!");
-                //     this.removeFile(file); 
-                // });
             }
         });
 
@@ -328,6 +332,35 @@ $configData = Helper::appClasses();
             }
 
         });
+
+        if (dataLocal) {
+            if (dataLocal.tenant_id) {
+                getTenant();
+            }
+            if (dataLocal.bank_id) {
+                getBank();
+            }
+            if (dataLocal.invoice_date) {
+                getInvoiceDate();
+            }
+            if (dataLocal.contract_date) {
+                getContractDate();
+            }
+           
+            if (dataLocal.addendum_date) {
+                getAddendumDate();
+            }
+            
+            if (dataLocal.invoice_due_date) {
+                getInvoiceDueDate();
+            }
+           
+            if (dataLocal.materai_date) {
+                getMateraiDate();
+            }
+        }
+
+
 
 
         $('#tenant').on("change", (async function(e) {
@@ -486,6 +519,7 @@ $configData = Helper::appClasses();
                 currency: "IDR"
             }).format(number);
         }
+
 
 
         if (dataLocal) {
@@ -677,5 +711,71 @@ $configData = Helper::appClasses();
             window.location.href = "/invoice/list-invoice"
         });
     });
+
+    function getTenant() {
+        let idTenant = dataLocal.tenant_id;
+        $.ajax({
+            url: "{{url('api/tenant')}}/" + idTenant,
+            type: "GET",
+            success: function(response) {
+                let data = response.data;
+                console.log(data);
+                let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
+                $('#tenant').prepend(tem);
+                // $("#company").text(data.company);
+                // $("#floor").text(data.floor);
+                // $("#name_tenant").text(data.name);
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function getBank() {
+        let idBank = dataLocal.bank_id;
+        $.ajax({
+            url: "{{url('api/bank')}}/" + idBank,
+            type: "GET",
+            success: function(response) {
+                let data = response.data;
+                let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
+                $('#bank').prepend(tem);
+
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function getInvoiceDate() {
+        let invoiceDate = dataLocal.invoice_date;
+        $('#invoice_date').val(invoiceDate);
+    }
+
+    function getContractDate() {
+        let contractDate = dataLocal.contract_date;
+        $('#contract_date').val(contractDate);
+    }
+    
+    function getAddendumDate() {
+        let addendumDate = dataLocal.addendum_date;
+        $('#addendum_date').val(addendumDate);
+    }
+    
+    function getInvoiceDueDate() {
+        let invoiceDueDate = dataLocal.invoice_due_date;
+        $('#invoice_due_date').val(invoiceDueDate);
+    }
+    
+    function getMateraiDate() {
+        let materailDate = dataLocal.materai_date;
+        $('#materai_date').val(materailDate);
+    }
+
+    function getDetails(){
+        
+    }
 </script>
 @endsection
