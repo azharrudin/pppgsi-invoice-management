@@ -88,9 +88,16 @@
         $((function() {
             var a = $(".invoice-list-table");
             if (a.length) var e = a.DataTable({
-                ajax: "{{ url('api/invoice') }}",
-                pageLength : 10,
-                paging : true,
+                processing: true,
+                serverSide: true,
+                deferRender: true,
+                ajax: {
+                    url: "{{ url('invoice/data-invoice') }}",
+                    "data": function(d) {
+                        d.start = 0;
+                        d.page = $(".invoice-list-table").DataTable().page.info().page + 1;
+                    }
+                },
                 columns: [{
                     name: "invoice_number",
                     data: "invoice_number",
@@ -99,94 +106,92 @@
                     render: function(data, type, row) {
                            return data;
                     }
-                }, {
-                    name: "tenant",
-                    data: "tenant",
-                    title: "Tenant",
-                    className: 'text-center',
-                    render: function(data, type, row) {
-                           return data.name;
-                    }
-                }, {
-                    name: "grand_total",
-                    data: "grand_total",
-                    title: "Total",
-                    className: 'text-center',
-                    render: function(data, type, row) {
-                           return new Intl.NumberFormat("id-ID", {
-                            style: "currency",
-                            currency: "IDR"
-                        }).format(data)
-                    }
-                }, {
-                    name: "invoice_date",
-                    data: "invoice_date",
-                    title: "Tanggal Invoice",
-                    className: 'text-center',
-                    render: function(data, type, full, meta) {
-                        var tanggalAwal = data;
-
-                        var bagianTanggal = tanggalAwal.split('-');
-                        var tahun = bagianTanggal[0];
-                        var bulan = bagianTanggal[1];
-                        var hari = bagianTanggal[2];
-
-                        var tanggalHasil = hari + '/' + bulan + '/' + tahun;
-
-                        return tanggalHasil;
-                    }
-                }, {
-                    name: "invoice_due_date",
-                    data: "invoice_due_date",
-                    title: "Tanggal Jatuh Tempo",
-                    className: 'text-center',
-                    render: function(data, type, full, meta) {
-                        var tanggalAwal = data;
-
-                        var bagianTanggal = tanggalAwal.split('-');
-                        var tahun = bagianTanggal[0];
-                        var bulan = bagianTanggal[1];
-                        var hari = bagianTanggal[2];
-
-                        var tanggalHasil = hari + '/' + bulan + '/' + tahun;
-
-                        return tanggalHasil;
-                    }
-                }, {
-                    class: "text-center",
-                    data: "status",
-                    name: "status",
-                    title: "Status",
-                    className: 'text-center',
-                    render: function(data, type, row) {
-                        console.log(data);
-                        if (data == 'Terbuat') {
-                            return '<span class="badge" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
-                        }else if (data == 'Disetujui KA') {
-                            return '<span class="badge" style="background-color : #4EC0D9; " text-capitalized> Disetujui KA </span>';
-                        }else if (data == 'Lunas') {
-                            return '<span class="badge" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
-                        }else if (data == 'Terkirim') {
-                            return '<span class="badge" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
-                        }else if (data == 'Disetujui BM') {
-                            return '<span class="badge" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
+                    }, {
+                        name: "tenant_name",
+                        data: "tenant_name",
+                        title: "Tenant",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return data;
                         }
-                    }
-                }, {
-                    data: "tanggapan",
-                    name: "tanggapan",
-                    title: "Tanggapan",
-                    render: function(data, type, row) {
-                        console.log(data);
-                        let editRow = '';
-                        let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
-                        let previewRow = '<a href="{{ url("invoice/preview-invoice")}}/'+data+'" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
-                        return `<div class="d-flex align-items-center">
-                        `+sendMailRow+previewRow+`
-                        <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="` +
-                            baseUrl +
-                            'app/invoice/edit" class="dropdown-item">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>'
-                    }
+                    }, {
+                        name: "grand_total",
+                        data: "grand_total",
+                        title: "Total",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return new Intl.NumberFormat("id-ID", {
+                                style: "currency",
+                                currency: "IDR"
+                            }).format(data)
+                        }
+                    }, {
+                        name: "invoice_date",
+                        data: "invoice_date",
+                        title: "Tanggal Invoice",
+                        className: 'text-center',
+                        render: function(data, type, full, meta) {
+                            var tanggalAwal = data;
+
+                            var bagianTanggal = tanggalAwal.split('-');
+                            var tahun = bagianTanggal[0];
+                            var bulan = bagianTanggal[1];
+                            var hari = bagianTanggal[2];
+
+                            var tanggalHasil = hari + '/' + bulan + '/' + tahun;
+
+                            return tanggalHasil;
+                        }
+                    }, {
+                        name: "invoice_due_date",
+                        data: "invoice_due_date",
+                        title: "Tanggal Jatuh Tempo",
+                        className: 'text-center',
+                        render: function(data, type, full, meta) {
+                            var tanggalAwal = data;
+
+                            var bagianTanggal = tanggalAwal.split('-');
+                            var tahun = bagianTanggal[0];
+                            var bulan = bagianTanggal[1];
+                            var hari = bagianTanggal[2];
+
+                            var tanggalHasil = hari + '/' + bulan + '/' + tahun;
+
+                            return tanggalHasil;
+                        }
+                    }, {
+                        class: "text-center",
+                        data: "status",
+                        name: "status",
+                        title: "Status",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            if (data == 'Terbuat') {
+                                return '<span class="badge" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
+                            }else if (data == 'Disetujui KA') {
+                                return '<span class="badge" style="background-color : #4EC0D9; " text-capitalized> Disetujui KA </span>';
+                            }else if (data == 'Lunas') {
+                                return '<span class="badge" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
+                            }else if (data == 'Terkirim') {
+                                return '<span class="badge" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
+                            }else if (data == 'Disetujui BM') {
+                                return '<span class="badge" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
+                            }
+                        }
+                    }, {
+                        data: "id",
+                        name: "tanggapan",
+                        title: "Tanggapan",
+                        render: function(data, type, row) {
+                            let editRow = '';
+                            let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
+                            let previewRow = '<a href="{{ url("invoice/preview-invoice")}}/'+data+'" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
+                            return `<div class="d-flex align-items-center">
+                            `+sendMailRow+previewRow+`
+                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="` +
+                                baseUrl +
+                                'app/invoice/edit" class="dropdown-item">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>'
+                        }
                 }],
                 order: [
                     [1, "desc"]
