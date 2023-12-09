@@ -76,37 +76,8 @@ $configData = Helper::appClasses();
 
                         {{-- Repeater --}}
                         <div class="repeater">
-                            <div class="" data-repeater-list="group-a">
-                                <div class="row-mg">
-                                    <div class="col-12 d-flex align-items-center justify-content-between">
-                                        <div class="col-sm-2 mb-3 mx-2">
-                                            <label for="note" class="form-label fw-medium">Uraian</label>
-                                            <input type="text" name="uraian" class="form-control w-px-150 row-input" placeholder="" name="item[]" required />
-                                        </div>
-                                        <div class="col-sm-2 mb-3 mx-2">
-                                            <label for="note" class="form-label fw-medium">Keterangan</label>
-                                            <input type="text" class="form-control w-px-150 row-input" placeholder="" name="description[]" required />
-                                        </div>
-                                        <div class="col-sm-2 mb-3 mx-2">
-                                            <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                                            <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required />
-                                        </div>
-                                        <div class="col-sm-1 mb-3 mx-2">
-                                            <label for="note" class="form-label fw-medium">Pajak</label>
-                                            <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
-                                        </div>
-                                        <div class="col-sm-2 mb-3 mx-2">
-                                            <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                                            <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled />
-                                        </div>
-                                        <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                                                <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
-                                                <path d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z" fill="#FF4747" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
+                            <div class="" id="details">
+
                             </div>
 
                             <div class="row pb-4">
@@ -237,19 +208,19 @@ $configData = Helper::appClasses();
             autoQueue: false,
             url: "../uploads/logo",
             init: function() {
-                if (dataLocal.materai_image) {
+                if (dataLocal) {
                     // Add a preloaded file to the dropzone with a preview
                     var mockFile = dataLocal.materai_image;
-                    this.options.addedfile.call(this, mockFile);
-                    this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
+                    if (mockFile) {
+                        this.options.addedfile.call(this, mockFile);
+                        this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
 
-                    // Optional: Handle the removal of the file
-                    mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-                        // Handle removal logic here
-                    });
+                        // Optional: Handle the removal of the file
+                        mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+                            // Handle removal logic here
+                        });
+                    }
                 }
-
-
                 this.on('addedfile', function(file) {
                     while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
                     ttdFile = file;
@@ -334,6 +305,15 @@ $configData = Helper::appClasses();
         });
 
         if (dataLocal) {
+            $("#invoice_number").val(dataLocal.invoice_number);
+            $("#contract_number").val(dataLocal.contract_number);
+            $("#addendum_number").val(dataLocal.addendum_number);
+            $("#grand_total_spelled").val(dataLocal.grand_total_spelled);
+            $(".grand_total").text(dataLocal.grand_total);
+            $("#materai_name").val(dataLocal.materai_name);
+            $("#term_and_conditions").val(dataLocal.term_and_conditions);
+
+
             if (dataLocal.tenant_id) {
                 getTenant();
             }
@@ -346,19 +326,21 @@ $configData = Helper::appClasses();
             if (dataLocal.contract_date) {
                 getContractDate();
             }
-           
+
             if (dataLocal.addendum_date) {
                 getAddendumDate();
             }
-            
+
             if (dataLocal.invoice_due_date) {
                 getInvoiceDueDate();
             }
-           
+
             if (dataLocal.materai_date) {
                 getMateraiDate();
             }
         }
+
+        getDetails();
 
 
 
@@ -399,14 +381,14 @@ $configData = Helper::appClasses();
             $(this).closest('.row-mg').remove();
         });
 
-        $(document).on('input', '.tax:last', function() {
+        $(document).on('input', '.tax', function() {
             // Hapus baris yang ditekan tombol hapus
-
+            let index = $('.tax').index(this);
             let total = 0;
-            let price = parseInt($('.price:last').val());
+            let price = parseInt($(`.price:eq(` + index + `)`).val());
             let tax = parseInt($(this).val());
             let totalPrice = price + tax;
-            $('.total_price:last').val(isNaN(totalPrice) ? 0 : totalPrice);
+            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : totalPrice);
             getTotal();
 
         });
@@ -758,24 +740,101 @@ $configData = Helper::appClasses();
         let contractDate = dataLocal.contract_date;
         $('#contract_date').val(contractDate);
     }
-    
+
     function getAddendumDate() {
         let addendumDate = dataLocal.addendum_date;
         $('#addendum_date').val(addendumDate);
     }
-    
+
     function getInvoiceDueDate() {
         let invoiceDueDate = dataLocal.invoice_due_date;
         $('#invoice_due_date').val(invoiceDueDate);
     }
-    
+
     function getMateraiDate() {
         let materailDate = dataLocal.materai_date;
         $('#materai_date').val(materailDate);
     }
 
-    function getDetails(){
-        
+    function getDetails() {
+        let data = dataLocal;
+        let getDetail = '';
+        let temp = '';
+
+        if (data) {
+            let details = dataLocal.details;
+            for (let i = 0; i < details.length; i++) {
+                temp = `             
+              <div class="row-mg">
+                <div class="col-12 d-flex align-items-center justify-content-between">
+                    <div class="col-sm-2 mb-3 mx-2">
+                        <label for="note" class="form-label fw-medium">Uraian</label>
+                        <input type="text" name="uraian" class="form-control w-px-150 row-input" placeholder="" name="item[]" required value="` + details[i].item + `" />
+                    </div>
+                    <div class="col-sm-2 mb-3 mx-2">
+                        <label for="note" class="form-label fw-medium">Keterangan</label>
+                        <input type="text" class="form-control w-px-150 row-input" placeholder="" name="description[]" required value="` + details[i].description + `" />
+                    </div>
+                    <div class="col-sm-2 mb-3 mx-2">
+                        <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
+                        <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required value="` + details[i].price + `"  />
+                    </div>
+                    <div class="col-sm-1 mb-3 mx-2">
+                        <label for="note" class="form-label fw-medium">Pajak</label>
+                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required  value="` + details[i].tax + `" />
+                    </div>
+                    <div class="col-sm-2 mb-3 mx-2">
+                        <label for="note" class="form-label fw-medium">Total (Rp.)</label>
+                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled value="` + details[i].total_price + `" />
+                    </div>
+                    <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
+                            <path d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z" fill="#FF4747" />
+                        </svg>
+                    </a>
+                </div>
+            </div>`;
+                getDetail = getDetail + temp;
+            }
+            $('#details').prepend(getDetail);
+        } else {
+            temp = `             
+              <div class="row-mg">
+                <div class="col-12 d-flex align-items-center justify-content-between">
+                    <div class="col-sm-2 mb-3 mx-2">
+                        <label for="note" class="form-label fw-medium">Uraian</label>
+                        <input type="text" name="uraian" class="form-control w-px-150 row-input" placeholder="" name="item[]" required />
+                    </div>
+                    <div class="col-sm-2 mb-3 mx-2">
+                        <label for="note" class="form-label fw-medium">Keterangan</label>
+                        <input type="text" class="form-control w-px-150 row-input" placeholder="" name="description[]" required />
+                    </div>
+                    <div class="col-sm-2 mb-3 mx-2">
+                        <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
+                        <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required />
+                    </div>
+                    <div class="col-sm-1 mb-3 mx-2">
+                        <label for="note" class="form-label fw-medium">Pajak</label>
+                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
+                    </div>
+                    <div class="col-sm-2 mb-3 mx-2">
+                        <label for="note" class="form-label fw-medium">Total (Rp.)</label>
+                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled/>
+                    </div>
+                    <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
+                            <path d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z" fill="#FF4747" />
+                        </svg>
+                    </a>
+                </div>
+            </div>`;
+            $('#details').prepend(temp);
+        }
+
+
+
     }
 </script>
 @endsection

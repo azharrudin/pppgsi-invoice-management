@@ -372,8 +372,6 @@ $configData = Helper::appClasses();
         }
 
         $('#details').prepend(getDetail);
-        console.log(getDetail);
-
     }
 
 
