@@ -56,12 +56,19 @@ class InvoiceController extends Controller
         $apiRequest = Http::get(env('BASE_URL_API') .'/api/invoice', [
             'per_page' => $request->length,
             'page' => $request->page,
-            'order' => $orderBy,
-            'sort' => $sortBy,
+            'order' => 'id',
+            'sort' => 'desc',
             'value' => $request->search['value'],
         ]);
         $response = json_decode($apiRequest->getBody());
-        return  DataTables::of($response->data)
+        $data = [];
+        if($response->data){
+            foreach ($response->data as $key => $value) {
+                $data[$key] = $value;
+                $data[$key]->tenant_name = $value->tenant->name;
+            }
+        }
+        return DataTables::of($data)
             ->setFilteredRecords($response->size)
             ->setTotalRecords($response->size)
             ->make(true);
