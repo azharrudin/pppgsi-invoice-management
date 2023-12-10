@@ -244,7 +244,7 @@ $configData = Helper::appClasses();
             <!-- /Invoice Add-->
 
             <!-- Invoice Actions -->
-            <div class="col-lg-3 col-12 invoice-actions">
+            <!-- <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
                         <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
@@ -255,7 +255,7 @@ $configData = Helper::appClasses();
                         <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- /Invoice Actions -->
         </div>
     </form>
@@ -279,19 +279,12 @@ $configData = Helper::appClasses();
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
 
-    let data = JSON.parse(localStorage.getItem("invoice"));
     $(document).ready(function() {
-
         var urlSegments = window.location.pathname.split('/');
         var idIndex = urlSegments.indexOf('show') + 1;
         var id = urlSegments[idIndex];
         getDataInvoice(id);
-
-
-
     });
-
-
 
     function getDataInvoice(id) {
         console.log(id);
@@ -301,7 +294,7 @@ $configData = Helper::appClasses();
             dataType: "json",
             success: function(res) {
                 let data = res.data;
-                console.log(data.tenant_id);
+                console.log(data);
 
                 getTenant(data.tenant_id)
                 getBank(data.bank_id)
@@ -317,7 +310,7 @@ $configData = Helper::appClasses();
                 $("#term_and_conditions").text(data.term_and_conditions);
                 $("#materai_date").text(data.materai_date);
                 $("#materai_name").text(data.materai_name);
-                getDetails();
+                getDetails(data.invoice_details);
 
                 if (data.materai_image) {
                     $("#materai-image").css('background-img', 'black');
@@ -365,9 +358,9 @@ $configData = Helper::appClasses();
         });
     }
 
-    function getDetails(det) {
-        console.log(data.details[0].item);
-        let details = data.details;
+    function getDetails(detailItems) {
+        console.log(detailItems);
+        let details = detailItems;
         let getDetail = '';
         let tem = '';
         for (let i = 0; i < details.length; i++) {
@@ -384,58 +377,5 @@ $configData = Helper::appClasses();
 
         $('#details').prepend(getDetail);
     }
-
-
-    $(document).on('click', '#batal', function(event) {
-        event.preventDefault();
-        localStorage.removeItem('invoice');
-        window.location.href = "/invoice/list-invoice"
-    });
-
-    $(document).on('click', '#save', function(event) {
-        event.preventDefault();
-        const newData = {
-            ...data,
-            materai_image: data.materai_image.dataURL
-        }
-        $.ajax({
-            url: baseUrl + "api/invoice/",
-            type: "POST",
-            data: JSON.stringify(newData),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-
-            success: function(response) {
-                $('.indicator-progress').show();
-                $('.indicator-label').hide();
-
-                Swal.fire({
-                    title: 'Berhasil',
-                    text: 'Berhasil menambahkan Invoice',
-                    icon: 'success',
-                    customClass: {
-                        confirmButton: 'btn btn-primary'
-                    },
-                    buttonsStyling: false
-                });
-
-                // localStorage.removeItem('invoice');
-                // window.location.href = "/invoice/list-invoice"
-
-            },
-            error: function(xhr, status, error) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Semua field harus diisi',
-                    icon: 'error',
-                    customClass: {
-                        confirmButton: 'btn btn-primary'
-                    },
-                    buttonsStyling: false
-                })
-            }
-        });
-        // window.location.href = "/invoice/list-invoice"
-    });
 </script>
 @endsection
