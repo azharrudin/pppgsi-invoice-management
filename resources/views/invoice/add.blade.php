@@ -120,7 +120,8 @@ $configData = Helper::appClasses();
                             </div>
                             <div class="col-md-8 d-flex align-items-center">
                                 <label for="note" class="form-label fw-medium me-2">Jatuh Tempo Tanggal :</label>
-                                <input type="text" class="form-control w-px-250 date" placeholder="Jatuh Tanggal Tempo" id="invoice_due_date" name="invoice_due_date" />
+                                <input type="text" class="form-control w-px-250 date" placeholder="Jatuh Tanggal Tempo" id="invoice_due_date" name="invoice_due_date" required/>
+                                <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                         </div>
 
@@ -129,12 +130,13 @@ $configData = Helper::appClasses();
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium me-2">Syarat & Ketentuan</label>
                                     <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll" required></textarea>
-
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium me-2">Bank</label>
-                                    <select name="bank" id="bank" name="bank" class="form-select w-px-250 item-details mb-3">
+                                    <select name="bank" id="bank" name="bank" class="form-select w-px-250 item-details mb-3" required>
                                     </select>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
@@ -142,6 +144,7 @@ $configData = Helper::appClasses();
                                     <label for="note" class="form-label fw-medium">Tanda Tangan & Meterai
                                         (Opsional)</label>
                                     <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" name="materai_date" required />
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-3">
                                     <div action="/upload" class="dropzone needsclick dz-clickable w-px-250" id="dropzone-basic">
@@ -152,6 +155,7 @@ $configData = Helper::appClasses();
                                 </div>
                                 <div class="mb-3">
                                     <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" required />
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
 
                             </div>
@@ -242,9 +246,19 @@ $configData = Helper::appClasses();
             dateFormat: 'Y-m-d'
         });
 
+        const flatPickrEL = $(".date");
+        if (flatPickrEL.length) {
+            flatPickrEL.flatpickr({
+                allowInput: true,
+                monthSelectorType: "static",
+                dateFormat: 'Y-m-d'
+            });
+        }
+
         $("#tenant").select2({
             placeholder: 'Select Tenant',
             allowClear: true,
+            minimumResultsForSearch: Infinity,
             ajax: {
                 url: "{{ url('api/tenant/select') }}",
                 dataType: 'json',
@@ -346,13 +360,15 @@ $configData = Helper::appClasses();
 
 
         $('#tenant').on("change", (async function(e) {
+            $(this).removeClass("invalid");
             var rekomendasi = $("#tenant").select2('data');
             var data = rekomendasi[0].id;
             $('#tenant').val(data);
-
         }));
-        $('#tenant').on("change", (async function(e) {
-            var rekomendasi = $("#tenant").select2('data');
+
+        $('#bank').on("change", (async function(e) {
+            $(this).addClass("valid");
+            var rekomendasi = $("#bank").select2('data');
             var data = rekomendasi[0].id;
             $('#bank').val(data);
 
@@ -519,6 +535,20 @@ $configData = Helper::appClasses();
                     if (!form.checkValidity()) {
                         event.preventDefault();
                         event.stopPropagation();
+
+                        let tenant = $("#tenant").val();
+                        let bank = $("#bank").val();
+                        let tglKontrak = $("#contract_date").val();
+
+                        if (!tenant) {
+                            $("#tenant").addClass("invalid");
+                        }
+                        if (!bank) {
+                            $("#bank").addClass("invalid");
+                        }
+
+
+
 
                     } else {
                         // Submit your form
@@ -804,18 +834,22 @@ $configData = Helper::appClasses();
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Uraian</label>
                         <input type="text" name="uraian" class="form-control w-px-150 row-input" placeholder="" name="item[]" required />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Keterangan</label>
                         <input type="text" class="form-control w-px-150 row-input" placeholder="" name="description[]" required />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
                         <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-sm-1 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Pajak</label>
                         <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Total (Rp.)</label>
