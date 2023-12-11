@@ -120,7 +120,7 @@ $configData = Helper::appClasses();
                             </div>
                             <div class="col-md-8 d-flex align-items-center">
                                 <label for="note" class="form-label fw-medium me-2">Jatuh Tempo Tanggal :</label>
-                                <input type="text" class="form-control w-px-250 date" placeholder="Jatuh Tanggal Tempo" id="invoice_due_date" name="invoice_due_date" required/>
+                                <input type="text" class="form-control w-px-250 date" placeholder="Jatuh Tanggal Tempo" id="invoice_due_date" name="invoice_due_date" required />
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                         </div>
@@ -197,40 +197,21 @@ $configData = Helper::appClasses();
         }
     });
 
+    let data;
+    let ttdFile;
+
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
     let dataLocal = JSON.parse(localStorage.getItem("invoice"));
     $(document).ready(function() {
-        let ttdFile = dataLocal ? dataLocal.materai_image : null;
-        const myDropzone = new Dropzone('#dropzone-basic', {
-            parallelUploads: 1,
-            maxFilesize: 3,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            autoQueue: false,
-            url: "../uploads/logo",
-            init: function() {
-                if (dataLocal) {
-                    // Add a preloaded file to the dropzone with a preview
-                    var mockFile = dataLocal.materai_image;
-                    if (mockFile) {
-                        this.options.addedfile.call(this, mockFile);
-                        this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
+        var urlSegments = window.location.pathname.split('/');
+        var idIndex = urlSegments.indexOf('edit') + 1;
+        var id = urlSegments[idIndex];
+        getDataInvoice(id);
 
-                        // Optional: Handle the removal of the file
-                        mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-                            // Handle removal logic here
-                        });
-                    }
-                }
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
-                    ttdFile = file;
-                })
-            }
-        });
+        console.log(data);
+
 
         window.addEventListener("pageshow", function(event) {
             var historyTraversal = event.persisted || (typeof window.performance !== "undefined" && window.performance.getEntriesByType("navigation")[0].type === "back_forward");
@@ -554,6 +535,7 @@ $configData = Helper::appClasses();
                         // Submit your form
                         event.preventDefault();
                         let fileTtd = ttdFile.dataURL;
+                        console.log(id+fileTtd);
                         let tenant = $("#tenant").val();
                         let noInvoice = $("#invoice_number").val();
                         let tglInvoice = $("#invoice_date").val();
@@ -609,11 +591,10 @@ $configData = Helper::appClasses();
                         datas.invoice_date = tglInvoice;
                         datas.grand_total = parseInt(grandTotal);
                         datas.materai_image = fileTtd
-                        console.log(datas);
 
                         $.ajax({
-                            url: baseUrl + "api/invoice/",
-                            type: "POST",
+                            url: baseUrl + "api/invoice/"+id,
+                            type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
@@ -723,10 +704,76 @@ $configData = Helper::appClasses();
         });
     });
 
-    function getTenant() {
-        let idTenant = dataLocal.tenant_id;
+    function getDataInvoice(id) {
+        console.log(id);
         $.ajax({
-            url: "{{url('api/tenant')}}/" + idTenant,
+            url: "{{ url('api/invoice') }}/" + id,
+            type: "GET",
+            dataType: "json",
+            success: function(res) {
+                let data = res.data;
+                console.log(data);
+                ttdFile = data.materai_image;
+
+                const myDropzone = new Dropzone('#dropzone-basic', {
+                    parallelUploads: 1,
+                    maxFilesize: 3,
+                    addRemoveLinks: true,
+                    maxFiles: 1,
+                    acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                    autoQueue: false,
+                    url: "../uploads/logo",
+                    init: function() {
+                        if (data.materai_image) {
+                            let mockFile = { dataURL: data.materai_image };
+                            console.log(data);
+                            if (data.materai_image) {
+                                this.options.addedfile.call(this, mockFile);
+                                this.options.thumbnail.call(this, mockFile, data.materai_image);
+
+                                // Optional: Handle the removal of the file
+                                mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+                                    // Handle removal logic here
+                                });
+                            }
+                        }
+                        this.on('addedfile', function(file) {
+                            while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
+                            ttdFile = file;
+                        })
+                    }
+                });
+                // console.log(data);
+
+                getTenant(data.tenant_id)
+                getBank(data.bank_id)
+                $("#invoice_number").val(data.invoice_number);
+                $("#invoice_date").val(data.invoice_date);
+                $("#contract_number").val(data.contract_number);
+                $("#contract_date").val(data.contract_date);
+                $("#addendum_number").val(data.addendum_number);
+                $("#addendum_date").val(data.addendum_date);
+                $("#grand_total_spelled").val(data.grand_total_spelled);
+                $(".grand_total").text(data.grand_total);
+                $("#invoice_due_date").val(data.invoice_due_date);
+                $("#term_and_conditions").val(data.term_and_conditions);
+                $("#materai_date").val(data.materai_date);
+                $("#materai_name").val(data.materai_name);
+                getDetails(data.invoice_details);
+
+               
+            },
+            error: function(errors) {
+                console.log(errors);
+            }
+        });
+    }
+
+
+
+    function getTenant(id) {
+        $.ajax({
+            url: "{{url('api/tenant')}}/" + id,
             type: "GET",
             success: function(response) {
                 let data = response.data;
@@ -743,10 +790,9 @@ $configData = Helper::appClasses();
         });
     }
 
-    function getBank() {
-        let idBank = dataLocal.bank_id;
+    function getBank(id) {
         $.ajax({
-            url: "{{url('api/bank')}}/" + idBank,
+            url: "{{url('api/bank')}}/" + id,
             type: "GET",
             success: function(response) {
                 let data = response.data;
@@ -760,38 +806,14 @@ $configData = Helper::appClasses();
         });
     }
 
-    function getInvoiceDate() {
-        let invoiceDate = dataLocal.invoice_date;
-        $('#invoice_date').val(invoiceDate);
-    }
+   
 
-    function getContractDate() {
-        let contractDate = dataLocal.contract_date;
-        $('#contract_date').val(contractDate);
-    }
-
-    function getAddendumDate() {
-        let addendumDate = dataLocal.addendum_date;
-        $('#addendum_date').val(addendumDate);
-    }
-
-    function getInvoiceDueDate() {
-        let invoiceDueDate = dataLocal.invoice_due_date;
-        $('#invoice_due_date').val(invoiceDueDate);
-    }
-
-    function getMateraiDate() {
-        let materailDate = dataLocal.materai_date;
-        $('#materai_date').val(materailDate);
-    }
-
-    function getDetails() {
-        let data = dataLocal;
+    function getDetails(detailItems) {
+        let details = detailItems;
         let getDetail = '';
         let temp = '';
 
-        if (data) {
-            let details = dataLocal.details;
+        if (details) {
             for (let i = 0; i < details.length; i++) {
                 temp = `             
               <div class="row-mg">
@@ -825,46 +847,48 @@ $configData = Helper::appClasses();
                 </div>
             </div>`;
                 getDetail = getDetail + temp;
+                console.log(getDetail);
             }
             $('#details').prepend(getDetail);
-        } else {
-            temp = `             
-              <div class="row-mg">
-                <div class="col-12 d-flex align-items-center justify-content-between">
-                    <div class="col-sm-2 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Uraian</label>
-                        <input type="text" name="uraian" class="form-control w-px-150 row-input" placeholder="" name="item[]" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-sm-2 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Keterangan</label>
-                        <input type="text" class="form-control w-px-150 row-input" placeholder="" name="description[]" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-sm-2 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                        <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-sm-1 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Pajak</label>
-                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-sm-2 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled/>
-                    </div>
-                    <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                            <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
-                            <path d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z" fill="#FF4747" />
-                        </svg>
-                    </a>
-                </div>
-            </div>`;
-            $('#details').prepend(temp);
         }
+        // } else {
+        //     temp = `             
+        //       <div class="row-mg">
+        //         <div class="col-12 d-flex align-items-center justify-content-between">
+        //             <div class="col-sm-2 mb-3 mx-2">
+        //                 <label for="note" class="form-label fw-medium">Uraian</label>
+        //                 <input type="text" name="uraian" class="form-control w-px-150 row-input" placeholder="" name="item[]" required />
+        //                 <div class="invalid-feedback">Tidak boleh kosong</div>
+        //             </div>
+        //             <div class="col-sm-2 mb-3 mx-2">
+        //                 <label for="note" class="form-label fw-medium">Keterangan</label>
+        //                 <input type="text" class="form-control w-px-150 row-input" placeholder="" name="description[]" required />
+        //                 <div class="invalid-feedback">Tidak boleh kosong</div>
+        //             </div>
+        //             <div class="col-sm-2 mb-3 mx-2">
+        //                 <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
+        //                 <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required />
+        //                 <div class="invalid-feedback">Tidak boleh kosong</div>
+        //             </div>
+        //             <div class="col-sm-1 mb-3 mx-2">
+        //                 <label for="note" class="form-label fw-medium">Pajak</label>
+        //                 <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
+        //                 <div class="invalid-feedback">Tidak boleh kosong</div>
+        //             </div>
+        //             <div class="col-sm-2 mb-3 mx-2">
+        //                 <label for="note" class="form-label fw-medium">Total (Rp.)</label>
+        //                 <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled/>
+        //             </div>
+        //             <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
+        //                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+        //                     <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
+        //                     <path d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z" fill="#FF4747" />
+        //                 </svg>
+        //             </a>
+        //         </div>
+        //     </div>`;
+        //     $('#details').prepend(temp);
+        // }
 
 
 

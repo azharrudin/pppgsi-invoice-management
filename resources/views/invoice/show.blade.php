@@ -244,7 +244,7 @@ $configData = Helper::appClasses();
             <!-- /Invoice Add-->
 
             <!-- Invoice Actions -->
-            <div class="col-lg-3 col-12 invoice-actions">
+            <!-- <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
                         <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
@@ -255,7 +255,7 @@ $configData = Helper::appClasses();
                         <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- /Invoice Actions -->
         </div>
     </form>
@@ -279,45 +279,56 @@ $configData = Helper::appClasses();
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
 
-    let data = JSON.parse(localStorage.getItem("invoice"));
     $(document).ready(function() {
-        $("#invoice_number").val(data.invoice_number);
-        $("#invoice_date").val(data.invoice_date);
-        $("#contract_number").val(data.contract_number);
-        $("#contract_date").val(data.contract_date);
-        $("#addendum_number").val(data.addendum_number);
-        $("#addendum_date").val(data.addendum_date);
-        $("#grand_total_spelled").text(data.grand_total_spelled);
-        $("#grand_total").text(data.grand_total);
-        $("#invoice_due_date").text(data.invoice_due_date);
-        $("#term_and_conditions").text(data.term_and_conditions);
-        $("#materai_date").text(data.materai_date);
-        $("#materai_name").text(data.materai_name);
-
-        if (data.tenant_id) {
-            getTenant();
-        }
-        if (data.bank_id) {
-            getBank();
-        }
-        getDetails();
-
-        if (data.materai_image) {
-            $("#materai-image").css('background-img', 'black');
-            $("#materai-image").css("background-image", `url('` + data.materai_image.dataURL+ `')`);
-            $("#materai-image").css("height", `200px`);
-            $("#materai-image").css("width", `200px`);
-            $("#materai-image").css("background-position", `center`);
-        }
-
-
+        var urlSegments = window.location.pathname.split('/');
+        var idIndex = urlSegments.indexOf('show') + 1;
+        var id = urlSegments[idIndex];
+        getDataInvoice(id);
     });
 
-
-    function getTenant() {
-        let idTenant = data.tenant_id;
+    function getDataInvoice(id) {
+        console.log(id);
         $.ajax({
-            url: "{{url('api/tenant')}}/" + idTenant,
+            url: "{{ url('api/invoice') }}/" + id,
+            type: "GET",
+            dataType: "json",
+            success: function(res) {
+                let data = res.data;
+                console.log(data);
+
+                getTenant(data.tenant_id)
+                getBank(data.bank_id)
+                $("#invoice_number").val(data.invoice_number);
+                $("#invoice_date").val(data.invoice_date);
+                $("#contract_number").val(data.contract_number);
+                $("#contract_date").val(data.contract_date);
+                $("#addendum_number").val(data.addendum_number);
+                $("#addendum_date").val(data.addendum_date);
+                $("#grand_total_spelled").text(data.grand_total_spelled);
+                $("#grand_total").text(data.grand_total);
+                $("#invoice_due_date").text(data.invoice_due_date);
+                $("#term_and_conditions").text(data.term_and_conditions);
+                $("#materai_date").text(data.materai_date);
+                $("#materai_name").text(data.materai_name);
+                getDetails(data.invoice_details);
+
+                if (data.materai_image) {
+                    $("#materai-image").css('background-img', 'black');
+                    $("#materai-image").css("background-image", `url('` + data.materai_image + `')`);
+                    $("#materai-image").css("height", `200px`);
+                    $("#materai-image").css("width", `200px`);
+                    $("#materai-image").css("background-position", `center`);
+                }
+            },
+            error: function(errors) {
+                console.log(errors);
+            }
+        });
+    }
+
+    function getTenant(id) {
+        $.ajax({
+            url: "{{url('api/tenant')}}/" + id,
             type: "GET",
             success: function(response) {
                 let data = response.data;
@@ -332,10 +343,9 @@ $configData = Helper::appClasses();
         });
     }
 
-    function getBank() {
-        let idBank = data.bank_id;
+    function getBank(id) {
         $.ajax({
-            url: "{{url('api/bank')}}/" + idBank,
+            url: "{{url('api/bank')}}/" + id,
             type: "GET",
             success: function(response) {
                 let data = response.data;
@@ -348,9 +358,9 @@ $configData = Helper::appClasses();
         });
     }
 
-    function getDetails() {
-        console.log(data.details[0].item);
-        let details = data.details;
+    function getDetails(detailItems) {
+        console.log(detailItems);
+        let details = detailItems;
         let getDetail = '';
         let tem = '';
         for (let i = 0; i < details.length; i++) {
@@ -367,55 +377,5 @@ $configData = Helper::appClasses();
 
         $('#details').prepend(getDetail);
     }
-
-
-    $(document).on('click', '#batal', function(event) {
-        event.preventDefault();
-        localStorage.removeItem('invoice');
-        window.location.href = "/invoice/list-invoice"
-    });
-
-    $(document).on('click', '#save', function(event) {
-        event.preventDefault();
-        const newData = { ...data, materai_image: data.materai_image.dataURL }
-        $.ajax({
-            url: baseUrl + "api/invoice/",
-            type: "POST",
-            data: JSON.stringify(newData),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-
-            success: function(response) {
-                $('.indicator-progress').show();
-                $('.indicator-label').hide();
-
-                Swal.fire({
-                    title: 'Berhasil',
-                    text: 'Berhasil menambahkan Invoice',
-                    icon: 'success',
-                    customClass: {
-                        confirmButton: 'btn btn-primary'
-                    },
-                    buttonsStyling: false
-                });
-
-                // localStorage.removeItem('invoice');
-                // window.location.href = "/invoice/list-invoice"
-
-            },
-            error: function(xhr, status, error) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Semua field harus diisi',
-                    icon: 'error',
-                    customClass: {
-                        confirmButton: 'btn btn-primary'
-                    },
-                    buttonsStyling: false
-                })
-            }
-        });
-        // window.location.href = "/invoice/list-invoice"
-    });
 </script>
 @endsection

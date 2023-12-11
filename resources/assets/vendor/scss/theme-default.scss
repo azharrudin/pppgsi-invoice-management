@@ -79,6 +79,16 @@ body {
   background: url('../../../../assets/icon/setting.svg') no-repeat;
 }
 
+.was-validated .custom-select:invalid + .select2 .select2-selection{
+  border-color: #dc3545!important;
+}
+.was-validated .custom-select:valid + .select2 .select2-selection{
+  border-color: #28a745!important;
+}
+*:focus{
+outline:0px;
+}
+
 @include template-common-theme($primary-color);
 @include template-libs-theme($primary-color);
 @include template-pages-theme($primary-color);
