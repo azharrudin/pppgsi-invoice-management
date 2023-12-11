@@ -46,6 +46,7 @@ Route::prefix('invoice')->group(function () {
         Route::get('/add-invoice', [InvoiceController::class, 'add'])->name('pages-add-invoice');
         Route::get('/preview-invoice', [InvoiceController::class, 'preview'])->name('pages-preview-invoice');
         Route::get('/data-invoice', [InvoiceController::class, 'datatable'])->name('data-invoice');
+        Route::get('/edit/{id}', [InvoiceController::class, 'edit'])->name('pages-edit-invoice');
         Route::get('/show/{id}', [InvoiceController::class, 'show'])->name('pages-show-invoice');
     });
 

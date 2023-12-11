@@ -314,7 +314,7 @@ $configData = Helper::appClasses();
 
                 if (data.materai_image) {
                     $("#materai-image").css('background-img', 'black');
-                    $("#materai-image").css("background-image", `url('` + data.materai_image.dataURL + `')`);
+                    $("#materai-image").css("background-image", `url('` + data.materai_image + `')`);
                     $("#materai-image").css("height", `200px`);
                     $("#materai-image").css("width", `200px`);
                     $("#materai-image").css("background-position", `center`);

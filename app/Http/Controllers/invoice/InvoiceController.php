@@ -74,6 +74,12 @@ class InvoiceController extends Controller
             ->make(true);
         
     }
+
+    public function edit(string $id)
+    {
+        return view('invoice.edit');
+    }
+
     public function show(string $id)
     {
         return view('invoice.show');
