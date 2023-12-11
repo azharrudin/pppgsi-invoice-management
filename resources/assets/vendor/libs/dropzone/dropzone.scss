@@ -443,5 +443,10 @@ $dz-icon-block-size: 3.75rem !default;
         width: $dz-thumbnail-width;
       }
     }
+
+    .dropzone .dz-preview .dz-image {
+      width: 250px;
+      height: 250px;
+    }
   }
 }

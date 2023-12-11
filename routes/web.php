@@ -47,6 +47,7 @@ Route::prefix('invoice')->group(function () {
         Route::get('/preview-invoice', [InvoiceController::class, 'preview'])->name('pages-preview-invoice');
         Route::get('/data-invoice', [InvoiceController::class, 'datatable'])->name('data-invoice');
         Route::get('/edit/{id}', [InvoiceController::class, 'edit'])->name('pages-edit-invoice');
+        Route::get('/preview-invoice-edit/{id}', [InvoiceController::class, 'editPreview'])->name('pages-edit-invoice');
         Route::get('/show/{id}', [InvoiceController::class, 'show'])->name('pages-show-invoice');
     });
 
@@ -54,7 +55,7 @@ Route::prefix('invoice')->group(function () {
         Route::get('/', [TandaTerimaController::class, 'index'])->name('pages-list-tanda-terima');
         Route::get('/add', [TandaTerimaController::class, 'create']);
         Route::get('/edit/{id}', [TandaTerimaController::class, 'edit']);
-        Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
+        Route::get('/preview', [TandaTerimaController::class, 'editPreview'])->name('pages-preview-tanda-terima');
     });
 });
 

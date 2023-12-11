@@ -19,6 +19,10 @@ class InvoiceController extends Controller
         return view('invoice.add');
     }
 
+    public function editPreview()
+    {
+        return view('invoice.edit-preview');
+    }
     public function preview()
     {
         return view('invoice.preview-invoice');

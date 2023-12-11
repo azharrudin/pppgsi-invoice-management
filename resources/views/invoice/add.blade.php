@@ -518,12 +518,6 @@ $configData = Helper::appClasses();
             }).format(number);
         }
 
-
-
-        if (dataLocal) {
-            console.log('kui');
-        }
-
         var saveInvoice = $('.create-invoice');
 
         Array.prototype.slice.call(saveInvoice).forEach(function(form) {
