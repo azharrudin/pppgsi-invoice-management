@@ -53,6 +53,7 @@ Route::prefix('invoice')->group(function () {
         Route::get('/add', [TandaTerimaController::class, 'create']);
         Route::get('/edit/{id}', [TandaTerimaController::class, 'edit']);
         Route::get('/preview/{id}', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
+        Route::get('/data-tanda-terima', [TandaTerimaController::class, 'datatable'])->name('data-tanda-terima');
     });
 });
 
@@ -115,6 +116,7 @@ Route::prefix('client')->group(function () {
     // List Tenant
     Route::prefix('/list-tenant')->group(function () {
         Route::get('/', [ListTenantController::class, 'index'])->name('pages-list-tenant');
+        Route::get('/data-tenant', [ListTenantController::class, 'datatable'])->name('data-tenant');
     });
 });
 

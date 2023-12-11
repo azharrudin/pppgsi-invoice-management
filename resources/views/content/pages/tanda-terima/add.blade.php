@@ -129,12 +129,12 @@
                                         name="receipt_date" placeholder="Tanggal" />
                                 </div>
                                 <div class="mb-3">
-                                    <form action="/upload" class="dropzone needsclick dz-clickable w-px-250"
+                                    <div action="/upload" class="dropzone needsclick dz-clickable w-px-250"
                                         id="dropzone-basic">
                                         <div class="dz-message needsclick">
                                             <span class="note needsclick">Unggah Tanda Tangan</span>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <input type="text" class="form-control w-px-250 " id="signature_name"
@@ -236,6 +236,24 @@
                 dateFormat: 'd-m-Y'
             });
 
+            // Dropzone
+            let ttdFile = null;
+            const myDropzone = new Dropzone('#dropzone-basic', {
+                parallelUploads: 1,
+                maxFilesize: 10,
+                addRemoveLinks: true,
+                maxFiles: 1,
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                autoQueue: false,
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        while (this.files.length > this.options.maxFiles) this.removeFile(this
+                            .files[0]);
+                        ttdFile = file;
+                    });
+                }
+            });
+
             // Save, Insert, and Create
             $(".btn-save").on('click', function() {
                 let invoice = $('.select-invoice').val();
@@ -259,7 +277,7 @@
                         datas[$("#" + inputId).attr("name")] = inputValue;
                     }
                 });
-
+                datas.signature_image = ttdFile;
                 datas.invoice_id = parseInt(invoice);
                 datas.tenant_id = parseInt(tenant);
                 datas.bank_id = parseInt(bank);

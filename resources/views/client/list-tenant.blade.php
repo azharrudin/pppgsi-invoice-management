@@ -60,171 +60,583 @@
         <div class="card-datatable table-responsive pt-0">
             <table class="list-tenant-table table">
                 <thead>
-                    <tr>
-                        <th>Nama PIC</th>
-                        <th>Email</th>
-                        <th>Telepon</th>
-                        <th>Company</th>
-                        <th>Lantai</th>
-                        <th>Status</th>
-                        <th>Tanggapan</th>
-                    </tr>
                 </thead>
             </table>
         </div>
     </div>
 
-@endsection
+    {{-- Card Add --}}
+    <div class="modal fade" id="create-tenant-data" data-bs-backdrop="static" tabindex="-1">
+        <div class="modal-dialog">
+            <form class="modal-content create-tenant" id="create-tenant" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="backDropModalTitle">Tambah Tenant</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body addTenant">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="nameBackdrop" class="form-label">Nama PIC</label>
+                            <input type="text" id="name" name="name" class="form-control"
+                                placeholder="Masukan Nama Tenant" required>
+                            <div class="invalid-feedback"> Please enter your name. </div>
+                        </div>
+                        <div class="col mb-3">
+                            <label for="nameBackdrop" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" class="form-control"
+                                placeholder="Masukan Email" required>
+                            <div class="invalid-feedback"> Please enter your Email. </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="nameBackdrop" class="form-label">Telepon</label>
+                            <input type="text" id="phone" name="phone" class="form-control"
+                                placeholder="Masukan Telepon" required>
+                            <div class="invalid-feedback"> Please enter your phone. </div>
+                        </div>
+                        <div class="col mb-3">
+                            <label for="nameBackdrop" class="form-label">Company</label>
+                            <input type="text" id="company" name="company" class="form-control"
+                                placeholder="Masukan Company" required>
+                            <div class="invalid-feedback"> Please enter your Company. </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="nameBackdrop" class="form-label">Floor</label>
+                            <input type="text" id="floor" name="floor" class="form-control"
+                                placeholder="Masukan Lantai" required>
+                            <div class="invalid-feedback"> Please enter your floor. </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                        id="modal_tenant_cancel">Close</button>
+                    <button type="submit" class="btn btn-primary save-tenant        ">
+                        <span class="indicator-label">Simpan</span>
+                        <span class="indicator-progress">
+                            Please wait...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                    </button>
 
-@section('page-script')
-    <script>
-        "use strict";
-        $((function() {
-            var a = $(".list-tenant-table");
-            if (a.length) var e = a.DataTable({
-                ajax: assetsPath + "json/purchase-request-list.json",
-                columns: [{
-                    data: "no_tanda_terima"
-                }, {
-                    data: "tenant"
-                }, {
-                    data: "total"
-                }, {
-                    data: "tanggal_tanda_terima"
-                }, {
-                    data: "status"
-                }, {
-                    data: "tanggapan"
-                }],
-                columnDefs: [{
-                    className: "control",
-                    responsivePriority: 2,
-                    searchable: !1,
-                    targets: 0,
-                    render: function(a, e, t, s) {
-                        return ""
-                    }
-                }, {
-                    targets: 1,
-                    render: function(a, e, t, s) {
-                        var n = t.invoice_id;
-                        return '<a href="' + baseUrl + 'app/invoice/preview">#' + n +
-                            "</a>"
-                    }
-                }, {
-                    targets: 2,
-                    render: function(a, e, t, s) {
-                        var n = t.tenant;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {}, {
-                    targets: 3,
-                    render: function(a, e, t, s) {
-                        var n = t.total;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {
-                    targets: 4,
-                    render: function(a, e, t, s) {
-                        var n = new Date(t.tanggal_tanda_terima);
-                        return '<span class="d-none">' + moment(n).format("YYYYMMDD") +
-                            "</span>" + moment(n).format("DD MMM YYYY")
-                    }
-                }, {
-                    targets: 5,
-                    orderable: !1,
-                    render: function(a, e, t, s) {
-                        var n = t.status;
-                        if (0 === n) {
-                            return '<span class="badge bg-label-success" text-capitalized> Paid </span>'
-                        }
-                        return '<span class="d-none">' + n + "</span>" + n
-                    }
-                }, {
-                    targets: 6,
-                    visible: !1
-                }, {
-                    targets: -1,
-                    title: "Tanggapan",
-                    searchable: !1,
-                    orderable: !1,
-                    render: function(a, e, t, s) {
-                        return '<div class="d-flex align-items-center"><a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a><a href="' +
-                            baseUrl +
-                            'app/invoice/preview" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="' +
-                            baseUrl +
-                            'app/invoice/edit" class="dropdown-item">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>'
-                    }
-                }],
-                order: [
-                    [1, "desc"]
-                ],
-                dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-                language: {
-                    sLengthMenu: "Show _MENU_",
-                    search: "",
-                    searchPlaceholder: "Search Tenant"
-                },
-                buttons: [{
-                    text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tenant</span>',
-                    className: "btn btn-primary",
-                    action: function(a, e, t, s) {
-                        window.location = '{{ route('pages-add-purchase-request') }}';
-                    }
-                }],
-                responsive: {
-                    details: {
-                        display: $.fn.dataTable.Responsive.display.modal({
-                            header: function(a) {
-                                return "Details of " + a.data().full_name
-                            }
-                        }),
-                        type: "column",
-                        renderer: function(a, e, t) {
-                            var s = $.map(t, (function(a, e) {
-                                return "" !== a.title ? '<tr data-dt-row="' + a
-                                    .rowIndex + '" data-dt-column="' + a
-                                    .columnIndex + '"><td>' + a.title +
-                                    ":</td> <td>" + a.data + "</td></tr>" : ""
-                            })).join("");
-                            return !!s && $('<table class="table"/><tbody />').append(s)
-                        }
-                    }
-                },
-                initComplete: function() {
-                    this.api().columns(7).every((function() {
-                        var a = this,
-                            e = $(
-                                '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
-                            ).appendTo(".purchase_status").on("change", (
-                                function() {
-                                    var e = $.fn.dataTable.util.escapeRegex($(
-                                        this).val());
-                                    a.search(e ? "^" + e + "$" : "", !0, !1)
-                                        .draw()
-                                }));
-                        a.data().unique().sort().each((function(a, t) {
-                            e.append('<option value="' + a +
-                                '" class="text-capitalize">' + a +
-                                "</option>")
-                        }))
-                    }))
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- Card Edit --}}
+    <div class="modal fade" id="edit-tenant-data" data-bs-backdrop="static" tabindex="-1">
+        <div class="modal-dialog">
+            <form class="modal-content edit-tenant" id="edit-tenant" novalidate>
+                <input type="hidden" id="edit_id">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="backDropModalTitle">Edit Tenant</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body editTenant">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="nameBackdrop" class="form-label">Nama PIC</label>
+                                <input type="text" id="edit_name" name="name" class="form-control"
+                                    placeholder="Masukan Nama Tenant" required>
+                                <div class="invalid-feedback"> Please enter your name. </div>
+                            </div>
+                            <div class="col mb-3">
+                                <label for="nameBackdrop" class="form-label">Email</label>
+                                <input type="email" id="edit_email" name="email" class="form-control"
+                                    placeholder="Masukan Email" required>
+                                <div class="invalid-feedback"> Please enter your Email. </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="nameBackdrop" class="form-label">Telepon</label>
+                                <input type="text" id="edit_phone" name="phone" class="form-control"
+                                    placeholder="Masukan Telepon" required>
+                                <div class="invalid-feedback"> Please enter your phone. </div>
+                            </div>
+                            <div class="col mb-3">
+                                <label for="nameBackdrop" class="form-label">Company</label>
+                                <input type="text" id="edit_company" name="company" class="form-control"
+                                    placeholder="Masukan Company" required>
+                                <div class="invalid-feedback"> Please enter your Company. </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="nameBackdrop" class="form-label">Floor</label>
+                                <input type="text" id="edit_floor" name="floor" class="form-control"
+                                    placeholder="Masukan Lantai" required>
+                                <div class="invalid-feedback"> Please enter your floor. </div>
+                            </div>
+                            <div class="col mb-3">
+                                <label for="nameBackdrop" class="form-label">Status</label>
+                                <select id="edit_status" class="form-select select2 item-details mb-3">
+                                </select>
+                                <div class="invalid-feedback"> Please enter your status. </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                            id="modal_tenant_cancel">Close</button>
+                        <button type="submit" class="btn btn-primary save-tenant">
+                            <span class="indicator-label">Simpan</span>
+                            <span class="indicator-progress">
+                                Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- Card Preview --}}
+    <div class="modal fade" id="preview-tenant-data" data-bs-backdrop="static" tabindex="-1">
+        <div class="modal-dialog">
+            <form class="modal-content edit-tenant" id="edit-tenant" novalidate>
+                <input type="hidden" id="preview_id">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="backDropModalTitle">Preview Tenant</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body previewTenant">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="nameBackdrop" class="form-label">Nama PIC</label>
+                                <input type="text" id="preview_name" name="name" class="form-control"
+                                    placeholder="Masukan Nama Tenant" required readonly>
+                                <div class="invalid-feedback"> Please enter your name. </div>
+                            </div>
+                            <div class="col mb-3">
+                                <label for="nameBackdrop" class="form-label">Email</label>
+                                <input type="email" id="preview_email" name="email" class="form-control"
+                                    placeholder="Masukan Email" required readonly>
+                                <div class="invalid-feedback"> Please enter your Email. </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="nameBackdrop" class="form-label">Telepon</label>
+                                <input type="text" id="preview_phone" name="phone" class="form-control"
+                                    placeholder="Masukan Telepon" required readonly>
+                                <div class="invalid-feedback"> Please enter your phone. </div>
+                            </div>
+                            <div class="col mb-3">
+                                <label for="nameBackdrop" class="form-label">Company</label>
+                                <input type="text" id="preview_company" name="company" class="form-control"
+                                    placeholder="Masukan Company" required readonly>
+                                <div class="invalid-feedback"> Please enter your Company. </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="nameBackdrop" class="form-label">Floor</label>
+                                <input type="text" id="preview_floor" name="floor" class="form-control"
+                                    placeholder="Masukan Lantai" required readonly>
+                                <div class="invalid-feedback"> Please enter your floor. </div>
+                            </div>
+                            <div class="col mb-3">
+                                <label for="nameBackdrop" class="form-label">Status</label>
+                                <select id="preview_status" class="form-select select2 item-details mb-3" readonly>
+                                </select>
+                                <div class="invalid-feedback"> Please enter your status. </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                            id="modal_tenant_cancel">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    @endsection
+
+    @section('page-script')
+        <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+        <script>
+            "use strict";
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            a.on("draw.dt", (function() {
-                [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((
-                    function(a) {
-                        return new bootstrap.Tooltip(a, {
-                            boundary: document.body
-                        })
-                    }))
-            })), $(".list-tenant-table tbody").on("click", ".delete-record", (function() {
-                e.row($(this).parents("tr")).remove().draw()
-            })), setTimeout((() => {
-                $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(
-                    ".dataTables_length .form-select").removeClass("form-select-sm")
-            }), 300)
-        }));
-    </script>
 
-@endsection
+            var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>`;
+
+            $((function() {
+                var a = $(".list-tenant-table");
+                if (a.length) var e = a.DataTable({
+                    processing: true,
+                    serverSide: true,
+                    deferRender: true,
+                    ajax: {
+                        url: "{{ url('client/list-tenant/data-tenant') }}",
+                        "data": function(d) {
+                            d.start = 0;
+                            d.page = $(".list-tenant-table").DataTable().page.info().page + 1;
+                        }
+                    },
+                    columns: [{
+                        data: "name",
+                        name: "name",
+                        title: "Nama PIC"
+                    }, {
+                        data: "email",
+                        name: "email",
+                        title: "Email"
+                    }, {
+                        data: "phone",
+                        name: "phone",
+                        title: "Phone"
+                    }, {
+                        data: "company",
+                        name: "company",
+                        title: "Company"
+                    }, {
+                        data: "floor",
+                        name: "floor",
+                        title: "Floor"
+                    }, {
+                        class: "text-center",
+                        data: "status",
+                        name: "status",
+                        title: "Status",
+                        render: function(data, type, full, meta) {
+                            if (data == "Active") {
+                                return '<span class="badge  bg-label-success">' + data +
+                                    '</span>'
+                            }
+                        }
+                    }, {
+                        data: null,
+                        title: "Tanggapan",
+                        render: function(data, type, row) {
+                            return `
+                        <div class="d-flex align-items-center">
+                        <a href="javascript:void(0)"  id="button-edit" data-bs-toggle="modal" data-id="` + data.id + `" class="text-body"><i class="ti ti-pencil mx-2 ti-sm"></i></a>
+                        <a href="javascript:void(0)"  id="button-preview" data-bs-toggle="modal" data-id="` + data.id + `" class="text-body"><i class="ti ti-eye mx-2 ti-sm"></i></a>
+                        <a href="javascript:void(0)"  id="button-delete"  data-id="` + data.id + `" class="text-body"><i class="ti ti-trash mx-2 ti-sm"></i></a>
+                        </div>`;
+                        }
+                    }],
+                    order: [
+                        [0, "desc"]
+                    ],
+                    dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+                    language: {
+                        sLengthMenu: "Show _MENU_",
+                        search: "",
+                        searchPlaceholder: "Search Tenant"
+                    },
+                    buttons: [{
+                        text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tenant</span>',
+                        className: "btn btn-primary",
+                        attr: {
+                            'data-bs-toggle': 'modal',
+                            'data-bs-target': '#create-tenant-data'
+                        }
+                    }],
+                    responsive: {
+                        details: {
+                            display: $.fn.dataTable.Responsive.display.modal({
+                                header: function(a) {
+                                    return "Details of " + a.data().full_name
+                                }
+                            }),
+                            type: "column",
+                            renderer: function(a, e, t) {
+                                var s = $.map(t, (function(a, e) {
+                                    return "" !== a.title ? '<tr data-dt-row="' + a
+                                        .rowIndex + '" data-dt-column="' + a
+                                        .columnIndex + '"><td>' + a.title +
+                                        ":</td> <td>" + a.data + "</td></tr>" : ""
+                                })).join("");
+                                return !!s && $('<table class="table"/><tbody />').append(s)
+                            }
+                        }
+                    },
+                    initComplete: function() {
+                        this.api().columns(5).every((function() {
+                            var a = this,
+                                e = $(
+                                    '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
+                                ).appendTo(".purchase_status").on("change", (
+                                    function() {
+                                        var e = $.fn.dataTable.util.escapeRegex($(
+                                            this).val());
+                                        a.search(e ? "^" + e + "$" : "", !0, !1)
+                                            .draw()
+                                    }));
+                            a.data().unique().sort().each((function(a, t) {
+                                e.append('<option value="' + a +
+                                    '" class="text-capitalize">' + a +
+                                    "</option>")
+                            }))
+                        }))
+                    }
+                });
+                a.on("draw.dt", (function() {
+                    [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((
+                        function(a) {
+                            return new bootstrap.Tooltip(a, {
+                                boundary: document.body
+                            })
+                        }))
+                })), $(".list-tenant-table tbody").on("click", ".delete-record", (function() {
+                    e.row($(this).parents("tr")).remove().draw()
+                })), setTimeout((() => {
+                    $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(
+                        ".dataTables_length .form-select").removeClass("form-select-sm")
+                }), 300)
+            }));
+
+            var createTenant = $(".create-tenant");
+            var editTenant = $(".edit-tenant");
+
+            // Create, Add dan Save
+            Array.prototype.slice.call(createTenant).forEach(function(form) {
+                $('.indicator-progress').hide();
+                $('.indicator-label').show();
+                form.addEventListener(
+                    "submit",
+                    function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        } else {
+                            // Submit your form
+                            event.preventDefault();
+                            Swal.fire({
+                                title: '<h2>Loading...</h2>',
+                                html: sweet_loader + '<h5>Please Wait</h5>',
+                                showConfirmButton: false,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
+                            })
+                            let formData = new FormData();
+
+                            $('.addTenant').find('.form-control').each(function() {
+                                var inputId = $(this).attr('id');
+                                var inputValue = $("#" + inputId).val();
+
+                                formData.append($("#" + inputId).attr("name"), inputValue);
+                            });
+
+                            formData.append('status', 'Active');
+
+                            $.ajax({
+                                url: "{{ url('api/tenant') }}",
+                                type: "POST",
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                success: function(response) {
+                                    $('.indicator-progress').show();
+                                    $('.indicator-label').hide();
+
+                                    Swal.fire({
+                                        title: 'Berhasil',
+                                        text: 'Berhasil menambahkan tenant',
+                                        icon: 'success',
+                                        customClass: {
+                                            confirmButton: 'btn btn-primary'
+                                        },
+                                        buttonsStyling: false
+                                    })
+
+                                    $('#modal_tenant_cancel').click();
+                                    $('#create-tenant')[0].reset();
+                                    $(".list-tenant-table").DataTable().ajax.reload();
+                                },
+                                error: function(xhr, status, error) {
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: ' You clicked the button!',
+                                        icon: 'error',
+                                        customClass: {
+                                            confirmButton: 'btn btn-primary'
+                                        },
+                                        buttonsStyling: false
+                                    })
+                                }
+                            });
+                        }
+
+                        form.classList.add("was-validated");
+                    },
+                    false
+                );
+            });
+
+            // Edit dan Update
+            Array.prototype.slice.call(editTenant).forEach(function(form) {
+                $('.indicator-progress').hide();
+                $('.indicator-label').show();
+                form.addEventListener(
+                    "submit",
+                    function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        } else {
+                            // Submit your form
+                            event.preventDefault();
+                            let id = $("#edit_id").val();
+                            let formData = new FormData();
+
+                            var data = $('#edit-tenant').serialize();
+                            $.ajax({
+                                url: "{{ url('api/tenant') }}/" + id,
+                                type: "PATCH",
+                                data: data,
+                                success: function(response) {
+                                    $('.indicator-progress').show();
+                                    $('.indicator-label').hide();
+
+                                    Swal.fire({
+                                        title: 'Berhasil',
+                                        text: 'Berhasil memperbarui tenant',
+                                        icon: 'success',
+                                        customClass: {
+                                            confirmButton: 'btn btn-primary'
+                                        },
+                                        buttonsStyling: false
+                                    })
+
+                                    $('#modal_tenant_cancel').click();
+                                    $('#edit-tenant')[0].reset();
+                                    $(".list-tenant-table").DataTable().ajax.reload();
+                                },
+                                error: function(xhr, status, error) {
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: ' You clicked the button!',
+                                        icon: 'error',
+                                        customClass: {
+                                            confirmButton: 'btn btn-primary'
+                                        },
+                                        buttonsStyling: false
+                                    })
+                                }
+                            });
+                        }
+
+                        form.classList.add("was-validated");
+                    },
+                    false
+                );
+            });
+
+            $(document).ready(function() {
+                var dataOptions = [{
+                        id: 'active',
+                        text: 'Active'
+                    },
+                    {
+                        id: 'non-active',
+                        text: 'Non-active'
+                    },
+                ];
+
+                $("#edit_status").select2({
+                    data: dataOptions,
+                    cache: true,
+                    allowClear: true,
+                    placeholder: 'Select Status'
+                });
+
+                $(document).on('click', '#button-edit', function(event) {
+                    let id = $(this).data('id');
+
+                    Swal.fire({
+                        title: '<h2>Loading...</h2>',
+                        html: sweet_loader + '<h5>Please Wait</h5>',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    })
+
+                    $.ajax({
+                        url: baseUrl + "api/tenant/" + id,
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response) {
+                            let result = response.data;
+                            $('#edit_id').val(result.id);
+                            $("#edit_status").empty().append('<option value="' + result.status +
+                                    '">' + result.status + '</option>').val(result.status)
+                                .trigger("change");
+                            $('#edit_name').val(result.name);
+                            $('#edit_email').val(result.email);
+                            $('#edit_phone').val(result.phone);
+                            $('#edit_company').val(result.company);
+                            $('#edit_floor').val(result.floor);
+                            $('#edit-tenant-data').modal('show');
+                            Swal.close();
+                        },
+                        error: function(errors) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: errors.responseJSON.message,
+                            });
+                        }
+                    });
+                });
+
+                $(document).on('click', '#button-preview', function(event) {
+                    let id = $(this).data('id');
+
+                    Swal.fire({
+                        title: '<h2>Loading...</h2>',
+                        html: sweet_loader + '<h5>Please Wait</h5>',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    })
+
+                    $.ajax({
+                        url: baseUrl + "api/tenant/" + id,
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response) {
+                            let result = response.data;
+                            $('#preview_id').val(result.id);
+                            $("#preview_status").empty().append('<option value="' + result.status +
+                                    '">' + result.status + '</option>').val(result.status)
+                                .trigger("change");
+                            $('#preview_name').val(result.name);
+                            $('#preview_email').val(result.email);
+                            $('#preview_phone').val(result.phone);
+                            $('#preview_company').val(result.company);
+                            $('#preview_floor').val(result.floor);
+                            $('#preview-tenant-data').modal('show');
+                            Swal.close();
+                        },
+                        error: function(errors) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: errors.responseJSON.message,
+                            })
+                        }
+                    });
+                });
+            });
+        </script>
+
+    @endsection

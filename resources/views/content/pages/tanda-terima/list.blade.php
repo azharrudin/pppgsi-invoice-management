@@ -80,21 +80,32 @@
         $((function() {
             var a = $(".invoice-list-table");
             if (a.length) var e = a.DataTable({
-                ajax: "{{ url('api/receipt') }}",
+                processing: true,
+                serverSide: true,
+                deferRender: true,
+                ajax: {
+                    url: "{{ url('invoice/tanda-terima/data-tanda-terima') }}",
+                    "data": function(d) {
+                        d.start = 0;
+                        d.page = $(".invoice-list-table").DataTable().page.info().page + 1;
+                    }
+                },
                 columns: [{
-                    class: "d-none",
-                    data: "created_at",
-                    name: "created_at"
-                }, {
                     class: "text-center",
                     data: "receipt_number",
                     name: "receipt_number",
-                    title: "No Tanda Terima"
+                    title: "No Tanda Terima",
+                    render: function(data, type, row) {
+                            return data;
+                        }
                 }, {
                     class: "text-center",
-                    data: "tenant.name",
-                    name: "tenant.name",
-                    title: "Tenant"
+                    data: "tenant_name",
+                    name: "tenant_name",
+                    title: "Tenant",
+                    render: function(data, type, row) {
+                            return data;
+                        }
                 }, {
                     class: "text-center",
                     data: "grand_total",
@@ -161,10 +172,8 @@
                     }
                 }],
                 order: [
-                    [0, "desc"]
+                    [1, "desc"]
                 ],
-                paging: true,
-                pageSize: 10,
                 dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                 language: {
                     sLengthMenu: "Show _MENU_",
@@ -198,7 +207,7 @@
                     }
                 },
                 initComplete: function() {
-                    this.api().columns(5).every((function() {
+                    this.api().columns(4).every((function() {
                         var a = this,
                             e = $(
                                 '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
@@ -206,7 +215,7 @@
                                 function() {
                                     var e = $.fn.dataTable.util.escapeRegex($(
                                         this).val());
-                                    a.search(e ? "^" + e + "$" : "", !0, !1)
+                                    a.search(e)
                                         .draw()
                                 }));
                         a.data().unique().sort().each((function(a, t) {
