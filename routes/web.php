@@ -66,6 +66,7 @@ Route::prefix('complain')->group(function () {
         Route::get('/list-ticket', [TicketListController::class, 'index'])->name('pages-list-ticket');
         Route::get('/add-ticket', [TicketListController::class, 'add'])->name('pages-add-ticket');
         Route::get('/preview-ticket', [TicketListController::class, 'preview'])->name('pages-preview-ticket');
+        Route::get('/data-ticket', [TicketListController::class, 'datatable'])->name('data-ticket');
     });
 
     // Laporan Kerusakan
@@ -142,8 +143,9 @@ Route::prefix('report')->group(function () {
 // Settings
 Route::prefix('settings')->group(function () {
     // List Tenant
-    Route::prefix('/list-bank')->group(function () {
-        Route::get('/', [ListBankController::class, 'index'])->name('pages-list-bank');
+    Route::prefix('/')->group(function () {
+        Route::get('/list-bank', [ListBankController::class, 'index'])->name('pages-list-bank');
+        Route::get('/data-bank', [ListBankController::class, 'datatable'])->name('data-bank');
     });
 
     // List User

@@ -772,7 +772,6 @@ $configData = Helper::appClasses();
                             if (dataLocal.materai_image) {
                                 this.options.addedfile.call(this, mockFile);
                                 this.options.thumbnail.call(this, mockFile, dataLocal.materai_image);
-
                                 // Optional: Handle the removal of the file
                                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
                                     // Handle removal logic here

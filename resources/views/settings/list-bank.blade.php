@@ -147,52 +147,54 @@ $configData = Helper::appClasses();
     $((function() {
         var a = $(".list-bank-table");
         if (a.length) var e = a.DataTable({
+            processing: true,
+            serverSide: true,
+            deferRender: true,
             ajax: {
-                url: baseUrl + "api/bank"
+                url: "{{ url('settings/data-bank') }}",
+                "data": function(d) {
+                    d.start = 0;
+                    d.page = $(".list-bank-table").DataTable().page.info().page + 1;
+                }
             },
             columns: [{
-                        data: "name",
-                        title: "Nama Bank"
-                    },
-                    {
-                        title: "Tanggal Dibuat",
-                        data: "created_at",
-                        render: function(data, type, row) {
-                            if (data != null) {
-                                const date = new Date(data);
-                                const year = date.getUTCFullYear();
-                                const month = new Intl.DateTimeFormat('en-US', {
-                                    month: 'long'
-                                }).format(date);
-                                const day = date.getUTCDate();
-                                const formattedDate = `${day} ${month} ${year}`;
-                                return formattedDate;
-                            } else {
-                                return '';
-                            }
+                    data: "name",
+                    title: "Nama Bank",
+                    name : "Nama Bank"
+                },
+                {
+                    title: "Tanggal Dibuat",
+                    data: "created_at",
+                    name: "Tanggal Dibuat",
+                    render: function(data, type, row) {
+                        if (data != null) {
+                            const date = new Date(data);
+                            const year = date.getUTCFullYear();
+                            const month = new Intl.DateTimeFormat('en-US', {
+                                month: 'long'
+                            }).format(date);
+                            const day = date.getUTCDate();
+                            const formattedDate = `${day} ${month} ${year}`;
+                            return formattedDate;
+                        } else {
+                            return '';
                         }
-                    },
-                    {
-                        title: "Tanggapan",
-                        data: null
-                    },
-                ]
-
-                ,
-            columnDefs: [{
-                targets: -1,
-                title: "Tanggapan",
-                searchable: !1,
-                orderable: !1,
-                render: function(data, type, row) {
-                    return `
+                    }
+                },
+                {
+                    data: "id",
+                    name: "tanggapan",
+                    title: "Tanggapan",
+                    render: function(data, type, row) {
+                        return `
                         <div class="d-flex align-items-center">
-                        <a href="javascript:void(0)"  id="button-edit" data-bs-toggle="modal" data-id="` + data.id + `" class="text-body"><i class="ti ti-pencil mx-2 ti-sm"></i></a>
-                        <a href="javascript:void(0)"  id="button-preview" data-bs-toggle="modal" data-id="` + data.id + `" class="text-body"><i class="ti ti-eye mx-2 ti-sm"></i></a>
-                        <a href="javascript:void(0)"  id="button-delete"  data-id="` + data.id + `" class="text-body"><i class="ti ti-trash mx-2 ti-sm"></i></a>
+                        <a href="javascript:void(0)"  id="button-edit" data-bs-toggle="modal" data-id="` + data + `" class="text-body"><i class="ti ti-pencil mx-2 ti-sm"></i></a>
+                        <a href="javascript:void(0)"  id="button-preview" data-bs-toggle="modal" data-id="` + data + `" class="text-body"><i class="ti ti-eye mx-2 ti-sm"></i></a>
+                        <a href="javascript:void(0)"  id="button-delete"  data-id="` + data + `" class="text-body"><i class="ti ti-trash mx-2 ti-sm"></i></a>
                         </div>`;
-                }
-            }],
+                    }
+                },
+            ],
             order: [
                 [1, "desc"]
             ],
