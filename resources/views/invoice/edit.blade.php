@@ -198,6 +198,7 @@ $configData = Helper::appClasses();
     });
 
     let data;
+    let ttdFile;
 
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
@@ -590,11 +591,10 @@ $configData = Helper::appClasses();
                         datas.invoice_date = tglInvoice;
                         datas.grand_total = parseInt(grandTotal);
                         datas.materai_image = fileTtd
-                        console.log(datas);
 
                         $.ajax({
-                            url: baseUrl + "api/invoice/",
-                            type: "POST",
+                            url: baseUrl + "api/invoice/"+id,
+                            type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
@@ -713,6 +713,7 @@ $configData = Helper::appClasses();
             success: function(res) {
                 let data = res.data;
                 console.log(data);
+                ttdFile = data.materai_image;
 
                 const myDropzone = new Dropzone('#dropzone-basic', {
                     parallelUploads: 1,
