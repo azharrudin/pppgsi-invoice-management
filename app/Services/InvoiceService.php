@@ -61,6 +61,13 @@ class InvoiceService{
         if ($validator->fails()) $message = implode(', ', $validator->errors()->all());
 
         if($message == ""){
+            $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "lunas"];
+            $status = strtolower($request->input("status"));
+
+            if(!in_array($status, $validStatus)) $message = "Status tidak valid";
+        }
+
+        if($message == ""){
             $getTenant = $this->CommonService->getDataById("App\Models\Tenant", $request->input("tenant_id"));
             $getBank = $this->CommonService->getDataById("App\Models\Bank", $request->input("bank_id"));
 

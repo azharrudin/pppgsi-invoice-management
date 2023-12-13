@@ -59,6 +59,13 @@ class DamageReportService{
             if (is_null($getTicket)) $message = "Ticket tidak ditemukan";
         }
 
+        if($message == ""){
+            $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "lunas"];
+            $status = strtolower($request->input("status"));
+
+            if(!in_array($status, $validStatus)) $message = "Status tidak valid";
+        }
+
         if($message == "" && !is_null($request->input("signatures"))){
             foreach($request->input("signatures") as $signature){
                 $type = strtolower($signature["type"]);
