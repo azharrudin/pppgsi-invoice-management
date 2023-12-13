@@ -239,9 +239,6 @@ $configData = Helper::appClasses();
             }
         });
 
-
-
-
         $('.date').flatpickr({
             dateFormat: 'Y-m-d'
         });

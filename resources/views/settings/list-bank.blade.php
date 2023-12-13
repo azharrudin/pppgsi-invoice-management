@@ -30,7 +30,6 @@ $configData = Helper::appClasses();
 <div class="card">
     <div class="card-datatable table-responsive pt-0">
         <table class="list-bank-table table">
-
         </table>
     </div>
 </div>
