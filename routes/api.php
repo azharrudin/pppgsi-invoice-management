@@ -34,11 +34,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('tenant/select', [TenantController::class, "select"]);
 Route::resource('tenant', TenantController::class);
 
+Route::get("bank/select", [BankController::class, "select"]);
 Route::resource('bank', BankController::class);
 
 Route::get("invoice/select", [InvoiceController::class, "select"]);
 Route::resource('invoice', InvoiceController::class);
 
+Route::get("receipt/select", [ReceiptController::class, "select"]);
 Route::resource('receipt', ReceiptController::class);
 
 Route::get("ticket/select", [TicketController::class, "select"]);
@@ -47,18 +49,23 @@ Route::resource('ticket', TicketController::class);
 Route::get("damage-report/select", [DamageReportController::class, "select"]);
 Route::resource('damage-report', DamageReportController::class);
 
+Route::get("work-order/select", [WorkOrderController::class, "select"]);
 Route::resource('work-order', WorkOrderController::class);
 
+Route::get("vendor/select", [VendorController::class, "select"]);
 Route::resource('vendor', VendorController::class);
 
 Route::get('material-request/select', [MaterialRequestController::class, "select"]);
 Route::resource('material-request', MaterialRequestController::class);
 
+Route::get("purchase-request/select", [PurchaseRequestController::class, "select"]);
 Route::resource('purchase-request', PurchaseRequestController::class);
 
+Route::get("purchase-order/select", [PurchaseOrderController::class, "select"]);
 Route::resource('purchase-order', PurchaseOrderController::class);
 
 Route::post('user/login', [UserController::class, "login"]);
 Route::resource('user', UserController::class);
 
+Route::get("tax/select", [TaxController::class, "select"]);
 Route::resource('tax', TaxController::class);
