@@ -56,6 +56,13 @@ class MaterialRequestService{
         $message = "";
         if ($validator->fails()) $message = implode(', ', $validator->errors()->all());
 
+        if($message == ""){
+            $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "lunas"];
+            $status = strtolower($request->input("status"));
+
+            if(!in_array($status, $validStatus)) $message = "Status tidak valid";
+        }
+
         if($message == "" && !is_null($request->input("signatures"))){
             $validType = ["prepared by", "reviewed by", "acknowledge by", "approved by"];
 
