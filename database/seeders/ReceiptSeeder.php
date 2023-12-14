@@ -18,7 +18,7 @@ class ReceiptSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 12; $i++) {
             $count = $i + 1;
             $grandTotal = $count * 100000;
             $startDate = $faker->dateTimeBetween('-2 week', '-1 week');
