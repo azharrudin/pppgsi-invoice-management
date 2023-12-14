@@ -205,4 +205,53 @@ class TicketController extends Controller
             return response()->json(['message' => $errorMessage], $errorStatusCode);
         }
     }
+
+    public function select(Request $request)
+    {
+        try{
+            [
+                "page" => $page,
+                "value" => $value
+            ] = $this->CommonService->getQuery($request);
+            $field = $request->input("field");
+            $perPage = 10;
+
+            if(is_null($field)) $field = "id";
+
+            $getTicket = Ticket::where("deleted_at", null)->
+                where($field, 'like', '%' . $value . '%')->
+                select("id", $field)->
+                paginate($perPage);
+            $totalCount = $getTicket->total();
+
+            $dataArr = [];
+            foreach($getTicket as $ticketObj){
+                $dataObj = [
+                    "id" => $ticketObj->id,
+                    "text" => $ticketObj->$field,
+                ];
+                array_push($dataArr, $dataObj);
+            }
+
+            $pagination = ["more" => false];
+            if($totalCount > ($perPage * $page)) {
+                $pagination = ["more" => true];
+            }
+
+            return [
+                "data" => $dataArr,
+                "pagination" => $pagination,
+            ];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
 }
