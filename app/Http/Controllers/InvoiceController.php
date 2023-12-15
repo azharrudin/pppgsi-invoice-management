@@ -191,11 +191,12 @@ class InvoiceController extends Controller
             DB::rollBack();
 
             if(is_a($e, CustomException::class)){
+                dd($e);
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
 
-            return response()->json(['message' => $errorMessage], $errorStatusCode);
+            return response()->json(['message' => $e], $errorStatusCode);
         }
     }
 

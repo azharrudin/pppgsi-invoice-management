@@ -99,7 +99,6 @@ class TicketController extends Controller
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
             DB::rollBack();
-
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();

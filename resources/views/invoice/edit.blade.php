@@ -198,30 +198,24 @@ $configData = Helper::appClasses();
     });
 
     let data;
-    let ttdFile;
 
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
-    let dataLocal = JSON.parse(localStorage.getItem("invoice"));
+
+    var urlSegments = window.location.pathname.split('/');
+    var idIndex = urlSegments.indexOf('edit') + 1;
+    var id = urlSegments[idIndex];
+    let dataLocal = JSON.parse(localStorage.getItem("edit-invoice"));
+    let ttdFile = dataLocal ? dataLocal.materai_image : null;
+
     $(document).ready(function() {
-        var urlSegments = window.location.pathname.split('/');
-        var idIndex = urlSegments.indexOf('edit') + 1;
-        var id = urlSegments[idIndex];
-        getDataInvoice(id);
-
-        console.log(data);
-
-
         window.addEventListener("pageshow", function(event) {
             var historyTraversal = event.persisted || (typeof window.performance !== "undefined" && window.performance.getEntriesByType("navigation")[0].type === "back_forward");
             if (historyTraversal) {
                 location.reload(); // Reload the page
             }
         });
-
-
-
 
         $('.date').flatpickr({
             dateFormat: 'Y-m-d'
@@ -301,44 +295,90 @@ $configData = Helper::appClasses();
 
         if (dataLocal) {
             $("#invoice_number").val(dataLocal.invoice_number);
+            $("#invoice_date").val(dataLocal.invoice_date);
             $("#contract_number").val(dataLocal.contract_number);
+            $("#contract_date").val(dataLocal.contract_date);
             $("#addendum_number").val(dataLocal.addendum_number);
+            $("#addendum_date").val(dataLocal.addendum_date);
             $("#grand_total_spelled").val(dataLocal.grand_total_spelled);
             $(".grand_total").text(dataLocal.grand_total);
-            $("#materai_name").val(dataLocal.materai_name);
+            $("#invoice_due_date").val(dataLocal.invoice_due_date);
             $("#term_and_conditions").val(dataLocal.term_and_conditions);
+            $("#materai_date").val(dataLocal.materai_date);
+            $("#materai_name").val(dataLocal.materai_name);
 
 
             if (dataLocal.tenant_id) {
-                getTenant();
+                getTenant(dataLocal.tenant_id);
             }
             if (dataLocal.bank_id) {
-                getBank();
-            }
-            if (dataLocal.invoice_date) {
-                getInvoiceDate();
-            }
-            if (dataLocal.contract_date) {
-                getContractDate();
+                getBank(dataLocal.bank_id);
             }
 
-            if (dataLocal.addendum_date) {
-                getAddendumDate();
-            }
+            const myDropzone = new Dropzone('#dropzone-basic', {
+                parallelUploads: 1,
+                maxFilesize: 3,
+                addRemoveLinks: true,
+                maxFiles: 1,
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                autoQueue: false,
+                url: "../uploads/logo",
+                thumbnailWidth: 250,
+                thumbnailHeight: null,
+                init: function() {
+                    if (dataLocal) {
+                        console.log('a');
+                        let mockFile = {
+                            dataURL: dataLocal.materai_image
+                        };
+                        if (dataLocal.materai_image) {
+                            this.options.addedfile.call(this, mockFile);
+                            this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
 
-            if (dataLocal.invoice_due_date) {
-                getInvoiceDueDate();
-            }
+                            // Optional: Handle the removal of the file
+                            mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+                                // Handle removal logic here
+                            });
+                        }
+                    } else {
+                        let mockFile = {
+                            dataURL: data.materai_image
+                        };
+                        if (data.materai_image) {
+                            this.options.addedfile.call(this, mockFile);
+                            this.options.thumbnail.call(this, mockFile, data.materai_image);
 
-            if (dataLocal.materai_date) {
-                getMateraiDate();
-            }
+                            // Optional: Handle the removal of the file
+                            mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+                                // Handle removal logic here
+                            });
+                        }
+
+                    }
+                    this.on("success", function(file) {
+                        console.log('a');
+                        $('.dz-image').css({
+                            "width": "50%",
+                            "height": "auto"
+                        });
+                    })
+                    // this.on("thumbnail", function(file) {
+                    //     if (file.width > 500 && file.height > 500) {
+                    //           this.removeFile(file)
+                    //     } 
+                    // });
+                    this.on('addedfile', function(file) {
+                        while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
+                        ttdFile = file;
+                    })
+                }
+            });
+
+            getDetails(dataLocal.details);
+
+        } else {
+            getDataInvoice(id);
         }
-
-        getDetails();
-
-
-
 
         $('#tenant').on("change", (async function(e) {
             $(this).removeClass("invalid");
@@ -534,8 +574,8 @@ $configData = Helper::appClasses();
                     } else {
                         // Submit your form
                         event.preventDefault();
-                        let fileTtd = ttdFile.dataURL;
-                        console.log(id+fileTtd);
+                        console.log(ttdFile);
+                        let fileTtd = ttdFile;
                         let tenant = $("#tenant").val();
                         let noInvoice = $("#invoice_number").val();
                         let tglInvoice = $("#invoice_date").val();
@@ -590,10 +630,10 @@ $configData = Helper::appClasses();
                         datas.addendum_date = tglAddendum;
                         datas.invoice_date = tglInvoice;
                         datas.grand_total = parseInt(grandTotal);
-                        datas.materai_image = fileTtd
+                        datas.materai_image = fileTtd.dataURL;
 
                         $.ajax({
-                            url: baseUrl + "api/invoice/"+id,
+                            url: baseUrl + "api/invoice/" + id,
                             type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -652,6 +692,7 @@ $configData = Helper::appClasses();
             let bank = $("#bank").val();
             let tglTtd = $("#materai_date").val();
             let nameTtd = $("#materai_name").val();
+            console.log(ttdFile);
             let fileTtd = ttdFile;
 
             var detail = [];
@@ -693,27 +734,24 @@ $configData = Helper::appClasses();
             datas.invoice_date = tglInvoice;
             datas.grand_total = grandTotal;
             datas.materai_image = fileTtd;
-            localStorage.setItem("invoice", JSON.stringify(datas));
-            window.location.href = "/invoice/preview-invoice"
+            localStorage.setItem("edit-invoice", JSON.stringify(datas));
+            window.location.href = `/invoice/preview-invoice-edit/${id}`
         });
 
         $(document).on('click', '#batal', function(event) {
             event.preventDefault();
-            localStorage.removeItem('invoice');
+            localStorage.removeItem("edit-invoice");
             window.location.href = "/invoice/list-invoice"
         });
     });
 
     function getDataInvoice(id) {
-        console.log(id);
         $.ajax({
             url: "{{ url('api/invoice') }}/" + id,
             type: "GET",
             dataType: "json",
             success: function(res) {
                 let data = res.data;
-                console.log(data);
-                ttdFile = data.materai_image;
 
                 const myDropzone = new Dropzone('#dropzone-basic', {
                     parallelUploads: 1,
@@ -723,10 +761,28 @@ $configData = Helper::appClasses();
                     acceptedFiles: ".jpeg,.jpg,.png,.gif",
                     autoQueue: false,
                     url: "../uploads/logo",
+                    thumbnailWidth: 250,
+                    thumbnailHeight: 250,
                     init: function() {
-                        if (data.materai_image) {
-                            let mockFile = { dataURL: data.materai_image };
-                            console.log(data);
+                        if (dataLocal) {
+                            console.log('a');
+                            let mockFile = {
+                                dataURL: dataLocal.materai_image
+                            };
+                            if (dataLocal.materai_image) {
+                                this.options.addedfile.call(this, mockFile);
+                                this.options.thumbnail.call(this, mockFile, dataLocal.materai_image);
+                                // Optional: Handle the removal of the file
+                                mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+                                    // Handle removal logic here
+                                });
+                            }
+                        } else {
+                            let mockFile = {
+                                dataURL: data.materai_image
+                            };
+
+                            ttdFile = mockFile
                             if (data.materai_image) {
                                 this.options.addedfile.call(this, mockFile);
                                 this.options.thumbnail.call(this, mockFile, data.materai_image);
@@ -736,6 +792,7 @@ $configData = Helper::appClasses();
                                     // Handle removal logic here
                                 });
                             }
+
                         }
                         this.on('addedfile', function(file) {
                             while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
@@ -761,7 +818,7 @@ $configData = Helper::appClasses();
                 $("#materai_name").val(data.materai_name);
                 getDetails(data.invoice_details);
 
-               
+
             },
             error: function(errors) {
                 console.log(errors);
@@ -777,7 +834,6 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
-                console.log(data);
                 let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
                 $('#tenant').prepend(tem);
                 // $("#company").text(data.company);
@@ -806,7 +862,7 @@ $configData = Helper::appClasses();
         });
     }
 
-   
+
 
     function getDetails(detailItems) {
         let details = detailItems;
@@ -847,7 +903,6 @@ $configData = Helper::appClasses();
                 </div>
             </div>`;
                 getDetail = getDetail + temp;
-                console.log(getDetail);
             }
             $('#details').prepend(getDetail);
         }

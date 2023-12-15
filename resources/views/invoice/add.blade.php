@@ -239,9 +239,6 @@ $configData = Helper::appClasses();
             }
         });
 
-
-
-
         $('.date').flatpickr({
             dateFormat: 'Y-m-d'
         });
@@ -516,12 +513,6 @@ $configData = Helper::appClasses();
                 style: "currency",
                 currency: "IDR"
             }).format(number);
-        }
-
-
-
-        if (dataLocal) {
-            console.log('kui');
         }
 
         var saveInvoice = $('.create-invoice');
