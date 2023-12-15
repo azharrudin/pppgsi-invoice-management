@@ -206,6 +206,19 @@ class BankController extends Controller
                 $dataObj = [
                     "id" => $tenantObj->id,
                     "text" => $tenantObj->$field,
+            if(is_null($field)) $field = "id";
+
+            $getBank = Bank::where("deleted_at", null)->
+                where($field, 'like', '%' . $value . '%')->
+                select("id", $field)->
+                paginate($perPage);
+            $totalCount = $getBank->total();
+
+            $dataArr = [];
+            foreach($getBank as $bankObj){
+                $dataObj = [
+                    "id" => $bankObj->id,
+                    "text" => $bankObj->$field,
                 ];
                 array_push($dataArr, $dataObj);
             }
