@@ -159,7 +159,7 @@
                         </button>
                         <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
                         <button type="button" class="btn btn-label-secondary btn-save d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                        <button type="button" class="btn btn-label-secondary d-grid w-100 btn-cancel">Batal</button>
                     </div>
                 </div>
             </div>
@@ -367,6 +367,13 @@
                 localStorage.setItem('receipt', JSON.stringify(datas));
                 window.location.href = "/invoice/tanda-terima/preview"
             })
+
+            // Cancel
+            $(document).on('click', '.btn-cancel', function(event) {
+            event.preventDefault();
+            localStorage.removeItem('receipt');
+            window.location.href = "/invoice/tanda-terima"
+        });
 
             // Select 2 ajax function
             $(".select-tenant").select2({
