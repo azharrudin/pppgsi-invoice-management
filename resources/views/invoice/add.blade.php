@@ -353,9 +353,6 @@ $configData = Helper::appClasses();
 
         getDetails();
 
-
-
-
         $('#tenant').on("change", (async function(e) {
             $(this).removeClass("invalid");
             var rekomendasi = $("#tenant").select2('data');
@@ -408,12 +405,6 @@ $configData = Helper::appClasses();
                     </a>
                 </div>
             </div>`;
-
-            
-            // Kosongkan nilai input pada baris yang di-clone
-          
-
-            // Tambahkan baris baru ke dalam tabel
             $details.append($newRow);
         });
 
@@ -439,6 +430,7 @@ $configData = Helper::appClasses();
             getTotal();
 
         });
+
         $(document).on('input', '.tax', function() {
             // Hapus baris yang ditekan tombol hapus
             let index = $('.tax').index(this);

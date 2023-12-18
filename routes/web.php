@@ -62,6 +62,7 @@ Route::prefix('invoice')->group(function () {
 // Complain
 Route::prefix('complain')->group(function () {
     // Ticket
+
     Route::prefix('/')->group(function () {
         Route::get('/list-ticket', [TicketListController::class, 'index'])->name('pages-list-ticket');
         Route::get('/add-ticket', [TicketListController::class, 'add'])->name('pages-add-ticket');

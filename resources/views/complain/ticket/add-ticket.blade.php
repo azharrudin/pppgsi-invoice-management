@@ -96,6 +96,16 @@ $configData = Helper::appClasses();
         });
 
         var files = [];
+
+        if (dataLocal) {
+            $("#reporter_name").val(dataLocal.reporter_name);
+            $("#reporter_phone").val(dataLocal.reporter_phone);
+            $("#reporter_company").val(dataLocal.reporter_company);
+            $("#ticket_title").val(dataLocal.ticket_title);
+            $("#ticket_body").val(dataLocal.ticket_body);
+            files = dataLocal.attachment;
+        }
+
         $(document).on('change', '#attachment', function(e) {
             // Get a reference to the file
             const file = e.target.files[0];
@@ -162,7 +172,7 @@ $configData = Helper::appClasses();
                                 })
 
                                 localStorage.removeItem('ticket');
-                                window.location.href = "/invoice/list-invoice"
+                                window.location.href = "/complain/list-ticket"
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
@@ -185,72 +195,25 @@ $configData = Helper::appClasses();
         });
 
         $(document).on('click', '#preview', function(event) {
+            event.preventDefault();
 
-            console.log(files);
-            // event.preventDefault();
-            // let tenant = $("#tenant").val();
-            // let noInvoice = $("#invoice_number").val();
-            // let tglInvoice = $("#invoice_date").val();
-            // let noKontrak = $("#contract_number").val();
-            // let tglKontrak = $("#contract_date").val();
-            // let noAddendum = $("#addendum_number").val();
-            // let tglAddendum = $("#addendum_date").val();
-            // let terbilang = $("#grand_total_spelled").val();
-            // let grandTotal = $(".grand_total").text();
-            // let tglJatuhTempo = $("#invoice_due_date").val();
-            // let syaratDanKententuan = $("#term_and_conditions").val();
-            // let bank = $("#bank").val();
-            // let tglTtd = $("#materai_date").val();
-            // let nameTtd = $("#materai_name").val();
-            // let fileTtd = ttdFile;
+            let datas = {};
+            $('.create-ticket').find('.form-control').each(function() {
+                var inputId = $(this).attr('id');
+                var inputValue = $("#" + inputId).val();
+                datas[$("#" + inputId).attr("name")] = inputValue;
+            });
+            datas.attachment = files;
+            datas.status = "Wait a response"
 
-            // var detail = [];
-            // $('.row-input').each(function(index) {
-            //     var input_name = $(this).attr('name');
-            //     var input_value = $(this).val();
-            //     var input_index = Math.floor(index / 5); // Membagi setiap 5 input menjadi satu objek pada array
-            //     if (index % 5 == 0) {
-            //         detail[input_index] = {
-            //             item: input_value
-            //         };
-            //     } else if (index % 5 == 1) {
-            //         detail[input_index].description = input_value;
-            //     } else if (index % 5 == 2) {
-            //         detail[input_index].price = input_value;
-            //     } else if (index % 5 == 3) {
-            //         detail[input_index].tax = input_value;
-            //     } else if (index % 5 == 4) {
-            //         detail[input_index].total_price = input_value;
-            //     }
-            // });
-
-
-            // let datas = {};
-            // $('.create-invoice').find('.form-control').each(function() {
-            //     var inputId = $(this).attr('id');
-            //     var inputValue = $("#" + inputId).val();
-            //     datas[$("#" + inputId).attr("name")] = inputValue;
-            // });
-
-            // datas.details = detail;
-            // datas.tenant_id = tenant;
-            // datas.bank_id = bank;
-            // datas.status = 'Terbuat';
-            // datas.contract_date = tglKontrak
-            // datas.opening_paragraph = "Bapak/Ibu Qwerty";
-            // datas.invoice_due_date = tglJatuhTempo;
-            // datas.addendum_date = tglAddendum;
-            // datas.invoice_date = tglInvoice;
-            // datas.grand_total = grandTotal;
-            // datas.materai_image = fileTtd;
-            // localStorage.setItem("invoice", JSON.stringify(datas));
-            // window.location.href = "/invoice/preview-invoice"
+            localStorage.setItem("ticket", JSON.stringify(datas));
+            window.location.href = "/complain/preview-ticket"
         });
 
         $(document).on('click', '#batal', function(event) {
             event.preventDefault();
-            localStorage.removeItem('invoice');
-            window.location.href = "/invoice/list-invoice"
+            localStorage.removeItem('ticket');
+            window.location.href = "/complain/list-ticket"
         });
     });
 </script>
