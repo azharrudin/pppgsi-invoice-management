@@ -83,6 +83,7 @@ class TicketController extends Controller
 
             $saveTicket = Ticket::create($request->all());
             if(!is_null($request->input("attachment"))){
+                // dd($request->input("attachment"));
               foreach($request->input("attachment") as $attachment){
                   TicketAttachment::create([
                       "ticket_id" => $saveTicket->id,

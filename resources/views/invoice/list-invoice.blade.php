@@ -201,7 +201,7 @@ $configData = Helper::appClasses();
                 searchPlaceholder: "Search Invoice"
             },
             buttons: [{
-                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tanda Terima</span>',
+                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Invoice</span>',
                 className: "btn btn-primary",
                 action: function(a, e, t, s) {
                     window.location = "{{url('invoice/add-invoice')}}"

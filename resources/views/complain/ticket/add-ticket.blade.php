@@ -161,8 +161,8 @@ $configData = Helper::appClasses();
                                     buttonsStyling: false
                                 })
 
-                                localStorage.removeItem('invoice');
-                                // window.location.href = "/invoice/list-invoice"
+                                localStorage.removeItem('ticket');
+                                window.location.href = "/invoice/list-invoice"
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
