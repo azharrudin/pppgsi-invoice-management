@@ -49,8 +49,8 @@ class InvoicesTableSeeder extends Seeder
                 'deleted_at' => null,
             ]);
 
-            for($j = 1; $j <= 2; $j++){
-                $totalPrice = $grandTotal / 2;
+            for($j = 1; $j <= 5; $j++){
+                $totalPrice = $grandTotal / 5;
                 $tax = $totalPrice * 0.1;
                 $price = $totalPrice - $tax;
 

@@ -40,7 +40,7 @@ class DamageReportSeeder extends Seeder
                 'deleted_at' => null,
             ]);
 
-            for($j = 1; $j <= 2; $j++){
+            for($j = 1; $j <= 5; $j++){
                 DamageReportDetail::create([
                     "damage_report_id" => $count,
                     "category" => "Kategori {$j}",
