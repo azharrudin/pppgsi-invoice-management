@@ -71,6 +71,13 @@ class WorkOrderService{
         }
 
         if($message == ""){
+            $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "lunas"];
+            $status = strtolower($request->input("status"));
+
+            if(!in_array($status, $validStatus)) $message = "Status tidak valid";
+        }
+
+        if($message == ""){
             $getDamageReport = $this->CommonService->getDataById("App\Models\DamageReport", $request->input("damage_report_id"));
 
             if (is_null($getDamageReport)) $message = "Laporan kerusakan tidak ditemukan";

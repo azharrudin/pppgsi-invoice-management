@@ -265,7 +265,7 @@
 
             getDataTandaTerima(id);
 
-            function getDataTandaTerima() {
+            function getDataTandaTerima(id) {
                 $.ajax({
                     url: "{{ url('api/receipt') }}/" + id,
                     type: "GET",

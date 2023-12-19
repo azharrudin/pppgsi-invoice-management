@@ -22,10 +22,10 @@ class PurchaseRequestSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 12; $i++) {
             $count = $i + 1;
             $firstDate = $faker->dateTimeBetween('-2 week', '-1 week');
-            $totalBudget = 1000000;
+            $totalBudget = 10000000;
             $proposedPurchasePrice = $count * 100000;
             $dataIndex = $i % 5;
 
@@ -43,7 +43,7 @@ class PurchaseRequestSeeder extends Seeder
                 'deleted_at' => null,
             ]);
 
-            for($j = 1; $j <= 3; $j++){
+            for($j = 1; $j <= 5; $j++){
                 PurchaseRequestDetail::create([
                     "purchase_request_id" => $count,
                     "number" => $j,

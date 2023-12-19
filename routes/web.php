@@ -54,7 +54,10 @@ Route::prefix('invoice')->group(function () {
     Route::prefix('tanda-terima')->group(function () {
         Route::get('/', [TandaTerimaController::class, 'index'])->name('pages-list-tanda-terima');
         Route::get('/add', [TandaTerimaController::class, 'create']);
+        Route::get('/preview', [TandaTerimaController::class, 'show']);
         Route::get('/edit/{id}', [TandaTerimaController::class, 'edit']);
+        Route::get('/preview/{id}', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
+        Route::get('/data-tanda-terima', [TandaTerimaController::class, 'datatable'])->name('data-tanda-terima');
         Route::get('/preview', [TandaTerimaController::class, 'editPreview'])->name('pages-preview-tanda-terima');
     });
 });
@@ -78,6 +81,7 @@ Route::prefix('complain')->group(function () {
         Route::get('/', [LaporanKerusakanController::class, 'index'])->name('pages-list-laporan-kerusakan');
         Route::get('/add', [LaporanKerusakanController::class, 'create'])->name('pages-create-laporan-kerusakan');
         Route::get('/preview', [LaporanKerusakanController::class, 'preview'])->name('pages-preview-laporan-kerusakan');
+        Route::get('/data-damage', [LaporanKerusakanController::class, 'datatable'])->name('data-damage');
     });
 
     // Work Order
@@ -123,6 +127,7 @@ Route::prefix('client')->group(function () {
     // List Tenant
     Route::prefix('/list-tenant')->group(function () {
         Route::get('/', [ListTenantController::class, 'index'])->name('pages-list-tenant');
+        Route::get('/data-tenant', [ListTenantController::class, 'datatable'])->name('data-tenant');
     });
 });
 

@@ -129,12 +129,12 @@
                                         name="receipt_date" placeholder="Tanggal" />
                                 </div>
                                 <div class="mb-3">
-                                    <form action="/upload" class="dropzone needsclick dz-clickable w-px-250"
+                                    <div action="/upload" class="dropzone needsclick dz-clickable w-px-250"
                                         id="dropzone-basic">
                                         <div class="dz-message needsclick">
                                             <span class="note needsclick">Unggah Tanda Tangan</span>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <input type="text" class="form-control w-px-250 " id="signature_name"
@@ -157,10 +157,9 @@
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="ti ti-send ti-xs me-2"></i>Kirim Tanda Terima</span>
                         </button>
-                        <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview"
-                            class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
+                        <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
                         <button type="button" class="btn btn-label-secondary btn-save d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                        <button type="button" class="btn btn-label-secondary d-grid w-100 btn-cancel">Batal</button>
                     </div>
                 </div>
             </div>
@@ -236,6 +235,24 @@
                 dateFormat: 'd-m-Y'
             });
 
+            // Dropzone
+            let ttdFile = null;
+            const myDropzone = new Dropzone('#dropzone-basic', {
+                parallelUploads: 1,
+                maxFilesize: 10,
+                addRemoveLinks: true,
+                maxFiles: 1,
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                autoQueue: false,
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        while (this.files.length > this.options.maxFiles) this.removeFile(this
+                            .files[0]);
+                        ttdFile = file;
+                    });
+                }
+            });
+
             // Save, Insert, and Create
             $(".btn-save").on('click', function() {
                 let invoice = $('.select-invoice').val();
@@ -259,7 +276,7 @@
                         datas[$("#" + inputId).attr("name")] = inputValue;
                     }
                 });
-
+                datas.signature_image = ttdFile;
                 datas.invoice_id = parseInt(invoice);
                 datas.tenant_id = parseInt(tenant);
                 datas.bank_id = parseInt(bank);
@@ -314,6 +331,49 @@
                     }
                 });
             });
+
+            // Preview before save
+            $(".btn-preview").on('click', function() {
+                let datas = {}
+
+                let invoice = $('.select-invoice').val();
+                let tenant = $('.select-tenant').val();
+                let bank = $('.select-bank').val();
+                let date = $('.date').val();
+
+                $('#addTandaTerima').find('.form-control').each(function() {
+                    var inputId = $(this).attr('id');
+                    var inputValue = $("#" + inputId).val();
+
+                    if (inputId === 'grand_total' || inputId === 'paid' || inputId ===
+                        'remaining') {
+                        datas[$("#" + inputId).attr("name")] = parseInt(inputValue, 10);
+                    } else if (inputId === 'receipt_date') {
+                        datas[$("#" + inputId).attr("name")] = moment(inputValue, 'D-M-YYYY')
+                            .format('YYYY-MM-DD');
+                    } else {
+                        datas[$("#" + inputId).attr("name")] = inputValue;
+                    }
+                });
+                datas.signature_image = ttdFile;
+                datas.invoice_id = parseInt(invoice);
+                datas.tenant_id = parseInt(tenant);
+                datas.bank_id = parseInt(bank);
+                datas.status = 'Terbuat';
+                datas.receipt_date = moment().format('YYYY-MM-DD');
+                datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
+                datas.signature_date = moment(date, 'D-M-YYYY').format('YYYY-MM-DD');
+
+                localStorage.setItem('receipt', JSON.stringify(datas));
+                window.location.href = "/invoice/tanda-terima/preview"
+            })
+
+            // Cancel
+            $(document).on('click', '.btn-cancel', function(event) {
+            event.preventDefault();
+            localStorage.removeItem('receipt');
+            window.location.href = "/invoice/tanda-terima"
+        });
 
             // Select 2 ajax function
             $(".select-tenant").select2({

@@ -46,8 +46,8 @@ class PurchaseOrderSeeder extends Seeder
                 'deleted_at' => null,
             ]);
 
-            for($j = 1; $j <= 2; $j++){
-                $totalPrice = $subtotal / 2;
+            for($j = 1; $j <= 5; $j++){
+                $totalPrice = $subtotal / 5;
 
                 PurchaseOrderDetail::create([
                     "purchase_order_id" => $count,

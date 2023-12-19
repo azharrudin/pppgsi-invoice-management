@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\CustomException;
-use App\Models\Bank;
-use App\Services\BankService;
+use App\Models\Tax;
 use App\Services\CommonService;
+use App\Services\TaxService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class BankController extends Controller
+class TaxController extends Controller
 {
     protected $CommonService;
-    protected $BankService;
+    protected $TaxService;
 
-    public function __construct(CommonService $CommonService, BankService $bankService)
+    public function __construct(CommonService $CommonService, TaxService $TaxService)
     {
         $this->CommonService = $CommonService;
-        $this->BankService = $bankService;
+        $this->TaxService = $TaxService;
     }
 
     /**
@@ -34,19 +34,22 @@ class BankController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $bankQuery = Bank::where("deleted_at", null);
+            $taxQuery = Tax::where("deleted_at", null);
             if($value){
-                $bankQuery->where(function ($query) use ($value) {
-                    $query->where('name', 'like', '%' . $value . '%');
+                $taxQuery->where(function ($query) use ($value) {
+                    $query->where('name', 'like', '%' . $value . '%')
+                    ->orWhere('rate', 'like', '%' . $value . '%')
+                    ->orWhere('description', 'like', '%' . $value . '%');
                 });
             }
-            $getBanks = $bankQuery->orderBy($order, $sort)->paginate($perPage);
-            $totalCount = $getBanks->total();
+            $getTaxs = $taxQuery->orderBy($order, $sort)->paginate($perPage);
+            $totalCount = $getTaxs->total();
 
-            $bankArr = $this->CommonService->toArray($getBanks);
+            $taxArr = $this->CommonService->toArray($getTaxs);
+            $taxArr = $this->TaxService->addRatePercentage($taxArr);
 
             return [
-                "data" => $bankArr,
+                "data" => $taxArr,
                 "per_page" => $perPage,
                 "page" => $page,
                 "size" => $totalCount,
@@ -73,16 +76,19 @@ class BankController extends Controller
         DB::beginTransaction();
 
         try{
-            $validateBank = $this->BankService->validateBank($request, true, "");
-            if($validateBank != "") throw new CustomException($validateBank, 400);
+            $validateTax = $this->TaxService->validateTax($request);
+            if($validateTax != "") throw new CustomException($validateTax, 400);
+
+            $saveTax = Tax::create($request->all());
+            $saveTax = $this->TaxService->addRatePercentage([$saveTax])[0];
 
             DB::commit();
-            $bank = Bank::create($request->all());
 
-            return response()->json($bank, 201);
+            return ["data" => $saveTax];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+
             DB::rollBack();
 
             if(is_a($e, CustomException::class)){
@@ -101,10 +107,11 @@ class BankController extends Controller
     {
         try{
             $id = (int) $id;
-            $getBank = $this->CommonService->getDataById("App\Models\Bank", $id);
-            if (is_null($getBank)) throw new CustomException("Bank tidak ditemukan", 404);
+            $getTax = $this->CommonService->getDataById("App\Models\Tax", $id);
+            if (is_null($getTax)) throw new CustomException("Tax rate tidak ditemukan", 404);
 
-            return ["data" => $getBank];
+            $getTax = $this->TaxService->addRatePercentage([$getTax])[0];
+            return ["data" => $getTax];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
@@ -127,21 +134,24 @@ class BankController extends Controller
 
         try{
             $id = (int) $id;
-            $getBank = $this->CommonService->getDataById("App\Models\Bank", $id);
-            if (is_null($getBank)) throw new CustomException("Bank tidak ditemukan", 404);
+            $taxExist = $this->CommonService->getDataById("App\Models\Tax", $id);
+            if (is_null($taxExist)) throw new CustomException("Tax rate tidak ditemukan", 404);
 
-            $validateBank = $this->BankService->validateBank($request, false, $id);
-            if($validateBank != "") throw new CustomException($validateBank, 400);
+            $validateTax = $this->TaxService->validateTax($request);
+            if($validateTax != "") throw new CustomException($validateTax, 400);
 
-            Bank::findOrFail($id)->update($request->all());
+            Tax::findOrFail($id)->update($request->all());
+
+            $getTax = $this->CommonService->getDataById("App\Models\Tax", $id);
+            $getTax = $this->TaxService->addRatePercentage([$getTax])[0];
+
             DB::commit();
 
-            $bank = Bank::where("id", $id)->first();
-
-            return response()->json($bank, 200);
+            return ["data" => $getTax];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+
             DB::rollBack();
 
             if(is_a($e, CustomException::class)){
@@ -162,16 +172,17 @@ class BankController extends Controller
 
         try{
             $id = (int) $id;
-            $getBank = $this->CommonService->getDataById("App\Models\Bank", $id);
-            if (is_null($getBank)) throw new CustomException("Bank tidak ditemukan", 404);
+            $taxExist = $this->CommonService->getDataById("App\Models\Tax", $id);
+            if (is_null($taxExist)) throw new CustomException("Tax rate tidak ditemukan", 404);
 
-            Bank::findOrFail($id)->delete();
+            Tax::findOrFail($id)->delete();
             DB::commit();
 
-            return response()->json(['message' => 'Bank berhasil dihapus'], 200);
+            return response()->json(['message' => 'Tax rate berhasil dihapus'], 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+
             DB::rollBack();
 
             if(is_a($e, CustomException::class)){
@@ -193,32 +204,19 @@ class BankController extends Controller
             $field = $request->input("field");
             $perPage = 10;
 
-            if(is_null($field)) $field = "name";
-
-            $getTenant = Bank::where("deleted_at", null)->
-                where($field, 'like', '%' . $value . '%')->
-                select("id", $field)->
-                paginate($perPage);
-            $totalCount = $getTenant->total();
-
-            $dataArr = [];
-            foreach($getTenant as $tenantObj){
-                $dataObj = [
-                    "id" => $tenantObj->id,
-                    "text" => $tenantObj->$field,
             if(is_null($field)) $field = "id";
 
-            $getBank = Bank::where("deleted_at", null)->
+            $getTax = Tax::where("deleted_at", null)->
                 where($field, 'like', '%' . $value . '%')->
                 select("id", $field)->
                 paginate($perPage);
-            $totalCount = $getBank->total();
+            $totalCount = $getTax->total();
 
             $dataArr = [];
-            foreach($getBank as $bankObj){
+            foreach($getTax as $taxObj){
                 $dataObj = [
-                    "id" => $bankObj->id,
-                    "text" => $bankObj->$field,
+                    "id" => $taxObj->id,
+                    "text" => $taxObj->$field,
                 ];
                 array_push($dataArr, $dataObj);
             }

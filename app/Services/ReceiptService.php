@@ -58,6 +58,13 @@ class ReceiptService{
             else if(is_null($getInvoice)) $message = "Invoice tidak ditemukan";
         }
 
+        if($message == ""){
+            $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "lunas"];
+            $status = strtolower($request->input("status"));
+
+            if(!in_array($status, $validStatus)) $message = "Status tidak valid";
+        }
+
         if($message == "" && !is_null($request->input("bank_id"))){
             $getBank = $this->CommonService->getDataById("App\Models\Bank", $request->input("bank_id"));
             if(is_null($getBank)) $message = "Bank tidak ditemukan";

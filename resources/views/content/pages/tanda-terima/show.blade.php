@@ -228,82 +228,93 @@
     </script>
     <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
     </script>
-    <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
+    <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script>
         $(document).ready(function() {
-
-            var urlSegments = window.location.pathname.split('/');
-            var idIndex = urlSegments.indexOf('preview') + 1;
-            var id = urlSegments[idIndex];
-
             var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
 
-            // function pengambil data
-            getDataPreview(id);
+            Swal.fire({
+                title: '<h2>Loading...</h2>',
+                html: sweet_loader + '<h5>Please Wait</h5>',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            })
 
-            function getDataPreview(id) {
+            let data = JSON.parse(localStorage.getItem("receipt"));
+
+            if (data) {
+                $("#receipt_number").val(data.receipt_number);
+                $('#check_number').text(data.check_number);
+                $('#grand_total').text(data.grand_total.toLocaleString('en-EN'));
+                $('#paid').text(data.paid.toLocaleString('en-EN'));
+                $('#remaining').text(data.remaining.toLocaleString('en-EN'));
+                $('#grand_total_spelled').text(data.grand_total_spelled);
+                $('#note').text(data.note);
+                $('#note').text(data.note);
+                $('#receipt_date').text(moment(data.receipt_date).format('DD MMMM YYYY'));
+                $('.prev-img').attr('src', data.signature_image);
+                $('#signature_name').text(data.signature_name);
+
+                if (data.tenant_id) {
+                    getTenant();
+                }
+                if (data.bank_id) {
+                    getBank();
+                }
+                if (data.invoice_id) {
+                    getInvoice();
+                }
+
+                Swal.close();
+            }
+
+            function getInvoice() {
+                let idInvoice = data.invoice_id;
                 $.ajax({
-                    url: "{{ url('api/receipt') }}/" + id,
+                    url: "{{ url('api/invoice') }}/" + idInvoice,
                     type: "GET",
-                    dataType: "json",
-                    beforeSend: function() {
-                        Swal.fire({
-                            title: '<h2>Loading...</h2>',
-                            html: sweet_loader + '<h5>Please Wait</h5>',
-                            showConfirmButton: false,
-                            allowOutsideClick: false,
-                            allowEscapeKey: false
-                        })
-                    },
                     success: function(response) {
-                        Swal.close();
-                        let result = response.data;
-
-                        $("#receipt_number").val(result.receipt_number);
-                        $('#invoice').text(result.invoice.invoice_number);
-                        $('#check_number').text(result.check_number);
-                        $('#bank').text(result.bank.name);
-                        $('#tenant').text(result.tenant.company);
-                        $('#grand_total').text(result.grand_total.toLocaleString('en-EN'));
-                        $('#paid').text(result.paid.toLocaleString('en-EN'));
-                        $('#remaining').text(result.remaining.toLocaleString('en-EN'));
-                        $('#grand_total_spelled').text(result.grand_total_spelled);
-                        $('#note').text(result.note);
-                        $('#note').text(result.note);
-                        $('#receipt_date').text(moment(result.receipt_date).format('DD MMMM YYYY'));
-                        $('.prev-img').attr('src', result.signature_image);
-                        $('#signature_name').text(result.signature_name);
-
-                        $('.btn-edit').attr('data-id', id);
+                        let data = response.data;
+                        $("#invoice").text(data.invoice_number);
                     },
-                    error: function(errors) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: errors.responseJSON
-                                .message,
-                            customClass: {
-                                confirmButton: 'btn btn-primary'
-                            },
-                            buttonsStyling: false
-                        })
+                    error: function(xhr, status, error) {
+                        console.log(error);
                     }
                 });
             }
 
-            $(".btn-edit").on('click', function() {
-                // Mendapatkan nilai data-id dari button yang diklik
-                var id = $(this).data('id');
+            function getTenant() {
+                let idTenant = data.tenant_id;
+                $.ajax({
+                    url: "{{ url('api/tenant') }}/" + idTenant,
+                    type: "GET",
+                    success: function(response) {
+                        let data = response.data;
+                        $("#tenant").text(data.name);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            }
 
-                // Membentuk URL dengan nilai id
-                var url = window.location.href.replace(/\/preview\/\d+$/, '/edit/' + id);
-
-                // Menggantikan URL saat ini dengan URL yang sudah dibentuk
-                window.location.replace(url);
-            });
-
+            function getBank() {
+                let idBank = data.bank_id;
+                $.ajax({
+                    url: "{{ url('api/bank') }}/" + idBank,
+                    type: "GET",
+                    success: function(response) {
+                        let data = response.data;
+                        $("#bank").text(data.name)
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            }
         })
     </script>
 @endsection

@@ -80,21 +80,32 @@
         $((function() {
             var a = $(".invoice-list-table");
             if (a.length) var e = a.DataTable({
-                ajax: "{{ url('api/receipt') }}",
+                processing: true,
+                serverSide: true,
+                deferRender: true,
+                ajax: {
+                    url: "{{ url('invoice/tanda-terima/data-tanda-terima') }}",
+                    "data": function(d) {
+                        d.start = 0;
+                        d.page = $(".invoice-list-table").DataTable().page.info().page + 1;
+                    }
+                },
                 columns: [{
-                    class: "d-none",
-                    data: "created_at",
-                    name: "created_at"
-                }, {
                     class: "text-center",
                     data: "receipt_number",
                     name: "receipt_number",
-                    title: "No Tanda Terima"
+                    title: "No Tanda Terima",
+                    render: function(data, type, row) {
+                            return data;
+                        }
                 }, {
                     class: "text-center",
-                    data: "tenant.name",
-                    name: "tenant.name",
-                    title: "Tenant"
+                    data: "tenant_name",
+                    name: "tenant_name",
+                    title: "Tenant",
+                    render: function(data, type, row) {
+                            return data;
+                        }
                 }, {
                     class: "text-center",
                     data: "grand_total",
@@ -153,24 +164,21 @@
                     data: null,
                     title: "Tanggapan",
                     render: function(data, type, row) {
-                        return '<div class="d-flex align-items-center"><a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a><a href="' +
-                            baseUrl +
-                            'app/invoice/preview" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="tanda-terima/edit/' +
+                        return '<div class="d-flex align-items-center"><a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a><a href="tanda-terima/preview/' +
+                            data.id + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="tanda-terima/edit/' +
                             data.id + '" class="dropdown-item btn-edit" data-id="' +
                             data.id +
                             '">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>'
                     }
                 }],
                 order: [
-                    [0, "desc"]
+                    [1, "desc"]
                 ],
-                paging: true,
-                pageSize: 10,
                 dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                 language: {
                     sLengthMenu: "Show _MENU_",
                     search: "",
-                    searchPlaceholder: "Search Invoice"
+                    searchPlaceholder: "Search Tanda Terima"
                 },
                 buttons: [{
                     text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tanda Terima</span>',
@@ -199,7 +207,7 @@
                     }
                 },
                 initComplete: function() {
-                    this.api().columns(5).every((function() {
+                    this.api().columns(4).every((function() {
                         var a = this,
                             e = $(
                                 '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
@@ -207,7 +215,7 @@
                                 function() {
                                     var e = $.fn.dataTable.util.escapeRegex($(
                                         this).val());
-                                    a.search(e ? "^" + e + "$" : "", !0, !1)
+                                    a.search(e)
                                         .draw()
                                 }));
                         a.data().unique().sort().each((function(a, t) {
@@ -231,7 +239,7 @@
                 $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(
                     ".dataTables_length .form-select").removeClass("form-select-sm")
             }), 300)
-            
+
         }));
     </script>
 
