@@ -72,4 +72,14 @@ class TicketListController extends Controller
             ->setTotalRecords($response->size)
             ->make(true);
     }
+
+    public function edit(string $id)
+    {
+        return view('complain.ticket.edit');
+    }
+
+    public function show(string $id)
+    {
+        return view('complain.ticket.show');
+    }
 }

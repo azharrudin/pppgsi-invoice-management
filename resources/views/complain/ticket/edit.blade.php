@@ -92,6 +92,9 @@ $configData = Helper::appClasses();
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
+    var urlSegments = window.location.pathname.split('/');
+    var idIndex = urlSegments.indexOf('edit-ticket') + 1;
+    var id = urlSegments[idIndex];
     let dataLocal = JSON.parse(localStorage.getItem("ticket"));
     $(document).ready(function() {
         window.addEventListener("pageshow", function(event) {
@@ -110,6 +113,8 @@ $configData = Helper::appClasses();
             $("#ticket_title").val(dataLocal.ticket_title);
             $("#ticket_body").val(dataLocal.ticket_body);
             files = dataLocal.attachment;
+        } else {
+            getDataTicket(id);
         }
 
         $(document).on('change', '#attachment', function(e) {
@@ -221,6 +226,30 @@ $configData = Helper::appClasses();
             localStorage.removeItem('ticket');
             window.location.href = "/complain/list-ticket"
         });
+
+        function getDataTicket(id) {
+            $.ajax({
+                url: "{{ url('api/ticket') }}/" + id,
+                type: "GET",
+                dataType: "json",
+                success: function(res) {
+                    let data = res.data;
+                    console.log(data);
+                    $("#reporter_name").val(data.reporter_name);
+                    $("#reporter_phone").val(data.reporter_phone);
+                    $("#reporter_company").val(data.reporter_company);
+                    $("#ticket_title").val(data.ticket_title);
+                    $("#ticket_body").val(data.ticket_body);
+                    // getImage(data.ticket_attachments);
+                    files = data.ticket_attachments;
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
+        }
+
+
     });
 </script>
 @endsection
