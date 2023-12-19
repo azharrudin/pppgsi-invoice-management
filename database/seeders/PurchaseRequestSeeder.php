@@ -43,7 +43,7 @@ class PurchaseRequestSeeder extends Seeder
                 'deleted_at' => null,
             ]);
 
-            for($j = 1; $j <= 3; $j++){
+            for($j = 1; $j <= 5; $j++){
                 PurchaseRequestDetail::create([
                     "purchase_request_id" => $count,
                     "number" => $j,

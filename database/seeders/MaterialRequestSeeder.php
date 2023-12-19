@@ -37,7 +37,7 @@ class MaterialRequestSeeder extends Seeder
                 'deleted_at' => null,
             ]);
 
-            for($j = 1; $j <= 3; $j++){
+            for($j = 1; $j <= 5; $j++){
                 $quantity = $j * 2;
 
                 MaterialRequestDetail::create([

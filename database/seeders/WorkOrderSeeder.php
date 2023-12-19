@@ -43,7 +43,7 @@ class WorkOrderSeeder extends Seeder
                 'deleted_at' => null,
             ]);
 
-            for($j = 0; $j < 2; $j++){
+            for($j = 0; $j < 5; $j++){
                 WorkOrderDetail::create([
                     "work_order_id" => $count,
                     "location" => "Lokasi {$dataIndex}",
