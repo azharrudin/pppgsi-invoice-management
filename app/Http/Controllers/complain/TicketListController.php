@@ -82,4 +82,9 @@ class TicketListController extends Controller
     {
         return view('complain.ticket.show');
     }
+ 
+    public function editPreview(string $id)
+    {
+        return view('complain.ticket.edit-preview');
+    }
 }

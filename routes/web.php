@@ -70,6 +70,7 @@ Route::prefix('complain')->group(function () {
         Route::get('/data-ticket', [TicketListController::class, 'datatable'])->name('data-ticket');
         Route::get('/show-ticket/{id}', [TicketListController::class, 'show'])->name('pages-show-ticket');
         Route::get('/edit-ticket/{id}', [TicketListController::class, 'edit'])->name('pages-edit-ticket');
+        Route::get('/preview-edit-ticket/{id}', [TicketListController::class, 'editPreview'])->name('pages-edit-preview-ticket');
     });
 
     // Laporan Kerusakan
@@ -160,6 +161,7 @@ Route::prefix('settings')->group(function () {
     Route::prefix('/tax-rates')->group(function () {
         Route::get('/', [TaxRatesController::class, 'index'])->name('pages-tax-rates');
         Route::get('/add', [TaxRatesController::class, 'create'])->name('pages-create-tax-rates');
+        Route::get('/data-tax', [TaxRatesController::class, 'datatable'])->name('data-tax');
     });
 });
 

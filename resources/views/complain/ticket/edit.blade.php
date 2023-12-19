@@ -95,7 +95,7 @@ $configData = Helper::appClasses();
     var urlSegments = window.location.pathname.split('/');
     var idIndex = urlSegments.indexOf('edit-ticket') + 1;
     var id = urlSegments[idIndex];
-    let dataLocal = JSON.parse(localStorage.getItem("ticket"));
+    let dataLocal = JSON.parse(localStorage.getItem("edit-ticket"));
     $(document).ready(function() {
         window.addEventListener("pageshow", function(event) {
             var historyTraversal = event.persisted || (typeof window.performance !== "undefined" && window.performance.getEntriesByType("navigation")[0].type === "back_forward");
@@ -158,12 +158,12 @@ $configData = Helper::appClasses();
                         });
 
                         datas.attachment = files;
-                        datas.status = "Wait a response"
                         console.log(files);
+                        datas.status = "Wait a response"
 
                         $.ajax({
-                            url: baseUrl + "api/ticket/",
-                            type: "POST",
+                            url: baseUrl + "api/ticket/" + id,
+                            type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
@@ -174,7 +174,7 @@ $configData = Helper::appClasses();
                                 console.log(datas);
                                 Swal.fire({
                                     title: 'Berhasil',
-                                    text: 'Berhasil menambahkan Ticket',
+                                    text: 'Berhasil Mengedit Ticket',
                                     icon: 'success',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'
@@ -182,7 +182,7 @@ $configData = Helper::appClasses();
                                     buttonsStyling: false
                                 })
 
-                                localStorage.removeItem('ticket');
+                                localStorage.removeItem('edit-ticket');
                                 window.location.href = "/complain/list-ticket"
                             },
                             error: function(xhr, status, error) {
@@ -217,8 +217,8 @@ $configData = Helper::appClasses();
             datas.attachment = files;
             datas.status = "Wait a response"
 
-            localStorage.setItem("ticket", JSON.stringify(datas));
-            window.location.href = "/complain/preview-ticket"
+            localStorage.setItem("edit-ticket", JSON.stringify(datas));
+            window.location.href = "/complain/preview-edit-ticket/"+id
         });
 
         $(document).on('click', '#batal', function(event) {
@@ -240,8 +240,6 @@ $configData = Helper::appClasses();
                     $("#reporter_company").val(data.reporter_company);
                     $("#ticket_title").val(data.ticket_title);
                     $("#ticket_body").val(data.ticket_body);
-                    // getImage(data.ticket_attachments);
-                    files = data.ticket_attachments;
                 },
                 error: function(errors) {
                     console.log(errors);
