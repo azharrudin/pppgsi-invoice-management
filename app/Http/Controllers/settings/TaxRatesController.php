@@ -48,7 +48,7 @@ class TaxRatesController extends Controller
         if ($request->page == null) {
             $request->page = 1;
         }
-        $apiRequest = Http::get(env('BASE_URL_API') . '/api/tax', [
+        $apiRequest = Http::get('http://127.0.0.1:8000/api/tax', [
             'per_page' => $request->length,
             'page' => $request->page,
             'order' => 'id',
