@@ -119,7 +119,11 @@ $configData = Helper::appClasses();
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
 
-    let data = JSON.parse(localStorage.getItem("ticket"));
+    let data = JSON.parse(localStorage.getItem("edit-ticket"));
+    var urlSegments = window.location.pathname.split('/');
+    var idIndex = urlSegments.indexOf('preview-edit-ticket') + 1;
+    var id = urlSegments[idIndex];
+
     $(document).ready(function() {
         $("#reporter_name").text(data.reporter_name);
         $("#reporter_phone").text(data.reporter_phone);
@@ -127,22 +131,22 @@ $configData = Helper::appClasses();
         $("#ticket_title").text(data.ticket_title);
         $("#ticket_body").text(data.ticket_body);
         getImage(data.attachment);
-
     });
 
 
 
     $(document).on('click', '#batal', function(event) {
         event.preventDefault();
-        localStorage.removeItem('invoice');
-        window.location.href = "/invoice/list-invoice"
+        localStorage.removeItem('edit-invoice');
+        window.location.href = "/complain/list-ticket"
     });
 
     $(document).on('click', '#save', function(event) {
         event.preventDefault();
+
         $.ajax({
-            url: baseUrl + "api/ticket/",
-            type: "POST",
+            url: baseUrl + "api/ticket/" + id,
+            type: "PATCH",
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -153,7 +157,7 @@ $configData = Helper::appClasses();
 
                 Swal.fire({
                     title: 'Berhasil',
-                    text: 'Berhasil menambahkan Invoice',
+                    text: 'Berhasil Update Ticket',
                     icon: 'success',
                     customClass: {
                         confirmButton: 'btn btn-primary'
@@ -161,9 +165,8 @@ $configData = Helper::appClasses();
                     buttonsStyling: false
                 });
 
-                localStorage.removeItem('ticket');
+                localStorage.removeItem('edit-ticket');
                 window.location.href = "/complain/list-ticket"
-
             },
             error: function(xhr, status, error) {
                 Swal.fire({
@@ -177,6 +180,7 @@ $configData = Helper::appClasses();
                 })
             }
         });
+        // window.location.href = "/invoice/list-invoice"
     });
 
     function getImage(images) {

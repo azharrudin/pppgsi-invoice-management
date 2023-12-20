@@ -5,7 +5,7 @@ namespace App\Http\Controllers\complain;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Yajra\DataTables\DataTables;
+use DataTables;
 
 class TicketListController extends Controller
 {
@@ -71,5 +71,20 @@ class TicketListController extends Controller
             ->setFilteredRecords($response->size)
             ->setTotalRecords($response->size)
             ->make(true);
+    }
+
+    public function edit(string $id)
+    {
+        return view('complain.ticket.edit');
+    }
+
+    public function show(string $id)
+    {
+        return view('complain.ticket.show');
+    }
+ 
+    public function editPreview(string $id)
+    {
+        return view('complain.ticket.edit-preview');
     }
 }

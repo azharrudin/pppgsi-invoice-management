@@ -92,7 +92,10 @@ $configData = Helper::appClasses();
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
-    let dataLocal = JSON.parse(localStorage.getItem("ticket"));
+    var urlSegments = window.location.pathname.split('/');
+    var idIndex = urlSegments.indexOf('edit-ticket') + 1;
+    var id = urlSegments[idIndex];
+    let dataLocal = JSON.parse(localStorage.getItem("edit-ticket"));
     $(document).ready(function() {
         window.addEventListener("pageshow", function(event) {
             var historyTraversal = event.persisted || (typeof window.performance !== "undefined" && window.performance.getEntriesByType("navigation")[0].type === "back_forward");
@@ -110,6 +113,8 @@ $configData = Helper::appClasses();
             $("#ticket_title").val(dataLocal.ticket_title);
             $("#ticket_body").val(dataLocal.ticket_body);
             files = dataLocal.attachment;
+        } else {
+            getDataTicket(id);
         }
 
         $(document).on('change', '#attachment', function(e) {
@@ -153,12 +158,12 @@ $configData = Helper::appClasses();
                         });
 
                         datas.attachment = files;
-                        datas.status = "Wait a response"
                         console.log(files);
+                        datas.status = "Wait a response"
 
                         $.ajax({
-                            url: baseUrl + "api/ticket/",
-                            type: "POST",
+                            url: baseUrl + "api/ticket/" + id,
+                            type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
@@ -169,7 +174,7 @@ $configData = Helper::appClasses();
                                 console.log(datas);
                                 Swal.fire({
                                     title: 'Berhasil',
-                                    text: 'Berhasil menambahkan Ticket',
+                                    text: 'Berhasil Mengedit Ticket',
                                     icon: 'success',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'
@@ -177,7 +182,7 @@ $configData = Helper::appClasses();
                                     buttonsStyling: false
                                 })
 
-                                localStorage.removeItem('ticket');
+                                localStorage.removeItem('edit-ticket');
                                 window.location.href = "/complain/list-ticket"
                             },
                             error: function(xhr, status, error) {
@@ -212,8 +217,8 @@ $configData = Helper::appClasses();
             datas.attachment = files;
             datas.status = "Wait a response"
 
-            localStorage.setItem("ticket", JSON.stringify(datas));
-            window.location.href = "/complain/preview-ticket"
+            localStorage.setItem("edit-ticket", JSON.stringify(datas));
+            window.location.href = "/complain/preview-edit-ticket/"+id
         });
 
         $(document).on('click', '#batal', function(event) {
@@ -221,6 +226,28 @@ $configData = Helper::appClasses();
             localStorage.removeItem('ticket');
             window.location.href = "/complain/list-ticket"
         });
+
+        function getDataTicket(id) {
+            $.ajax({
+                url: "{{ url('api/ticket') }}/" + id,
+                type: "GET",
+                dataType: "json",
+                success: function(res) {
+                    let data = res.data;
+                    console.log(data);
+                    $("#reporter_name").val(data.reporter_name);
+                    $("#reporter_phone").val(data.reporter_phone);
+                    $("#reporter_company").val(data.reporter_company);
+                    $("#ticket_title").val(data.ticket_title);
+                    $("#ticket_body").val(data.ticket_body);
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
+        }
+
+
     });
 </script>
 @endsection

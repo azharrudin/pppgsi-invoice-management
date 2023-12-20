@@ -84,7 +84,7 @@ $configData = Helper::appClasses();
 
         <!-- Ticket Actions -->
         <!-- Ticket Actions -->
-        <div class="col-lg-3 col-12 invoice-actions">
+        <!-- <div class="col-lg-3 col-12 invoice-actions">
             <div class="card mb-4">
                 <div class="card-body">
                     <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
@@ -95,7 +95,7 @@ $configData = Helper::appClasses();
                     <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- /Ticket Actions -->
         <!-- /Ticket Actions -->
     </div>
@@ -119,71 +119,41 @@ $configData = Helper::appClasses();
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
 
-    let data = JSON.parse(localStorage.getItem("ticket"));
     $(document).ready(function() {
-        $("#reporter_name").text(data.reporter_name);
-        $("#reporter_phone").text(data.reporter_phone);
-        $("#reporter_company").text(data.reporter_company);
-        $("#ticket_title").text(data.ticket_title);
-        $("#ticket_body").text(data.ticket_body);
-        getImage(data.attachment);
-
+        var urlSegments = window.location.pathname.split('/');
+        var idIndex = urlSegments.indexOf('show-ticket') + 1;
+        var id = urlSegments[idIndex];
+        getDataTicket(id);
     });
 
-
-
-    $(document).on('click', '#batal', function(event) {
-        event.preventDefault();
-        localStorage.removeItem('invoice');
-        window.location.href = "/invoice/list-invoice"
-    });
-
-    $(document).on('click', '#save', function(event) {
-        event.preventDefault();
+    function getDataTicket(id) {
         $.ajax({
-            url: baseUrl + "api/ticket/",
-            type: "POST",
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
+            url: "{{ url('api/ticket') }}/" + id,
+            type: "GET",
             dataType: "json",
-
-            success: function(response) {
-                $('.indicator-progress').show();
-                $('.indicator-label').hide();
-
-                Swal.fire({
-                    title: 'Berhasil',
-                    text: 'Berhasil menambahkan Invoice',
-                    icon: 'success',
-                    customClass: {
-                        confirmButton: 'btn btn-primary'
-                    },
-                    buttonsStyling: false
-                });
-
-                localStorage.removeItem('ticket');
-                window.location.href = "/complain/list-ticket"
-
+            success: function(res) {
+                let data = res.data;
+                console.log(data);
+                $("#reporter_name").text(data.reporter_name);
+                $("#reporter_phone").text(data.reporter_phone);
+                $("#reporter_company").text(data.reporter_company);
+                $("#ticket_title").text(data.ticket_title);
+                $("#ticket_body").text(data.ticket_body);
+                getImage(data.ticket_attachments);
             },
-            error: function(xhr, status, error) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Semua field harus diisi',
-                    icon: 'error',
-                    customClass: {
-                        confirmButton: 'btn btn-primary'
-                    },
-                    buttonsStyling: false
-                })
+            error: function(errors) {
+                console.log(errors);
             }
         });
-    });
+    }
+
+
 
     function getImage(images) {
-        console.log(images.length);
+        console.log(images);
         let temp = '';
         for (let i = 0; i < images.length; i++) {
-            temp += `<img class="mx-2 my-2 object-fit-cover" style="width: 250px; height: 250px;" src="${images[i]}" alt="">`
+            temp += `<img class="mx-2 my-2 object-fit-cover" style="width: 250px; height: 250px;" src="${images[i].attachment}" alt="">`
         }
         $('.gallery').append(temp);
     }
