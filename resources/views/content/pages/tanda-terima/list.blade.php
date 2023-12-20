@@ -178,7 +178,7 @@
                 language: {
                     sLengthMenu: "Show _MENU_",
                     search: "",
-                    searchPlaceholder: "Search Invoice"
+                    searchPlaceholder: "Search Tanda Terima"
                 },
                 buttons: [{
                     text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tanda Terima</span>',
