@@ -98,13 +98,15 @@ Route::prefix('request')->group(function () {
     Route::prefix('/')->group(function () {
         Route::get('/list-purchase-request', [PurchaseRequestController::class, 'index'])->name('pages-purchase-request');
         Route::get('/add-purchase-request', [PurchaseRequestController::class, 'add'])->name('pages-add-purchase-request');
+        
     });
 
     // Material Request
     Route::prefix('material-request')->group(function () {
         Route::get('/', [MaterialRequestController::class, 'index'])->name('pages-list-material-request');
         Route::get('/add', [MaterialRequestController::class, 'create'])->name('pages-create-tanda-terima');
-        Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
+        Route::get('/data-material-request', [MaterialRequestController::class, 'datatable'])->name('data-material-reques');
+        // Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
     });
 
     // Request Order
