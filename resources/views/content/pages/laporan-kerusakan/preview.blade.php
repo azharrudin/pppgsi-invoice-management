@@ -17,11 +17,11 @@
 @section('content')
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
-        <form id="create-lk" class="create-lk" novalidate>
+        <form id="edit-lk" class="edit-lk" novalidate>
             <div class="row invoice-add">
                 <!-- Invoice Add-->
                 <div class="col-lg-9 col-12 mb-lg-0 mb-3">
-                    <div class="card invoice-preview-card" id="addLaporanKerusakan">
+                    <div class="card invoice-preview-card" id="editLaporanKerusakan">
                         <div class="card-body">
                             <div class="row m-sm-4 m-0">
                                 <div class="col-md-7 mb-md-0 mb-4 ps-0">
@@ -32,8 +32,8 @@
                                     <span class="fs-4 d-block text-center mx-auto"><b>LAPORAN KERUSAKAN</b></span>
                                     <span class="d-block text-center mx-auto">Nomor Lk :</span>
                                     <input type="text" class="form-control add w-px-250 mx-auto"
-                                        id="damage_report_number" name="damage_report_number" placeholder="Nomor LK"
-                                        required />
+                                        id="edit_damage_report_number" name="damage_report_number" placeholder="Nomor LK"
+                                        required readonly />
                                     <div class="invalid-feedback mx-auto w-px-250">Tidak boleh kosong</div>
                                 </div>
                             </div>
@@ -50,26 +50,28 @@
                                     </div>
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Date</label>
-                                        <input type="text" class="form-control add w-px-250 date" id="damage_report_date"
-                                            name="damage_report_date" placeholder="Tanggal" required />
+                                        <input type="text" class="form-control add w-px-250"
+                                            id="edit_damage_report_date" name="damage_report_date" placeholder="Tanggal"
+                                            required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Scope</label>
-                                        <input type="text" class="form-control add w-px-250" id="scope"
-                                            name="scope" placeholder="Scope" required />
+                                        <input type="text" class="form-control add w-px-250" id="edit_scope"
+                                            name="scope" placeholder="Scope" required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Classification</label>
-                                        <input type="text" class="form-control add w-px-250" id="classification"
-                                            name="classification" placeholder="Classification" required />
+                                        <input type="text" class="form-control add w-px-250" id="edit_classification"
+                                            name="classification" placeholder="Classification" required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Action Plan Date</label>
-                                        <input type="text" class="form-control add w-px-250 date" id="action_plan_date"
-                                            name="action_plan_date" placeholder="Action Plan Date" required />
+                                        <input type="text" class="form-control add w-px-250"
+                                            id="edit_action_plan_date" name="action_plan_date"
+                                            placeholder="Action Plan Date" required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
@@ -91,21 +93,21 @@
                                                     <div class="col-4">
                                                         <label for="note" class="form-label fw-medium">Jenis Masalah
                                                             Kerusakan</label>
-                                                        <input type="text" class="form-control" id="category"
+                                                        <input type="text" class="form-control" id="edit_category"
                                                             name="category" placeholder="Jenis Masalah Kerusakan"
-                                                            required />
+                                                            required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
                                                     <div class="col-4">
                                                         <label for="note" class="form-label fw-medium">Lokasi</label>
-                                                        <input type="text" class="form-control" id="location"
-                                                            name="location" placeholder="Lokasi" required />
+                                                        <input type="text" class="form-control" id="edit_location"
+                                                            name="location" placeholder="Lokasi" required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
                                                     <div class="col-3">
                                                         <label for="note" class="form-label fw-medium">Jumlah</label>
-                                                        <input type="text" class="form-control" id="total"
-                                                            name="total" placeholder="Jumlah" required />
+                                                        <input type="text" class="form-control" id="edit_total"
+                                                            name="total" placeholder="Jumlah" required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
                                                     <a class="mb-3 mx-2 mt-4" style="width: 10px" role="button"
@@ -139,26 +141,40 @@
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add"
                                                     placeholder="KA. Unit Pelayanan" style="text-align:center;"
-                                                    id="type" name="type" required />
+                                                    id="edit_type-1" name="type" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add "
                                                     placeholder="Nama & Jabatan" style="text-align:center;"
-                                                    id="name" name="name" required />
+                                                    id="edit_name-1" name="name" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
-                                            <div class="mb-3">
-                                                <div action="/upload" class="dropzone needsclick dz-clickable w-px-250"
+                                            <div class="mb-3 prev-1">
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-1" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                        </div>
+                                                    </div>
+                                                        {{-- <a class="dz-remove" id="1" href="javascript:undefined;"
+                                                            data-dz-remove="">Remove file</a> --}}
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 click-1" style="display: none">
+                                                <form action="/upload" class="dropzone needsclick dz-clickable w-px-230"
                                                     id="dropzone-1">
                                                     <div class="dz-message needsclick">
                                                         <span class="note needsclick">Unggah Tanda Tangan</span>
                                                     </div>
-                                                </div>
+                                                </form>
                                             </div>
                                             <div class="mb-3">
-                                                <input type="text" class="form-control add date" placeholder="Tanggal"
-                                                    style="text-align:center;" id="date1" name="date" required />
+                                                <input type="text" class="form-control add" placeholder="Tanggal"
+                                                    style="text-align:center;" id="edit_date-1" name="date"
+                                                    required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
@@ -166,26 +182,41 @@
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add"
                                                     placeholder="KA. Unit Pelayanan" style="text-align:center;"
-                                                    id="type" name="type" required />
+                                                    id="edit_type-2" name="type" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add "
                                                     placeholder="Nama & Jabatan" style="text-align:center;"
-                                                    id="name" name="name" required />
+                                                    id="edit_name-2" name="name" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
-                                            <div class="mb-3">
-                                                <div action="/upload" class="dropzone needsclick dz-clickable w-px-250"
+                                            <div class="mb-3 prev-2">
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-2" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                        </div>
+                                                    </div>
+                                                    {{-- <a class="dz-remove" id="2"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a> --}}
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 click-2" style="display: none">
+                                                <form action="/upload" class="dropzone needsclick dz-clickable w-px-230"
                                                     id="dropzone-2">
                                                     <div class="dz-message needsclick">
                                                         <span class="note needsclick">Unggah Tanda Tangan</span>
                                                     </div>
-                                                </div>
+                                                </form>
                                             </div>
                                             <div class="mb-3">
-                                                <input type="text" class="form-control add date" placeholder="Tanggal"
-                                                    style="text-align:center;" id="date2" name="date" required />
+                                                <input type="text" class="form-control add" placeholder="Tanggal"
+                                                    style="text-align:center;" id="edit_date-2" name="date"
+                                                    required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
@@ -193,26 +224,41 @@
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add"
                                                     placeholder="KA. Unit Pelayanan" style="text-align:center;"
-                                                    id="type" name="type" required />
+                                                    id="edit_type-3" name="type" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add "
                                                     placeholder="Nama & Jabatan" style="text-align:center;"
-                                                    id="name" name="name" required />
+                                                    id="edit_name-3" name="name" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
-                                            <div class="mb-3">
-                                                <div action="/upload" class="dropzone needsclick dz-clickable w-px-250"
+                                            <div class="mb-3 prev-3">
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-3" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                        </div>
+                                                    </div>
+                                                    {{-- <a class="dz-remove" id="3"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a> --}}
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 click-3" style="display: none">
+                                                <form action="/upload" class="dropzone needsclick dz-clickable w-px-230"
                                                     id="dropzone-3">
                                                     <div class="dz-message needsclick">
                                                         <span class="note needsclick">Unggah Tanda Tangan</span>
                                                     </div>
-                                                </div>
+                                                </form>
                                             </div>
                                             <div class="mb-3">
-                                                <input type="text" class="form-control add date" placeholder="Tanggal"
-                                                    style="text-align:center;" id="date3" name="date" required />
+                                                <input type="text" class="form-control add" placeholder="Tanggal"
+                                                    style="text-align:center;" id="edit_date-3" name="date"
+                                                    required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
@@ -228,13 +274,10 @@
                 <div class="col-lg-3 col-12 invoice-actions">
                     <div class="card mb-4">
                         <div class="card-body">
-                            {{-- <button class="btn btn-primary d-grid w-100 mb-2 btn-save" data-bs-toggle="offcanvas"
-                            data-bs-target="#sendInvoiceOffcanvas">
-                            <span class="d-flex align-items-center justify-content-center text-nowrap">Simpan</span>
-                        </button> --}}
-                            <button type="submit" id="save"
-                                class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
-                            <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
+                            {{-- <button type="submit" id="edit"
+                                class="btn btn-primary d-grid w-100 mb-2">Update</button> --}}
+                            {{-- <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview"
+                                class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a> --}}
                             <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
                         </div>
                     </div>
@@ -312,328 +355,109 @@
             $('.repeater').repeater({
 
             })
-
             var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
+
+            // Mendapatkan id dengan cara mengambil dari URL
+            var urlSegments = window.location.pathname.split('/');
+            var idIndex = urlSegments.indexOf('preview') + 1;
+            var id = urlSegments[idIndex];
+
+            getDataLaporanKerusakan(id)
+
+            // Get data from API
+            function getDataLaporanKerusakan(id) {
+                Swal.fire({
+                    title: '<h2>Loading...</h2>',
+                    html: sweet_loader + '<h5>Please Wait</h5>',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                })
+                $.ajax({
+                    url: "{{ url('api/damage-report') }}/" + id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(res) {
+                        let response = res.data;
+
+                        // Set value ke form atas
+                        $('#editLaporanKerusakan').find('.form-control').each(function() {
+                            $("#" + $(this).attr('id')).val(response[$(this).attr(
+                                "name")]);
+                        });
+                        $('#edit_damage_report_date').val(moment(response.damage_report_date,
+                            'YYYY-MM-DD').format('DD-MM-YYYY'));
+                        $('#edit_action_plan_date').val(moment(response.action_plan_date, 'YYYY-MM-DD')
+                            .format('DD-MM-YYYY'));
+                        $(".select-ticket").empty().append('<option value="' + response.ticket_id +
+                                '">' + response.ticket_id + '</option>').val(response.ticket_id);
+                        localStorage.setItem('status', response.status);
+
+                        // Set value ke repeater
+                        var firstRow = $('.repeater-wrapper').first();
+
+                        for (var i = 0; i < response.damage_report_details.length; i++) {
+                            var rowValues = response.damage_report_details[i];
+
+                            if (i === 0) {
+                                firstRow.find('#edit_category').val(rowValues.category);
+                                firstRow.find('#edit_location').val(rowValues.location);
+                                firstRow.find('#edit_total').val(rowValues.total);
+                            } else {
+                                var newRow = firstRow.clone();
+                                newRow.find('#edit_category').val(rowValues.category);
+                                newRow.find('#edit_location').val(rowValues.location);
+                                newRow.find('#edit_total').val(rowValues.total);
+
+                                $('.repeater [data-repeater-list="group-a"]').append(newRow);
+                            }
+                        }
+
+                        $('.repeater').repeater();
+
+                        // Set value ke form signature
+                        for (let i = 1; i < response.damage_report_signatures.length + 1; i++) {
+                            $("#edit_type-" + i).val(response.damage_report_signatures[i - 1].type);
+                            $("#edit_name-" + i).val(response.damage_report_signatures[i - 1].name);
+                            if (response.damage_report_signatures[i - 1].signature != '') {
+                                $('.prev-img-' + i).attr('src', response.damage_report_signatures[i - 1]
+                                    .signature);
+                            } else {
+                                $('.dz-nopreview').css('display', 'block');
+                            }
+                            $('#edit_date-' + i).val(moment(response.damage_report_signatures[i - 1]
+                                .date, 'YYYY-MM-DD').format('DD-MM-YYYY'));
+                        }
+                        Swal.close();
+                    },
+                    error: function(errors) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: errors.responseJSON
+                                .message,
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        })
+                    }
+                });
+            }
 
             // Date
             $('.date').flatpickr({
                 dateFormat: 'd-m-Y'
             });
-
-            // Fungsi untuk mengambil value dari setiap baris
-            function getRepeaterValues() {
-                var values = [];
-
-                $('.repeater-wrapper').each(function() {
-                    var rowValues = {
-                        category: $(this).find('#category').val(),
-                        location: $(this).find('#location').val(),
-                        total: parseInt($(this).find('#total').val()) || 0
-                    };
-
-                    values.push(rowValues);
-                });
-
-                return values;
-            }
-
-            // Mengambil value tanda tangan
-            let ttdFile1 = null;
-            const myDropzone1 = new Dropzone('#dropzone-1', {
-                parallelUploads: 1,
-                maxFilesize: 10,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile1 = file;
-                    });
-                }
-            });
-
-            let ttdFile2 = null;
-            const myDropzone2 = new Dropzone('#dropzone-2', {
-                parallelUploads: 1,
-                maxFilesize: 10,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile2 = file;
-                    });
-                }
-            });
-
-            let ttdFile3 = null;
-            const myDropzone3 = new Dropzone('#dropzone-3', {
-                parallelUploads: 1,
-                maxFilesize: 10,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile3 = file;
-                    });
-                }
-            });
-
-            // Create, Insert, Save
-            var savelk = $('.create-lk');
-
-            Array.prototype.slice.call(savelk).forEach(function(form) {
-                $('.indicator-progress').hide();
-                $('.indicator-label').show();
-                form.addEventListener(
-                    "submit",
-                    function(event) {
-                        if (!form.checkValidity()) {
-                            event.preventDefault();
-                            event.stopPropagation();
-
-                            let damageReportNumber = $("#damage_report_number").val();
-                            let ticketNumber = $(".select-ticket").val();
-                            let receiptDate = $("#damage_report_date").val();
-                            let actionDate = $("#action_plan_date").val();
-                            let scope = $("#scope").val();
-                            let classification = $("#classification").val();
-
-                            if (!ticketNumber) {
-                                $(".select-ticket").addClass("invalid");
-                            }
-                        } else {
-                            event.preventDefault();
-                            Swal.fire({
-                                title: 'Loading...',
-                                text: "Please wait",
-                                customClass: {
-                                    confirmButton: 'd-none'
-                                },
-                                buttonsStyling: false
-                            });
-                            let ticket = $('.select-ticket').val();
-                            let datas = {}
-                            let signatures = []
-
-                            $('#addLaporanKerusakan').find('.add').each(function() {
-                                var inputId = $(this).attr('id');
-                                var inputValue = $("#" + inputId).val();
-
-                                if (inputId === 'grand_total' || inputId === 'paid' ||
-                                    inputId ===
-                                    'remaining') {
-                                    datas[$("#" + inputId).attr("name")] = parseInt(inputValue,
-                                        10);
-                                } else if (inputId === 'damage_report_date' || inputId ===
-                                    'action_plan_date') {
-                                    datas[$("#" + inputId).attr("name")] = moment(inputValue,
-                                            'D-M-YYYY')
-                                        .format('YYYY-MM-DD');
-                                } else {
-                                    datas[$("#" + inputId).attr("name")] = inputValue;
-                                }
-                            });
-
-                            datas.details = getRepeaterValues();
-
-                            $('.signatures').each(function(index) {
-                                let signature = {};
-
-                                $(this).find('.form-control').each(function() {
-                                    var inputId = $(this).attr('id');
-                                    var inputValue = $("#" + inputId).val();
-
-                                    if (inputId.startsWith('date')) {
-                                        signature[$("#" + inputId).attr("name")] =
-                                            moment(inputValue, 'D-M-YYYY')
-                                            .format('YYYY-MM-DD');
-                                    } else {
-                                        signature[$("#" + inputId).attr("name")] =
-                                            inputValue;
-                                    }
-                                });
-
-                                if (ttdFile1 && index === 0) {
-                                    signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                                }
-
-                                if (ttdFile2 && index === 1) {
-                                    signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                                }
-
-                                if (ttdFile3 && index === 2) {
-                                    signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                                }
-
-                                signatures.push(signature);
-                            });
-
-                            var allValues = getRepeaterValues();
-                            datas.ticket_id = ticket;
-                            datas.signatures = signatures;
-                            datas.status = "Terbuat";
-
-                            $.ajax({
-                                url: baseUrl + "api/damage-report/",
-                                type: "POST",
-                                data: JSON.stringify(datas),
-                                contentType: "application/json; charset=utf-8",
-                                dataType: "json",
-
-                                success: function(response) {
-                                    $('.indicator-progress').show();
-                                    $('.indicator-label').hide();
-
-                                    Swal.fire({
-                                        title: 'Berhasil',
-                                        text: 'Berhasil menambahkan Laporan Kerusakan.',
-                                        icon: 'success',
-                                        customClass: {
-                                            confirmButton: 'btn btn-primary'
-                                        },
-                                        buttonsStyling: false
-                                    })
-
-                                    window.location.href = "/complain/laporan-kerusakan"
-                                },
-                                error: function(xhr, status, error) {
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: errors.responseJSON.message,
-                                        icon: 'error',
-                                        customClass: {
-                                            confirmButton: 'btn btn-primary'
-                                        },
-                                        buttonsStyling: false
-                                    })
-                                }
-                            });
-                        }
-
-                        form.classList.add("was-validated");
-                    },
-                    false
-                );
-            });
-
-            // Preview before save
-            $(".btn-preview").on('click', function() {
-                let ticket = $('.select-ticket').val();
-                let datas = {}
-                let signatures = []
-
-                $('#addLaporanKerusakan').find('.add').each(function() {
-                    var inputId = $(this).attr('id');
-                    var inputValue = $("#" + inputId).val();
-
-                    if (inputId === 'grand_total' || inputId === 'paid' ||
-                        inputId ===
-                        'remaining') {
-                        datas[$("#" + inputId).attr("name")] = parseInt(inputValue,
-                            10);
-                    } else if (inputId === 'damage_report_date' || inputId ===
-                        'action_plan_date') {
-                        datas[$("#" + inputId).attr("name")] = moment(inputValue,
-                                'D-M-YYYY')
-                            .format('YYYY-MM-DD');
-                    } else {
-                        datas[$("#" + inputId).attr("name")] = inputValue;
-                    }
-                });
-
-                datas.details = getRepeaterValues();
-
-                $('.signatures').each(function(index) {
-                    let signature = {};
-
-                    $(this).find('.form-control').each(function() {
-                        var inputId = $(this).attr('id');
-                        var inputValue = $("#" + inputId).val();
-
-                        if (inputId.startsWith('date')) {
-                            signature[$("#" + inputId).attr("name")] =
-                                moment(inputValue, 'D-M-YYYY')
-                                .format('YYYY-MM-DD');
-                        } else {
-                            signature[$("#" + inputId).attr("name")] =
-                                inputValue;
-                        }
-                    });
-
-                    if (ttdFile1 && index === 0) {
-                        signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                    }
-
-                    if (ttdFile2 && index === 1) {
-                        signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                    }
-
-                    if (ttdFile3 && index === 2) {
-                        signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                    }
-
-                    signatures.push(signature);
-                });
-
-                var allValues = getRepeaterValues();
-                datas.ticket_id = ticket;
-                datas.signatures = signatures;
-                datas.status = "Terbuat";
-
-
-                localStorage.setItem('damage-report', JSON.stringify(datas));
-                window.location.href = "/complain/laporan-kerusakan/show";
-            })
-
+            
             // Cancel
             $(".btn-cancel").on("click", function() {
                 window.location.href = "/complain/laporan-kerusakan"
             })
 
             // Select2
-            $(".select-ticket").select2({
-                placeholder: 'Select Ticket',
-                allowClear: true,
-                ajax: {
-                    url: "{{ url('api/ticket/select') }}",
-                    dataType: 'json',
-                    cache: true,
-                    data: function(params) {
-                        return {
-                            term: params.term || '',
-                            page: params.page || 1
-                        }
-                    },
-                    processResults: function(data, params) {
-                        var more = data.pagination.more;
-                        if (more === false) {
-                            params.page = 1;
-                            params.abort = true;
-                        }
-
-                        return {
-                            results: data.data,
-                            pagination: {
-                                more: more
-                            }
-                        };
-                    }
-                }
-            });
-
             $('.select-ticket').on("change", (async function(e) {
                 $(this).removeClass("is-invalid");
             }));

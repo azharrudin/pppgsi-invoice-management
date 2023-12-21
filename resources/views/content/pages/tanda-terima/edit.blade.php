@@ -152,7 +152,6 @@
                                     <input type="text" class="form-control w-px-250 " id="signature_name"
                                         name="signature_name" placeholder="Nama & Jabatan" />
                                 </div>
-
                             </div>
                         </div>
                     </div>

@@ -28,17 +28,17 @@ class LaporanKerusakanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function preview(string $id)
     {
-        //
+        return view('content.pages.laporan-kerusakan.preview');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        return view('content.pages.laporan-kerusakan.show');
     }
 
     /**
@@ -46,7 +46,7 @@ class LaporanKerusakanController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('content.pages.laporan-kerusakan.edit');
     }
 
     /**
