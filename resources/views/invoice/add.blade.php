@@ -143,7 +143,7 @@ $configData = Helper::appClasses();
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Tanda Tangan & Meterai
                                         (Opsional)</label>
-                                    <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" name="materai_date" required />
+                                    <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" name="materai_date"  />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-3">
@@ -154,7 +154,7 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" required />
+                                    <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
 
@@ -303,7 +303,7 @@ $configData = Helper::appClasses();
                         params.page = 1;
                         params.abort = true;
                     }
-
+                    console.log(data);
                     return {
                         results: data.data,
                         pagination: {
@@ -774,7 +774,9 @@ $configData = Helper::appClasses();
             url: "{{url('api/bank')}}/" + idBank,
             type: "GET",
             success: function(response) {
+                console.log(response);
                 let data = response.data;
+
                 let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
                 $('#bank').prepend(tem);
 

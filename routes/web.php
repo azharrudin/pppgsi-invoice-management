@@ -160,6 +160,7 @@ Route::prefix('settings')->group(function () {
     // List User
     Route::prefix('/list-user')->group(function () {
         Route::get('/', [ListUserController::class, 'index'])->name('pages-list-user');
+        Route::get('/data-user', [ListUserController::class, 'datatable'])->name('data-user');
     });
 
     // Tax Rates

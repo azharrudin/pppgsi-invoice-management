@@ -193,7 +193,7 @@ class BankController extends Controller
             $field = $request->input("field");
             $perPage = 10;
 
-            if(is_null($field)) $field = "id";
+            if(is_null($field)) $field = "name";
 
             $getBank = Bank::where("deleted_at", null)->
                 where($field, 'like', '%' . $value . '%')->
@@ -217,7 +217,7 @@ class BankController extends Controller
 
             return [
                 "data" => $dataArr,
-                "pagination" => $pagination,
+            "pagination" => $pagination,
             ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
