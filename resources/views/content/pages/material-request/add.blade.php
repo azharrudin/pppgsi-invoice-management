@@ -27,16 +27,16 @@ $configData = Helper::appClasses();
                     <div class="row py-3 px-3">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">No Lap Kerusakan </label>
-                                <input type="text" class="form-control w-px-250" placeholder="No Lap Kerusakan" />
+                                <label for="note" class="form-label fw-medium">Requester</label>
+                                <input type="text" class="form-control w-px-250" placeholder="Requester" />
                             </div>
                             <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">No Lap Kerusakan </label>
-                                <input type="text" class="form-control w-px-250" placeholder="No Lap Kerusakan" />
+                                <label for="note" class="form-label fw-medium">Departement </label>
+                                <input type="text" class="form-control w-px-250" placeholder="Departement" />
                             </div>
                             <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">No Lap Kerusakan </label>
-                                <input type="text" class="form-control w-px-250" placeholder="No Lap Kerusakan" />
+                                <label for="note" class="form-label fw-medium">Stock </label>
+                                <input type="text" class="form-control w-px-250" placeholder="Stock" />
                             </div>
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">No Lap Kerusakan </label>

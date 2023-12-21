@@ -120,7 +120,7 @@ $configData = Helper::appClasses();
                             </div>
                             <div class="col-md-8 d-flex align-items-center">
                                 <label for="note" class="form-label fw-medium me-2">Jatuh Tempo Tanggal :</label>
-                                <input type="text" class="form-control w-px-250 date" placeholder="Jatuh Tanggal Tempo" id="invoice_due_date" name="invoice_due_date" required/>
+                                <input type="text" class="form-control w-px-250 date" placeholder="Jatuh Tanggal Tempo" id="invoice_due_date" name="invoice_due_date" required />
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                         </div>
@@ -143,7 +143,7 @@ $configData = Helper::appClasses();
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Tanda Tangan & Meterai
                                         (Opsional)</label>
-                                    <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" name="materai_date"  />
+                                    <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" name="materai_date" />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-3">
@@ -390,12 +390,12 @@ $configData = Helper::appClasses();
                     </div>
                     <div class="col-sm-1 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Pajak</label>
-                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
+                        <input type="number" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled/>
+                        <input type="number" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled/>
                     </div>
                     <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -422,7 +422,7 @@ $configData = Helper::appClasses();
             // Hapus baris yang ditekan tombol hapus
             let index = $('.price').index(this);
             let total = 0;
-            let tax = isNaN(parseInt($(`.tax:eq(` + index + `)`).val()))  ? 0 : parseInt($(`.tax:eq(` + index + `)`).val());
+            let tax = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val());
             let price = parseInt($(this).val());
             console.log(tax);
             let totalPrice = price + tax;
@@ -833,11 +833,11 @@ $configData = Helper::appClasses();
                     </div>
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                        <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required value="` + details[i].price + `"  />
+                        <input type="number" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required value="` + details[i].price + `"  />
                     </div>
                     <div class="col-sm-1 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Pajak</label>
-                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required  value="` + details[i].tax + `" />
+                        <input type="number" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required  value="` + details[i].tax + `" />
                     </div>
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Total (Rp.)</label>
@@ -875,12 +875,12 @@ $configData = Helper::appClasses();
                     </div>
                     <div class="col-sm-1 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Pajak</label>
-                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
+                        <input type="number" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled/>
+                        <input type="number" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled/>
                     </div>
                     <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
