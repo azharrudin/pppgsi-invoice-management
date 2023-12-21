@@ -167,6 +167,8 @@ Route::prefix('settings')->group(function () {
         Route::get('/', [TaxRatesController::class, 'index'])->name('pages-tax-rates');
         Route::get('/add', [TaxRatesController::class, 'create'])->name('pages-create-tax-rates');
         Route::get('/data-tax', [TaxRatesController::class, 'datatable'])->name('data-tax');
+        Route::get('/preview-tax', [TaxRatesController::class, 'preview'])->name('pages-tax-rates-preview');
+        Route::get('/show/{id}', [TaxRatesController::class, 'show'])->name('pages-show-tax');
     });
 });
 
@@ -180,7 +182,7 @@ Route::get('/pages/misc-error', [MiscError::class, 'index'])->name('pages-misc-e
 Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
 Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'),'verified',])->group(function () {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
