@@ -43,7 +43,7 @@ class ListBankController extends Controller
         if ($request->page == null) {
             $request->page = 1;
         }
-        $apiRequest = Http::get(env('BASE_URL_API') . '/api/bank', [
+        $apiRequest = Http::get(env('BASE_URL_API') . '/api/user', [
             'per_page' => $request->length,
             'page' => $request->page,
             'order' => 'id',

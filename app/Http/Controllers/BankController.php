@@ -195,19 +195,6 @@ class BankController extends Controller
 
             if(is_null($field)) $field = "name";
 
-            $getTenant = Bank::where("deleted_at", null)->
-                where($field, 'like', '%' . $value . '%')->
-                select("id", $field)->
-                paginate($perPage);
-            $totalCount = $getTenant->total();
-
-            $dataArr = [];
-            foreach($getTenant as $tenantObj){
-                $dataObj = [
-                    "id" => $tenantObj->id,
-                    "text" => $tenantObj->$field,
-            if(is_null($field)) $field = "id";
-
             $getBank = Bank::where("deleted_at", null)->
                 where($field, 'like', '%' . $value . '%')->
                 select("id", $field)->
@@ -230,7 +217,7 @@ class BankController extends Controller
 
             return [
                 "data" => $dataArr,
-                "pagination" => $pagination,
+            "pagination" => $pagination,
             ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
