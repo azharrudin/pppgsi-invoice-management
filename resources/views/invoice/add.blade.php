@@ -418,12 +418,27 @@ $configData = Helper::appClasses();
             $(this).closest('.row-mg').remove();
         });
 
-        $(document).on('input', '.price', function() {
+        $(document).on('keydown', '.price', function(event) {
+            var key = event.which;
+            if ((key < 48 || key > 57) && key != 8) event.preventDefault();
+        });
+        $(document).on('input', '.price', function(event) {
+            console.log(event.currentTarget.value);
+            var nStr = event.currentTarget.value + '';
+            nStr = nStr.replace(/\,/g, "");
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            event.currentTarget.value = x1 + x2;
             // Hapus baris yang ditekan tombol hapus
             let index = $('.price').index(this);
             let total = 0;
-            let tax = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val());
-            let price = parseInt($(this).val());
+            let tax = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replace(',', ''));
+            let price = parseInt($(this).val().replace(',', ''));
             console.log(tax);
             let totalPrice = price + tax;
             $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : totalPrice);
@@ -431,12 +446,24 @@ $configData = Helper::appClasses();
 
         });
 
-        $(document).on('input', '.tax', function() {
+        $(document).on('input', '.tax', function(event) {
+            console.log(event.currentTarget.value);
+            var nStr = event.currentTarget.value + '';
+
+            nStr = nStr.replace(/\,/g, "");
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            event.currentTarget.value = x1 + x2;
             // Hapus baris yang ditekan tombol hapus
             let index = $('.tax').index(this);
             let total = 0;
-            let price = parseInt($(`.price:eq(` + index + `)`).val());
-            let tax = parseInt($(this).val());
+            let price = parseInt($(`.price:eq(` + index + `)`).val().replace(',', ''));
+            let tax = parseInt($(this).val().replace(',', ''));
             let totalPrice = price + tax;
             $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : totalPrice);
             getTotal();
@@ -457,7 +484,6 @@ $configData = Helper::appClasses();
             }
             $('.grand_total').text(sum);
             $('.terbilang').val(terbilang(sum));
-
 
         }
 
@@ -833,11 +859,11 @@ $configData = Helper::appClasses();
                     </div>
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                        <input type="number" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required value="` + details[i].price + `"  />
+                        <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required value="` + details[i].price + `"  />
                     </div>
                     <div class="col-sm-1 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Pajak</label>
-                        <input type="number" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required  value="` + details[i].tax + `" />
+                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required  value="` + details[i].tax + `" />
                     </div>
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Total (Rp.)</label>
@@ -875,12 +901,12 @@ $configData = Helper::appClasses();
                     </div>
                     <div class="col-sm-1 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Pajak</label>
-                        <input type="number" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
+                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="number" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled/>
+                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled/>
                     </div>
                     <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">

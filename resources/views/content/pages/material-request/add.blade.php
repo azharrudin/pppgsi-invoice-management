@@ -39,8 +39,8 @@ $configData = Helper::appClasses();
                                 <input type="text" class="form-control w-px-250" placeholder="Stock" />
                             </div>
                             <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">No Lap Kerusakan </label>
-                                <input type="text" class="form-control w-px-250" placeholder="No Lap Kerusakan" />
+                                <label for="note" class="form-label fw-medium">Purchase </label>
+                                <input type="text" class="form-control w-px-250" placeholder="Purchase" />
                             </div>
                         </div>
                         <div class="col-md-6 d-flex flex-column align-items-end">
