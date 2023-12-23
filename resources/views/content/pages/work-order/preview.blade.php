@@ -36,7 +36,7 @@
                             <hr class="my-3 mx-n4">
 
                             <div class="row py-3 px-3">
-                                <div class="col-md-3">
+                                <div class="col-md-3 pe-none">
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">No Lap Kerusakan </label>
                                         <select class="form-select select2 w-px-250 select-lk item-details mb-3" required>
@@ -44,130 +44,130 @@
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 pe-none">
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Date </label>
                                         <input type="text" class="form-control date add" id="work_order_date"
-                                            name="work_order_date" placeholder="Date" required />
+                                            name="work_order_date" placeholder="Date" required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 pe-none">
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Action Plan </label>
                                         <input type="text" class="form-control date add" id="action_plan_date"
-                                            name="action_plan_date" placeholder="Action Plan" required />
+                                            name="action_plan_date" placeholder="Action Plan" required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 pe-none">
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Finish Plan </label>
                                         <input type="text" class="form-control date add" id="finish_plan"
-                                            name="finish_plan" placeholder="Finish Plan" required />
+                                            name="finish_plan" placeholder="Finish Plan" required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row py-3 px-3">
+                            <div class="row py-3 px-3 pe-none">
                                 <div class="col-12">
                                     <label for="note" class="form-label fw-medium">Scope </label>
                                     <div class="">
                                         <div class="form-check form-check-inline check1">
                                             <input class="form-check-input scope-checkbox" type="checkbox"
-                                                name="telekomunikasi" id="telekomunikasi" required>
+                                                name="telekomunikasi" id="telekomunikasi" required readonly>
                                             <label class="form-check-label" for="telekomunikasi">Telekomunikasi</label>
                                         </div>
                                         <div class="form-check form-check-inline check1">
                                             <input class="form-check-input scope-checkbox" type="checkbox" name="electric"
-                                                id="electric" required>
+                                                id="electric" required readonly>
                                             <label class="form-check-label" for="electric">Electric</label>
                                         </div>
                                         <div class="form-check form-check-inline check1">
                                             <input class="form-check-input scope-checkbox" type="checkbox" name="plumbing"
-                                                id="plumbing" required>
+                                                id="plumbing" required readonly>
                                             <label class="form-check-label" for="plumbing">Plumbing</label>
                                         </div>
                                         <div class="form-check form-check-inline check1">
                                             <input class="form-check-input scope-checkbox" type="checkbox" name="civil"
-                                                id="civil" required>
+                                                id="civil" required readonly>
                                             <label class="form-check-label" for="civil">Civil</label>
                                         </div>
                                         <div class="form-check form-check-inline check1">
                                             <input class="form-check-input scope-checkbox" type="checkbox" name="bas"
-                                                id="bas" required>
+                                                id="bas" required readonly>
                                             <label class="form-check-label" for="bas">BAS</label>
                                         </div>
                                         <div class="form-check form-check-inline check1">
                                             <input class="form-check-input scope-checkbox" type="checkbox" name="mdp"
-                                                id="mdp" required>
+                                                id="mdp" required readonly>
                                             <label class="form-check-label" for="mdp">MDP</label>
                                         </div>
                                     </div>
                                     <div class="">
-                                        <div class="form-check form-check-inline check1">
+                                        {{-- <div class="form-check form-check-inline check1">
                                             <input class="form-check-input scope-checkbox" type="checkbox"
-                                                name="telekomunikasi" required id="telekomunikasi2">
+                                                name="telekomunikasi" required readonly id="telekomunikasi2">
                                             <label class="form-check-label" for="telekomunikasi2">Telekomunikasi</label>
-                                        </div>
+                                        </div> --}}
                                         <div class="form-check form-check-inline check1">
                                             <input class="form-check-input scope-checkbox" type="checkbox" name="hvac"
-                                                required id="hvac">
+                                                required readonly id="hvac">
                                             <label class="form-check-label" for="hvac">HVAC</label>
                                         </div>
                                         <div class="form-check form-check-inline check1">
                                             <input class="form-check-input scope-checkbox" type="checkbox" name="lift"
-                                                required id="lift">
+                                                required readonly id="lift">
                                             <label class="form-check-label" for="lift">Lift</label>
                                         </div>
                                         <div class="form-check form-check-inline check1">
                                             <input class="form-check-input scope-checkbox" type="checkbox"
-                                                name="fire system" required id="fireSystem">
+                                                name="fire system" required readonly id="fireSystem">
                                             <label class="form-check-label" for="fireSystem">Fire System</label>
                                         </div>
                                         <div class="form-check form-check-inline check1">
                                             <input class="form-check-input scope-checkbox" type="checkbox" name="genset"
-                                                required id="genset">
+                                                required readonly id="genset">
                                             <label class="form-check-label" for="genset">GENSET</label>
                                         </div>
                                         <div class="form-check form-check-inline check1">
                                             <input class="form-check-input scope-checkbox" type="checkbox" name="others"
-                                                required id="others">
+                                                required readonly id="others">
                                             <label class="form-check-label" for="others">Others</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row py-3 px-3">
+                            <div class="row py-3 px-3 pe-none">
                                 <div class="col-12">
                                     <label for="note" class="form-label fw-medium">Classification</label>
                                     <div class="">
                                         <div class="form-check form-check-inline classif">
                                             <input class="form-check-input classif-checkbox" type="checkbox"
-                                                name="previous maintenance routine" id="mainRoutine" required>
+                                                name="previous maintenance routine" id="mainRoutine" required readonly>
                                             <label class="form-check-label" for="mainRoutine">Prev. Maint Routine</label>
                                         </div>
                                         <div class="form-check form-check-inline classif">
                                             <input class="form-check-input classif-checkbox" type="checkbox"
-                                                name="previous maintenance non routine" id="prevnonroutine" required>
+                                                name="previous maintenance non routine" id="prevnonroutine" required readonly>
                                             <label class="form-check-label" for="prevnonroutine">Prev Maint Non
                                                 Routine</label>
                                         </div>
                                         <div class="form-check form-check-inline classif">
                                             <input class="form-check-input classif-checkbox" type="checkbox"
-                                                name="repair" id="repair" required>
+                                                name="repair" id="repair" required readonly>
                                             <label class="form-check-label" for="repair">Repair</label>
                                         </div>
                                         <div class="form-check form-check-inline classif">
                                             <input class="form-check-input classif-checkbox" type="checkbox"
-                                                name="replacement" id="replacement" required>
+                                                name="replacement" id="replacement" required readonly>
                                             <label class="form-check-label" for="replacement">Replacement</label>
                                         </div>
                                         <div class="form-check form-check-inline classif">
                                             <input class="form-check-input classif-checkbox" type="checkbox"
-                                                name="vendor" id="vendor" required>
+                                                name="vendor" id="vendor" required readonly>
                                             <label class="form-check-label" for="vendor">Vendor</label>
                                         </div>
                                     </div>
@@ -179,7 +179,7 @@
                                     <div class="mb-3">
                                         <label for="note" class="form-label fw-medium">Job deskription:</label>
                                         <textarea class="form-control add" rows="5" id="job_description" name="job_description"
-                                            placeholder="Job deskription" required></textarea>
+                                            placeholder="Job deskription" required readonly></textarea>
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
@@ -195,77 +195,58 @@
                                                         <label for="note"
                                                             class="form-label fw-medium">Location</label>
                                                         <input type="text" class="form-control  " id="location"
-                                                            name="location" placeholder="Location" required />
+                                                            name="location" placeholder="Location" required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
                                                     <div class="col-3">
                                                         <label for="note" class="form-label fw-medium">Material
                                                             Request</label>
                                                         <input type="text" class="form-control  " id="material-req"
-                                                            name="material-req" placeholder="Material Request" required />
+                                                            name="material-req" placeholder="Material Request" required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
                                                     <div class="col-3">
                                                         <label for="note" class="form-label fw-medium">Type /Made
                                                             In</label>
                                                         <input type="text" class="form-control  " id="type"
-                                                            name="type" placeholder="Type /Made In" required />
+                                                            name="type" placeholder="Type /Made In" required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
-                                                    <div class="col-2">
+                                                    <div class="col-3">
                                                         <label for="note"
                                                             class="form-label fw-medium">Quantity</label>
                                                         <input type="text" class="form-control qty" id="qty"
-                                                            name="qty" placeholder="Quantity" required />
+                                                            name="qty" placeholder="Quantity" required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
-                                                    <a class="mb-3 mx-2 mt-4" style="width: 10px" role="button"
-                                                        data-repeater-delete>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12"
-                                                            height="12" viewBox="0 0 12 12" fill="none">
-                                                            <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
-                                                            <path
-                                                                d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z"
-                                                                fill="#FF4747" />
-                                                        </svg>
-                                                    </a>
                                                 </div>
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="row pb-4">
-                                            <div class="col-12">
-                                                <button type="button" class="btn btn-primary waves-effect waves-light"
-                                                    data-repeater-create>Tambah Baris</button>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="row py-3">
+                                    <div class="row py-3 pe-none">
                                         <div class="col-12">
                                             <label for="note" class="form-label fw-medium">Classification</label>
                                             <div class="">
                                                 <div class="form-check form-check-inline classif2">
                                                     <input class="form-check-input classif2-checkbox" type="checkbox"
-                                                        name="closed" id="closed" required>
+                                                        name="closed" id="closed" required readonly>
                                                     <label class="form-check-label" for="closed">Closed
                                                     </label>
                                                 </div>
                                                 <div class="form-check form-check-inline classif2">
                                                     <input class="form-check-input classif2-checkbox" type="checkbox"
-                                                        name="cancelled" id="cancelled" required>
+                                                        name="cancelled" id="cancelled" required readonly>
                                                     <label class="form-check-label" for="cancelled">Calceled</label>
                                                 </div>
                                                 <div class="form-check form-check-inline classif2">
                                                     <input class="form-check-input classif2-checkbox" type="checkbox"
-                                                        name="explanation" id="explanation" required>
+                                                        name="explanation" id="explanation" required readonly>
                                                     <label class="form-check-label" for="explanation">Explanation</label>
                                                 </div>
                                                 <div class="form-check form-check-inline classif2">
                                                     <input class="form-check-input classif2-checkbox" type="checkbox"
-                                                        name="others" id="others" required>
+                                                        name="others" id="others" required readonly>
                                                     <label class="form-check-label" for="others">Others</label>
                                                 </div>
                                             </div>
@@ -279,25 +260,31 @@
                                             <div class="mb-3">
                                                 <input type="text" class="form-control" placeholder="Technician"
                                                     id="technician1" name="technician" style="text-align:center;"
-                                                    required />
+                                                    required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control " placeholder="Nama & Jabatan"
-                                                    id="nama1" name="name" style="text-align:center;" required />
+                                                    id="nama1" name="name" style="text-align:center;" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <form action="/upload" class="dropzone needsclick dz-clickable"
-                                                    id="dropzone-1">
-                                                    <div class="dz-message needsclick">
-                                                        <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-1" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                        </div>
                                                     </div>
-                                                </form>
+                                                    {{-- <a class="dz-remove" id="3"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a> --}}
+                                                </div>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="mb-3 pe-none">
                                                 <input type="text" class="form-control date" placeholder="Tanggal"
-                                                    name="date" id="date1" style="text-align:center;" required />
+                                                    name="date" id="date1" style="text-align:center;" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
@@ -305,25 +292,31 @@
                                             <div class="mb-3">
                                                 <input type="text" class="form-control" placeholder="Technician"
                                                     id="technician2" name="technician" style="text-align:center;"
-                                                    required />
+                                                    required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control " placeholder="Nama & Jabatan"
-                                                    id="nama2" name="name" style="text-align:center;" required />
+                                                    id="nama2" name="name" style="text-align:center;" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <form action="/upload" class="dropzone needsclick dz-clickable"
-                                                    id="dropzone-2">
-                                                    <div class="dz-message needsclick">
-                                                        <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-2" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                        </div>
                                                     </div>
-                                                </form>
+                                                    {{-- <a class="dz-remove" id="3"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a> --}}
+                                                </div>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="mb-3 pe-none">
                                                 <input type="text" class="form-control date" placeholder="Tanggal"
-                                                    id="date2" name="date" style="text-align:center;" required />
+                                                    id="date2" name="date" style="text-align:center;" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
@@ -331,25 +324,31 @@
                                             <div class="mb-3">
                                                 <input type="text" class="form-control" placeholder="Technician"
                                                     id="technician3" name="technician" style="text-align:center;"
-                                                    required />
+                                                    required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control " placeholder="Nama & Jabatan"
-                                                    id="nama3" name="name" style="text-align:center;" required />
+                                                    id="nama3" name="name" style="text-align:center;" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <form action="/upload" class="dropzone needsclick dz-clickable"
-                                                    id="dropzone-3">
-                                                    <div class="dz-message needsclick">
-                                                        <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-3" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                        </div>
                                                     </div>
-                                                </form>
+                                                    {{-- <a class="dz-remove" id="3"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a> --}}
+                                                </div>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="mb-3 pe-none">
                                                 <input type="text" class="form-control date" placeholder="Tanggal"
-                                                    id="date3" name="date" style="text-align:center;" required />
+                                                    id="date3" name="date" style="text-align:center;" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
@@ -357,25 +356,31 @@
                                             <div class="mb-3">
                                                 <input type="text" class="form-control" placeholder="Technician"
                                                     id="technician4" name="technician" style="text-align:center;"
-                                                    required />
+                                                    required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control " placeholder="Nama & Jabatan"
-                                                    id="nama4" name="name" style="text-align:center;" required />
+                                                    id="nama4" name="name" style="text-align:center;" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <form action="/upload" class="dropzone needsclick dz-clickable"
-                                                    id="dropzone-4">
-                                                    <div class="dz-message needsclick">
-                                                        <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-4" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                        </div>
                                                     </div>
-                                                </form>
+                                                    {{-- <a class="dz-remove" id="3"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a> --}}
+                                                </div>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="mb-3 pe-none">
                                                 <input type="text" class="form-control date" placeholder="Tanggal"
-                                                    id="date4" name="date" style="text-align:center;" required />
+                                                    id="date4" name="date" style="text-align:center;" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
@@ -390,9 +395,6 @@
                 <div class="col-lg-3 col-12 invoice-actions">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <button type="submit" id="save"
-                                class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
-                            <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
                             <button type="button" class="btn btn-label-secondary d-grid w-100 btn-cancel">Batal</button>
                         </div>
                     </div>
@@ -580,6 +582,153 @@
                 }
             }
 
+            // Get Data
+            var urlSegments = window.location.pathname.split('/');
+            var idIndex = urlSegments.indexOf('preview') + 1;
+            var id = urlSegments[idIndex];
+
+            getDataWorkOrder(id);
+
+            function getDataWorkOrder(id) {
+                Swal.fire({
+                    title: 'Loading...',
+                    text: "Please wait",
+                    customClass: {
+                        confirmButton: 'd-none'
+                    },
+                    buttonsStyling: false
+                });
+                $.ajax({
+                    url: "{{ url('api/work-order') }}/" + id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(res) {
+                        let response = res.data;
+                        $('#addWorkOrder').find('.form-control').each(function() {
+                            var elementId = $(this).attr('id');
+                            var elementName = $(this).attr('name');
+
+                            if (elementId === 'work_order_date' || elementId ===
+                                'action_plan_date' || elementId === 'finish_plan') {
+                                // Format tanggal menggunakan moment.js
+                                $("#" + elementId).val(moment(response[elementName],
+                                    'YYYY-MM-DD').format('DD-MM-YYYY'));
+                            } else {
+                                $("#" + elementId).val(response[elementName]);
+                            }
+                        });
+
+                        // Mengambil data lk
+                        $.ajax({
+                            url: "{{ url('api/damage-report') }}/" + response.damage_report_id,
+                            type: "GET",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function(res) {
+                                $(".select-lk").empty().append('<option value="' + res.data
+                                    .id + '">' + res.data.damage_report_number +
+                                    '</option>').val(
+                                    res.data.id).trigger("change");
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: xhr.responseJSON.message,
+                                    icon: 'error',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                })
+                            }
+                        });
+
+                        // Set value ke repeater
+                        var firstRow = $('.repeater-wrapper').first();
+
+                        for (var i = 0; i < response.work_order_details.length; i++) {
+                            var rowValues = response.work_order_details[i];
+
+                            if (i === 0) {
+                                firstRow.find('#location').val(rowValues.location);
+                                firstRow.find('#material-req').val(rowValues.material_request);
+                                firstRow.find('#type').val(rowValues.type);
+                                firstRow.find('#qty').val(rowValues.quantity);
+                            } else {
+                                var newRow = firstRow.clone();
+                                newRow.find('#location').val(rowValues.location);
+                                newRow.find('#material-req').val(rowValues.material_request);
+                                newRow.find('#type').val(rowValues.type);
+                                newRow.find('#qty').val(rowValues.quantity);
+
+                                $('.repeater [data-repeater-list="group-a"]').append(newRow);
+                            }
+                        }
+
+                        $('.repeater').repeater();
+
+                        $('.scope-checkbox').each(function() {
+                            var checkboxName = $(this).attr('name').toLowerCase();
+
+                            if ((response.scope).toLowerCase() === checkboxName) {
+                                $('.scope-checkbox').not(this).prop('disabled', true);
+                                $(this).prop('checked', true);
+                            } else {
+                                $(this).prop('checked', false);
+                            }
+                        });
+
+                        $('.classif-checkbox').each(function() {
+                            var checkboxName = $(this).attr('name').toLowerCase();
+
+                            if ((response.classification).toLowerCase() === checkboxName) {
+                                $('.classif-checkbox').not(this).prop('disabled', true);
+                                $(this).prop('checked', true);
+                            } else {
+                                $(this).prop('checked', false);
+                            }
+                        });
+
+                        $('.classif2-checkbox').each(function() {
+                            var checkboxName = $(this).attr('name').toLowerCase();
+
+                            if ((response.klasifikasi).toLowerCase() === checkboxName) {
+                                $('.classif2-checkbox').not(this).prop('disabled', true);
+                                $(this).prop('checked', true);
+                            } else {
+                                $(this).prop('checked', false);
+                            }
+                        });
+
+                        // Set value ke form signature
+                        for (let i = 1; i < response.work_order_signatures.length + 1; i++) {
+                            $("#nama" + i).val(response.work_order_signatures[i - 1].name);
+                            if (response.work_order_signatures[i - 1].signature != '') {
+                                $('.prev-img-' + i).attr('src', response.work_order_signatures[i - 1]
+                                    .signature);
+                            } else {
+                                $('.dz-nopreview').css('display', 'block');
+                            }
+                            $('#date' + i).val(moment(response.work_order_signatures[i - 1]
+                                .date, 'YYYY-MM-DD').format('DD-MM-YYYY'));
+                        }
+                        Swal.close();
+                    },
+                    error: function(errors) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: errors.responseJSON
+                                .message,
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        })
+                    }
+                });
+            }
+
             // Create, Insert, Save
             // var savewo = $('.create-wo');
 
@@ -681,73 +830,73 @@
             // });
 
             // Mengambil value tanda tangan
-            let ttdFile1 = null;
-            const myDropzone1 = new Dropzone('#dropzone-1', {
-                parallelUploads: 1,
-                maxFilesize: 2,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile1 = file;
-                    });
-                }
-            });
+            // let ttdFile1 = null;
+            // const myDropzone1 = new Dropzone('#dropzone-1', {
+            //     parallelUploads: 1,
+            //     maxFilesize: 2,
+            //     addRemoveLinks: true,
+            //     maxFiles: 1,
+            //     acceptedFiles: ".jpeg,.jpg,.png",
+            //     autoQueue: false,
+            //     init: function() {
+            //         this.on('addedfile', function(file) {
+            //             while (this.files.length > this.options.maxFiles) this.removeFile(this
+            //                 .files[0]);
+            //             ttdFile1 = file;
+            //         });
+            //     }
+            // });
 
-            let ttdFile2 = null;
-            const myDropzone2 = new Dropzone('#dropzone-2', {
-                parallelUploads: 1,
-                maxFilesize: 2,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile2 = file;
-                    });
-                }
-            });
+            // let ttdFile2 = null;
+            // const myDropzone2 = new Dropzone('#dropzone-2', {
+            //     parallelUploads: 1,
+            //     maxFilesize: 2,
+            //     addRemoveLinks: true,
+            //     maxFiles: 1,
+            //     acceptedFiles: ".jpeg,.jpg,.png",
+            //     autoQueue: false,
+            //     init: function() {
+            //         this.on('addedfile', function(file) {
+            //             while (this.files.length > this.options.maxFiles) this.removeFile(this
+            //                 .files[0]);
+            //             ttdFile2 = file;
+            //         });
+            //     }
+            // });
 
-            let ttdFile3 = null;
-            const myDropzone3 = new Dropzone('#dropzone-3', {
-                parallelUploads: 1,
-                maxFilesize: 2,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile3 = file;
-                    });
-                }
-            });
+            // let ttdFile3 = null;
+            // const myDropzone3 = new Dropzone('#dropzone-3', {
+            //     parallelUploads: 1,
+            //     maxFilesize: 2,
+            //     addRemoveLinks: true,
+            //     maxFiles: 1,
+            //     acceptedFiles: ".jpeg,.jpg,.png",
+            //     autoQueue: false,
+            //     init: function() {
+            //         this.on('addedfile', function(file) {
+            //             while (this.files.length > this.options.maxFiles) this.removeFile(this
+            //                 .files[0]);
+            //             ttdFile3 = file;
+            //         });
+            //     }
+            // });
 
-            let ttdFile4 = null;
-            const myDropzone4 = new Dropzone('#dropzone-4', {
-                parallelUploads: 1,
-                maxFilesize: 2,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile4 = file;
-                    });
-                }
-            });
+            // let ttdFile4 = null;
+            // const myDropzone4 = new Dropzone('#dropzone-4', {
+            //     parallelUploads: 1,
+            //     maxFilesize: 2,
+            //     addRemoveLinks: true,
+            //     maxFiles: 1,
+            //     acceptedFiles: ".jpeg,.jpg,.png",
+            //     autoQueue: false,
+            //     init: function() {
+            //         this.on('addedfile', function(file) {
+            //             while (this.files.length > this.options.maxFiles) this.removeFile(this
+            //                 .files[0]);
+            //             ttdFile4 = file;
+            //         });
+            //     }
+            // });
 
             // Fungsi untuk mengambil value dari setiap baris
             function getRepeaterValues() {
@@ -817,20 +966,9 @@
                         }
                     });
 
-                    if (ttdFile1 && index === 0) {
-                        signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                    }
-
-                    if (ttdFile2 && index === 1) {
-                        signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                    }
-
-                    if (ttdFile3 && index === 2) {
-                        signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                    }
-
-                    if (ttdFile4 && index === 3) {
-                        signature['signature'] = ttdFile4.dataURL || ttdFile4.url;
+                    if ($('.prev-img-' + (index + 1)).attr("src") != '') {
+                        signature['signature'] = $('.prev-img-' + (index + 1)).attr(
+                            "src");
                     }
 
                     signatures.push(signature);
@@ -839,6 +977,7 @@
                 datas.signatures = signatures;
                 datas.status = "Terbuat";
 
+                console.log(datas);
                 $.ajax({
                     url: baseUrl + "api/work-order",
                     type: "POST",
@@ -881,79 +1020,10 @@
                 window.location.href = "/complain/work-order"
             })
 
-            // Preview before save
-            $(".btn-preview").on('click', function() {
-                let lk = $(".select-lk").val();
-                let datas = {}
-                let signatures = [];
-
-                datas.damage_report_id = lk;
-                $('#addWorkOrder').find('.add').each(function() {
-                    var inputId = $(this).attr('id');
-                    var inputValue = $("#" + inputId).val();
-
-                    if (inputId === 'work_order_date' || inputId ===
-                        'action_plan_date' || inputId === 'finish_plan') {
-                        datas[$("#" + inputId).attr("name")] = moment(inputValue,
-                                'D-M-YYYY')
-                            .format('YYYY-MM-DD');
-                    } else {
-                        datas[$("#" + inputId).attr("name")] = inputValue;
-                    }
-                });
-
-                datas.scope = $('.scope-checkbox:checked').attr('name');
-                datas.classification = $('.classif-checkbox:checked').attr('name');
-                datas.klasifikasi = $('.classif2-checkbox:checked').attr('name');
-                datas.details = getRepeaterValues();
-
-                $('.signatures').each(function(index) {
-                    let signature = {};
-
-                    $(this).find('.form-control').each(function() {
-                        var inputId = $(this).attr('id');
-                        var inputValue = $("#" + inputId).val();
-
-                        if (inputId.startsWith('date')) {
-                            signature[$("#" + inputId).attr("name")] =
-                                moment(inputValue, 'D-M-YYYY')
-                                .format('YYYY-MM-DD');
-                        } else {
-                            signature[$("#" + inputId).attr("name")] =
-                                inputValue;
-                        }
-                    });
-
-                    if (ttdFile1 && index === 0) {
-                        signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                    }
-
-                    if (ttdFile2 && index === 1) {
-                        signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                    }
-
-                    if (ttdFile3 && index === 2) {
-                        signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                    }
-
-                    if (ttdFile4 && index === 3) {
-                        signature['signature'] = ttdFile4.dataURL || ttdFile4.url;
-                    }
-
-                    signatures.push(signature);
-                });
-
-                datas.signatures = signatures;
-                datas.status = "Terbuat";
-
-                localStorage.setItem('work-order', JSON.stringify(datas));
-                window.location.href = "/complain/work-order/preview";
-            })
-
             // Select2
             $(".select-lk").select2({
                 placeholder: 'Select Damage Report',
-                allowClear: true,
+                // allowClear: true,
                 ajax: {
                     url: "{{ url('api/damage-report/select') }}",
                     dataType: 'json',

@@ -64,7 +64,6 @@ Route::prefix('invoice')->group(function () {
 // Complain
 Route::prefix('complain')->group(function () {
     // Ticket
-
     Route::prefix('/')->group(function () {
         Route::get('/list-ticket', [TicketListController::class, 'index'])->name('pages-list-ticket');
         Route::get('/add-ticket', [TicketListController::class, 'add'])->name('pages-add-ticket');
@@ -89,7 +88,10 @@ Route::prefix('complain')->group(function () {
     Route::prefix('work-order')->group(function () {
         Route::get('/', [WorkOrderController::class, 'index'])->name('pages-list-work-order');
         Route::get('/add', [WorkOrderController::class, 'create'])->name('pages-create-tanda-terima');
-        Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
+        Route::get('/preview', [WorkOrderController::class, 'show'])->name('pages-show-tanda-terima');
+        Route::get('/edit/{id}', [WorkOrderController::class, 'edit'])->name('pages-edit-tanda-terima');
+        Route::get('/preview/{id}', [WorkOrderController::class, 'preview'])->name('pages-preview-tanda-terima');
+        Route::get('/data-work', [WorkOrderController::class, 'datatable'])->name('data-work');
     });
 });
 
