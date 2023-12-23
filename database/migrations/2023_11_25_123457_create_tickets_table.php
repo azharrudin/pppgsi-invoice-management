@@ -26,7 +26,7 @@ return new class extends Migration
         Schema::create('ticket_attachments', function (Blueprint $table) {
             $table->unsignedInteger("ticket_id");
             $table->foreign('ticket_id')->references('id')->on('tickets');
-            $table->text("attachment");
+            $table->mediumText("attachment");
             $table->timestamps();
             $table->date("deleted_at")->nullable();
         });

@@ -42,7 +42,7 @@ return new class extends Migration
             $table->unsignedInteger("work_order_id");
             $table->foreign('work_order_id')->references('id')->on('work_orders');
             $table->string("name");
-            $table->text("signature");
+            $table->mediumText("signature");
             $table->date("date");
             $table->timestamps();
             $table->date("deleted_at")->nullable();

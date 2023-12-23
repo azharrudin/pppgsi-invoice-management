@@ -27,7 +27,7 @@ return new class extends Migration
             $table->unsignedInteger("tax");
             $table->string("grand_total_spelled");
             $table->text("term_and_conditions");
-            $table->text("signature");
+            $table->mediumText("signature");
             $table->string("signature_name");
             $table->timestamps();
             $table->date("deleted_at")->nullable();

@@ -44,7 +44,7 @@ return new class extends Migration
             $table->foreign('material_request_id')->references('id')->on('material_requests');
             $table->string("type");
             $table->string("name");
-            $table->text("signature");
+            $table->mediumText("signature");
             $table->date("date");
             $table->timestamps();
             $table->date("deleted_at")->nullable();
