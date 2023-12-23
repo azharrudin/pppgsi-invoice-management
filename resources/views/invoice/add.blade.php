@@ -390,12 +390,12 @@ $configData = Helper::appClasses();
                     </div>
                     <div class="col-sm-1 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Pajak</label>
-                        <input type="number" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
+                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="number" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled/>
+                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled/>
                     </div>
                     <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -439,9 +439,10 @@ $configData = Helper::appClasses();
             let total = 0;
             let tax = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replace(',', ''));
             let price = parseInt($(this).val().replace(',', ''));
-            console.log(tax);
             let totalPrice = price + tax;
-            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : totalPrice);
+            console.log(totalPrice);
+            console.log(format(totalPrice));
+            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
             getTotal();
 
         });
@@ -465,16 +466,32 @@ $configData = Helper::appClasses();
             let price = parseInt($(`.price:eq(` + index + `)`).val().replace(',', ''));
             let tax = parseInt($(this).val().replace(',', ''));
             let totalPrice = price + tax;
-            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : totalPrice);
+            console.log(format(totalPrice));
+            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
             getTotal();
 
         });
+
+        function format(e) {
+            console.log(e);
+            var nStr = e + '';
+
+            nStr = nStr.replace(/\,/g, "");
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            return x1 + x2;
+        }
 
         function getTotal() {
             let totalArr = [];
             let tempTotal = document.getElementsByClassName('total_price');
             for (let i = 0; i < tempTotal.length; i++) {
-                var slipOdd = tempTotal[i].value;
+                var slipOdd = parseInt(tempTotal[i].value.replace(',', ''));
                 totalArr.push(Number(slipOdd));
             }
 
@@ -482,7 +499,7 @@ $configData = Helper::appClasses();
             for (let i = 0; i < totalArr.length; i++) {
                 sum += totalArr[i];
             }
-            $('.grand_total').text(sum);
+            $('.grand_total').text(format(sum));
             $('.terbilang').val(terbilang(sum));
 
         }
@@ -613,7 +630,7 @@ $configData = Helper::appClasses();
                         let noAddendum = $("#addendum_number").val();
                         let tglAddendum = $("#addendum_date").val();
                         let terbilang = $("#grand_total_spelled").val();
-                        let grandTotal = $(".grand_total").text();
+                        let grandTotal = parseInt($(".grand_total").text().replace(',', ''));
                         let tglJatuhTempo = $("#invoice_due_date").val();
                         let syaratDanKententuan = $("#term_and_conditions").val();
                         let bank = $("#bank").val();
@@ -632,11 +649,11 @@ $configData = Helper::appClasses();
                             } else if (index % 5 == 1) {
                                 detail[input_index].description = input_value;
                             } else if (index % 5 == 2) {
-                                detail[input_index].price = input_value;
+                                detail[input_index].price = parseInt(input_value.replace(',', ''));
                             } else if (index % 5 == 3) {
-                                detail[input_index].tax = input_value;
+                                detail[input_index].tax = parseInt(input_value.replace(',', ''));
                             } else if (index % 5 == 4) {
-                                detail[input_index].total_price = input_value;
+                                detail[input_index].total_price = parseInt(input_value.replace(',', ''));
                             }
                         });
 
@@ -716,13 +733,14 @@ $configData = Helper::appClasses();
             let noAddendum = $("#addendum_number").val();
             let tglAddendum = $("#addendum_date").val();
             let terbilang = $("#grand_total_spelled").val();
-            let grandTotal = $(".grand_total").text();
+            let grandTotal = parseInt($(".grand_total").text().replace(',', ''));
             let tglJatuhTempo = $("#invoice_due_date").val();
             let syaratDanKententuan = $("#term_and_conditions").val();
             let bank = $("#bank").val();
             let tglTtd = $("#materai_date").val();
             let nameTtd = $("#materai_name").val();
             let fileTtd = ttdFile;
+
 
             var detail = [];
             $('.row-input').each(function(index) {
@@ -736,14 +754,13 @@ $configData = Helper::appClasses();
                 } else if (index % 5 == 1) {
                     detail[input_index].description = input_value;
                 } else if (index % 5 == 2) {
-                    detail[input_index].price = input_value;
+                    detail[input_index].price = parseInt(input_value.replace(',', ''));
                 } else if (index % 5 == 3) {
-                    detail[input_index].tax = input_value;
+                    detail[input_index].tax = parseInt(input_value.replace(',', ''));
                 } else if (index % 5 == 4) {
-                    detail[input_index].total_price = input_value;
+                    detail[input_index].total_price = parseInt(input_value.replace(',', ''));
                 }
             });
-
 
             let datas = {};
             $('.create-invoice').find('.form-control').each(function() {
