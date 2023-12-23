@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string("grand_total_spelled");
             $table->text("note")->nullable();
             $table->date("signature_date");
-            $table->text("signature_image");
+            $table->mediumText("signature_image");
             $table->string("signature_name");
             $table->timestamps();
             $table->date("deleted_at")->nullable();
