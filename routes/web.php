@@ -58,7 +58,6 @@ Route::prefix('invoice')->group(function () {
         Route::get('/edit/{id}', [TandaTerimaController::class, 'edit']);
         Route::get('/preview/{id}', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
         Route::get('/data-tanda-terima', [TandaTerimaController::class, 'datatable'])->name('data-tanda-terima');
-        Route::get('/preview', [TandaTerimaController::class, 'editPreview'])->name('pages-preview-tanda-terima');
     });
 });
 
@@ -100,13 +99,15 @@ Route::prefix('request')->group(function () {
     Route::prefix('/')->group(function () {
         Route::get('/list-purchase-request', [PurchaseRequestController::class, 'index'])->name('pages-purchase-request');
         Route::get('/add-purchase-request', [PurchaseRequestController::class, 'add'])->name('pages-add-purchase-request');
+        
     });
 
     // Material Request
     Route::prefix('material-request')->group(function () {
         Route::get('/', [MaterialRequestController::class, 'index'])->name('pages-list-material-request');
         Route::get('/add', [MaterialRequestController::class, 'create'])->name('pages-create-tanda-terima');
-        Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
+        Route::get('/data-material-request', [MaterialRequestController::class, 'datatable'])->name('data-material-reques');
+        // Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
     });
 
     // Request Order
@@ -162,6 +163,7 @@ Route::prefix('settings')->group(function () {
     // List User
     Route::prefix('/list-user')->group(function () {
         Route::get('/', [ListUserController::class, 'index'])->name('pages-list-user');
+        Route::get('/data-user', [ListUserController::class, 'datatable'])->name('data-user');
     });
 
     // Tax Rates
@@ -169,6 +171,8 @@ Route::prefix('settings')->group(function () {
         Route::get('/', [TaxRatesController::class, 'index'])->name('pages-tax-rates');
         Route::get('/add', [TaxRatesController::class, 'create'])->name('pages-create-tax-rates');
         Route::get('/data-tax', [TaxRatesController::class, 'datatable'])->name('data-tax');
+        Route::get('/preview-tax', [TaxRatesController::class, 'preview'])->name('pages-tax-rates-preview');
+        Route::get('/show/{id}', [TaxRatesController::class, 'show'])->name('pages-show-tax');
     });
 });
 
@@ -182,7 +186,7 @@ Route::get('/pages/misc-error', [MiscError::class, 'index'])->name('pages-misc-e
 Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
 Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'),'verified',])->group(function () {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');

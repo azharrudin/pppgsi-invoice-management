@@ -159,7 +159,7 @@ $configData = Helper::appClasses();
             columns: [{
                     data: "name",
                     title: "Nama Bank",
-                    name : "Nama Bank"
+                    name: "Nama Bank"
                 },
                 {
                     title: "Tanggal Dibuat",

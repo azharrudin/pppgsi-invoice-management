@@ -18,6 +18,16 @@ class TaxRatesController extends Controller
     {
         return view('settings.tax-rates.add');
     }
+    
+    public function show()
+    {
+        return view('settings.tax-rates.show');
+    }
+
+    public function preview()
+    {
+        return view('settings.tax-rates.preview');
+    }
 
     public function datatable(Request $request)
     {
@@ -48,7 +58,7 @@ class TaxRatesController extends Controller
         if ($request->page == null) {
             $request->page = 1;
         }
-        $apiRequest = Http::get('http://127.0.0.1:8000/api/tax', [
+        $apiRequest = Http::get(env('BASE_URL_API') . '/api/tax', [
             'per_page' => $request->length,
             'page' => $request->page,
             'order' => 'id',
