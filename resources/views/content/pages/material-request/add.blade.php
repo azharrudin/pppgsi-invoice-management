@@ -8,7 +8,9 @@ $configData = Helper::appClasses();
 
 @section('page-style')
 {{-- Page Css files --}}
-<link rel="stylesheet" href="{{asset('assets/vendor/libs/dropzone/dropzone.css')}}">
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}">
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}">
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}">
 @endsection
 
 @section('content')
@@ -45,15 +47,15 @@ $configData = Helper::appClasses();
                         </div>
                         <div class="col-md-6 d-flex flex-column align-items-end">
                             <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">No Lap Kerusakan </label>
+                                <label for="note" class="form-label fw-medium">Material Request Nomor</label>
                                 <input type="text" class="form-control w-px-250" placeholder="No Lap Kerusakan" />
                             </div>
                             <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">No Lap Kerusakan </label>
-                                <input type="text" class="form-control w-px-250" placeholder="No Lap Kerusakan" />
+                                <label for="note" class="form-label fw-medium">Tanggal</label>
+                                <input type="text" class="form-control w-px-250 date" placeholder="No Lap Kerusakan" />
                             </div>
                             <div class="mb-3">
-                                <textarea class="form-control w-px-300" rows="6" id="note" placeholder="Job deskription"></textarea>
+                                <textarea class="form-control w-px-300" rows="6" id="note" placeholder="Catatan"></textarea>
                             </div>
                         </div>
                     </div>
@@ -128,7 +130,7 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
                                 <div class="col-3">
-                                    <label for="note" class="form-label fw-medium mb-3">Prepered by :</label>
+                                    <label for="note" class="form-label fw-medium mb-3">Reviewed by :</label>
                                     <div class="mb-3">
                                         <input type="text" class="form-control " placeholder="Nama & Jabatan" style="text-align:center;" />
                                     </div>
@@ -144,7 +146,7 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
                                 <div class="col-3">
-                                    <label for="note" class="form-label fw-medium mb-3">Prepered by :</label>
+                                    <label for="note" class="form-label fw-medium mb-3">Aknowledge by :</label>
                                     <div class="mb-3">
                                         <input type="text" class="form-control " placeholder="Nama & Jabatan" style="text-align:center;" />
                                     </div>
@@ -160,7 +162,7 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
                                 <div class="col-3">
-                                    <label for="note" class="form-label fw-medium mb-3">Prepered by :</label>
+                                    <label for="note" class="form-label fw-medium mb-3">Approved by :</label>
                                     <div class="mb-3">
                                         <input type="text" class="form-control " placeholder="Nama & Jabatan" style="text-align:center;" />
                                     </div>
@@ -266,8 +268,9 @@ $configData = Helper::appClasses();
 
 @section('page-script')
 <script src="{{asset('assets/vendor/libs/dropzone/dropzone.js')}}"></script>
-<script src="{{asset('assets/js/forms-file-upload.js')}}"></script>
-<script src="{{asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
     $(document).ready(function() {
         $('.repeater').repeater({
@@ -276,6 +279,23 @@ $configData = Helper::appClasses();
     });
 </script>
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>`;
+    let dataLocal = JSON.parse(localStorage.getItem("invoice"));
+    $(document).ready(function() {
+        $('.date').flatpickr({
+            dateFormat: 'Y-m-d'
+        });
+    });
+
+
     var myDropzoneTheFirst = new Dropzone(
         //id of drop zone element 1
         '#a-form-element', {
