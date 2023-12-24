@@ -73,6 +73,11 @@ class MaterialRequestController extends Controller
     {
         return view('content.pages.material-request.add');
     }
+    
+    public function preview()
+    {
+        return view('content.pages.material-request.preview');
+    }
 
     /**
      * Store a newly created resource in storage.

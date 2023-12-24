@@ -109,7 +109,7 @@ Route::prefix('request')->group(function () {
         Route::get('/', [MaterialRequestController::class, 'index'])->name('pages-list-material-request');
         Route::get('/add', [MaterialRequestController::class, 'create'])->name('pages-create-tanda-terima');
         Route::get('/data-material-request', [MaterialRequestController::class, 'datatable'])->name('data-material-reques');
-        // Route::get('/preview', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
+        Route::get('/preview', [MaterialRequestController::class, 'preview'])->name('pages-preview-material-request');
     });
 
     // Request Order

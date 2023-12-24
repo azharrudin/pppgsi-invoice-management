@@ -40,7 +40,7 @@ $configData = Helper::appClasses();
                                 </div>
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Stock </label>
-                                    <input type="text" class="form-control w-px-250" placeholder="Stock" id="stock" name="stock" required />
+                                    <input type="number" class="form-control w-px-250" placeholder="Stock" id="stock" name="stock" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-3">
@@ -50,17 +50,13 @@ $configData = Helper::appClasses();
                                 </div>
                             </div>
                             <div class="col-md-6 d-flex flex-column align-items-end">
-                                <!-- <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">Material Request Nomor</label>
-                                <input type="text" class="form-control w-px-250" placeholder="Material Request Nomor" />
-                            </div> -->
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Tanggal</label>
                                     <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" name="request_date" id="request_date" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-3">
-                                    <textarea class="form-control w-px-300" rows="6" id="note" placeholder="Catatan" name="note" id="note" required></textarea>
+                                    <textarea class="form-control w-px-300" rows="6" id="note" name="note" placeholder="Catatan" required></textarea>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
@@ -346,6 +342,17 @@ $configData = Helper::appClasses();
             }
         });
 
+        if (dataLocal) {
+            $("#requester").val(dataLocal.requester);
+            $("#department").val(dataLocal.department);
+            $("#request_date").val(dataLocal.request_date);
+            $("#stock").val(dataLocal.stock);
+            $("#purchase").val(dataLocal.purchase);
+            $("#note").val(dataLocal.note);
+        }
+
+        getDetails();
+
         $(document).on('click', '.btn-remove-mg', function() {
             // Hapus baris yang ditekan tombol hapus
             $(this).closest('.row-mg').remove();
@@ -356,30 +363,30 @@ $configData = Helper::appClasses();
             var $details = $('#details');
             var $newRow = `
             <div class="row mb-3 row-mg">
-                    <div class="col-12 d-flex   flex-wrap">
+                    <div class="col-12 d-flex align-items-end mb-2">
                         <div class="">
                             <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="Nomor" id="number"  name="number[]" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Nomor" name="number[]" required/>
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Part Number</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="No. Suku Cadang" id="part_number" name="part_number[]" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="No. Suku Cadang" name="part_number[]" required/>
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Deskripsi</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="Deskripsi" id="description" name="description[]" required />
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Deskripsi" name="description[]" required />
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="Kuantitas" id="quantity" name="quantity[]" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Kuantitas" name="quantity[]" required/>
                         </div>
                         <div class="">
                             <label for="note" class="form-label fw-medium">Filled Storekeeper Only</label>
                         <div class="d-flex justify-content-between">
-                            <input type="text" class="form-control  w-px-75" placeholder="Stock" id="stock" name="stock" required/>
-                            <input type="text" class="form-control  w-px-75" placeholder="Stock Out" id="stock_out" name="stock_out[]" required/>
-                            <input type="text" class="form-control  w-px-75" placeholder="End Stock" id="end_stock" name="end_stock[]" required/>
-                            <input type="text" class="form-control  w-px-75" placeholder="Min Stock" id="min_stock" name="min_stock[]" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Stock" name="stock" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Stock Out" name="stock_out[]" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="End Stock" name="end_stock[]" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Min Stock" name="min_stock[]" required/>
                             <a class="btn-remove-mg" role="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 12 12" fill="none">
                                     <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
@@ -394,7 +401,6 @@ $configData = Helper::appClasses();
             $details.append($newRow);
         });
 
-        getDetails();
     });
 
     function getDetails() {
@@ -404,33 +410,34 @@ $configData = Helper::appClasses();
 
         if (data) {
             let details = dataLocal.details;
+            console.log(details.length);
             for (let i = 0; i < details.length; i++) {
                 temp = `
                 <div class="row mb-3 row-mg">
-                    <div class="col-12 d-flex flex-wrap">
+                    <div class="col-12 d-flex align-items-end mb-2">
                         <div class="">
                             <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="Nomor" id="number"  name="number[]" required/>
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="Nomor" name="number[]"  value="` + details[i].number + `" required/>
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Part Number</label>
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="No. Suku Cadang" id="part_number" name="part_number[]" required/>
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="No. Suku Cadang" name="part_number[]" value="` + details[i].part_number + `" required/>
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Deskripsi</label>
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="Deskripsi" id="description" name="description[]" required />
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="Deskripsi" name="description[]" value="` + details[i].description + `" required />
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="Kuantitas" id="quantity" name="quantity[]" required/>
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="Kuantitas" name="quantity[]" value="` + details[i].quantity + `" required/>
                         </div>
                         <div class="">
                             <label for="note" class="form-label fw-medium">Filled Storekeeper Only</label>
                         <div class="d-flex justify-content-between">
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="Stock" id="stock" name="stock" required/>
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="Stock Out" id="stock_out" name="stock_out[]" required/>
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="End Stock" id="end_stock" name="end_stock[]" required/>
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="Min Stock" id="min_stock" name="min_stock[]" required/>
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="Stock" name="stock[]" value="` + details[i].stock + `" required/>
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="Stock Out" name="stock_out[]" value="` + details[i].stock_out + `" required/>
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="End Stock" name="end_stock[]" value="` + details[i].end_stock + `" required/>
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="Min Stock" name="min_stock[]" value="` + details[i].min_stock + `" required/>
                             <a class="btn-remove-mg" role="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 12 12" fill="none">
                                     <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
@@ -448,30 +455,30 @@ $configData = Helper::appClasses();
         } else {
             temp = `             
             <div class="row mb-3 row-mg">
-                    <div class="col-12 d-flex flex-wrap">
+                    <div class="col-12 d-flex align-items-end mb-2">
                         <div class="">
                             <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Nomor" id="number"  name="number[]" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Nomor" name="number[]" required/>
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Part Number</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="No. Suku Cadang" id="part_number" name="part_number[]" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="No. Suku Cadang" name="part_number[]" required/>
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Deskripsi</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Deskripsi" id="description" name="description[]" required />
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Deskripsi" name="description[]" required />
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Kuantitas" id="quantity" name="quantity[]" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Kuantitas" name="quantity[]" required/>
                         </div>
                         <div class="">
                             <label for="note" class="form-label fw-medium">Filled Storekeeper Only</label>
                         <div class="d-flex justify-content-between">
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Stock" id="stock" name="stock[]" required/>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Stock Out" id="stock_out" name="stock_out[]" required/>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="End Stock" id="end_stock" name="end_stock[]" required/>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Min Stock" id="min_stock" name="min_stock"[] required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Stock" name="stock[]" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Stock Out" name="stock_out[]" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="End Stock" name="end_stock[]" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Min Stock" name="min_stock"[] required/>
                             <a class="btn-remove-mg" role="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 12 12" fill="none">
                                     <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
@@ -501,92 +508,91 @@ $configData = Helper::appClasses();
                         // Submit your form
                         event.preventDefault();
                         // let fileTtd = ttdFile.dataURL;
-                        // let requester = $("#requester").val();
-                        // let department = $("#department").val();
-                        // let request_date = $("#request_date").val();
-                        // let stock = $("#stock").val();
-                        // let purchase = $("#purchase").val();
-                        // let note = $("#purchase").val();
+                        let requester = $("#requester").val();
+                        let department = $("#department").val();
+                        let request_date = $("#request_date").val();
+                        let stock = $("#stock").val();
+                        let purchase = $("#purchase").val();
+                        let note = $("#purchase").val();
+
+                        let datas = {};
 
                         var details = [];
                         $('.row-input').each(function(index) {
                             var input_name = $(this).attr('name');
                             var input_value = $(this).val();
-                            var input_index = Math.floor(index / 5); // Membagi setiap 5 input menjadi satu objek pada array
-                            if (index % 5 == 0) {
-                                detail[input_index] = {
-                                    item: input_value
+                            var input_index = Math.floor(index / 8); // Membagi setiap 5 input menjadi satu objek pada array
+                            if (index % 8 == 0) {
+                                details[input_index] = {
+                                    number: input_value
                                 };
                             } else if (index % 8 == 1) {
-                                detail[input_index].number = input_value;
+                                details[input_index].part_number = input_value;
                             } else if (index % 8 == 2) {
-                                detail[input_index].part_number = input_value;
+                                details[input_index].description = input_value;
                             } else if (index % 8 == 3) {
-                                detail[input_index].description = input_value;
+                                details[input_index].quantity = input_value;
                             } else if (index % 8 == 4) {
-                                detail[input_index].quantity = input_value;
+                                details[input_index].stock = input_value;
                             } else if (index % 8 == 5) {
-                                detail[input_index].stock = input_value;
+                                details[input_index].stock_out = input_value;
                             } else if (index % 8 == 6) {
-                                detail[input_index].stock_out = input_value;
+                                details[input_index].end_stock = input_value;
                             } else if (index % 8 == 7) {
-                                detail[input_index].end_stock = input_value;
-                            } else if (index % 8 == 8) {
-                                detail[input_index].min_stock = input_value;
+                                details[input_index].min_stock = input_value;
                             }
                         });
 
 
-                        let datas = {};
-                        $('.create-material-request').find('.form-control').each(function() {
-                            var inputId = $(this).attr('id');
-                            var inputValue = $("#" + inputId).val();
-                            datas[$("#" + inputId).attr("name")] = inputValue;
-                        });
-
                         datas.details = details;
+                        datas.requester = requester;
+                        datas.department = department;
+                        datas.purchase = purchase;
+                        datas.stock = stock;
+                        datas.request_date = request_date;
+                        datas.note = note;
                         datas.status = 'Terbuat';
 
 
                         console.log(datas);
 
 
-                        // $.ajax({
-                        //     url: baseUrl + "api/invoice/",
-                        //     type: "POST",
-                        //     data: JSON.stringify(datas),
-                        //     contentType: "application/json; charset=utf-8",
-                        //     dataType: "json",
+                        $.ajax({
+                            url: baseUrl + "api/material-request/",
+                            type: "POST",
+                            data: JSON.stringify(datas),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
 
-                        //     success: function(response) {
-                        //         $('.indicator-progress').show();
-                        //         $('.indicator-label').hide();
+                            success: function(response) {
+                                $('.indicator-progress').show();
+                                $('.indicator-label').hide();
 
-                        //         Swal.fire({
-                        //             title: 'Berhasil',
-                        //             text: 'Berhasil menambahkan Invoice',
-                        //             icon: 'success',
-                        //             customClass: {
-                        //                 confirmButton: 'btn btn-primary'
-                        //             },
-                        //             buttonsStyling: false
-                        //         })
+                                Swal.fire({
+                                    title: 'Berhasil',
+                                    text: 'Berhasil menambahkan Invoice',
+                                    icon: 'success',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                })
 
-                        //         localStorage.removeItem('invoice');
-                        //         window.location.href = "/invoice/list-invoice"
-                        //     },
-                        //     error: function(xhr, status, error) {
-                        //         Swal.fire({
-                        //             title: 'Error!',
-                        //             text: ' You clicked the button!',
-                        //             icon: 'error',
-                        //             customClass: {
-                        //                 confirmButton: 'btn btn-primary'
-                        //             },
-                        //             buttonsStyling: false
-                        //         })
-                        //     }
-                        // });
+                                localStorage.removeItem('invoice');
+                                window.location.href = "/request/material-request"
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: ' You clicked the button!',
+                                    icon: 'error',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                })
+                            }
+                        });
                     }
 
                     form.classList.add("was-validated");
@@ -596,5 +602,63 @@ $configData = Helper::appClasses();
         });
 
     }
+
+    $(document).on('click', '#preview', function(event) {
+        event.preventDefault();
+        let requester = $("#requester").val();
+        let department = $("#department").val();
+        let request_date = $("#request_date").val();
+        let stock = $("#stock").val();
+        let purchase = $("#purchase").val();
+        let note = $("#purchase").val();
+
+        let datas = {};
+
+        var details = [];
+        $('.row-input').each(function(index) {
+            var input_name = $(this).attr('name');
+            var input_value = $(this).val();
+            var input_index = Math.floor(index / 8); // Membagi setiap 5 input menjadi satu objek pada array
+            if (index % 8 == 0) {
+                details[input_index] = {
+                    number: input_value
+                };
+            } else if (index % 8 == 1) {
+                details[input_index].part_number = input_value;
+            } else if (index % 8 == 2) {
+                details[input_index].description = input_value;
+            } else if (index % 8 == 3) {
+                details[input_index].quantity = input_value;
+            } else if (index % 8 == 4) {
+                details[input_index].stock = input_value;
+            } else if (index % 8 == 5) {
+                details[input_index].stock_out = input_value;
+            } else if (index % 8 == 6) {
+                details[input_index].end_stock = input_value;
+            } else if (index % 8 == 7) {
+                details[input_index].min_stock = input_value;
+            }
+        });
+
+        console.log(details);
+
+
+        datas.details = details;
+        datas.requester = requester;
+        datas.department = department;
+        datas.purchase = purchase;
+        datas.stock = stock;
+        datas.request_date = request_date;
+        datas.note = note;
+        datas.status = 'Terbuat';
+        localStorage.setItem("material-request", JSON.stringify(datas));
+        window.location.href = "/request/material-request/preview"
+    });
+
+    $(document).on('click', '#batal', function(event) {
+        event.preventDefault();
+        localStorage.removeItem('invoice');
+        window.location.href = "/request/material-request"
+    });
 </script>
 @endsection
