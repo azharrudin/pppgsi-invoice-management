@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('department');
             $table->string('level');
             $table->string('status');
+            $table->mediumText("image");
             $table->timestamps();
             $table->date("deleted_at")->nullable();
         });

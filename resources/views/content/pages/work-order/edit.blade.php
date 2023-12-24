@@ -106,11 +106,11 @@
                                         </div>
                                     </div>
                                     <div class="">
-                                        <div class="form-check form-check-inline check1">
+                                        {{-- <div class="form-check form-check-inline check1">
                                             <input class="form-check-input scope-checkbox" type="checkbox"
                                                 name="telekomunikasi" required id="telekomunikasi2">
                                             <label class="form-check-label" for="telekomunikasi2">Telekomunikasi</label>
-                                        </div>
+                                        </div> --}}
                                         <div class="form-check form-check-inline check1">
                                             <input class="form-check-input scope-checkbox" type="checkbox" name="hvac"
                                                 required id="hvac">
@@ -288,12 +288,18 @@
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <form action="/upload" class="dropzone needsclick dz-clickable"
-                                                    id="dropzone-1">
-                                                    <div class="dz-message needsclick">
-                                                        <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-1" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                        </div>
                                                     </div>
-                                                </form>
+                                                    {{-- <a class="dz-remove" id="3"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a> --}}
+                                                </div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control date" placeholder="Tanggal"
@@ -314,12 +320,18 @@
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <form action="/upload" class="dropzone needsclick dz-clickable"
-                                                    id="dropzone-2">
-                                                    <div class="dz-message needsclick">
-                                                        <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-2" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                        </div>
                                                     </div>
-                                                </form>
+                                                    {{-- <a class="dz-remove" id="3"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a> --}}
+                                                </div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control date" placeholder="Tanggal"
@@ -340,12 +352,18 @@
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <form action="/upload" class="dropzone needsclick dz-clickable"
-                                                    id="dropzone-3">
-                                                    <div class="dz-message needsclick">
-                                                        <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-3" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                        </div>
                                                     </div>
-                                                </form>
+                                                    {{-- <a class="dz-remove" id="3"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a> --}}
+                                                </div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control date" placeholder="Tanggal"
@@ -366,12 +384,18 @@
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <form action="/upload" class="dropzone needsclick dz-clickable"
-                                                    id="dropzone-4">
-                                                    <div class="dz-message needsclick">
-                                                        <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-4" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                        </div>
                                                     </div>
-                                                </form>
+                                                    {{-- <a class="dz-remove" id="3"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a> --}}
+                                                </div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control date" placeholder="Tanggal"
@@ -391,8 +415,9 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <button type="submit" id="save"
-                                class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
-                            <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
+                                class="btn btn-primary d-grid w-100 mb-2">Update</button>
+                            <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview"
+                                class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
                             <button type="button" class="btn btn-label-secondary d-grid w-100 btn-cancel">Batal</button>
                         </div>
                     </div>
@@ -580,6 +605,153 @@
                 }
             }
 
+            // Get Data
+            var urlSegments = window.location.pathname.split('/');
+            var idIndex = urlSegments.indexOf('edit') + 1;
+            var id = urlSegments[idIndex];
+
+            getDataWorkOrder(id);
+
+            function getDataWorkOrder(id) {
+                Swal.fire({
+                    title: 'Loading...',
+                    text: "Please wait",
+                    customClass: {
+                        confirmButton: 'd-none'
+                    },
+                    buttonsStyling: false
+                });
+                $.ajax({
+                    url: "{{ url('api/work-order') }}/" + id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(res) {
+                        let response = res.data;
+                        $('#addWorkOrder').find('.form-control').each(function() {
+                            var elementId = $(this).attr('id');
+                            var elementName = $(this).attr('name');
+
+                            if (elementId === 'work_order_date' || elementId ===
+                                'action_plan_date' || elementId === 'finish_plan') {
+                                // Format tanggal menggunakan moment.js
+                                $("#" + elementId).val(moment(response[elementName],
+                                    'YYYY-MM-DD').format('DD-MM-YYYY'));
+                            } else {
+                                $("#" + elementId).val(response[elementName]);
+                            }
+                        });
+
+                        // Mengambil data lk
+                        $.ajax({
+                            url: "{{ url('api/damage-report') }}/" + response.damage_report_id,
+                            type: "GET",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function(res) {
+                                $(".select-lk").empty().append('<option value="' + res.data
+                                    .id + '">' + res.data.damage_report_number +
+                                    '</option>').val(
+                                    res.data.id).trigger("change");
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: xhr.responseJSON.message,
+                                    icon: 'error',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                })
+                            }
+                        });
+
+                        // Set value ke repeater
+                        var firstRow = $('.repeater-wrapper').first();
+
+                        for (var i = 0; i < response.work_order_details.length; i++) {
+                            var rowValues = response.work_order_details[i];
+
+                            if (i === 0) {
+                                firstRow.find('#location').val(rowValues.location);
+                                firstRow.find('#material-req').val(rowValues.material_request);
+                                firstRow.find('#type').val(rowValues.type);
+                                firstRow.find('#qty').val(rowValues.quantity);
+                            } else {
+                                var newRow = firstRow.clone();
+                                newRow.find('#location').val(rowValues.location);
+                                newRow.find('#material-req').val(rowValues.material_request);
+                                newRow.find('#type').val(rowValues.type);
+                                newRow.find('#qty').val(rowValues.quantity);
+
+                                $('.repeater [data-repeater-list="group-a"]').append(newRow);
+                            }
+                        }
+
+                        $('.repeater').repeater();
+
+                        $('.scope-checkbox').each(function() {
+                            var checkboxName = $(this).attr('name').toLowerCase();
+
+                            if ((response.scope).toLowerCase() === checkboxName) {
+                                $('.scope-checkbox').not(this).prop('disabled', true);
+                                $(this).prop('checked', true);
+                            } else {
+                                $(this).prop('checked', false);
+                            }
+                        });
+
+                        $('.classif-checkbox').each(function() {
+                            var checkboxName = $(this).attr('name').toLowerCase();
+
+                            if ((response.classification).toLowerCase() === checkboxName) {
+                                $('.classif-checkbox').not(this).prop('disabled', true);
+                                $(this).prop('checked', true);
+                            } else {
+                                $(this).prop('checked', false);
+                            }
+                        });
+
+                        $('.classif2-checkbox').each(function() {
+                            var checkboxName = $(this).attr('name').toLowerCase();
+
+                            if ((response.klasifikasi).toLowerCase() === checkboxName) {
+                                $('.classif2-checkbox').not(this).prop('disabled', true);
+                                $(this).prop('checked', true);
+                            } else {
+                                $(this).prop('checked', false);
+                            }
+                        });
+
+                        // Set value ke form signature
+                        for (let i = 1; i < response.work_order_signatures.length + 1; i++) {
+                            $("#nama" + i).val(response.work_order_signatures[i - 1].name);
+                            if (response.work_order_signatures[i - 1].signature != '') {
+                                $('.prev-img-' + i).attr('src', response.work_order_signatures[i - 1]
+                                    .signature);
+                            } else {
+                                $('.dz-nopreview').css('display', 'block');
+                            }
+                            $('#date' + i).val(moment(response.work_order_signatures[i - 1]
+                                .date, 'YYYY-MM-DD').format('DD-MM-YYYY'));
+                        }
+                        Swal.close();
+                    },
+                    error: function(errors) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: errors.responseJSON
+                                .message,
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        })
+                    }
+                });
+            }
+
             // Create, Insert, Save
             // var savewo = $('.create-wo');
 
@@ -681,73 +853,73 @@
             // });
 
             // Mengambil value tanda tangan
-            let ttdFile1 = null;
-            const myDropzone1 = new Dropzone('#dropzone-1', {
-                parallelUploads: 1,
-                maxFilesize: 2,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile1 = file;
-                    });
-                }
-            });
+            // let ttdFile1 = null;
+            // const myDropzone1 = new Dropzone('#dropzone-1', {
+            //     parallelUploads: 1,
+            //     maxFilesize: 2,
+            //     addRemoveLinks: true,
+            //     maxFiles: 1,
+            //     acceptedFiles: ".jpeg,.jpg,.png",
+            //     autoQueue: false,
+            //     init: function() {
+            //         this.on('addedfile', function(file) {
+            //             while (this.files.length > this.options.maxFiles) this.removeFile(this
+            //                 .files[0]);
+            //             ttdFile1 = file;
+            //         });
+            //     }
+            // });
 
-            let ttdFile2 = null;
-            const myDropzone2 = new Dropzone('#dropzone-2', {
-                parallelUploads: 1,
-                maxFilesize: 2,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile2 = file;
-                    });
-                }
-            });
+            // let ttdFile2 = null;
+            // const myDropzone2 = new Dropzone('#dropzone-2', {
+            //     parallelUploads: 1,
+            //     maxFilesize: 2,
+            //     addRemoveLinks: true,
+            //     maxFiles: 1,
+            //     acceptedFiles: ".jpeg,.jpg,.png",
+            //     autoQueue: false,
+            //     init: function() {
+            //         this.on('addedfile', function(file) {
+            //             while (this.files.length > this.options.maxFiles) this.removeFile(this
+            //                 .files[0]);
+            //             ttdFile2 = file;
+            //         });
+            //     }
+            // });
 
-            let ttdFile3 = null;
-            const myDropzone3 = new Dropzone('#dropzone-3', {
-                parallelUploads: 1,
-                maxFilesize: 2,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile3 = file;
-                    });
-                }
-            });
+            // let ttdFile3 = null;
+            // const myDropzone3 = new Dropzone('#dropzone-3', {
+            //     parallelUploads: 1,
+            //     maxFilesize: 2,
+            //     addRemoveLinks: true,
+            //     maxFiles: 1,
+            //     acceptedFiles: ".jpeg,.jpg,.png",
+            //     autoQueue: false,
+            //     init: function() {
+            //         this.on('addedfile', function(file) {
+            //             while (this.files.length > this.options.maxFiles) this.removeFile(this
+            //                 .files[0]);
+            //             ttdFile3 = file;
+            //         });
+            //     }
+            // });
 
-            let ttdFile4 = null;
-            const myDropzone4 = new Dropzone('#dropzone-4', {
-                parallelUploads: 1,
-                maxFilesize: 2,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile4 = file;
-                    });
-                }
-            });
+            // let ttdFile4 = null;
+            // const myDropzone4 = new Dropzone('#dropzone-4', {
+            //     parallelUploads: 1,
+            //     maxFilesize: 2,
+            //     addRemoveLinks: true,
+            //     maxFiles: 1,
+            //     acceptedFiles: ".jpeg,.jpg,.png",
+            //     autoQueue: false,
+            //     init: function() {
+            //         this.on('addedfile', function(file) {
+            //             while (this.files.length > this.options.maxFiles) this.removeFile(this
+            //                 .files[0]);
+            //             ttdFile4 = file;
+            //         });
+            //     }
+            // });
 
             // Fungsi untuk mengambil value dari setiap baris
             function getRepeaterValues() {
@@ -817,20 +989,9 @@
                         }
                     });
 
-                    if (ttdFile1 && index === 0) {
-                        signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                    }
-
-                    if (ttdFile2 && index === 1) {
-                        signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                    }
-
-                    if (ttdFile3 && index === 2) {
-                        signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                    }
-
-                    if (ttdFile4 && index === 3) {
-                        signature['signature'] = ttdFile4.dataURL || ttdFile4.url;
+                    if ($('.prev-img-' + (index + 1)).attr("src") != '') {
+                        signature['signature'] = $('.prev-img-' + (index + 1)).attr(
+                            "src");
                     }
 
                     signatures.push(signature);
@@ -839,6 +1000,7 @@
                 datas.signatures = signatures;
                 datas.status = "Terbuat";
 
+                console.log(datas);
                 $.ajax({
                     url: baseUrl + "api/work-order",
                     type: "POST",
@@ -879,75 +1041,6 @@
             // Cancel
             $(".btn-cancel").on("click", function() {
                 window.location.href = "/complain/work-order"
-            })
-
-            // Preview before save
-            $(".btn-preview").on('click', function() {
-                let lk = $(".select-lk").val();
-                let datas = {}
-                let signatures = [];
-
-                datas.damage_report_id = lk;
-                $('#addWorkOrder').find('.add').each(function() {
-                    var inputId = $(this).attr('id');
-                    var inputValue = $("#" + inputId).val();
-
-                    if (inputId === 'work_order_date' || inputId ===
-                        'action_plan_date' || inputId === 'finish_plan') {
-                        datas[$("#" + inputId).attr("name")] = moment(inputValue,
-                                'D-M-YYYY')
-                            .format('YYYY-MM-DD');
-                    } else {
-                        datas[$("#" + inputId).attr("name")] = inputValue;
-                    }
-                });
-
-                datas.scope = $('.scope-checkbox:checked').attr('name');
-                datas.classification = $('.classif-checkbox:checked').attr('name');
-                datas.klasifikasi = $('.classif2-checkbox:checked').attr('name');
-                datas.details = getRepeaterValues();
-
-                $('.signatures').each(function(index) {
-                    let signature = {};
-
-                    $(this).find('.form-control').each(function() {
-                        var inputId = $(this).attr('id');
-                        var inputValue = $("#" + inputId).val();
-
-                        if (inputId.startsWith('date')) {
-                            signature[$("#" + inputId).attr("name")] =
-                                moment(inputValue, 'D-M-YYYY')
-                                .format('YYYY-MM-DD');
-                        } else {
-                            signature[$("#" + inputId).attr("name")] =
-                                inputValue;
-                        }
-                    });
-
-                    if (ttdFile1 && index === 0) {
-                        signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                    }
-
-                    if (ttdFile2 && index === 1) {
-                        signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                    }
-
-                    if (ttdFile3 && index === 2) {
-                        signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                    }
-
-                    if (ttdFile4 && index === 3) {
-                        signature['signature'] = ttdFile4.dataURL || ttdFile4.url;
-                    }
-
-                    signatures.push(signature);
-                });
-
-                datas.signatures = signatures;
-                datas.status = "Terbuat";
-
-                localStorage.setItem('work-order', JSON.stringify(datas));
-                window.location.href = "/complain/work-order/preview";
             })
 
             // Select2

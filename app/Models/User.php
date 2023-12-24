@@ -28,6 +28,7 @@ class User extends Model
         'department',
         'level',
         'status',
+        'image',
     ];
 
     /**
