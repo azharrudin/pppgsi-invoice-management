@@ -16,171 +16,179 @@ $configData = Helper::appClasses();
 @section('content')
 <!-- Content -->
 <div class="container-xxl flex-grow-1 container-p-y">
-
-    <div class="row invoice-add">
-        <!-- Invoice Add-->
-        <div class="col-lg-9 col-12 mb-lg-0 mb-3">
-            <div class="card invoice-preview-card">
-                <div class="card-body">
-                    <div class="row m-sm-4 m-0">
-                        <h1 class="text-center"><b>MATERIAL REQUEST</b></h1>
-                    </div>
-
-                    <div class="row py-3 px-3">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">Requester</label>
-                                <input type="text" class="form-control w-px-250" placeholder="Requester" name="requester" id="requester" required/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">Departement </label>
-                                <input type="text" class="form-control w-px-250" placeholder="Departement" name="department" id="department" required/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">Stock </label>
-                                <input type="text" class="form-control w-px-250" placeholder="Stock" id="stock" name="stock" required/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">Purchase </label>
-                                <input type="text" class="form-control w-px-250" placeholder="Purchase" name="purchase" id="purchase" required/>
-                            </div>
+    <form id="create-material-request" class="create-material-request" novalidate>
+        <div class="row invoice-add">
+            <!-- Invoice Add-->
+            <div class="col-lg-9 col-12 mb-lg-0 mb-3">
+                <div class="card invoice-preview-card">
+                    <div class="card-body">
+                        <div class="row m-sm-4 m-0">
+                            <h1 class="text-center"><b>MATERIAL REQUEST</b></h1>
                         </div>
-                        <div class="col-md-6 d-flex flex-column align-items-end">
-                            <!-- <div class="mb-3">
+
+                        <div class="row py-3 px-3">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="note" class="form-label fw-medium">Requester</label>
+                                    <input type="text" class="form-control w-px-250" placeholder="Requester" name="requester" id="requester" required />
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="note" class="form-label fw-medium">Departement </label>
+                                    <input type="text" class="form-control w-px-250" placeholder="Departement" name="department" id="department" required />
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="note" class="form-label fw-medium">Stock </label>
+                                    <input type="text" class="form-control w-px-250" placeholder="Stock" id="stock" name="stock" required />
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="note" class="form-label fw-medium">Purchase </label>
+                                    <input type="text" class="form-control w-px-250" placeholder="Purchase" name="purchase" id="purchase" required />
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-flex flex-column align-items-end">
+                                <!-- <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">Material Request Nomor</label>
                                 <input type="text" class="form-control w-px-250" placeholder="Material Request Nomor" />
                             </div> -->
-                            <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">Tanggal</label>
-                                <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" required/>
-                            </div>
-                            <div class="mb-3">
-                                <textarea class="form-control w-px-300" rows="6" id="note" placeholder="Catatan" name="note" id="note" required></textarea>
+                                <div class="mb-3">
+                                    <label for="note" class="form-label fw-medium">Tanggal</label>
+                                    <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" name="request_date" id="request_date" required />
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control w-px-300" rows="6" id="note" placeholder="Catatan" name="note" id="note" required></textarea>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="py-3 px-3">
-                        <div class="card academy-content shadow-none border p-3">
-                            <div class="">
+                        <div class="py-3 px-3">
+                            <div class="card academy-content shadow-none border p-3">
                                 <div class="">
-                                    <div class="" id="details">
+                                    <div class="">
+                                        <div class="" id="details">
 
-                                    </div>
-                                </div>
-
-                                <div class="row pb-4">
-                                    <div class="col-12">
-                                        <button type="button" class="btn btn-primary waves-effect waves-light btn-add-row-mg">Tambah Baris</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-3">
-                                    <label for="note" class="form-label fw-medium mb-3">Prepered by :</label>
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
-                                    </div>
-                                    <div class="mb-3">
-                                        <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd1">
-                                            <div class="dz-message needsclick">
-                                                <span class="note needsclick">Unggah Tanda Tangan</span>
-                                            </div>
                                         </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <label for="note" class="form-label fw-medium mb-3">Reviewed by :</label>
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
-                                    </div>
-                                    <div class="mb-3">
-                                        <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd2">
-                                            <div class="dz-message needsclick">
-                                                <span class="note needsclick">Unggah Tanda Tangan</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="name[]" />
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <label for="note" class="form-label fw-medium mb-3">Aknowledge by :</label>
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="date" name="name[]" />
-                                    </div>
-                                    <div class="mb-3">
-                                        <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd3">
-                                            <div class="dz-message needsclick">
-                                                <span class="note needsclick">Unggah Tanda Tangan</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <label for="note" class="form-label fw-medium mb-3">Approved by :</label>
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
-                                    </div>
-                                    <div class="mb-3">
-                                        <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd4">
-                                            <div class="dz-message needsclick">
-                                                <span class="note needsclick">Unggah Tanda Tangan</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-2">
-                                    <span>Lembar</span>
+                                    <div class="row pb-4">
+                                        <div class="col-12">
+                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-add-row-mg">Tambah Baris</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-4">
-                                    <span>1. Accounting (Putih)</span>
+
+                                <div class="row mb-3">
+                                    <div class="col-3">
+                                        <label for="note" class="form-label fw-medium mb-3">Prepered by :</label>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd1">
+                                                <div class="dz-message needsclick">
+                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <label for="note" class="form-label fw-medium mb-3">Reviewed by :</label>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd2">
+                                                <div class="dz-message needsclick">
+                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="name[]" />
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <label for="note" class="form-label fw-medium mb-3">Aknowledge by :</label>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="date" name="name[]" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd3">
+                                                <div class="dz-message needsclick">
+                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <label for="note" class="form-label fw-medium mb-3">Approved by :</label>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd4">
+                                                <div class="dz-message needsclick">
+                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-2">
+                                        <span>Lembar</span>
+                                    </div>
+                                    <div class="col-4">
+                                        <span>1. Accounting (Putih)</span>
+                                        <br>
+                                        <span>2. Guddang (Merah)</span>
+                                    </div>
                                     <br>
-                                    <span>2. Guddang (Merah)</span>
-                                </div>
-                                <br>
-                                <div class="col-4">
-                                    <span>3. Purchasing (Hijau)</span>
-                                    <br>
-                                    <span>4. Pemohon (Biru)</span>
+                                    <div class="col-4">
+                                        <span>3. Purchasing (Hijau)</span>
+                                        <br>
+                                        <span>4. Pemohon (Biru)</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- /Invoice Add-->
+            <!-- /Invoice Add-->
 
-        <!-- Invoice Actions -->
-        <div class="col-lg-3 col-12 invoice-actions">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
-                        <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
-                    </button>
-                    <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
-                    <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
-                    <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
+            <!-- Invoice Actions -->
+            <div class="col-lg-3 col-12 invoice-actions">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
+                            <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
+                        </button>
+                        <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
+                        <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
+                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                    </div>
                 </div>
             </div>
+            <!-- /Invoice Actions -->
         </div>
-        <!-- /Invoice Actions -->
-    </div>
+    </form>
+
 
     <!-- Offcanvas -->
     <!-- Send Invoice Sidebar -->
@@ -211,6 +219,15 @@ $configData = Helper::appClasses();
         $('.date').flatpickr({
             dateFormat: 'Y-m-d'
         });
+
+        const flatPickrEL = $(".date");
+        if (flatPickrEL.length) {
+            flatPickrEL.flatpickr({
+                allowInput: true,
+                monthSelectorType: "static",
+                dateFormat: 'Y-m-d'
+            });
+        }
 
         let ttdFile1, ttdFile2, ttdFile3, ttdFile4 = null;
 
@@ -342,27 +359,27 @@ $configData = Helper::appClasses();
                     <div class="col-12 d-flex   flex-wrap">
                         <div class="">
                             <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="Nomor" id="number"  name="number" required/>
+                            <input type="text" class="form-control  w-px-75" placeholder="Nomor" id="number"  name="number[]" required/>
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Part Number</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="No. Suku Cadang" id="part_number" name="part_number" required/>
+                            <input type="text" class="form-control  w-px-75" placeholder="No. Suku Cadang" id="part_number" name="part_number[]" required/>
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Deskripsi</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="Deskripsi" id="description" name="description"required />
+                            <input type="text" class="form-control  w-px-75" placeholder="Deskripsi" id="description" name="description[]" required />
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="Kuantitas" id="quantity" name="quantity" required/>
+                            <input type="text" class="form-control  w-px-75" placeholder="Kuantitas" id="quantity" name="quantity[]" required/>
                         </div>
                         <div class="">
                             <label for="note" class="form-label fw-medium">Filled Storekeeper Only</label>
                         <div class="d-flex justify-content-between">
-                            <input type="text" class="form-control  w-px-75" placeholder="Stock" id="stock" name="stock" />
-                            <input type="text" class="form-control  w-px-75" placeholder="Stock Out" id="stock_out" name="stock_out" required/>
-                            <input type="text" class="form-control  w-px-75" placeholder="End Stock" id="end_stock" name="end_stock" required/>
-                            <input type="text" class="form-control  w-px-75" placeholder="Min Stock" id="min_stock" name="min_stock" required/>
+                            <input type="text" class="form-control  w-px-75" placeholder="Stock" id="stock" name="stock" required/>
+                            <input type="text" class="form-control  w-px-75" placeholder="Stock Out" id="stock_out" name="stock_out[]" required/>
+                            <input type="text" class="form-control  w-px-75" placeholder="End Stock" id="end_stock" name="end_stock[]" required/>
+                            <input type="text" class="form-control  w-px-75" placeholder="Min Stock" id="min_stock" name="min_stock[]" required/>
                             <a class="btn-remove-mg" role="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 12 12" fill="none">
                                     <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
@@ -390,30 +407,30 @@ $configData = Helper::appClasses();
             for (let i = 0; i < details.length; i++) {
                 temp = `
                 <div class="row mb-3 row-mg">
-                    <div class="col-12 d-flex   flex-wrap">
+                    <div class="col-12 d-flex flex-wrap">
                         <div class="">
                             <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="Nomor" id="number"  name="number" required/>
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="Nomor" id="number"  name="number[]" required/>
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Part Number</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="No. Suku Cadang" id="part_number" name="part_number" required/>
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="No. Suku Cadang" id="part_number" name="part_number[]" required/>
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Deskripsi</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="Deskripsi" id="description" name="description"required />
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="Deskripsi" id="description" name="description[]" required />
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="Kuantitas" id="quantity" name="quantity" required/>
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="Kuantitas" id="quantity" name="quantity[]" required/>
                         </div>
                         <div class="">
                             <label for="note" class="form-label fw-medium">Filled Storekeeper Only</label>
                         <div class="d-flex justify-content-between">
-                            <input type="text" class="form-control  w-px-75" placeholder="Stock" id="stock" name="stock" />
-                            <input type="text" class="form-control  w-px-75" placeholder="Stock Out" id="stock_out" name="stock_out" required/>
-                            <input type="text" class="form-control  w-px-75" placeholder="End Stock" id="end_stock" name="end_stock" required/>
-                            <input type="text" class="form-control  w-px-75" placeholder="Min Stock" id="min_stock" name="min_stock" required/>
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="Stock" id="stock" name="stock" required/>
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="Stock Out" id="stock_out" name="stock_out[]" required/>
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="End Stock" id="end_stock" name="end_stock[]" required/>
+                            <input type="text" class="form-control w-px-75 row-input" placeholder="Min Stock" id="min_stock" name="min_stock[]" required/>
                             <a class="btn-remove-mg" role="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 12 12" fill="none">
                                     <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
@@ -431,30 +448,30 @@ $configData = Helper::appClasses();
         } else {
             temp = `             
             <div class="row mb-3 row-mg">
-                    <div class="col-12 d-flex   flex-wrap">
+                    <div class="col-12 d-flex flex-wrap">
                         <div class="">
                             <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="Nomor" id="number"  name="number" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Nomor" id="number"  name="number[]" required/>
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Part Number</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="No. Suku Cadang" id="part_number" name="part_number" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="No. Suku Cadang" id="part_number" name="part_number[]" required/>
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Deskripsi</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="Deskripsi" id="description" name="description"required />
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Deskripsi" id="description" name="description[]" required />
                         </div>
                         <div class="me-1">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control  w-px-75" placeholder="Kuantitas" id="quantity" name="quantity" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Kuantitas" id="quantity" name="quantity[]" required/>
                         </div>
                         <div class="">
                             <label for="note" class="form-label fw-medium">Filled Storekeeper Only</label>
                         <div class="d-flex justify-content-between">
-                            <input type="text" class="form-control  w-px-75" placeholder="Stock" id="stock" name="stock" />
-                            <input type="text" class="form-control  w-px-75" placeholder="Stock Out" id="stock_out" name="stock_out" required/>
-                            <input type="text" class="form-control  w-px-75" placeholder="End Stock" id="end_stock" name="end_stock" required/>
-                            <input type="text" class="form-control  w-px-75" placeholder="Min Stock" id="min_stock" name="min_stock" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Stock" id="stock" name="stock[]" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Stock Out" id="stock_out" name="stock_out[]" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="End Stock" id="end_stock" name="end_stock[]" required/>
+                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Min Stock" id="min_stock" name="min_stock"[] required/>
                             <a class="btn-remove-mg" role="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 12 12" fill="none">
                                     <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
@@ -468,6 +485,115 @@ $configData = Helper::appClasses();
             `;
             $('#details').prepend(temp);
         }
+
+        var saveMaterial = $('.create-material-request');
+
+        Array.prototype.slice.call(saveMaterial).forEach(function(form) {
+            $('.indicator-progress').hide();
+            $('.indicator-label').show();
+            form.addEventListener(
+                "submit",
+                function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    } else {
+                        // Submit your form
+                        event.preventDefault();
+                        // let fileTtd = ttdFile.dataURL;
+                        // let requester = $("#requester").val();
+                        // let department = $("#department").val();
+                        // let request_date = $("#request_date").val();
+                        // let stock = $("#stock").val();
+                        // let purchase = $("#purchase").val();
+                        // let note = $("#purchase").val();
+
+                        var details = [];
+                        $('.row-input').each(function(index) {
+                            var input_name = $(this).attr('name');
+                            var input_value = $(this).val();
+                            var input_index = Math.floor(index / 5); // Membagi setiap 5 input menjadi satu objek pada array
+                            if (index % 5 == 0) {
+                                detail[input_index] = {
+                                    item: input_value
+                                };
+                            } else if (index % 8 == 1) {
+                                detail[input_index].number = input_value;
+                            } else if (index % 8 == 2) {
+                                detail[input_index].part_number = input_value;
+                            } else if (index % 8 == 3) {
+                                detail[input_index].description = input_value;
+                            } else if (index % 8 == 4) {
+                                detail[input_index].quantity = input_value;
+                            } else if (index % 8 == 5) {
+                                detail[input_index].stock = input_value;
+                            } else if (index % 8 == 6) {
+                                detail[input_index].stock_out = input_value;
+                            } else if (index % 8 == 7) {
+                                detail[input_index].end_stock = input_value;
+                            } else if (index % 8 == 8) {
+                                detail[input_index].min_stock = input_value;
+                            }
+                        });
+
+
+                        let datas = {};
+                        $('.create-material-request').find('.form-control').each(function() {
+                            var inputId = $(this).attr('id');
+                            var inputValue = $("#" + inputId).val();
+                            datas[$("#" + inputId).attr("name")] = inputValue;
+                        });
+
+                        datas.details = details;
+                        datas.status = 'Terbuat';
+
+
+                        console.log(datas);
+
+
+                        // $.ajax({
+                        //     url: baseUrl + "api/invoice/",
+                        //     type: "POST",
+                        //     data: JSON.stringify(datas),
+                        //     contentType: "application/json; charset=utf-8",
+                        //     dataType: "json",
+
+                        //     success: function(response) {
+                        //         $('.indicator-progress').show();
+                        //         $('.indicator-label').hide();
+
+                        //         Swal.fire({
+                        //             title: 'Berhasil',
+                        //             text: 'Berhasil menambahkan Invoice',
+                        //             icon: 'success',
+                        //             customClass: {
+                        //                 confirmButton: 'btn btn-primary'
+                        //             },
+                        //             buttonsStyling: false
+                        //         })
+
+                        //         localStorage.removeItem('invoice');
+                        //         window.location.href = "/invoice/list-invoice"
+                        //     },
+                        //     error: function(xhr, status, error) {
+                        //         Swal.fire({
+                        //             title: 'Error!',
+                        //             text: ' You clicked the button!',
+                        //             icon: 'error',
+                        //             customClass: {
+                        //                 confirmButton: 'btn btn-primary'
+                        //             },
+                        //             buttonsStyling: false
+                        //         })
+                        //     }
+                        // });
+                    }
+
+                    form.classList.add("was-validated");
+                },
+                false
+            );
+        });
 
     }
 </script>
