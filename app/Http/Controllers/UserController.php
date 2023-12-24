@@ -63,7 +63,11 @@ class UserController extends Controller
             $validateLogin = $this->UserService->validatLoginData($request, true, "");
             if($validateLogin != "") throw new CustomException($validateLogin, 400);
 
-            $getUser = User::where("email", $request->input("email"))->where("deleted_at", null)->first();
+            $getUser = User::with("department")
+              ->with("level")
+              ->where("email", $request->input("email"))
+              ->where("deleted_at", null)
+              ->first();
             if(is_null($getUser)) throw new CustomException("Email atau password tidak ditemukan", 404);
 
             $validatePassword = Hash::check($request->input("password"), $getUser['password']);
@@ -108,7 +112,7 @@ class UserController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $userQuery = User::where("deleted_at", null);
+            $userQuery = User::with("department")->with("level")->where("deleted_at", null);
             if($value){
                 $userQuery->where(function ($query) use ($value) {
                     $query->where('name', 'like', '%' . $value . '%')
@@ -150,7 +154,11 @@ class UserController extends Controller
     {
         try{
             $id = (int) $id;
-            $getUser = $this->CommonService->getDataById("App\Models\User", $id);
+            $getUser = User::with("department")
+              ->with("level")
+              ->where("id", $id)
+              ->where("deleted_at", null)
+              ->first();
             if (is_null($getUser)) throw new CustomException("User tidak ditemukan", 404);
 
             return ["data" => $getUser];
