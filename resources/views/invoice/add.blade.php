@@ -120,7 +120,7 @@ $configData = Helper::appClasses();
                             </div>
                             <div class="col-md-8 d-flex align-items-center">
                                 <label for="note" class="form-label fw-medium me-2">Jatuh Tempo Tanggal :</label>
-                                <input type="text" class="form-control w-px-250 date" placeholder="Jatuh Tanggal Tempo" id="invoice_due_date" name="invoice_due_date" required/>
+                                <input type="text" class="form-control w-px-250 date" placeholder="Jatuh Tanggal Tempo" id="invoice_due_date" name="invoice_due_date" required />
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                         </div>
@@ -143,7 +143,7 @@ $configData = Helper::appClasses();
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Tanda Tangan & Meterai
                                         (Opsional)</label>
-                                    <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" name="materai_date"  />
+                                    <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" name="materai_date" />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-3">
@@ -418,36 +418,80 @@ $configData = Helper::appClasses();
             $(this).closest('.row-mg').remove();
         });
 
-        $(document).on('input', '.price', function() {
+        $(document).on('keydown', '.price', function(event) {
+            var key = event.which;
+            if ((key < 48 || key > 57) && key != 8) event.preventDefault();
+        });
+        $(document).on('input', '.price', function(event) {
+            console.log(event.currentTarget.value);
+            var nStr = event.currentTarget.value + '';
+            nStr = nStr.replace(/\,/g, "");
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            event.currentTarget.value = x1 + x2;
             // Hapus baris yang ditekan tombol hapus
             let index = $('.price').index(this);
             let total = 0;
-            let tax = isNaN(parseInt($(`.tax:eq(` + index + `)`).val()))  ? 0 : parseInt($(`.tax:eq(` + index + `)`).val());
-            let price = parseInt($(this).val());
-            console.log(tax);
+            let tax = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replace(',', ''));
+            let price = parseInt($(this).val().replace(',', ''));
             let totalPrice = price + tax;
-            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : totalPrice);
+            console.log(totalPrice);
+            console.log(format(totalPrice));
+            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
             getTotal();
 
         });
 
-        $(document).on('input', '.tax', function() {
+        $(document).on('input', '.tax', function(event) {
+            console.log(event.currentTarget.value);
+            var nStr = event.currentTarget.value + '';
+
+            nStr = nStr.replace(/\,/g, "");
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            event.currentTarget.value = x1 + x2;
             // Hapus baris yang ditekan tombol hapus
             let index = $('.tax').index(this);
             let total = 0;
-            let price = parseInt($(`.price:eq(` + index + `)`).val());
-            let tax = parseInt($(this).val());
+            let price = parseInt($(`.price:eq(` + index + `)`).val().replace(',', ''));
+            let tax = parseInt($(this).val().replace(',', ''));
             let totalPrice = price + tax;
-            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : totalPrice);
+            console.log(format(totalPrice));
+            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
             getTotal();
 
         });
+
+        function format(e) {
+            console.log(e);
+            var nStr = e + '';
+
+            nStr = nStr.replace(/\,/g, "");
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            return x1 + x2;
+        }
 
         function getTotal() {
             let totalArr = [];
             let tempTotal = document.getElementsByClassName('total_price');
             for (let i = 0; i < tempTotal.length; i++) {
-                var slipOdd = tempTotal[i].value;
+                var slipOdd = parseInt(tempTotal[i].value.replace(',', ''));
                 totalArr.push(Number(slipOdd));
             }
 
@@ -455,9 +499,8 @@ $configData = Helper::appClasses();
             for (let i = 0; i < totalArr.length; i++) {
                 sum += totalArr[i];
             }
-            $('.grand_total').text(sum);
+            $('.grand_total').text(format(sum));
             $('.terbilang').val(terbilang(sum));
-
 
         }
 
@@ -587,7 +630,7 @@ $configData = Helper::appClasses();
                         let noAddendum = $("#addendum_number").val();
                         let tglAddendum = $("#addendum_date").val();
                         let terbilang = $("#grand_total_spelled").val();
-                        let grandTotal = $(".grand_total").text();
+                        let grandTotal = parseInt($(".grand_total").text().replace(',', ''));
                         let tglJatuhTempo = $("#invoice_due_date").val();
                         let syaratDanKententuan = $("#term_and_conditions").val();
                         let bank = $("#bank").val();
@@ -606,11 +649,11 @@ $configData = Helper::appClasses();
                             } else if (index % 5 == 1) {
                                 detail[input_index].description = input_value;
                             } else if (index % 5 == 2) {
-                                detail[input_index].price = input_value;
+                                detail[input_index].price = parseInt(input_value.replace(',', ''));
                             } else if (index % 5 == 3) {
-                                detail[input_index].tax = input_value;
+                                detail[input_index].tax = parseInt(input_value.replace(',', ''));
                             } else if (index % 5 == 4) {
-                                detail[input_index].total_price = input_value;
+                                detail[input_index].total_price = parseInt(input_value.replace(',', ''));
                             }
                         });
 
@@ -690,13 +733,14 @@ $configData = Helper::appClasses();
             let noAddendum = $("#addendum_number").val();
             let tglAddendum = $("#addendum_date").val();
             let terbilang = $("#grand_total_spelled").val();
-            let grandTotal = $(".grand_total").text();
+            let grandTotal = parseInt($(".grand_total").text().replace(',', ''));
             let tglJatuhTempo = $("#invoice_due_date").val();
             let syaratDanKententuan = $("#term_and_conditions").val();
             let bank = $("#bank").val();
             let tglTtd = $("#materai_date").val();
             let nameTtd = $("#materai_name").val();
             let fileTtd = ttdFile;
+
 
             var detail = [];
             $('.row-input').each(function(index) {
@@ -710,14 +754,13 @@ $configData = Helper::appClasses();
                 } else if (index % 5 == 1) {
                     detail[input_index].description = input_value;
                 } else if (index % 5 == 2) {
-                    detail[input_index].price = input_value;
+                    detail[input_index].price = parseInt(input_value.replace(',', ''));
                 } else if (index % 5 == 3) {
-                    detail[input_index].tax = input_value;
+                    detail[input_index].tax = parseInt(input_value.replace(',', ''));
                 } else if (index % 5 == 4) {
-                    detail[input_index].total_price = input_value;
+                    detail[input_index].total_price = parseInt(input_value.replace(',', ''));
                 }
             });
-
 
             let datas = {};
             $('.create-invoice').find('.form-control').each(function() {

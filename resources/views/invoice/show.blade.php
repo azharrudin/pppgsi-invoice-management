@@ -305,7 +305,7 @@ $configData = Helper::appClasses();
                 $("#addendum_number").val(data.addendum_number);
                 $("#addendum_date").val(data.addendum_date);
                 $("#grand_total_spelled").text(data.grand_total_spelled);
-                $("#grand_total").text(data.grand_total);
+                $("#grand_total").text(format(data.grand_total));
                 $("#invoice_due_date").text(data.invoice_due_date);
                 $("#term_and_conditions").text(data.term_and_conditions);
                 $("#materai_date").text(data.materai_date);
@@ -343,6 +343,21 @@ $configData = Helper::appClasses();
         });
     }
 
+    function format(e) {
+        console.log(e);
+        var nStr = e + '';
+
+        nStr = nStr.replace(/\,/g, "");
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+
     function getBank(id) {
         $.ajax({
             url: "{{url('api/bank')}}/" + id,
@@ -365,11 +380,11 @@ $configData = Helper::appClasses();
         let tem = '';
         for (let i = 0; i < details.length; i++) {
             tem = `<tr>
-                        <td class="text-nowrap">` + details[i].item + `</td>
-                        <td class="text-nowrap">` + details[i].description + `</td>
-                        <td>` + details[i].price + `</td>
-                        <td>` + details[i].tax + `</td>
-                        <td>` + details[i].total_price + `</td>
+                        <td>` + details[i].item + `</td>
+                        <td>` + details[i].description + `</td>
+                        <td>` + format(details[i].price) + `</td>
+                        <td>` + format(details[i].tax) + `</td>
+                        <td>` + format(details[i].total_price) + `</td>
                     </tr>
             `;
             getDetail = getDetail + tem;
