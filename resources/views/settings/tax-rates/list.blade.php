@@ -118,17 +118,17 @@ $configData = Helper::appClasses();
                     <div class="col-md-12 mb-md-0 mb-3">
                         <div class="mb-3">
                             <label for="note" class="form-label fw-bold">Nama</label>
-                            <input type="text" class="form-control" placeholder="Nama" name="preview-name" id="preview-name" required />
+                            <input type="text" class="form-control" placeholder="Nama" name="preview-name" id="preview-name" readonly />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="mb-3">
                             <label for="note" class="form-label fw-bold">Rates</label>
-                            <input type="number" class="form-control" placeholder="Rates" name="preview-rate" id="preview-rate" required />
+                            <input type="number" class="form-control" placeholder="Rates" name="preview-rate" id="preview-rate" readonly />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="mb-3">
                             <label for="note" class="form-label fw-bold">Keterangan</label>
-                            <textarea class="form-control" rows="6" placeholder="Keterangan" name="preview-description" id="preview-description" required></textarea>
+                            <textarea class="form-control" rows="6" placeholder="Keterangan" name="preview-description" id="preview-description" readonly></textarea>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                     </div>

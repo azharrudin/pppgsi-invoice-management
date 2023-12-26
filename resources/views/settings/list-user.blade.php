@@ -336,7 +336,7 @@ $configData = Helper::appClasses();
                 searchPlaceholder: "Search Bank"
             },
             buttons: [{
-                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat List Bank</span>',
+                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat User</span>',
                 className: "btn btn-primary",
                 attr: {
                     'data-bs-toggle': 'modal',
@@ -429,7 +429,7 @@ $configData = Helper::appClasses();
 
                             Swal.fire({
                                 title: 'Berhasil',
-                                text: 'Berhasil menambahkan Bank',
+                                text: 'Berhasil menambahkan User',
                                 icon: 'success',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
@@ -496,7 +496,7 @@ $configData = Helper::appClasses();
 
                             Swal.fire({
                                 title: 'Berhasil',
-                                text: 'Berhasil Memperbarui Bank',
+                                text: 'Berhasil Memperbarui User',
                                 icon: 'success',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
