@@ -19,6 +19,7 @@ class MaterialRequest extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        "material_request_number",
         "requester",
         "department",
         "request_date",
@@ -30,6 +31,22 @@ class MaterialRequest extends Model
     ];
 
     public $timestamp = true;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->resetYearlyNumber();
+    }
+
+    public function resetYearlyNumber()
+    {
+        $year = now()->year;
+
+        $maxNumberForYear = static::whereYear('created_at', $year)->max('material_request_number') ?: 0;
+
+        $this->material_request_number = $maxNumberForYear + 1;
+    }
 
     public function materialRequestDetails(): HasMany
     {

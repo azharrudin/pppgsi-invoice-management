@@ -19,7 +19,7 @@ class ReceiptService{
      */
     public function validateReceipt($request){
         $rules = [
-            "receipt_number" => ["bail", "required", "string"],
+            // "receipt_number" => ["bail", "required", "string"],
             "grand_total" => ["bail", "required", "numeric", "gte:0"],
             "receipt_date" => ["bail", "required", "date"],
             "receipt_send_date" => ["bail", "nullable", "date", "after_or_equal:receipt_date"],

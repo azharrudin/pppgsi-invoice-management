@@ -19,7 +19,6 @@ class DamageReportService{
      */
     public function validateDamageReport($request){
         $rules = [
-            "damage_report_number" => ["bail", "required", "string"],
             "scope" => ["bail", "required", "string"],
             "classification" => ["bail", "required", "string"],
             "damage_report_date" => ["bail", "required", "date"],

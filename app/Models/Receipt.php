@@ -41,6 +41,22 @@ class Receipt extends Model
 
     public $timestamp = true;
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->resetYearlyNumber();
+    }
+
+    public function resetYearlyNumber()
+    {
+        $year = now()->year;
+
+        $maxNumberForYear = static::whereYear('created_at', $year)->max('receipt_number') ?: 0;
+
+        $this->receipt_number = $maxNumberForYear + 1;
+    }
+
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class, "tenant_id");

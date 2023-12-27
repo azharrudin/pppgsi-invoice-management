@@ -17,6 +17,7 @@ class WorkOrder extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        "work_order_number",
         "scope",
         "classification",
         "work_order_date",
@@ -30,6 +31,22 @@ class WorkOrder extends Model
     ];
 
     public $timestamp = true;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->resetYearlyNumber();
+    }
+
+    public function resetYearlyNumber()
+    {
+        $year = now()->year;
+
+        $maxNumberForYear = static::whereYear('created_at', $year)->max('work_order_number') ?: 0;
+
+        $this->work_order_number = $maxNumberForYear + 1;
+    }
 
     public function workOrderDetails(): HasMany
     {

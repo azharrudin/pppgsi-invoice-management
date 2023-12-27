@@ -18,6 +18,7 @@ class Ticket extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        "ticket_number",
         "reporter_name",
         "reporter_phone",
         "reporter_company",
@@ -30,6 +31,22 @@ class Ticket extends Model
     ];
 
     public $timestamp = true;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->resetYearlyNumber();
+    }
+
+    public function resetYearlyNumber()
+    {
+        $year = now()->year;
+
+        $maxNumberForYear = static::whereYear('created_at', $year)->max('ticket_number') ?: 0;
+
+        $this->ticket_number = $maxNumberForYear + 1;
+    }
 
     public function ticketAttachments(): HasMany
     {

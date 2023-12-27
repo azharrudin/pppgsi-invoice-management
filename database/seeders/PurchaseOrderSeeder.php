@@ -29,7 +29,6 @@ class PurchaseOrderSeeder extends Seeder
             $dataIndex = $i % 5;
 
             PurchaseOrder::create([
-                "purchase_order_number" => "PURCHASE/ORD/ER/{$count}",
                 "vendor_id" => $count,
                 "about" => $faker->colorName,
                 "grand_total" => $grandTotal,

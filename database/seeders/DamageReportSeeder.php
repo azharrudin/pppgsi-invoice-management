@@ -30,7 +30,6 @@ class DamageReportSeeder extends Seeder
             $dataIndex = $i % 5;
 
             DamageReport::create([
-                "damage_report_number" => "LK00{$count}",
                 "scope" => $scope[$dataIndex],
                 "classification" => $classification[$dataIndex],
                 "damage_report_date" => $firstDate,

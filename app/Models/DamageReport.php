@@ -30,6 +30,22 @@ class DamageReport extends Model
 
     public $timestamp = true;
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->resetYearlyNumber();
+    }
+
+    public function resetYearlyNumber()
+    {
+        $year = now()->year;
+
+        $maxNumberForYear = static::whereYear('created_at', $year)->max('damage_report_number') ?: 0;
+
+        $this->damage_report_number = $maxNumberForYear + 1;
+    }
+
     public function damageReportDetails(): HasMany
     {
         return $this->hasMany(DamageReportDetail::class, "damage_report_id");
