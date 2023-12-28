@@ -41,7 +41,7 @@ class MaterialRequestController extends Controller
                 where("deleted_at", null);
             if($value){
                 $materialRequestQuery->where(function ($query) use ($value) {
-                    $query->where('id', 'like', '%' . $value . '%')
+                    $query->where('material_request_number', 'like', '%' . $value . '%')
                     ->orWhere('requester', 'like', '%' . $value . '%')
                     ->orWhere('department', 'like', '%' . $value . '%')
                     ->orWhere('request_date', 'like', '%' . $value . '%')

@@ -38,7 +38,7 @@ class TicketController extends Controller
             $ticketQuery = Ticket::with("ticketAttachments")->where("deleted_at", null);
             if($value){
                 $ticketQuery->where(function ($query) use ($value) {
-                    $query->where('id', 'like', '%' . $value . '%')
+                    $query->where('ticket_number', 'like', '%' . $value . '%')
                     ->orWhere('reporter_name', 'like', '%' . $value . '%')
                     ->orWhere('reporter_company', 'like', '%' . $value . '%')
                     ->orWhere('ticket_title', 'like', '%' . $value . '%')
