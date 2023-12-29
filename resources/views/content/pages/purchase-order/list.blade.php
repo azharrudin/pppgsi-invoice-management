@@ -50,18 +50,7 @@ $configData = Helper::appClasses();
 <!-- Invoice List Table -->
 <div class="card">
     <div class="card-datatable table-responsive pt-0">
-        <table class="invoice-list-table table">
-            <thead>
-                <tr>
-                    <th>No. PO</th>
-                    <th>Vendor</th>
-                    <th>Perihal</th>
-                    <th>Total</th>
-                    <th>Tanggal PO</th>
-                    <th>Status</th>
-                    <th>Tanggapan</th>
-                </tr>
-            </thead>
+        <table class="invoice-list-table table"  width="100%">
         </table>
     </div>
 </div>
@@ -76,81 +65,101 @@ $configData = Helper::appClasses();
     $((function() {
         var a = $(".invoice-list-table");
         if (a.length) var e = a.DataTable({
-            ajax: assetsPath + "json/invoice-list.json",
+            processing: true,
+            serverSide: true,
+            deferRender: true,
+            ajax: {
+                url: "{{ route('data-purchase-order') }}",
+                "data": function(d) {
+                    d.start = 0;
+                    d.page = $(".invoice-list-table").DataTable().page.info().page + 1;
+                }
+            },
             columns: [{
-                data: "no_po"
+                name: "No. PO",
+                data: "purchase_order_number",
+                title: "No. PO",
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return data;
+                }
             }, {
-                data: "vendor"
+                name: "Vendor",
+                data: "vendor_name",
+                title: "Vendor",
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return data;
+                }
             }, {
-                data: "perihal"
+                name: "Perihal",
+                data: "about",
+                title: "Perihal",
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return data;
+                }
             }, {
-                data: "total"
+                name: "Total",
+                data: "grand_total",
+                title: "Total",
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return new Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR"
+                    }).format(data)
+                }
             }, {
-                data: "tanggal_po"
-            }, {
-                data: "status"
-            }, {
-                data: "tanggapan"
-            }],
-            columnDefs: [{
+                name: "Tanggal PO",
+                data: "purchase_order_date",
+                title: "Tanggal PO",
+                className: 'text-center',
+                render: function(data, type, full, meta) {
+                    var tanggalAwal = data;
 
-                    targets: 0,
-                    render: function(a, e, t, s) {
-                        return ""
-                    }
-                }, {
-                    targets: 1,
-                    render: function(a, e, t, s) {
-                        var n = t.no_po;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {
-                    targets: 2,
-                    render: function(a, e, t, s) {
-                        var n = t.vendor;
-                        return '<a href="' + baseUrl + 'app/invoice/preview">#' + n + "</a>"
-                    }
-                }, {
-                    targets: 3,
-                    render: function(a, e, t, s) {
-                        var n = t.perihal;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {
-                    targets: 4,
-                    render: function(a, e, t, s) {
-                        var n = t.total;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {
-                    targets: 5,
-                    render: function(a, e, t, s) {
-                        var n = new Date(t.tangga_po);
-                        return '<span class="d-none">' + moment(n).format("YYYYMMDD") + "</span>" + moment(n).format("DD MMM YYYY")
-                    }
-                }, {
-                    targets: 6,
-                    orderable: !1,
-                    render: function(a, e, t, s) {
-                        var n = t.status;
-                        if (0 === n) {
-                            return '<span class="badge bg-label-success" text-capitalized> Paid </span>'
-                        }
-                        return '<span class="d-none">' + n + "</span>" + n
-                    }
-                }, {
-                    targets: 7,
-                    visible: !1
-                }, {
-                    targets: -1,
-                    title: "Tanggapan",
-                    searchable: !1,
-                    orderable: !1,
-                    render: function(a, e, t, s) {
-                        return '<div class="d-flex align-items-center"><a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a><a href="' + baseUrl + 'app/invoice/preview" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="' + baseUrl + 'app/invoice/edit" class="dropdown-item">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>'
+                    var bagianTanggal = tanggalAwal.split('-');
+                    var tahun = bagianTanggal[0];
+                    var bulan = bagianTanggal[1];
+                    var hari = bagianTanggal[2];
+
+                    var tanggalHasil = hari + '/' + bulan + '/' + tahun;
+
+                    return tanggalHasil;
+                }
+            },{
+                class: "text-center",
+                data: "status",
+                name: "status",
+                title: "Status",
+                className: 'text-center',
+                render: function(data, type, row) {
+                    if (data == 'Terbuat') {
+                        return '<span class="badge" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
+                    } else if (data == 'Disetujui KA') {
+                        return '<span class="badge" style="background-color : #4EC0D9; " text-capitalized> Disetujui KA </span>';
+                    } else if (data == 'Lunas') {
+                        return '<span class="badge" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
+                    } else if (data == 'Terkirim') {
+                        return '<span class="badge" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
+                    } else if (data == 'Disetujui BM') {
+                        return '<span class="badge" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
                     }
                 }
-            ],
+            }, {
+                data: "id",
+                name: "Tanggapan",
+                title: "Tanggapan",
+                render: function(data, type, row) {
+                    console.log(data);
+                    let editRow = '';
+                    let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
+                    let previewRow = '<a href="{{ url("invoice/show")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
+                    return `<div class="d-flex align-items-center">
+                            ` + sendMailRow + previewRow + `
+                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="{{ url("invoice/edit")}}/` + data + `" class="dropdown-item">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
+                }
+            }],
             order: [
                 [1, "desc"]
             ],
@@ -184,7 +193,7 @@ $configData = Helper::appClasses();
                 }
             },
             initComplete: function() {
-                this.api().columns(7).every((function() {
+                this.api().columns(5).every((function() {
                     var a = this,
                         e = $('<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>').appendTo(".invoice_status").on("change", (function() {
                             var e = $.fn.dataTable.util.escapeRegex($(this).val());
