@@ -41,7 +41,7 @@ class WorkOrderController extends Controller
                 where("deleted_at", null);
             if($value){
                 $workOrderQuery->where(function ($query) use ($value) {
-                    $query->where('id', 'like', '%' . $value . '%')
+                    $query->where('work_order_number', 'like', '%' . $value . '%')
                     ->orWhere('scope', 'like', '%' . $value . '%')
                     ->orWhere('classification', 'like', '%' . $value . '%')
                     ->orWhere('work_order_date', 'like', '%' . $value . '%')

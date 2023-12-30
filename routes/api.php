@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\DamageReportController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\LevelController;
 use App\Http\Controllers\MaterialRequestController;
 use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\PurchaseRequestController;
@@ -63,6 +65,12 @@ Route::resource('purchase-request', PurchaseRequestController::class);
 
 Route::get("purchase-order/select", [PurchaseOrderController::class, "select"]);
 Route::resource('purchase-order', PurchaseOrderController::class);
+
+Route::get("department/select", [DepartmentController::class, "select"]);
+Route::resource('department', DepartmentController::class);
+
+Route::get("level/select", [LevelController::class, "select"]);
+Route::resource('level', LevelController::class);
 
 Route::post('user/login', [UserController::class, "login"]);
 Route::resource('user', UserController::class);

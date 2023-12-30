@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('work_orders', function (Blueprint $table) {
             $table->increments("id");
+            $table->unsignedInteger("work_order_number");
             $table->string("scope");
             $table->string("classification");
             $table->date("work_order_date");

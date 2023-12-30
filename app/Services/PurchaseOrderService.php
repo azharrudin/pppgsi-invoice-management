@@ -19,7 +19,6 @@ class PurchaseOrderService{
      */
     public function validatePurchaseOrder($request){
         $rules = [
-            "purchase_order_number" => ["bail", "required", "string"],
             "vendor_id" => ["bail", "required", "numeric"],
             "about" => ["bail", "required", "string"],
             "grand_total" => ["bail", "required", "numeric", "gte:0"],
