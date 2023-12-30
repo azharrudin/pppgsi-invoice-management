@@ -17,7 +17,7 @@
 @section('content')
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
-        <div id="create-wo" class="create-wo" novalidate>
+        <form id="create-wo" class="create-wo" novalidate>
             <div class="row invoice-add">
                 <!-- Invoice Add-->
                 <div class="col-lg-9 col-12 mb-lg-0 mb-3">
@@ -288,12 +288,12 @@
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <form action="/upload" class="dropzone needsclick dz-clickable"
+                                                <div action="/upload" class="dropzone needsclick dz-clickable"
                                                     id="dropzone-1">
                                                     <div class="dz-message needsclick">
                                                         <span class="note needsclick">Unggah Tanda Tangan</span>
                                                     </div>
-                                                </form>
+                                                </div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control date" placeholder="Tanggal"
@@ -314,12 +314,12 @@
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <form action="/upload" class="dropzone needsclick dz-clickable"
+                                                <div action="/upload" class="dropzone needsclick dz-clickable"
                                                     id="dropzone-2">
                                                     <div class="dz-message needsclick">
                                                         <span class="note needsclick">Unggah Tanda Tangan</span>
                                                     </div>
-                                                </form>
+                                                </div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control date" placeholder="Tanggal"
@@ -340,12 +340,12 @@
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <form action="/upload" class="dropzone needsclick dz-clickable"
+                                                <div action="/upload" class="dropzone needsclick dz-clickable"
                                                     id="dropzone-3">
                                                     <div class="dz-message needsclick">
                                                         <span class="note needsclick">Unggah Tanda Tangan</span>
                                                     </div>
-                                                </form>
+                                                </div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control date" placeholder="Tanggal"
@@ -366,12 +366,12 @@
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <form action="/upload" class="dropzone needsclick dz-clickable"
+                                                <div action="/upload" class="dropzone needsclick dz-clickable"
                                                     id="dropzone-4">
                                                     <div class="dz-message needsclick">
                                                         <span class="note needsclick">Unggah Tanda Tangan</span>
                                                     </div>
-                                                </form>
+                                                </div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control date" placeholder="Tanggal"
@@ -399,7 +399,7 @@
                 </div>
                 <!-- /Invoice Actions -->
             </div>
-        </div>
+        </form>
 
         <!-- Offcanvas -->
         <!-- Send Invoice Sidebar -->
@@ -581,104 +581,150 @@
             }
 
             // Create, Insert, Save
-            // var savewo = $('.create-wo');
+            var savewo = $('.create-wo');
 
-            // Array.prototype.slice.call(savewo).forEach(function(form) {
-            //     $('.indicator-progress').hide();
-            //     $('.indicator-label').show();
-            //     form.addEventListener(
-            //         "submit",
-            //         function(event) {
-            //             if (!form.checkValidity()) {
-            //                 event.preventDefault();
-            //                 event.stopPropagation();
+            Array.prototype.slice.call(savewo).forEach(function(form) {
+                $('.indicator-progress').hide();
+                $('.indicator-label').show();
+                form.addEventListener(
+                    "submit",
+                    function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
 
-            //                 let wod = $("#work_order_date").val();
-            //                 let lk = $(".select-lk").val();
-            //                 let finishPlan = $("#finish_plan").val();
-            //                 let actionDate = $("#action_plan_date").val();
+                            let wod = $("#work_order_date").val();
+                            let lk = $(".select-lk").val();
+                            let finishPlan = $("#finish_plan").val();
+                            let actionDate = $("#action_plan_date").val();
 
-            //                 if (!lk) {
-            //                     $(".select-lk").addClass("invalid");
-            //                 }
-            //                 if (!finishPlan) {
-            //                     $("#finish_plan").addClass("invalid");
-            //                 }
-            //                 if (!actionDate) {
-            //                     $("#action_plan_date").addClass("invalid");
-            //                 }
-            //                 if (!wod) {
-            //                     $("#work_order_date").addClass("invalid");
-            //                 }
-            //             } else {
-            //                 event.preventDefault();
-            //                 Swal.fire({
-            //                     title: 'Loading...',
-            //                     text: "Please wait",
-            //                     customClass: {
-            //                         confirmButton: 'd-none'
-            //                     },
-            //                     buttonsStyling: false
-            //                 });
-            //                 let lk = $(".select-lk").val();
-            //                 let datas = {}
+                            if (!lk) {
+                                $(".select-lk").addClass("invalid");
+                            }
+                            if (!finishPlan) {
+                                $("#finish_plan").addClass("invalid");
+                            }
+                            if (!actionDate) {
+                                $("#action_plan_date").addClass("invalid");
+                            }
+                            if (!wod) {
+                                $("#work_order_date").addClass("invalid");
+                            }
+                        } else {
+                            event.preventDefault();
+                            Swal.fire({
+                                title: 'Loading...',
+                                text: "Please wait",
+                                customClass: {
+                                    confirmButton: 'd-none'
+                                },
+                                buttonsStyling: false
+                            });
+                            let lk = $(".select-lk").val();
+                            let datas = {}
+                            let signatures = [];
 
-            //                 datas.damage_report_id = lk;
-            //                 $('#addWorkOrder').find('.form-control').each(function() {
-            //                     var inputId = $(this).attr('id');
-            //                     var inputValue = $("#" + inputId).val();
-            //                     if (inputId === 'work_order_date' || inputId ===
-            //                         'action_plan_date' || inputId === 'finish_plan') {
-            //                         datas[$("#" + inputId).attr("name")] = moment(inputValue,
-            //                                 'D-M-YYYY')
-            //                             .format('YYYY-MM-DD');
-            //                     } else {
-            //                         datas[$("#" + inputId).attr("name")] = inputValue;
-            //                     }
-            //                 });
-            //                 console.log(datas);
-            //                 // $.ajax({
-            //                 //     url: baseUrl + "api/damage-report/",
-            //                 //     type: "POST",
-            //                 //     data: JSON.stringify(datas),
-            //                 //     contentType: "application/json; charset=utf-8",
-            //                 //     dataType: "json",
+                            datas.damage_report_id = lk;
+                            $('#addWorkOrder').find('.add').each(function() {
+                                var inputId = $(this).attr('id');
+                                var inputValue = $("#" + inputId).val();
 
-            //                 //     success: function(response) {
-            //                 //         $('.indicator-progress').show();
-            //                 //         $('.indicator-label').hide();
+                                if (inputId === 'work_order_date' || inputId ===
+                                    'action_plan_date' || inputId === 'finish_plan') {
+                                    datas[$("#" + inputId).attr("name")] = moment(inputValue,
+                                            'D-M-YYYY')
+                                        .format('YYYY-MM-DD');
+                                } else {
+                                    datas[$("#" + inputId).attr("name")] = inputValue;
+                                }
+                            });
 
-            //                 //         Swal.fire({
-            //                 //             title: 'Berhasil',
-            //                 //             text: 'Berhasil menambahkan Laporan Kerusakan.',
-            //                 //             icon: 'success',
-            //                 //             customClass: {
-            //                 //                 confirmButton: 'btn btn-primary'
-            //                 //             },
-            //                 //             buttonsStyling: false
-            //                 //         })
+                            datas.scope = $('.scope-checkbox:checked').attr('name');
+                            datas.classification = $('.classif-checkbox:checked').attr('name');
+                            datas.klasifikasi = $('.classif2-checkbox:checked').attr('name');
+                            datas.details = getRepeaterValues();
 
-            //                 //         window.location.href = "/complain/laporan-kerusakan"
-            //                 //     },
-            //                 //     error: function(xhr, status, error) {
-            //                 //         Swal.fire({
-            //                 //             title: 'Error!',
-            //                 //             text: errors.responseJSON.message,
-            //                 //             icon: 'error',
-            //                 //             customClass: {
-            //                 //                 confirmButton: 'btn btn-primary'
-            //                 //             },
-            //                 //             buttonsStyling: false
-            //                 //         })
-            //                 //     }
-            //                 // });
-            //             }
+                            $('.signatures').each(function(index) {
+                                let signature = {};
 
-            //             form.classList.add("was-validated");
-            //         },
-            //         false
-            //     );
-            // });
+                                $(this).find('.form-control').each(function() {
+                                    var inputId = $(this).attr('id');
+                                    var inputValue = $("#" + inputId).val();
+
+                                    if (inputId.startsWith('date')) {
+                                        signature[$("#" + inputId).attr("name")] =
+                                            moment(inputValue, 'D-M-YYYY')
+                                            .format('YYYY-MM-DD');
+                                    } else {
+                                        signature[$("#" + inputId).attr("name")] =
+                                            inputValue;
+                                    }
+                                });
+
+                                if (ttdFile1 && index === 0) {
+                                    signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
+                                }
+
+                                if (ttdFile2 && index === 1) {
+                                    signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
+                                }
+
+                                if (ttdFile3 && index === 2) {
+                                    signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
+                                }
+
+                                if (ttdFile4 && index === 3) {
+                                    signature['signature'] = ttdFile4.dataURL || ttdFile4.url;
+                                }
+
+                                signatures.push(signature);
+                            });
+
+                            datas.signatures = signatures;
+                            datas.status = "Terbuat";
+
+                            $.ajax({
+                                url: baseUrl + "api/work-order",
+                                type: "POST",
+                                data: JSON.stringify(datas),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+
+                                success: function(response) {
+                                    $('.indicator-progress').show();
+                                    $('.indicator-label').hide();
+
+                                    Swal.fire({
+                                        title: 'Berhasil',
+                                        text: 'Berhasil menambahkan Laporan Kerusakan.',
+                                        icon: 'success',
+                                        customClass: {
+                                            confirmButton: 'btn btn-primary'
+                                        },
+                                        buttonsStyling: false
+                                    })
+
+                                    window.location.href = "/complain/laporan-kerusakan"
+                                },
+                                error: function(xhr, status, error) {
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: errors.responseJSON.message,
+                                        icon: 'error',
+                                        customClass: {
+                                            confirmButton: 'btn btn-primary'
+                                        },
+                                        buttonsStyling: false
+                                    })
+                                }
+                            });
+                        }
+
+                        form.classList.add("was-validated");
+                    },
+                    false
+                );
+            });
 
             // Mengambil value tanda tangan
             let ttdFile1 = null;
@@ -766,115 +812,6 @@
 
                 return values;
             }
-
-            $("#save").on("click", function() {
-                Swal.fire({
-                    title: 'Loading...',
-                    text: "Please wait",
-                    customClass: {
-                        confirmButton: 'd-none'
-                    },
-                    buttonsStyling: false
-                });
-                let lk = $(".select-lk").val();
-                let datas = {}
-                let signatures = [];
-
-                datas.damage_report_id = lk;
-                $('#addWorkOrder').find('.add').each(function() {
-                    var inputId = $(this).attr('id');
-                    var inputValue = $("#" + inputId).val();
-
-                    if (inputId === 'work_order_date' || inputId ===
-                        'action_plan_date' || inputId === 'finish_plan') {
-                        datas[$("#" + inputId).attr("name")] = moment(inputValue,
-                                'D-M-YYYY')
-                            .format('YYYY-MM-DD');
-                    } else {
-                        datas[$("#" + inputId).attr("name")] = inputValue;
-                    }
-                });
-
-                datas.scope = $('.scope-checkbox:checked').attr('name');
-                datas.classification = $('.classif-checkbox:checked').attr('name');
-                datas.klasifikasi = $('.classif2-checkbox:checked').attr('name');
-                datas.details = getRepeaterValues();
-
-                $('.signatures').each(function(index) {
-                    let signature = {};
-
-                    $(this).find('.form-control').each(function() {
-                        var inputId = $(this).attr('id');
-                        var inputValue = $("#" + inputId).val();
-
-                        if (inputId.startsWith('date')) {
-                            signature[$("#" + inputId).attr("name")] =
-                                moment(inputValue, 'D-M-YYYY')
-                                .format('YYYY-MM-DD');
-                        } else {
-                            signature[$("#" + inputId).attr("name")] =
-                                inputValue;
-                        }
-                    });
-
-                    if (ttdFile1 && index === 0) {
-                        signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                    }
-
-                    if (ttdFile2 && index === 1) {
-                        signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                    }
-
-                    if (ttdFile3 && index === 2) {
-                        signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                    }
-
-                    if (ttdFile4 && index === 3) {
-                        signature['signature'] = ttdFile4.dataURL || ttdFile4.url;
-                    }
-
-                    signatures.push(signature);
-                });
-
-                datas.signatures = signatures;
-                datas.status = "Terbuat";
-
-                $.ajax({
-                    url: baseUrl + "api/work-order",
-                    type: "POST",
-                    data: JSON.stringify(datas),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-
-                    success: function(response) {
-                        $('.indicator-progress').show();
-                        $('.indicator-label').hide();
-
-                        Swal.fire({
-                            title: 'Berhasil',
-                            text: 'Berhasil menambahkan Laporan Kerusakan.',
-                            icon: 'success',
-                            customClass: {
-                                confirmButton: 'btn btn-primary'
-                            },
-                            buttonsStyling: false
-                        })
-
-                        window.location.href = "/complain/laporan-kerusakan"
-                    },
-                    error: function(xhr, status, error) {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: errors.responseJSON.message,
-                            icon: 'error',
-                            customClass: {
-                                confirmButton: 'btn btn-primary'
-                            },
-                            buttonsStyling: false
-                        })
-                    }
-                });
-            })
 
             // Cancel
             $(".btn-cancel").on("click", function() {
