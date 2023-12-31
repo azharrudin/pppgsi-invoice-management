@@ -1,6 +1,8 @@
 <?php
 namespace App\Services;
 
+use App\Models\Invoice;
+use App\Models\Receipt;
 use Validator;
 
 class InvoiceService{
@@ -61,7 +63,7 @@ class InvoiceService{
         if ($validator->fails()) $message = implode(', ', $validator->errors()->all());
 
         if($message == ""){
-            $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "lunas"];
+            $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "kurang bayar", "lunas"];
             $status = strtolower($request->input("status"));
 
             if(!in_array($status, $validStatus)) $message = "Status tidak valid";
@@ -76,5 +78,34 @@ class InvoiceService{
         }
 
         return $message;
+    }
+
+    /**
+     * Fungsi untuk mengupdate status invoice ke `Kurang Bayar` jika
+     * invoice belum terbayar semuanya dan ke `Lunas` jika invoice
+     * sudah terbayar
+     *
+     * @param Number $invoiceId id invoice yang akan diupdate statusnya
+     * @return Boolean true
+     */
+    public function updateInvoiceStatus($invoiceId){
+        $getReceipt = Receipt::select("invoice_id", "paid")->where("invoice_id", $invoiceId)->where("deleted_at", null)->get();
+        $receiptArr = $this->CommonService->toArray($getReceipt);
+
+        $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $invoiceId);
+
+        $totalPaid = 0;
+        foreach($receiptArr as $receiptObj){
+            $totalPaid += $receiptObj->paid;
+        }
+
+        $invoiceStatus = "";
+        if($totalPaid >= $getInvoice['grand_total']) $invoiceStatus = "Lunas";
+        else $invoiceStatus = "Kurang Bayar";
+
+        $updateObj = ["status" => $invoiceStatus];
+        Invoice::findOrFail($invoiceId)->update($updateObj);
+
+        return true;
     }
 }

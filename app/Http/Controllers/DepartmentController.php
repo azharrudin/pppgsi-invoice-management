@@ -3,22 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\CustomException;
-use App\Models\Ticket;
-use App\Models\TicketAttachment;
+use App\Models\Department;
 use App\Services\CommonService;
-use App\Services\TicketService;
+use App\Services\DepartmentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class TicketController extends Controller
+class DepartmentController extends Controller
 {
     protected $CommonService;
-    protected $TicketService;
+    protected $DepartmentService;
 
-    public function __construct(CommonService $CommonService, TicketService $TicketService)
+    public function __construct(CommonService $CommonService, DepartmentService $DepartmentService)
     {
         $this->CommonService = $CommonService;
-        $this->TicketService = $TicketService;
+        $this->DepartmentService = $DepartmentService;
     }
 
     /**
@@ -35,23 +34,19 @@ class TicketController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $ticketQuery = Ticket::with("ticketAttachments")->where("deleted_at", null);
+            $departmentQuery = Department::where("deleted_at", null);
             if($value){
-                $ticketQuery->where(function ($query) use ($value) {
-                    $query->where('ticket_number', 'like', '%' . $value . '%')
-                    ->orWhere('reporter_name', 'like', '%' . $value . '%')
-                    ->orWhere('reporter_company', 'like', '%' . $value . '%')
-                    ->orWhere('ticket_title', 'like', '%' . $value . '%')
-                    ->orWhere('status', 'like', '%' . $value . '%');
+                $departmentQuery->where(function ($query) use ($value) {
+                    $query->where('name', 'like', '%' . $value . '%');
                 });
             }
-            $getTickets = $ticketQuery->orderBy($order, $sort)->paginate($perPage);
-            $totalCount = $getTickets->total();
+            $getDepartments = $departmentQuery->orderBy($order, $sort)->paginate($perPage);
+            $totalCount = $getDepartments->total();
 
-            $ticketArr = $this->CommonService->toArray($getTickets);
+            $departmentArr = $this->CommonService->toArray($getDepartments);
 
             return [
-                "data" => $ticketArr,
+                "data" => $departmentArr,
                 "per_page" => $perPage,
                 "page" => $page,
                 "size" => $totalCount,
@@ -78,28 +73,18 @@ class TicketController extends Controller
         DB::beginTransaction();
 
         try{
-            $validateTicket = $this->TicketService->validateTicket($request);
-            if($validateTicket != "") throw new CustomException($validateTicket, 400);
-
-            $saveTicket = Ticket::create($request->all());
-            if(!is_null($request->input("attachment"))){
-                // dd($request->input("attachment"));
-              foreach($request->input("attachment") as $attachment){
-                  TicketAttachment::create([
-                      "ticket_id" => $saveTicket->id,
-                      "attachment" => $attachment
-                  ]);
-              }
-            }
+            $validateDepartment = $this->DepartmentService->validateDepartment($request, true, "");
+            if($validateDepartment != "") throw new CustomException($validateDepartment, 400);
 
             DB::commit();
-            $getTicket = Ticket::with("ticketAttachments")->where("id", $saveTicket->id)->where("deleted_at", null)->first();
+            $department = Department::create($request->all());
 
-            return ["data" => $getTicket];
+            return response()->json($department, 201);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
             DB::rollBack();
+
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
@@ -116,10 +101,10 @@ class TicketController extends Controller
     {
         try{
             $id = (int) $id;
-            $getTicket = Ticket::with("ticketAttachments")->where("id", $id)->where("deleted_at", null)->first();
-            if (is_null($getTicket)) throw new CustomException("Ticket tidak ditemukan", 404);
+            $getDepartment = $this->CommonService->getDataById("App\Models\Department", $id);
+            if (is_null($getDepartment)) throw new CustomException("Department tidak ditemukan", 404);
 
-            return ["data" => $getTicket];
+            return ["data" => $getDepartment];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
@@ -142,25 +127,18 @@ class TicketController extends Controller
 
         try{
             $id = (int) $id;
-            $ticketExist = $this->CommonService->getDataById("App\Models\Ticket", $id);
-            if (is_null($ticketExist)) throw new CustomException("Ticket tidak ditemukan", 404);
+            $getDepartment = $this->CommonService->getDataById("App\Models\Department", $id);
+            if (is_null($getDepartment)) throw new CustomException("Department tidak ditemukan", 404);
 
-            $validateTicket = $this->TicketService->validateTicket($request);
-            if($validateTicket != "") throw new CustomException($validateTicket, 400);
+            $validateDepartment = $this->DepartmentService->validateDepartment($request, false, $id);
+            if($validateDepartment != "") throw new CustomException($validateDepartment, 400);
 
-            Ticket::findOrFail($id)->update($request->all());
-            TicketAttachment::where("ticket_id", $id)->where("deleted_at", null)->delete();
-            foreach($request->input("attachment") as $attachment){
-                TicketAttachment::create([
-                    "ticket_id" => $id,
-                    "attachment" => $attachment
-                ]);
-            }
-
+            Department::findOrFail($id)->update($request->all());
             DB::commit();
-            $getTicket = Ticket::with("ticketAttachments")->where("id", $id)->where("deleted_at", null)->first();
 
-            return ["data" => $getTicket];
+            $department = Department::where("id", $id)->first();
+
+            return response()->json($department, 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
@@ -184,14 +162,13 @@ class TicketController extends Controller
 
         try{
             $id = (int) $id;
-            $ticketExist = $this->CommonService->getDataById("App\Models\Ticket", $id);
-            if (is_null($ticketExist)) throw new CustomException("Ticket tidak ditemukan", 404);
+            $getDepartment = $this->CommonService->getDataById("App\Models\Department", $id);
+            if (is_null($getDepartment)) throw new CustomException("Department tidak ditemukan", 404);
 
-            Ticket::findOrFail($id)->delete();
-            TicketAttachment::where("ticket_id", $id)->where("deleted_at", null)->delete();
+            Department::findOrFail($id)->delete();
             DB::commit();
 
-            return response()->json(['message' => 'Ticket berhasil dihapus'], 200);
+            return response()->json(['message' => 'Department berhasil dihapus'], 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
@@ -218,17 +195,17 @@ class TicketController extends Controller
 
             if(is_null($field)) $field = "id";
 
-            $getTicket = Ticket::where("deleted_at", null)->
+            $getDepartment = Department::where("deleted_at", null)->
                 where($field, 'like', '%' . $value . '%')->
                 select("id", $field)->
                 paginate($perPage);
-            $totalCount = $getTicket->total();
+            $totalCount = $getDepartment->total();
 
             $dataArr = [];
-            foreach($getTicket as $ticketObj){
+            foreach($getDepartment as $departmentObj){
                 $dataObj = [
-                    "id" => $ticketObj->id,
-                    "text" => $ticketObj->$field,
+                    "id" => $departmentObj->id,
+                    "text" => $departmentObj->$field,
                 ];
                 array_push($dataArr, $dataObj);
             }

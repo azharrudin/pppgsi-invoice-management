@@ -25,7 +25,6 @@ class ReceiptSeeder extends Seeder
             $dataIndex = $i % 5;
 
             Receipt::create([
-                "receipt_number" => "0000{$count}",
                 "grand_total" => $grandTotal,
                 "receipt_date" => $startDate,
                 "receipt_send_date" => $faker->dateTimeBetween('+1 week', '+2 week'),

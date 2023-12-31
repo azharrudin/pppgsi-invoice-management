@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('purchase_requests', function (Blueprint $table) {
             $table->increments("id");
+            $table->unsignedInteger("purchase_request_number");
             $table->string("department");
             $table->unsignedInteger("proposed_purchase_price");
             $table->string("budget_status");

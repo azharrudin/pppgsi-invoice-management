@@ -17,8 +17,10 @@ return new class extends Migration
             $table->string('password');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('department');
-            $table->string('level');
+            $table->unsignedInteger('department_id');
+            $table->foreign('department_id')->references('id')->on('departments');
+            $table->unsignedInteger('level_id');
+            $table->foreign('level_id')->references('id')->on('levels');
             $table->string('status');
             $table->mediumText("image");
             $table->timestamps();

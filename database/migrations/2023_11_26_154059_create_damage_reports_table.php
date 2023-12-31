@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('damage_reports', function (Blueprint $table) {
             $table->increments("id");
-            $table->string("damage_report_number");
+            $table->unsignedInteger("damage_report_number");
             $table->string("scope");
             $table->string("classification");
             $table->date("damage_report_date");

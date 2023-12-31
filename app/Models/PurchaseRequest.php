@@ -18,6 +18,7 @@ class PurchaseRequest extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        "purchase_request_number",
         "department",
         "proposed_purchase_price",
         "budget_status",
@@ -32,6 +33,22 @@ class PurchaseRequest extends Model
     ];
 
     public $timestamp = true;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->resetYearlyNumber();
+    }
+
+    public function resetYearlyNumber()
+    {
+        $year = now()->year;
+
+        $maxNumberForYear = static::whereYear('created_at', $year)->max('purchase_request_number') ?: 0;
+
+        $this->purchase_request_number = $maxNumberForYear + 1;
+    }
 
     public function materialRequest(): BelongsTo
     {

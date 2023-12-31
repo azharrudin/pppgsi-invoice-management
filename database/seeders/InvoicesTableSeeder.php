@@ -17,8 +17,8 @@ class InvoicesTableSeeder extends Seeder
         // Invoice::truncate();
         // InvoiceDetail::truncate();
 
-        $status = ["Terbuat", "Disetujui KA", "Disetujui BM", "Terkirim", "Lunas"];
-        $spelled = ["Seratus ribu rupiah", "Dua ratus ribu rupiah", "Tiga ratus ribu rupiah", "Empat ratus ribu rupiah", "Lima ratus ribu rupiah"];
+        $status = ["Terbuat", "Disetujui KA", "Disetujui BM", "Terkirim", "Kurang Bayar", "Lunas"];
+        $spelled = ["Seratus ribu rupiah", "Dua ratus ribu rupiah", "Tiga ratus ribu rupiah", "Empat ratus ribu rupiah", "Lima ratus ribu rupiah", "Enam ratus ribu rupiah"];
 
         $faker = \Faker\Factory::create();
 
@@ -26,7 +26,7 @@ class InvoicesTableSeeder extends Seeder
             $count = $i + 1;
             $grandTotal = $count * 100000;
             $startDate = $faker->dateTimeBetween('-2 week', '-1 week');
-            $dataIndex = $i % 5;
+            $dataIndex = $i % 6;
 
             Invoice::create([
                 "invoice_number" => "INV/2023/{$count}",

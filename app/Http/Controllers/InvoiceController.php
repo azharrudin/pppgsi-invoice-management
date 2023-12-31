@@ -240,12 +240,24 @@ class InvoiceController extends Controller
             ] = $this->CommonService->getQuery($request);
 
             $perPage = 10;
+            $status = strtolower($request->input("status", ""));
+            $statusArray = explode(",", $status);
 
             $invoiceQuery = Invoice::where("deleted_at", null);
             if($value){
                 $invoiceQuery->where('invoice_number', 'like', '%' . $value . '%');
             }
-            $getInvoices = $invoiceQuery->select("id", "invoice_number")->paginate($perPage);
+            if($status != ""){
+                $invoiceQuery->where(function ($query) use ($statusArray) {
+                    $length = count($statusArray);
+
+                    for($i = 0; $i < $length; $i++){
+                        $statusFromArray = trim($statusArray[$i]);
+                        $query->orWhere('status', 'like', '%' . $statusFromArray . '%');
+                    }
+                });
+            }
+            $getInvoices = $invoiceQuery->select("id", "invoice_number", "status")->paginate($perPage);
             $totalCount = $getInvoices->total();
 
             $dataArr = [];

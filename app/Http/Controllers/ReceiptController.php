@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\CustomException;
 use App\Models\Receipt;
 use App\Services\CommonService;
+use App\Services\InvoiceService;
 use App\Services\ReceiptService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,11 +14,13 @@ class ReceiptController extends Controller
 {
     protected $CommonService;
     protected $ReceiptService;
+    protected $InvoiceService;
 
-    public function __construct(CommonService $CommonService, ReceiptService $ReceiptService)
+    public function __construct(CommonService $CommonService, ReceiptService $ReceiptService, InvoiceService $InvoiceService)
     {
         $this->CommonService = $CommonService;
         $this->ReceiptService = $ReceiptService;
+        $this->InvoiceService = $InvoiceService;
     }
 
     /**
@@ -84,6 +87,7 @@ class ReceiptController extends Controller
             if($validateReceipt != "") throw new CustomException($validateReceipt, 400);
 
             $receipt = Receipt::create($request->all());
+            $this->InvoiceService->updateInvoiceStatus($request->input("invoice_id"));
             DB::commit();
 
             $getReceipt = Receipt::with("invoice")
@@ -152,6 +156,7 @@ class ReceiptController extends Controller
             if($validateReceipt != "") throw new CustomException($validateReceipt, 400);
 
             Receipt::findOrFail($id)->update($request->all());
+            $this->InvoiceService->updateInvoiceStatus($request->input("invoice_id"));
             DB::commit();
 
             $getReceipt = Receipt::with("invoice")
