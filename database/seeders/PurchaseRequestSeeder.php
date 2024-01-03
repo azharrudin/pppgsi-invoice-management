@@ -28,9 +28,10 @@ class PurchaseRequestSeeder extends Seeder
             $totalBudget = 10000000;
             $proposedPurchasePrice = $count * 100000;
             $dataIndex = $i % 5;
+            $department = ($count % 5) + 1;
 
             PurchaseRequest::create([
-                "department" => "Department {$count}",
+                "department_id" => $department,
                 "proposed_purchase_price" => $proposedPurchasePrice,
                 "budget_status" => $budgetStatus[$dataIndex],
                 "request_date" => $firstDate,

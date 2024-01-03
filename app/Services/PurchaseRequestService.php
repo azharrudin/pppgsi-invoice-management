@@ -19,7 +19,7 @@ class PurchaseRequestService{
      */
     public function validatePurchaseRequest($request){
         $rules = [
-            "department" => ["bail", "required", "string"],
+            "department_id" => ["bail", "required", "numeric"],
             "proposed_purchase_price" => ["bail", "required", "numeric", "gte:0"],
             "budget_status" => ["bail", "required", "string"],
             "request_date" => ["bail", "required", "date"],
@@ -68,8 +68,10 @@ class PurchaseRequestService{
 
         if($message == ""){
             $materialRequestExist = $this->CommonService->getDataById("App\Models\MaterialRequest", $request->input("material_request_id"));
+            $departmentExist = $this->CommonService->getDataById("App\Models\Department", $request->input("department_id"));
 
             if(is_null($materialRequestExist)) $message = "Material request tidak ditemukan";
+            else if(is_null($departmentExist)) $message = "Department tidak ditemukan";
         }
 
         if($message == ""){
