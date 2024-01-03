@@ -289,4 +289,31 @@ class InvoiceController extends Controller
             return response()->json(['message' => $errorMessage], $errorStatusCode);
         }
     }
+
+    public function report()
+    {
+        try{
+            $countTenant = Tenant::where("deleted_at", null)->count();
+            $countInvoice = Invoice::where("deleted_at", null)->count();
+            $sumInvoicePaid = Invoice::where("deleted_at", null)->where("status", 'like', '%Lunas%')->sum("grand_total");
+            $sumInvoiceNotPaid = Invoice::where("deleted_at", null)->where("status", '!=', 'Lunas')->sum("grand_total");
+
+            return [
+                "count_tenant" => $countTenant,
+                "count_invoice" => $countInvoice,
+                "invoice_paid" => $sumInvoicePaid,
+                "invoice_not_paid" => $sumInvoiceNotPaid
+            ];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
 }

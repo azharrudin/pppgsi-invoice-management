@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\CustomException;
 use App\Models\Receipt;
+use App\Models\Tenant;
 use App\Services\CommonService;
 use App\Services\InvoiceService;
 use App\Services\ReceiptService;
@@ -246,6 +247,31 @@ class ReceiptController extends Controller
             return [
                 "data" => $dataArr,
                 "pagination" => $pagination,
+            ];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
+
+    public function report()
+    {
+        try{
+            $countTenant = Tenant::where("deleted_at", null)->count();
+            $countReceiptSent = Receipt::where("deleted_at", null)->where("status", "like", "%Terkirim%")->count();
+            $countReceiptNotSent = Receipt::where("deleted_at", null)->where("status", "!=", "Terkirim")->count();
+
+            return [
+                "count_tenant" => $countTenant,
+                "count_receipt_sent" => $countReceiptSent,
+                "count_receipt_not_sent" => $countReceiptNotSent,
             ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
