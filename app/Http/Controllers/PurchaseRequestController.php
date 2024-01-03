@@ -40,6 +40,7 @@ class PurchaseRequestController extends Controller
             $purchaseRequestQuery = PurchaseRequest::with("purchaseRequestDetails")->
                 with("purchaseRequestSignatures")->
                 with("materialRequest")->
+                with("department")->
                 where("deleted_at", null);
             if($value){
                 $purchaseRequestQuery->where(function ($query) use ($value) {
@@ -119,6 +120,7 @@ class PurchaseRequestController extends Controller
             $getPurchaseRequest = PurchaseRequest::with("purchaseRequestDetails")->
                 with("purchaseRequestSignatures")->
                 with("materialRequest")->
+                with("department")->
                 where("id", $purchaseRequest->id)->
                 where("deleted_at", null)->
                 first();
@@ -149,6 +151,7 @@ class PurchaseRequestController extends Controller
             $getPurchaseRequest = PurchaseRequest::with("purchaseRequestDetails")->
                 with("purchaseRequestSignatures")->
                 with("materialRequest")->
+                with("department")->
                 where("id", $id)->
                 where("deleted_at", null)->
                 first();
@@ -217,6 +220,7 @@ class PurchaseRequestController extends Controller
             $getPurchaseRequest = PurchaseRequest::with("purchaseRequestDetails")->
                 with("purchaseRequestSignatures")->
                 with("materialRequest")->
+                with("department")->
                 where("id", $id)->
                 where("deleted_at", null)->
                 first();

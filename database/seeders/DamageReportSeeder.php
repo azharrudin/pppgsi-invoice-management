@@ -15,7 +15,7 @@ class DamageReportSeeder extends Seeder
      */
     public function run(): void
     {
-        $status = ["Terbuat", "Disetujui KA", "Disetujui BM", "Terbuat", "Disetujui KA"];
+        $status = ["Terbuat", "Disetujui KA", "Disetujui BM", "Terbuat", "Selesai"];
         $scope = ["Telekomunikasi", "HVAC", "CIVIL", "Other", "Other"];
         $classification = ["Repair", "Replacement", "Vendor", "Replacement", "Vendor"];
         $signatureType = ["KA. Unit Pelayanan", "Kord. Teknik", "Leader Cleaning"];
