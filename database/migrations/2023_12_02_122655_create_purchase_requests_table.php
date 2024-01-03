@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('purchase_requests', function (Blueprint $table) {
             $table->increments("id");
             $table->unsignedInteger("purchase_request_number");
-            $table->string("department");
+            $table->unsignedInteger("department_id");
+            $table->foreign('department_id')->references('id')->on('departments');
             $table->unsignedInteger("proposed_purchase_price");
             $table->string("budget_status");
             $table->date("request_date");
