@@ -19,7 +19,7 @@ $configData = Helper::appClasses();
     <!-- /Left Text -->
     <div class="d-none d-lg-flex col-lg-7 p-0" style="background: rgb(97,73,206);
 background: linear-gradient(3deg, rgba(97,73,206,1) 0%, rgba(156,98,244,1) 100%); color:white;">
-      <img src="c" alt="illustrasi" class="mx-auto my-auto d-block img-fluid" style="width : 60%; height : auto;">
+      <img src="{{ asset('assets/img/login.png')}}" alt="illustrasi" class="mx-auto my-auto d-block img-fluid" style="width : 60%; height : auto;">
     </div>
     <!-- /Left Text -->
 
