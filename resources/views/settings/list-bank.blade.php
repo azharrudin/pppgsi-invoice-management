@@ -284,7 +284,7 @@ $configData = Helper::appClasses();
                     event.preventDefault();
                     var formData = new FormData($('#create-bank')[0]);
                     $.ajax({
-                        url: baseUrl + "api/bank",
+                        url: "{{env('BASE_URL_API')}}" + "api/bank",
                         type: "POST",
                         data: formData,
                         processData: false,
