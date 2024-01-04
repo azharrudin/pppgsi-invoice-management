@@ -67,7 +67,7 @@ $configData = Helper::appClasses();
                                     </div>
                                     <div class="mb-3 mx-2">
                                         <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control w-px-150 date" id="addendum_date" placeholder="" required />
+                                        <input type="text" class="form-control w-px-150 date" id="addendum_date" name="addendum_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </dd>
@@ -191,6 +191,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
+    "use strict";
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -204,9 +205,9 @@ $configData = Helper::appClasses();
     function format(e) {
         var nStr = e + '';
         nStr = nStr.replace(/\,/g, "");
-        x = nStr.split('.');
-        x1 = x[0];
-        x2 = x.length > 1 ? '.' + x[1] : '';
+        let x = nStr.split('.');
+        let x1 = x[0];
+        let x2 = x.length > 1 ? '.' + x[1] : '';
         var rgx = /(\d+)(\d{3})/;
         while (rgx.test(x1)) {
             x1 = x1.replace(rgx, '$1' + ',' + '$2');
@@ -218,6 +219,8 @@ $configData = Helper::appClasses();
         let ttdFile = dataLocal ? dataLocal.materai_image : null;
         const myDropzone = new Dropzone('#dropzone-basic', {
             parallelUploads: 1,
+            thumbnailWidth: null,
+            thumbnailHeight: null,
             maxFilesize: 3,
             addRemoveLinks: true,
             maxFiles: 1,
@@ -232,6 +235,9 @@ $configData = Helper::appClasses();
                         this.options.addedfile.call(this, mockFile);
                         this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
 
+                        $('.dz-image').last().find('img').attr('width','100%');
+
+
                         // Optional: Handle the removal of the file
                         mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
                             // Handle removal logic here
@@ -239,6 +245,7 @@ $configData = Helper::appClasses();
                     }
                 }
                 this.on('addedfile', function(file) {
+                    $('.dz-image').last().find('img').attr('width','100%');
                     while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
                     ttdFile = file;
                 })
@@ -440,9 +447,9 @@ $configData = Helper::appClasses();
             console.log(event.currentTarget.value);
             var nStr = event.currentTarget.value + '';
             nStr = nStr.replace(/\,/g, "");
-            x = nStr.split('.');
-            x1 = x[0];
-            x2 = x.length > 1 ? '.' + x[1] : '';
+            var x = nStr.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? '.' + x[1] : '';
             var rgx = /(\d+)(\d{3})/;
             while (rgx.test(x1)) {
                 x1 = x1.replace(rgx, '$1' + ',' + '$2');
@@ -453,10 +460,7 @@ $configData = Helper::appClasses();
             let total = 0;
             let tax = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
             let price = parseInt($(this).val().replaceAll(',', ''));
-            console.log(price);
             let totalPrice = price + tax;
-            console.log(totalPrice);
-            console.log(format(totalPrice));
             $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
             getTotal();
 
@@ -467,9 +471,9 @@ $configData = Helper::appClasses();
             var nStr = event.currentTarget.value + '';
 
             nStr = nStr.replace(/\,/g, "");
-            x = nStr.split('.');
-            x1 = x[0];
-            x2 = x.length > 1 ? '.' + x[1] : '';
+            var x = nStr.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? '.' + x[1] : '';
             var rgx = /(\d+)(\d{3})/;
             while (rgx.test(x1)) {
                 x1 = x1.replace(rgx, '$1' + ',' + '$2');
@@ -513,8 +517,13 @@ $configData = Helper::appClasses();
             let tingkat = new Array('', 'Ribu', 'Juta', 'Milyar', 'Triliun');
 
             let panjang_bilangan = bilangan.length;
-            let kalimat = subkalimat = kata1 = kata2 = kata3 = "";
-            let i = j = 0;
+            let kalimat = "";
+            let subkalimat = "";
+            let kata1 =""; 
+            let kata2 = "";
+            let kata3 = "";
+            let i = 0;
+            let j = 0;
 
             /* pengujian panjang bilangan */
             if (panjang_bilangan > 15) {
@@ -670,23 +679,24 @@ $configData = Helper::appClasses();
                         datas.details = detail;
                         datas.tenant_id = tenant;
                         datas.bank_id = bank;
-                        datas.bank_id = bank;
-                        datas.status = 'Terbuat';
+                        datas.status = "terbuat";
                         datas.contract_date = tglKontrak
                         datas.opening_paragraph = "Bapak/Ibu Qwerty";
                         datas.invoice_due_date = tglJatuhTempo;
                         datas.addendum_date = tglAddendum;
                         datas.invoice_date = tglInvoice;
                         datas.grand_total = parseInt(grandTotal);
-                        datas.materai_image = fileTtd
+                        datas.materai_image = fileTtd;
+                        delete datas['undefined'];
+
                         console.log(datas);
 
                         $.ajax({
-                            url: baseUrl + "/api/invoice/",
+                            url: baseUrl + "api/invoice",
                             type: "POST",
                             data: JSON.stringify(datas),
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
+                            processData: false,
+                            contentType: false,
                             success: function(response) {
                                 $('.indicator-progress').show();
                                 $('.indicator-label').hide();
@@ -773,7 +783,7 @@ $configData = Helper::appClasses();
             datas.details = detail;
             datas.tenant_id = tenant;
             datas.bank_id = bank;
-            datas.status = 'Terbuat';
+            datas.status = 'terbuat';
             datas.contract_date = tglKontrak
             datas.opening_paragraph = "Bapak/Ibu Qwerty";
             datas.invoice_due_date = tglJatuhTempo;
