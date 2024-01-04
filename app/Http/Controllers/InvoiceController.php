@@ -80,7 +80,7 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
-
+        dd($request->all());
         try{
             $validateInvoice = $this->InvoiceService->validateInvoice($request);
             if($validateInvoice != "") throw new CustomException($validateInvoice, 400);

@@ -235,7 +235,7 @@ $configData = Helper::appClasses();
                         this.options.addedfile.call(this, mockFile);
                         this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
 
-                        $('.dz-image').last().find('img').attr('width','100%');
+                        $('.dz-image').last().find('img').attr('width', '100%');
 
 
                         // Optional: Handle the removal of the file
@@ -245,7 +245,7 @@ $configData = Helper::appClasses();
                     }
                 }
                 this.on('addedfile', function(file) {
-                    $('.dz-image').last().find('img').attr('width','100%');
+                    $('.dz-image').last().find('img').attr('width', '100%');
                     while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
                     ttdFile = file;
                 })
@@ -519,7 +519,7 @@ $configData = Helper::appClasses();
             let panjang_bilangan = bilangan.length;
             let kalimat = "";
             let subkalimat = "";
-            let kata1 =""; 
+            let kata1 = "";
             let kata2 = "";
             let kata3 = "";
             let i = 0;
@@ -677,9 +677,9 @@ $configData = Helper::appClasses();
                         });
 
                         datas.details = detail;
-                        datas.tenant_id = tenant;
-                        datas.bank_id = bank;
-                        datas.status = "terbuat";
+                        datas.tenant_id = parseInt(tenant);
+                        datas.bank_id = parseInt(bank);
+                        datas.status = "Terbuat";
                         datas.contract_date = tglKontrak
                         datas.opening_paragraph = "Bapak/Ibu Qwerty";
                         datas.invoice_due_date = tglJatuhTempo;
@@ -692,11 +692,13 @@ $configData = Helper::appClasses();
                         console.log(datas);
 
                         $.ajax({
-                            url: baseUrl + "api/invoice",
+                            url: "{{env('BASE_URL_API')}}" + "/api/invoice",
                             type: "POST",
                             data: JSON.stringify(datas),
                             processData: false,
                             contentType: false,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
                             success: function(response) {
                                 $('.indicator-progress').show();
                                 $('.indicator-label').hide();
@@ -781,8 +783,8 @@ $configData = Helper::appClasses();
             });
 
             datas.details = detail;
-            datas.tenant_id = tenant;
-            datas.bank_id = bank;
+            datas.tenant_id = parseInt(tenant);
+            datas.bank_id = parseInt(bank);
             datas.status = 'terbuat';
             datas.contract_date = tglKontrak
             datas.opening_paragraph = "Bapak/Ibu Qwerty";
