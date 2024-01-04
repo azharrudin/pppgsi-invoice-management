@@ -37,15 +37,15 @@
                                         <div class="mb-1">
                                             <label for="note" class="form-label fw-medium">Yang Meminta </label>
                                             <input type="text" class="form-control add" placeholder="Yang Meminta"
-                                                id="requester" name="requester" required />
+                                                id="requester" name="requester" required readonly />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 pe-none">
                                         <div class="mb-1">
                                             <label for="note" class="form-label fw-medium">Departemen </label>
-                                            <select class="form-select select2 w-px-250 select-department item-details mb-3"
-                                                required>
+                                            <select class="form-select select2 select-department item-details mb-3"
+                                                required readonly>
                                             </select>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
@@ -54,7 +54,7 @@
                                         <div class="mb-1">
                                             <label for="note" class="form-label fw-medium">Jumlah Anggaran </label>
                                             <input type="text" class="form-control add qty price" id="total_budget"
-                                                name="total_budget" placeholder="Jumlah Anggaran" required />
+                                                name="total_budget" placeholder="Jumlah Anggaran" required readonly />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@
                                             <label for="note" class="form-label fw-medium">Usulan Permintaan </label>
                                             <input type="text" class="form-control add qty price"
                                                 id="proposed_purchase_price" name="proposed_purchase_price"
-                                                placeholder="Usulan Permintaan" required />
+                                                placeholder="Usulan Permintaan" required readonly />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
@@ -71,7 +71,7 @@
                                         <div class="mb-1">
                                             <label for="note" class="form-label fw-medium">Sisa Anggaran </label>
                                             <input type="text" class="form-control add qty price" id="remaining_budget"
-                                                name="remaining_budget" placeholder="Sisa Anggaran" required />
+                                                name="remaining_budget" placeholder="Sisa Anggaran" required readonly />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
@@ -83,7 +83,7 @@
                                         <div class="mb-1">
                                             <label for="note" class="form-label fw-medium">Nomor PR </label>
                                             <input type="text" class="form-control" placeholder="Nomor PR"
-                                                id="purchase_request_number" name="purchase_request_number" required
+                                                id="purchase_request_number" name="purchase_request_number" required readonly
                                                 disabled />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
@@ -91,16 +91,16 @@
                                     <div class="col-md-5 mb-0">
                                         <div class="mb-1">
                                             <label for="note" class="form-label fw-medium">Tanggal PR </label>
-                                            <input type="text" class="form-control add date" id="request_date"
-                                                name="request_date" placeholder="Tanggal PR" required />
+                                            <input type="text" class="form-control add date pe-none" id="request_date"
+                                                name="request_date" placeholder="Tanggal PR" required readonly />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
-                                    <div class="col-md-5 mb-0">
+                                    <div class="col-md-5 mb-0 pe-none">
                                         <div class="mb-1">
                                             <label for="note" class="form-label fw-medium">Nomor MR </label>
-                                            <select class="form-select select2 w-px-250 select-mr item-details mb-3"
-                                                required>
+                                            <select class="form-select select2 select-mr item-details mb-3"
+                                                required readonly>
                                             </select>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
@@ -109,14 +109,14 @@
                                         <div class="mb-1">
                                             <label for="note" class="form-label fw-medium">Tanggal MR </label>
                                             <input type="text" class="form-control date pe-none" id="tanggal_mr"
-                                                placeholder="Tanggal MR" required />
+                                                placeholder="Tanggal MR" required readonly />
                                             <div class="invalid-feedback" style="display: none">Tidak boleh kosong</div>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mt-2">
                                         <div class="mb-1">
                                             <textarea class="form-control add" rows="7" style="padding: 15px" id="additional_note" name="additional_note"
-                                                placeholder="Termin pembayaran, garansi dll" required></textarea>
+                                                placeholder="Termin pembayaran, garansi dll" required readonly></textarea>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
@@ -125,31 +125,31 @@
 
                             {{-- Radio Button --}}
                             <div class="row py-3 px-3">
-                                <div class="col-12">
+                                <div class="col-12 pe-none">
                                     <div class="">
                                         <div class="form-check form-check-inline checkbox">
                                             <input class="form-check-input checkbox-check" type="checkbox"
-                                                name="Sesuai Budget" id="sesuai_budget" required>
+                                                name="Sesuai Budget" id="sesuai_budget" required readonly>
                                             <label class="form-check-label" for="sesuai_budget">Sesuai Budget</label>
                                         </div>
                                         <div class="form-check form-check-inline checkbox">
                                             <input class="form-check-input checkbox-check" type="checkbox"
-                                                name="Diluar Budget" id="diluar_budget" required>
+                                                name="Diluar Budget" id="diluar_budget" required readonly>
                                             <label class="form-check-label" for="diluar_budget">Diluar Budget</label>
                                         </div>
                                         <div class="form-check form-check-inline checkbox">
                                             <input class="form-check-input checkbox-check" type="checkbox" name="penting"
-                                                id="penting" required>
+                                                id="penting" required readonly>
                                             <label class="form-check-label" for="penting">Penting</label>
                                         </div>
                                         <div class="form-check form-check-inline checkbox">
                                             <input class="form-check-input checkbox-check" type="checkbox"
-                                                name="1 Minggu" id="1_minggu" required>
+                                                name="1 Minggu" id="1_minggu" required readonly>
                                             <label class="form-check-label" for="1_minggu">1 Minggu</label>
                                         </div>
                                         <div class="form-check form-check-inline checkbox">
                                             <input class="form-check-input checkbox-check" type="checkbox" name="1 Bulan"
-                                                id="1_bulan" required>
+                                                id="1_bulan" required readonly>
                                             <label class="form-check-label" for="1_bulan">1 Bulan</label>
                                         </div>
                                     </div>
@@ -166,31 +166,31 @@
                                                     <div class="col-1">
                                                         <label for="note" class="form-label fw-medium">Nomor</label>
                                                         <input type="text" class="form-control" placeholder="Nomor"
-                                                            id="number" required />
+                                                            id="number" required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
                                                     <div class="col-2">
                                                         <label for="note" class="form-label fw-medium">Suku
                                                             Cadang</label>
                                                         <input type="text" class="form-control  " id="suku_cadang"
-                                                            placeholder="Suku Cadang" required />
+                                                            placeholder="Suku Cadang" required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
                                                     <div class="col-5">
                                                         <label for="note" class="form-label fw-medium">Pembelian
                                                             Terakhir</label>
                                                         <div class="d-flex flex-wrap">
-                                                            <input type="text" class="form-control date me-1"
+                                                            <input type="text" class="form-control date pe-none me-1"
                                                                 id="tanggal_rep" style="width: 90px"
-                                                                placeholder="Tanggal" required />
+                                                                placeholder="Tanggal" required readonly />
                                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                                             <input type="text" class="form-control qty me-1"
                                                                 id="kuantitas" style="width: 90px"
-                                                                placeholder="Kuantitas" required />
+                                                                placeholder="Kuantitas" required readonly />
                                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                                             <input type="text" class="form-control qty"
                                                                 id="persediaan" style="width: 90px"
-                                                                placeholder="Persediaan" required />
+                                                                placeholder="Persediaan" required readonly />
                                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                                         </div>
                                                     </div>
@@ -198,14 +198,14 @@
                                                         <label for="note"
                                                             class="form-label fw-medium">Keterangan</label>
                                                         <input type="text" class="form-control " id="deskripsi"
-                                                            placeholder="Deskripsi" required />
+                                                            placeholder="Deskripsi" required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
                                                     <div class="col-1">
                                                         <label for="note"
                                                             class="form-label fw-medium">Quantity</label>
                                                         <input type="text" class="form-control qty" id="qty"
-                                                            placeholder="Kuantitas" required />
+                                                            placeholder="Kuantitas" required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
                                                     <a class="mb-3 mx-2 mt-4" style="width: 10px" role="button"
@@ -239,70 +239,85 @@
                                     <div class="row  text-center mb-5">
                                         <div class="col-3 signatures">
                                             <label for="note" class="form-label fw-medium">Diperiksa Oleh :</label>
-                                            <input type="text" value="Checked By" id="type1" name="type"
-                                                class="form-control d-none">
+                                            <input type="text" value="Checked By" id="type1" name="type" class="form-control d-none">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  " placeholder="Nama & Jabatan"
-                                                    style="text-align:center;" id="name1" name="name" required />
+                                                    style="text-align:center;" id="name1" name="name" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <div action="/upload" class="dropzone needsclick dz-clickable"
-                                                    id="dropzone-1">
-                                                    <div class="dz-message needsclick">
-                                                        <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-1" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                        </div>
                                                     </div>
+                                                    {{-- <a class="dz-remove" id="3"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a> --}}
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <input type="text" class="form-control date" placeholder="Tanggal"
-                                                    style="text-align:center;" id="date1" name="date" required />
+                                                <input type="text" class="form-control pe-none date" placeholder="Tanggal"
+                                                    style="text-align:center;" id="date1" name="date" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
                                         <div class="col-3 signatures">
                                             <label for="note" class="form-label fw-medium">Diperiksa Oleh :</label>
-                                            <input type="text" value="Checked By" id="type2" name="type"
-                                                class="form-control d-none">
+                                            <input type="text" value="Checked By" id="type2" name="type" class="form-control d-none">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  " placeholder="Nama & Jabatan"
-                                                    style="text-align:center;" id="name2" name="name" required />
+                                                    style="text-align:center;" id="name2" name="name" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <div action="/upload" class="dropzone needsclick dz-clickable"
-                                                    id="dropzone-2">
-                                                    <div class="dz-message needsclick">
-                                                        <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-2" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                        </div>
                                                     </div>
+                                                    {{-- <a class="dz-remove" id="3"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a> --}}
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <input type="text" class="form-control  date" placeholder="Tanggal"
-                                                    style="text-align:center;" id="date2" name="date" required />
+                                                <input type="text" class="form-control pe-none date" placeholder="Tanggal"
+                                                    style="text-align:center;" id="date2" name="date" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
                                         <div class="col-3 signatures">
                                             <label for="note" class="form-label fw-medium">Diketahui Oleh :</label>
-                                            <input type="text" value="Known By" id="type3" name="type"
-                                                class="form-control d-none">
+                                            <input type="text" value="Known By" id="type3" name="type" class="form-control d-none">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  " placeholder="Nama & Jabatan"
-                                                    style="text-align:center;" id="name3" name="name" required />
+                                                    style="text-align:center;" id="name3" name="name" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <div action="/upload" class="dropzone needsclick dz-clickable"
-                                                    id="dropzone-3">
-                                                    <div class="dz-message needsclick">
-                                                        <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-3" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                        </div>
                                                     </div>
+                                                    {{-- <a class="dz-remove" id="3"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a> --}}
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <input type="text" class="form-control  date" placeholder="Tanggal"
-                                                    style="text-align:center;" id="date3" name="date" required />
+                                                <input type="text" class="form-control pe-none date" placeholder="Tanggal"
+                                                    style="text-align:center;" id="date3" name="date" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
@@ -336,10 +351,7 @@
                 <div class="col-lg-3 col-12 purchase-req-actions">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <button type="submit" id="save"
-                                class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
-                            <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
-                            <button type="button" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                            <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -477,7 +489,7 @@
                         number: $(this).find('#number').val(),
                         part_number: $(this).find('#suku_cadang').val(),
                         last_buy_date: moment($(this).find('#tanggal_rep').val(), 'D-M-YYYY')
-                            .format('YYYY-MM-DD'),
+                                    .format('YYYY-MM-DD'),
                         last_buy_quantity: parseInt($(this).find('#kuantitas').val()) || 0,
                         last_buy_stock: parseInt($(this).find('#persediaan').val()) || 0,
                         description: $(this).find('#deskripsi').val(),
@@ -490,273 +502,168 @@
                 return values;
             }
 
-            // Save, Insert and Create
-            var savepr = $('#create-pr');
+            // Get Data
+            var urlSegments = window.location.pathname.split('/');
+            var idIndex = urlSegments.indexOf('preview') + 1;
+            var id = urlSegments[idIndex];
 
-            Array.prototype.slice.call(savepr).forEach(function(form) {
-                $('.indicator-progress').hide();
-                $('.indicator-label').show();
-                form.addEventListener(
-                    "submit",
-                    function(event) {
-                        if (!form.checkValidity()) {
-                            event.preventDefault();
-                            event.stopPropagation();
+            getDataPurchaseRequest(id);
 
-                            let tanggal_pr = $("#tanggal_pr").val();
-                            let tanggal_mr = $("#tanggal_mr").val();
-                            let tanggal_rep = $("#tanggal_rep").val();
-
-
-                            if (!tanggal_pr) {
-                                $("#tanggal_pr").addClass("invalid");
-                            }
-                            if (!tanggal_mr) {
-                                $("#tanggal_mr").addClass("invalid");
-                            }
-                            if (!tanggal_rep) {
-                                $("#tanggal_rep").addClass("invalid");
-                            }
-                        } else {
-                            event.preventDefault();
-                            Swal.fire({
-                                title: 'Loading...',
-                                text: "Please wait",
-                                customClass: {
-                                    confirmButton: 'd-none'
-                                },
-                                buttonsStyling: false
-                            });
-                            let material = $('.select-mr').val();
-                            let department = $('.select-department').val();
-                            let datas = {}
-                            let signatures = []
-
-                            $('#addPurchaseRequest').find('.add').each(function() {
-                                var inputId = $(this).attr('id');
-                                var inputValue = $("#" + inputId).val();
-
-                                if (inputId === 'total_budget' || inputId ===
-                                    'proposed_purchase_price' ||
-                                    inputId === 'remaining_budget') {
-                                    var inputValueWithoutComma = inputValue.replace(',', '');
-
-                                    datas[$("#" + inputId).attr("name")] = parseInt(
-                                        inputValueWithoutComma, 10);
-                                } else if (inputId === 'tanggal_pr' || inputId ===
-                                    'tanggal_mr' || inputId === 'request_date') {
-                                    datas[$("#" + inputId).attr("name")] = moment(inputValue,
-                                            'D-M-YYYY')
-                                        .format('YYYY-MM-DD');
-                                } else {
-                                    datas[$("#" + inputId).attr("name")] = inputValue;
-                                }
-                            });
-
-                            datas.details = getRepeaterValues();
-
-                            $('.signatures').each(function(index) {
-                                let signature = {};
-
-                                $(this).find('.form-control').each(function() {
-                                    var inputId = $(this).attr('id');
-                                    var inputValue = $("#" + inputId).val();
-
-                                    if (inputId && inputId.startsWith('date')) {
-                                        signature[$("#" + inputId).attr("name")] =
-                                            moment(inputValue, 'D-M-YYYY')
-                                            .format('YYYY-MM-DD');
-                                    } else {
-                                        signature[$("#" + inputId).attr("name")] =
-                                            inputValue;
-                                    }
-                                });
-
-                                if (ttdFile1 && index === 0) {
-                                    signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                                }
-
-                                if (ttdFile2 && index === 1) {
-                                    signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                                }
-
-                                if (ttdFile3 && index === 2) {
-                                    signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                                }
-                                signatures.push(signature);
-                            });
-
-                            datas.budget_status = $('.checkbox-check:checked').attr('name');
-                            datas.material_request_id = parseInt(material);
-                            datas.department_id = parseInt(department);
-                            datas.signatures = signatures;
-                            datas.status = "Terbuat";
-                            console.log(datas)
-                            $.ajax({
-                                url: baseUrl + "api/purchase-request/",
-                                type: "POST",
-                                data: JSON.stringify(datas),
-                                contentType: "application/json; charset=utf-8",
-                                dataType: "json",
-
-                                success: function(response) {
-                                    $('.indicator-progress').show();
-                                    $('.indicator-label').hide();
-
-                                    Swal.fire({
-                                        title: 'Berhasil',
-                                        text: 'Berhasil menambahkan Laporan Kerusakan.',
-                                        icon: 'success',
-                                        customClass: {
-                                            confirmButton: 'btn btn-primary'
-                                        },
-                                        buttonsStyling: false
-                                    })
-
-                                    window.location.href = "/request/list-purchase-request"
-                                },
-                                error: function(xhr, status, error) {
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: xhr.responseJSON.message,
-                                        icon: 'error',
-                                        customClass: {
-                                            confirmButton: 'btn btn-primary'
-                                        },
-                                        buttonsStyling: false
-                                    })
-                                }
-                            });
-                        }
-
-                        form.classList.add("was-validated");
+            function getDataPurchaseRequest(id) {
+                Swal.fire({
+                    title: 'Loading...',
+                    text: "Please wait",
+                    customClass: {
+                        confirmButton: 'd-none'
                     },
-                    false
-                );
-            });
-
-            // Preview before save
-            $(".btn-preview").on('click', function() {
-                let material = $('.select-mr').val();
-                let department = $('.select-department').val();
-                let datas = {}
-                let signatures = []
-
-                $('#addPurchaseRequest').find('.add').each(function() {
-                    var inputId = $(this).attr('id');
-                    var inputValue = $("#" + inputId).val();
-
-                    if (inputId === 'total_budget' || inputId ===
-                        'proposed_purchase_price' ||
-                        inputId === 'remaining_budget') {
-                        var inputValueWithoutComma = inputValue.replace(',', '');
-
-                        datas[$("#" + inputId).attr("name")] = parseInt(
-                            inputValueWithoutComma, 10);
-                    } else if (inputId === 'tanggal_pr' || inputId ===
-                        'tanggal_mr' || inputId === 'request_date') {
-                        datas[$("#" + inputId).attr("name")] = moment(inputValue,
-                                'D-M-YYYY')
-                            .format('YYYY-MM-DD');
-                    } else {
-                        datas[$("#" + inputId).attr("name")] = inputValue;
-                    }
+                    buttonsStyling: false
                 });
+                $.ajax({
+                    url: "{{ url('api/purchase-request') }}/" + id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(res) {
+                        let response = res.data;
+                        $('#addPurchaseRequest').find('.form-control').each(function() {
+                            var elementId = $(this).attr('id');
+                            var elementName = $(this).attr('name');
 
-                datas.details = getRepeaterValues();
+                            if (elementId === 'request_date' || elementId ===
+                                'action_plan_date' || elementId === 'finish_plan') {
+                                // Format tanggal menggunakan moment.js
+                                $("#" + elementId).val(moment(response[elementName],
+                                    'YYYY-MM-DD').format('DD-MM-YYYY'));
+                            } else if (elementId === 'total_budget' || elementId === 'proposed_purchase_price' || elementId === 'remaining_budget') {
+                                $("#" + elementId).val(response[elementName].toLocaleString('en-US'));
+                            } else {
+                                $("#" + elementId).val(response[elementName]);
+                            }
+                        });
 
-                $('.signatures').each(function(index) {
-                    let signature = {};
+                        // Mengambil data department
+                        $.ajax({
+                            url: "{{ url('api/department') }}/" + response.department_id,
+                            type: "GET",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function(res) {
+                                $(".select-department").empty().append('<option value="' + res.data
+                                    .id + '">' + res.data.name +
+                                    '</option>').val(
+                                    res.data.id);
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: xhr.responseJSON.message,
+                                    icon: 'error',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                })
+                            }
+                        });
 
-                    $(this).find('.form-control').each(function() {
-                        var inputId = $(this).attr('id');
-                        var inputValue = $("#" + inputId).val();
+                        // Mengambil data material
+                        $.ajax({
+                            url: "{{ url('api/material-request') }}/" + response.material_request_id,
+                            type: "GET",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function(res) {
+                                $(".select-mr").empty().append('<option value="' + res.data
+                                    .id + '">' + res.data.id +
+                                    '</option>').val(
+                                    res.data.id);
+                                $("#tanggal_mr").val(moment(res.data.request_date, 'YYYY-M-D').format('DD-MM-YYYY'));
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: xhr.responseJSON.message,
+                                    icon: 'error',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                })
+                            }
+                        });
 
-                        if (inputId && inputId.startsWith('date')) {
-                            signature[$("#" + inputId).attr("name")] =
-                                moment(inputValue, 'D-M-YYYY')
-                                .format('YYYY-MM-DD');
-                        } else {
-                            signature[$("#" + inputId).attr("name")] =
-                                inputValue;
+                        // Set value ke repeater
+                        var firstRow = $('.repeater-wrapper').first();
+
+                        for (var i = 0; i < response.purchase_request_details.length; i++) {
+                            var rowValues = response.purchase_request_details[i];
+
+                            if (i === 0) {
+                                firstRow.find('#number').val(rowValues.number);
+                                firstRow.find('#suku_cadang').val(rowValues.part_number);
+                                firstRow.find('#tanggal_rep').val(moment(rowValues.last_buy_date, 'YYYY-MM-DD').format('D-M-YYYY'));
+                                firstRow.find('#kuantitas').val(rowValues.last_buy_quantity);
+                                firstRow.find('#persediaan').val(rowValues.last_buy_stock);
+                                firstRow.find('#deskripsi').val(rowValues.description);
+                                firstRow.find('#qty').val(rowValues.quantity);
+                            } else {
+                                var newRow = firstRow.clone();
+                                firstRow.find('#number').val(rowValues.number);
+                                firstRow.find('#suku_cadang').val(rowValues.part_number);
+                                firstRow.find('#tanggal_rep').val(moment(rowValues.last_buy_date, 'YYYY-MM-DD').format('D-M-YYYY'));
+                                firstRow.find('#kuantitas').val(rowValues.last_buy_quantity);
+                                firstRow.find('#persediaan').val(rowValues.last_buy_stock);
+                                firstRow.find('#deskripsi').val(rowValues.description);
+                                firstRow.find('#qty').val(rowValues.quantity);
+
+                                $('.repeater [data-repeater-list="group-a"]').append(newRow);
+                            }
                         }
-                    });
 
-                    if (ttdFile1 && index === 0) {
-                        signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                    }
+                        $('.repeater').repeater();
 
-                    if (ttdFile2 && index === 1) {
-                        signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                    }
+                        $('.checkbox-check').each(function() {
+                            var checkboxName = $(this).attr('name').toLowerCase();
+                            if ((response.budget_status).toLowerCase() === checkboxName) {
+                                $('.checkbox-check').not(this).prop('disabled', true);
+                                $(this).prop('checked', true);
+                            } else {
+                                $(this).prop('checked', false);
+                            }
+                        });
 
-                    if (ttdFile3 && index === 2) {
-                        signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
+                        // Set value ke form signature
+                        for (let i = 1; i < response.purchase_request_signatures.length + 1; i++) {
+                            $("#name" + i).val(response.purchase_request_signatures[i - 1].name);
+                            if (response.purchase_request_signatures[i - 1].signature != '') {
+                                $('.prev-img-' + i).attr('src', response.purchase_request_signatures[i - 1]
+                                    .signature);
+                            } else {
+                                $('.dz-nopreview').css('display', 'block');
+                            }
+                            $('#date' + i).val(moment(response.purchase_request_signatures[i - 1]
+                                .date, 'YYYY-MM-DD').format('DD-MM-YYYY'));
+                        }
+                        Swal.close();
+                    },
+                    error: function(errors) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: errors.responseJSON
+                                .message,
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        })
                     }
-                    signatures.push(signature);
                 });
+            }
 
-                datas.budget_status = $('.checkbox-check:checked').attr('name');
-                datas.material_request_id = parseInt(material);
-                datas.department_id = parseInt(department);
-                datas.signatures = signatures;
-                datas.status = "Terbuat";
-
-                localStorage.setItem('purchase-request', JSON.stringify(datas));
-                window.location.href = "/request/preview"
+            // Cancel
+            $(".btn-cancel").on("click", function() {
+                window.location.href = "/request/list-purchase-request"
             })
-
-            // Mengambil value tanda tangan
-            let ttdFile1 = null;
-            const myDropzone1 = new Dropzone('#dropzone-1', {
-                parallelUploads: 1,
-                maxFilesize: 2,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile1 = file;
-                    });
-                }
-            });
-
-            let ttdFile2 = null;
-            const myDropzone2 = new Dropzone('#dropzone-2', {
-                parallelUploads: 1,
-                maxFilesize: 2,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile2 = file;
-                    });
-                }
-            });
-
-            let ttdFile3 = null;
-            const myDropzone3 = new Dropzone('#dropzone-3', {
-                parallelUploads: 1,
-                maxFilesize: 2,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile3 = file;
-                    });
-                }
-            });
 
             // Select2
             $(".select-department").select2({
