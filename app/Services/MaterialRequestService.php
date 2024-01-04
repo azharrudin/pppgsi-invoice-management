@@ -57,7 +57,7 @@ class MaterialRequestService{
         if ($validator->fails()) $message = implode(', ', $validator->errors()->all());
 
         if($message == ""){
-            $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "lunas"];
+            $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "selesai"];
             $status = strtolower($request->input("status"));
 
             if(!in_array($status, $validStatus)) $message = "Status tidak valid";

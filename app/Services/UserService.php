@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Models\Department;
 use App\Models\User;
 use Validator;
 
@@ -25,14 +26,16 @@ class UserService{
           'name' => ["bail", "required", "string"],
           'email' => ["bail", "required", "string", "email"],
           'password' => ["bail", "required", "string"],
-          'department' => ["bail", "required", "string"],
-          'level' => ["bail", "required", "string"],
+          'department_id' => ["bail", "required", "numeric"],
+          'level_id' => ["bail", "required", "numeric"],
           'status' => ["bail", "required", "string"],
+          'image' => ["bail", "nullable", "string"],
         ];
         $errorMessages = [
             "required" => "Field :attribute harus diisi",
             "string" => "Field :attribute harus diisi dengan string",
             "email" => "Field :attribute harus ditulis dengan format email yang valid",
+            "numeric" => "Field :attribute harus diisi dengan angka"
         ];
 
         $validator = Validator::make($request->all(), $rules, $errorMessages);
@@ -46,6 +49,14 @@ class UserService{
             $emailExist = $emailExist->first();
 
             if(!is_null($emailExist)) $message = "Email sudah digunakan";
+        }
+
+        if($message == ""){
+            $departmentExist = $this->CommonService->getDataById("App\Models\Department", $request->input("department_id"));
+            $levelExist = $this->CommonService->getDataById("App\Models\Level", $request->input("level_id"));
+
+            if(is_null($departmentExist)) $message = "Department tidak ditemukan";
+            else if(is_null($levelExist)) $message = "Level tidak ditemukan";
         }
 
         return $message;

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedInteger('level_id');
             $table->foreign('level_id')->references('id')->on('levels');
             $table->string('status');
-            $table->mediumText("image");
+            $table->mediumText("image")->nullable();
             $table->timestamps();
             $table->date("deleted_at")->nullable();
         });

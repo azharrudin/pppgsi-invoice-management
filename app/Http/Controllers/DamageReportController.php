@@ -6,6 +6,7 @@ use App\Exceptions\CustomException;
 use App\Models\DamageReport;
 use App\Models\DamageReportDetail;
 use App\Models\DamageReportSignature;
+use App\Models\Tenant;
 use App\Services\CommonService;
 use App\Services\DamageReportService;
 use Illuminate\Http\Request;
@@ -292,6 +293,31 @@ class DamageReportController extends Controller
             return [
                 "data" => $dataArr,
                 "pagination" => $pagination,
+            ];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
+
+    public function report()
+    {
+        try{
+            $countTenant = Tenant::where("deleted_at", null)->count();
+            $countDamageReport = DamageReport::where("deleted_at", null)->count();
+            $countDamageReportDone = DamageReport::where("deleted_at", null)->where("status", "like", "%Selesai%")->count();
+
+            return [
+                "count_tenant" => $countTenant,
+                "count_damage_report" => $countDamageReport,
+                "count_damage_report_done" => $countDamageReportDone,
             ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";

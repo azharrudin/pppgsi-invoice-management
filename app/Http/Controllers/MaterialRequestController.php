@@ -315,4 +315,29 @@ class MaterialRequestController extends Controller
             return response()->json(['message' => $errorMessage], $errorStatusCode);
         }
     }
+
+    public function report()
+    {
+        try{
+            $countMaterialRequest = MaterialRequest::where("deleted_at", null)->count();
+            $countMaterialRequestOngoing = MaterialRequest::where("deleted_at", null)->where("status", "!=", "Selesai")->count();
+            $countMaterialRequestDone = MaterialRequest::where("deleted_at", null)->where("status", "like", "%Selesai%")->count();
+
+            return [
+                "count_material_request" => $countMaterialRequest,
+                "count_material_request_ongoing" => $countMaterialRequestOngoing,
+                "count_material_request_done" => $countMaterialRequestDone,
+            ];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
 }
