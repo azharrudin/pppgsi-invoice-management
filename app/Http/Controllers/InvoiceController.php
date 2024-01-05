@@ -106,15 +106,18 @@ class InvoiceController extends Controller
                 ->first();
 
             return ["data" => $getInvoice];
-        } catch (\Throwable $e) {
+        } catch (\Exception  $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
             DB::rollBack();
+
+            dd($e);
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
+           
 
             return response()->json(['message' => $errorMessage], $errorStatusCode);
         }

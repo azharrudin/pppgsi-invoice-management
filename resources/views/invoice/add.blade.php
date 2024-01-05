@@ -67,7 +67,7 @@ $configData = Helper::appClasses();
                                     </div>
                                     <div class="mb-3 mx-2">
                                         <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control w-px-150 date" id="addendum_date" placeholder="" required />
+                                        <input type="text" class="form-control w-px-150 date" id="addendum_date" name="addendum_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </dd>
@@ -191,6 +191,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
+    "use strict";
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -200,11 +201,26 @@ $configData = Helper::appClasses();
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
+
+    function format(e) {
+        var nStr = e + '';
+        nStr = nStr.replace(/\,/g, "");
+        let x = nStr.split('.');
+        let x1 = x[0];
+        let x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
     let dataLocal = JSON.parse(localStorage.getItem("invoice"));
     $(document).ready(function() {
         let ttdFile = dataLocal ? dataLocal.materai_image : null;
         const myDropzone = new Dropzone('#dropzone-basic', {
             parallelUploads: 1,
+            thumbnailWidth: null,
+            thumbnailHeight: null,
             maxFilesize: 3,
             addRemoveLinks: true,
             maxFiles: 1,
@@ -219,6 +235,9 @@ $configData = Helper::appClasses();
                         this.options.addedfile.call(this, mockFile);
                         this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
 
+                        $('.dz-image').last().find('img').attr('width','100%');
+
+
                         // Optional: Handle the removal of the file
                         mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
                             // Handle removal logic here
@@ -226,6 +245,7 @@ $configData = Helper::appClasses();
                     }
                 }
                 this.on('addedfile', function(file) {
+                    $('.dz-image').last().find('img').attr('width','100%');
                     while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
                     ttdFile = file;
                 })
@@ -422,13 +442,14 @@ $configData = Helper::appClasses();
             var key = event.which;
             if ((key < 48 || key > 57) && key != 8) event.preventDefault();
         });
+
         $(document).on('input', '.price', function(event) {
             console.log(event.currentTarget.value);
             var nStr = event.currentTarget.value + '';
             nStr = nStr.replace(/\,/g, "");
-            x = nStr.split('.');
-            x1 = x[0];
-            x2 = x.length > 1 ? '.' + x[1] : '';
+            var x = nStr.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? '.' + x[1] : '';
             var rgx = /(\d+)(\d{3})/;
             while (rgx.test(x1)) {
                 x1 = x1.replace(rgx, '$1' + ',' + '$2');
@@ -437,11 +458,9 @@ $configData = Helper::appClasses();
             // Hapus baris yang ditekan tombol hapus
             let index = $('.price').index(this);
             let total = 0;
-            let tax = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replace(',', ''));
-            let price = parseInt($(this).val().replace(',', ''));
+            let tax = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
+            let price = parseInt($(this).val().replaceAll(',', ''));
             let totalPrice = price + tax;
-            console.log(totalPrice);
-            console.log(format(totalPrice));
             $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
             getTotal();
 
@@ -452,9 +471,9 @@ $configData = Helper::appClasses();
             var nStr = event.currentTarget.value + '';
 
             nStr = nStr.replace(/\,/g, "");
-            x = nStr.split('.');
-            x1 = x[0];
-            x2 = x.length > 1 ? '.' + x[1] : '';
+            var x = nStr.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? '.' + x[1] : '';
             var rgx = /(\d+)(\d{3})/;
             while (rgx.test(x1)) {
                 x1 = x1.replace(rgx, '$1' + ',' + '$2');
@@ -463,35 +482,22 @@ $configData = Helper::appClasses();
             // Hapus baris yang ditekan tombol hapus
             let index = $('.tax').index(this);
             let total = 0;
-            let price = parseInt($(`.price:eq(` + index + `)`).val().replace(',', ''));
-            let tax = parseInt($(this).val().replace(',', ''));
+            let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+            let tax = parseInt($(this).val().replaceAll(',', ''));
             let totalPrice = price + tax;
-            console.log(format(totalPrice));
+            // console.log(format(totalPrice));
             $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
             getTotal();
 
         });
 
-        function format(e) {
-            console.log(e);
-            var nStr = e + '';
 
-            nStr = nStr.replace(/\,/g, "");
-            x = nStr.split('.');
-            x1 = x[0];
-            x2 = x.length > 1 ? '.' + x[1] : '';
-            var rgx = /(\d+)(\d{3})/;
-            while (rgx.test(x1)) {
-                x1 = x1.replace(rgx, '$1' + ',' + '$2');
-            }
-            return x1 + x2;
-        }
 
         function getTotal() {
             let totalArr = [];
             let tempTotal = document.getElementsByClassName('total_price');
             for (let i = 0; i < tempTotal.length; i++) {
-                var slipOdd = parseInt(tempTotal[i].value.replace(',', ''));
+                var slipOdd = parseInt(tempTotal[i].value.replaceAll(',', ''));
                 totalArr.push(Number(slipOdd));
             }
 
@@ -511,8 +517,13 @@ $configData = Helper::appClasses();
             let tingkat = new Array('', 'Ribu', 'Juta', 'Milyar', 'Triliun');
 
             let panjang_bilangan = bilangan.length;
-            let kalimat = subkalimat = kata1 = kata2 = kata3 = "";
-            let i = j = 0;
+            let kalimat = "";
+            let subkalimat = "";
+            let kata1 =""; 
+            let kata2 = "";
+            let kata3 = "";
+            let i = 0;
+            let j = 0;
 
             /* pengujian panjang bilangan */
             if (panjang_bilangan > 15) {
@@ -630,7 +641,7 @@ $configData = Helper::appClasses();
                         let noAddendum = $("#addendum_number").val();
                         let tglAddendum = $("#addendum_date").val();
                         let terbilang = $("#grand_total_spelled").val();
-                        let grandTotal = parseInt($(".grand_total").text().replace(',', ''));
+                        let grandTotal = parseInt($(".grand_total").text().replaceAll(',', ''));
                         let tglJatuhTempo = $("#invoice_due_date").val();
                         let syaratDanKententuan = $("#term_and_conditions").val();
                         let bank = $("#bank").val();
@@ -649,11 +660,11 @@ $configData = Helper::appClasses();
                             } else if (index % 5 == 1) {
                                 detail[input_index].description = input_value;
                             } else if (index % 5 == 2) {
-                                detail[input_index].price = parseInt(input_value.replace(',', ''));
+                                detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
                             } else if (index % 5 == 3) {
-                                detail[input_index].tax = parseInt(input_value.replace(',', ''));
+                                detail[input_index].tax = parseInt(input_value.replaceAll(',', ''));
                             } else if (index % 5 == 4) {
-                                detail[input_index].total_price = parseInt(input_value.replace(',', ''));
+                                detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
                             }
                         });
 
@@ -668,24 +679,24 @@ $configData = Helper::appClasses();
                         datas.details = detail;
                         datas.tenant_id = tenant;
                         datas.bank_id = bank;
-                        datas.bank_id = bank;
-                        datas.status = 'Terbuat';
+                        datas.status = "terbuat";
                         datas.contract_date = tglKontrak
                         datas.opening_paragraph = "Bapak/Ibu Qwerty";
                         datas.invoice_due_date = tglJatuhTempo;
                         datas.addendum_date = tglAddendum;
                         datas.invoice_date = tglInvoice;
                         datas.grand_total = parseInt(grandTotal);
-                        datas.materai_image = fileTtd
+                        datas.materai_image = fileTtd;
+                        delete datas['undefined'];
+
                         console.log(datas);
 
                         $.ajax({
-                            url: baseUrl + "api/invoice/",
+                            url: baseUrl + "api/invoice",
                             type: "POST",
                             data: JSON.stringify(datas),
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-
+                            processData: false,
+                            contentType: false,
                             success: function(response) {
                                 $('.indicator-progress').show();
                                 $('.indicator-label').hide();
@@ -733,7 +744,7 @@ $configData = Helper::appClasses();
             let noAddendum = $("#addendum_number").val();
             let tglAddendum = $("#addendum_date").val();
             let terbilang = $("#grand_total_spelled").val();
-            let grandTotal = parseInt($(".grand_total").text().replace(',', ''));
+            let grandTotal = parseInt($(".grand_total").text().replaceAll(',', ''));
             let tglJatuhTempo = $("#invoice_due_date").val();
             let syaratDanKententuan = $("#term_and_conditions").val();
             let bank = $("#bank").val();
@@ -754,11 +765,11 @@ $configData = Helper::appClasses();
                 } else if (index % 5 == 1) {
                     detail[input_index].description = input_value;
                 } else if (index % 5 == 2) {
-                    detail[input_index].price = parseInt(input_value.replace(',', ''));
+                    detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
                 } else if (index % 5 == 3) {
-                    detail[input_index].tax = parseInt(input_value.replace(',', ''));
+                    detail[input_index].tax = parseInt(input_value.replaceAll(',', ''));
                 } else if (index % 5 == 4) {
-                    detail[input_index].total_price = parseInt(input_value.replace(',', ''));
+                    detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
                 }
             });
 
@@ -772,7 +783,7 @@ $configData = Helper::appClasses();
             datas.details = detail;
             datas.tenant_id = tenant;
             datas.bank_id = bank;
-            datas.status = 'Terbuat';
+            datas.status = 'terbuat';
             datas.contract_date = tglKontrak
             datas.opening_paragraph = "Bapak/Ibu Qwerty";
             datas.invoice_due_date = tglJatuhTempo;
@@ -801,9 +812,6 @@ $configData = Helper::appClasses();
                 console.log(data);
                 let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
                 $('#tenant').prepend(tem);
-                // $("#company").text(data.company);
-                // $("#floor").text(data.floor);
-                // $("#name_tenant").text(data.name);
             },
             error: function(xhr, status, error) {
                 console.log(error);
@@ -876,15 +884,15 @@ $configData = Helper::appClasses();
                     </div>
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                        <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required value="` + details[i].price + `"  />
+                        <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required value="` + format(details[i].price) + `"  />
                     </div>
                     <div class="col-sm-1 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Pajak</label>
-                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required  value="` + details[i].tax + `" />
+                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required  value="` + format(details[i].tax) + `" />
                     </div>
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled value="` + details[i].total_price + `" />
+                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled value="` + format(details[i].total_price) + `" />
                     </div>
                     <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -935,7 +943,6 @@ $configData = Helper::appClasses();
             </div>`;
             $('#details').prepend(temp);
         }
-
     }
 </script>
 @endsection
