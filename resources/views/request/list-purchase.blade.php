@@ -60,16 +60,9 @@
         <div class="card-datatable table-responsive pt-0">
             <table class="purchase-request-list-table table">
                 <thead>
-                    <tr>
-                        <th>No. PR</th>
-                        <th>Department</th>
-                        <th>Usulan Pembelian</th>
-                        <th>Status Budget</th>
-                        <th>Tgl Request</th>
-                        <th>Status</th>
-                        <th>Tanggapan</th>
-                    </tr>
                 </thead>
+                <tbody>
+                </tbody>
             </table>
         </div>
     </div>
@@ -82,84 +75,89 @@
         $((function() {
             var a = $(".purchase-request-list-table");
             if (a.length) var e = a.DataTable({
-                ajax: assetsPath + "json/purchase-request-list.json",
+                processing: true,
+                serverSide: true,
+                deferRender: true,
+                ajax: {
+                    url: "{{ url('request/data-purchase-request') }}",
+                    "data": function(d) {
+                        d.start = 0;
+                        d.page = $(".purchase-request-list-table").DataTable().page.info().page +
+                            1;
+                    }
+                },
                 columns: [{
-                    data: "no_tanda_terima"
+                    data: "id",
+                    name: "id",
+                    title: "id"
                 }, {
-                    data: "tenant"
+                    data: "department",
+                    name: "department",
+                    title: "Department"
                 }, {
-                    data: "total"
-                }, {
-                    data: "tanggal_tanda_terima"
-                }, {
-                    data: "status"
-                }, {
-                    data: "tanggapan"
-                }],
-                columnDefs: [{
-                    className: "control",
-                    responsivePriority: 2,
-                    searchable: !1,
-                    targets: 0,
-                    render: function(a, e, t, s) {
-                        return ""
-                    }
-                }, {
-                    targets: 1,
-                    render: function(a, e, t, s) {
-                        var n = t.invoice_id;
-                        return '<a href="' + baseUrl + 'app/invoice/preview">#' + n +
-                            "</a>"
-                    }
-                }, {
-                    targets: 2,
-                    render: function(a, e, t, s) {
-                        var n = t.tenant;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {}, {
-                    targets: 3,
-                    render: function(a, e, t, s) {
-                        var n = t.total;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {
-                    targets: 4,
-                    render: function(a, e, t, s) {
-                        var n = new Date(t.tanggal_tanda_terima);
-                        return '<span class="d-none">' + moment(n).format("YYYYMMDD") +
-                            "</span>" + moment(n).format("DD MMM YYYY")
-                    }
-                }, {
-                    targets: 5,
-                    orderable: !1,
-                    render: function(a, e, t, s) {
-                        var n = t.status;
-                        if (0 === n) {
-                            return '<span class="badge bg-label-success" text-capitalized> Paid </span>'
+                    data: "proposed_purchase_price",
+                    name: "proposed_purchase_price",
+                    title: "Usulan Pembelian",
+                    render: function(data, type, full, meta) {
+                        if (data != null) {
+                            return data.toLocaleString('en-US');
                         }
-                        return '<span class="d-none">' + n + "</span>" + n
                     }
                 }, {
-                    targets: 6,
-                    visible: !1
+                    data: "budget_status",
+                    name: "budget_status",
+                    title: "Status Budget"
                 }, {
-                    targets: -1,
+                    data: "request_date",
+                    name: "request_date",
+                    title: "Tgl Request",
+                    render: function(data, type, full, meta) {
+                        var tanggalAwal = data;
+
+                        var bagianTanggal = tanggalAwal.split('-');
+                        var tahun = bagianTanggal[0];
+                        var bulan = bagianTanggal[1];
+                        var hari = bagianTanggal[2];
+
+                        var tanggalHasil = hari + '/' + bulan + '/' + tahun;
+
+                        return tanggalHasil;
+                    }
+                }, {
+                    data: "status",
+                    name: "status",
+                    title: "Status",
+                    render: function(data, type, full, meta) {
+                        if (data == "Disetujui KA") {
+                            return '<span class="badge  bg-label-success">' + data +
+                                '</span>'
+                        } else if (data == "Disetujui BM") {
+                            return '<span class="badge  bg-label-info">' + data +
+                                '</span>'
+                        } else if (data == "Terbuat") {
+                            return '<span class="badge  bg-label-secondary">' + data +
+                                '</span>'
+                        } else if (data == "Terkirim") {
+                            return '<span class="badge  bg-label-danger">' + data +
+                                '</span>'
+                        }
+                    }
+                }, {
+                    data: null,
                     title: "Tanggapan",
-                    searchable: !1,
-                    orderable: !1,
-                    render: function(a, e, t, s) {
-                        return '<div class="d-flex align-items-center"><a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a><a href="' +
-                            baseUrl +
-                            'app/invoice/preview" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="' +
-                            baseUrl +
-                            'app/invoice/edit" class="dropdown-item">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>'
+                    render: function(data, type, row) {
+                        return '<div class="d-flex align-items-center"><a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a><a href="preview/' +
+                            data.id +
+                            '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="edit/' +
+                            data.id + '" class="dropdown-item btn-edit" data-id="' +
+                            data.id +
+                            '">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>'
                     }
                 }],
                 order: [
-                    [1, "desc"]
+                    [0, "asc"]
                 ],
-                dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+                dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"purchase_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                 language: {
                     sLengthMenu: "Show _MENU_",
                     search: "",
@@ -192,7 +190,7 @@
                     }
                 },
                 initComplete: function() {
-                    this.api().columns(7).every((function() {
+                    this.api().columns(5).every((function() {
                         var a = this,
                             e = $(
                                 '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
