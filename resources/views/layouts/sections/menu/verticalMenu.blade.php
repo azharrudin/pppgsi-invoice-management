@@ -3,13 +3,13 @@ $configData = Helper::appClasses();
 @endphp
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu " style="background: rgb(97,73,206);
-background: linear-gradient(3deg, rgba(97,73,206,1) 0%, rgba(156,98,244,1) 100%); color:white;" >
+background: linear-gradient(3deg, rgba(97,73,206,1) 0%, rgba(156,98,244,1) 100%); color:white;" width="70%">
 
   <!-- ! Hide app brand if navbar-full -->
   @if(!isset($navbarFull))
   <div class="app-brand demo" style="height: 136px;">
     <a href="{{url('/')}}" class="app-brand-link">
-      <img alt="Logo" src="{{ asset('assets/img/logo.png') }}" />
+      <img alt="Logo" src="{{ asset('assets/img/Logo B-MApps.png') }}" width="70%" />
     </a>
 
     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">

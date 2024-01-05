@@ -340,7 +340,7 @@ $configData = Helper::appClasses();
             $("#contract_number").val(dataLocal.contract_number);
             $("#addendum_number").val(dataLocal.addendum_number);
             $("#grand_total_spelled").val(dataLocal.grand_total_spelled);
-            $(".grand_total").text(dataLocal.grand_total);
+            $(".grand_total").text(format(dataLocal.grand_total));
             $("#materai_name").val(dataLocal.materai_name);
             $("#term_and_conditions").val(dataLocal.term_and_conditions);
 

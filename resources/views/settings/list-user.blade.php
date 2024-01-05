@@ -97,11 +97,11 @@ $configData = Helper::appClasses();
                         <label for="nameBackdrop" class="form-label">Department</label>
                         <select id="department" name="department" class="form-control" required>
                             <option value="">Pilih Department</option>
-                            <option value="CS">CS</option>
-                            <option value="Teknik">Teknik</option>
-                            <option value="BM">BM</option>
-                            <option value="KA Unit Umum">KA Unit Umum</option>
-                            <option value="KA Unit Account">KA Unit Account</option>
+                            <option value="1">CS</option>
+                            <option value="2">Teknik</option>
+                            <option value="3">BM</option>
+                            <option value="4">KA Unit Umum</option>
+                            <option value="5">KA Unit Account</option>
                         </select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
@@ -109,10 +109,12 @@ $configData = Helper::appClasses();
                         <label for="nameBackdrop" class="form-label">Level</label>
                         <select id="level" name="level" class="form-control" required>
                             <option value="">Pilih Level</option>
-                            <option value="Lead CS">Lead CS</option>
-                            <option value="Administrator">Administrator</option>
-                            <option value="KA Unit">KA Unit</option>
-                            <option value="Administrator">Administrator</option>
+                            <option value="1">Admin</option>
+                            <option value="2">Teknisi</option>
+                            <option value="3">Kepala Unitt</option>
+                            <option value="4">BM</option>
+                            <option value="5">Executive</option>
+                            <option value="6">Vendor</option>
                         </select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
@@ -164,11 +166,11 @@ $configData = Helper::appClasses();
                         <label for="nameBackdrop" class="form-label">Department</label>
                         <select id="edit_department" name="department" class="form-control" required>
                             <option value="">Pilih Department</option>
-                            <option value="CS">CS</option>
-                            <option value="Teknik">Teknik</option>
-                            <option value="BM">BM</option>
-                            <option value="KA Unit Umum">KA Unit Umum</option>
-                            <option value="KA Unit Account">KA Unit Account</option>
+                            <option value="1">CS</option>
+                            <option value="2">Teknik</option>
+                            <option value="3">BM</option>
+                            <option value="4">KA Unit Umum</option>
+                            <option value="5">KA Unit Account</option>
                         </select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
@@ -176,10 +178,12 @@ $configData = Helper::appClasses();
                         <label for="nameBackdrop" class="form-label">Level</label>
                         <select id="edit_level" name="level" class="form-control" required>
                             <option value="">Pilih Level</option>
-                            <option value="Lead CS">Lead CS</option>
-                            <option value="Administrator">Administrator</option>
-                            <option value="KA Unit">KA Unit</option>
-                            <option value="Administrator">Administrator</option>
+                            <option value="1">Admin</option>
+                            <option value="2">Teknisi</option>
+                            <option value="3">Kepala Unitt</option>
+                            <option value="4">BM</option>
+                            <option value="5">Executive</option>
+                            <option value="6">Vendor</option>
                         </select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
@@ -297,12 +301,12 @@ $configData = Helper::appClasses();
                     name: "Email"
                 },
                 {
-                    data: "department",
+                    data: "department.name",
                     title: "Departement",
                     name: "Departement"
                 },
                 {
-                    data: "level",
+                    data: "level.name",
                     title: "Level",
                     name: "Level"
                 },
@@ -418,7 +422,7 @@ $configData = Helper::appClasses();
                     formData.append('status', 'Active');
                     console.log(formData);
                     $.ajax({
-                        url: baseUrl + "api/user",
+                        url: "{{env('BASE_URL_API')}}" + "/api/user",
                         type: "POST",
                         data: formData,
                         processData: false,
@@ -487,7 +491,7 @@ $configData = Helper::appClasses();
                     data.department = department;
                     data.status = 'Active';
                     $.ajax({
-                        url: baseUrl + "api/user/" + id,
+                        url: "{{env('BASE_URL_API')}}"  + "/api/user/" + id,
                         type: "PATCH",
                         data: data,
                         success: function(response) {

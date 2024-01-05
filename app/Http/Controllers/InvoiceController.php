@@ -27,7 +27,7 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
-        try {
+        try{
             [
                 "perPage" => $perPage,
                 "page" => $page,
@@ -37,16 +37,16 @@ class InvoiceController extends Controller
             ] = $this->CommonService->getQuery($request);
 
             $invoiceQuery = Invoice::with("invoiceDetails")->with("tenant")->with("bank")->where("deleted_at", null);
-            if ($value) {
+            if($value){
                 $invoiceQuery->where(function ($query) use ($value) {
                     $query->whereHas('tenant', function ($tenantQuery) use ($value) {
                         $tenantQuery->where('name', 'like', '%' . $value . '%');
                     })
-                        ->orwhere('invoice_number', 'like', '%' . $value . '%')
-                        ->orWhere('grand_total', 'like', '%' . $value . '%')
-                        ->orWhere('invoice_date', 'like', '%' . $value . '%')
-                        ->orWhere('invoice_due_date', 'like', '%' . $value . '%')
-                        ->orWhere('status', 'like', '%' . $value . '%');
+                    ->orwhere('invoice_number', 'like', '%' . $value . '%')
+                    ->orWhere('grand_total', 'like', '%' . $value . '%')
+                    ->orWhere('invoice_date', 'like', '%' . $value . '%')
+                    ->orWhere('invoice_due_date', 'like', '%' . $value . '%')
+                    ->orWhere('status', 'like', '%' . $value . '%');
                 });
             }
             $getInvoices = $invoiceQuery->orderBy($order, $sort)->paginate($perPage);
@@ -59,13 +59,13 @@ class InvoiceController extends Controller
                 "per_page" => $perPage,
                 "page" => $page,
                 "size" => $totalCount,
-                "pages" => ceil($totalCount / $perPage)
+                "pages" => ceil($totalCount/$perPage)
             ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if (is_a($e, CustomException::class)) {
+            if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -80,9 +80,10 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
-        try {
+
+        try{
             $validateInvoice = $this->InvoiceService->validateInvoice($request);
-            if ($validateInvoice != "") throw new CustomException($validateInvoice, 400);
+            if($validateInvoice != "") throw new CustomException($validateInvoice, 400);
 
             $invoice = Invoice::create($request->all());
             foreach ($request->input('details') as $detail) {
@@ -112,11 +113,11 @@ class InvoiceController extends Controller
 
             dd($e);
 
-            if (is_a($e, CustomException::class)) {
+            if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
-
+           
 
             return response()->json(['message' => $errorMessage], $errorStatusCode);
         }
@@ -127,9 +128,13 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-        try {
+        try{
             $id = (int) $id;
-            $getInvoice = Invoice::with("invoiceDetails")->with("tenant")->with("bank")->where("id", $id)->where("deleted_at", null)->first();
+            $getInvoice = Invoice::with("invoiceDetails")->
+                with("tenant")->
+                with("bank")->
+                where("id", $id)->
+                where("deleted_at", null)->first();
             if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
 
             return ["data" => $getInvoice];
@@ -137,7 +142,7 @@ class InvoiceController extends Controller
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if (is_a($e, CustomException::class)) {
+            if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -153,13 +158,13 @@ class InvoiceController extends Controller
     {
         DB::beginTransaction();
 
-        try {
+        try{
             $id = (int) $id;
             $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
             if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
 
             $validateInvoice = $this->InvoiceService->validateInvoice($request);
-            if ($validateInvoice != "") throw new CustomException($validateInvoice, 400);
+            if($validateInvoice != "") throw new CustomException($validateInvoice, 400);
 
             Invoice::findOrFail($id)->update($request->all());
             InvoiceDetail::where("invoice_id", $id)->where("deleted_at", null)->delete();
@@ -188,7 +193,7 @@ class InvoiceController extends Controller
             $errorStatusCode = 500;
             DB::rollBack();
 
-            if (is_a($e, CustomException::class)) {
+            if(is_a($e, CustomException::class)){
                 dd($e);
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
@@ -205,7 +210,7 @@ class InvoiceController extends Controller
     {
         DB::beginTransaction();
 
-        try {
+        try{
             $id = (int) $id;
             $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
             if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
@@ -220,7 +225,7 @@ class InvoiceController extends Controller
             $errorStatusCode = 500;
             DB::rollBack();
 
-            if (is_a($e, CustomException::class)) {
+            if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -231,7 +236,7 @@ class InvoiceController extends Controller
 
     public function select(Request $request)
     {
-        try {
+        try{
             [
                 "page" => $page,
                 "value" => $value
@@ -242,14 +247,14 @@ class InvoiceController extends Controller
             $statusArray = explode(",", $status);
 
             $invoiceQuery = Invoice::where("deleted_at", null);
-            if ($value) {
+            if($value){
                 $invoiceQuery->where('invoice_number', 'like', '%' . $value . '%');
             }
-            if ($status != "") {
+            if($status != ""){
                 $invoiceQuery->where(function ($query) use ($statusArray) {
                     $length = count($statusArray);
 
-                    for ($i = 0; $i < $length; $i++) {
+                    for($i = 0; $i < $length; $i++){
                         $statusFromArray = trim($statusArray[$i]);
                         $query->orWhere('status', 'like', '%' . $statusFromArray . '%');
                     }
@@ -259,7 +264,7 @@ class InvoiceController extends Controller
             $totalCount = $getInvoices->total();
 
             $dataArr = [];
-            foreach ($getInvoices as $invoiceObj) {
+            foreach($getInvoices as $invoiceObj){
                 $dataObj = [
                     "id" => $invoiceObj->id,
                     "text" => $invoiceObj->invoice_number,
@@ -268,7 +273,7 @@ class InvoiceController extends Controller
             }
 
             $pagination = ["more" => false];
-            if ($totalCount > ($perPage * $page)) {
+            if($totalCount > ($perPage * $page)) {
                 $pagination = ["more" => true];
             }
 
@@ -280,7 +285,34 @@ class InvoiceController extends Controller
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if (is_a($e, CustomException::class)) {
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
+
+    public function report()
+    {
+        try{
+            $countTenant = Tenant::where("deleted_at", null)->count();
+            $countInvoice = Invoice::where("deleted_at", null)->count();
+            $sumInvoicePaid = Invoice::where("deleted_at", null)->where("status", 'like', '%Lunas%')->sum("grand_total");
+            $sumInvoiceNotPaid = Invoice::where("deleted_at", null)->where("status", '!=', 'Lunas')->sum("grand_total");
+
+            return [
+                "count_tenant" => $countTenant,
+                "count_invoice" => $countInvoice,
+                "invoice_paid" => $sumInvoicePaid,
+                "invoice_not_paid" => $sumInvoiceNotPaid
+            ];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+
+            if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
