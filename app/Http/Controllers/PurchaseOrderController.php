@@ -6,6 +6,7 @@ use App\Exceptions\CustomException;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderDetail;
 use App\Models\PurchaseOrderSignature;
+use App\Models\Tenant;
 use App\Services\CommonService;
 use App\Services\PurchaseOrderService;
 use Illuminate\Http\Request;
@@ -283,6 +284,29 @@ class PurchaseOrderController extends Controller
             return [
                 "data" => $dataArr,
                 "pagination" => $pagination,
+            ];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
+
+    public function report()
+    {
+        try{
+            $countTenant = Tenant::where("deleted_at", null)->count();
+            $countPurchaseOrder = PurchaseOrder::where("deleted_at", null)->count();
+
+            return [
+                "count_tenant" => $countTenant,
+                "count_purchase_order" => $countPurchaseOrder,
             ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";

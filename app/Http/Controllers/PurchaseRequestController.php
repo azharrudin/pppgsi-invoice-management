@@ -6,6 +6,8 @@ use App\Exceptions\CustomException;
 use App\Models\PurchaseRequest;
 use App\Models\PurchaseRequestDetail;
 use App\Models\PurchaseRequestSignature;
+use App\Models\Receipt;
+use App\Models\Tenant;
 use App\Services\CommonService;
 use App\Services\PurchaseRequestService;
 use Illuminate\Http\Request;
@@ -310,6 +312,31 @@ class PurchaseRequestController extends Controller
             return [
                 "data" => $dataArr,
                 "pagination" => $pagination,
+            ];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
+
+    public function report()
+    {
+        try{
+            $countTenant = Tenant::where("deleted_at", null)->count();
+            $countReceipt = Receipt::where("deleted_at", null)->count();
+            $countReceiptPaid = Receipt::where("deleted_at", null)->where("status", "like", "%Lunas%")->sum("grand_total");
+
+            return [
+                "count_tenant" => $countTenant,
+                "count_receipt" => $countReceipt,
+                "count_receipt_paid" => $countReceiptPaid,
             ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";

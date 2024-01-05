@@ -40,30 +40,38 @@ Route::get('bank/select', [BankController::class, "select"]);
 Route::resource('bank', BankController::class);
 
 Route::get("invoice/select", [InvoiceController::class, "select"]);
+Route::get("invoice/report", [InvoiceController::class, "report"]);
 Route::resource('invoice', InvoiceController::class);
 
 Route::get("receipt/select", [ReceiptController::class, "select"]);
+Route::get("receipt/report", [ReceiptController::class, "report"]);
 Route::resource('receipt', ReceiptController::class);
 
 Route::get("ticket/select", [TicketController::class, "select"]);
+Route::get("ticket/report", [TicketController::class, "report"]);
 Route::resource('ticket', TicketController::class);
 
 Route::get("damage-report/select", [DamageReportController::class, "select"]);
+Route::get("damage-report/report", [DamageReportController::class, "report"]);
 Route::resource('damage-report', DamageReportController::class);
 
 Route::get("work-order/select", [WorkOrderController::class, "select"]);
+Route::get("work-order/report", [WorkOrderController::class, "report"]);
 Route::resource('work-order', WorkOrderController::class);
 
 Route::get("vendor/select", [VendorController::class, "select"]);
 Route::resource('vendor', VendorController::class);
 
 Route::get('material-request/select', [MaterialRequestController::class, "select"]);
+Route::get("material-request/report", [MaterialRequestController::class, "report"]);
 Route::resource('material-request', MaterialRequestController::class);
 
 Route::get("purchase-request/select", [PurchaseRequestController::class, "select"]);
+Route::get("purchase-request/report", [PurchaseRequestController::class, "report"]);
 Route::resource('purchase-request', PurchaseRequestController::class);
 
 Route::get("purchase-order/select", [PurchaseOrderController::class, "select"]);
+Route::get("purchase-order/report", [PurchaseOrderController::class, "report"]);
 Route::resource('purchase-order', PurchaseOrderController::class);
 
 Route::get("department/select", [DepartmentController::class, "select"]);
