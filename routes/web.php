@@ -110,6 +110,10 @@ Route::group(['middleware' => 'cekauth'], function () {
         Route::prefix('/')->group(function () {
             Route::get('/list-purchase-request', [PurchaseRequestController::class, 'index'])->name('pages-purchase-request');
             Route::get('/add-purchase-request', [PurchaseRequestController::class, 'add'])->name('pages-add-purchase-request');
+            Route::get('/edit/{id}', [PurchaseRequestController::class, 'edit'])->name('pages-edit-purchase-request');
+            Route::get('/data-purchase-request', [PurchaseRequestController::class, 'datatable'])->name('data-purchase-request');
+            Route::get('/preview/{id}', [PurchaseRequestController::class, 'preview'])->name('pages-preview-purchase-request');
+            Route::get('/preview', [PurchaseRequestController::class, 'show'])->name('pages-show-purchase-request');
         });
 
         // Material Request
@@ -193,8 +197,6 @@ Route::group(['middleware' => 'cekauth'], function () {
     // pages
     Route::get('/pages/misc-error', [MiscError::class, 'index'])->name('pages-misc-error');
 });
-
-
 
 // authentication
 // Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');

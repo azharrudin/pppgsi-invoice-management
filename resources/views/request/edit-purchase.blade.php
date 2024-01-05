@@ -44,7 +44,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-1">
                                             <label for="note" class="form-label fw-medium">Departemen </label>
-                                            <select class="form-select select2 w-px-250 select-department item-details mb-3"
+                                            <select class="form-select select2 select-department item-details mb-3"
                                                 required>
                                             </select>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
@@ -99,8 +99,7 @@
                                     <div class="col-md-5 mb-0">
                                         <div class="mb-1">
                                             <label for="note" class="form-label fw-medium">Nomor MR </label>
-                                            <select class="form-select select2 w-px-250 select-mr item-details mb-3"
-                                                required>
+                                            <select class="form-select select2 select-mr item-details mb-3" required>
                                             </select>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
@@ -239,14 +238,26 @@
                                     <div class="row  text-center mb-5">
                                         <div class="col-3 signatures">
                                             <label for="note" class="form-label fw-medium">Diperiksa Oleh :</label>
-                                            <input type="text" value="Checked By" id="type1" name="type"
-                                                class="form-control d-none">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  " placeholder="Nama & Jabatan"
                                                     style="text-align:center;" id="name1" name="name" required />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="mb-3 prev-1">
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-1" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                            <div class="dz-success-mark"></div>
+                                                        </div>
+                                                    </div><a class="dz-remove" data-id="1"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 click-1" style="display: none">
                                                 <div action="/upload" class="dropzone needsclick dz-clickable"
                                                     id="dropzone-1">
                                                     <div class="dz-message needsclick">
@@ -262,14 +273,26 @@
                                         </div>
                                         <div class="col-3 signatures">
                                             <label for="note" class="form-label fw-medium">Diperiksa Oleh :</label>
-                                            <input type="text" value="Checked By" id="type2" name="type"
-                                                class="form-control d-none">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  " placeholder="Nama & Jabatan"
                                                     style="text-align:center;" id="name2" name="name" required />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="mb-3 prev-2">
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-2" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                            <div class="dz-success-mark"></div>
+                                                        </div>
+                                                    </div><a class="dz-remove" data-id="2"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 click-2" style="display: none">
                                                 <div action="/upload" class="dropzone needsclick dz-clickable"
                                                     id="dropzone-2">
                                                     <div class="dz-message needsclick">
@@ -285,14 +308,26 @@
                                         </div>
                                         <div class="col-3 signatures">
                                             <label for="note" class="form-label fw-medium">Diketahui Oleh :</label>
-                                            <input type="text" value="Known By" id="type3" name="type"
-                                                class="form-control d-none">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  " placeholder="Nama & Jabatan"
                                                     style="text-align:center;" id="name3" name="name" required />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="mb-3 prev-3">
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                    <div class="dz-details">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-3" alt=""
+                                                                src="">
+                                                            <span class="dz-nopreview">No preview</span>
+                                                            <div class="dz-success-mark"></div>
+                                                        </div>
+                                                    </div><a class="dz-remove" data-id="3"
+                                                        href="javascript:undefined;" data-dz-remove="">Remove
+                                                        file</a>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 click-1" style="display: none">
                                                 <div action="/upload" class="dropzone needsclick dz-clickable"
                                                     id="dropzone-3">
                                                     <div class="dz-message needsclick">
@@ -338,7 +373,8 @@
                         <div class="card-body">
                             <button type="submit" id="save"
                                 class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
-                            <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
+                            <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview"
+                                class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
                             <button type="button" class="btn btn-label-secondary d-grid w-100">Batal</button>
                         </div>
                     </div>
@@ -421,6 +457,171 @@
             $('.date').flatpickr({
                 dateFormat: 'd-m-Y'
             });
+
+            // Get Data
+            var urlSegments = window.location.pathname.split('/');
+            var idIndex = urlSegments.indexOf('edit') + 1;
+            var id = urlSegments[idIndex];
+
+            getDataPurchaseRequest(id);
+
+            function getDataPurchaseRequest(id) {
+                Swal.fire({
+                    title: 'Loading...',
+                    text: "Please wait",
+                    customClass: {
+                        confirmButton: 'd-none'
+                    },
+                    buttonsStyling: false
+                });
+                $.ajax({
+                    url: "{{ url('api/purchase-request') }}/" + id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(res) {
+                        let response = res.data;
+                        $('#addPurchaseRequest').find('.form-control').each(function() {
+                            var elementId = $(this).attr('id');
+                            var elementName = $(this).attr('name');
+
+                            if (elementId === 'request_date' || elementId ===
+                                'action_plan_date' || elementId === 'finish_plan') {
+                                // Format tanggal menggunakan moment.js
+                                $("#" + elementId).val(moment(response[elementName],
+                                    'YYYY-MM-DD').format('DD-MM-YYYY'));
+                            } else if (elementId === 'total_budget' || elementId ===
+                                'proposed_purchase_price' || elementId === 'remaining_budget') {
+                                $("#" + elementId).val(response[elementName].toLocaleString(
+                                    'en-US'));
+                            } else {
+                                $("#" + elementId).val(response[elementName]);
+                            }
+                        });
+
+                        // Mengambil data department
+                        $.ajax({
+                            url: "{{ url('api/department') }}/" + response.department_id,
+                            type: "GET",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function(res) {
+                                $(".select-department").empty().append('<option value="' +
+                                    res.data
+                                    .id + '">' + res.data.name +
+                                    '</option>').val(
+                                    res.data.id);
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: xhr.responseJSON.message,
+                                    icon: 'error',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                })
+                            }
+                        });
+
+                        // Mengambil data material
+                        $.ajax({
+                            url: "{{ url('api/material-request') }}/" + response.department_id,
+                            type: "GET",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function(res) {
+                                $(".select-mr").empty().append('<option value="' + res.data
+                                    .id + '">' + res.data.id +
+                                    '</option>').val(
+                                    res.data.id);
+                                $("#tanggal_mr").val(moment(res.data.request_date,
+                                    'YYYY-M-D').format('DD-MM-YYYY'));
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: xhr.responseJSON.message,
+                                    icon: 'error',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                })
+                            }
+                        });
+
+                        // Set value ke repeater
+                        var firstRow = $('.repeater-wrapper').first();
+
+                        for (var i = 0; i < response.purchase_request_details.length; i++) {
+                            var rowValues = response.purchase_request_details[i];
+
+                            if (i === 0) {
+                                firstRow.find('#number').val(rowValues.number);
+                                firstRow.find('#suku_cadang').val(rowValues.part_number);
+                                firstRow.find('#tanggal_rep').val(moment(rowValues.last_buy_date,
+                                    'YYYY-MM-DD').format('D-M-YYYY'));
+                                firstRow.find('#kuantitas').val(rowValues.last_buy_quantity);
+                                firstRow.find('#persediaan').val(rowValues.last_buy_stock);
+                                firstRow.find('#deskripsi').val(rowValues.description);
+                                firstRow.find('#qty').val(rowValues.quantity);
+                            } else {
+                                var newRow = firstRow.clone();
+                                firstRow.find('#number').val(rowValues.number);
+                                firstRow.find('#suku_cadang').val(rowValues.part_number);
+                                firstRow.find('#tanggal_rep').val(moment(rowValues.last_buy_date,
+                                    'YYYY-MM-DD').format('D-M-YYYY'));
+                                firstRow.find('#kuantitas').val(rowValues.last_buy_quantity);
+                                firstRow.find('#persediaan').val(rowValues.last_buy_stock);
+                                firstRow.find('#deskripsi').val(rowValues.description);
+                                firstRow.find('#qty').val(rowValues.quantity);
+
+                                $('.repeater [data-repeater-list="group-a"]').append(newRow);
+                            }
+                        }
+
+                        $('.repeater').repeater();
+
+                        $('.checkbox-check').each(function() {
+                            var checkboxName = $(this).attr('name').toLowerCase();
+                            if ((response.budget_status).toLowerCase() === checkboxName) {
+                                $('.checkbox-check').not(this).prop('disabled', true);
+                                $(this).prop('checked', true);
+                            } else {
+                                $(this).prop('checked', false);
+                            }
+                        });
+
+                        // Set value ke form signature
+                        for (let i = 1; i < response.purchase_request_signatures.length + 1; i++) {
+                            $("#name" + i).val(response.purchase_request_signatures[i - 1].name);
+                            if (response.purchase_request_signatures[i - 1].signature != '') {
+                                $('.prev-img-' + i).attr('src', response.purchase_request_signatures[i -
+                                        1]
+                                    .signature);
+                            } else {
+                                $('.dz-nopreview').css('display', 'block');
+                            }
+                            $('#date' + i).val(moment(response.purchase_request_signatures[i - 1]
+                                .date, 'YYYY-MM-DD').format('DD-MM-YYYY'));
+                        }
+                        Swal.close();
+                    },
+                    error: function(errors) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: errors.responseJSON
+                                .message,
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        })
+                    }
+                });
+            }
 
             // Check date
             $("#tanggal_mr").on('change', function() {
@@ -557,11 +758,29 @@
 
                             $('.signatures').each(function(index) {
                                 let signature = {};
+                                let prevId = ".prev-" + (index + 1);
+                                let prevContent = $(this).find(prevId + " .prev-img-" + (index +
+                                    1)).attr('src');
+
+                                if (prevContent) {
+                                    signature['type'] =
+                                    'Checked By';
+                                    signature['signature'] = prevContent;
+                                } else {
+                                    let ttdFile = (index === 0) ? ttdFile1 : ((index === 1) ?
+                                        ttdFile2 : ttdFile3);
+
+                                    if (ttdFile) {
+                                        signature['type'] =
+                                        'Checked By';
+                                        signature['signature'] = ttdFile.dataURL || ttdFile.url;
+                                    }
+                                }
 
                                 $(this).find('.form-control').each(function() {
                                     var inputId = $(this).attr('id');
                                     var inputValue = $("#" + inputId).val();
-
+                                    console.log(inputValue, inputId);
                                     if (inputId && inputId.startsWith('date')) {
                                         signature[$("#" + inputId).attr("name")] =
                                             moment(inputValue, 'D-M-YYYY')
@@ -572,17 +791,6 @@
                                     }
                                 });
 
-                                if (ttdFile1 && index === 0) {
-                                    signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                                }
-
-                                if (ttdFile2 && index === 1) {
-                                    signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                                }
-
-                                if (ttdFile3 && index === 2) {
-                                    signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                                }
                                 signatures.push(signature);
                             });
 
@@ -591,10 +799,9 @@
                             datas.department_id = parseInt(department);
                             datas.signatures = signatures;
                             datas.status = "Terbuat";
-                            console.log(datas)
                             $.ajax({
-                                url: baseUrl + "api/purchase-request/",
-                                type: "POST",
+                                url: baseUrl + "api/purchase-request/" + id,
+                                type: "PATCH",
                                 data: JSON.stringify(datas),
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
@@ -605,7 +812,7 @@
 
                                     Swal.fire({
                                         title: 'Berhasil',
-                                        text: 'Berhasil menambahkan Laporan Kerusakan.',
+                                        text: 'Berhasil memperbarui Laporan Kerusakan.',
                                         icon: 'success',
                                         customClass: {
                                             confirmButton: 'btn btn-primary'
@@ -613,7 +820,7 @@
                                         buttonsStyling: false
                                     })
 
-                                    window.location.href = "/request/list-purchase-request"
+                                    // window.location.href = "/request/list-purchase-request"
                                 },
                                 error: function(xhr, status, error) {
                                     Swal.fire({
@@ -635,76 +842,24 @@
                 );
             });
 
-            // Preview before save
-            $(".btn-preview").on('click', function() {
-                let material = $('.select-mr').val();
-                let department = $('.select-department').val();
-                let datas = {}
-                let signatures = []
+            // Remove image
+            $('.dz-remove').on('click', function() {
+                let id = $(this).data('id');
+                // Find the <img> element
+                var imgElement = $('.prev-img-' + id);
 
-                $('#addPurchaseRequest').find('.add').each(function() {
-                    var inputId = $(this).attr('id');
-                    var inputValue = $("#" + inputId).val();
+                // Check if the imgElement exists
+                if (imgElement.length > 0) {
+                    // Remove the 'src' attribute
+                    imgElement.removeAttr('src');
 
-                    if (inputId === 'total_budget' || inputId ===
-                        'proposed_purchase_price' ||
-                        inputId === 'remaining_budget') {
-                        var inputValueWithoutComma = inputValue.replace(',', '');
+                    // Add the desired class
+                    $('.prev-' + id).hide();
+                    $('.click-' + id).show();
 
-                        datas[$("#" + inputId).attr("name")] = parseInt(
-                            inputValueWithoutComma, 10);
-                    } else if (inputId === 'tanggal_pr' || inputId ===
-                        'tanggal_mr' || inputId === 'request_date') {
-                        datas[$("#" + inputId).attr("name")] = moment(inputValue,
-                                'D-M-YYYY')
-                            .format('YYYY-MM-DD');
-                    } else {
-                        datas[$("#" + inputId).attr("name")] = inputValue;
-                    }
-                });
-
-                datas.details = getRepeaterValues();
-
-                $('.signatures').each(function(index) {
-                    let signature = {};
-
-                    $(this).find('.form-control').each(function() {
-                        var inputId = $(this).attr('id');
-                        var inputValue = $("#" + inputId).val();
-
-                        if (inputId && inputId.startsWith('date')) {
-                            signature[$("#" + inputId).attr("name")] =
-                                moment(inputValue, 'D-M-YYYY')
-                                .format('YYYY-MM-DD');
-                        } else {
-                            signature[$("#" + inputId).attr("name")] =
-                                inputValue;
-                        }
-                    });
-
-                    if (ttdFile1 && index === 0) {
-                        signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                    }
-
-                    if (ttdFile2 && index === 1) {
-                        signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                    }
-
-                    if (ttdFile3 && index === 2) {
-                        signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                    }
-                    signatures.push(signature);
-                });
-
-                datas.budget_status = $('.checkbox-check:checked').attr('name');
-                datas.material_request_id = parseInt(material);
-                datas.department_id = parseInt(department);
-                datas.signatures = signatures;
-                datas.status = "Terbuat";
-
-                localStorage.setItem('purchase-request', JSON.stringify(datas));
-                window.location.href = "/request/preview"
-            })
+                    // imgElement.addClass('dropzone needsclick dz-clickable');
+                }
+            });
 
             // Mengambil value tanda tangan
             let ttdFile1 = null;
