@@ -256,7 +256,7 @@
             console.log(id);
             event.stopPropagation();
             Swal.fire({
-                text: "Apakah Ingin menghapus Bank ini  ?",
+                text: "Apakah Ingin menghapus Tanda Terima ini  ?",
                 icon: "warning",
                 showCancelButton: true,
                 buttonsStyling: false,
