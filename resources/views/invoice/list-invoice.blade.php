@@ -166,6 +166,7 @@ $configData = Helper::appClasses();
                 title: "Status",
                 className: 'text-center',
                 render: function(data, type, row) {
+                    console.log(data);
                     if (data == 'Terbuat') {
                         return '<span class="badge" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
                     } else if (data == 'Disetujui KA') {
@@ -176,6 +177,8 @@ $configData = Helper::appClasses();
                         return '<span class="badge" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
                     } else if (data == 'Disetujui BM') {
                         return '<span class="badge" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
+                    } else if (data == 'Kurang Bayar') {
+                        return '<span class="badge" style="background-color : #F9ED32; " text-capitalized> Kurang Bayar </span>';
                     }
                 }
             }, {
