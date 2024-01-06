@@ -408,8 +408,7 @@
                     </div>
                     <div class="mb-3 d-flex flex-wrap">
                         <button type="button" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">Send</button>
-                        <button type="button" class="btn btn-label-secondary"
-                            data-bs-dismiss="offcanvas">Cancel</button>
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">Cancel</button>
                     </div>
                 </form>
             </div>

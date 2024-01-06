@@ -373,9 +373,7 @@
                         <div class="card-body">
                             <button type="submit" id="save"
                                 class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
-                            <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview"
-                                class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
-                            <button type="button" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                            <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -764,7 +762,7 @@
 
                                 if (prevContent) {
                                     signature['type'] =
-                                    'Checked By';
+                                        'Checked By';
                                     signature['signature'] = prevContent;
                                 } else {
                                     let ttdFile = (index === 0) ? ttdFile1 : ((index === 1) ?
@@ -772,7 +770,7 @@
 
                                     if (ttdFile) {
                                         signature['type'] =
-                                        'Checked By';
+                                            'Checked By';
                                         signature['signature'] = ttdFile.dataURL || ttdFile.url;
                                     }
                                 }
@@ -991,6 +989,12 @@
                         console.error(error);
                     }
                 });
+            });
+
+            // Cancel
+            $(document).on('click', '.btn-cancel', function(event) {
+                event.preventDefault();
+                window.location.href = "/request/list-purchase-request"
             });
 
             // Check checkbox classification2
