@@ -225,34 +225,43 @@ $configData = Helper::appClasses();
         let tem = '';
         for (let i = 0; i < details.length; i++) {
             tem = `
-            <div class="row mb-3 row-mg">
-                    <div class="col-12 d-flex align-items-end mb-2">
-                        <div class="">
+            <div class="mb-3 row-mg">
+                    <div class="row d-flex align-items-end mb-2">
+                        <div class="col" style="padding-right:0.25rem">
                             <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Nomor" name="number[]" value="` + details[i].number + `" readonly/>
+                            <input type="text" class="form-control w-100-px row-input" placeholder="Nomor" name="number[]" value="` + details[i].number + `" required />
                         </div>
-                        <div class="me-1">
+                        <div class="col px-1">
                             <label for="note" class="form-label fw-medium">Part Number</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="No. Suku Cadang" name="part_number[]" value="` + details[i].part_number + `" readonly/>
+                            <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" value="` + details[i].part_number + `" required />
                         </div>
-                        <div class="me-1">
+                        <div class="col px-1">
                             <label for="note" class="form-label fw-medium">Deskripsi</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Deskripsi" name="description[]" value="` + details[i].description + `" readonly />
+                                <input type="text" class="form-control row-input" placeholder="Deskripsi" name="description[]"  value="` + details[i].description + `" required />
                         </div>
-                        <div class="me-1">
+                        <div class="col px-1">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Kuantitas" name="quantity[]" value="` + details[i].quantity + `" readonly/>
+                            <input type="text" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" value="` + details[i].quantity + `"  required />
                         </div>
-                        <div class="">
+                        <div class="col-6 px-1">
                             <label for="note" class="form-label fw-medium">Filled Storekeeper Only</label>
-                        <div class="d-flex justify-content-between">
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Stock" name="stock[]" value="` + details[i].stock + `" readonly/>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Stock Out" name="stock_out[]" value="` + details[i].stock_out + `" readonly/>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="End Stock" name="c[]" value="` + details[i].stock_out + `" readonly/>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Min Stock" name="min_stock"[] value="` + details[i].min_stock + `" readonly/>
+                            <div class="d-flex justify-content-between align-items-end">
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="Stock" name="stock[]" value="` + details[i].stock + `" required />
+                                </div>
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="Stock Out" name="stock_out[]" value="` + details[i].stock_out + `" required />
+                                </div>
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="End Stock" name="end_stock[]" value="` + details[i].end_stock + `" required />
+                                </div>
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="Min Stock" name="min_stock[]" value="` + details[i].min_stock + `" required />
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                 </div> 
             `;
             getDetail = getDetail + tem;
         }

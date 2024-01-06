@@ -85,7 +85,7 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd1">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd1" style="padding:0px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -198,7 +198,6 @@ $configData = Helper::appClasses();
 @endsection
 
 @section('page-script')
-<script src="{{asset('assets/vendor/libs/dropzone/dropzone.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
@@ -231,8 +230,8 @@ $configData = Helper::appClasses();
 
         const myDropzone1 = new Dropzone('#ttd1', {
             parallelUploads: 1,
-            thumbnailWidth: null,
-            thumbnailHeight: null,
+            thumbnailWidth: "250",
+            thumbnailHeight: "250",
             maxFilesize: 3,
             addRemoveLinks: true,
             maxFiles: 1,
