@@ -248,9 +248,15 @@
             if (data) {
                 $("#receipt_number").val(data.receipt_number);
                 $('#check_number').text(data.check_number);
-                $('#grand_total').text(data.grand_total.toLocaleString('en-EN'));
-                $('#paid').text(data.paid.toLocaleString('en-EN'));
-                $('#remaining').text(data.remaining.toLocaleString('en-EN'));
+                if (data.grand_total) {
+                    $('#grand_total').text(data.grand_total.toLocaleString('en-EN'));
+                }
+                if (data.paid) {
+                    $('#paid').text(data.paid.toLocaleString('en-EN'));
+                }
+                if (data.remaining) {
+                    $('#remaining').text(data.remaining.toLocaleString('en-EN'));
+                }
                 $('#grand_total_spelled').text(data.grand_total_spelled);
                 $('#note').text(data.note);
                 $('#note').text(data.note);

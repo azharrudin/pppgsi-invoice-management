@@ -10,6 +10,7 @@
     {{-- Page Css files --}}
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}">
 @endsection
 
 @section('content')
@@ -75,8 +76,14 @@
 
 @section('page-script')
     <script src="{{ asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script>
         "use strict";
+
+        var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>`;
+
         $((function() {
             var a = $(".invoice-list-table");
             if (a.length) var e = a.DataTable({
@@ -96,16 +103,16 @@
                     name: "receipt_number",
                     title: "No Tanda Terima",
                     render: function(data, type, row) {
-                            return data;
-                        }
+                        return data;
+                    }
                 }, {
                     class: "text-center",
                     data: "tenant_name",
                     name: "tenant_name",
                     title: "Tenant",
                     render: function(data, type, row) {
-                            return data;
-                        }
+                        return data;
+                    }
                 }, {
                     class: "text-center",
                     data: "grand_total",
@@ -165,14 +172,16 @@
                     title: "Tanggapan",
                     render: function(data, type, row) {
                         return '<div class="d-flex align-items-center"><a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a><a href="tanda-terima/preview/' +
-                            data.id + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="tanda-terima/edit/' +
+                            data.id +
+                            '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="tanda-terima/edit/' +
                             data.id + '" class="dropdown-item btn-edit" data-id="' +
                             data.id +
-                            '">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>'
+                            '">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="' +
+                            data.id + '">Delete</a></div></div></div>'
                     }
                 }],
                 order: [
-                    [1, "desc"]
+                    [0, "desc"]
                 ],
                 dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                 language: {
@@ -241,6 +250,67 @@
             }), 300)
 
         }));
+
+        $(document).on('click', '.btn-delete', function(event) {
+            let id = $(this).data('id');
+            console.log(id);
+            event.stopPropagation();
+            Swal.fire({
+                text: "Apakah Ingin menghapus Tanda Terima ini  ?",
+                icon: "warning",
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Yes, send!",
+                cancelButtonText: "No, cancel",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                    cancelButton: "btn fw-bold btn-active-light-primary"
+                }
+            }).then(async function(result) {
+                if (result.value) {
+                    var formData = new FormData();
+                    hapusReceipt(id);
+                }
+            });
+        });
+
+        function hapusReceipt(id) {
+            Swal.fire({
+                title: '<h2>Loading...</h2>',
+                html: sweet_loader + '<h5>Please Wait</h5>',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            })
+
+            $.ajax({
+                url: "{{ env('BASE_URL_API') }}" + "/api/receipt/" + id,
+                type: "DELETE",
+                contentType: false,
+                processData: false,
+                async: true,
+                success: function(response, result) {
+                    Swal.fire({
+                        title: 'Berhasil',
+                        text: 'Berhasil Hapus Tanda Terima',
+                        icon: 'success',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                        buttonsStyling: false
+                    }).then(async function(res) {
+                        $(".invoice-list-table").DataTable().ajax.reload();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: error,
+                    });
+                }
+            });
+        }
     </script>
 
 @endsection
