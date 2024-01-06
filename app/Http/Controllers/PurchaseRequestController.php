@@ -46,8 +46,10 @@ class PurchaseRequestController extends Controller
                 where("deleted_at", null);
             if($value){
                 $purchaseRequestQuery->where(function ($query) use ($value) {
-                    $query->where('purchase_request_number', 'like', '%' . $value . '%')
-                    ->orWhere('department', 'like', '%' . $value . '%')
+                  $query->whereHas('department', function ($departmentQuery) use ($value) {
+                      $departmentQuery->where('name', 'like', '%' . $value . '%');
+                    })
+                    ->orWhere('purchase_request_number', 'like', '%' . $value . '%')
                     ->orWhere('proposed_purchase_price', 'like', '%' . $value . '%')
                     ->orWhere('budget_status', 'like', '%' . $value . '%')
                     ->orWhere('request_date', 'like', '%' . $value . '%')
