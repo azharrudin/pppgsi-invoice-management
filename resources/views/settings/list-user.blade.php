@@ -124,7 +124,7 @@ $configData = Helper::appClasses();
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal" id="modal_bank_cancel">Close</button>
                 <button type="submit" class="btn btn-primary save-bank">
-                    <span class="indicator-label">Simpan</span>
+                    Simpan
                 </button>
 
             </div>
@@ -137,7 +137,7 @@ $configData = Helper::appClasses();
         <form class="modal-content edit-bank" id="edit-bank" novalidate>
             <input type="hidden" id="edit_id">
             <div class="modal-header">
-                <h5 class="modal-title" id="backDropModalTitle">Edit Bank</h5>
+                <h5 class="modal-title" id="backDropModalTitle">Edit User</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -192,8 +192,8 @@ $configData = Helper::appClasses();
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal" id="modal_bank_cancel">Close</button>
-                <button type="submit" class="btn btn-primary save-bank">
-                    <span class="indicator-label">Simpan</span>
+                <button type="submit" class="btn btn-primary edit-bank">
+                    Simpan
                 </button>
 
             </div>
@@ -232,11 +232,11 @@ $configData = Helper::appClasses();
                         <label for="nameBackdrop" class="form-label">Department</label>
                         <select id="preview_department" name="department" class="form-control" required readonly>
                             <option value="">Pilih Department</option>
-                            <option value="CS">CS</option>
-                            <option value="Teknik">Teknik</option>
-                            <option value="BM">BM</option>
-                            <option value="KA Unit Umum">KA Unit Umum</option>
-                            <option value="KA Unit Account">KA Unit Account</option>
+                            <option value="1">CS</option>
+                            <option value="2">Teknik</option>
+                            <option value="3">BM</option>
+                            <option value="4">KA Unit Umum</option>
+                            <option value="5">KA Unit Account</option>
                         </select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
@@ -244,10 +244,12 @@ $configData = Helper::appClasses();
                         <label for="nameBackdrop" class="form-label">Level</label>
                         <select id="preview_level" name="level" class="form-control" required readonly>
                             <option value="">Pilih Level</option>
-                            <option value="Lead CS">Lead CS</option>
-                            <option value="Administrator">Administrator</option>
-                            <option value="KA Unit">KA Unit</option>
-                            <option value="Administrator">Administrator</option>
+                            <option value="1">Admin</option>
+                            <option value="2">Teknisi</option>
+                            <option value="3">Kepala Unitt</option>
+                            <option value="4">BM</option>
+                            <option value="5">Executive</option>
+                            <option value="6">Vendor</option>
                         </select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
@@ -407,8 +409,6 @@ $configData = Helper::appClasses();
 
     // Loop over them and prevent submission
     Array.prototype.slice.call(createBank).forEach(function(form) {
-        $('.indicator-progress').hide();
-        $('.indicator-label').show();
         form.addEventListener(
             "submit",
             function(event) {
@@ -437,9 +437,6 @@ $configData = Helper::appClasses();
                         type: "POST",
                         data: data,
                         success: function(response) {
-                            $('.indicator-progress').show();
-                            $('.indicator-label').hide();
-
                             Swal.fire({
                                 title: 'Berhasil',
                                 text: 'Berhasil menambahkan User',
@@ -475,8 +472,6 @@ $configData = Helper::appClasses();
     });
 
     Array.prototype.slice.call(editBank).forEach(function(form) {
-        $('.indicator-progress').hide();
-        $('.indicator-label').show();
         form.addEventListener(
             "submit",
             function(event) {
@@ -504,9 +499,6 @@ $configData = Helper::appClasses();
                         type: "PATCH",
                         data: data,
                         success: function(response) {
-                            $('.indicator-progress').show();
-                            $('.indicator-label').hide();
-
                             Swal.fire({
                                 title: 'Berhasil',
                                 text: 'Berhasil Memperbarui User',
@@ -576,17 +568,18 @@ $configData = Helper::appClasses();
         let id = $(this).data('id');
 
         $.ajax({
-            url: "{{env('BASE_URL_API')}}" + "api/user/" + id,
+            url: "{{env('BASE_URL_API')}}" + "/api/user/" + id,
             type: "get",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(response) {
+                console.log(response);
                 $('#preview_id').val(response.data.id);
                 $('#preview_name').val(response.data.name)
                 $('#preview_username').val(response.data.username)
                 $('#preview_email').val(response.data.email)
-                $('#preview_department').val(response.data.department)
-                $('#preview_level').val(response.data.level)
+                $('#preview_department').val(response.data.department_id)
+                $('#preview_level').val(response.data.level_id)
                 $('#preview-bank-data').modal('show')
             },
             error: function(errors) {
@@ -633,7 +626,7 @@ $configData = Helper::appClasses();
         })
 
         $.ajax({
-            url: "{{env('BASE_URL_API')}}" +"/api/user" + "/" + id,
+            url: "{{env('BASE_URL_API')}}" + "/api/user" + "/" + id,
             type: "DELETE",
             contentType: false,
             processData: false,
