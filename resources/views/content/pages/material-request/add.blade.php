@@ -85,7 +85,7 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd1">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd1" style="padding:0px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -145,6 +145,8 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
 
+
+
                                 <div class="row">
                                     <div class="col-2">
                                         <span>Lembar</span>
@@ -196,7 +198,6 @@ $configData = Helper::appClasses();
 @endsection
 
 @section('page-script')
-<script src="{{asset('assets/vendor/libs/dropzone/dropzone.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
@@ -229,6 +230,8 @@ $configData = Helper::appClasses();
 
         const myDropzone1 = new Dropzone('#ttd1', {
             parallelUploads: 1,
+            thumbnailWidth: "250",
+            thumbnailHeight: "250",
             maxFilesize: 3,
             addRemoveLinks: true,
             maxFiles: 1,
@@ -242,7 +245,7 @@ $configData = Helper::appClasses();
                     if (mockFile) {
                         this.options.addedfile.call(this, mockFile);
                         this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
-
+                        $('.dz-image').find('img').attr('width', '100%');
                         // Optional: Handle the removal of the file
                         mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
                             // Handle removal logic here
@@ -251,6 +254,7 @@ $configData = Helper::appClasses();
                 }
                 this.on('addedfile', function(file) {
                     while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
+                    $('.dz-image').find('img').attr('width', '100%');
                     ttdFile1 = file;
                 })
             }
@@ -362,41 +366,46 @@ $configData = Helper::appClasses();
             // Clone baris terakhir
             var $details = $('#details');
             var $newRow = `
-            <div class="row mb-3 row-mg">
-                    <div class="col-12 d-flex align-items-end mb-2">
-                        <div class="">
+                <div class="mb-3 row-mg">
+                    <div class="row d-flex align-items-end mb-2">
+                        <div class="col" style="padding-right:0.25rem">
                             <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Nomor" name="number[]" required/>
+                            <input type="text" class="form-control w-100-px row-input" placeholder="Nomor" name="number[]" required />
                         </div>
-                        <div class="me-1">
+                        <div class="col px-1">
                             <label for="note" class="form-label fw-medium">Part Number</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="No. Suku Cadang" name="part_number[]" required/>
+                            <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" required />
                         </div>
-                        <div class="me-1">
+                        <div class="col px-1">
                             <label for="note" class="form-label fw-medium">Deskripsi</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Deskripsi" name="description[]" required />
+                                <input type="text" class="form-control row-input" placeholder="Deskripsi" name="description[]" required />
                         </div>
-                        <div class="me-1">
+                        <div class="col px-1">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Kuantitas" name="quantity[]" required/>
+                            <input type="text" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required />
                         </div>
-                        <div class="">
+                        <div class="col-6 px-1">
                             <label for="note" class="form-label fw-medium">Filled Storekeeper Only</label>
-                        <div class="d-flex justify-content-between">
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Stock" name="stock" required/>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Stock Out" name="stock_out[]" required/>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="End Stock" name="end_stock[]" required/>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Min Stock" name="min_stock[]" required/>
-                            <a class="btn-remove-mg" role="button">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 12 12" fill="none">
-                                    <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
-                                    <path d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z" fill="#FF4747" />
-                                </svg>
-                            </a>
-
+                            <div class="d-flex justify-content-between align-items-end">
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="Stock" name="stock[]" required />
+                                </div>
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="Stock Out" name="stock_out[]" required />
+                                </div>
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="End Stock" name="end_stock[]" required />
+                                </div>
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="Min Stock" name="min_stock" [] required />
+                                </div>
+                                <a role="button" class="btn btn-primary text-center btn-remove-mg text-white" disabled>
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                 </div> 
             `;
             $details.append($newRow);
         });
@@ -413,82 +422,93 @@ $configData = Helper::appClasses();
             console.log(details.length);
             for (let i = 0; i < details.length; i++) {
                 temp = `
-                <div class="row mb-3 row-mg">
-                    <div class="col-12 d-flex align-items-end mb-2">
-                        <div class="">
+                <div class="mb-3 row-mg">
+                    <div class="row d-flex align-items-end mb-2">
+                        <div class="col" style="padding-right:0.25rem">
                             <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="Nomor" name="number[]"  value="` + details[i].number + `" required/>
+                            <input type="text" class="form-control w-100-px row-input" placeholder="Nomor" name="number[]" value="` + details[i].number + `" required />
                         </div>
-                        <div class="me-1">
+                        <div class="col px-1">
                             <label for="note" class="form-label fw-medium">Part Number</label>
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="No. Suku Cadang" name="part_number[]" value="` + details[i].part_number + `" required/>
+                            <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" value="` + details[i].part_number + `" required />
                         </div>
-                        <div class="me-1">
+                        <div class="col px-1">
                             <label for="note" class="form-label fw-medium">Deskripsi</label>
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="Deskripsi" name="description[]" value="` + details[i].description + `" required />
+                                <input type="text" class="form-control row-input" placeholder="Deskripsi" name="description[]"  value="` + details[i].description + `" required />
                         </div>
-                        <div class="me-1">
+                        <div class="col px-1">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="Kuantitas" name="quantity[]" value="` + details[i].quantity + `" required/>
+                            <input type="text" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" value="` + details[i].quantity + `"  required />
                         </div>
-                        <div class="">
+                        <div class="col-6 px-1">
                             <label for="note" class="form-label fw-medium">Filled Storekeeper Only</label>
-                        <div class="d-flex justify-content-between">
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="Stock" name="stock[]" value="` + details[i].stock + `" required/>
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="Stock Out" name="stock_out[]" value="` + details[i].stock_out + `" required/>
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="End Stock" name="end_stock[]" value="` + details[i].end_stock + `" required/>
-                            <input type="text" class="form-control w-px-75 row-input" placeholder="Min Stock" name="min_stock[]" value="` + details[i].min_stock + `" required/>
-                            <a class="btn-remove-mg" role="button">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 12 12" fill="none">
-                                    <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
-                                    <path d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z" fill="#FF4747" />
-                                </svg>
-                            </a>
-
+                            <div class="d-flex justify-content-between align-items-end">
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="Stock" name="stock[]" value="` + details[i].stock + `" required />
+                                </div>
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="Stock Out" name="stock_out[]" value="` + details[i].stock_out + `" required />
+                                </div>
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="End Stock" name="end_stock[]" value="` + details[i].end_stock + `" required />
+                                </div>
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="Min Stock" name="min_stock[]" value="` + details[i].min_stock + `" required />
+                                </div>
+                                <a role="button" class="btn btn-primary text-center btn-remove-mg text-white" disabled>
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                 </div> 
                 `;
                 getDetail = getDetail + temp;
             }
             $('#details').prepend(getDetail);
         } else {
-            temp = `             
-            <div class="row mb-3 row-mg">
-                    <div class="col-12 d-flex align-items-end mb-2">
-                        <div class="">
+            console.log();
+            temp = `            
+                <div class="mb-3 row-mg">
+                    <div class="row d-flex align-items-end mb-2">
+                        <div class="col" style="padding-right:0.25rem">
                             <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Nomor" name="number[]" required/>
+                            <input type="text" class="form-control w-100-px row-input" placeholder="Nomor" name="number[]" required />
                         </div>
-                        <div class="me-1">
+                        <div class="col px-1">
                             <label for="note" class="form-label fw-medium">Part Number</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="No. Suku Cadang" name="part_number[]" required/>
+                            <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" required />
                         </div>
-                        <div class="me-1">
+                        <div class="col px-1">
                             <label for="note" class="form-label fw-medium">Deskripsi</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Deskripsi" name="description[]" required />
+                                <input type="text" class="form-control row-input" placeholder="Deskripsi" name="description[]" required />
                         </div>
-                        <div class="me-1">
+                        <div class="col px-1">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Kuantitas" name="quantity[]" required/>
+                            <input type="text" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required />
                         </div>
-                        <div class="">
+                        <div class="col-6 px-1">
                             <label for="note" class="form-label fw-medium">Filled Storekeeper Only</label>
-                        <div class="d-flex justify-content-between">
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Stock" name="stock[]" required/>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Stock Out" name="stock_out[]" required/>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="End Stock" name="end_stock[]" required/>
-                            <input type="text" class="form-control  w-px-75 row-input" placeholder="Min Stock" name="min_stock"[] required/>
-                            <a class="btn-remove-mg" role="button">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 12 12" fill="none">
-                                    <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
-                                    <path d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z" fill="#FF4747" />
-                                </svg>
-                            </a>
-
+                            <div class="d-flex justify-content-between align-items-end">
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="Stock" name="stock[]" required />
+                                </div>
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="Stock Out" name="stock_out[]" required />
+                                </div>
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="End Stock" name="end_stock[]" required />
+                                </div>
+                                <div class="col px-1">
+                                    <input type="text" class="form-control row-input" placeholder="Min Stock" name="min_stock" [] required />
+                                </div>
+                                <a role="button" class="btn btn-primary text-center btn-remove-mg text-white" disabled>
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                 </div> 
             `;
             $('#details').prepend(temp);
         }

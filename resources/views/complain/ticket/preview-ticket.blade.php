@@ -87,10 +87,10 @@ $configData = Helper::appClasses();
         <div class="col-lg-3 col-12 invoice-actions">
             <div class="card mb-4">
                 <div class="card-body">
-                    <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
-                        <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
-                    </button>
-                    <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
+                    <a href="#" class="btn btn-primary d-grid w-100 mb-2">
+                        <span class="d-flex align-items-center justify-content-center text-nowrap">Buat Laporan Kerusakan</span>
+                    </a>
+                    <a href="/complain/add-ticket" class="btn btn-label-secondary d-grid w-100 mb-2">Edit Ticket</a>
                     <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
                     <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
                 </div>
@@ -130,12 +130,10 @@ $configData = Helper::appClasses();
 
     });
 
-
-
     $(document).on('click', '#batal', function(event) {
         event.preventDefault();
-        localStorage.removeItem('invoice');
-        window.location.href = "/invoice/list-invoice"
+        localStorage.removeItem('ticket');
+        window.location.href = "/complain/list-ticket"
     });
 
     $(document).on('click', '#save', function(event) {
@@ -153,7 +151,7 @@ $configData = Helper::appClasses();
 
                 Swal.fire({
                     title: 'Berhasil',
-                    text: 'Berhasil menambahkan Invoice',
+                    text: 'Berhasil menambahkan Ticket',
                     icon: 'success',
                     customClass: {
                         confirmButton: 'btn btn-primary'

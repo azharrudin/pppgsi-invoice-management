@@ -60,9 +60,9 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
+                        <a href="#" class="btn btn-primary d-grid w-100 mb-2">
                             <span class="d-flex align-items-center justify-content-center text-nowrap">Buat Laporan Kerusakan</span>
-                        </button>
+                        </a>
                         <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
                         <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
                         <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>

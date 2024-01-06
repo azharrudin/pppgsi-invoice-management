@@ -97,7 +97,7 @@ $configData = Helper::appClasses();
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal" id="modal_tax_cancel">Close</button>
                 <button type="submit" class="btn btn-primary save-tax">
-                    <span class="indicator-label">Simpan</span>
+                    Simpan
                 </button>
             </div>
         </form>
@@ -264,8 +264,6 @@ $configData = Helper::appClasses();
             var editTax = $(".edit-tax");
 
             Array.prototype.slice.call(editTax).forEach(function(form) {
-                $('.indicator-progress').hide();
-                $('.indicator-label').show();
                 form.addEventListener(
                     "submit",
                     function(event) {
@@ -289,9 +287,6 @@ $configData = Helper::appClasses();
                                 type: "PATCH",
                                 data: data,
                                 success: function(response) {
-                                    $('.indicator-progress').show();
-                                    $('.indicator-label').hide();
-
                                     Swal.fire({
                                         title: 'Berhasil',
                                         text: 'Berhasil Memperbarui Tax',
@@ -365,7 +360,7 @@ $configData = Helper::appClasses();
                         $('#preview-name').val(response.data.name);
                         $('#preview-rate').val(response.data.rate);
                         $('#preview-description').val(response.data.description);
-                       
+
                         $('#preview-tax-data').modal('show')
                     },
                     error: function(errors) {
