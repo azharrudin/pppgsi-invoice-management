@@ -154,7 +154,7 @@
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="ti ti-send ti-xs me-2"></i>Kirim Tanda Terima</span>
                         </button>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2"
+                        <button type="button" class="btn btn-label-secondary btn-status d-grid w-100 mb-2"
                             style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
                             <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2">Download</button>
                             <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2">Print</button>
@@ -228,7 +228,7 @@
     </script>
     <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
     </script>
-    <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
+    <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script>
         $(document).ready(function() {
 
@@ -292,6 +292,88 @@
                     }
                 });
             }
+
+            $(".btn-status").on("click", function() {
+                $.ajax({
+                    url: "{{ url('api/receipt') }}/" + id,
+                    type: "GET",
+                    dataType: "json",
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: '<h2>Loading...</h2>',
+                            html: sweet_loader + '<h5>Please Wait</h5>',
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        })
+                    },
+                    success: function(response) {
+                        let result = response.data;
+                        let datas = {};
+
+                        datas = response.data;
+                        datas.status = "disetujui ka"
+
+                        $.ajax({
+                            url: "{{ url('api/receipt') }}/" + result.id,
+                            type: "PATCH",
+                            data: JSON.stringify(datas),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Loading...',
+                                    text: "Please wait",
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                });
+                            },
+                            success: function(response) {
+                                Swal.fire({
+                                    title: 'Berhasil',
+                                    text: 'Berhasil update Tanda Terima',
+                                    icon: 'success',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href =
+                                            '{{ route('pages-list-tanda-terima') }}';
+                                    }
+                                });
+                            },
+                            error: function(errors) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: errors.responseJSON
+                                        .message,
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                })
+                            }
+                        });
+                    },
+                    error: function(errors) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: errors.responseJSON
+                                .message,
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        })
+                    }
+                });
+            })
 
             $(".btn-edit").on('click', function() {
                 // Mendapatkan nilai data-id dari button yang diklik

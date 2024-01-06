@@ -79,7 +79,7 @@
                                 <label for="salesperson" class="form-label  fw-medium">Total Invoice</label>
                             </div>
                             <div class="col-10">
-                                <input type="text" class="form-control " id="grand_total" name="grand_total"
+                                <input type="text" class="form-control qty price" id="grand_total" name="grand_total"
                                     placeholder="Total Invoice" fdprocessedid="yombzp">
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                                 <label for="salesperson" class="form-label  fw-medium">Dibayarkan</label>
                             </div>
                             <div class="col-10">
-                                <input type="text" class="form-control " id="paid" name="paid"
+                                <input type="text" class="form-control qty price" id="paid" name="paid"
                                     placeholder="Dibayarkan" fdprocessedid="yombzp">
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                                 <label for="salesperson" class="form-label  fw-medium">Sisa Tagihan</label>
                             </div>
                             <div class="col-10">
-                                <input type="text" class="form-control " id="remaining" name="remaining"
+                                <input type="text" class="form-control qty price" id="remaining" name="remaining"
                                     placeholder="Sisa Tagihan" fdprocessedid="yombzp">
                             </div>
                         </div>
@@ -131,8 +131,8 @@
                                 <div class="mb-3 prev">
                                     <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
                                         <div class="dz-details">
-                                            <div class="dz-thumbnail"> <img class="prev-img"
-                                                    alt="" src="">
+                                            <div class="dz-thumbnail"> <img class="prev-img" alt=""
+                                                    src="">
                                                 <span class="dz-nopreview">No preview</span>
                                                 <div class="dz-success-mark"></div>
                                             </div>
@@ -141,12 +141,12 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 click" style="display: none">
-                                    <form action="/upload" class="dropzone needsclick dz-clickable w-px-250"
+                                    <div action="/upload" class="dropzone needsclick dz-clickable w-px-250"
                                         id="dropzone-basic">
                                         <div class="dz-message needsclick">
                                             <span class="note needsclick">Unggah Tanda Tangan</span>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <input type="text" class="form-control w-px-250 " id="signature_name"
@@ -257,6 +257,24 @@
                 buttonsStyling: false
             });
 
+            // Dropzone
+            let ttdFile = null;
+            const myDropzone = new Dropzone('#dropzone-basic', {
+                parallelUploads: 1,
+                maxFilesize: 10,
+                addRemoveLinks: true,
+                maxFiles: 1,
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                autoQueue: false,
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        while (this.files.length > this.options.maxFiles) this.removeFile(this
+                            .files[0]);
+                        ttdFile = file;
+                    });
+                }
+            });
+
             // Mendapatkan id dengan cara mengambil dari URL
             var urlSegments = window.location.pathname.split('/');
             var idIndex = urlSegments.indexOf('edit') + 1;
@@ -272,9 +290,21 @@
                     success: function(res) {
                         let response = res.data;
                         $('#editTandaTerima').find('.form-control').each(function() {
-                            $("#" + $(this).attr('id')).val(response[$(this).attr(
-                                "name")]);
+                            let inputName = $(this).attr('name');
+                            let inputValue = response[inputName];
+
+                            $("#" + $(this).attr('id')).val(inputValue);
+
+                            // Check if the input is the 'grand_total' field
+                            if (inputName === 'grand_total' || inputName === 'paid' ||
+                                inputName === 'remaining') {
+                                // Format the number using toLocaleString with 'en-US' locale
+                                let formattedValue = parseFloat(inputValue).toLocaleString(
+                                    'en-US');
+                                $("#" + $(this).attr('id')).val(formattedValue);
+                            }
                         });
+
                         $('#signature_date').val(moment(response.signature_date, 'YYYY-MM-DD').format(
                             'DD-MM-YYYY'));
                         $(".select-tenant").empty().append('<option value="' + response.tenant_id +
@@ -329,7 +359,10 @@
 
                     if (inputId === 'grand_total' || inputId === 'paid' || inputId ===
                         'remaining') {
-                        datas[$("#" + inputId).attr("name")] = parseInt(inputValue, 10);
+                        var inputValueWithoutComma = inputValue.replace(',', '');
+
+                        datas[$("#" + inputId).attr("name")] = parseInt(
+                            inputValueWithoutComma, 10);
                     } else if (inputId === 'receipt_date') {
                         datas[$("#" + inputId).attr("name")] = moment(inputValue, 'D-M-YYYY')
                             .format('YYYY-MM-DD');
@@ -400,6 +433,111 @@
                 window.location.href = '{{ route('pages-list-tanda-terima') }}';
             })
 
+            $('#paid').on('keyup', function() {
+                getTotal(); // Memanggil fungsi getTotal() setiap kali terjadi perubahan pada input
+            });
+
+            // Fungsi terbilang
+            function getTotal() {
+                let totalArr = [];
+                let tempTotal = $("#paid").val().replace(/,/g, '');
+
+                $('#grand_total_spelled').val(terbilang(tempTotal));
+
+            }
+
+            function terbilang(bilangan) {
+                console.log(bilangan)
+                bilangan = String(bilangan);
+                let angka = new Array('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+                    '0');
+                let kata = new Array('', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan',
+                    'Sembilan');
+                let tingkat = new Array('', 'Ribu', 'Juta', 'Milyar', 'Triliun');
+
+                let panjang_bilangan = bilangan.length;
+                let kalimat = "";
+                let subkalimat = "";
+                let kata1 = "";
+                let kata2 = "";
+                let kata3 = "";
+                let i = 0;
+                let j = 0;
+
+                /* pengujian panjang bilangan */
+                if (panjang_bilangan > 15) {
+                    kalimat = "Diluar Batas";
+                    return kalimat;
+                }
+
+                /* mengambil angka-angka yang ada dalam bilangan, dimasukkan ke dalam array */
+                for (i = 1; i <= panjang_bilangan; i++) {
+                    angka[i] = bilangan.substr(-(i), 1);
+                }
+
+                i = 1;
+                j = 0;
+                kalimat = "";
+
+                /* mulai proses iterasi terhadap array angka */
+                while (i <= panjang_bilangan) {
+
+                    subkalimat = "";
+                    kata1 = "";
+                    kata2 = "";
+                    kata3 = "";
+
+                    /* untuk Ratusan */
+                    if (angka[i + 2] != "0") {
+                        if (angka[i + 2] == "1") {
+                            kata1 = "Seratus";
+                        } else {
+                            kata1 = kata[angka[i + 2]] + " Ratus";
+                        }
+                    }
+
+                    /* untuk Puluhan atau Belasan */
+                    if (angka[i + 1] != "0") {
+                        if (angka[i + 1] == "1") {
+                            if (angka[i] == "0") {
+                                kata2 = "Sepuluh";
+                            } else if (angka[i] == "1") {
+                                kata2 = "Sebelas";
+                            } else {
+                                kata2 = kata[angka[i]] + " Belas";
+                            }
+                        } else {
+                            kata2 = kata[angka[i + 1]] + " Puluh";
+                        }
+                    }
+
+                    /* untuk Satuan */
+                    if (angka[i] != "0") {
+                        if (angka[i + 1] != "1") {
+                            kata3 = kata[angka[i]];
+                        }
+                    }
+
+                    /* pengujian angka apakah tidak nol semua, lalu ditambahkan tingkat */
+                    if ((angka[i] != "0") || (angka[i + 1] != "0") || (angka[i + 2] != "0")) {
+                        subkalimat = kata1 + " " + kata2 + " " + kata3 + " " + tingkat[j] + " ";
+                    }
+
+                    /* gabungkan variabe sub kalimat (untuk Satu blok 3 angka) ke variabel kalimat */
+                    kalimat = subkalimat + kalimat;
+                    i = i + 3;
+                    j = j + 1;
+
+                }
+
+                /* mengganti Satu Ribu jadi Seribu jika diperlukan */
+                if ((angka[5] == "0") && (angka[6] == "0")) {
+                    kalimat = kalimat.replace("Satu Ribu", "Seribu");
+                }
+
+                return (kalimat.trim().replace(/\s{2,}/g, ' ')) + " Rupiah";
+            }
+
             $('.dz-remove').on('click', function() {
                 // Find the <img> element
                 var imgElement = $('.prev-img');
@@ -414,6 +552,24 @@
                     $('.click').show();
 
                     imgElement.addClass('dropzone needsclick dz-clickable');
+                }
+            });
+
+            // Keyup input qty
+            $(document).on('input', '.qty', function() {
+                var sanitizedValue = $(this).val().replace(/[^0-9]/g, '');
+                $(this).val(sanitizedValue);
+            });
+
+            // Keyup input price
+            $(document).on('input', '.price', function() {
+                var sanitizedValue = $(this).val().replace(/[^0-9]/g, '');
+                var numericValue = parseInt(sanitizedValue, 10);
+
+                if (!isNaN(numericValue)) {
+                    var formattedValue = numericValue.toLocaleString('en-US');
+
+                    $(this).val(formattedValue);
                 }
             });
 

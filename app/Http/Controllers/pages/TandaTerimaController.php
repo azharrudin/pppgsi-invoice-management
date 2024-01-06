@@ -35,6 +35,11 @@ class TandaTerimaController extends Controller
         return view('content.pages.tanda-terima.show');
     }
 
+    public function edit(string $id)
+    {
+        return view('content.pages.tanda-terima.edit');
+    }
+
     public function datatable(Request $request)
     {
         $searchColumn = array();
