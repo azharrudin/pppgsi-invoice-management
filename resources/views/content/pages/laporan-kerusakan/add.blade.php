@@ -104,13 +104,13 @@
                                                     </div>
                                                     <div class="col-3">
                                                         <label for="note" class="form-label fw-medium">Jumlah</label>
-                                                        <input type="text" class="form-control" id="total"
+                                                        <input type="text" class="form-control qty" id="total"
                                                             name="total" placeholder="Jumlah" required />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
-                                                    <a class="mb-3 mx-2 mt-4" style="width: 10px; color: red" role="button"
+                                                    <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button"
                                                         data-repeater-delete>
-                                                        <i class="ti ti-trash mx-2 ti-sm"></i>
+                                                        <i class="fas fa-trash"></i>
                                                     </a>
                                                 </div>
                                             </div>
@@ -506,7 +506,7 @@
                                 error: function(xhr, status, error) {
                                     Swal.fire({
                                         title: 'Error!',
-                                        text: errors.responseJSON.message,
+                                        text: xhr.responseJSON.message,
                                         icon: 'error',
                                         customClass: {
                                             confirmButton: 'btn btn-primary'
@@ -631,6 +631,12 @@
             $('.select-ticket').on("change", (async function(e) {
                 $(this).removeClass("is-invalid");
             }));
+
+            // Keyup input qty
+            $(document).on('input', '.qty', function() {
+                var sanitizedValue = $(this).val().replace(/[^0-9]/g, '');
+                $(this).val(sanitizedValue);
+            });
         });
     </script>
 @endsection

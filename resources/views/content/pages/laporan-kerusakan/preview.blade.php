@@ -278,6 +278,7 @@
                                 class="btn btn-primary d-grid w-100 mb-2">Update</button> --}}
                             {{-- <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview"
                                 class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a> --}}
+                            <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2 btn-edit">Edit Laporan Kerusakan</button>
                             <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
                         </div>
                     </div>
@@ -381,7 +382,7 @@
                     dataType: "json",
                     success: function(res) {
                         let response = res.data;
-
+                        $('.btn-edit').attr('data-id', id);
                         // Set value ke form atas
                         $('#editLaporanKerusakan').find('.form-control').each(function() {
                             $("#" + $(this).attr('id')).val(response[$(this).attr(
@@ -446,6 +447,18 @@
                     }
                 });
             }
+
+            // Button edit
+            $(".btn-edit").on('click', function() {
+                // Mendapatkan nilai data-id dari button yang diklik
+                var id = $(this).data('id');
+
+                // Membentuk URL dengan nilai id
+                var url = window.location.href.replace(/\/preview\/\d+$/, '/edit/' + id);
+
+                // Menggantikan URL saat ini dengan URL yang sudah dibentuk
+                window.location.replace(url);
+            });
 
             // Date
             $('.date').flatpickr({

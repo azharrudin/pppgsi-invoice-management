@@ -10,7 +10,7 @@
     {{-- Page Css files --}}
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}">
 @endsection
 
 @section('content')
@@ -61,16 +61,9 @@
         <div class="card-datatable table-responsive pt-0">
             <table class="damage-report-list-table table">
                 <thead>
-                    <tr>
-                        <th>No Laporan Kerusakan</th>
-                        <th>Scope</th>
-                        <th>Classification</th>
-                        <th>Date</th>
-                        <th>Action Plan</th>
-                        <th>Status</th>
-                        <th>Tanggapan</th>
-                    </tr>
                 </thead>
+                <tbody>
+                </tbody>
             </table>
         </div>
     </div>
@@ -80,7 +73,7 @@
 
 @section('page-script')
     <script src="{{ asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
-    <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
+    <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script>
         "use strict";
 
@@ -105,19 +98,23 @@
                 columns: [{
                     data: "damage_report_number",
                     name: "damage_report_number",
-                    title: "No LK"
+                    title: "No LK",
+                className: 'text-center'
                 }, {
                     data: "scope",
                     name: "scope",
-                    title: "Scope"
+                    title: "Scope",
+                className: 'text-center'
                 }, {
                     data: "classification",
                     name: "classification",
-                    title: "Classification"
+                    title: "Classification",
+                className: 'text-center'
                 }, {
                     data: "damage_report_date",
                     name: "damage_report_date",
                     title: "Date",
+                className: 'text-center',
                     render: function(data, type, full, meta) {
                         var tanggalAwal = data;
 
@@ -134,6 +131,7 @@
                     data: "action_plan_date",
                     name: "action_plan_date",
                     title: "Action Plan",
+                className: 'text-center',
                     render: function(data, type, full, meta) {
                         var tanggalAwal = data;
 
@@ -150,21 +148,22 @@
                     data: "status",
                     name: "status",
                     title: "Status",
+                className: 'text-center',
                     render: function(data, type, full, meta) {
                         if (data == "Disetujui KA") {
-                            return '<span class="badge bg-label-primary">' + data +
+                            return '<span class="badge bg-label-primary" style="width: 96px">' + data +
                                 '</span>'
                         } else if (data == "Disetujui BM") {
-                            return '<span class="badge  bg-label-info">' + data +
+                            return '<span class="badge  bg-label-info" style="width: 96px">' + data +
                                 '</span>'
                         } else if (data == "Terbuat") {
-                            return '<span class="badge  bg-label-secondary">' + data +
+                            return '<span class="badge  bg-label-secondary" style="width: 96px">' + data +
                                 '</span>'
                         } else if (data == "Terkirim") {
-                            return '<span class="badge  bg-label-danger">' + data +
+                            return '<span class="badge  bg-label-danger" style="width: 96px">' + data +
                                 '</span>'
                         } else if (data == "Selesai") {
-                            return '<span class="badge  bg-label-success">' + data +
+                            return '<span class="badge  bg-label-success" style="width: 96px">' + data +
                                 '</span>'
                         }
                     }
@@ -177,11 +176,12 @@
                             '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="laporan-kerusakan/edit/' +
                             data.id + '" class="dropdown-item btn-edit" data-id="' +
                             data.id +
-                            '">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="' + data.id +'">Delete</a></div></div></div>'
+                            '">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="' +
+                            data.id + '">Delete</a></div></div></div>'
                     }
                 }],
                 order: [
-                [0, "desc"]
+                    [0, "desc"]
                 ],
                 dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                 language: {
@@ -282,7 +282,7 @@
             })
 
             $.ajax({
-                url: "{{env('BASE_URL_API')}}" + "/api/damage-report/" + id,
+                url: "{{ env('BASE_URL_API') }}" + "/api/damage-report/" + id,
                 type: "DELETE",
                 contentType: false,
                 processData: false,
