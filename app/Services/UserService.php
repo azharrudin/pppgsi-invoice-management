@@ -25,6 +25,7 @@ class UserService{
         $rules = [
           'name' => ["bail", "required", "string"],
           'email' => ["bail", "required", "string", "email"],
+          'username' => ["bail", "nullable", "string"],
           'password' => ["bail", "required", "string"],
           'department_id' => ["bail", "required", "numeric"],
           'level_id' => ["bail", "required", "numeric"],
@@ -49,6 +50,14 @@ class UserService{
             $emailExist = $emailExist->first();
 
             if(!is_null($emailExist)) $message = "Email sudah digunakan";
+        }
+
+        if($message == "" && $request->input("username")){
+            $usernameExist = User::where("username", $request->input("username"))->where("deleted_at", null);
+            if(!$isCreate) $usernameExist = $usernameExist->where("id", "!=", $id);
+            $usernameExist = $usernameExist->first();
+
+            if(!is_null($usernameExist)) $message = "Username sudah digunakan";
         }
 
         if($message == ""){

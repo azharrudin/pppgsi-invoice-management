@@ -192,7 +192,7 @@ class UserController extends Controller
 
             $userPayload = $request->all();
             $userPayload["password"] = Hash::make($request->input("password"));
-            if(isset($userPayload["username"])) unset($userPayload["username"]);
+            // if(isset($userPayload["username"])) unset($userPayload["username"]);
 
             User::findOrFail($id)->update($userPayload);
             DB::commit();
