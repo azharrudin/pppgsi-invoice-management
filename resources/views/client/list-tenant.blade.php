@@ -289,6 +289,10 @@
                         }
                     },
                     columns: [{
+                        data: "id",
+                        name: "id",
+                        className: "d-none",
+                    },{
                         data: "name",
                         name: "name",
                         title: "Nama PIC"

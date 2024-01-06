@@ -121,10 +121,7 @@
                     render: function(data, type, row) {
                         // Check if it is of type 'display'
                         if (type === 'display') {
-                            return 'Rp. ' + parseFloat(data).toLocaleString('en-US', {
-                                minimumFractionDigits: 0,
-                                maximumFractionDigits: 0
-                            });
+                            return 'Rp. ' + parseFloat(data).toLocaleString('en-US') + ',-';
                         }
 
                         // For other types (sorting, filtering, etc.), return the original data
@@ -154,16 +151,16 @@
                     title: "Status",
                     render: function(data, type, full, meta) {
                         if (data == "Disetujui KA") {
-                            return '<span class="badge  bg-label-success">' + data +
+                            return '<span class="badge  bg-label-success" style="width: 96px">' + data +
                                 '</span>'
                         } else if (data == "Disetujui BM") {
-                            return '<span class="badge  bg-label-info">' + data +
+                            return '<span class="badge  bg-label-info" style="width: 96px">' + data +
                                 '</span>'
                         } else if (data == "Terbuat") {
-                            return '<span class="badge  bg-label-secondary">' + data +
+                            return '<span class="badge  bg-label-secondary" style="width: 96px">' + data +
                                 '</span>'
                         } else if (data == "Terkirim") {
-                            return '<span class="badge  bg-label-danger">' + data +
+                            return '<span class="badge  bg-label-danger" style="width: 96px">' + data +
                                 '</span>'
                         }
                     }
