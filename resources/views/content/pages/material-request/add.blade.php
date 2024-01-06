@@ -85,7 +85,7 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd1" style="padding:0px;">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd1" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -101,7 +101,7 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd2">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd2"  style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -117,7 +117,7 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="date" name="name[]" />
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd3">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd3" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -133,7 +133,7 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd4">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd4" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
