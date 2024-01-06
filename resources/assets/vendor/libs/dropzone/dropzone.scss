@@ -8,6 +8,7 @@ $dz-box-padding-x: 1.15rem !default;
 $dz-box-padding-y: 1.5rem !default;
 $dz-icon-size: 1.875rem !default;
 $dz-thumbnail-width: 10rem !default;
+$dz-thumbnail-width-four: 6rem !default;
 $dz-thumbnail-height: 7.5rem !default;
 $dz-preview-padding: 0.625rem !default;
 $dz-progress-height: 0.5rem !default;
@@ -347,8 +348,15 @@ $dz-icon-block-size: 3.75rem !default;
         width: $dz-thumbnail-width + ($dz-preview-padding * 2);
       }
 
+      .dd .dz-preview {
+        display: inline-block;
+        width: $dz-thumbnail-width-four + ($dz-preview-padding * 2);
+      }
       .dz-thumbnail {
         width: $dz-thumbnail-width;
+      }
+      .dd .dz-thumbnail {
+        width: $dz-thumbnail-width-four;
       }
     }
   }
@@ -439,14 +447,26 @@ $dz-icon-block-size: 3.75rem !default;
         width: $dz-thumbnail-width + ($dz-preview-padding * 2);
       }
 
+      .dd .dz-preview {
+        display: inline-block;
+        width: $dz-thumbnail-width-four + ($dz-preview-padding * 2);
+      }
       .dz-thumbnail {
         width: $dz-thumbnail-width;
+      }
+      .dd .dz-thumbnail {
+        width: $dz-thumbnail-width-four;
       }
     }
 
     .dropzone .dz-preview .dz-image {
       width: 250px;
       height: 250px;
+    }
+
+    .dd .dz-preview .dz-image {
+      width: 180px;
+      height: 180px;
     }
   }
 }
