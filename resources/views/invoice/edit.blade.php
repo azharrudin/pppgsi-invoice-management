@@ -154,7 +154,7 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name"/>
+                                    <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
 
@@ -208,6 +208,19 @@ $configData = Helper::appClasses();
     var id = urlSegments[idIndex];
     let dataLocal = JSON.parse(localStorage.getItem("edit-invoice"));
     let ttdFile = dataLocal ? dataLocal.materai_image : null;
+
+    function format(e) {
+        var nStr = e + '';
+        nStr = nStr.replace(/\,/g, "");
+        let x = nStr.split('.');
+        let x1 = x[0];
+        let x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
 
     $(document).ready(function() {
         window.addEventListener("pageshow", function(event) {
@@ -301,7 +314,7 @@ $configData = Helper::appClasses();
             $("#addendum_number").val(dataLocal.addendum_number);
             $("#addendum_date").val(dataLocal.addendum_date);
             $("#grand_total_spelled").val(dataLocal.grand_total_spelled);
-            $(".grand_total").text(dataLocal.grand_total);
+            $(".grand_total").text(format(dataLocal.grand_total));
             $("#invoice_due_date").val(dataLocal.invoice_due_date);
             $("#term_and_conditions").val(dataLocal.term_and_conditions);
             $("#materai_date").val(dataLocal.materai_date);
@@ -445,28 +458,55 @@ $configData = Helper::appClasses();
             $(this).closest('.row-mg').remove();
         });
 
-        $(document).on('input', '.price', function() {
+        $(document).on('keydown', '.price', function(event) {
+            var key = event.which;
+            if ((key < 48 || key > 57) && key != 8) event.preventDefault();
+        });
+
+        $(document).on('input', '.price', function(event) {
+            console.log(event.currentTarget.value);
+            var nStr = event.currentTarget.value + '';
+            nStr = nStr.replace(/\,/g, "");
+            var x = nStr.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            event.currentTarget.value = x1 + x2;
             // Hapus baris yang ditekan tombol hapus
             let index = $('.price').index(this);
             let total = 0;
-            let tax = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val());
-            let price = parseInt($(this).val());
-            console.log(tax);
+            let tax = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
+            let price = parseInt($(this).val().replaceAll(',', ''));
             let totalPrice = price + tax;
-            console.log(totalPrice);
-            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : totalPrice);
+            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
             getTotal();
 
         });
 
-        $(document).on('input', '.tax', function() {
+        $(document).on('input', '.tax', function(event) {
+            console.log(event.currentTarget.value);
+            var nStr = event.currentTarget.value + '';
+
+            nStr = nStr.replace(/\,/g, "");
+            var x = nStr.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            event.currentTarget.value = x1 + x2;
             // Hapus baris yang ditekan tombol hapus
             let index = $('.tax').index(this);
             let total = 0;
-            let price = parseInt($(`.price:eq(` + index + `)`).val());
-            let tax = parseInt($(this).val());
+            let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+            let tax = parseInt($(this).val().replaceAll(',', ''));
             let totalPrice = price + tax;
-            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : totalPrice);
+            // console.log(format(totalPrice));
+            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
             getTotal();
 
         });
@@ -475,7 +515,7 @@ $configData = Helper::appClasses();
             let totalArr = [];
             let tempTotal = document.getElementsByClassName('total_price');
             for (let i = 0; i < tempTotal.length; i++) {
-                var slipOdd = tempTotal[i].value;
+                var slipOdd = parseInt(tempTotal[i].value.replaceAll(',', ''));
                 totalArr.push(Number(slipOdd));
             }
 
@@ -483,10 +523,8 @@ $configData = Helper::appClasses();
             for (let i = 0; i < totalArr.length; i++) {
                 sum += totalArr[i];
             }
-            $('.grand_total').text(sum);
+            $('.grand_total').text(format(sum));
             $('.terbilang').val(terbilang(sum));
-
-
         }
 
         function terbilang(bilangan) {
@@ -608,10 +646,6 @@ $configData = Helper::appClasses();
                         if (!bank) {
                             $("#bank").addClass("invalid");
                         }
-
-
-
-
                     } else {
                         // Submit your form
                         event.preventDefault();
@@ -674,12 +708,11 @@ $configData = Helper::appClasses();
                         datas.materai_image = fileTtd.dataURL;
 
                         $.ajax({
-                            url: baseUrl + "api/invoice/" + id,
+                            url: "{{env('BASE_URL_API')}}" + "/api/invoice/" + id,
                             type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
-
                             success: function(response) {
                                 $('.indicator-progress').show();
                                 $('.indicator-label').hide();
@@ -788,7 +821,7 @@ $configData = Helper::appClasses();
 
     function getDataInvoice(id) {
         $.ajax({
-            url: "{{ url('api/invoice') }}/" + id,
+            url: "{{env('BASE_URL_API')}}" + "/api/invoice/" + id,
             type: "GET",
             dataType: "json",
             success: function(res) {
@@ -852,7 +885,7 @@ $configData = Helper::appClasses();
                 $("#addendum_number").val(data.addendum_number);
                 $("#addendum_date").val(data.addendum_date);
                 $("#grand_total_spelled").val(data.grand_total_spelled);
-                $(".grand_total").text(data.grand_total);
+                $(".grand_total").text(format(data.grand_total));
                 $("#invoice_due_date").val(data.invoice_due_date);
                 $("#term_and_conditions").val(data.term_and_conditions);
                 $("#materai_date").val(data.materai_date);
@@ -911,7 +944,7 @@ $configData = Helper::appClasses();
         if (details) {
             for (let i = 0; i < details.length; i++) {
                 temp = `             
-              <div class="row-mg">
+            <div class="row-mg">
                 <div class="col-12 d-flex align-items-center justify-content-between">
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Uraian</label>
@@ -923,15 +956,15 @@ $configData = Helper::appClasses();
                     </div>
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                        <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required value="` + details[i].price + `"  />
+                        <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required value="` + format(details[i].price) + `"  />
                     </div>
                     <div class="col-sm-1 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Pajak</label>
-                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required  value="` + details[i].tax + `" />
+                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required  value="` + format(details[i].tax) + `" />
                     </div>
                     <div class="col-sm-2 mb-3 mx-2">
                         <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled value="` + details[i].total_price + `" />
+                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled value="` + format(details[i].total_price) + `" />
                     </div>
                     <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">

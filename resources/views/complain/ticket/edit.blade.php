@@ -61,7 +61,7 @@ $configData = Helper::appClasses();
                 <div class="card mb-4">
                     <div class="card-body">
                         <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
-                            <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
+                            <span class="d-flex align-items-center justify-content-center text-nowrap">Kirim Invoice</span>
                         </button>
                         <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
                         <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
@@ -83,6 +83,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
+    "use strict";
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -162,7 +163,7 @@ $configData = Helper::appClasses();
                         datas.status = "Wait a response"
 
                         $.ajax({
-                            url: baseUrl + "api/ticket/" + id,
+                            url: "{{env('BASE_URL_API')}}" + "/api/ticket/" + id,
                             type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -218,7 +219,7 @@ $configData = Helper::appClasses();
             datas.status = "Wait a response"
 
             localStorage.setItem("edit-ticket", JSON.stringify(datas));
-            window.location.href = "/complain/preview-edit-ticket/"+id
+            window.location.href = "/complain/preview-edit-ticket/" + id
         });
 
         $(document).on('click', '#batal', function(event) {
@@ -229,7 +230,7 @@ $configData = Helper::appClasses();
 
         function getDataTicket(id) {
             $.ajax({
-                url: "{{ url('api/ticket') }}/" + id,
+                url: "{{env('BASE_URL_API')}}" + "/api/ticket/" + id,
                 type: "GET",
                 dataType: "json",
                 success: function(res) {

@@ -250,9 +250,15 @@ $configData = Helper::appClasses();
                         <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
                         </button>
+                        <a type="button" class="btn btn-label-secondary d-grid w-100 mb-2" style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
+                        <a href="#" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Download</a>
+                        <a href="#" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Print</a>
                         <a href="/invoice/add-invoice" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Edit Invoice</a>
-                        <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                        <!-- <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button> -->
+                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100 mb-2">Batal</button>
+                        <button class="btn btn-primary d-grid w-100 mb-2">
+                            <span class="d-flex align-items-center justify-content-center text-nowrap">Add Payment</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -309,8 +315,6 @@ $configData = Helper::appClasses();
             $("#materai-image").css("width", `200px`);
             $("#materai-image").css("background-position", `center`);
         }
-
-
     });
 
     function format(e) {
@@ -396,7 +400,7 @@ $configData = Helper::appClasses();
             materai_image: data.materai_image.dataURL
         }
         $.ajax({
-            url: baseUrl + "api/invoice/",
+            url: "{{env('BASE_URL_API')}}" + "/api/invoice",
             type: "POST",
             data: JSON.stringify(newData),
             contentType: "application/json; charset=utf-8",
@@ -416,8 +420,8 @@ $configData = Helper::appClasses();
                     buttonsStyling: false
                 });
 
-                // localStorage.removeItem('invoice');
-                // window.location.href = "/invoice/list-invoice"
+                localStorage.removeItem('invoice');
+                window.location.href = "/invoice/list-invoice"
 
             },
             error: function(xhr, status, error) {

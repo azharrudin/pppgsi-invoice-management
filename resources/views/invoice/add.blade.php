@@ -491,8 +491,6 @@ $configData = Helper::appClasses();
 
         });
 
-
-
         function getTotal() {
             let totalArr = [];
             let tempTotal = document.getElementsByClassName('total_price');

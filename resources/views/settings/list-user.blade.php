@@ -95,7 +95,7 @@ $configData = Helper::appClasses();
                     </div>
                     <div class="mb-3">
                         <label for="nameBackdrop" class="form-label">Department</label>
-                        <select id="department" name="department" class="form-control" required>
+                        <select id="department_id" name="department_id" class="form-control" required>
                             <option value="">Pilih Department</option>
                             <option value="1">CS</option>
                             <option value="2">Teknik</option>
@@ -107,7 +107,7 @@ $configData = Helper::appClasses();
                     </div>
                     <div class="mb-3">
                         <label for="nameBackdrop" class="form-label">Level</label>
-                        <select id="level" name="level" class="form-control" required>
+                        <select id="level_id" name="level_id" class="form-control" required>
                             <option value="">Pilih Level</option>
                             <option value="1">Admin</option>
                             <option value="2">Teknisi</option>
@@ -163,8 +163,8 @@ $configData = Helper::appClasses();
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="mb-3">
-                        <label for="nameBackdrop" class="form-label">Department</label>
-                        <select id="edit_department" name="department" class="form-control" required>
+                        <label for="edit_department_id" class="form-label">Department</label>
+                        <select id="edit_department_id" name="edit_department_id" class="form-control" required>
                             <option value="">Pilih Department</option>
                             <option value="1">CS</option>
                             <option value="2">Teknik</option>
@@ -176,7 +176,7 @@ $configData = Helper::appClasses();
                     </div>
                     <div class="mb-3">
                         <label for="nameBackdrop" class="form-label">Level</label>
-                        <select id="edit_level" name="level" class="form-control" required>
+                        <select id="edit_level_id" name="edit_level_id" class="form-control" required>
                             <option value="">Pilih Level</option>
                             <option value="1">Admin</option>
                             <option value="2">Teknisi</option>
@@ -337,7 +337,7 @@ $configData = Helper::appClasses();
             language: {
                 sLengthMenu: "Show _MENU_",
                 search: "",
-                searchPlaceholder: "Search Bank"
+                searchPlaceholder: "Cari User"
             },
             buttons: [{
                 text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat User</span>',
@@ -418,15 +418,24 @@ $configData = Helper::appClasses();
                 } else {
                     // Submit your form
                     event.preventDefault();
-                    var formData = new FormData($('#create-bank')[0]);
-                    formData.append('status', 'Active');
-                    console.log(formData);
+                    let name = $('#name').val();
+                    let email = $('#email').val();
+                    let password = $('#password').val();
+                    let department = $('#department_id').val();
+                    let level = $('#level_id').val();
+                    let data = {};
+                    data.name = name;
+                    data.email = email;
+                    data.password = password;
+                    data.level_id = parseInt(level);
+                    data.department_id = parseInt(department);
+                    data.status = 'Active';
+                    data.image = "a";
+                    console.log(data);
                     $.ajax({
                         url: "{{env('BASE_URL_API')}}" + "/api/user",
                         type: "POST",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
+                        data: data,
                         success: function(response) {
                             $('.indicator-progress').show();
                             $('.indicator-label').hide();
@@ -481,17 +490,17 @@ $configData = Helper::appClasses();
                     let name = $('#edit_name').val();
                     let email = $('#edit_email').val();
                     let password = $('#edit_password').val();
-                    let department = $('#edit_department').val();
-                    let level = $('#edit_level').val();
+                    let department = $('#edit_department_id').val();
+                    let level = $('#edit_level_id').val();
                     let data = {};
                     data.name = name;
                     data.email = email;
                     data.password = password;
-                    data.level = level;
-                    data.department = department;
+                    data.level_id = parseInt(level);
+                    data.department_id = parseInt(department);
                     data.status = 'Active';
                     $.ajax({
-                        url: "{{env('BASE_URL_API')}}"  + "/api/user/" + id,
+                        url: "{{env('BASE_URL_API')}}" + "/api/user/" + id,
                         type: "PATCH",
                         data: data,
                         success: function(response) {
@@ -539,7 +548,7 @@ $configData = Helper::appClasses();
         let id = $(this).data('id');
 
         $.ajax({
-            url: baseUrl + "api/user/" + id,
+            url: "{{env('BASE_URL_API')}}" + "/api/user/" + id,
             type: "get",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -549,8 +558,8 @@ $configData = Helper::appClasses();
                 $('#edit_name').val(response.data.name)
                 $('#edit_username').val(response.data.username)
                 $('#edit_email').val(response.data.email)
-                $('#edit_department').val(response.data.department)
-                $('#edit_level').val(response.data.level)
+                $('#edit_department_id').val(response.data.department.id)
+                $('#edit_level_id').val(response.data.level.id)
                 $('#edit-bank-data').modal('show')
             },
             error: function(errors) {
@@ -567,7 +576,7 @@ $configData = Helper::appClasses();
         let id = $(this).data('id');
 
         $.ajax({
-            url: baseUrl + "api/user/" + id,
+            url: "{{env('BASE_URL_API')}}" + "api/user/" + id,
             type: "get",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -624,7 +633,7 @@ $configData = Helper::appClasses();
         })
 
         $.ajax({
-            url: "{{ url('api/user') }}" + "/" + id,
+            url: "{{env('BASE_URL_API')}}" +"/api/user" + "/" + id,
             type: "DELETE",
             contentType: false,
             processData: false,
