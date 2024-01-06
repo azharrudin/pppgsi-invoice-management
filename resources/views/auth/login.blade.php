@@ -14,82 +14,105 @@ $configData = Helper::appClasses();
 @endsection
 
 @section('content')
-<div class="authentication-wrapper authentication-cover authentication-bg">
-  <div class="authentication-inner row " style="margin: 0;">
-    <!-- /Left Text -->
-    <div class="d-none d-lg-flex col-lg-7 p-0" style="background: rgb(97,73,206);
-background: linear-gradient(3deg, rgba(97,73,206,1) 0%, rgba(156,98,244,1) 100%); color:white;">
-      <img src="{{ asset('assets/img/login.png')}}" alt="illustrasi" class="mx-auto my-auto d-block img-fluid" style="width : 60%; height : auto;">
-    </div>
-    <!-- /Left Text -->
+<!-- Section: Design Block -->
+<section class="background-radial-gradient overflow-hidden vh-100 d-flex align-items-center">
+  <style>
+    .form-check-input:checked,
+    .form-check-input[type=checkbox]:indeterminate {
+      background-color: #000;
+      border-color: #000;
+    }
 
-    <!-- Login -->
-    <div class="d-flex col-12 col-lg-5 align-items-center p-sm-5 p-4">
-      <div class="w-px-400 my-auto d-flex flex-grow-1 justify-content-center align-items-center" style="min-height: 85vh;">
-        <div class="" style="min-width : 85%;">
-          <!-- Logo -->
-          <div class="mb-4 mx-auto">
-            <h1 class="text-center"><b>USER LOGIN</b></h1>
+    .background-radial-gradient {
+      background-image: url("{{ asset('assets/img/PPPGSI 1.png') }}");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+
+    #radius-shape-1 {
+      height: 220px;
+      width: 220px;
+      top: -60px;
+      left: -130px;
+      background: radial-gradient(#44006b, #ad1fff);
+      overflow: hidden;
+    }
+
+    #radius-shape-2 {
+      border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+      bottom: -60px;
+      right: -110px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(#44006b, #ad1fff);
+      overflow: hidden;
+    }
+
+    .bg-glass {
+      background-color: hsla(0, 0%, 100%, 0.5) !important;
+      backdrop-filter: saturate(200%) blur(25px);
+    }
+  </style>
+
+  <div class="container text-center text-lg-start my-5 ">
+    <div class="row my-5 align-middle ">
+      <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+      </div>
+
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <div class="card bg-glass">
+          <div class="card-body px-3 py-3 px-md-5">
+            <form id="formAuthentication" class="mb-3" action="{{ route('auth.login') }}" method="POST">
+              @csrf
+              <h1 class="my-5 fw-bold text-white text-center">
+                USER LOGIN
+              </h1>
+              <div class="mb-3">
+                <div class="input-group input-group-merge">
+                  <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-mail"></i></span>
+                  <input type="text" class="form-control @error('username') is-invalid @enderror" id="email" name="email" placeholder="Username" autofocus value="{{ old('username') }}">
+                </div>
+                @error('username')
+                <span class="invalid-feedback" role="alert">
+                  <span class="fw-medium">{{ $message }}</span>
+                </span>
+                @enderror
+              </div>
+              <div class="mb-3 form-password-toggle">
+                <div class="input-group input-group-merge">
+                  <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-eye-off"></i></span>
+                  <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" aria-describedby="password" />
+
+                </div>
+                @error('password')
+                <span class="invalid-feedback" role="alert">
+                  <span class="fw-medium">{{ $message }}</span>
+                </span>
+                @enderror
+              </div>
+              <div class="my-4 d-flex justify-content-between">
+                <div class="form-check">
+                  <input class="form-check-input rounded-circle" type="checkbox" id="remember-me" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                  <label class="text-white" for="remember-me">
+                    Remember Me
+                  </label>
+                </div>
+                <div class="">
+                  <a href="{{ route('password.request') }}" style="color: #fff;">
+                    Forgot Password?
+                  </a>
+                </div>
+              </div>
+              <button class="btn btn-white d-grid w-90 mx-auto text-dark" type="submit" style="padding: 10px 50px;">Login</button>
+            </form>
           </div>
-          <!-- /Logo -->
-
-
-          @if (session('status'))
-          <div class="alert alert-success mb-1 rounded-0" role="alert">
-            <div class="alert-body">
-              {{ session('status') }}
-            </div>
-          </div>
-          @endif
-
-          <form id="formAuthentication" class="mb-3" action="{{ route('auth.login') }}" method="POST">
-            @csrf
-            <div class="mb-3">
-              <div class="input-group input-group-merge @error('username') is-invalid @enderror">
-                <span class="input-group-text cursor-pointer"><i class="icon-person"></i></span>
-                <input type="text" class="form-control @error('username') is-invalid @enderror" id="email" name="email" placeholder="Username" autofocus value="{{ old('username') }}">
-              </div>
-              @error('username')
-              <span class="invalid-feedback" role="alert">
-                <span class="fw-medium">{{ $message }}</span>
-              </span>
-              @enderror
-            </div>
-            <div class="mb-3 form-password-toggle">
-              <div class="input-group input-group-merge @error('password') is-invalid @enderror">
-                <span class="input-group-text cursor-pointer"><i class="icon-lock"></i></span>
-                <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" aria-describedby="password" />
-              </div>
-              @error('password')
-              <span class="invalid-feedback" role="alert">
-                <span class="fw-medium">{{ $message }}</span>
-              </span>
-              @enderror
-            </div>
-            <!-- <div class="mb-3 d-flex justify-content-between">
-              <div class="form-check">
-                <input class="form-check-input rounded-circle" type="checkbox" id="remember-me" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                <label class="form-check-label" for="remember-me">
-                  Remember Me
-                </label>
-              </div>
-              <div class="">
-                <a href="{{ route('password.request') }}" style="color: #000;">
-                  <small>Forgot Password?</small>
-                </a>
-              </div>
-            </div> -->
-            <button class="btn btn-primary d-grid w-90 mx-auto" type="submit" style="padding: 10px 50px;">Login</button>
-          </form>
         </div>
-        <div></div>
-
       </div>
     </div>
   </div>
-  <!-- /Login -->
-</div>
-</div>
+</section>
+<!-- Section: Design Block -->
 @endsection
 
 @section('page-script')
