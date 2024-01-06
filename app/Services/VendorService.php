@@ -14,10 +14,17 @@ class VendorService{
     public function validateVendor($request){
         $rules = [
             "name" => ["bail", "required", "string"],
+            'email' => ["bail", "required", "email", "string"],
+            'phone' => ["bail", "required", "numeric"],
+            'address' => ["bail", "required", "string"],
+            'floor' => ["bail", "required", "string"],
+            'status' => ["bail", "required", "string"],
         ];
         $errorMessages = [
-            "required" => "Field :attribute harus diisi",
-            "string" => "Field :attribute harus diisi dengan string",
+          "required" => "Field :attribute harus diisi",
+          "string" => "Field :attribute harus diisi dengan string",
+          "email" => "Field :attribute harus ditulis dengan format email yang valid",
+          "numeric" => "Field :attribute harus diisi dengan angka",
         ];
 
         $validator = Validator::make($request->all(), $rules, $errorMessages);

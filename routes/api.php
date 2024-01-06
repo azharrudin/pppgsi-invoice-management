@@ -5,6 +5,7 @@ use App\Http\Controllers\DamageReportController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\MaterialRequestController;
 use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\PurchaseRequestController;
@@ -85,3 +86,5 @@ Route::resource('user', UserController::class);
 
 Route::get("tax/select", [TaxController::class, "select"]);
 Route::resource('tax', TaxController::class);
+
+Route::post("mail/send-attachment", [MailController::class, "send"]);
