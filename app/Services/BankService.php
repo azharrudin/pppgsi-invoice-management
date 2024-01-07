@@ -16,6 +16,9 @@ class BankService{
     public function validateBank($request, $isCreate = true, $id = "", ){
         $rules = [
             "name" => ["bail", "required", "string"],
+            'account_name' => ["bail", "required", "string"],
+            'account_number' => ["bail", "required", "string"],
+            'branch_name' => ["bail", "required", "string"],
         ];
         $errorMessages = [
             "required" => "Field :attribute harus diisi",

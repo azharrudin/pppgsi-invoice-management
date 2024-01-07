@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('purchase_orders', function (Blueprint $table) {
             $table->increments("id");
-            $table->unsignedInteger("purchase_order_number");
+            $table->string("purchase_order_number");
             $table->unsignedInteger("vendor_id");
             $table->foreign('vendor_id')->references('id')->on('vendors');
             $table->string("about");
