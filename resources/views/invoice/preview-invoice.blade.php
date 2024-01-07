@@ -247,9 +247,9 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
+                        <!-- <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
-                        </button>
+                        </button> -->
                         <!-- <a type="button" class="btn btn-label-secondary d-grid w-100 mb-2" style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
                         <a href="#" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Download</a>
                         <a href="#" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Print</a> -->
@@ -317,6 +317,7 @@ $configData = Helper::appClasses();
     });
 
     function format(e) {
+        console.log(e);
         var nStr = e + '';
 
         nStr = nStr.replace(/\,/g, "");
@@ -337,6 +338,7 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
+                console.log(data);
                 $("#company").text(data.company);
                 $("#floor").text(data.floor);
                 $("#name_tenant").text(data.name);
@@ -354,6 +356,7 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
+                console.log(data);
                 $("#bank-name").text(data.name)
             },
             error: function(xhr, status, error) {
@@ -372,7 +375,7 @@ $configData = Helper::appClasses();
                         <td class="text-nowrap">` + details[i].item + `</td>
                         <td class="text-nowrap">` + details[i].description + `</td>
                         <td>` + format(details[i].price) + `</td>
-                        <td>` + format(details[i].tax.name) + `</td>
+                        <td>` + format(details[i].tax_id) + `</td>
                         <td>` + format(details[i].total_price) + `</td>
                     </tr>
             `;
