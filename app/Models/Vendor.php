@@ -19,6 +19,11 @@ class Vendor extends Model
 
     protected $fillable = [
         'name',
+        'email',
+        'phone',
+        'address',
+        'floor',
+        'status',
         'created_at',
         'updated_at',
         'deleted_at',
