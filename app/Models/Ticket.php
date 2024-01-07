@@ -45,7 +45,7 @@ class Ticket extends Model
 
         $maxNumberForYear = static::whereYear('created_at', $year)->max('ticket_number') ?: 0;
 
-        $this->ticket_number = $maxNumberForYear + 1;
+        $this->ticket_number = str_pad($maxNumberForYear + 1, 5, '0', STR_PAD_LEFT);
     }
 
     public function ticketAttachments(): HasMany

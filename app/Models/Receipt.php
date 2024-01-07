@@ -54,7 +54,7 @@ class Receipt extends Model
 
         $maxNumberForYear = static::whereYear('created_at', $year)->max('receipt_number') ?: 0;
 
-        $this->receipt_number = $maxNumberForYear + 1;
+        $this->receipt_number = str_pad($maxNumberForYear + 1, 5, '0', STR_PAD_LEFT);
     }
 
     public function tenant(): BelongsTo

@@ -47,7 +47,7 @@ class PurchaseRequest extends Model
 
         $maxNumberForYear = static::whereYear('created_at', $year)->max('purchase_request_number') ?: 0;
 
-        $this->purchase_request_number = $maxNumberForYear + 1;
+        $this->purchase_request_number = str_pad($maxNumberForYear + 1, 5, '0', STR_PAD_LEFT);
     }
 
     public function department(): BelongsTo

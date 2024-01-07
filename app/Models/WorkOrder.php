@@ -45,7 +45,7 @@ class WorkOrder extends Model
 
         $maxNumberForYear = static::whereYear('created_at', $year)->max('work_order_number') ?: 0;
 
-        $this->work_order_number = $maxNumberForYear + 1;
+        $this->work_order_number = str_pad($maxNumberForYear + 1, 5, '0', STR_PAD_LEFT);
     }
 
     public function workOrderDetails(): HasMany

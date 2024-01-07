@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('receipts', function (Blueprint $table) {
             $table->increments("id");
-            $table->unsignedInteger("receipt_number");
+            $table->string("receipt_number");
             $table->unsignedInteger("grand_total");
             $table->date("receipt_date");
             $table->date("receipt_send_date")->nullable();
