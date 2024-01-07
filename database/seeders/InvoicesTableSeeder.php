@@ -29,7 +29,6 @@ class InvoicesTableSeeder extends Seeder
             $dataIndex = $i % 6;
 
             Invoice::create([
-                "invoice_number" => "INV/2023/{$count}",
                 "tenant_id" => $count,
                 "grand_total" => $grandTotal,
                 "invoice_date" => $startDate,
@@ -59,7 +58,7 @@ class InvoicesTableSeeder extends Seeder
                     "item" => "Item {$j}",
                     "description" => $faker->text,
                     "price" => $price,
-                    "tax" => $tax,
+                    "tax_id" => 10,
                     "total_price" => $totalPrice,
                     'deleted_at' => null,
                 ]);

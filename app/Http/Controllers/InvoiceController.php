@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\CustomException;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
+use App\Models\Receipt;
 use App\Models\Tenant;
 use App\Services\CommonService;
 use App\Services\InvoiceService;
@@ -36,7 +37,7 @@ class InvoiceController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $invoiceQuery = Invoice::with("invoiceDetails")->with("tenant")->with("bank")->where("deleted_at", null);
+            $invoiceQuery = Invoice::with("invoiceDetails.tax")->with("tenant")->with("bank")->where("deleted_at", null);
             if($value){
                 $invoiceQuery->where(function ($query) use ($value) {
                     $query->whereHas('tenant', function ($tenantQuery) use ($value) {
@@ -85,20 +86,23 @@ class InvoiceController extends Controller
             $validateInvoice = $this->InvoiceService->validateInvoice($request);
             if($validateInvoice != "") throw new CustomException($validateInvoice, 400);
 
-            $invoice = Invoice::create($request->all());
+            $invoicePayload = $request->all();
+            if(isset($invoicePayload["invoice_number"])) unset($invoicePayload["invoice_number"]);
+
+            $invoice = Invoice::create($invoicePayload);
             foreach ($request->input('details') as $detail) {
                 InvoiceDetail::create([
                     'invoice_id' => $invoice->id,
                     'item' => $detail['item'],
                     'description' => $detail['description'],
                     'price' => $detail['price'],
-                    'tax' => $detail['tax'],
+                    'tax_id' => $detail['tax_id'],
                     'total_price' => $detail['total_price'],
                 ]);
             }
 
             DB::commit();
-            $getInvoice = Invoice::with("invoiceDetails")
+            $getInvoice = Invoice::with("invoiceDetails.tax")
                 ->with("tenant")
                 ->with("bank")
                 ->where("id", $invoice->id)
@@ -130,12 +134,15 @@ class InvoiceController extends Controller
     {
         try{
             $id = (int) $id;
-            $getInvoice = Invoice::with("invoiceDetails")->
+            $getInvoice = Invoice::with("invoiceDetails.tax")->
                 with("tenant")->
                 with("bank")->
                 where("id", $id)->
                 where("deleted_at", null)->first();
             if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
+
+            $sumReceipt = Receipt::where("invoice_id", $id)->where("deleted_at", null)->sum("grand_total");
+            $getInvoice["total_paid"] = $sumReceipt;
 
             return ["data" => $getInvoice];
         } catch (\Throwable $e) {
@@ -166,7 +173,10 @@ class InvoiceController extends Controller
             $validateInvoice = $this->InvoiceService->validateInvoice($request);
             if($validateInvoice != "") throw new CustomException($validateInvoice, 400);
 
-            Invoice::findOrFail($id)->update($request->all());
+            $invoicePayload = $request->all();
+            if(isset($invoicePayload["invoice_number"])) unset($invoicePayload["invoice_number"]);
+
+            Invoice::findOrFail($id)->update($invoicePayload);
             InvoiceDetail::where("invoice_id", $id)->where("deleted_at", null)->delete();
             foreach ($request->input('details') as $detail) {
                 InvoiceDetail::create([
@@ -174,13 +184,13 @@ class InvoiceController extends Controller
                     'item' => $detail['item'],
                     'description' => $detail['description'],
                     'price' => $detail['price'],
-                    'tax' => $detail['tax'],
+                    'tax_id' => $detail['tax_id'],
                     'total_price' => $detail['total_price'],
                 ]);
             }
 
             DB::commit();
-            $getInvoice = Invoice::with("invoiceDetails")
+            $getInvoice = Invoice::with("invoiceDetails.tax")
                 ->with("tenant")
                 ->with("bank")
                 ->where("id", $id)

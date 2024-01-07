@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\Invoice;
 use App\Models\Receipt;
+use App\Models\Tax;
 use Validator;
 
 class InvoiceService{
@@ -21,7 +22,6 @@ class InvoiceService{
      */
     public function validateInvoice($request){
         $rules = [
-            "invoice_number" => ["bail", "required", "string"],
             "tenant_id" => ["bail", "required", "numeric"],
             "grand_total" => ["bail", "required", "numeric", "gte:0"],
             "invoice_date" => ["bail", "required", "date"],
@@ -37,7 +37,7 @@ class InvoiceService{
             "details.*.item" => ["bail", "required", "string"],
             "details.*.description" => ["bail", "required", "string"],
             "details.*.price" => ["bail", "required", "numeric"],
-            "details.*.tax" => ["bail", "required", "numeric"],
+            "details.*.tax_id" => ["bail", "required", "numeric"],
             "details.*.total_price" => ["bail", "required", "numeric"],
 
             "grand_total_spelled" => ["bail", "required", "string"],
@@ -75,6 +75,17 @@ class InvoiceService{
 
             if (is_null($getTenant)) $message = "Tenant tidak ditemukan";
             else if(is_null($getBank)) $message = "Bank tidak ditemukan";
+        }
+
+        if($message == ""){
+          foreach($request->input("details") as $detail){
+            $getTax = Tax::where("id", $detail["tax_id"])->where("deleted_at", null)->select("id")->first();
+
+            if(is_null($getTax)){
+              $message = "Pajak tidak ditemukan";
+              break;
+            }
+          }
         }
 
         return $message;
