@@ -980,36 +980,36 @@ $configData = Helper::appClasses();
             let details = dataLocal.details;
             console.log(details);
             for (let i = 0; i < details.length; i++) {
-                $("#tax-" + i).select2({
-                    width: '100px',
-                    placeholder: 'Select Pajak',
-                    allowClear: true,
-                    ajax: {
-                        url: "{{env('BASE_URL_API')}}" + "/api/tax/select",
-                        dataType: 'json',
-                        cache: true,
-                        data: function(params) {
-                            return {
-                                value: params.term || '',
-                                page: params.page || 1
-                            }
-                        },
-                        processResults: function(data, params) {
-                            var more = data.pagination.more;
-                            if (more === false) {
-                                params.page = 1;
-                                params.abort = true;
-                            }
-                            return {
-                                results: data.data,
-                                pagination: {
-                                    more: more
-                                }
-                            };
-                        }
-                    }
+                // $("#tax-" + i).select2({
+                //     width: '100px',
+                //     placeholder: 'Select Pajak',
+                //     allowClear: true,
+                //     ajax: {
+                //         url: "{{env('BASE_URL_API')}}" + "/api/tax/select",
+                //         dataType: 'json',
+                //         cache: true,
+                //         data: function(params) {
+                //             return {
+                //                 value: params.term || '',
+                //                 page: params.page || 1
+                //             }
+                //         },
+                //         processResults: function(data, params) {
+                //             var more = data.pagination.more;
+                //             if (more === false) {
+                //                 params.page = 1;
+                //                 params.abort = true;
+                //             }
+                //             return {
+                //                 results: data.data,
+                //                 pagination: {
+                //                     more: more
+                //                 }
+                //             };
+                //         }
+                //     }
 
-                });
+                // });
                 temp = `             
                 <div class="row-mg">
                     <div class="col-12 d-flex align-items-end  justify-content-between mb-3">
@@ -1048,8 +1048,6 @@ $configData = Helper::appClasses();
                     </div>
                 </div>`;
                 getDetail = getDetail + temp;
-
-
                 $.ajax({
                     url: "{{env('BASE_URL_API')}}" + "/api/tax/" + details[i].tax_id,
                     type: "GET",
@@ -1067,6 +1065,38 @@ $configData = Helper::appClasses();
 
             }
             $('#details').prepend(getDetail);
+            for (let i = 0; i < details.length; i++) {
+                $("#tax-" + i).select2({
+                    width: '100px',
+                    placeholder: 'Select Pajak',
+                    allowClear: true,
+                    ajax: {
+                        url: "{{env('BASE_URL_API')}}" + "/api/tax/select",
+                        dataType: 'json',
+                        cache: true,
+                        data: function(params) {
+                            return {
+                                value: params.term || '',
+                                page: params.page || 1
+                            }
+                        },
+                        processResults: function(data, params) {
+                            var more = data.pagination.more;
+                            if (more === false) {
+                                params.page = 1;
+                                params.abort = true;
+                            }
+                            return {
+                                results: data.data,
+                                pagination: {
+                                    more: more
+                                }
+                            };
+                        }
+                    }
+
+                });
+            }
         } else {
             temp = `             
               <div class="row-mg">
