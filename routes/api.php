@@ -42,6 +42,7 @@ Route::resource('bank', BankController::class);
 
 Route::get("invoice/select", [InvoiceController::class, "select"]);
 Route::get("invoice/report", [InvoiceController::class, "report"]);
+Route::get("invoice/nomor", [InvoiceController::class, "nomor"]);
 Route::resource('invoice', InvoiceController::class);
 
 Route::get("receipt/select", [ReceiptController::class, "select"]);

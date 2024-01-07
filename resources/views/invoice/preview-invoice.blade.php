@@ -250,15 +250,14 @@ $configData = Helper::appClasses();
                         <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
                         </button>
-                        <a type="button" class="btn btn-label-secondary d-grid w-100 mb-2" style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
+                        <!-- <a type="button" class="btn btn-label-secondary d-grid w-100 mb-2" style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
                         <a href="#" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Download</a>
-                        <a href="#" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Print</a>
-                        <a href="/invoice/add-invoice" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Edit Invoice</a>
+                        <a href="#" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Print</a> -->
+                        <a href="/invoice/add-invoice" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Kembali</a>
                         <!-- <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button> -->
-                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100 mb-2">Batal</button>
-                        <button class="btn btn-primary d-grid w-100 mb-2">
+                        <!-- <button class="btn btn-primary d-grid w-100 mb-2">
                             <span class="d-flex align-items-center justify-content-center text-nowrap">Add Payment</span>
-                        </button>
+                        </button> -->
                     </div>
                 </div>
             </div>
@@ -318,7 +317,6 @@ $configData = Helper::appClasses();
     });
 
     function format(e) {
-        console.log(e);
         var nStr = e + '';
 
         nStr = nStr.replace(/\,/g, "");
@@ -339,7 +337,6 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
-                console.log(data);
                 $("#company").text(data.company);
                 $("#floor").text(data.floor);
                 $("#name_tenant").text(data.name);
@@ -357,7 +354,6 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
-                console.log(data);
                 $("#bank-name").text(data.name)
             },
             error: function(xhr, status, error) {
@@ -376,7 +372,7 @@ $configData = Helper::appClasses();
                         <td class="text-nowrap">` + details[i].item + `</td>
                         <td class="text-nowrap">` + details[i].description + `</td>
                         <td>` + format(details[i].price) + `</td>
-                        <td>` + format(details[i].tax) + `</td>
+                        <td>` + format(details[i].tax.name) + `</td>
                         <td>` + format(details[i].total_price) + `</td>
                     </tr>
             `;

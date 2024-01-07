@@ -25,60 +25,49 @@ $configData = Helper::appClasses();
                         <div style="background-image: url('{{ asset('assets/img/header.png') }}'); height : 150px; background-size: contain; background-repeat: no-repeat;">
                         </div>
 
-                        <div class="row m-sm-2 m-0 px-3">
-                            <div class="row col-md-7 mb-md-0 ps-0">
-                                <div class="row px-3 d-flex align-items-start mb-3">
-                                    <div class="d-flex align-items-center justify-content-between col-3">
-                                        <label for="select2Primary" class="form-label">Kepada Yth,</label>
-                                    </div>
-                                    <div class="col-8 fs-5">
-                                        <div class="form-label">
-                                            <span id="company"></span><br>
-                                            <span id="floor"></span><br><br>
-                                            <span id="name_tenant"></span>
-                                        </div>
-                                        <div class="d-none">
-                                            <select name="tenant" id="tenant" name="tenant" class="w-px-250 item-details mb-3" required>
-                                            </select>
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-
-                                    </div>
+                        <div class="row  px-3">
+                            <div class="col-6">
+                                <label for="select2Primary" class="form-label">Kepada Yth, </label>
+                                <br>
+                                <div class="form-label">
+                                    <span id="company"></span><br>
+                                    <span id="floor"></span><br><br>
+                                    <span id="name_tenant"></span>
                                 </div>
                             </div>
-                            <div class="col-md-5">
-                                <dd class="d-flex justify-content-md-end flex-wrap pe-0 ps-0 ps-sm-2">
-                                    <div class="mb-3 mx-2">
+                            <div class="col-6">
+                                <div class="row d-flex justify-content-end">
+                                    <div class="col-6 mb-3">
                                         <label for="note" class="form-label fw-medium">No. Invoice</label>
-                                        <input type="text" class="form-control w-px-150" name="invoice_number" id="invoice_number" placeholder="" readonly disabled />
+                                        <input type="text" class="form-control" id="invoice_number" placeholder="" readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="mb-3 mx-2">
+                                    <div class="col-6 mb-3">
                                         <label for="note" class="form-label fw-medium">Tgl. Invoice</label>
-                                        <input type="text" class="form-control w-px-150 date" name="invoice_date" id="invoice_date" placeholder="" readonly />
+                                        <input type="text" class="form-control date" name="invoice_date" id="invoice_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="mb-3 mx-2">
+                                    <div class="col-6 mb-3">
                                         <label for="note" class="form-label fw-medium">No. Kontrak</label>
-                                        <input type="text" class="form-control w-px-150" name="contract_number" id="contract_number" placeholder="" readonly />
+                                        <input type="text" class="form-control" name="contract_number" id="contract_number" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="mb-3 mx-2">
+                                    <div class="col-6 mb-3">
                                         <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control w-px-150 date" name="contract_number" id="contract_date" placeholder="" readonly />
+                                        <input type="text" class="form-control  date" name="contract_date" id="contract_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="mb-3 mx-2">
+                                    <div class="col-6 mb-3 ">
                                         <label for="note" class="form-label fw-medium">No. Addendum</label>
-                                        <input type="text" class="form-control w-px-150" name="addendum_number" id="addendum_number" placeholder="" readonly />
+                                        <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="mb-3 mx-2">
+                                    <div class="col-6 mb-3">
                                         <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control w-px-150 date" id="addendum_date" placeholder="" readonly />
+                                        <input type="text" class="form-control date" id="addendum_date" name="addendum_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                </dd>
+                                </div>
                             </div>
                         </div>
 
@@ -244,18 +233,20 @@ $configData = Helper::appClasses();
             <!-- /Invoice Add-->
 
             <!-- Invoice Actions -->
-            <!-- <div class="col-lg-3 col-12 invoice-actions">
+            <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
                         <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
                         </button>
-                        <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
-                        <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                        <a type="button" class="btn btn-label-secondary d-grid w-100 mb-2" style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
+                        <a href="#" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Download</a>
+                        <button class="btn btn-primary d-grid w-100 mb-2">
+                            <span class="d-flex align-items-center justify-content-center text-nowrap">Add Payment</span>
+                        </button>
                     </div>
                 </div>
-            </div> -->
+            </div>
             <!-- /Invoice Actions -->
         </div>
     </form>
@@ -287,15 +278,12 @@ $configData = Helper::appClasses();
     });
 
     function getDataInvoice(id) {
-        console.log(id);
         $.ajax({
             url: "{{ url('api/invoice') }}/" + id,
             type: "GET",
             dataType: "json",
             success: function(res) {
                 let data = res.data;
-                console.log(data);
-
                 getTenant(data.tenant_id)
                 getBank(data.bank_id)
                 $("#invoice_number").val(data.invoice_number);
@@ -332,7 +320,6 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
-                console.log(data);
                 $("#company").text(data.company);
                 $("#floor").text(data.floor);
                 $("#name_tenant").text(data.name);
@@ -344,7 +331,6 @@ $configData = Helper::appClasses();
     }
 
     function format(e) {
-        console.log(e);
         var nStr = e + '';
 
         nStr = nStr.replace(/\,/g, "");
@@ -364,7 +350,6 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
-                console.log(data);
                 $("#bank-name").text(data.name)
             },
             error: function(xhr, status, error) {
@@ -383,7 +368,7 @@ $configData = Helper::appClasses();
                         <td>` + details[i].item + `</td>
                         <td>` + details[i].description + `</td>
                         <td>` + format(details[i].price) + `</td>
-                        <td>` + format(details[i].tax) + `</td>
+                        <td>` + format(details[i].tax.name) + `</td>
                         <td>` + format(details[i].total_price) + `</td>
                     </tr>
             `;

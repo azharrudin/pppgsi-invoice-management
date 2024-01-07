@@ -25,57 +25,53 @@ $configData = Helper::appClasses();
                         <div style="background-image: url('{{ asset('assets/img/header.png') }}'); height : 150px; background-size: contain; background-repeat: no-repeat;">
                         </div>
 
-                        <div class="row m-sm-2 m-0 px-3">
-                            <div class="row col-md-7 mb-md-0 ps-0">
-                                <div class="row px-3 d-flex align-items-start mb-3">
-                                    <div class="d-flex align-items-center justify-content-between col-3">
-                                        <label for="select2Primary" class="form-label">Kepada Yth,</label>
+                        <div class="row  px-3">
+                            <div class="col-6">
+                                <label for="select2Primary" class="form-label">Kepada Yth, </label>
+                                <br>
+                                <div class="col-8">
+                                    <select name="tenant" id="tenant" name="tenant" class="mb-3" required>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row d-flex justify-content-end">
+                                    <div class="col-6 mb-3">
+                                        <label for="note" class="form-label fw-medium">No. Invoice</label>
+                                        <input type="text" class="form-control" id="invoice_number" placeholder="" readonly />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-8 fs-5">
-                                        <select name="tenant" id="tenant" name="tenant" class="w-px-250 item-details mb-3" required>
-                                        </select>
+                                    <div class="col-6 mb-3">
+                                        <label for="note" class="form-label fw-medium">Tgl. Invoice</label>
+                                        <input type="text" class="form-control date" name="invoice_date" id="invoice_date" placeholder="" required />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <label for="note" class="form-label fw-medium">No. Kontrak</label>
+                                        <input type="text" class="form-control" name="contract_number" id="contract_number" placeholder="" required />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <label for="note" class="form-label fw-medium">Tanggal</label>
+                                        <input type="text" class="form-control  date" name="contract_date" id="contract_date" placeholder="" required />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                    <div class="col-6 mb-3 ">
+                                        <label for="note" class="form-label fw-medium">No. Addendum</label>
+                                        <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" required />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <label for="note" class="form-label fw-medium">Tanggal</label>
+                                        <input type="text" class="form-control date" id="addendum_date" name="addendum_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5">
-                                <dd class="d-flex justify-content-md-end flex-wrap pe-0 ps-0 ps-sm-2">
-                                    <div class="mb-3 mx-2">
-                                        <label for="note" class="form-label fw-medium">No. Invoice</label>
-                                        <input type="text" class="form-control w-px-150" name="invoice_number" id="invoice_number" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="mb-3 mx-2">
-                                        <label for="note" class="form-label fw-medium">Tgl. Invoice</label>
-                                        <input type="text" class="form-control w-px-150 date" name="invoice_date" id="invoice_date" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="mb-3 mx-2">
-                                        <label for="note" class="form-label fw-medium">No. Kontrak</label>
-                                        <input type="text" class="form-control w-px-150" name="contract_number" id="contract_number" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="mb-3 mx-2">
-                                        <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control w-px-150 date" name="contract_date" id="contract_date" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="mb-3 mx-2">
-                                        <label for="note" class="form-label fw-medium">No. Addendum</label>
-                                        <input type="text" class="form-control w-px-150" name="addendum_number" id="addendum_number" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="mb-3 mx-2">
-                                        <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control w-px-150 date" id="addendum_date" name="addendum_date" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                </dd>
-                            </div>
                         </div>
 
                         {{-- Repeater --}}
-                        <div class="repeater">
+                        <div class="repeater px-3">
                             <div class="" id="details">
 
                             </div>
@@ -89,12 +85,12 @@ $configData = Helper::appClasses();
                         </div>
 
                         {{-- Divider --}}
-                        <div class="px-5">
+                        <div class="px-5 ">
                             <hr class="my-3 mx-n5">
                         </div>
 
                         {{-- Total --}}
-                        <div class="col-md-12 d-flex float-end px-5 mb-5">
+                        <div class="col-md-12 d-flex float-end px-3 mb-5">
                             <div class="col-6"></div>
                             <div class="col-6">
                                 {{-- Total --}}
@@ -165,6 +161,7 @@ $configData = Helper::appClasses();
             </div>
             <!-- /Invoice Add-->
 
+
             <!-- Invoice Actions -->
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
@@ -201,6 +198,7 @@ $configData = Helper::appClasses();
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
+    var lastIndex = null;
 
     function format(e) {
         var nStr = e + '';
@@ -216,6 +214,22 @@ $configData = Helper::appClasses();
     }
     let dataLocal = JSON.parse(localStorage.getItem("invoice"));
     $(document).ready(function() {
+        $.ajax({
+            url: baseUrl + "api/invoice/nomor",
+            type: "get",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(response) {
+                $('#invoice_number').val(response.data);
+            },
+            error: function(errors) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: errors.responseJSON.message,
+                })
+            }
+        });
         let ttdFile = dataLocal ? dataLocal.materai_image : null;
         const myDropzone = new Dropzone('#dropzone-basic', {
             parallelUploads: 1,
@@ -275,7 +289,6 @@ $configData = Helper::appClasses();
         $("#tenant").select2({
             placeholder: 'Select Tenant',
             allowClear: true,
-            minimumResultsForSearch: Infinity,
             ajax: {
                 url: "{{ url('api/tenant/select') }}",
                 dataType: 'json',
@@ -304,6 +317,11 @@ $configData = Helper::appClasses();
 
         });
 
+
+
+        // $('#tenant').next('.select2-container').find('.select2-selection').css('width', '250px');
+        // $('#tenant').find('.select2-container').css('width', '100px');
+
         $("#bank").select2({
             placeholder: 'Select Bank',
             allowClear: true,
@@ -323,7 +341,6 @@ $configData = Helper::appClasses();
                         params.page = 1;
                         params.abort = true;
                     }
-                    console.log(data);
                     return {
                         results: data.data,
                         pagination: {
@@ -390,47 +407,114 @@ $configData = Helper::appClasses();
 
         $(document).on('click', '.btn-add-row-mg', function() {
             // Clone baris terakhir
+            var index = lastIndex ? lastIndex + 1 : $('.tax').length;
+            lastIndex = index;
+            console.log(lastIndex);
             var $details = $('#details');
-            var $newRow = ` <div class="row-mg">
-                <div class="col-12 d-flex align-items-center justify-content-between">
-                    <div class="col-sm-2 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Uraian</label>
-                        <input type="text" name="uraian" class="form-control w-px-150 row-input" placeholder="" name="item[]" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
+            var $newRow = `
+            <div class="row-mg">
+                <div class="col-12 d-flex align-items-end  justify-content-between mb-3">
+                    <div class="col-sm-5 row d-flex justify-content-between px-1">
+                        <div class="col-sm-6">
+                            <label for="note" class="form-label fw-medium">Uraian</label>
+                            <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required /></textarea>
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-sm-6" style="padding-left:0px">
+                            <label for="note" class="form-label fw-medium">Keterangan</label>
+                            <textarea class="form-control row-input" placeholder="" name="description[]" required></textarea>
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
                     </div>
-                    <div class="col-sm-2 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Keterangan</label>
-                        <input type="text" class="form-control w-px-150 row-input" placeholder="" name="description[]" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-sm-2 mb-3 mx-2">
+
+                    <div class="col-sm-2 px-1">
                         <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                        <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required />
+                        <input type="text" class="form-control row-input price" placeholder="" name="price[]" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col-sm-1 mb-3 mx-2">
+                    <div class="col-sm-2 px-1">
                         <label for="note" class="form-label fw-medium">Pajak</label>
-                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
+                        <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-` + index + `" required></select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col-sm-2 mb-3 mx-2">
+                    <div class="col-sm-2 px-1">
                         <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled/>
+                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled/>
                     </div>
-                    <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                            <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
-                            <path d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z" fill="#FF4747" />
-                        </svg>
-                    </a>
+                    <div class="col-sm-1 px-1">
+                        <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
                 </div>
             </div>`;
             $details.append($newRow);
+            $("#tax-" + index).select2({
+                width: '100px',
+                placeholder: 'Select Pajak',
+                allowClear: true,
+                ajax: {
+                    url: "{{env('BASE_URL_API')}}" + "/api/tax/select",
+                    dataType: 'json',
+                    cache: true,
+                    data: function(params) {
+                        return {
+                            value: params.term || '',
+                            page: params.page || 1
+                        }
+                    },
+                    processResults: function(data, params) {
+                        var more = data.pagination.more;
+                        if (more === false) {
+                            params.page = 1;
+                            params.abort = true;
+                        }
+                        return {
+                            results: data.data,
+                            pagination: {
+                                more: more
+                            }
+                        };
+                    }
+                }
+
+            });
         });
 
         function tenantTemplate(data) {
             return data;
         }
+
+        $("#tax-0").select2({
+            placeholder: 'Select Tenant',
+            allowClear: true,
+            ajax: {
+                url: "{{env('BASE_URL_API')}}" + "/api/tax/select",
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        value: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+
+        });
 
 
         $(document).on('click', '.btn-remove-mg', function() {
@@ -444,7 +528,6 @@ $configData = Helper::appClasses();
         });
 
         $(document).on('input', '.price', function(event) {
-            console.log(event.currentTarget.value);
             var nStr = event.currentTarget.value + '';
             nStr = nStr.replace(/\,/g, "");
             var x = nStr.split('.');
@@ -458,37 +541,63 @@ $configData = Helper::appClasses();
             // Hapus baris yang ditekan tombol hapus
             let index = $('.price').index(this);
             let total = 0;
-            let tax = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
             let price = parseInt($(this).val().replaceAll(',', ''));
-            let totalPrice = price + tax;
-            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
-            getTotal();
+            let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
+            console.log(id);
+            if (id == 0) {
+                $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(price));
+                getTotal();
+            } else {
+                $.ajax({
+                    url: "{{env('BASE_URL_API')}}" + "/api/tax/" + id,
+                    type: "get",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(response) {
+                        console.log(response);
+                        let data = response.data.rate;
+                        let total = 0;
+                        let tax = parseInt(data);
+                        tax = tax / 100;
+                        let totalPrice = price * tax + price;
+                        // console.log(format(totalPrice));
+                        $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
+                        getTotal();
+                    },
+                    error: function(errors) {
+                        console.log(errors);
+                    }
+                });
+            }
 
         });
 
         $(document).on('input', '.tax', function(event) {
-            console.log(event.currentTarget.value);
-            var nStr = event.currentTarget.value + '';
-
-            nStr = nStr.replace(/\,/g, "");
-            var x = nStr.split('.');
-            var x1 = x[0];
-            var x2 = x.length > 1 ? '.' + x[1] : '';
-            var rgx = /(\d+)(\d{3})/;
-            while (rgx.test(x1)) {
-                x1 = x1.replace(rgx, '$1' + ',' + '$2');
-            }
-            event.currentTarget.value = x1 + x2;
-            // Hapus baris yang ditekan tombol hapus
+            let id = event.currentTarget.value;
             let index = $('.tax').index(this);
-            let total = 0;
-            let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
-            let tax = parseInt($(this).val().replaceAll(',', ''));
-            let totalPrice = price + tax;
-            // console.log(format(totalPrice));
-            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
-            getTotal();
-
+            let data = 0;
+            $.ajax({
+                url: "{{env('BASE_URL_API')}}" + "/api/tax/" + id,
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    console.log(response);
+                    let data = response.data.rate;
+                    console.log($(this));
+                    let total = 0;
+                    let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+                    let tax = parseInt(data);
+                    tax = tax / 100;
+                    let totalPrice = price * tax + price;
+                    // console.log(format(totalPrice));
+                    $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
+                    getTotal();
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
         });
 
         function getTotal() {
@@ -660,7 +769,7 @@ $configData = Helper::appClasses();
                             } else if (index % 5 == 2) {
                                 detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
                             } else if (index % 5 == 3) {
-                                detail[input_index].tax = parseInt(input_value.replaceAll(',', ''));
+                                detail[input_index].tax_id = parseInt(input_value);
                             } else if (index % 5 == 4) {
                                 detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
                             }
@@ -686,7 +795,6 @@ $configData = Helper::appClasses();
                         datas.grand_total = parseInt(grandTotal);
                         datas.materai_image = fileTtd;
                         delete datas['undefined'];
-
                         console.log(datas);
 
                         $.ajax({
@@ -767,7 +875,7 @@ $configData = Helper::appClasses();
                 } else if (index % 5 == 2) {
                     detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
                 } else if (index % 5 == 3) {
-                    detail[input_index].tax = parseInt(input_value.replaceAll(',', ''));
+                    detail[input_index].tax_id = parseInt(input_value);
                 } else if (index % 5 == 4) {
                     detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
                 }
@@ -791,6 +899,7 @@ $configData = Helper::appClasses();
             datas.invoice_date = tglInvoice;
             datas.grand_total = grandTotal;
             datas.materai_image = fileTtd;
+            console.log(lastIndex);
             localStorage.setItem("invoice", JSON.stringify(datas));
             window.location.href = "/invoice/preview-invoice"
         });
@@ -809,7 +918,6 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
-                console.log(data);
                 let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
                 $('#tenant').prepend(tem);
             },
@@ -872,34 +980,37 @@ $configData = Helper::appClasses();
             let details = dataLocal.details;
             for (let i = 0; i < details.length; i++) {
                 temp = `             
-              <div class="row-mg">
-                <div class="col-12 d-flex align-items-center justify-content-between">
-                    <div class="col-sm-2 mb-3 mx-2">
+                <div class="row-mg">
+                <div class="col-12 d-flex align-items-end mb-3">
+                    <div class="col-sm-3 px-1">
                         <label for="note" class="form-label fw-medium">Uraian</label>
-                        <input type="text" name="uraian" class="form-control w-px-150 row-input" placeholder="" name="item[]" required value="` + details[i].item + `" />
+                        <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required />` + details[i].item + `</textarea>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col-sm-2 mb-3 mx-2">
+                    <div class="col-sm-3 px-1">
                         <label for="note" class="form-label fw-medium">Keterangan</label>
-                        <input type="text" class="form-control w-px-150 row-input" placeholder="" name="description[]" required value="` + details[i].description + `" />
+                        <textarea class="form-control row-input" placeholder="" name="description[]" required>` + details[i].description + `</textarea>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col-sm-2 mb-3 mx-2">
+                    <div class="col-sm-2 px-1">
                         <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                        <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required value="` + format(details[i].price) + `"  />
+                        <input type="text" class="form-control row-input price" placeholder="" name="price[]" required />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col-sm-1 mb-3 mx-2">
+                    <div class="col-sm-1 px-1">
                         <label for="note" class="form-label fw-medium">Pajak</label>
-                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required  value="` + format(details[i].tax) + `" />
+                        <input type="text" class="form-control row-input tax" placeholder="" name="tax[]" required />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col-sm-2 mb-3 mx-2">
+                    <div class="col-sm-2 px-1">
                         <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled value="` + format(details[i].total_price) + `" />
+                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled/>
                     </div>
-                    <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                            <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
-                            <path d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z" fill="#FF4747" />
-                        </svg>
-                    </a>
+                    <div class="col-sm-1 px-1">
+                        <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
                 </div>
             </div>`;
                 getDetail = getDetail + temp;
@@ -908,37 +1019,39 @@ $configData = Helper::appClasses();
         } else {
             temp = `             
               <div class="row-mg">
-                <div class="col-12 d-flex align-items-center justify-content-between">
-                    <div class="col-sm-2 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Uraian</label>
-                        <input type="text" name="uraian" class="form-control w-px-150 row-input" placeholder="" name="item[]" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                <div class="col-12 d-flex align-items-end  justify-content-between mb-3">
+                    <div class="col-sm-5 row d-flex justify-content-between px-1">
+                        <div class="col-sm-6">
+                            <label for="note" class="form-label fw-medium">Uraian</label>
+                            <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required /></textarea>
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-sm-6" style="padding-left:0px">
+                            <label for="note" class="form-label fw-medium">Keterangan</label>
+                            <textarea class="form-control row-input" placeholder="" name="description[]" required></textarea>
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
                     </div>
-                    <div class="col-sm-2 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Keterangan</label>
-                        <input type="text" class="form-control w-px-150 row-input" placeholder="" name="description[]" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-sm-2 mb-3 mx-2">
+
+                    <div class="col-sm-2 px-1">
                         <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                        <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required />
+                        <input type="text" class="form-control row-input price" placeholder="" name="price[]" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col-sm-1 mb-3 mx-2">
+                    <div class="col-sm-2 px-1">
                         <label for="note" class="form-label fw-medium">Pajak</label>
-                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
+                        <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-0" required></select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col-sm-2 mb-3 mx-2">
+                    <div class="col-sm-2 px-1">
                         <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled/>
+                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled/>
                     </div>
-                    <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                            <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
-                            <path d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z" fill="#FF4747" />
-                        </svg>
-                    </a>
+                    <div class="col-sm-1 px-1">
+                        <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
                 </div>
             </div>`;
             $('#details').prepend(temp);
