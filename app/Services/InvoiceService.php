@@ -21,7 +21,6 @@ class InvoiceService{
      */
     public function validateInvoice($request){
         $rules = [
-            "invoice_number" => ["bail", "required", "string"],
             "tenant_id" => ["bail", "required", "numeric"],
             "grand_total" => ["bail", "required", "numeric", "gte:0"],
             "invoice_date" => ["bail", "required", "date"],
