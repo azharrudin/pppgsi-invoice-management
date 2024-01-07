@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class InvoiceDetail extends Model
@@ -19,7 +20,7 @@ class InvoiceDetail extends Model
         "item",
         "description",
         "price",
-        "tax",
+        "tax_id",
         "total_price",
         'deleted_at',
     ];
@@ -29,5 +30,10 @@ class InvoiceDetail extends Model
     public function invoice(): BelongsTo
     {
         return $this->belongsTo(Invoice::class, "invoice_id");
+    }
+
+    public function tax(): BelongsTo
+    {
+        return $this->belongsTo(Tax::class, "tax_id");
     }
 }

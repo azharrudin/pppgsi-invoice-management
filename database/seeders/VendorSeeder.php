@@ -18,6 +18,11 @@ class VendorSeeder extends Seeder
         for ($i = 0; $i < 20; $i++) {
             Vendor::create([
                 'name' => "Vendor {$faker->colorName}",
+                'email' => $faker->email,
+                'phone' => "080000123{$i}",
+                'address' => $faker->address,
+                'floor' => "Lantai {$i}",
+                'status' => "Active",
                 'deleted_at' => null,
             ]);
         }

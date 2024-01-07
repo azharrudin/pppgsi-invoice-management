@@ -42,7 +42,8 @@ return new class extends Migration
             $table->string('item');
             $table->text('description');
             $table->integer("price");
-            $table->integer("tax");
+            $table->unsignedInteger("tax_id");
+            $table->foreign('tax_id')->references('id')->on('taxes');
             $table->integer("total_price");
             $table->timestamps();
             $table->date("deleted_at")->nullable();
