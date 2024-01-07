@@ -75,6 +75,7 @@ class PurchaseRequestController extends Controller
         if ($response->data) {
             foreach ($response->data as $key => $value) {
                 $data[$key] = $value;
+                $data[$key]->department = $value->department->name;
             }
         }
         return DataTables::of($data)
