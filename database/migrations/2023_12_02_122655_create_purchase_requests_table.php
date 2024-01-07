@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('purchase_requests', function (Blueprint $table) {
             $table->increments("id");
-            $table->unsignedInteger("purchase_request_number");
+            $table->string("purchase_request_number");
             $table->unsignedInteger("department_id");
             $table->foreign('department_id')->references('id')->on('departments');
             $table->unsignedInteger("proposed_purchase_price");

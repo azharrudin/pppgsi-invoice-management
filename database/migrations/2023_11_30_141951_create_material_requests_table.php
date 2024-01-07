@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('material_requests', function (Blueprint $table) {
             $table->increments("id");
-            $table->unsignedInteger("material_request_number");
+            $table->string("material_request_number");
             $table->string("requester");
             $table->string("department");
             $table->date("request_date");
