@@ -978,42 +978,93 @@ $configData = Helper::appClasses();
 
         if (data) {
             let details = dataLocal.details;
+            console.log(details);
             for (let i = 0; i < details.length; i++) {
+                $("#tax-" + i).select2({
+                    width: '100px',
+                    placeholder: 'Select Pajak',
+                    allowClear: true,
+                    ajax: {
+                        url: "{{env('BASE_URL_API')}}" + "/api/tax/select",
+                        dataType: 'json',
+                        cache: true,
+                        data: function(params) {
+                            return {
+                                value: params.term || '',
+                                page: params.page || 1
+                            }
+                        },
+                        processResults: function(data, params) {
+                            var more = data.pagination.more;
+                            if (more === false) {
+                                params.page = 1;
+                                params.abort = true;
+                            }
+                            return {
+                                results: data.data,
+                                pagination: {
+                                    more: more
+                                }
+                            };
+                        }
+                    }
+
+                });
                 temp = `             
                 <div class="row-mg">
-                <div class="col-12 d-flex align-items-end mb-3">
-                    <div class="col-sm-3 px-1">
-                        <label for="note" class="form-label fw-medium">Uraian</label>
-                        <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required />` + details[i].item + `</textarea>
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    <div class="col-12 d-flex align-items-end  justify-content-between mb-3">
+                        <div class="col-sm-5 row d-flex justify-content-between px-1">
+                            <div class="col-sm-6">
+                                <label for="note" class="form-label fw-medium">Uraian</label>
+                                <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required />` + details[i].item + `</textarea>
+                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                            </div>
+                            <div class="col-sm-6" style="padding-left:0px">
+                                <label for="note" class="form-label fw-medium">Keterangan</label>
+                                <textarea class="form-control row-input" placeholder="" name="description[]" required>` + details[i].description + `</textarea>
+                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2 px-1">
+                            <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
+                            <input type="text" class="form-control row-input price" placeholder="" name="price[]" value="` + details[i].price + `" required />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-sm-2 px-1">
+                            <label for="note" class="form-label fw-medium">Pajak</label>
+                            <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-` + i + `" required></select>
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-sm-2 px-1">
+                            <label for="note" class="form-label fw-medium">Total (Rp.)</label>
+                            <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]"  value="` + format(details[i].total_price) + `" disabled/>
+                        </div>
+                        <div class="col-sm-1 px-1">
+                            <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
                     </div>
-                    <div class="col-sm-3 px-1">
-                        <label for="note" class="form-label fw-medium">Keterangan</label>
-                        <textarea class="form-control row-input" placeholder="" name="description[]" required>` + details[i].description + `</textarea>
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-sm-2 px-1">
-                        <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                        <input type="text" class="form-control row-input price" placeholder="" name="price[]" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-sm-1 px-1">
-                        <label for="note" class="form-label fw-medium">Pajak</label>
-                        <input type="text" class="form-control row-input tax" placeholder="" name="tax[]" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-sm-2 px-1">
-                        <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled/>
-                    </div>
-                    <div class="col-sm-1 px-1">
-                        <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>`;
+                </div>`;
                 getDetail = getDetail + temp;
+
+
+                $.ajax({
+                    url: "{{env('BASE_URL_API')}}" + "/api/tax/" + details[i].tax_id,
+                    type: "GET",
+                    success: function(response) {
+
+                        let data = response.data;
+                        let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
+                        $('#tax-' + i).prepend(tem);
+                        console.log();
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+
             }
             $('#details').prepend(getDetail);
         } else {

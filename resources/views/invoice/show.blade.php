@@ -25,7 +25,7 @@ $configData = Helper::appClasses();
                         <div style="background-image: url('{{ asset('assets/img/header.png') }}'); height : 150px; background-size: contain; background-repeat: no-repeat;">
                         </div>
 
-                        <div class="row  px-3">
+                        <div class="row px-4">
                             <div class="col-6">
                                 <label for="select2Primary" class="form-label">Kepada Yth, </label>
                                 <br>
@@ -241,7 +241,7 @@ $configData = Helper::appClasses();
                         </button>
                         <a type="button" class="btn btn-label-secondary d-grid w-100 mb-2" style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
                         <a href="#" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Download</a>
-                        <button class="btn btn-primary d-grid w-100 mb-2">
+                        <button class="btn btn-primary d-grid w-100 mb-2 add-pay">
                             <span class="d-flex align-items-center justify-content-center text-nowrap">Add Payment</span>
                         </button>
                     </div>
@@ -269,6 +269,7 @@ $configData = Helper::appClasses();
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
+    var nomorInvoice;
 
     $(document).ready(function() {
         var urlSegments = window.location.pathname.split('/');
@@ -277,15 +278,20 @@ $configData = Helper::appClasses();
         getDataInvoice(id);
     });
 
+
+
     function getDataInvoice(id) {
         $.ajax({
-            url: "{{ url('api/invoice') }}/" + id,
+            url: "{{env('BASE_URL_API')}}"+"/api/invoice/" + id,
             type: "GET",
             dataType: "json",
             success: function(res) {
                 let data = res.data;
+                console.log(data);
                 getTenant(data.tenant_id)
                 getBank(data.bank_id)
+                nomorInvoice = data.invoice_number;
+                console.log(nomorInvoice);
                 $("#invoice_number").val(data.invoice_number);
                 $("#invoice_date").val(data.invoice_date);
                 $("#contract_number").val(data.contract_number);
@@ -313,6 +319,11 @@ $configData = Helper::appClasses();
             }
         });
     }
+
+    $(document).on('click', '.add-pay', function(event) {
+        event.preventDefault();
+        window.location.href = "/invoice/tanda-terima/add?nomor-invoice=" + nomorInvoice
+    });
 
     function getTenant(id) {
         $.ajax({
