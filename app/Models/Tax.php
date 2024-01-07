@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tax extends Model
@@ -24,4 +25,9 @@ class Tax extends Model
     ];
 
     public $timestamp = true;
+
+    public function invoiceDetails(): HasMany
+    {
+        return $this->hasMany(InvoiceDetail::class, "tax_id");
+    }
 }

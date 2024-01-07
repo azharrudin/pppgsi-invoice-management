@@ -37,7 +37,7 @@ class InvoiceController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $invoiceQuery = Invoice::with("invoiceDetails")->with("tenant")->with("bank")->where("deleted_at", null);
+            $invoiceQuery = Invoice::with("invoiceDetails.tax")->with("tenant")->with("bank")->where("deleted_at", null);
             if($value){
                 $invoiceQuery->where(function ($query) use ($value) {
                     $query->whereHas('tenant', function ($tenantQuery) use ($value) {
@@ -96,13 +96,13 @@ class InvoiceController extends Controller
                     'item' => $detail['item'],
                     'description' => $detail['description'],
                     'price' => $detail['price'],
-                    'tax' => $detail['tax'],
+                    'tax_id' => $detail['tax_id'],
                     'total_price' => $detail['total_price'],
                 ]);
             }
 
             DB::commit();
-            $getInvoice = Invoice::with("invoiceDetails")
+            $getInvoice = Invoice::with("invoiceDetails.tax")
                 ->with("tenant")
                 ->with("bank")
                 ->where("id", $invoice->id)
@@ -131,7 +131,7 @@ class InvoiceController extends Controller
     {
         try{
             $id = (int) $id;
-            $getInvoice = Invoice::with("invoiceDetails")->
+            $getInvoice = Invoice::with("invoiceDetails.tax")->
                 with("tenant")->
                 with("bank")->
                 where("id", $id)->
@@ -181,13 +181,13 @@ class InvoiceController extends Controller
                     'item' => $detail['item'],
                     'description' => $detail['description'],
                     'price' => $detail['price'],
-                    'tax' => $detail['tax'],
+                    'tax_id' => $detail['tax_id'],
                     'total_price' => $detail['total_price'],
                 ]);
             }
 
             DB::commit();
-            $getInvoice = Invoice::with("invoiceDetails")
+            $getInvoice = Invoice::with("invoiceDetails.tax")
                 ->with("tenant")
                 ->with("bank")
                 ->where("id", $id)

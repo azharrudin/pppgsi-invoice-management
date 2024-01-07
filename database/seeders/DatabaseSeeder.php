@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(TenantsTableSeeder::class);
         $this->call(BanksTableSeeder::class);
+        $this->call(TaxSeeder::class);
         $this->call(InvoicesTableSeeder::class);
         $this->call(ReceiptSeeder::class);
         $this->call(TicketSeeder::class);
@@ -26,6 +27,5 @@ class DatabaseSeeder extends Seeder
         $this->call(MaterialRequestSeeder::class);
         $this->call(PurchaseRequestSeeder::class);
         $this->call(PurchaseOrderSeeder::class);
-        $this->call(TaxSeeder::class);
     }
 }

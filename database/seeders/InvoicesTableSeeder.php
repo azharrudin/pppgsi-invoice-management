@@ -58,7 +58,7 @@ class InvoicesTableSeeder extends Seeder
                     "item" => "Item {$j}",
                     "description" => $faker->text,
                     "price" => $price,
-                    "tax" => $tax,
+                    "tax_id" => 10,
                     "total_price" => $totalPrice,
                     'deleted_at' => null,
                 ]);
