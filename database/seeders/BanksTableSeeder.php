@@ -18,6 +18,9 @@ class BanksTableSeeder extends Seeder
         for ($i = 0; $i < 20; $i++) {
             Bank::create([
                 'name' => "Bank {$faker->colorName}",
+                'account_name' => $faker->name,
+                'account_number' => "f0000a1293". $i,
+                'branch_name' => "Branch {$faker->colorName}",
                 'deleted_at' => null,
             ]);
         }
