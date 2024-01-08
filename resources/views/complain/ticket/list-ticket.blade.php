@@ -76,7 +76,7 @@ $configData = Helper::appClasses();
             },
             columns: [{
                 name: "invoice_number",
-                data: "id",
+                data: "ticket_number",
                 title: "No. Ticket",
                 className: 'text-center',
                 render: function(data, type, row) {

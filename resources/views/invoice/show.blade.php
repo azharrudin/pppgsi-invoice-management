@@ -22,11 +22,11 @@ $configData = Helper::appClasses();
             <div class="col-lg-9 col-12 mb-lg-0 mb-3">
                 <div class="card invoice-preview-card">
                     <div class="card-body">
-                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); height : 150px; background-size: contain; background-repeat: no-repeat;">
+                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); background-size: contain; background-repeat: no-repeat;" class="set-back">
                         </div>
 
                         <div class="row px-4">
-                            <div class="col-6">
+                            <div class="col-md-6">
                                 <label for="select2Primary" class="form-label">Kepada Yth, </label>
                                 <br>
                                 <div class="form-label">
@@ -35,34 +35,34 @@ $configData = Helper::appClasses();
                                     <span id="name_tenant"></span>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-md-6">
                                 <div class="row d-flex justify-content-end">
-                                    <div class="col-6 mb-3">
+                                    <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">No. Invoice</label>
                                         <input type="text" class="form-control" id="invoice_number" placeholder="" readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-6 mb-3">
+                                    <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">Tgl. Invoice</label>
                                         <input type="text" class="form-control date" name="invoice_date" id="invoice_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-6 mb-3">
+                                    <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">No. Kontrak</label>
                                         <input type="text" class="form-control" name="contract_number" id="contract_number" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-6 mb-3">
+                                    <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">Tanggal</label>
                                         <input type="text" class="form-control  date" name="contract_date" id="contract_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-6 mb-3 ">
+                                    <div class="col-md-6 mb-3 ">
                                         <label for="note" class="form-label fw-medium">No. Addendum</label>
                                         <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-6 mb-3">
+                                    <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">Tanggal</label>
                                         <input type="text" class="form-control date" id="addendum_date" name="addendum_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
@@ -270,11 +270,12 @@ $configData = Helper::appClasses();
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
     var nomorInvoice;
+    var id;
 
     $(document).ready(function() {
         var urlSegments = window.location.pathname.split('/');
         var idIndex = urlSegments.indexOf('show') + 1;
-        var id = urlSegments[idIndex];
+        id = urlSegments[idIndex];
         getDataInvoice(id);
     });
 
@@ -282,12 +283,12 @@ $configData = Helper::appClasses();
 
     function getDataInvoice(id) {
         $.ajax({
-            url: "{{env('BASE_URL_API')}}"+"/api/invoice/" + id,
+            url: "{{env('BASE_URL_API')}}" + "/api/invoice/" + id,
             type: "GET",
             dataType: "json",
             success: function(res) {
                 let data = res.data;
-                console.log(data);
+                id = data.id;
                 getTenant(data.tenant_id)
                 getBank(data.bank_id)
                 nomorInvoice = data.invoice_number;
@@ -322,7 +323,7 @@ $configData = Helper::appClasses();
 
     $(document).on('click', '.add-pay', function(event) {
         event.preventDefault();
-        window.location.href = "/invoice/tanda-terima/add?nomor-invoice=" + nomorInvoice
+        window.location.href = "/invoice/tanda-terima/add?id-invoice=" + id
     });
 
     function getTenant(id) {
