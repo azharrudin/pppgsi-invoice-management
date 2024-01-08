@@ -43,7 +43,7 @@ class DamageReport extends Model
 
         $maxNumberForYear = static::whereYear('created_at', $year)->max('damage_report_number') ?: 0;
 
-        $this->damage_report_number = $maxNumberForYear + 1;
+        $this->damage_report_number = str_pad($maxNumberForYear + 1, 5, '0', STR_PAD_LEFT);
     }
 
     public function damageReportDetails(): HasMany
