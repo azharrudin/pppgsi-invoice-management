@@ -44,10 +44,25 @@ $configData = Helper::appClasses();
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col mb-3">
-                        <label for="nameBackdrop" class="form-label">Nama Bank</label>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nama Bank</label>
                         <input type="text" id="name" name="name" class="form-control" placeholder="Masukan Nama Bank" required>
                         <div class="invalid-feedback"> Please enter your name. </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="account_name" class="form-label">Nama Akun</label>
+                        <input type="text" id="account_name" name="account_name" class="form-control" placeholder="Masukan Nama Bank" required>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="account_number" class="form-label">Nomor Akun</label>
+                        <input type="text" id="account_number" name="account_number" class="form-control" placeholder="Masukan Nama Bank" required>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="branch_name" class="form-label">Nama Cabang</label>
+                        <input type="text" id="branch_name" name="branch_name" class="form-control" placeholder="Masukan Nama Bank" required>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                 </div>
 
@@ -78,10 +93,25 @@ $configData = Helper::appClasses();
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col mb-3">
+                    <div class="mb-3">
                         <label for="nameBackdrop" class="form-label">Nama Bank</label>
                         <input type="text" id="edit_name" name="name" class="form-control" placeholder="Masukan Nama Bank" required>
                         <div class="invalid-feedback"> Please enter your name. </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nameBackdrop" class="form-label">Nama Akun</label>
+                        <input type="text" id="edit_account_name" name="account_name" class="form-control" placeholder="Masukan Nama Bank" required>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nameBackdrop" class="form-label">Nomor Akun</label>
+                        <input type="text" id="edit_account_number" name="account_number" class="form-control" placeholder="Masukan Nama Bank" required>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nameBackdrop" class="form-label">Nama Cabang</label>
+                        <input type="text" id="edit_branch_name" name="branch_name" class="form-control" placeholder="Masukan Nama Bank" required>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                 </div>
 
@@ -89,11 +119,7 @@ $configData = Helper::appClasses();
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal" id="modal_bank_cancel">Close</button>
                 <button type="submit" class="btn btn-primary save-bank">
-                    <span class="indicator-label">Simpan</span>
-                    <span class="indicator-progress">
-                        Please wait...
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
+                    Simpan
                 </button>
 
             </div>
@@ -112,23 +138,23 @@ $configData = Helper::appClasses();
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col mb-3">
+                    <div class="mb-3">
                         <label for="nameBackdrop" class="form-label">Nama Bank</label>
                         <input type="text" id="preview_name" name="name" class="form-control" placeholder="Masukan Nama Bank" readonly>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col mb-3">
+                    <div class="mb-3">
                         <label for="nameBackdrop" class="form-label">Nama Akun</label>
                         <input type="text" id="preview_account_name" name="account_name" class="form-control" placeholder="Masukan Nama Bank" readonly>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col mb-3">
+                    <div class="mb-3">
                         <label for="nameBackdrop" class="form-label">Nomor Akun</label>
                         <input type="text" id="preview_account_number" name="account_number" class="form-control" placeholder="Masukan Nama Bank" readonly>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col mb-3">
-                        <label for="nameBackdrop" class="form-label">Nama Ranting</label>
+                    <div class="mb-3">
+                        <label for="nameBackdrop" class="form-label">Nama Cabang</label>
                         <input type="text" id="preview_branch_name" name="branch_name" class="form-control" placeholder="Masukan Nama Bank" readonly>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
@@ -161,6 +187,7 @@ $configData = Helper::appClasses();
     $((function() {
         var a = $(".list-bank-table");
         if (a.length) var e = a.DataTable({
+            responsive: true,
             processing: true,
             serverSide: true,
             deferRender: true,
@@ -173,28 +200,28 @@ $configData = Helper::appClasses();
             },
             columns: [{
                     data: "name",
-                    title: "Nama Bank",
-                    name: "Nama Bank"
+                    name: "name",
+                    title: "Nama Bank"
                 },
                 {
                     data: "account_name",
+                    name: "account_name",
                     title: "Nama Akun",
-                    name: "Nama Akun"
                 },
                 {
                     data: "account_number",
+                    name: "account_number",
                     title: "Nomor Akun",
-                    name: "Nomor Akun"
                 },
                 {
                     data: "branch_name",
-                    title: "Nama Ranting",
-                    name: "Nama Ranting"
+                    name: "branch_name",
+                    title: "Nama Cabang",
                 },
                 {
                     title: "Tanggal Dibuat",
                     data: "created_at",
-                    name: "Tanggal Dibuat",
+                    name: "created_at",
                     render: function(data, type, row) {
                         if (data != null) {
                             const date = new Date(data);
@@ -245,7 +272,7 @@ $configData = Helper::appClasses();
                 details: {
                     display: $.fn.dataTable.Responsive.display.modal({
                         header: function(a) {
-                            return "Details of " + a.data().full_name
+                            return "Detail"
                         }
                     }),
                     type: "column",
@@ -427,6 +454,9 @@ $configData = Helper::appClasses();
             success: function(response) {
                 $('#edit_id').val(response.data.id);
                 $('#edit_name').val(response.data.name)
+                $('#edit_account_name').val(response.data.account_name)
+                $('#edit_account_number').val(response.data.account_number)
+                $('#edit_branch_name').val(response.data.branch_name)
                 $('#edit-bank-data').modal('show')
             },
             error: function(errors) {
@@ -448,8 +478,12 @@ $configData = Helper::appClasses();
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(response) {
+                console.log(response);
                 $('#preview_id').val(response.data.id);
                 $('#preview_name').val(response.data.name)
+                $('#preview_account_name').val(response.data.account_name)
+                $('#preview_account_number').val(response.data.account_number)
+                $('#preview_branch_name').val(response.data.branch_name)
                 $('#preview-bank-data').modal('show')
             },
             error: function(errors) {

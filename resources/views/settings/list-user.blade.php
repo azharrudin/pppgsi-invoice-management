@@ -6,6 +6,13 @@ $configData = Helper::appClasses();
 
 @section('title', 'List User')
 
+@section('page-style')
+{{-- Page Css files --}}
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}">
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}">
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}">
+@endsection
+
 @section('content')
 
 <nav aria-label="breadcrumb">
@@ -64,7 +71,7 @@ $configData = Helper::appClasses();
 </div>
 
 
-<div class="modal fade" id="create-bank-data" data-bs-backdrop="static" tabindex="-1">
+<div class="modal fade" id="create-bank-data" data-bs-backdrop="static">
     <div class="modal-dialog">
         <form class="modal-content create-bank" id="create-bank" novalidate>
             <div class="modal-header">
@@ -94,16 +101,9 @@ $configData = Helper::appClasses();
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="mb-3">
-                        <label for="nameBackdrop" class="form-label">Department</label>
-                        <select id="department_id" name="department_id" class="form-control" required>
-                            <option value="">Pilih Department</option>
-                            <option value="1">CS</option>
-                            <option value="2">Teknik</option>
-                            <option value="3">BM</option>
-                            <option value="4">KA Unit Umum</option>
-                            <option value="5">KA Unit Account</option>
+                        <label for="department_id" class="form-label">Department</label>
+                        <select id="department_id" name="department_id" required>
                         </select>
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="mb-3">
                         <label for="nameBackdrop" class="form-label">Level</label>
@@ -132,7 +132,7 @@ $configData = Helper::appClasses();
     </div>
 </div>
 
-<div class="modal fade" id="edit-bank-data" data-bs-backdrop="static" tabindex="-1">
+<div class="modal fade" id="edit-bank-data" data-bs-backdrop="static">
     <div class="modal-dialog">
         <form class="modal-content edit-bank" id="edit-bank" novalidate>
             <input type="hidden" id="edit_id">
@@ -165,25 +165,12 @@ $configData = Helper::appClasses();
                     <div class="mb-3">
                         <label for="edit_department_id" class="form-label">Department</label>
                         <select id="edit_department_id" name="edit_department_id" class="form-control" required>
-                            <option value="">Pilih Department</option>
-                            <option value="1">CS</option>
-                            <option value="2">Teknik</option>
-                            <option value="3">BM</option>
-                            <option value="4">KA Unit Umum</option>
-                            <option value="5">KA Unit Account</option>
                         </select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="mb-3">
                         <label for="nameBackdrop" class="form-label">Level</label>
                         <select id="edit_level_id" name="edit_level_id" class="form-control" required>
-                            <option value="">Pilih Level</option>
-                            <option value="1">Admin</option>
-                            <option value="2">Teknisi</option>
-                            <option value="3">Kepala Unitt</option>
-                            <option value="4">BM</option>
-                            <option value="5">Executive</option>
-                            <option value="6">Vendor</option>
                         </select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
@@ -202,7 +189,7 @@ $configData = Helper::appClasses();
 </div>
 
 
-<div class="modal fade" id="preview-bank-data" data-bs-backdrop="static" tabindex="-1">
+<div class="modal fade" id="preview-bank-data" data-bs-backdrop="static">
     <div class="modal-dialog">
         <form class="modal-content edit-bank" id="edit-bank" novalidate>
             <input type="hidden" id="preview_id">
@@ -231,25 +218,12 @@ $configData = Helper::appClasses();
                     <div class="mb-3">
                         <label for="nameBackdrop" class="form-label">Department</label>
                         <select id="preview_department" name="department" class="form-control" required readonly>
-                            <option value="">Pilih Department</option>
-                            <option value="1">CS</option>
-                            <option value="2">Teknik</option>
-                            <option value="3">BM</option>
-                            <option value="4">KA Unit Umum</option>
-                            <option value="5">KA Unit Account</option>
                         </select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="mb-3">
                         <label for="nameBackdrop" class="form-label">Level</label>
                         <select id="preview_level" name="level" class="form-control" required readonly>
-                            <option value="">Pilih Level</option>
-                            <option value="1">Admin</option>
-                            <option value="2">Teknisi</option>
-                            <option value="3">Kepala Unitt</option>
-                            <option value="4">BM</option>
-                            <option value="5">Executive</option>
-                            <option value="6">Vendor</option>
                         </select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
@@ -267,6 +241,7 @@ $configData = Helper::appClasses();
 
 @section('page-script')
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
 <script>
     "use strict";
     $.ajaxSetup({
@@ -278,6 +253,132 @@ $configData = Helper::appClasses();
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
+    $(document).ready(function() {
+        $("#department_id").select2({
+            dropdownParent: $("#create-bank-data"),
+            placeholder: 'Select Department',
+            allowClear: true,
+            ajax: {
+                url: "{{ url('api/department/select') }}",
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        value: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+        });
+
+        $("#level_id").select2({
+            dropdownParent: $("#create-bank-data"),
+            placeholder: 'Select Level',
+            allowClear: true,
+            ajax: {
+                url: "{{ url('api/level/select') }}",
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        value: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+        });
+
+        $("#edit_department_id").select2({
+            dropdownParent: $("#edit-bank-data"),
+            placeholder: 'Select Department',
+            allowClear: true,
+            ajax: {
+                url: "{{ url('api/department/select') }}",
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        value: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+        });
+
+        $("#edit_level_id").select2({
+            dropdownParent: $("#edit-bank-data"),
+            placeholder: 'Select Level',
+            allowClear: true,
+            ajax: {
+                url: "{{ url('api/level/select') }}",
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        value: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+
+        });
+    });
 
     $((function() {
         var a = $(".list-user-table");
@@ -403,8 +504,42 @@ $configData = Helper::appClasses();
         }), 300)
     }));
 
+
+
+
     var createBank = $(".create-bank");
     var editBank = $(".edit-bank");
+
+    function getDepartement(element, id) {
+        $.ajax({
+            url: "{{url('api/department')}}/" + id,
+            type: "GET",
+            success: function(response) {
+                let data = response.data;
+                let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
+                $(`#${element}`).prepend(tem);
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function getLevel(element, id) {
+        $.ajax({
+            url: "{{url('api/level')}}/" + id,
+            type: "GET",
+            success: function(response) {
+                let data = response.data;
+                let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
+                $(`#${element}`).prepend(tem);
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
 
 
     // Loop over them and prevent submission
@@ -550,8 +685,8 @@ $configData = Helper::appClasses();
                 $('#edit_name').val(response.data.name)
                 $('#edit_username').val(response.data.username)
                 $('#edit_email').val(response.data.email)
-                $('#edit_department_id').val(response.data.department.id)
-                $('#edit_level_id').val(response.data.level.id)
+                getDepartement('edit_department_id', response.data.department.id)
+                getLevel('edit_level_id', response.data.level.id)
                 $('#edit-bank-data').modal('show')
             },
             error: function(errors) {
@@ -563,6 +698,7 @@ $configData = Helper::appClasses();
             }
         });
     });
+
 
     $(document).on('click', '#button-preview', function(event) {
         let id = $(this).data('id');
@@ -578,8 +714,8 @@ $configData = Helper::appClasses();
                 $('#preview_name').val(response.data.name)
                 $('#preview_username').val(response.data.username)
                 $('#preview_email').val(response.data.email)
-                $('#preview_department').val(response.data.department_id)
-                $('#preview_level').val(response.data.level_id)
+                getDepartement('preview_department', response.data.department_id)
+                getLevel('preview_level', response.data.level_id)
                 $('#preview-bank-data').modal('show')
             },
             error: function(errors) {

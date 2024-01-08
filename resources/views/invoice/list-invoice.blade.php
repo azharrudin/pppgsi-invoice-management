@@ -71,8 +71,8 @@ $configData = Helper::appClasses();
 
 {{-- Datatables --}}
 <div class="card">
-    <div class="card-datatable table-responsive pt-0">
-        <table class="invoice-list-table table">
+    <div class="card-datatable pt-0">
+        <table class="table invoice-list-table">
             <thead>
             </thead>
         </table>
@@ -88,6 +88,7 @@ $configData = Helper::appClasses();
     $((function() {
         var a = $(".invoice-list-table");
         if (a.length) var e = a.DataTable({
+            responsive: true,
             processing: true,
             serverSide: true,
             deferRender: true,
@@ -214,7 +215,8 @@ $configData = Helper::appClasses();
                 details: {
                     display: $.fn.dataTable.Responsive.display.modal({
                         header: function(a) {
-                            return "Details of " + a.data().full_name
+                            console.log(a);
+                            return "Detail"
                         }
                     }),
                     type: "column",

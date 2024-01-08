@@ -5,7 +5,7 @@ namespace App\Http\Controllers\settings;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Yajra\DataTables\DataTables;
+use DataTables;
 
 class ListBankController extends Controller
 {

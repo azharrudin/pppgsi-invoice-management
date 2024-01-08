@@ -193,7 +193,7 @@ class DepartmentController extends Controller
             $field = $request->input("field");
             $perPage = 10;
 
-            if(is_null($field)) $field = "id";
+            if(is_null($field)) $field = "name";
 
             $getDepartment = Department::where("deleted_at", null)->
                 where($field, 'like', '%' . $value . '%')->

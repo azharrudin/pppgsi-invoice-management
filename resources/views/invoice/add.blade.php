@@ -351,42 +351,8 @@ $configData = Helper::appClasses();
         });
 
         if (dataLocal) {
-            $("#invoice_number").val(dataLocal.invoice_number);
-            $("#contract_number").val(dataLocal.contract_number);
-            $("#addendum_number").val(dataLocal.addendum_number);
-            $("#grand_total_spelled").val(dataLocal.grand_total_spelled);
-            $(".grand_total").text(format(dataLocal.grand_total));
-            $("#materai_name").val(dataLocal.materai_name);
-            $("#term_and_conditions").val(dataLocal.term_and_conditions);
-
-
-            if (dataLocal.tenant_id) {
-                getTenant();
-            }
-            if (dataLocal.bank_id) {
-                getBank();
-            }
-            if (dataLocal.invoice_date) {
-                getInvoiceDate();
-            }
-            if (dataLocal.contract_date) {
-                getContractDate();
-            }
-
-            if (dataLocal.addendum_date) {
-                getAddendumDate();
-            }
-
-            if (dataLocal.invoice_due_date) {
-                getInvoiceDueDate();
-            }
-
-            if (dataLocal.materai_date) {
-                getMateraiDate();
-            }
+            load(dataLocal);
         }
-
-        getDetails();
 
         $('#tenant').on("change", (async function(e) {
             $(this).removeClass("invalid");
@@ -910,6 +876,53 @@ $configData = Helper::appClasses();
         });
     });
 
+    function load(dataLocale) {
+        Swal.fire({
+            title: '<h2>Loading...</h2>',
+            html: sweet_loader + '<h5>Please Wait</h5>',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        });
+        $("#invoice_number").val(dataLocal.invoice_number);
+        $("#contract_number").val(dataLocal.contract_number);
+        $("#addendum_number").val(dataLocal.addendum_number);
+        $("#grand_total_spelled").val(dataLocal.grand_total_spelled);
+        $(".grand_total").text(format(dataLocal.grand_total));
+        $("#materai_name").val(dataLocal.materai_name);
+        $("#term_and_conditions").val(dataLocal.term_and_conditions);
+
+
+        if (dataLocal.tenant_id) {
+            getTenant();
+        }
+        if (dataLocal.bank_id) {
+            getBank();
+        }
+        if (dataLocal.invoice_date) {
+            getInvoiceDate();
+        }
+        if (dataLocal.contract_date) {
+            getContractDate();
+        }
+
+        if (dataLocal.addendum_date) {
+            getAddendumDate();
+        }
+
+        if (dataLocal.invoice_due_date) {
+            getInvoiceDueDate();
+        }
+
+        if (dataLocal.materai_date) {
+            getMateraiDate();
+        }
+
+        getDetails();
+        Swal.close();
+    }
+
+
     function getTenant() {
         let idTenant = dataLocal.tenant_id;
         $.ajax({
@@ -1016,19 +1029,19 @@ $configData = Helper::appClasses();
                             <div class="row row d-flex justify-content-between px-1">
                                 <div class="col-md-6 px-1-custom">
                                     <label for="note" class="form-label fw-medium">Uraian</label>
-                                    <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required />`+details[i].item+`</textarea>
+                                    <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required />` + details[i].item + `</textarea>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="col-md-6 px-1-custom">
                                     <label for="note" class="form-label fw-medium">Keterangan</label>
-                                    <textarea class="form-control row-input" placeholder="" name="description[]" required>`+details[i].description+`</textarea>
+                                    <textarea class="form-control row-input" placeholder="" name="description[]" required>` + details[i].description + `</textarea>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-2 px-1-custom">
                             <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                            <input type="text" class="form-control row-input price" placeholder="" name="price[]" required value="`+details[i].price+`"/>
+                            <input type="text" class="form-control row-input price" placeholder="" name="price[]" required value="` + details[i].price + `"/>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-2 px-1-custom">
@@ -1038,7 +1051,7 @@ $configData = Helper::appClasses();
                         </div>
                         <div class="col-md-2 px-1-custom">
                             <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                            <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled value="`+details[i].total_price+`"/>
+                            <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled value="` + details[i].total_price + `"/>
                         </div>
                         <div class="col-md-1 px-1-custom">
                             <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>

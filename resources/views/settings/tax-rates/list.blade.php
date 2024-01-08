@@ -168,13 +168,13 @@ $configData = Helper::appClasses();
                     columns: [{
                             data: "name",
                             title: "Nama Pajak",
-                            name: "Nama Pajak",
+                            name: "name",
                             className: 'text-center',
                         },
                         {
                             title: "Pajak",
                             data: "rate",
-                            name: "Pajak",
+                            name: "rate",
                             className: 'text-center',
                         },
                         {

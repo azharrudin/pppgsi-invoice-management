@@ -276,8 +276,21 @@ $configData = Helper::appClasses();
         var urlSegments = window.location.pathname.split('/');
         var idIndex = urlSegments.indexOf('show') + 1;
         id = urlSegments[idIndex];
-        getDataInvoice(id);
+        load(id);
     });
+
+    function load(id) {
+        Swal.fire({
+            title: '<h2>Loading...</h2>',
+            html: sweet_loader + '<h5>Please Wait</h5>',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        });
+        getDataInvoice(id);
+        Swal.close();
+    }
+
 
 
 
