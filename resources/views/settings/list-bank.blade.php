@@ -115,7 +115,22 @@ $configData = Helper::appClasses();
                     <div class="col mb-3">
                         <label for="nameBackdrop" class="form-label">Nama Bank</label>
                         <input type="text" id="preview_name" name="name" class="form-control" placeholder="Masukan Nama Bank" readonly>
-                        <div class="invalid-feedback"> Please enter your name. </div>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="col mb-3">
+                        <label for="nameBackdrop" class="form-label">Nama Akun</label>
+                        <input type="text" id="preview_account_name" name="account_name" class="form-control" placeholder="Masukan Nama Bank" readonly>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="col mb-3">
+                        <label for="nameBackdrop" class="form-label">Nomor Akun</label>
+                        <input type="text" id="preview_account_number" name="account_number" class="form-control" placeholder="Masukan Nama Bank" readonly>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="col mb-3">
+                        <label for="nameBackdrop" class="form-label">Nama Ranting</label>
+                        <input type="text" id="preview_branch_name" name="branch_name" class="form-control" placeholder="Masukan Nama Bank" readonly>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                 </div>
 
@@ -160,6 +175,21 @@ $configData = Helper::appClasses();
                     data: "name",
                     title: "Nama Bank",
                     name: "Nama Bank"
+                },
+                {
+                    data: "account_name",
+                    title: "Nama Akun",
+                    name: "Nama Akun"
+                },
+                {
+                    data: "account_number",
+                    title: "Nomor Akun",
+                    name: "Nomor Akun"
+                },
+                {
+                    data: "branch_name",
+                    title: "Nama Ranting",
+                    name: "Nama Ranting"
                 },
                 {
                     title: "Tanggal Dibuat",

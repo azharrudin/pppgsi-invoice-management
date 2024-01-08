@@ -22,47 +22,47 @@ $configData = Helper::appClasses();
             <div class="col-lg-9 col-12 mb-lg-0 mb-3">
                 <div class="card invoice-preview-card">
                     <div class="card-body">
-                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); height : 150px; background-size: contain; background-repeat: no-repeat;">
+                        <div style="background-image: url('{{ asset('assets/img/header.png') }}');  background-size: contain; background-repeat: no-repeat;" class="set-back">
                         </div>
 
                         <div class="row  px-3">
-                            <div class="col-6">
+                            <div class="col-md-6">
                                 <label for="select2Primary" class="form-label">Kepada Yth, </label>
                                 <br>
-                                <div class="col-8">
+                                <div class="col-md-8 mb-3">
                                     <select name="tenant" id="tenant" name="tenant" class="mb-3" required>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-md-6">
                                 <div class="row d-flex justify-content-end">
-                                    <div class="col-6 mb-3">
+                                    <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">No. Invoice</label>
                                         <input type="text" class="form-control" id="invoice_number" placeholder="" readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-6 mb-3">
-                                        <label for="note" class="form-label fw-medium">Tgl. Invoice</label>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="invoice_date" class="form-label fw-medium">Tgl. Invoice</label>
                                         <input type="text" class="form-control date" name="invoice_date" id="invoice_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-6 mb-3">
-                                        <label for="note" class="form-label fw-medium">No. Kontrak</label>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contract_number" class="form-label fw-medium">No. Kontrak</label>
                                         <input type="text" class="form-control" name="contract_number" id="contract_number" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-6 mb-3">
-                                        <label for="note" class="form-label fw-medium">Tanggal</label>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contract_date" class="form-label fw-medium">Tanggal</label>
                                         <input type="text" class="form-control  date" name="contract_date" id="contract_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-6 mb-3 ">
-                                        <label for="note" class="form-label fw-medium">No. Addendum</label>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="addendum_number" class="form-label fw-medium">No. Addendum</label>
                                         <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-6 mb-3">
-                                        <label for="note" class="form-label fw-medium">Tanggal</label>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="addendum_date" class="form-label fw-medium">Tanggal</label>
                                         <input type="text" class="form-control date" id="addendum_date" name="addendum_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
@@ -77,7 +77,7 @@ $configData = Helper::appClasses();
                             </div>
 
                             <div class="row pb-4">
-                                <div class="col-sm-3 px-3">
+                                <div class="col-md-3 px-3">
                                     <button type="button" class="btn btn-primary waves-effect waves-light w-px-150 btn-add-row-mg">Tambah
                                         Baris</button>
                                 </div>
@@ -90,10 +90,9 @@ $configData = Helper::appClasses();
                         </div>
 
                         {{-- Total --}}
-                        <div class="col-md-12 d-flex float-end px-3 mb-5">
-                            <div class="col-6"></div>
-                            <div class="col-6">
-                                {{-- Total --}}
+                        <div class="row d-flex px-3 mb-5">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
                                 <div class="d-flex justify-content-between">
                                     <div>
                                         <p>Total</p>
@@ -102,17 +101,16 @@ $configData = Helper::appClasses();
                                         <p class="grand_total">0.00</p>
                                     </div>
                                 </div>
-                                {{-- Divider --}}
                                 <div>
                                     <hr class="m-0 mx-n7">
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-12 mb-5">
+                        <div class="row mb-5">
                             <div class="col-md-12 mb-2">
                                 <label for="note" class="form-label fw-medium">Terbilang</label>
-                                <input type="text" class="form-control w-full terbilang" id="grand_total_spelled" name="grand_total_spelled" placeholder="Terbilang" disabled />
+                                <input type="text" class="form-control terbilang" id="grand_total_spelled" name="grand_total_spelled" placeholder="Terbilang" disabled />
                             </div>
                             <div class="col-md-8 d-flex align-items-center">
                                 <label for="note" class="form-label fw-medium me-2">Jatuh Tempo Tanggal :</label>
@@ -413,35 +411,36 @@ $configData = Helper::appClasses();
             var $details = $('#details');
             var $newRow = `
             <div class="row-mg">
-                <div class="col-12 d-flex align-items-end  justify-content-between mb-3">
-                    <div class="col-sm-5 row d-flex justify-content-between px-1">
-                        <div class="col-sm-6">
-                            <label for="note" class="form-label fw-medium">Uraian</label>
-                            <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required /></textarea>
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                        <div class="col-sm-6" style="padding-left:0px">
-                            <label for="note" class="form-label fw-medium">Keterangan</label>
-                            <textarea class="form-control row-input" placeholder="" name="description[]" required></textarea>
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                <div class="row d-flex align-items-end justify-content-between mb-3">
+                    <div class="col-md-5">
+                        <div class="row row d-flex justify-content-between px-1">
+                            <div class="col-md-6 px-1-custom">
+                                <label for="note" class="form-label fw-medium">Uraian</label>
+                                <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required /></textarea>
+                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                            </div>
+                            <div class="col-md-6 px-1-custom">
+                                <label for="note" class="form-label fw-medium">Keterangan</label>
+                                <textarea class="form-control row-input" placeholder="" name="description[]" required></textarea>
+                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-sm-2 px-1">
+                    <div class="col-md-2 px-1-custom">
                         <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
                         <input type="text" class="form-control row-input price" placeholder="" name="price[]" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col-sm-2 px-1">
+                    <div class="col-md-2 px-1-custom">
                         <label for="note" class="form-label fw-medium">Pajak</label>
-                        <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-` + index + `" required></select>
+                        <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-${index}" required></select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col-sm-2 px-1">
+                    <div class="col-md-2 px-1-custom">
                         <label for="note" class="form-label fw-medium">Total (Rp.)</label>
                         <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled/>
                     </div>
-                    <div class="col-sm-1 px-1">
+                    <div class="col-md-1 px-1-custom">
                         <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
                             <i class="fas fa-trash"></i>
                         </a>
@@ -1012,35 +1011,36 @@ $configData = Helper::appClasses();
                 // });
                 temp = `             
                 <div class="row-mg">
-                    <div class="col-12 d-flex align-items-end  justify-content-between mb-3">
-                        <div class="col-sm-5 row d-flex justify-content-between px-1">
-                            <div class="col-sm-6">
-                                <label for="note" class="form-label fw-medium">Uraian</label>
-                                <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required />` + details[i].item + `</textarea>
-                                <div class="invalid-feedback">Tidak boleh kosong</div>
-                            </div>
-                            <div class="col-sm-6" style="padding-left:0px">
-                                <label for="note" class="form-label fw-medium">Keterangan</label>
-                                <textarea class="form-control row-input" placeholder="" name="description[]" required>` + details[i].description + `</textarea>
-                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                    <div class="row d-flex align-items-end justify-content-between mb-3">
+                        <div class="col-md-5">
+                            <div class="row row d-flex justify-content-between px-1">
+                                <div class="col-md-6 px-1-custom">
+                                    <label for="note" class="form-label fw-medium">Uraian</label>
+                                    <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required />`+details[i].item+`</textarea>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                                <div class="col-md-6 px-1-custom">
+                                    <label for="note" class="form-label fw-medium">Keterangan</label>
+                                    <textarea class="form-control row-input" placeholder="" name="description[]" required>`+details[i].description+`</textarea>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="col-sm-2 px-1">
+                        <div class="col-md-2 px-1-custom">
                             <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                            <input type="text" class="form-control row-input price" placeholder="" name="price[]" value="` + details[i].price + `" required />
+                            <input type="text" class="form-control row-input price" placeholder="" name="price[]" required value="`+details[i].price+`"/>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
-                        <div class="col-sm-2 px-1">
+                        <div class="col-md-2 px-1-custom">
                             <label for="note" class="form-label fw-medium">Pajak</label>
-                            <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-` + i + `" required></select>
+                            <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-${i}" required></select>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
-                        <div class="col-sm-2 px-1">
+                        <div class="col-md-2 px-1-custom">
                             <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                            <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]"  value="` + format(details[i].total_price) + `" disabled/>
+                            <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled value="`+details[i].total_price+`"/>
                         </div>
-                        <div class="col-sm-1 px-1">
+                        <div class="col-md-1 px-1-custom">
                             <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
                                 <i class="fas fa-trash"></i>
                             </a>
@@ -1099,36 +1099,37 @@ $configData = Helper::appClasses();
             }
         } else {
             temp = `             
-              <div class="row-mg">
-                <div class="col-12 d-flex align-items-end  justify-content-between mb-3">
-                    <div class="col-sm-5 row d-flex justify-content-between px-1">
-                        <div class="col-sm-6">
-                            <label for="note" class="form-label fw-medium">Uraian</label>
-                            <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required /></textarea>
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                        <div class="col-sm-6" style="padding-left:0px">
-                            <label for="note" class="form-label fw-medium">Keterangan</label>
-                            <textarea class="form-control row-input" placeholder="" name="description[]" required></textarea>
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
+            <div class="row-mg">
+                <div class="row d-flex align-items-end justify-content-between mb-3">
+                    <div class="col-md-5">
+                        <div class="row row d-flex justify-content-between px-1">
+                            <div class="col-md-6 px-1-custom">
+                                <label for="note" class="form-label fw-medium">Uraian</label>
+                                <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required /></textarea>
+                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                            </div>
+                            <div class="col-md-6 px-1-custom">
+                                <label for="note" class="form-label fw-medium">Keterangan</label>
+                                <textarea class="form-control row-input" placeholder="" name="description[]" required></textarea>
+                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-sm-2 px-1">
+                    <div class="col-md-2 px-1-custom">
                         <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
                         <input type="text" class="form-control row-input price" placeholder="" name="price[]" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col-sm-2 px-1">
+                    <div class="col-md-2 px-1-custom">
                         <label for="note" class="form-label fw-medium">Pajak</label>
                         <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-0" required></select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col-sm-2 px-1">
+                    <div class="col-md-2 px-1-custom">
                         <label for="note" class="form-label fw-medium">Total (Rp.)</label>
                         <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled/>
                     </div>
-                    <div class="col-sm-1 px-1">
+                    <div class="col-md-1 px-1-custom">
                         <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
                             <i class="fas fa-trash"></i>
                         </a>
