@@ -246,7 +246,7 @@ $configData = Helper::appClasses();
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-1"  style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-1" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -267,7 +267,7 @@ $configData = Helper::appClasses();
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-2"  style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-2" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -288,7 +288,7 @@ $configData = Helper::appClasses();
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-3"  style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-3" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -309,7 +309,7 @@ $configData = Helper::appClasses();
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-4"  style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-4" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -399,6 +399,7 @@ $configData = Helper::appClasses();
 <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
 </script>
 <script>
+    "use strict";
     $(document).ready(function() {
         $('.repeater').repeater({
 
@@ -546,14 +547,14 @@ $configData = Helper::appClasses();
                         }
                     } else {
                         event.preventDefault();
-                        Swal.fire({
-                            title: 'Loading...',
-                            text: "Please wait",
-                            customClass: {
-                                confirmButton: 'd-none'
-                            },
-                            buttonsStyling: false
-                        });
+                        // Swal.fire({
+                        //     title: 'Loading...',
+                        //     text: "Please wait",
+                        //     customClass: {
+                        //         confirmButton: 'd-none'
+                        //     },
+                        //     buttonsStyling: false
+                        // });
                         let lk = $(".select-lk").val();
                         let datas = {}
                         let signatures = [];
@@ -618,7 +619,7 @@ $configData = Helper::appClasses();
                         datas.status = "Terbuat";
 
                         $.ajax({
-                            url: baseUrl + "api/work-order",
+                            url: "{{env('BASE_URL_API')}}" + "/api/work-order",
                             type: "POST",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -638,7 +639,7 @@ $configData = Helper::appClasses();
                                     buttonsStyling: false
                                 })
 
-                                window.location.href = "/complain/laporan-kerusakan"
+                                window.location.href = "/complain/work-order"
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
