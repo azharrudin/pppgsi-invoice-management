@@ -599,7 +599,7 @@
 
                                     Swal.fire({
                                         title: 'Berhasil',
-                                        text: 'Berhasil menambahkan Laporan Kerusakan.',
+                                        text: 'Berhasil menambahkan Purchase Request.',
                                         icon: 'success',
                                         customClass: {
                                             confirmButton: 'btn btn-primary'

@@ -8,7 +8,8 @@
 
 @section('page-style')
     {{-- Page Css files --}}
-    <link rel="stylesheet" href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/flatpickr/flatpickr.css">
+    <link rel="stylesheet"
+        href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/flatpickr/flatpickr.css">
 @endsection
 
 @section('content')
@@ -38,7 +39,7 @@
                                             <div class="mb-3">
                                                 <label for="note" class="form-label fw-medium">No Tanda Terima:</label>
                                                 <input type="text" class="form-control w-px-150 qty" id="receipt_number"
-                                                    name="receipt_number" placeholder="" required />
+                                                    name="receipt_number" placeholder="" required disabled />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </dd>
@@ -89,6 +90,16 @@
                             </div>
                             <div class="row px-3 d-flex align-items-center mb-3">
                                 <div class="col-2">
+                                    <label for="salesperson" class="form-label  fw-medium">Sudah Dibayarkan</label>
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control qty price" id="total_paid" name="total_paid"
+                                        placeholder="Sudah Dibayarkan" fdprocessedid="yombzp" required readonly>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                            </div>
+                            <div class="row px-3 d-flex align-items-center mb-3">
+                                <div class="col-2">
                                     <label for="salesperson" class="form-label  fw-medium">Dibayarkan</label>
                                 </div>
                                 <div class="col-10">
@@ -113,7 +124,8 @@
                                 </div>
                                 <div class="col-10">
                                     <input type="text" class="form-control pe-none" id="grand_total_spelled"
-                                        name="grand_total_spelled" placeholder="Terbilang" fdprocessedid="yombzp" required>
+                                        name="grand_total_spelled" placeholder="Terbilang" fdprocessedid="yombzp"
+                                        required>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
@@ -240,6 +252,59 @@
     <script>
         $(document).ready(function() {
 
+            // Mendapatkan id dari invoice
+            const idInvoice = getParameterByName('id-invoice');
+
+            if (idInvoice) {
+                getDataInvoice(idInvoice);
+            }
+
+            // Function to get URL parameter by name using jQuery
+            function getParameterByName(name) {
+                var url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+
+            function getDataInvoice(id) {
+                $.ajax({
+                    url: "{{ url('api/invoice') }}/" + id,
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(res) {
+                        let total_paid = parseFloat(res.data.total_paid);
+                        let grand_total = parseFloat(res.data.grand_total);
+                        let tenant = res.data.tenant;
+                        let bank = res.data.bank;
+                        $("#total_paid").val(total_paid.toLocaleString('en-US'));
+                        $("#grand_total").val(grand_total.toLocaleString('en-US'));
+                        $(".select-bank").empty().append('<option value="' + bank.id + '">' +
+                            bank.name + '</option>').val(bank.id);
+                        $(".select-tenant").empty().append('<option value="' + tenant.id +
+                            '">' + tenant.name + '</option>').val(tenant.id);
+                        $(".select-invoice").empty().append('<option value="' + res.data.id +
+                            '">' + res.data.invoice_number + '</option>').val(res.data.id);
+                        Swal.close();
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: xhr.responseJSON.message,
+                            icon: 'error',
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        })
+                    }
+                });
+            }
+
             // Date
             $('.date').flatpickr({
                 dateFormat: 'd-m-Y'
@@ -284,6 +349,20 @@
                     $(params).removeClass("invalid");
                 }
             }
+
+            // Get invoice data
+            $(".select-invoice").on("change", function() {
+                Swal.fire({
+                    title: 'Loading...',
+                    text: "Please wait",
+                    customClass: {
+                        confirmButton: 'd-none'
+                    },
+                    buttonsStyling: false
+                });
+                let id = $(this).val();
+                getDataInvoice(id);
+            })
 
             // Save, Insert, and Create
             var saveTandaTerima = $('.create-tanda-terima');
@@ -448,8 +527,17 @@
                 window.location.href = "/invoice/tanda-terima"
             });
 
+            // Keyup dibayarkan
             $('#paid').on('keyup', function() {
-                getTotal(); // Memanggil fungsi getTotal() setiap kali terjadi perubahan pada input
+                getTotal();
+
+                var totalInvoice = $('#grand_total').val().replace(/,/g, '') || 0;
+                var paidAmount = $(this).val().replace(/,/g, '') || 0;
+                console.log(totalInvoice)
+
+                var remainingAmount = totalInvoice - paidAmount;
+
+                $('#remaining').val(remainingAmount.toLocaleString('en-US'));
             });
 
             // Fungsi terbilang
