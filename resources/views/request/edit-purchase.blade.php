@@ -804,7 +804,7 @@
 
                                     Swal.fire({
                                         title: 'Berhasil',
-                                        text: 'Berhasil memperbarui Laporan Kerusakan.',
+                                        text: 'Berhasil memperbarui Purchase Request.',
                                         icon: 'success',
                                         customClass: {
                                             confirmButton: 'btn btn-primary'
