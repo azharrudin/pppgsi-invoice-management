@@ -22,63 +22,52 @@ $configData = Helper::appClasses();
             <div class="col-lg-9 col-12 mb-lg-0 mb-3">
                 <div class="card invoice-preview-card">
                     <div class="card-body">
-                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); height : 150px; background-size: contain; background-repeat: no-repeat;">
+                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); background-size: contain; background-repeat: no-repeat;" class="set-back">
                         </div>
 
-                        <div class="row m-sm-2 m-0 px-3">
-                            <div class="row col-md-7 mb-md-0 ps-0">
-                                <div class="row px-3 d-flex align-items-start mb-3">
-                                    <div class="d-flex align-items-center justify-content-between col-3">
-                                        <label for="select2Primary" class="form-label">Kepada Yth,</label>
-                                    </div>
-                                    <div class="col-8 fs-5">
-                                        <div class="form-label">
-                                            <span id="company"></span><br>
-                                            <span id="floor"></span><br><br>
-                                            <span id="name_tenant"></span>
-                                        </div>
-                                        <div class="d-none">
-                                            <select name="tenant" id="tenant" name="tenant" class="w-px-250 item-details mb-3" required>
-                                            </select>
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-
-                                    </div>
+                        <div class="row px-4">
+                            <div class="col-md-6">
+                                <label for="select2Primary" class="form-label">Kepada Yth, </label>
+                                <br>
+                                <div class="form-label">
+                                    <span id="company"></span><br>
+                                    <span id="floor"></span><br><br>
+                                    <span id="name_tenant"></span>
                                 </div>
                             </div>
-                            <div class="col-md-5">
-                                <dd class="d-flex justify-content-md-end flex-wrap pe-0 ps-0 ps-sm-2">
-                                    <div class="mb-3 mx-2">
+                            <div class="col-md-6">
+                                <div class="row d-flex justify-content-end">
+                                    <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">No. Invoice</label>
-                                        <input type="text" class="form-control w-px-150" name="invoice_number" id="invoice_number" placeholder="" readonly disabled />
+                                        <input type="text" class="form-control" id="invoice_number" placeholder="" readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="mb-3 mx-2">
+                                    <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">Tgl. Invoice</label>
-                                        <input type="text" class="form-control w-px-150 date" name="invoice_date" id="invoice_date" placeholder="" readonly />
+                                        <input type="text" class="form-control date" name="invoice_date" id="invoice_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="mb-3 mx-2">
+                                    <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">No. Kontrak</label>
-                                        <input type="text" class="form-control w-px-150" name="contract_number" id="contract_number" placeholder="" readonly />
+                                        <input type="text" class="form-control" name="contract_number" id="contract_number" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="mb-3 mx-2">
+                                    <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control w-px-150 date" name="contract_number" id="contract_date" placeholder="" readonly />
+                                        <input type="text" class="form-control  date" name="contract_date" id="contract_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="mb-3 mx-2">
+                                    <div class="col-md-6 mb-3 ">
                                         <label for="note" class="form-label fw-medium">No. Addendum</label>
-                                        <input type="text" class="form-control w-px-150" name="addendum_number" id="addendum_number" placeholder="" readonly />
+                                        <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="mb-3 mx-2">
+                                    <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control w-px-150 date" id="addendum_date" placeholder="" readonly />
+                                        <input type="text" class="form-control date" id="addendum_date" name="addendum_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                </dd>
+                                </div>
                             </div>
                         </div>
 
@@ -234,7 +223,7 @@ $configData = Helper::appClasses();
                                     <div id="materai-image"></div>
                                 </div>
                                 <div class="mb-3">
-                                    <p class="form-label" id="materai_name">Kuu</p>
+                                    <p class="form-label" id="materai_name">Dina - Manager Operasional</p>
                                 </div>
                             </div>
                         </div>
@@ -247,12 +236,17 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
+                        <!-- <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
-                        </button>
-                        <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
-                        <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                        </button> -->
+                        <!-- <a type="button" class="btn btn-label-secondary d-grid w-100 mb-2" style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
+                        <a href="#" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Download</a>
+                        <a href="#" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Print</a> -->
+                        <button  type="button" id="back" class="btn btn-label-secondary d-grid w-100 mb-2">Kembali</button>
+                        <!-- <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button> -->
+                        <!-- <button class="btn btn-primary d-grid w-100 mb-2">
+                            <span class="d-flex align-items-center justify-content-center text-nowrap">Add Payment</span>
+                        </button> -->
                     </div>
                 </div>
             </div>
@@ -282,6 +276,22 @@ $configData = Helper::appClasses();
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
 
+    function format(e) {
+        console.log(e);
+        var nStr = e + '';
+
+        nStr = nStr.replace(/\,/g, "");
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+
+
     let data = JSON.parse(localStorage.getItem("edit-invoice"));
     console.log(data);
     $(document).ready(function() {
@@ -292,7 +302,7 @@ $configData = Helper::appClasses();
         $("#addendum_number").val(data.addendum_number);
         $("#addendum_date").val(data.addendum_date);
         $("#grand_total_spelled").text(data.grand_total_spelled);
-        $("#grand_total").text(data.grand_total);
+        $("#grand_total").text(format(data.grand_total));
         $("#invoice_due_date").text(data.invoice_due_date);
         $("#term_and_conditions").text(data.term_and_conditions);
         $("#materai_date").text(data.materai_date);
@@ -308,7 +318,7 @@ $configData = Helper::appClasses();
 
         if (data.materai_image) {
             $("#materai-image").css('background-img', 'black');
-            $("#materai-image").css("background-image", `url('` + data.materai_image.dataURL+ `')`);
+            $("#materai-image").css("background-image", `url('` + data.materai_image.dataURL + `')`);
             $("#materai-image").css("height", `200px`);
             $("#materai-image").css("width", `200px`);
             $("#materai-image").css("background-position", `center`);
@@ -353,7 +363,6 @@ $configData = Helper::appClasses();
     }
 
     function getDetails() {
-        console.log(data.details[0].item);
         let details = data.details;
         let getDetail = '';
         let tem = '';
@@ -361,9 +370,9 @@ $configData = Helper::appClasses();
             tem = `<tr>
                         <td class="text-nowrap">` + details[i].item + `</td>
                         <td class="text-nowrap">` + details[i].description + `</td>
-                        <td>` + details[i].price + `</td>
-                        <td>` + details[i].tax + `</td>
-                        <td>` + details[i].total_price + `</td>
+                        <td>` + format(details[i].price) + `</td>
+                        <td>` + format(details[i].tax_id) + `</td>
+                        <td>` + format(details[i].total_price) + `</td>
                     </tr>
             `;
             getDetail = getDetail + tem;
@@ -373,15 +382,17 @@ $configData = Helper::appClasses();
     }
 
 
-    $(document).on('click', '#batal', function(event) {
+    $(document).on('click', '#back', function(event) {
         event.preventDefault();
-        localStorage.removeItem('invoice');
-        window.location.href = "/invoice/list-invoice"
+        window.location.href = "/invoice/edit/"+id
     });
 
     $(document).on('click', '#save', function(event) {
         event.preventDefault();
-        const newData = { ...data, materai_image: data.materai_image.dataURL }
+        const newData = {
+            ...data,
+            materai_image: data.materai_image.dataURL
+        }
         $.ajax({
             url: baseUrl + "api/invoice/" + id,
             type: "PATCH",

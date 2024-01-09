@@ -16,159 +16,149 @@ $configData = Helper::appClasses();
 @section('content')
 <!-- Content -->
 <div class="container-xxl flex-grow-1 container-p-y">
-    <form id="create-material-request" class="create-material-request" novalidate>
+    <form id="create-invoice" class="create-invoice" novalidate>
         <div class="row invoice-add">
             <!-- Invoice Add-->
             <div class="col-lg-9 col-12 mb-lg-0 mb-3">
                 <div class="card invoice-preview-card">
                     <div class="card-body">
-                        <div class="row m-sm-4 m-0">
-                            <h1 class="text-center"><b>MATERIAL REQUEST</b></h1>
+                        <div style="background-image: url('{{ asset('assets/img/header.png') }}');  background-size: contain; background-repeat: no-repeat;" class="set-back">
                         </div>
 
-                        <div class="row py-3 px-3">
+                        <div class="row  px-3">
                             <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="note" class="form-label fw-medium">Requester</label>
-                                    <input type="text" class="form-control" placeholder="Requester" name="requester" id="requester" required />
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="note" class="form-label fw-medium">Departement </label>
-                                    <input type="text" class="form-control" placeholder="Departement" name="department" id="department" required />
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="note" class="form-label fw-medium">Stock </label>
-                                    <input type="number" class="form-control" placeholder="Stock" id="stock" name="stock" required />
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="note" class="form-label fw-medium">Purchase </label>
-                                    <input type="text" class="form-control" placeholder="Purchase" name="purchase" id="purchase" required />
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                <label for="select2Primary" class="form-label">Kepada Yth, </label>
+                                <br>
+                                <div class="col-md-8 mb-3">
+                                    <select name="tenant" id="tenant" name="tenant" class="mb-3" required>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="note" class="form-label fw-medium">Tanggal</label>
-                                    <input type="text" class="form-control date" placeholder="Tanggal" name="request_date" id="request_date" required />
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
-                                <div class="mb-3">
-                                    <textarea class="form-control" rows="6" id="note" name="note" placeholder="Catatan" required></textarea>
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                <div class="row d-flex justify-content-end">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="note" class="form-label fw-medium">No. Invoice</label>
+                                        <input type="text" class="form-control" id="invoice_number" placeholder="" readonly />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="invoice_date" class="form-label fw-medium">Tgl. Invoice</label>
+                                        <input type="text" class="form-control date" name="invoice_date" id="invoice_date" placeholder="" required />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contract_number" class="form-label fw-medium">No. Kontrak</label>
+                                        <input type="text" class="form-control" name="contract_number" id="contract_number" placeholder="" required />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contract_date" class="form-label fw-medium">Tanggal</label>
+                                        <input type="text" class="form-control  date" name="contract_date" id="contract_date" placeholder="" required />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="addendum_number" class="form-label fw-medium">No. Addendum</label>
+                                        <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" required />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="addendum_date" class="form-label fw-medium">Tanggal</label>
+                                        <input type="text" class="form-control date" id="addendum_date" name="addendum_date" placeholder="" required />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="py-3 px-3">
-                            <div class="card academy-content shadow-none border p-3">
-                                <div class="">
-                                    <div class="">
-                                        <div class="" id="details">
+                        {{-- Repeater --}}
+                        <div class="repeater px-3">
+                            <div class="" id="details">
 
-                                        </div>
+                            </div>
+
+                            <div class="row pb-4">
+                                <div class="col-md-3 px-3">
+                                    <button type="button" class="btn btn-primary waves-effect waves-light w-px-150 btn-add-row-mg">Tambah
+                                        Baris</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Divider --}}
+                        <div class="px-5 ">
+                            <hr class="my-3 mx-n5">
+                        </div>
+
+                        {{-- Total --}}
+                        <div class="row d-flex px-3 mb-5">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Total</p>
                                     </div>
+                                    <div>
+                                        <p class="grand_total">0.00</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <hr class="m-0 mx-n7">
+                                </div>
+                            </div>
+                        </div>
 
-                                    <div class="row pb-4">
-                                        <div class="col-12">
-                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-add-row-mg">Tambah Baris</button>
+                        <div class="row mb-5">
+                            <div class="col-md-12 mb-2">
+                                <label for="note" class="form-label fw-medium">Terbilang</label>
+                                <input type="text" class="form-control terbilang" id="grand_total_spelled" name="grand_total_spelled" placeholder="Terbilang" disabled />
+                            </div>
+                            <div class="col-md-8 d-flex align-items-center">
+                                <label for="note" class="form-label fw-medium me-2">Jatuh Tempo Tanggal :</label>
+                                <input type="text" class="form-control w-px-250 date" placeholder="Jatuh Tanggal Tempo" id="invoice_due_date" name="invoice_due_date" required />
+                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-md-0 mb-3">
+                                <div class="mb-3">
+                                    <label for="note" class="form-label fw-medium me-2">Syarat & Ketentuan</label>
+                                    <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll" required></textarea>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="note" class="form-label fw-medium me-2">Bank</label>
+                                    <select name="bank" id="bank" name="bank" class="form-select w-px-250 item-details mb-3" required>
+                                    </select>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
+                                <div class="mb-3">
+                                    <label for="note" class="form-label fw-medium">Tanda Tangan & Meterai
+                                        (Opsional)</label>
+                                    <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" name="materai_date" />
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                                <div class="mb-3">
+                                    <div action="/upload" class="dropzone needsclick dz-clickable w-px-250" id="dropzone-basic">
+                                        <div class="dz-message needsclick">
+                                            <span class="note needsclick">Unggah Tanda Tangan</span>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-3">
-                                        <label for="note" class="form-label fw-medium mb-3">Prepered by :</label>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
-                                        </div>
-                                        <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd1" style="padding: 5px;">
-                                                <div class="dz-message needsclick">
-                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="note" class="form-label fw-medium mb-3">Reviewed by :</label>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
-                                        </div>
-                                        <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd2" style="padding: 5px;">
-                                                <div class="dz-message needsclick">
-                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="name[]" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="note" class="form-label fw-medium mb-3">Aknowledge by :</label>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="date" name="name[]" />
-                                        </div>
-                                        <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd3" style="padding: 5px;">
-                                                <div class="dz-message needsclick">
-                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="note" class="form-label fw-medium mb-3">Approved by :</label>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
-                                        </div>
-                                        <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd4" style="padding: 5px;">
-                                                <div class="dz-message needsclick">
-                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
-                                        </div>
-                                    </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" />
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
 
-
-
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <span>Lembar</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <span>1. Accounting (Putih)</span>
-                                        <br>
-                                        <span>2. Guddang (Merah)</span>
-                                    </div>
-                                    <br>
-                                    <div class="col-md-4">
-                                        <span>3. Purchasing (Hijau)</span>
-                                        <br>
-                                        <span>4. Pemohon (Biru)</span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- /Invoice Add-->
+
 
             <!-- Invoice Actions -->
             <div class="col-lg-3 col-12 invoice-actions">
@@ -186,12 +176,6 @@ $configData = Helper::appClasses();
             <!-- /Invoice Actions -->
         </div>
     </form>
-
-
-    <!-- Offcanvas -->
-    <!-- Send Invoice Sidebar -->
-
-
 </div>
 <!-- / Content -->
 
@@ -881,7 +865,6 @@ $configData = Helper::appClasses();
             datas.invoice_date = tglInvoice;
             datas.grand_total = grandTotal;
             datas.materai_image = fileTtd;
-            console.log(lastIndex);
             localStorage.setItem("invoice", JSON.stringify(datas));
             window.location.href = "/invoice/preview-invoice"
         });

@@ -22,55 +22,51 @@ $configData = Helper::appClasses();
             <div class="col-lg-9 col-12 mb-lg-0 mb-3">
                 <div class="card invoice-preview-card">
                     <div class="card-body">
-                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); height : 150px; background-size: contain; background-repeat: no-repeat;">
+                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); height : 150px; background-size: contain; background-repeat: no-repeat;" class="set-back">
                         </div>
 
-                        <div class="row m-sm-2 m-0 px-3">
-                            <div class="row col-md-7 mb-md-0 ps-0">
-                                <div class="row px-3 d-flex align-items-start mb-3">
-                                    <div class="d-flex align-items-center justify-content-between col-3">
-                                        <label for="select2Primary" class="form-label">Kepada Yth,</label>
+                        <div class="row  px-3">
+                            <div class="col-md-6">
+                                <label for="select2Primary" class="form-label">Kepada Yth, </label>
+                                <br>
+                                <div class="col-md-8 mb-3">
+                                    <select name="tenant" id="tenant" name="tenant" class="mb-3" required>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row d-flex justify-content-end">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="note" class="form-label fw-medium">No. Invoice</label>
+                                        <input type="text" class="form-control" id="invoice_number" name="invoice_number" placeholder="" readonly />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-8 fs-5">
-                                        <select name="tenant" id="tenant" name="tenant" class="w-px-250 item-details mb-3" required>
-                                        </select>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="invoice_date" class="form-label fw-medium">Tgl. Invoice</label>
+                                        <input type="text" class="form-control date" name="invoice_date" id="invoice_date" placeholder="" required />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contract_number" class="form-label fw-medium">No. Kontrak</label>
+                                        <input type="text" class="form-control" name="contract_number" id="contract_number" placeholder="" required />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contract_date" class="form-label fw-medium">Tanggal</label>
+                                        <input type="text" class="form-control  date" name="contract_date" id="contract_date" placeholder="" required />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="addendum_number" class="form-label fw-medium">No. Addendum</label>
+                                        <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" required />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="addendum_date" class="form-label fw-medium">Tanggal</label>
+                                        <input type="text" class="form-control date" id="addendum_date" name="addendum_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-5">
-                                <dd class="d-flex justify-content-md-end flex-wrap pe-0 ps-0 ps-sm-2">
-                                    <div class="mb-3 mx-2">
-                                        <label for="note" class="form-label fw-medium">No. Invoice</label>
-                                        <input type="text" class="form-control w-px-150" name="invoice_number" id="invoice_number" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="mb-3 mx-2">
-                                        <label for="note" class="form-label fw-medium">Tgl. Invoice</label>
-                                        <input type="text" class="form-control w-px-150 date" name="invoice_date" id="invoice_date" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="mb-3 mx-2">
-                                        <label for="note" class="form-label fw-medium">No. Kontrak</label>
-                                        <input type="text" class="form-control w-px-150" name="contract_number" id="contract_number" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="mb-3 mx-2">
-                                        <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control w-px-150 date" name="contract_date" id="contract_date" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="mb-3 mx-2">
-                                        <label for="note" class="form-label fw-medium">No. Addendum</label>
-                                        <input type="text" class="form-control w-px-150" name="addendum_number" id="addendum_number" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="mb-3 mx-2">
-                                        <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control w-px-150 date" id="addendum_date" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                </dd>
                             </div>
                         </div>
 
@@ -191,6 +187,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
+    "use strict";
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -202,6 +199,20 @@ $configData = Helper::appClasses();
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
+    var lastIndex = null;
+
+    function format(e) {
+        var nStr = e + '';
+        nStr = nStr.replace(/\,/g, "");
+        let x = nStr.split('.');
+        let x1 = x[0];
+        let x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
 
     var urlSegments = window.location.pathname.split('/');
     var idIndex = urlSegments.indexOf('edit') + 1;
@@ -347,7 +358,7 @@ $configData = Helper::appClasses();
                         if (dataLocal.materai_image) {
                             this.options.addedfile.call(this, mockFile);
                             this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
-
+                            $('.dz-image').last().find('img').attr('width', '100%');
                             // Optional: Handle the removal of the file
                             mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
                                 // Handle removal logic here
@@ -360,7 +371,7 @@ $configData = Helper::appClasses();
                         if (data.materai_image) {
                             this.options.addedfile.call(this, mockFile);
                             this.options.thumbnail.call(this, mockFile, data.materai_image);
-
+                            $('.dz-image').last().find('img').attr('width', '100%');
                             // Optional: Handle the removal of the file
                             mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
                                 // Handle removal logic here
@@ -368,19 +379,8 @@ $configData = Helper::appClasses();
                         }
 
                     }
-                    this.on("success", function(file) {
-                        console.log('a');
-                        $('.dz-image').css({
-                            "width": "50%",
-                            "height": "auto"
-                        });
-                    })
-                    // this.on("thumbnail", function(file) {
-                    //     if (file.width > 500 && file.height > 500) {
-                    //           this.removeFile(file)
-                    //     } 
-                    // });
                     this.on('addedfile', function(file) {
+                        $('.dz-image').last().find('img').attr('width', '100%');
                         while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
                         ttdFile = file;
                     })
@@ -410,42 +410,79 @@ $configData = Helper::appClasses();
 
         $(document).on('click', '.btn-add-row-mg', function() {
             // Clone baris terakhir
+            var index = lastIndex ? lastIndex + 1 : $('.tax').length;
+            lastIndex = index;
+            console.log(lastIndex);
             var $details = $('#details');
-            var $newRow = ` <div class="row-mg">
-                <div class="col-12 d-flex align-items-center justify-content-between">
-                    <div class="col-sm-2 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Uraian</label>
-                        <input type="text" name="uraian" class="form-control w-px-150 row-input" placeholder="" name="item[]" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
+            var $newRow = `
+            <div class="row-mg">
+                <div class="row d-flex align-items-end justify-content-between mb-3">
+                    <div class="col-md-5">
+                        <div class="row row d-flex justify-content-between px-1">
+                            <div class="col-md-6 px-1-custom">
+                                <label for="note" class="form-label fw-medium">Uraian</label>
+                                <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required /></textarea>
+                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                            </div>
+                            <div class="col-md-6 px-1-custom">
+                                <label for="note" class="form-label fw-medium">Keterangan</label>
+                                <textarea class="form-control row-input" placeholder="" name="description[]" required></textarea>
+                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-2 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Keterangan</label>
-                        <input type="text" class="form-control w-px-150 row-input" placeholder="" name="description[]" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-sm-2 mb-3 mx-2">
+                    <div class="col-md-2 px-1-custom">
                         <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                        <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required />
+                        <input type="text" class="form-control row-input price" placeholder="" name="price[]" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col-sm-1 mb-3 mx-2">
+                    <div class="col-md-2 px-1-custom">
                         <label for="note" class="form-label fw-medium">Pajak</label>
-                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
+                        <select class="form-control row-input tax" placeholder="" id="tax-${index}" required></select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="col-sm-2 mb-3 mx-2">
+                    <div class="col-md-2 px-1-custom">
                         <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled/>
+                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled/>
                     </div>
-                    <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                            <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
-                            <path d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z" fill="#FF4747" />
-                        </svg>
-                    </a>
+                    <div class="col-md-1 px-1-custom">
+                        <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
                 </div>
             </div>`;
             $details.append($newRow);
+            $("#tax-" + index).select2({
+                width: '100px',
+                placeholder: 'Select Pajak',
+                allowClear: true,
+                ajax: {
+                    url: "{{env('BASE_URL_API')}}" + "/api/tax/select",
+                    dataType: 'json',
+                    cache: true,
+                    data: function(params) {
+                        return {
+                            value: params.term || '',
+                            page: params.page || 1
+                        }
+                    },
+                    processResults: function(data, params) {
+                        var more = data.pagination.more;
+                        if (more === false) {
+                            params.page = 1;
+                            params.abort = true;
+                        }
+                        return {
+                            results: data.data,
+                            pagination: {
+                                more: more
+                            }
+                        };
+                    }
+                }
+
+            });
         });
 
         function tenantTemplate(data) {
@@ -464,7 +501,6 @@ $configData = Helper::appClasses();
         });
 
         $(document).on('input', '.price', function(event) {
-            console.log(event.currentTarget.value);
             var nStr = event.currentTarget.value + '';
             nStr = nStr.replace(/\,/g, "");
             var x = nStr.split('.');
@@ -478,37 +514,63 @@ $configData = Helper::appClasses();
             // Hapus baris yang ditekan tombol hapus
             let index = $('.price').index(this);
             let total = 0;
-            let tax = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
             let price = parseInt($(this).val().replaceAll(',', ''));
-            let totalPrice = price + tax;
-            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
-            getTotal();
+            let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
+            console.log(id);
+            if (id == 0) {
+                $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(price));
+                getTotal();
+            } else {
+                $.ajax({
+                    url: "{{env('BASE_URL_API')}}" + "/api/tax/" + id,
+                    type: "get",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(response) {
+                        console.log(response);
+                        let data = response.data.rate;
+                        let total = 0;
+                        let tax = parseInt(data);
+                        tax = tax / 100;
+                        let totalPrice = price * tax + price;
+                        // console.log(format(totalPrice));
+                        $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
+                        getTotal();
+                    },
+                    error: function(errors) {
+                        console.log(errors);
+                    }
+                });
+            }
 
         });
 
         $(document).on('input', '.tax', function(event) {
-            console.log(event.currentTarget.value);
-            var nStr = event.currentTarget.value + '';
-
-            nStr = nStr.replace(/\,/g, "");
-            var x = nStr.split('.');
-            var x1 = x[0];
-            var x2 = x.length > 1 ? '.' + x[1] : '';
-            var rgx = /(\d+)(\d{3})/;
-            while (rgx.test(x1)) {
-                x1 = x1.replace(rgx, '$1' + ',' + '$2');
-            }
-            event.currentTarget.value = x1 + x2;
-            // Hapus baris yang ditekan tombol hapus
+            let id = event.currentTarget.value;
             let index = $('.tax').index(this);
-            let total = 0;
-            let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
-            let tax = parseInt($(this).val().replaceAll(',', ''));
-            let totalPrice = price + tax;
-            // console.log(format(totalPrice));
-            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
-            getTotal();
-
+            let data = 0;
+            $.ajax({
+                url: "{{env('BASE_URL_API')}}" + "/api/tax/" + id,
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    console.log(response);
+                    let data = response.data.rate;
+                    console.log($(this));
+                    let total = 0;
+                    let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+                    let tax = parseInt(data);
+                    tax = tax / 100;
+                    let totalPrice = price * tax + price;
+                    // console.log(format(totalPrice));
+                    $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
+                    getTotal();
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
         });
 
         function getTotal() {
@@ -525,6 +587,7 @@ $configData = Helper::appClasses();
             }
             $('.grand_total').text(format(sum));
             $('.terbilang').val(terbilang(sum));
+
         }
 
         function terbilang(bilangan) {
@@ -650,7 +713,7 @@ $configData = Helper::appClasses();
                         // Submit your form
                         event.preventDefault();
                         console.log(ttdFile);
-                        let fileTtd = ttdFile;
+                        let fileTtd = ttdFile.dataURL;
                         let tenant = $("#tenant").val();
                         let noInvoice = $("#invoice_number").val();
                         let tglInvoice = $("#invoice_date").val();
@@ -678,11 +741,11 @@ $configData = Helper::appClasses();
                             } else if (index % 5 == 1) {
                                 detail[input_index].description = input_value;
                             } else if (index % 5 == 2) {
-                                detail[input_index].price = input_value;
+                                detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
                             } else if (index % 5 == 3) {
-                                detail[input_index].tax = input_value;
+                                detail[input_index].tax_id = parseInt(input_value);
                             } else if (index % 5 == 4) {
-                                detail[input_index].total_price = input_value;
+                                detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
                             }
                         });
 
@@ -695,17 +758,17 @@ $configData = Helper::appClasses();
                         });
 
                         datas.details = detail;
-                        datas.tenant_id = tenant;
-                        datas.bank_id = bank;
-                        datas.bank_id = bank;
-                        datas.status = 'Terbuat';
+                        datas.tenant_id = parseInt(tenant);
+                        datas.bank_id = parseInt(bank);
+                        datas.status = "Terbuat";
                         datas.contract_date = tglKontrak
                         datas.opening_paragraph = "Bapak/Ibu Qwerty";
                         datas.invoice_due_date = tglJatuhTempo;
                         datas.addendum_date = tglAddendum;
                         datas.invoice_date = tglInvoice;
                         datas.grand_total = parseInt(grandTotal);
-                        datas.materai_image = fileTtd.dataURL;
+                        datas.materai_image = fileTtd;
+                        delete datas['undefined'];
 
                         $.ajax({
                             url: "{{env('BASE_URL_API')}}" + "/api/invoice/" + id,
@@ -760,14 +823,14 @@ $configData = Helper::appClasses();
             let noAddendum = $("#addendum_number").val();
             let tglAddendum = $("#addendum_date").val();
             let terbilang = $("#grand_total_spelled").val();
-            let grandTotal = $(".grand_total").text();
+            let grandTotal = parseInt($(".grand_total").text().replaceAll(',', ''));
             let tglJatuhTempo = $("#invoice_due_date").val();
             let syaratDanKententuan = $("#term_and_conditions").val();
             let bank = $("#bank").val();
             let tglTtd = $("#materai_date").val();
             let nameTtd = $("#materai_name").val();
-            console.log(ttdFile);
             let fileTtd = ttdFile;
+
 
             var detail = [];
             $('.row-input').each(function(index) {
@@ -781,14 +844,13 @@ $configData = Helper::appClasses();
                 } else if (index % 5 == 1) {
                     detail[input_index].description = input_value;
                 } else if (index % 5 == 2) {
-                    detail[input_index].price = input_value;
+                    detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
                 } else if (index % 5 == 3) {
-                    detail[input_index].tax = input_value;
+                    detail[input_index].tax_id = parseInt(input_value);
                 } else if (index % 5 == 4) {
-                    detail[input_index].total_price = input_value;
+                    detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
                 }
             });
-
 
             let datas = {};
             $('.create-invoice').find('.form-control').each(function() {
@@ -798,9 +860,9 @@ $configData = Helper::appClasses();
             });
 
             datas.details = detail;
-            datas.tenant_id = tenant;
-            datas.bank_id = bank;
-            datas.status = 'Terbuat';
+            datas.tenant_id = parseInt(tenant);
+            datas.bank_id = parseInt(bank);
+            datas.status = 'terbuat';
             datas.contract_date = tglKontrak
             datas.opening_paragraph = "Bapak/Ibu Qwerty";
             datas.invoice_due_date = tglJatuhTempo;
@@ -847,6 +909,8 @@ $configData = Helper::appClasses();
                                 this.options.addedfile.call(this, mockFile);
                                 this.options.thumbnail.call(this, mockFile, dataLocal.materai_image);
                                 // Optional: Handle the removal of the file
+                                $('.dz-image').last().find('img').attr('width', '100%');
+
                                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
                                     // Handle removal logic here
                                 });
@@ -861,6 +925,8 @@ $configData = Helper::appClasses();
                                 this.options.addedfile.call(this, mockFile);
                                 this.options.thumbnail.call(this, mockFile, data.materai_image);
 
+                                $('.dz-image').last().find('img').attr('width', '100%');
+
                                 // Optional: Handle the removal of the file
                                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
                                     // Handle removal logic here
@@ -869,6 +935,7 @@ $configData = Helper::appClasses();
 
                         }
                         this.on('addedfile', function(file) {
+                            $('.dz-image').last().find('img').attr('width', '100%');
                             while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
                             ttdFile = file;
                         })
@@ -944,39 +1011,92 @@ $configData = Helper::appClasses();
         if (details) {
             for (let i = 0; i < details.length; i++) {
                 temp = `             
-            <div class="row-mg">
-                <div class="col-12 d-flex align-items-center justify-content-between">
-                    <div class="col-sm-2 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Uraian</label>
-                        <input type="text" name="uraian" class="form-control w-px-150 row-input" placeholder="" name="item[]" required value="` + details[i].item + `" />
+                <div class="row-mg">
+                    <div class="row d-flex align-items-end justify-content-between mb-3">
+                        <div class="col-md-5">
+                            <div class="row row d-flex justify-content-between px-1">
+                                <div class="col-md-6 px-1-custom">
+                                    <label for="note" class="form-label fw-medium">Uraian</label>
+                                    <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required />` + details[i].item + `</textarea>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                                <div class="col-md-6 px-1-custom">
+                                    <label for="note" class="form-label fw-medium">Keterangan</label>
+                                    <textarea class="form-control row-input" placeholder="" name="description[]" required>` + details[i].description + `</textarea>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 px-1-custom">
+                            <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
+                            <input type="text" class="form-control row-input price" placeholder="" name="price[]" required value="` + format(details[i].price) + `"/>
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-md-2 px-1-custom">
+                            <label for="note" class="form-label fw-medium">Pajak</label>
+                            <select class="form-control row-input tax" placeholder="" id="tax-${i}" required></select>
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-md-2 px-1-custom">
+                            <label for="note" class="form-label fw-medium">Total (Rp.)</label>
+                            <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled value="` + format(details[i].total_price) + `"/>
+                        </div>
+                        <div class="col-md-1 px-1-custom">
+                            <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
                     </div>
-                    <div class="col-sm-2 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Keterangan</label>
-                        <input type="text" class="form-control w-px-150 row-input" placeholder="" name="description[]" required value="` + details[i].description + `" />
-                    </div>
-                    <div class="col-sm-2 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                        <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required value="` + format(details[i].price) + `"  />
-                    </div>
-                    <div class="col-sm-1 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Pajak</label>
-                        <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required  value="` + format(details[i].tax) + `" />
-                    </div>
-                    <div class="col-sm-2 mb-3 mx-2">
-                        <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled value="` + format(details[i].total_price) + `" />
-                    </div>
-                    <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                            <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
-                            <path d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z" fill="#FF4747" />
-                        </svg>
-                    </a>
-                </div>
-            </div>`;
+                </div>`;
                 getDetail = getDetail + temp;
+                $.ajax({
+                    url: "{{env('BASE_URL_API')}}" + "/api/tax/" + details[i].tax_id,
+                    type: "GET",
+                    success: function(response) {
+
+                        let data = response.data;
+                        let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
+                        $('#tax-' + i).prepend(tem);
+                        console.log();
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+                });
             }
             $('#details').prepend(getDetail);
+            for (let i = 0; i < details.length; i++) {
+                $("#tax-" + i).select2({
+                    width: '100px',
+                    placeholder: 'Select Pajak',
+                    allowClear: true,
+                    ajax: {
+                        url: "{{env('BASE_URL_API')}}" + "/api/tax/select",
+                        dataType: 'json',
+                        cache: true,
+                        data: function(params) {
+                            return {
+                                value: params.term || '',
+                                page: params.page || 1
+                            }
+                        },
+                        processResults: function(data, params) {
+                            var more = data.pagination.more;
+                            if (more === false) {
+                                params.page = 1;
+                                params.abort = true;
+                            }
+                            return {
+                                results: data.data,
+                                pagination: {
+                                    more: more
+                                }
+                            };
+                        }
+                    }
+
+                });
+            }
         }
         // } else {
         //     temp = `             
