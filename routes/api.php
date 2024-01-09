@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\ClassificationController;
 use App\Http\Controllers\DamageReportController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\InvoiceController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\MaterialRequestController;
 use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\PurchaseRequestController;
 use App\Http\Controllers\ReceiptController;
+use App\Http\Controllers\ScopeController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\TicketController;
@@ -88,3 +90,9 @@ Route::get("tax/select", [TaxController::class, "select"]);
 Route::resource('tax', TaxController::class);
 
 Route::post("mail/send-attachment", [MailController::class, "send"]);
+
+Route::get("classification/select", [ClassificationController::class, "select"]);
+Route::resource('classification', ClassificationController::class);
+
+Route::get("scope/select", [ScopeController::class, "select"]);
+Route::resource('scope', ScopeController::class);

@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
         $this->call(DepartmentSeeder::class);
         $this->call(LevelSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(ClassificationSeeder::class);
+        $this->call(ScopeSeeder::class);
         $this->call(TenantsTableSeeder::class);
         $this->call(BanksTableSeeder::class);
         $this->call(TaxSeeder::class);
