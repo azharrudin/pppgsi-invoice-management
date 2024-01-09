@@ -276,7 +276,7 @@ $configData = Helper::appClasses();
                 <div class="card mb-4">
                     <div class="card-body">
                         <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
-                        <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
+                        <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
                         <button type="button" class="btn btn-label-secondary d-grid w-100 btn-cancel">Batal</button>
                     </div>
                 </div>
@@ -541,24 +541,35 @@ $configData = Helper::appClasses();
             let signatures = [];
 
             datas.damage_report_id = lk;
-            $('#addWorkOrder').find('.add').each(function() {
+
+            $('.addWorkOrder').find('.form-control').each(function() {
                 var inputId = $(this).attr('id');
                 var inputValue = $("#" + inputId).val();
-
-                if (inputId === 'work_order_date' || inputId ===
-                    'action_plan_date' || inputId === 'finish_plan') {
-                    datas[$("#" + inputId).attr("name")] = moment(inputValue,
-                            'D-M-YYYY')
-                        .format('YYYY-MM-DD');
-                } else {
-                    datas[$("#" + inputId).attr("name")] = inputValue;
-                }
+                datas[$("#" + inputId).attr("name")] = inputValue;
             });
 
             datas.scope = $('.scope-checkbox:checked').attr('name');
             datas.classification = $('.classif-checkbox:checked').attr('name');
             datas.klasifikasi = $('.classif2-checkbox:checked').attr('name');
-            datas.details = getRepeaterValues();
+            var detail = [];
+            $('.row-input').each(function(index) {
+                var input_name = $(this).attr('name');
+                var input_value = $(this).val();
+                var input_index = Math.floor(index / 4); // Membagi setiap 5 input menjadi satu objek pada array
+                if (index % 4 == 0) {
+                    detail[input_index] = {
+                        location: input_value
+                    };
+                } else if (index % 4 == 1) {
+                    detail[input_index].material_request = input_value;
+                } else if (index % 4 == 2) {
+                    detail[input_index].type = input_value;
+                } else if (index % 4 == 3) {
+                    detail[input_index].quantity = parseInt(input_value);
+                }
+            });
+
+            datas.details = detail;
 
             $('.signatures').each(function(index) {
                 let signature = {};
@@ -599,8 +610,10 @@ $configData = Helper::appClasses();
             datas.signatures = signatures;
             datas.status = "Terbuat";
 
+            console.log(datas);
+
             localStorage.setItem('work-order', JSON.stringify(datas));
-            window.location.href = "/complain/work-order/preview";
+            // window.location.href = "/complain/work-order/preview";
         })
 
         // Select2
@@ -690,22 +703,22 @@ $configData = Helper::appClasses();
                 <div class="row mb-3  d-flex align-items-end">
                      <div class="col-md-3">
                         <label for="note" class="form-label fw-medium">Location</label>
-                        <input type="text" class="form-control" id="location" name="location" placeholder="Location" required />
+                        <input type="text" class="form-control row-input" id="location" name="location[]" placeholder="Location" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-3">
                         <label for="note" class="form-label fw-medium">Material Request</label>
-                        <input type="text" class="form-control" id="material-req" name="material-req" placeholder="Material Request" required />
+                        <input type="text" class="form-control row-input" id="material-req" name="material-req[]" placeholder="Material Request" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-3">
                         <label for="note" class="form-label fw-medium">Type /Made In</label>
-                        <input type="text" class="form-control" id="type" name="type" placeholder="Type /Made In" required />
+                        <input type="text" class="form-control row-input" id="type" name="type[]" placeholder="Type /Made In" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-2 mb-1-custom"">
                         <label for="note" class="form-label fw-medium">Quantity</label>
-                        <input type="text" class="form-control qty" id="qty" name="qty" placeholder="Quantity" required />
+                        <input type="text" class="form-control qty row-input" id="qty" name="qty[]" placeholder="Quantity" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-1 px-1-custom mb-1-custom">
@@ -771,22 +784,22 @@ $configData = Helper::appClasses();
                 <div class="row mb-3  d-flex align-items-end">
                      <div class="col-md-3">
                         <label for="note" class="form-label fw-medium">Location</label>
-                        <input type="text" class="form-control" id="location" name="location" placeholder="Location" required />
+                        <input type="text" class="form-control row-input" id="location" name="location[]" placeholder="Location" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-3">
                         <label for="note" class="form-label fw-medium">Material Request</label>
-                        <input type="text" class="form-control" id="material-req" name="material-req" placeholder="Material Request" required />
+                        <input type="text" class="form-control row-input" id="material-req" name="material-req[]" placeholder="Material Request" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-3">
                         <label for="note" class="form-label fw-medium">Type /Made In</label>
-                        <input type="text" class="form-control" id="type" name="type" placeholder="Type /Made In" required />
+                        <input type="text" class="form-control row-input" id="type" name="type[]" placeholder="Type /Made In" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-2 mb-1-custom"">
                         <label for="note" class="form-label fw-medium">Quantity</label>
-                        <input type="text" class="form-control qty" id="qty" name="qty" placeholder="Quantity" required />
+                        <input type="text" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-1 px-1-custom mb-1-custom">

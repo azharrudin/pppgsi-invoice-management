@@ -244,6 +244,7 @@ $configData = Helper::appClasses();
                         <button class="btn btn-primary d-grid w-100 mb-2 add-pay">
                             <span class="d-flex align-items-center justify-content-center text-nowrap">Add Payment</span>
                         </button>
+                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Kembali</button>
                     </div>
                 </div>
             </div>
@@ -277,6 +278,11 @@ $configData = Helper::appClasses();
         var idIndex = urlSegments.indexOf('show') + 1;
         id = urlSegments[idIndex];
         getDataInvoice(id);
+
+        $(document).on('click', '#batal', function(event) {
+            event.preventDefault();
+            window.location.href = "/invoice/list-invoice"
+        });
     });
 
     function getDataInvoice(id) {

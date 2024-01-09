@@ -30,33 +30,33 @@ $configData = Helper::appClasses();
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Requester</label>
-                                    <input type="text" class="form-control w-px-250" placeholder="Requester" name="requester" id="requester" required readonly />
+                                    <input type="text" class="form-control" placeholder="Requester" name="requester" id="requester" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Departement </label>
-                                    <input type="text" class="form-control w-px-250" placeholder="Departement" name="department" id="department" required readonly />
+                                    <input type="text" class="form-control" placeholder="Departement" name="department" id="department" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Stock </label>
-                                    <input type="text" class="form-control w-px-250" placeholder="Stock" id="stock" name="stock" required readonly />
+                                    <input type="number" class="form-control" placeholder="Stock" id="stock" name="stock" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Purchase </label>
-                                    <input type="text" class="form-control w-px-250" placeholder="Purchase" name="purchase" id="purchase" required readonly/>
+                                    <input type="text" class="form-control" placeholder="Purchase" name="purchase" id="purchase" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
-                            <div class="col-md-6 d-flex flex-column align-items-end">
+                            <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Tanggal</label>
-                                    <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" name="request_date" id="request_date" required readonly >
+                                    <input type="text" class="form-control date" placeholder="Tanggal" name="request_date" id="request_date" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-3">
-                                    <textarea class="form-control w-px-300" rows="6" id="note" name="note" placeholder="Catatan" required readonly></textarea>
+                                    <textarea class="form-control" rows="6" id="note" name="note" placeholder="Catatan" required></textarea>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
@@ -70,16 +70,22 @@ $configData = Helper::appClasses();
 
                                         </div>
                                     </div>
+
+                                    <div class="row pb-4">
+                                        <div class="col-12">
+                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-add-row-mg">Tambah Baris</button>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <div class="col-3">
+                                    <div class="col-md-3">
                                         <label for="note" class="form-label fw-medium mb-3">Prepered by :</label>
                                         <div class="mb-3">
                                             <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd1">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd1" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -89,13 +95,13 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
                                         </div>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-md-3">
                                         <label for="note" class="form-label fw-medium mb-3">Reviewed by :</label>
                                         <div class="mb-3">
                                             <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd2">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd2" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -105,13 +111,13 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="name[]" />
                                         </div>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-md-3">
                                         <label for="note" class="form-label fw-medium mb-3">Aknowledge by :</label>
                                         <div class="mb-3">
                                             <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="date" name="name[]" />
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd3">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd3" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -121,13 +127,13 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
                                         </div>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-md-3">
                                         <label for="note" class="form-label fw-medium mb-3">Approved by :</label>
                                         <div class="mb-3">
                                             <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable" id="ttd4">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd4" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -139,17 +145,19 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
 
+
+
                                 <div class="row">
-                                    <div class="col-2">
+                                    <div class="col-md-2">
                                         <span>Lembar</span>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-md-4">
                                         <span>1. Accounting (Putih)</span>
                                         <br>
                                         <span>2. Guddang (Merah)</span>
                                     </div>
                                     <br>
-                                    <div class="col-4">
+                                    <div class="col-md-4">
                                         <span>3. Purchasing (Hijau)</span>
                                         <br>
                                         <span>4. Pemohon (Biru)</span>
