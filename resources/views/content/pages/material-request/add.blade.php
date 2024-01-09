@@ -30,33 +30,33 @@ $configData = Helper::appClasses();
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Requester</label>
-                                    <input type="text" class="form-control w-px-250" placeholder="Requester" name="requester" id="requester" required />
+                                    <input type="text" class="form-control" placeholder="Requester" name="requester" id="requester" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Departement </label>
-                                    <input type="text" class="form-control w-px-250" placeholder="Departement" name="department" id="department" required />
+                                    <input type="text" class="form-control" placeholder="Departement" name="department" id="department" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Stock </label>
-                                    <input type="number" class="form-control w-px-250" placeholder="Stock" id="stock" name="stock" required />
+                                    <input type="number" class="form-control" placeholder="Stock" id="stock" name="stock" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Purchase </label>
-                                    <input type="text" class="form-control w-px-250" placeholder="Purchase" name="purchase" id="purchase" required />
+                                    <input type="text" class="form-control" placeholder="Purchase" name="purchase" id="purchase" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
-                            <div class="col-md-6 d-flex flex-column align-items-end">
+                            <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Tanggal</label>
-                                    <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" name="request_date" id="request_date" required />
+                                    <input type="text" class="form-control date" placeholder="Tanggal" name="request_date" id="request_date" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-3">
-                                    <textarea class="form-control w-px-300" rows="6" id="note" name="note" placeholder="Catatan" required></textarea>
+                                    <textarea class="form-control" rows="6" id="note" name="note" placeholder="Catatan" required></textarea>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
@@ -79,7 +79,7 @@ $configData = Helper::appClasses();
                                 </div>
 
                                 <div class="row mb-3">
-                                    <div class="col-3">
+                                    <div class="col-md-3">
                                         <label for="note" class="form-label fw-medium mb-3">Prepered by :</label>
                                         <div class="mb-3">
                                             <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
@@ -95,13 +95,13 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
                                         </div>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-md-3">
                                         <label for="note" class="form-label fw-medium mb-3">Reviewed by :</label>
                                         <div class="mb-3">
                                             <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd2"  style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd2" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -111,7 +111,7 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="name[]" />
                                         </div>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-md-3">
                                         <label for="note" class="form-label fw-medium mb-3">Aknowledge by :</label>
                                         <div class="mb-3">
                                             <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="date" name="name[]" />
@@ -127,7 +127,7 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
                                         </div>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-md-3">
                                         <label for="note" class="form-label fw-medium mb-3">Approved by :</label>
                                         <div class="mb-3">
                                             <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
@@ -148,16 +148,16 @@ $configData = Helper::appClasses();
 
 
                                 <div class="row">
-                                    <div class="col-2">
+                                    <div class="col-md-2">
                                         <span>Lembar</span>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-md-4">
                                         <span>1. Accounting (Putih)</span>
                                         <br>
                                         <span>2. Guddang (Merah)</span>
                                     </div>
                                     <br>
-                                    <div class="col-4">
+                                    <div class="col-md-4">
                                         <span>3. Purchasing (Hijau)</span>
                                         <br>
                                         <span>4. Pemohon (Biru)</span>
@@ -368,40 +368,42 @@ $configData = Helper::appClasses();
             var $newRow = `
                 <div class="mb-3 row-mg">
                     <div class="row d-flex align-items-end mb-2">
-                        <div class="col" style="padding-right:0.25rem">
+                        <div class="col-md px-75-custom">
                             <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control w-100-px row-input" placeholder="Nomor" name="number[]" required />
+                            <input type="text" class="form-control row-input" placeholder="Nomor" name="number[]" required />
                         </div>
-                        <div class="col px-1">
+                        <div class="col-md px-1-custom">
                             <label for="note" class="form-label fw-medium">Part Number</label>
                             <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" required />
                         </div>
-                        <div class="col px-1">
+                        <div class="col-md px-1-custom">
                             <label for="note" class="form-label fw-medium">Deskripsi</label>
-                                <input type="text" class="form-control row-input" placeholder="Deskripsi" name="description[]" required />
+                            <textarea class="form-control row-input" placeholder="Deskripsi" name="description[]"></textarea>
                         </div>
-                        <div class="col px-1">
+                        <div class="col-md px-1-custom">
                             <label for="note" class="form-label fw-medium">Quantity</label>
                             <input type="text" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required />
                         </div>
-                        <div class="col-6 px-1">
+                        <div class="col-md-6">
                             <label for="note" class="form-label fw-medium">Filled Storekeeper Only</label>
-                            <div class="d-flex justify-content-between align-items-end">
-                                <div class="col px-1">
+                            <div class="row d-flex justify-content-between align-items-end">
+                                <div class="col-md px-1-custom mb-1-custom">
                                     <input type="text" class="form-control row-input" placeholder="Stock" name="stock[]" required />
                                 </div>
-                                <div class="col px-1">
+                                <div class="col-md px-1-custom mb-1-custom">
                                     <input type="text" class="form-control row-input" placeholder="Stock Out" name="stock_out[]" required />
                                 </div>
-                                <div class="col px-1">
+                                <div class="col-md px-1-custom mb-1-custom">
                                     <input type="text" class="form-control row-input" placeholder="End Stock" name="end_stock[]" required />
                                 </div>
-                                <div class="col px-1">
+                                <div class="col-md px-1-custom mb-1-custom">
                                     <input type="text" class="form-control row-input" placeholder="Min Stock" name="min_stock" [] required />
                                 </div>
-                                <a role="button" class="btn btn-primary text-center btn-remove-mg text-white" disabled>
-                                    <i class="fas fa-trash"></i>
-                                </a>
+                                <div class="col-md px-1-custom mb-1-custom">
+                                    <a role="button" class="btn btn-primary text-center btn-remove-mg text-white" disabled>
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -426,7 +428,7 @@ $configData = Helper::appClasses();
                     <div class="row d-flex align-items-end mb-2">
                         <div class="col" style="padding-right:0.25rem">
                             <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control w-100-px row-input" placeholder="Nomor" name="number[]" value="` + details[i].number + `" required />
+                            <input type="text" class="form-control row-input" placeholder="Nomor" name="number[]" value="` + details[i].number + `" required />
                         </div>
                         <div class="col px-1">
                             <label for="note" class="form-label fw-medium">Part Number</label>
@@ -434,7 +436,7 @@ $configData = Helper::appClasses();
                         </div>
                         <div class="col px-1">
                             <label for="note" class="form-label fw-medium">Deskripsi</label>
-                                <input type="text" class="form-control row-input" placeholder="Deskripsi" name="description[]"  value="` + details[i].description + `" required />
+                            <textarea class="form-control row-input" placeholder="Deskripsi" name="description[]" required />` + details[i].description + `</textarea>
                         </div>
                         <div class="col px-1">
                             <label for="note" class="form-label fw-medium">Quantity</label>
@@ -471,40 +473,42 @@ $configData = Helper::appClasses();
             temp = `            
                 <div class="mb-3 row-mg">
                     <div class="row d-flex align-items-end mb-2">
-                        <div class="col" style="padding-right:0.25rem">
+                        <div class="col-md px-75-custom">
                             <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control w-100-px row-input" placeholder="Nomor" name="number[]" required />
+                            <input type="text" class="form-control row-input" placeholder="Nomor" name="number[]" required />
                         </div>
-                        <div class="col px-1">
+                        <div class="col-md px-1-custom">
                             <label for="note" class="form-label fw-medium">Part Number</label>
                             <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" required />
                         </div>
-                        <div class="col px-1">
+                        <div class="col-md px-1-custom">
                             <label for="note" class="form-label fw-medium">Deskripsi</label>
-                                <input type="text" class="form-control row-input" placeholder="Deskripsi" name="description[]" required />
+                            <textarea class="form-control row-input" placeholder="Deskripsi" name="description[]"></textarea>
                         </div>
-                        <div class="col px-1">
+                        <div class="col-md px-1-custom">
                             <label for="note" class="form-label fw-medium">Quantity</label>
                             <input type="text" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required />
                         </div>
-                        <div class="col-6 px-1">
+                        <div class="col-md-6">
                             <label for="note" class="form-label fw-medium">Filled Storekeeper Only</label>
-                            <div class="d-flex justify-content-between align-items-end">
-                                <div class="col px-1">
+                            <div class="row d-flex justify-content-between align-items-end">
+                                <div class="col-md px-1-custom mb-1-custom">
                                     <input type="text" class="form-control row-input" placeholder="Stock" name="stock[]" required />
                                 </div>
-                                <div class="col px-1">
+                                <div class="col-md px-1-custom mb-1-custom">
                                     <input type="text" class="form-control row-input" placeholder="Stock Out" name="stock_out[]" required />
                                 </div>
-                                <div class="col px-1">
+                                <div class="col-md px-1-custom mb-1-custom">
                                     <input type="text" class="form-control row-input" placeholder="End Stock" name="end_stock[]" required />
                                 </div>
-                                <div class="col px-1">
+                                <div class="col-md px-1-custom mb-1-custom">
                                     <input type="text" class="form-control row-input" placeholder="Min Stock" name="min_stock" [] required />
                                 </div>
-                                <a role="button" class="btn btn-primary text-center btn-remove-mg text-white" disabled>
-                                    <i class="fas fa-trash"></i>
-                                </a>
+                                <div class="col-md px-1-custom mb-1-custom">
+                                    <a role="button" class="btn btn-primary text-center btn-remove-mg text-white" disabled>
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -512,6 +516,7 @@ $configData = Helper::appClasses();
             `;
             $('#details').prepend(temp);
         }
+        
 
         var saveMaterial = $('.create-material-request');
 

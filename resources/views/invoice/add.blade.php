@@ -353,6 +353,7 @@ $configData = Helper::appClasses();
         if (dataLocal) {
             load(dataLocal);
         }
+        getDetails();
 
         $('#tenant').on("change", (async function(e) {
             $(this).removeClass("invalid");
@@ -917,8 +918,6 @@ $configData = Helper::appClasses();
         if (dataLocal.materai_date) {
             getMateraiDate();
         }
-
-        getDetails();
         Swal.close();
     }
 
@@ -990,38 +989,7 @@ $configData = Helper::appClasses();
 
         if (data) {
             let details = dataLocal.details;
-            console.log(details);
             for (let i = 0; i < details.length; i++) {
-                // $("#tax-" + i).select2({
-                //     width: '100px',
-                //     placeholder: 'Select Pajak',
-                //     allowClear: true,
-                //     ajax: {
-                //         url: "{{env('BASE_URL_API')}}" + "/api/tax/select",
-                //         dataType: 'json',
-                //         cache: true,
-                //         data: function(params) {
-                //             return {
-                //                 value: params.term || '',
-                //                 page: params.page || 1
-                //             }
-                //         },
-                //         processResults: function(data, params) {
-                //             var more = data.pagination.more;
-                //             if (more === false) {
-                //                 params.page = 1;
-                //                 params.abort = true;
-                //             }
-                //             return {
-                //                 results: data.data,
-                //                 pagination: {
-                //                     more: more
-                //                 }
-                //             };
-                //         }
-                //     }
-
-                // });
                 temp = `             
                 <div class="row-mg">
                     <div class="row d-flex align-items-end justify-content-between mb-3">
@@ -1111,6 +1079,7 @@ $configData = Helper::appClasses();
                 });
             }
         } else {
+            console.log('a');
             temp = `             
             <div class="row-mg">
                 <div class="row d-flex align-items-end justify-content-between mb-3">
@@ -1130,7 +1099,7 @@ $configData = Helper::appClasses();
                     </div>
                     <div class="col-md-2 px-1-custom">
                         <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                        <input type="text" class="form-control row-input price" placeholder="" name="price[]" required />
+                        <input type="text" class="form-control row-input price" placeholder="" name="price[]" required/>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-2 px-1-custom">

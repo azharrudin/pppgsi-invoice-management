@@ -91,25 +91,25 @@ $configData = Helper::appClasses();
                 }
             },
             columns: [{
-                    name: "No. Material Request",
-                    data: "id",
+                    name: "material_request_number",
+                    data: "material_request_number",
                     title: "No. Material Request",
                     className: 'text-center'
                 },
                 {
-                    name: "Requester",
+                    name: "requester",
                     data: "requester",
                     title: "Requester",
                     className: 'text-center'
                 },
                 {
-                    name: "Department",
+                    name: "department",
                     data: "department",
                     title: "Department",
                     className: 'text-center'
                 },
                 {
-                    name: "Tgl Request",
+                    name: "request_date",
                     data: "request_date",
                     title: "Tgl Request",
                     className: 'text-center',

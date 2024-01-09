@@ -95,8 +95,8 @@
                     }
                 },
                 columns: [{
-                    data: "id",
-                    name: "id",
+                    data: "work_order_number",
+                    name: "work_order_number",
                     title: "No. Work Order"
                 }, {
                     data: "scope",

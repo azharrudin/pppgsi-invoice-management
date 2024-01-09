@@ -18,60 +18,76 @@ $configData = Helper::appClasses();
                     <h2 class="mx-auto"><b>Form Aduan dan Complain</b></h2>
                     {{-- Divider --}}
                     <hr class="my-3 mx-n4">
-
-                    <div class="row px-3 d-flex align-items-center mb-3">
-                        <div class="d-flex align-items-center justify-content-between col-3">
-                            <label for="salesperson" class="form-label fw-bold fs-5">Nama Pelapor</label>
-                            <span>:</span>
-                        </div>
-                        <div class="col-8 fw-bold fs-5">
-                            <div id="reporter_name"></div>
-                        </div>
+                    <div class="table-responsive">
+                        <table style="width: 100%;">
+                            <tr style="vertical-align: top;">
+                                <td style="width: 20%;">
+                                    <label for="salesperson" class="form-label fw-bold fs-5">Nama Pelapor</label>
+                                </td>
+                                <td style="width: 5%;" class="mx-auto">
+                                    <div class="">:</div>
+                                </td>
+                                <td style="width: 75%;">
+                                    <span id="reporter_name" class="fw-bold fs-5"></span>
+                                </td>
+                            </tr>
+                            <tr style="vertical-align: top;">
+                                <td style="width: 20%;">
+                                    <label for="salesperson" class="form-label fw-bold fs-5">Nomor Telepon</label>
+                                </td>
+                                <td style="width: 5%;" class="mx-auto">
+                                    <div class="">:</div>
+                                </td>
+                                <td style="width: 75%;">
+                                    <div id="reporter_phone" class="fw-bold fs-5"></div>
+                                </td>
+                            </tr>
+                            <tr style="vertical-align: top;">
+                                <td style="width: 20%;">
+                                    <label for="salesperson" class="form-label fw-bold fs-5">Nama Perusahaan</label>
+                                </td>
+                                <td style="width: 5%;" class="mx-auto">
+                                    <div class="">:</div>
+                                </td>
+                                <td style="width: 75%;">
+                                    <div id="reporter_company" class="fw-bold fs-5"></div>
+                                </td>
+                            </tr>
+                            <tr style="vertical-align: top;">
+                                <td style="width: 20%;">
+                                    <label for="salesperson" class="form-label fw-bold fs-5">Judul Laporan</label>
+                                </td>
+                                <td style="width: 5%;" class="mx-auto">
+                                    <div class="">:</div>
+                                </td>
+                                <td style="width: 75%;">
+                                    <div id="ticket_title" class="fw-bold fs-5"></div>
+                                </td>
+                            </tr>
+                            <tr style="vertical-align: top;">
+                                <td style="width: 20%;">
+                                    <label for="salesperson" class="form-label fw-bold fs-5">Isi laporan</label>
+                                </td>
+                                <td style="width: 5%;" class="mx-auto">
+                                    <div class="">:</div>
+                                </td>
+                                <td style="width: 75%;">
+                                    <div id="ticket_body" class="fw-bold fs-5"></div>
+                                </td>
+                            </tr>
+                            <tr style="vertical-align: top;">
+                                <td style="width: 20%;">
+                                    <label for="salesperson" class="form-label fw-bold fs-5">Laporan</label>
+                                </td>
+                                <td style="width: 5%;" class="mx-auto">
+                                    <div class="">:</div>
+                                </td>
+                                <td style="width: 75%;">
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="row px-3 d-flex align-items-center mb-3">
-                        <div class="d-flex align-items-center justify-content-between col-3">
-                            <label for="salesperson" class="form-label fw-bold fs-5">Nomor Telepon</label>
-                            <span>:</span>
-                        </div>
-                        <div class="col-8 fw-bold fs-5">
-                            <div id="reporter_phone"></div>
-                        </div>
-                    </div>
-                    <div class="row px-3 d-flex align-items-center mb-3">
-                        <div class="d-flex align-items-center justify-content-between col-3">
-                            <label for="salesperson" class="form-label fw-bold fs-5">Nama Perusahaan</label>
-                            <span>:</span>
-                        </div>
-                        <div class="col-8 fw-bold fs-5">
-                            <div id="reporter_company"></div>
-                        </div>
-                    </div>
-                    <div class="row px-3 d-flex align-items-center mb-3">
-                        <div class="d-flex align-items-center justify-content-between col-3">
-                            <label for="salesperson" class="form-label fw-bold fs-5">Judul Laporan</label>
-                            <span>:</span>
-                        </div>
-                        <div class="col-8 fw-bold fs-5">
-                            <div id="ticket_title"></div>
-                        </div>
-                    </div>
-                    <div class="row px-3 d-flex align-items-center mb-3">
-                        <div class="d-flex align-items-center justify-content-between col-3">
-                            <label for="salesperson" class="form-label fw-bold fs-5">Isi laporan</label>
-                            <span>:</span>
-                        </div>
-                        <div class="col-8 fw-bold fs-5">
-                            <div id="ticket_body"></div>
-                        </div>
-                    </div>
-                    <div class="row px-3 mb-3">
-                        <div class="d-flex align-items-center justify-content-between col-3">
-                            <label for="salesperson" class="form-label fw-bold fs-5">Lampiran</label>
-                            <span>:</span>
-                        </div>
-                        <div></div>
-                    </div>
-                    <div class="d-flex flex-wrap px-3 fw-bold fs-5 mb-3 gallery">
+                    <div class="d-flex flex-wrap fw-bold fs-5 mb-3 gallery">
 
                     </div>
                     <div class="px-3">
@@ -87,12 +103,7 @@ $configData = Helper::appClasses();
         <div class="col-lg-3 col-12 invoice-actions">
             <div class="card mb-4">
                 <div class="card-body">
-                    <a href="#" class="btn btn-primary d-grid w-100 mb-2">
-                        <span class="d-flex align-items-center justify-content-center text-nowrap">Buat Laporan Kerusakan</span>
-                    </a>
-                    <a href="/complain/add-ticket" class="btn btn-label-secondary d-grid w-100 mb-2">Edit Ticket</a>
-                    <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
-                    <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                    <a href="/complain/add-ticket" class="btn btn-label-secondary d-grid w-100 mb-2">Kembali</a>
                 </div>
             </div>
         </div>
@@ -121,14 +132,26 @@ $configData = Helper::appClasses();
 
     let data = JSON.parse(localStorage.getItem("ticket"));
     $(document).ready(function() {
+       load(data);
+
+    });
+
+    function load(data) {
+        Swal.fire({
+            title: '<h2>Loading...</h2>',
+            html: sweet_loader + '<h5>Please Wait</h5>',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        });
         $("#reporter_name").text(data.reporter_name);
         $("#reporter_phone").text(data.reporter_phone);
         $("#reporter_company").text(data.reporter_company);
         $("#ticket_title").text(data.ticket_title);
         $("#ticket_body").text(data.ticket_body);
         getImage(data.attachment);
-
-    });
+        Swal.close();
+    }
 
     $(document).on('click', '#batal', function(event) {
         event.preventDefault();
@@ -181,7 +204,7 @@ $configData = Helper::appClasses();
         console.log(images.length);
         let temp = '';
         for (let i = 0; i < images.length; i++) {
-            temp += `<img class="mx-2 my-2 object-fit-cover" style="width: 250px; height: 250px;" src="${images[i]}" alt="">`
+            temp += `<img class=" my-2 object-fit-cover" style="width: 250px; height: 250px;" src="${images[i]}" alt="">`
         }
         $('.gallery').append(temp);
     }

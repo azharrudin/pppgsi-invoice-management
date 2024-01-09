@@ -22,32 +22,32 @@ $configData = Helper::appClasses();
                         <div class="col-md-12 mb-md-0 mb-3">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-bold">Nama Pelapor</label>
-                                <input type="text" class="form-control w-75" name="reporter_name" id="reporter_name" placeholder="Nama Pelapor" required />
+                                <input type="text" class="form-control" name="reporter_name" id="reporter_name" placeholder="Nama Pelapor" required />
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-bold">Nomor Telepon</label>
-                                <input type="text" class="form-control w-75" name="reporter_phone" id="reporter_phone" placeholder="Nomor Telepon" required />
+                                <input type="text" class="form-control" name="reporter_phone" id="reporter_phone" placeholder="Nomor Telepon" required />
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-bold">Nama Perusahaan</label>
-                                <input type="text" class="form-control w-75" name="reporter_company" id="reporter_company" placeholder="Nama Perusahaan" required />
+                                <input type="text" class="form-control" name="reporter_company" id="reporter_company" placeholder="Nama Perusahaan" required />
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-bold">Judul Laporan</label>
-                                <input type="text" class="form-control w-75" name="ticket_title" id="ticket_title" placeholder="Judul Laporan" required />
+                                <input type="text" class="form-control" name="ticket_title" id="ticket_title" placeholder="Judul Laporan" required />
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-bold">Isi laporan</label>
-                                <textarea class="form-control w-75" rows="11" id="ticket_body" name="ticket_body" placeholder="Isi laporan" required></textarea>
+                                <textarea class="form-control" rows="11" id="ticket_body" name="ticket_body" placeholder="Isi laporan" required></textarea>
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                             <div class="mb-3">
                                 <label for="formFile" class="form-label fw-bold">Upload Lampiran</label>
-                                <input class="form-control w-75" type="file" name="attachment" id="attachment" placeholder="Pilih Berkas" alt="Pilih Berkas" multiple required>
+                                <input class="form-control" type="file" name="attachment" id="attachment" placeholder="Pilih Berkas" alt="Pilih Berkas" multiple required>
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                         </div>
@@ -60,11 +60,11 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <a href="#" class="btn btn-primary d-grid w-100 mb-2">
+                        <!-- <a href="#" class="btn btn-primary d-grid w-100 mb-2">
                             <span class="d-flex align-items-center justify-content-center text-nowrap">Buat Laporan Kerusakan</span>
-                        </a>
+                        </a> -->
+                        <button type="submit" id="save" class="btn btn-primary btn-label-secondary d-grid w-100 mb-2">Simpan</button>
                         <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
-                        <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
                         <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
                     </div>
                 </div>
@@ -111,6 +111,9 @@ $configData = Helper::appClasses();
             $("#ticket_title").val(dataLocal.ticket_title);
             $("#ticket_body").val(dataLocal.ticket_body);
             files = dataLocal.attachment;
+            if (files) {
+                $('#attachment').removeAttr("required");
+            }
         }
 
         $(document).on('change', '#attachment', function(e) {

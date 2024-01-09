@@ -276,36 +276,29 @@ $configData = Helper::appClasses();
         var urlSegments = window.location.pathname.split('/');
         var idIndex = urlSegments.indexOf('show') + 1;
         id = urlSegments[idIndex];
-        load(id);
-    });
-
-    function load(id) {
-        Swal.fire({
-            title: '<h2>Loading...</h2>',
-            html: sweet_loader + '<h5>Please Wait</h5>',
-            showConfirmButton: false,
-            allowOutsideClick: false,
-            allowEscapeKey: false
-        });
         getDataInvoice(id);
-        Swal.close();
-    }
-
-
-
+    });
 
     function getDataInvoice(id) {
         $.ajax({
             url: "{{env('BASE_URL_API')}}" + "/api/invoice/" + id,
             type: "GET",
             dataType: "json",
+            beforeSend: function() {
+                Swal.fire({
+                    title: '<h2>Loading...</h2>',
+                    html: sweet_loader + '<h5>Please Wait</h5>',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                });
+            },
             success: function(res) {
                 let data = res.data;
                 id = data.id;
                 getTenant(data.tenant_id)
                 getBank(data.bank_id)
                 nomorInvoice = data.invoice_number;
-                console.log(nomorInvoice);
                 $("#invoice_number").val(data.invoice_number);
                 $("#invoice_date").val(data.invoice_date);
                 $("#contract_number").val(data.contract_number);
@@ -327,6 +320,8 @@ $configData = Helper::appClasses();
                     $("#materai-image").css("width", `200px`);
                     $("#materai-image").css("background-position", `center`);
                 }
+
+                Swal.close();
             },
             error: function(errors) {
                 console.log(errors);
