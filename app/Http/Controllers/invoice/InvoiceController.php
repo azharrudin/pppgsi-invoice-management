@@ -96,7 +96,7 @@ class InvoiceController extends Controller
         $response = json_decode($apiRequest->getBody());
         $data = $response->data;
     	$pdf = PDF::loadview('invoice.download',['data'=>$data]);
-    	return $pdf->download('laporan-pegawai-pdf.pdf');
+    	return $pdf->download('invoice.pdf');
         // return view('invoice.download',['data'=>$data]);
     }
 }
