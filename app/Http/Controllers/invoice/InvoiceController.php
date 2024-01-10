@@ -92,7 +92,11 @@ class InvoiceController extends Controller
     
     public function print($id){
         // return view('invoice.download');
-    	$pdf = PDF::loadview('invoice.download');
+        $apiRequest = Http::get(env('BASE_URL_API') .'/api/invoice/'.$id);
+        $response = json_decode($apiRequest->getBody());
+        $data = $response->data;
+    	$pdf = PDF::loadview('invoice.download',['data'=>$data]);
     	return $pdf->download('laporan-pegawai-pdf.pdf');
+        // return view('invoice.download',['data'=>$data]);
     }
 }

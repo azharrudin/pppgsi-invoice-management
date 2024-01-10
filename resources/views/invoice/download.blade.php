@@ -78,28 +78,29 @@
                                 Up. Bp. Chrissandy Dave Winata</b></td>
                         <td style="width: 120px; border: none;"></td>
                         <td style="border: 0.5px solid black;">No. Invoice:
-                            <br>GSI-FIN/IX/23/1629
+                            <br>{{$data->invoice_number}}
                         </td>
                         <td style="border: 0.5px solid black;">Tanggal: <br>
-                            07/09/2023</td>
+                            {{$data->invoice_date}}
+                        </td>
                     </tr>
                     <tr>
 
                         <td style="width: 120px; border: none;"></td>
                         <td style="border: 0.5px solid black;">No. Kontrak:
-                            <br>
+                            <br> {{$data->contract_number}}
                         </td>
-                        <td style="border: 0.5px solid black;">Tanggal: <br>
+                        <td style="border: 0.5px solid black;">Tanggal: <br> {{$data->contract_date}}
                         </td>
                     </tr>
                     <tr>
 
                         <td style="width: 120px; border: none;"></td>
                         <td style="border: 0.5px solid black;">No. Addendum:
-                            <br>
+                            <br> {{$data->addendum_number}}
                         </td>
-                        <td style="border: 0.5px solid black;">Tanggal: <br>
-                        </td>
+                        <td style="border: 0.5px solid black;">Tanggal: <br>{{$data->addendum_date}}
+                        </td> 
                     </tr>
                 </tbody>
             </table>
@@ -135,22 +136,16 @@
                     <tr>
                         <td class="text-right" colspan="4"><b>Total :</b>
                         </td>
-                        <td>10.222.201</td>
+                        <td>{{$data->grand_total}}</td>
                     </tr>
                     <tr>
-                        <td colspan="5"><b>Terbilang: Sepuluh juta dua
-                                ratus
-                                dua puluh dua ribu dua ratus satu</b></td>
-
+                        <td colspan="5"><b>Terbilang: {{$data->grand_total_spelled}}</b></td>
                     </tr>
                 </tfoot>
             </table>
-            <p>Jatuh Tempo Tgl : 21/09/2023</p><br>
-            <p>Keterangan : </p><br>
-            <p>Jika telah melakukan pembayaran mohon untuk konfirmasi bukti
-                pembayaran melalui fax (021) 5265239 atau melalui email
-                nidhaamoy@gmail.com, haqqani_ani@yahoo.com atau
-                dinalestariekaputri@gmail.com.</p>
+            <p>Jatuh Tempo Tgl : {{$data->invoice_due_date}}</p><br>
+            <p>Keterangan : {{$data->term_and_conditions}}</p><br>
+            <p></p>
         </div>
         <div class="row">
             <div class="col-4" style="border: 1px solid black;">
