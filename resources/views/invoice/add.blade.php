@@ -771,6 +771,15 @@ $configData = Helper::appClasses();
                             contentType: false,
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: '<h2>Loading...</h2>',
+                                    html: sweet_loader + '<h5>Please Wait</h5>',
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false
+                                });
+                            },
                             success: function(response) {
                                 $('.indicator-progress').show();
                                 $('.indicator-label').hide();
@@ -783,10 +792,10 @@ $configData = Helper::appClasses();
                                         confirmButton: 'btn btn-primary'
                                     },
                                     buttonsStyling: false
-                                })
-
-                                localStorage.removeItem('invoice');
-                                window.location.href = "/invoice/list-invoice"
+                                }).then(function() {
+                                    localStorage.removeItem('invoice');
+                                    window.location.href = "/invoice/list-invoice"
+                                });
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({

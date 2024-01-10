@@ -168,6 +168,15 @@ $configData = Helper::appClasses();
                             contentType: false,
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: '<h2>Loading...</h2>',
+                                    html: sweet_loader + '<h5>Please Wait</h5>',
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false
+                                });
+                            },
                             success: function(response) {
                                 $('.indicator-progress').show();
                                 $('.indicator-label').hide();
@@ -179,10 +188,10 @@ $configData = Helper::appClasses();
                                         confirmButton: 'btn btn-primary'
                                     },
                                     buttonsStyling: false
-                                })
-
-                                localStorage.removeItem('ticket');
-                                window.location.href = "/complain/list-ticket"
+                                }).then(function() {
+                                    localStorage.removeItem('ticket');
+                                    window.location.href = "/complain/list-ticket"
+                                });
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
