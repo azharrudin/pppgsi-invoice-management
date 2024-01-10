@@ -63,10 +63,17 @@ Route::group(['middleware' => 'cekauth'], function () {
 
         Route::prefix('tanda-terima')->group(function () {
             Route::get('/', [TandaTerimaController::class, 'index'])->name('pages-list-tanda-terima');
+<<<<<<< HEAD
             Route::get('/add', [TandaTerimaController::class, 'create'])->name('pages-list-tanda-terima');
             Route::get('/preview', [TandaTerimaController::class, 'show'])->name('pages-list-tanda-terima');
             Route::get('/edit/{id}', [TandaTerimaController::class, 'edit'])->name('pages-list-tanda-terima');
             Route::get('/preview/{id}', [TandaTerimaController::class, 'preview'])->name('pages-list-tanda-terima');
+=======
+            Route::get('/add', [TandaTerimaController::class, 'create']);
+            Route::get('/preview', [TandaTerimaController::class, 'show']);
+            Route::get('/edit/{id}', [TandaTerimaController::class, 'edit']);
+            Route::get('/show/{id}', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
+>>>>>>> 2e34380c9b7211fbd1259c0719594b55ef6b5a8e
             Route::get('/data-tanda-terima', [TandaTerimaController::class, 'datatable'])->name('data-tanda-terima');
             Route::get('/print/{id}', [TandaTerimaController::class, 'print']);
         });

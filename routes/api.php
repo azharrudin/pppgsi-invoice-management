@@ -50,6 +50,7 @@ Route::resource('invoice', InvoiceController::class);
 
 Route::get("receipt/select", [ReceiptController::class, "select"]);
 Route::get("receipt/report", [ReceiptController::class, "report"]);
+Route::patch("receipt/update-status/{id}", [ReceiptController::class, "updateStatus"]);
 Route::resource('receipt', ReceiptController::class);
 
 Route::get("ticket/select", [TicketController::class, "select"]);

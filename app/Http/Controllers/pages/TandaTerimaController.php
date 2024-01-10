@@ -28,7 +28,7 @@ class TandaTerimaController extends Controller
 
     public function preview(string $id)
     {
-        return view('content.pages.tanda-terima.preview');
+        return view('content.pages.tanda-terima.preview', compact('id'));
     }
 
     public function show()

@@ -79,10 +79,21 @@
     <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script>
         "use strict";
-
+        let account = {!! json_encode(session('data')) !!}
+        let buttonAdd = [];
         var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
+
+        if(account.level.id == '10'){
+            buttonAdd = [{
+                    text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tanda Terima</span>',
+                    className: "btn btn-primary",
+                    action: function(a, e, t, s) {
+                        window.location = baseUrl + "invoice/tanda-terima/add"
+                    }
+                }];
+        }
 
         $((function() {
             var a = $(".invoice-list-table");
@@ -118,6 +129,20 @@
                     data: "grand_total",
                     name: "grand_total",
                     title: "Total",
+                    render: function(data, type, row) {
+                        // Check if it is of type 'display'
+                        if (type === 'display') {
+                            return 'Rp. ' + parseFloat(data).toLocaleString('en-US') + ',-';
+                        }
+
+                        // For other types (sorting, filtering, etc.), return the original data
+                        return data;
+                    }
+                }, {
+                    class: "text-center",
+                    data: "paid",
+                    name: "paid",
+                    title: "Dibayarkan",
                     render: function(data, type, row) {
                         // Check if it is of type 'display'
                         if (type === 'display') {
@@ -168,6 +193,7 @@
                     data: null,
                     title: "Tanggapan",
                     render: function(data, type, row) {
+<<<<<<< HEAD
                         return `
                         <div class="d-flex align-items-center">
                             <a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>
@@ -175,6 +201,27 @@
                             <div class="dropdown">
                                 <a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="tanda-terima/print/${data.id}" class="dropdown-item">Download</a><a href="tanda-terima/edit/${data.id}" class="dropdown-item btn-edit" data-id="${data.id}">Edit</a>
                             <a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="${data.id}">Delete</a></div></div></div>`;
+=======
+                        let sendMailRow = '';
+                        let editRow = '';
+                        if(row.status == 'Disetujui BM' && account.level.id == 10){
+                            sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
+                        }
+                        if(account.level.id == 1){
+
+                        }
+                        return `<div class="d-flex align-items-center">
+                                    ${sendMailRow}
+                                    <a href="tanda-terima/show/${data.id}" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Show Tanda Terima"><i class="ti ti-eye mx-2 ti-sm"></i></a>
+                                    <div class="dropdown">
+                                        <a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a href="javascript:;" class="dropdown-item">Download</a><a href="tanda-terima/edit/${data.id}" class="dropdown-item btn-edit" data-id="${data.id}">Edit</a>
+                                            <a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="${data.id}">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>`;
+>>>>>>> 2e34380c9b7211fbd1259c0719594b55ef6b5a8e
                     }
                 }],
                 order: [
@@ -186,13 +233,7 @@
                     search: "",
                     searchPlaceholder: "Search Tanda Terima"
                 },
-                buttons: [{
-                    text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tanda Terima</span>',
-                    className: "btn btn-primary",
-                    action: function(a, e, t, s) {
-                        window.location = baseUrl + "invoice/tanda-terima/add"
-                    }
-                }],
+                buttons: buttonAdd,
                 responsive: {
                     details: {
                         display: $.fn.dataTable.Responsive.display.modal({

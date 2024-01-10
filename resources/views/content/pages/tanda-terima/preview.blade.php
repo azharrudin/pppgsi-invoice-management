@@ -61,10 +61,14 @@ $configData = Helper::appClasses();
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 d-flex justify-content-end">
+                        <div class="col-md-6 justify-content-end text-end">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">Nama Tenant</label>
                                 <div class="form-label" id="tenant" name="tenant"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="note" class="form-label fw-medium">Tanggal Tanda Terima</label>
+                                <div class="form-label" id="receipt_date" name="tenant"></div>
                             </div>
                         </div>
                     </div>
@@ -120,10 +124,10 @@ $configData = Helper::appClasses();
                             </span>
                         </div>
 
-                        <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
+                        <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center data-material">
                             <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">Tanda Tangan</label>
-                                <div class="form-label" id="receipt_date" name="receipt_date">
+                                <label for="note" class="form-label fw-medium"></label>
+                                <div class="form-label" id="signature_date" name="signature_date">
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -131,7 +135,7 @@ $configData = Helper::appClasses();
                             </div>
                             <div class="mb-3">
                                 <div class="form-label" id="signature_name" name="signature_name">
-                                    Dina - Manager Operasional
+                                    
                                 </div>
                             </div>
 
@@ -146,14 +150,12 @@ $configData = Helper::appClasses();
         <div class="col-lg-3 col-12 invoice-actions">
             <div class="card mb-4">
                 <div class="card-body">
-                    <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
+                    <button class="btn btn-primary d-grid w-100 mb-2 kirim-tanda-terima" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
                         <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Tanda Terima</span>
                     </button>
-                    <button type="button" class="btn btn-label-secondary btn-status d-grid w-100 mb-2" style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2">Download</button>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2">Print</button>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100 btn-edit">Edit Tanda
-                            Terima</button>
+                    <button type="button" class="btn btn-label-secondary btn-status d-grid w-100 mb-2 disetujui" style="background-color: #4EC0D9; color : #fff;">Disetujui</button>
+                    <a target="_blank" href="{{url('invoice/tanda-terima/print/')}}/{{$id}}" id="preview" class="btn btn-label-info d-grid w-100 mb-2">Download</a>
+                    <a href="{{ url('invoice/tanda-terima')}}" id="back" class="btn btn-label-danger d-grid w-100 mb-2">Kembali</a>
                 </div>
             </div>
         </div>
@@ -220,8 +222,9 @@ $configData = Helper::appClasses();
 <script>
     $(document).ready(function() {
 
+        let account = {!! json_encode(session('data')) !!}
         var urlSegments = window.location.pathname.split('/');
-        var idIndex = urlSegments.indexOf('preview') + 1;
+        var idIndex = urlSegments.indexOf('show') + 1;
         var id = urlSegments[idIndex];
 
         var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
@@ -233,7 +236,7 @@ $configData = Helper::appClasses();
 
         function getDataPreview(id) {
             $.ajax({
-                url: "{{ url('api/receipt') }}/" + id,
+                url: "{{ env('BASE_URL_API') }}" + "/api/receipt/" + id,
                 type: "GET",
                 dataType: "json",
                 beforeSend: function() {
@@ -262,7 +265,18 @@ $configData = Helper::appClasses();
                     $('#note').text(result.note);
                     $('#receipt_date').text(moment(result.receipt_date).format('DD MMMM YYYY'));
                     $('.prev-img').attr('src', result.signature_image);
+                    if(result.signature_name == null && account.level.id != 1){
+                        $('.data-material').attr('style','display:none !important');
+                    }
                     $('#signature_name').text(result.signature_name);
+                    $('#signature_date').text(result.signature_date);
+
+                    if(result.status != 'Disetujui BM' || account.level.id != 10){
+                        $('.kirim-tanda-terima').attr('style','display:none !important');
+                    }
+                    if(account.level.id != '2' || result.status == 'Disetujui KA'){
+                        $('.disetujui').attr('style','display:none !important');
+                    }
 
                     $('.btn-edit').attr('data-id', id);
                 },
@@ -282,10 +296,13 @@ $configData = Helper::appClasses();
         }
 
         $(".btn-status").on("click", function() {
+            let datas = {}
+            datas.status = 'Disetujui KA';
             $.ajax({
-                url: "{{ url('api/receipt') }}/" + id,
-                type: "GET",
+                url: "{{env('BASE_URL_API')}}" + "/api/receipt/update-status/" + id,
+                type: "PATCH",
                 dataType: "json",
+                data: JSON.stringify(datas),
                 beforeSend: function() {
                     Swal.fire({
                         title: '<h2>Loading...</h2>',

@@ -136,6 +136,7 @@ $configData = Helper::appClasses();
                                     <input type="text" class="form-control w-px-250 date" id="receipt_date" name="receipt_date" placeholder="Tanggal" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
+<<<<<<< HEAD
                                 <div class="mb-3">
                                     <div action="/upload" class="dropzone needsclick dz-clickable w-px-250" id="dropzone-basic">
                                         <div class="dz-message needsclick">
@@ -148,6 +149,84 @@ $configData = Helper::appClasses();
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
 
+=======
+                            </div>
+                            <div class="row px-3 d-flex align-items-center mb-3">
+                                <div class="col-2">
+                                    <label for="salesperson" class="form-label  fw-medium">Sudah Dibayarkan</label>
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control qty price" id="total_paid" name="total_paid"
+                                        placeholder="Sudah Dibayarkan" fdprocessedid="yombzp" required readonly>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                            </div>
+                            <div class="row px-3 d-flex align-items-center mb-3">
+                                <div class="col-2">
+                                    <label for="salesperson" class="form-label  fw-medium">Dibayarkan</label>
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control qty price" id="paid" name="paid"
+                                        placeholder="Dibayarkan" fdprocessedid="yombzp" required>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                            </div>
+                            <div class="row px-3 d-flex align-items-center mb-3">
+                                <div class="col-2">
+                                    <label for="salesperson" class="form-label  fw-medium">Sisa Tagihan</label>
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control qty price" id="remaining" name="remaining"
+                                        placeholder="Sisa Tagihan" fdprocessedid="yombzp" required>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                            </div>
+                            <div class="row px-3 d-flex align-items-center mb-3">
+                                <div class="col-2">
+                                    <label for="salesperson" class="form-label  fw-medium">Terbilang</label>
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control pe-none" id="grand_total_spelled"
+                                        name="grand_total_spelled" placeholder="Terbilang" fdprocessedid="yombzp"
+                                        required>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                            </div>
+
+                            <div class="row py-3 px-3">
+                                <div class="col-md-6 mb-md-0 mb-3">
+                                    <textarea class="form-control" rows="11" id="note" name="note" placeholder="Catatan" required></textarea>
+                                    <br>
+                                    <br>
+                                    <span>
+                                        Apabila dibayar dengan cek / Bilyet giro, Pembayaran baru dianggap sah apabila telah
+                                        dapat dicairkan di Bank kami.
+                                    </span>
+                                </div>
+                                @if (session('data')['level']['id'] == '1')
+                                <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center ">
+                                    <div class="mb-3">
+                                        <label for="note" class="form-label fw-medium">Tanda Tangan</label>
+                                        <input type="text" class="form-control w-px-250 date" id="receipt_date"
+                                            name="receipt_date" placeholder="Tanggal" required />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div action="/upload" class="dropzone needsclick dz-clickable w-px-250"
+                                            id="dropzone-basic">
+                                            <div class="dz-message needsclick">
+                                                <span class="note needsclick">Unggah Tanda Tangan</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control w-px-250 " id="signature_name"
+                                            name="signature_name" placeholder="Nama & Jabatan" required />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                </div>
+                                @endif
+>>>>>>> 2e34380c9b7211fbd1259c0719594b55ef6b5a8e
                             </div>
                         </div>
                     </div>
@@ -155,6 +234,7 @@ $configData = Helper::appClasses();
             </div>
             <!-- /Invoice Add-->
 
+<<<<<<< HEAD
             <!-- Invoice Actions -->
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
@@ -165,6 +245,17 @@ $configData = Helper::appClasses();
                         <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
                         <button type="submit" class="btn btn-label-secondary btn-save d-grid w-100 mb-2">Simpan</button>
                         <button type="button" class="btn btn-label-secondary d-grid w-100 btn-cancel">Batal</button>
+=======
+                <!-- Invoice Actions -->
+                <div class="col-lg-3 col-12 invoice-actions">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <button class="btn btn-label-warning d-grid w-100 mb-2 btn-preview">Preview</button>
+                            <button type="submit"
+                                class="btn btn-label-success btn-save d-grid w-100 mb-2">Simpan</button>
+                            <button type="button" class="btn btn-label-danger d-grid w-100 btn-cancel">Batal</button>
+                        </div>
+>>>>>>> 2e34380c9b7211fbd1259c0719594b55ef6b5a8e
                     </div>
                 </div>
             </div>
@@ -229,8 +320,15 @@ $configData = Helper::appClasses();
 <script>
     $(document).ready(function() {
 
+<<<<<<< HEAD
         // Mendapatkan id dari invoice
         const idInvoice = getParameterByName('id-invoice');
+=======
+            let account = {!! json_encode(session('data')) !!}
+
+            // Mendapatkan id dari invoice
+            const idInvoice = getParameterByName('id-invoice');
+>>>>>>> 2e34380c9b7211fbd1259c0719594b55ef6b5a8e
 
         if (idInvoice) {
             getDataInvoice(idInvoice);
@@ -305,6 +403,7 @@ $configData = Helper::appClasses();
             }
         });
 
+<<<<<<< HEAD
         $(".select-invoice").on('change', function() {
             validateSelect(this);
         })
@@ -313,6 +412,457 @@ $configData = Helper::appClasses();
         })
         $(".select-tenant").on('change', function() {
             validateSelect(this);
+=======
+            // Date
+            $('.date').flatpickr({
+                dateFormat: 'd-m-Y'
+            });
+
+            // Dropzone
+            let ttdFile = null;
+            if(account.level.id == '1'){
+                const myDropzone = new Dropzone('#dropzone-basic', {
+                    parallelUploads: 1,
+                    maxFilesize: 10,
+                    addRemoveLinks: true,
+                    maxFiles: 1,
+                    acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                    autoQueue: false,
+                    init: function() {
+                        this.on('addedfile', function(file) {
+                            while (this.files.length > this.options.maxFiles) this.removeFile(this
+                                .files[0]);
+                            ttdFile = file;
+                        });
+                    }
+                });
+            }
+
+            $(".select-invoice").on('change', function() {
+                validateSelect(this);
+            })
+            $(".select-bank").on('change', function() {
+                validateSelect(this);
+            })
+            $(".select-tenant").on('change', function() {
+                validateSelect(this);
+            })
+
+            function validateSelect(params) {
+                var checkDate = $(params).val();
+
+                if (checkDate === null) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    $(params).addClass("invalid");
+                } else {
+                    $(params).removeClass("invalid");
+                }
+            }
+
+            // Get invoice data
+            $(".select-invoice").on("change", function() {
+                Swal.fire({
+                    title: 'Loading...',
+                    text: "Please wait",
+                    customClass: {
+                        confirmButton: 'd-none'
+                    },
+                    buttonsStyling: false
+                });
+                let id = $(this).val();
+                getDataInvoice(id);
+            })
+
+            // Save, Insert, and Create
+            var saveTandaTerima = $('.create-tanda-terima');
+
+            Array.prototype.slice.call(saveTandaTerima).forEach(function(form) {
+                $('.indicator-progress').hide();
+                $('.indicator-label').show();
+                form.addEventListener(
+                    "submit",
+                    function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+
+                            let tenant = $('.select-tenant').val();
+                            let invoice = $('.select-invoice').val();
+                            let bank = $(".select-bank").val();
+
+                            if (!invoice) {
+                                $(".select-invoice").addClass("invalid");
+                            }
+                            if (!tenant) {
+                                $(".select-tenant").addClass("invalid");
+                            }
+                            if (!bank) {
+                                $(".select-bank").addClass("invalid");
+                            }
+
+                        } else {
+                            // Submit your form
+                            event.preventDefault();
+                            let invoice = $('.select-invoice').val();
+                            let tenant = $('.select-tenant').val();
+                            let bank = $('.select-bank').val();
+                            let date = $('.date').val();
+
+                            let datas = {}
+
+                            $('#addTandaTerima').find('.form-control').each(function() {
+                                var inputId = $(this).attr('id');
+                                var inputValue = $("#" + inputId).val();
+
+                                if (inputId === 'grand_total' || inputId === 'paid' ||
+                                    inputId ===
+                                    'remaining') {
+                                    var inputValueWithoutComma = inputValue.replace(',', '');
+
+                                    datas[$("#" + inputId).attr("name")] = parseInt(
+                                        inputValueWithoutComma, 10);
+                                } else if (inputId === 'receipt_date') {
+                                    datas[$("#" + inputId).attr("name")] = moment(inputValue,
+                                            'D-M-YYYY')
+                                        .format('YYYY-MM-DD');
+                                } else {
+                                    datas[$("#" + inputId).attr("name")] = inputValue;
+                                }
+                            });
+                            // datas.signature_image = ttdFile;
+                            datas.invoice_id = parseInt(invoice);
+                            datas.tenant_id = parseInt(tenant);
+                            datas.bank_id = parseInt(bank);
+                            datas.status = 'Terbuat';
+                            datas.receipt_date = moment().format('YYYY-MM-DD');
+                            datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
+                            datas.signature_date = date ? moment(date, 'D-M-YYYY').format('YYYY-MM-DD') : null;
+                            console.log(datas);
+
+                            $.ajax({
+                                url: "{{env('BASE_URL_API')}}" + "/api/receipt",
+                                type: "POST",
+                                data: JSON.stringify(datas),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                beforeSend: function() {
+                                    Swal.fire({
+                                        title: 'Loading...',
+                                        text: "Please wait",
+                                        customClass: {
+                                            confirmButton: 'd-none'
+                                        },
+                                        buttonsStyling: false
+                                    });
+                                },
+                                success: function(response) {
+                                    Swal.fire({
+                                        title: 'Berhasil',
+                                        text: 'Berhasil menambahkan Tanda Terima',
+                                        icon: 'success',
+                                        customClass: {
+                                            confirmButton: 'btn btn-primary'
+                                        },
+                                        buttonsStyling: false
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href =
+                                                '{{ route('pages-list-tanda-terima') }}';
+                                        }
+                                    });
+                                },
+                                error: function(errors) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: errors.responseJSON
+                                            .message,
+                                        customClass: {
+                                            confirmButton: 'btn btn-primary'
+                                        },
+                                        buttonsStyling: false
+                                    })
+                                }
+                            });
+                        }
+
+                        form.classList.add("was-validated");
+                    },
+                    false
+                );
+            });
+
+            // Preview before save
+            $(".btn-preview").on('click', function() {
+                let datas = {}
+
+                let invoice = $('.select-invoice').val();
+                let tenant = $('.select-tenant').val();
+                let bank = $('.select-bank').val();
+                let date = $('.date').val();
+
+                $('#addTandaTerima').find('.form-control').each(function() {
+                    var inputId = $(this).attr('id');
+                    var inputValue = $("#" + inputId).val();
+
+                    if (inputId === 'grand_total' || inputId === 'paid' || inputId ===
+                        'remaining') {
+                        var inputValueWithoutComma = inputValue.replace(',', '');
+
+                        datas[$("#" + inputId).attr("name")] = parseInt(inputValueWithoutComma, 10);
+                    } else if (inputId === 'receipt_date') {
+                        datas[$("#" + inputId).attr("name")] = moment(inputValue, 'D-M-YYYY')
+                            .format('YYYY-MM-DD');
+                    } else {
+                        datas[$("#" + inputId).attr("name")] = inputValue;
+                    }
+                });
+                datas.signature_image = ttdFile;
+                datas.invoice_id = parseInt(invoice);
+                datas.tenant_id = parseInt(tenant);
+                datas.bank_id = parseInt(bank);
+                datas.status = 'Terbuat';
+                datas.receipt_date = moment().format('YYYY-MM-DD');
+                datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
+                datas.signature_date = moment(date, 'D-M-YYYY').format('YYYY-MM-DD');
+
+                localStorage.setItem('receipt', JSON.stringify(datas));
+                window.location.href = "/invoice/tanda-terima/preview"
+            })
+
+            // Cancel
+            $(document).on('click', '.btn-cancel', function(event) {
+                event.preventDefault();
+                localStorage.removeItem('receipt');
+                window.location.href = "/invoice/tanda-terima"
+            });
+
+            // Keyup dibayarkan
+            $('#paid').on('keyup', function() {
+                getTotal();
+
+                var totalInvoice = $('#grand_total').val().replace(/,/g, '') || 0;
+                var paidAmount = $(this).val().replace(/,/g, '') || 0;
+                console.log(totalInvoice)
+
+                var remainingAmount = totalInvoice - paidAmount;
+
+                $('#remaining').val(remainingAmount.toLocaleString('en-US'));
+            });
+
+            // Fungsi terbilang
+            function getTotal() {
+                let totalArr = [];
+                let tempTotal = $("#paid").val().replace(/,/g, '');
+
+                $('#grand_total_spelled').val(terbilang(tempTotal));
+
+            }
+
+            function terbilang(bilangan) {
+                console.log(bilangan)
+                bilangan = String(bilangan);
+                let angka = new Array('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+                    '0');
+                let kata = new Array('', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan',
+                    'Sembilan');
+                let tingkat = new Array('', 'Ribu', 'Juta', 'Milyar', 'Triliun');
+
+                let panjang_bilangan = bilangan.length;
+                let kalimat = "";
+                let subkalimat = "";
+                let kata1 = "";
+                let kata2 = "";
+                let kata3 = "";
+                let i = 0;
+                let j = 0;
+
+                /* pengujian panjang bilangan */
+                if (panjang_bilangan > 15) {
+                    kalimat = "Diluar Batas";
+                    return kalimat;
+                }
+
+                /* mengambil angka-angka yang ada dalam bilangan, dimasukkan ke dalam array */
+                for (i = 1; i <= panjang_bilangan; i++) {
+                    angka[i] = bilangan.substr(-(i), 1);
+                }
+
+                i = 1;
+                j = 0;
+                kalimat = "";
+
+                /* mulai proses iterasi terhadap array angka */
+                while (i <= panjang_bilangan) {
+
+                    subkalimat = "";
+                    kata1 = "";
+                    kata2 = "";
+                    kata3 = "";
+
+                    /* untuk Ratusan */
+                    if (angka[i + 2] != "0") {
+                        if (angka[i + 2] == "1") {
+                            kata1 = "Seratus";
+                        } else {
+                            kata1 = kata[angka[i + 2]] + " Ratus";
+                        }
+                    }
+
+                    /* untuk Puluhan atau Belasan */
+                    if (angka[i + 1] != "0") {
+                        if (angka[i + 1] == "1") {
+                            if (angka[i] == "0") {
+                                kata2 = "Sepuluh";
+                            } else if (angka[i] == "1") {
+                                kata2 = "Sebelas";
+                            } else {
+                                kata2 = kata[angka[i]] + " Belas";
+                            }
+                        } else {
+                            kata2 = kata[angka[i + 1]] + " Puluh";
+                        }
+                    }
+
+                    /* untuk Satuan */
+                    if (angka[i] != "0") {
+                        if (angka[i + 1] != "1") {
+                            kata3 = kata[angka[i]];
+                        }
+                    }
+
+                    /* pengujian angka apakah tidak nol semua, lalu ditambahkan tingkat */
+                    if ((angka[i] != "0") || (angka[i + 1] != "0") || (angka[i + 2] != "0")) {
+                        subkalimat = kata1 + " " + kata2 + " " + kata3 + " " + tingkat[j] + " ";
+                    }
+
+                    /* gabungkan variabe sub kalimat (untuk Satu blok 3 angka) ke variabel kalimat */
+                    kalimat = subkalimat + kalimat;
+                    i = i + 3;
+                    j = j + 1;
+
+                }
+
+                /* mengganti Satu Ribu jadi Seribu jika diperlukan */
+                if ((angka[5] == "0") && (angka[6] == "0")) {
+                    kalimat = kalimat.replace("Satu Ribu", "Seribu");
+                }
+
+                return (kalimat.trim().replace(/\s{2,}/g, ' ')) + " Rupiah";
+            }
+
+            // Keyup input qty
+            $(document).on('input', '.qty', function() {
+                var sanitizedValue = $(this).val().replace(/[^0-9]/g, '');
+                $(this).val(sanitizedValue);
+            });
+
+            // Keyup input price
+            $(document).on('input', '.price', function() {
+                var sanitizedValue = $(this).val().replace(/[^0-9]/g, '');
+                var numericValue = parseInt(sanitizedValue, 10);
+
+                if (!isNaN(numericValue)) {
+                    var formattedValue = numericValue.toLocaleString('en-US');
+
+                    $(this).val(formattedValue);
+                }
+            });
+
+            // Select 2 ajax function
+            $(".select-tenant").select2({
+                placeholder: 'Select Tenant',
+                allowClear: true,
+                ajax: {
+                    url: "{{ url('api/tenant/select') }}",
+                    dataType: 'json',
+                    cache: true,
+                    data: function(params) {
+                        return {
+                            term: params.term || '',
+                            page: params.page || 1
+                        }
+                    },
+                    processResults: function(data, params) {
+                        var more = data.pagination.more;
+                        if (more === false) {
+                            params.page = 1;
+                            params.abort = true;
+                        }
+
+                        return {
+                            results: data.data,
+                            pagination: {
+                                more: more
+                            }
+                        };
+                    }
+                }
+            });
+
+            $(".select-invoice").select2({
+                placeholder: 'Select Invoice',
+                allowClear: true,
+                ajax: {
+                    url: "{{ url('api/invoice/select') }}",
+                    dataType: 'json',
+                    cache: true,
+                    data: function(params) {
+                        return {
+                            term: params.term || '',
+                            search: params.term,
+                            page: params.page || 1
+                        }
+                    },
+                    processResults: function(data, params) {
+                        var more = data.pagination.more;
+                        if (more === false) {
+                            params.page = 1;
+                            params.abort = true;
+                        }
+
+                        return {
+                            results: data.data,
+                            pagination: {
+                                more: more
+                            }
+                        };
+                    }
+                }
+            });
+
+            $(".select-bank").select2({
+                placeholder: 'Select Bank',
+                allowClear: true,
+                ajax: {
+                    url: "{{ url('api/bank') }}",
+                    dataType: 'json',
+                    cache: true,
+                    data: function(params) {
+                        return {
+                            term: params.term || '',
+                            search: params.term,
+                            page: params.page || 1
+                        }
+                    },
+                    processResults: function(data) {
+                        var banks = data.data || [];
+
+                        var formattedData = banks.map(function(bank) {
+                            return {
+                                id: bank.id,
+                                text: bank.name
+                            };
+                        });
+
+                        return {
+                            results: formattedData
+                        };
+                    }
+                }
+            });
+>>>>>>> 2e34380c9b7211fbd1259c0719594b55ef6b5a8e
         })
 
         function validateSelect(params) {
