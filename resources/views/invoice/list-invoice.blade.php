@@ -86,6 +86,19 @@ $configData = Helper::appClasses();
 <script>
     "use strict";
     $((function() {
+
+        let account = {!! json_encode(session('data')) !!}
+        let buttonAdd = [];
+        if(account.level.id == '10'){
+            buttonAdd = [{
+                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Invoice</span>',
+                className: "btn btn-primary",
+                action: function(a, e, t, s) {
+                    window.location = "{{url('invoice/add-invoice')}}"
+                }
+            }];
+        }
+
         var a = $(".invoice-list-table");
         if (a.length) var e = a.DataTable({
             responsive: true,
@@ -167,19 +180,18 @@ $configData = Helper::appClasses();
                 title: "Status",
                 className: 'text-center',
                 render: function(data, type, row) {
-                    console.log(data);
                     if (data == 'Terbuat') {
-                        return '<span class="badge" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
+                        return '<span class="badge w-100" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
                     } else if (data == 'Disetujui KA') {
-                        return '<span class="badge" style="background-color : #4EC0D9; " text-capitalized> Disetujui KA </span>';
+                        return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized> Disetujui KA </span>';
                     } else if (data == 'Lunas') {
-                        return '<span class="badge" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
+                        return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
                     } else if (data == 'Terkirim') {
-                        return '<span class="badge" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
+                        return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
                     } else if (data == 'Disetujui BM') {
-                        return '<span class="badge" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
+                        return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
                     } else if (data == 'Kurang Bayar') {
-                        return '<span class="badge" style="background-color : #F9ED32; " text-capitalized> Kurang Bayar </span>';
+                        return '<span class="badge w-100" style="background-color : #ff9f43; " text-capitalized> Kurang Bayar </span>';
                     }
                 }
             }, {
@@ -187,12 +199,15 @@ $configData = Helper::appClasses();
                 name: "tanggapan",
                 title: "Tanggapan",
                 render: function(data, type, row) {
+                    let sendMailRow = '';
                     let editRow = '';
-                    let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
+                    if(row.status == 'Disetujui BM'){
+                        sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
+                    }
                     let previewRow = '<a href="{{ url("invoice/show")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
                     return `<div class="d-flex align-items-center">
                             ` + sendMailRow + previewRow + `
-                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="{{ url("invoice/edit")}}/` + data + `" class="dropdown-item">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
+                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="{{ url("invoice/edit")}}/` + data + `" class="dropdown-item">Edit</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
                 }
             }],
             order: [
@@ -204,13 +219,7 @@ $configData = Helper::appClasses();
                 search: "",
                 searchPlaceholder: "Search Invoice"
             },
-            buttons: [{
-                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Invoice</span>',
-                className: "btn btn-primary",
-                action: function(a, e, t, s) {
-                    window.location = "{{url('invoice/add-invoice')}}"
-                }
-            }],
+            buttons: buttonAdd,
             responsive: {
                 details: {
                     display: $.fn.dataTable.Responsive.display.modal({

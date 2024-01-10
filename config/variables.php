@@ -1,10 +1,10 @@
 <?php
 // Variables
 return [
-  "creatorName" => "Pixinvent",
+  "creatorName" => "Dooha",
   "creatorUrl" => "https://pixinvent.com",
-  "templateName" => "Vuexy",
-  "templateSuffix" => "Bootstrap Admin Template",
+  "templateName" => "PPPGSI",
+  "templateSuffix" => "Badan Pengelola Gedung Graha Surveyor Indonesia",
   "templateVersion" => "1.0.0",
   "templateFree" => false,
   "templateDescription" => "Start your development with a Dashboard for Bootstrap 5",

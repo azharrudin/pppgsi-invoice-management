@@ -135,10 +135,9 @@ $configData = Helper::appClasses();
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
+                            <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center data-materai">
                                 <div class="mb-3">
-                                    <label for="note" class="form-label fw-medium">Tanda Tangan & Meterai
-                                        (Opsional)</label>
+                                    <label for="note" class="form-label fw-medium">Tanda Tangan & Meterai</label>
                                     <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" name="materai_date" />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
@@ -165,12 +164,12 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
+                        <button class="btn btn-primary d-grid w-100 mb-2 kirim-invoice" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
                         </button>
                         <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
                         <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                        <button type="button" id="batal" class="btn btn-label-danger d-grid w-100">Kembali</button>
                     </div>
                 </div>
             </div>
@@ -188,6 +187,9 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
     "use strict";
+
+    let account = {!! json_encode(session('data')) !!}
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -597,8 +599,8 @@ $configData = Helper::appClasses();
             let tingkat = new Array('', 'Ribu', 'Juta', 'Milyar', 'Triliun');
 
             let panjang_bilangan = bilangan.length;
-            let kalimat = subkalimat = kata1 = kata2 = kata3 = "";
-            let i = j = 0;
+            let kalimat, subkalimat , kata1 , kata2 , kata3 = "";
+            let i , j = 0;
 
             /* pengujian panjang bilangan */
             if (panjang_bilangan > 15) {
@@ -712,7 +714,6 @@ $configData = Helper::appClasses();
                     } else {
                         // Submit your form
                         event.preventDefault();
-                        console.log(ttdFile);
                         let fileTtd = ttdFile.dataURL;
                         let tenant = $("#tenant").val();
                         let noInvoice = $("#invoice_number").val();
@@ -722,7 +723,7 @@ $configData = Helper::appClasses();
                         let noAddendum = $("#addendum_number").val();
                         let tglAddendum = $("#addendum_date").val();
                         let terbilang = $("#grand_total_spelled").val();
-                        let grandTotal = $(".grand_total").text();
+                        let grandTotal = $(".grand_total").text().replaceAll(',', '');
                         let tglJatuhTempo = $("#invoice_due_date").val();
                         let syaratDanKententuan = $("#term_and_conditions").val();
                         let bank = $("#bank").val();
@@ -760,7 +761,11 @@ $configData = Helper::appClasses();
                         datas.details = detail;
                         datas.tenant_id = parseInt(tenant);
                         datas.bank_id = parseInt(bank);
-                        datas.status = "Terbuat";
+                        if(account.level.id == '1'){
+                            datas.status = "Disetujui BM";
+                        }else{
+                            datas.status = "Terbuat";
+                        }
                         datas.contract_date = tglKontrak
                         datas.opening_paragraph = "Bapak/Ibu Qwerty";
                         datas.invoice_due_date = tglJatuhTempo;
@@ -941,7 +946,6 @@ $configData = Helper::appClasses();
                         })
                     }
                 });
-                // console.log(data);
 
                 getTenant(data.tenant_id)
                 getBank(data.bank_id)
@@ -958,7 +962,13 @@ $configData = Helper::appClasses();
                 $("#materai_date").val(data.materai_date);
                 $("#materai_name").val(data.materai_name);
                 getDetails(data.invoice_details);
-
+                if(data.status != 'Disetujui BM'){
+                    $('.kirim-invoice').attr('style','display:none !important');
+                    $('.add-payment').attr('style','display:none !important');
+                }
+                if(account.level.id != '1'){
+                    $('.data-materai').attr('style','display:none !important');
+                }
 
             },
             error: function(errors) {

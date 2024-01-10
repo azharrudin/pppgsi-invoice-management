@@ -135,7 +135,7 @@ class InvoiceController extends Controller
         try {
             $id = (int) $id;
             $getInvoice = Invoice::with("invoiceDetails.tax")->with("tenant")->with("bank")->where("id", $id)->where("deleted_at", null)->first();
-            if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
+            if ($getInvoice) throw new CustomException("Invoice tidak ditemukan", 404);
 
             $sumReceipt = Receipt::where("invoice_id", $id)->where("deleted_at", null)->sum("grand_total");
             $getInvoice["total_paid"] = $sumReceipt;
@@ -164,7 +164,7 @@ class InvoiceController extends Controller
         try {
             $id = (int) $id;
             $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
-            if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
+            if ($getInvoice) throw new CustomException("Invoice tidak ditemukan", 404);
 
             $validateInvoice = $this->InvoiceService->validateInvoice($request);
             if ($validateInvoice != "") throw new CustomException($validateInvoice, 400);
@@ -219,7 +219,7 @@ class InvoiceController extends Controller
         try {
             $id = (int) $id;
             $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
-            if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
+            if ($getInvoice) throw new CustomException("Invoice tidak ditemukan", 404);
 
             Invoice::findOrFail($id)->delete();
             InvoiceDetail::where("invoice_id", $id)->where("deleted_at", null)->delete();

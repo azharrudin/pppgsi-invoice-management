@@ -133,6 +133,7 @@ $configData = Helper::appClasses();
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
+                            @if (session('data')['level']['id'] == '1')
                             <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Tanda Tangan & Meterai
@@ -151,8 +152,8 @@ $configData = Helper::appClasses();
                                     <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
-
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -169,7 +170,7 @@ $configData = Helper::appClasses();
                         </button>
                         <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
                         <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                        <button type="button" id="batal" class="btn btn-label-danger d-grid w-100">Kembali</button>
                     </div>
                 </div>
             </div>
@@ -187,6 +188,9 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
     "use strict";
+    
+    let account = {!! json_encode(session('data')) !!}
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -229,40 +233,42 @@ $configData = Helper::appClasses();
             }
         });
         let ttdFile = dataLocal ? dataLocal.materai_image : null;
-        const myDropzone = new Dropzone('#dropzone-basic', {
-            parallelUploads: 1,
-            thumbnailWidth: null,
-            thumbnailHeight: null,
-            maxFilesize: 3,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            autoQueue: false,
-            url: "../uploads/logo",
-            init: function() {
-                if (dataLocal) {
-                    // Add a preloaded file to the dropzone with a preview
-                    var mockFile = dataLocal.materai_image;
-                    if (mockFile) {
-                        this.options.addedfile.call(this, mockFile);
-                        this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
-
-                        $('.dz-image').last().find('img').attr('width', '100%');
-
-
-                        // Optional: Handle the removal of the file
-                        mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-                            // Handle removal logic here
-                        });
+        if(account.level.id == '1'){
+            const myDropzone = new Dropzone('#dropzone-basic', {
+                parallelUploads: 1,
+                thumbnailWidth: null,
+                thumbnailHeight: null,
+                maxFilesize: 3,
+                addRemoveLinks: true,
+                maxFiles: 1,
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                autoQueue: false,
+                url: "../uploads/logo",
+                init: function() {
+                    if (dataLocal) {
+                        // Add a preloaded file to the dropzone with a preview
+                        var mockFile = dataLocal.materai_image;
+                        if (mockFile) {
+                            this.options.addedfile.call(this, mockFile);
+                            this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
+    
+                            $('.dz-image').last().find('img').attr('width', '100%');
+    
+    
+                            // Optional: Handle the removal of the file
+                            mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+                                // Handle removal logic here
+                            });
+                        }
                     }
+                    this.on('addedfile', function(file) {
+                        $('.dz-image').last().find('img').attr('width', '100%');
+                        while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
+                        ttdFile = file;
+                    })
                 }
-                this.on('addedfile', function(file) {
-                    $('.dz-image').last().find('img').attr('width', '100%');
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
-                    ttdFile = file;
-                })
-            }
-        });
+            });
+        }
 
         window.addEventListener("pageshow", function(event) {
             var historyTraversal = event.persisted || (typeof window.performance !== "undefined" && window.performance.getEntriesByType("navigation")[0].type === "back_forward");
@@ -705,7 +711,10 @@ $configData = Helper::appClasses();
                     } else {
                         // Submit your form
                         event.preventDefault();
-                        let fileTtd = ttdFile.dataURL;
+                        let fileTtd = '';
+                        if(account.level.id == '1'){
+                            let fileTtd = ttdFile.dataURL;
+                        }
                         let tenant = $("#tenant").val();
                         let noInvoice = $("#invoice_number").val();
                         let tglInvoice = $("#invoice_date").val();
@@ -740,7 +749,6 @@ $configData = Helper::appClasses();
                                 detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
                             }
                         });
-
 
                         let datas = {};
                         $('.create-invoice').find('.form-control').each(function() {
@@ -1078,7 +1086,6 @@ $configData = Helper::appClasses();
                 });
             }
         } else {
-            console.log('a');
             temp = `             
             <div class="row-mg">
                 <div class="row d-flex align-items-end justify-content-between mb-3">
