@@ -1,5 +1,9 @@
 @php
-
+    function rupiah($angka)
+    {
+        $hasil_rupiah = 'Rp ' . number_format($angka, 2, ',', '.');
+        return $hasil_rupiah;
+    }
 @endphp
 <!doctype html>
 <html lang="en">
@@ -65,7 +69,7 @@
         </header>
 
         <div class="row" style="float: right;">
-            <div class="p-2" style="width: 100px; border: 1px solid black;">No .</div>
+            <div class="p-2" style="width: 100px; border: 1px solid black;">No . {{$data->receipt_number}}</div>
         </div>
         <div style="clear: both;"></div>
 
@@ -74,26 +78,30 @@
         </div>
 
         <p style="margin: 0px;">Telah terima Pembayaran tunai/Cek/Giro</p>
-        <div class="row">
-            <table class="table">
+        <div class="row" style="width: 250px;">
+            <table class="table mt-2" style="width:100%">
                 <tbody>
                     <tr>
-                        <td>No. Cek/Giro:</td>
-                        <td> </td>
-                        <td>Nama :</td>
-                        <td> </td>
+                        <td>No. Cek/Giro</td>
+                        <td>:</td>
+                        <td>{{$data->check_number}}</td>
+                        <td>Nama</td>
+                        <td>:</td>
+                        <td>{{$data->check_number}}</td>
                     </tr>
                     <tr>
                         <td>Bank</td>
-                        <td> </td>
-                        <td>Alamat :</td>
-                        <td> </td>
+                        <td colspan="2"></td>
+                        <td>Alamat</td>
+                        <td>:</td>
+                        <td></td>
                     </tr>
-                    <tr>
-                        <td>Rp.</td>
-                        <td> </td>
-                        <td>Telepon :</td>
-                        <td> </td>
+                    <tr class="mt-1">
+                        <td>{{rupiah($data->grand_total)}}</td>
+                        <td colspan="2"> </td>
+                        <td>Telepon</td>
+                        <td>:</td>
+                        <td>{{$data->tenant->phone}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -52,21 +52,21 @@ Route::group(['middleware' => 'cekauth'], function () {
     Route::prefix('invoice')->group(function () {
         Route::prefix('/')->group(function () {
             Route::get('/list-invoice', [InvoiceController::class, 'index'])->name('pages-list-invoice');
-            Route::get('/add-invoice', [InvoiceController::class, 'add'])->name('pages-add-invoice');
-            Route::get('/preview-invoice', [InvoiceController::class, 'preview'])->name('pages-preview-invoice');
+            Route::get('/add-invoice', [InvoiceController::class, 'add'])->name('pages-list-invoice');
+            Route::get('/preview-invoice', [InvoiceController::class, 'preview'])->name('pages-list-invoice');
             Route::get('/data-invoice', [InvoiceController::class, 'datatable'])->name('data-invoice');
-            Route::get('/edit/{id}', [InvoiceController::class, 'edit'])->name('pages-edit-invoice');
-            Route::get('/preview-invoice-edit/{id}', [InvoiceController::class, 'editPreview'])->name('pages-edit-invoice');
-            Route::get('/show/{id}', [InvoiceController::class, 'show'])->name('pages-show-invoice');
+            Route::get('/edit/{id}', [InvoiceController::class, 'edit'])->name('pages-list-invoice');
+            Route::get('/preview-invoice-edit/{id}', [InvoiceController::class, 'editPreview'])->name('pages-list-invoice');
+            Route::get('/show/{id}', [InvoiceController::class, 'show'])->name('pages-list-invoice');
             Route::get('/print/{id}', [InvoiceController::class, 'print']);
         });
 
         Route::prefix('tanda-terima')->group(function () {
             Route::get('/', [TandaTerimaController::class, 'index'])->name('pages-list-tanda-terima');
-            Route::get('/add', [TandaTerimaController::class, 'create']);
-            Route::get('/preview', [TandaTerimaController::class, 'show']);
-            Route::get('/edit/{id}', [TandaTerimaController::class, 'edit']);
-            Route::get('/preview/{id}', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
+            Route::get('/add', [TandaTerimaController::class, 'create'])->name('pages-list-tanda-terima');
+            Route::get('/preview', [TandaTerimaController::class, 'show'])->name('pages-list-tanda-terima');
+            Route::get('/edit/{id}', [TandaTerimaController::class, 'edit'])->name('pages-list-tanda-terima');
+            Route::get('/preview/{id}', [TandaTerimaController::class, 'preview'])->name('pages-list-tanda-terima');
             Route::get('/data-tanda-terima', [TandaTerimaController::class, 'datatable'])->name('data-tanda-terima');
             Route::get('/print/{id}', [TandaTerimaController::class, 'print']);
         });
