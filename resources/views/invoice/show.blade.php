@@ -206,24 +206,25 @@ $configData = Helper::appClasses();
                                     </select>
                                     <br>
                                     <div class="form-label">
-                                        <span class="fw-bold">PPPGSI</span><br>
+                                        <span class="fw-bold" id="account-name"></span><br>
                                         <span class="fw-bold" id="bank-name"></span><br>
+                                        <span class="fw-bold" id="branch-name"></span><br>
+                                        <span class="fw-bold" id="account-number"></span><br>
                                     </div>
 
 
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
+                            <div class="col-md-6 mb-md-0 mb-3 data-material d-flex flex-column align-items-center text-center">
                                 <div class="mb-3">
-                                    <label for="note" class="form-label">Tanda Tangan & Meterai
-                                        (Opsional)</label>
-                                    <p class="form-label" id="materai_date">25 September 2023</p>
+                                    <label for="note" class="form-label"></label>
+                                    <p class="form-label" id="materai_date"></p>
                                 </div>
                                 <div class="mb-3">
                                     <div id="materai-image"></div>
                                 </div>
                                 <div class="mb-3">
-                                    <p class="form-label" id="materai_name">Dina - Manager Operasional</p>
+                                    <p class="form-label" id="materai_name"></p>
                                 </div>
                             </div>
                         </div>
@@ -236,15 +237,15 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
+                        <button class="btn btn-primary d-grid w-100 mb-2 kirim-invoice" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
                         </button>
-                        <a type="button" class="btn btn-label-secondary d-grid w-100 mb-2" style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
+                        <a type="button" class="btn btn-label-secondary d-grid w-100 mb-2 disetujui" style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
                         <a href="#" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Download</a>
-                        <button class="btn btn-primary d-grid w-100 mb-2 add-pay">
+                        <button class="btn btn-primary d-grid w-100 mb-2 add-pay add-payment">
                             <span class="d-flex align-items-center justify-content-center text-nowrap">Add Payment</span>
                         </button>
-                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Kembali</button>
+                        <a href="{{ url('invoice/list-invoice')}}" id="back" class="btn btn-label-danger d-grid w-100 mb-2">Kembali</a>
                     </div>
                 </div>
             </div>
@@ -261,6 +262,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
+    let account = {!! json_encode(session('data')) !!}
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -282,6 +284,84 @@ $configData = Helper::appClasses();
         $(document).on('click', '#batal', function(event) {
             event.preventDefault();
             window.location.href = "/invoice/list-invoice"
+        });
+
+        $(document).on('click', '.disetujui', function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: "{{env('BASE_URL_API')}}" + "/api/invoice/" + id,
+                type: "GET",
+                dataType: "json",
+                beforeSend: function() {
+                    Swal.fire({
+                        title: '<h2>Loading...</h2>',
+                        html: sweet_loader + '<h5>Please Wait</h5>',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    });
+                },
+                success: function(res) {
+                    let datas = res.data;
+                    delete datas.bank;
+                    delete datas.tenant;
+                    delete datas.created_at;
+                    delete datas.updated_at;
+                    delete datas.deleted_at;
+                    delete datas.total_paid;
+                    delete datas.id;
+                    datas.details = $.map(datas.invoice_details, function (value) {
+                        let data = {}
+                        data.item = value.item;
+                        data.description = value.description;
+                        data.price = value.price;
+                        data.tax_id = value.tax_id;
+                        data.total_price = value.total_price;
+                        return data;
+                    });
+                    delete datas.invoice_details;
+                    delete datas.invoice_number;
+                    datas.status = 'Disetujui KA';
+                    $.ajax({
+                        url: "{{env('BASE_URL_API')}}" + "/api/invoice/" + id,
+                        type: "PATCH",
+                        data: JSON.stringify(datas),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response) {
+                            $('.indicator-progress').show();
+                            $('.indicator-label').hide();
+
+                            Swal.fire({
+                                title: 'Berhasil',
+                                text: 'Berhasil menambahkan Invoice',
+                                icon: 'success',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            })
+
+                            localStorage.removeItem('invoice');
+                            window.location.href = "/invoice/list-invoice"
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: ' You clicked the button!',
+                                icon: 'error',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            })
+                        }
+                    });
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
         });
     });
 
@@ -315,10 +395,12 @@ $configData = Helper::appClasses();
                 $("#grand_total").text(format(data.grand_total));
                 $("#invoice_due_date").text(data.invoice_due_date);
                 $("#term_and_conditions").text(data.term_and_conditions);
+                if(data.materai_name == null){
+                    $('.data-material').attr('style','display:none !important');
+                }
                 $("#materai_date").text(data.materai_date);
                 $("#materai_name").text(data.materai_name);
                 getDetails(data.invoice_details);
-
                 if (data.materai_image) {
                     $("#materai-image").css('background-img', 'black');
                     $("#materai-image").css("background-image", `url('` + data.materai_image + `')`);
@@ -326,7 +408,13 @@ $configData = Helper::appClasses();
                     $("#materai-image").css("width", `200px`);
                     $("#materai-image").css("background-position", `center`);
                 }
-
+                if(data.status != 'Disetujui BM'){
+                    $('.kirim-invoice').attr('style','display:none !important');
+                    $('.add-payment').attr('style','display:none !important');
+                }
+                if(account.level.id != '2' || data.status == 'Disetujui KA'){
+                    $('.disetujui').attr('style','display:none !important');
+                }
                 Swal.close();
             },
             error: function(errors) {
@@ -376,6 +464,9 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
+                $("#account-name").text(data.account_name);
+                $("#account-number").text(data.account_number)
+                $("#branch-name").text(data.branch_name)
                 $("#bank-name").text(data.name)
             },
             error: function(xhr, status, error) {
@@ -385,7 +476,6 @@ $configData = Helper::appClasses();
     }
 
     function getDetails(detailItems) {
-        console.log(detailItems);
         let details = detailItems;
         let getDetail = '';
         let tem = '';

@@ -151,16 +151,16 @@
                     title: "Status",
                     render: function(data, type, full, meta) {
                         if (data == "Disetujui KA") {
-                            return '<span class="badge  bg-label-success" style="width: 96px">' + data +
+                            return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized>' + data +
                                 '</span>'
                         } else if (data == "Disetujui BM") {
-                            return '<span class="badge  bg-label-info" style="width: 96px">' + data +
+                            return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized>' + data +
                                 '</span>'
                         } else if (data == "Terbuat") {
-                            return '<span class="badge  bg-label-secondary" style="width: 96px">' + data +
+                            return '<span class="badge w-100" style="background-color : #BFBFBF; " text-capitalized>' + data +
                                 '</span>'
                         } else if (data == "Terkirim") {
-                            return '<span class="badge  bg-label-danger" style="width: 96px">' + data +
+                            return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized>' + data +
                                 '</span>'
                         }
                     }
@@ -173,7 +173,8 @@
                             '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="tanda-terima/edit/' +
                             data.id + '" class="dropdown-item btn-edit" data-id="' +
                             data.id +
-                            '">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="' +
+                            '">Edit</a>'+
+                            // '<a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="' +
                             data.id + '">Delete</a></div></div></div>'
                     }
                 }],

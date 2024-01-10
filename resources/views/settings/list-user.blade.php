@@ -108,13 +108,6 @@ $configData = Helper::appClasses();
                     <div class="mb-3">
                         <label for="nameBackdrop" class="form-label">Level</label>
                         <select id="level_id" name="level_id" class="form-control" required>
-                            <option value="">Pilih Level</option>
-                            <option value="1">Admin</option>
-                            <option value="2">Teknisi</option>
-                            <option value="3">Kepala Unitt</option>
-                            <option value="4">BM</option>
-                            <option value="5">Executive</option>
-                            <option value="6">Vendor</option>
                         </select>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>

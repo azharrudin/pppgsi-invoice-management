@@ -23,7 +23,6 @@ class LoginController extends Controller
                 "method" => "POST"
             ];
 
-
             $params =  [
                 'email' => $request->email,
                 'password' => $request->password
@@ -97,30 +96,7 @@ class LoginController extends Controller
     {
         session([
             'ACCESS_TOKEN' => $auth['token'],
+            'data' => $auth['data'],
         ]);
     }
-
-    // public function validasi(Request $request)
-    // {
-    //     try {
-    //         $data = [
-    //             "url" => env('APP_BO') . "/auth/validasi",
-    //             "method" => "POST"
-    //         ];
-
-    //         $params =  [
-    //             'phone_number' => $request->prefix . $request->phone_number,
-    //             'password' => $request->password
-    //         ];
-
-    //         $records = CallApiHelpers::storeAPI($data, $params);
-    //         if ($records['status']) {
-    //             return true;
-    //         } else {
-    //             return false;
-    //         }
-    //     } catch (\Throwable $th) {
-    //         return false;
-    //     }
-    // }
 }
