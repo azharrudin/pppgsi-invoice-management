@@ -87,16 +87,14 @@ class InvoiceController extends Controller
 
     public function show(string $id)
     {
-        return view('invoice.show');
+        return view('invoice.show', compact('id'));
     }
     
     public function print($id){
-        // return view('invoice.download');
         $apiRequest = Http::get(env('BASE_URL_API') .'/api/invoice/'.$id);
         $response = json_decode($apiRequest->getBody());
         $data = $response->data;
     	$pdf = PDF::loadview('invoice.download',['data'=>$data]);
-    	return $pdf->download('invoice.pdf');
-        // return view('invoice.download',['data'=>$data]);
+    	return $pdf->stream('invoice.pdf');
     }
 }

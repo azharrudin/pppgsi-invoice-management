@@ -35,14 +35,14 @@
                                         <dt class="col-sm-6 text-md-end ps-0">
 
                                         </dt>
-                                        <dd class="col-sm-6 d-flex justify-content-md-end pe-0 ps-0 ps-sm-2">
+                                        {{-- <dd class="col-sm-6 d-flex justify-content-md-end pe-0 ps-0 ps-sm-2">
                                             <div class="mb-3">
                                                 <label for="note" class="form-label fw-medium">No Tanda Terima:</label>
                                                 <input type="text" class="form-control w-px-150 qty" id="receipt_number"
                                                     name="receipt_number" placeholder="" required disabled />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
-                                        </dd>
+                                        </dd> --}}
                                     </dl>
                                 </div>
                             </div>
@@ -428,9 +428,10 @@
                             datas.receipt_date = moment().format('YYYY-MM-DD');
                             datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
                             datas.signature_date = moment(date, 'D-M-YYYY').format('YYYY-MM-DD');
+                            console.log(datas);
 
                             $.ajax({
-                                url: "{{env('BASE_URL_API')}}" + "/api/receipt/",
+                                url: "{{env('BASE_URL_API')}}" + "/api/receipt",
                                 type: "POST",
                                 data: JSON.stringify(datas),
                                 contentType: "application/json; charset=utf-8",

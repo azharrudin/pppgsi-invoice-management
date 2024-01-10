@@ -241,7 +241,7 @@ $configData = Helper::appClasses();
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
                         </button>
                         <a type="button" class="btn btn-label-secondary d-grid w-100 mb-2 disetujui" style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
-                        <a href="#" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Download</a>
+                        <a target="_blank" href="{{url('invoice/print/')}}/{{$id}}" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Download</a>
                         <button class="btn btn-primary d-grid w-100 mb-2 add-pay add-payment">
                             <span class="d-flex align-items-center justify-content-center text-nowrap">Add Payment</span>
                         </button>
@@ -371,7 +371,7 @@ $configData = Helper::appClasses();
                     $("#materai-image").css("width", `200px`);
                     $("#materai-image").css("background-position", `center`);
                 }
-                if(data.status != 'Disetujui BM'){
+                if(data.status != 'Disetujui BM' || account.level.id != 10){
                     $('.kirim-invoice').attr('style','display:none !important');
                     $('.add-payment').attr('style','display:none !important');
                 }
