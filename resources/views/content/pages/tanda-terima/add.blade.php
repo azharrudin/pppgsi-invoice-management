@@ -320,15 +320,10 @@ $configData = Helper::appClasses();
 <script>
     $(document).ready(function() {
 
-<<<<<<< HEAD
-        // Mendapatkan id dari invoice
-        const idInvoice = getParameterByName('id-invoice');
-=======
             let account = {!! json_encode(session('data')) !!}
 
             // Mendapatkan id dari invoice
             const idInvoice = getParameterByName('id-invoice');
->>>>>>> 2e34380c9b7211fbd1259c0719594b55ef6b5a8e
 
         if (idInvoice) {
             getDataInvoice(idInvoice);
@@ -403,16 +398,6 @@ $configData = Helper::appClasses();
             }
         });
 
-<<<<<<< HEAD
-        $(".select-invoice").on('change', function() {
-            validateSelect(this);
-        })
-        $(".select-bank").on('change', function() {
-            validateSelect(this);
-        })
-        $(".select-tenant").on('change', function() {
-            validateSelect(this);
-=======
             // Date
             $('.date').flatpickr({
                 dateFormat: 'd-m-Y'
@@ -862,7 +847,6 @@ $configData = Helper::appClasses();
                     }
                 }
             });
->>>>>>> 2e34380c9b7211fbd1259c0719594b55ef6b5a8e
         })
 
         function validateSelect(params) {
