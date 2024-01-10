@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\invoice;
 
 use App\Http\Controllers\Controller;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use DataTables;
@@ -87,5 +88,11 @@ class InvoiceController extends Controller
     public function show(string $id)
     {
         return view('invoice.show');
+    }
+    
+    public function print(){
+        return view('invoice.download');
+    	// $pdf = PDF::loadview('invoice.download');
+    	// return $pdf->download('laporan-pegawai-pdf.pdf');
     }
 }
