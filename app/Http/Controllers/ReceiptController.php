@@ -285,4 +285,36 @@ class ReceiptController extends Controller
             return response()->json(['message' => $errorMessage], $errorStatusCode);
         }
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        DB::beginTransaction();
+
+        try {
+            $id = (int) $id;
+            $getReceipt = $this->CommonService->getDataById("App\Models\Receipt", $id);
+            if (is_null($getReceipt)) throw new CustomException("Invoice tidak ditemukan", 404);
+
+            Receipt::findOrFail($id)->update([
+                'status' => $request->status
+            ]);
+
+            $receipt = Receipt::where('id', $id)->first();
+            
+            DB::commit();
+            return ["data" => $receipt];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+            DB::rollBack();
+
+            if (is_a($e, CustomException::class)) {
+                dd($e);
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $e], $errorStatusCode);
+        }
+    }
 }
