@@ -272,7 +272,7 @@
 
             function getDataInvoice(id) {
                 $.ajax({
-                    url: "{{ url('api/invoice') }}/" + id,
+                    url: "{{env('BASE_URL_API')}}" + "/api/invoice/" + id,
                     type: "GET",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -430,7 +430,7 @@
                             datas.signature_date = moment(date, 'D-M-YYYY').format('YYYY-MM-DD');
 
                             $.ajax({
-                                url: "{{ url('api/receipt') }}",
+                                url: "{{env('BASE_URL_API')}}" + "/api/receipt/",
                                 type: "POST",
                                 data: JSON.stringify(datas),
                                 contentType: "application/json; charset=utf-8",

@@ -24,13 +24,6 @@ class CallApiHelpers
             ]
         ]);
 
-        // dd(json_decode($response->getBody()), true);
-        // $logtail_logger = new Logger("logtail-source");
-        // $logtail_logger->pushHandler(
-        //         new LogtailHandler(LOG_SOURCE_TOKEN)
-        //     );
-        // $logtail_logger->info("getAPI called", ["url" => $url, "response" => $response->getBody()]);
-
         return json_decode($response->getBody(), true);
     }
 
@@ -44,12 +37,6 @@ class CallApiHelpers
                 ],
                 'form_params' => $params
             ]);
-
-            // $logtail_logger = new Logger("logtail-source");
-            // $logtail_logger->pushHandler(
-            //         new LogtailHandler(LOG_SOURCE_TOKEN)
-            //     );
-            // $logtail_logger->info("storeAPI called", ["data" => $data, "params" => $params, "response" => $response->getBody()]);
 
             return json_decode($response->getBody(), true);
         } catch (\Exception $e) {
@@ -69,8 +56,6 @@ class CallApiHelpers
                 'Authorization' => 'Bearer ' . Session::get('ACCESS_TOKEN')
             ]
         ]);
-
-        // return json_decode($response->getBody()->getContents(), true);
         return json_decode($response->getBody(), true);
     }
 }

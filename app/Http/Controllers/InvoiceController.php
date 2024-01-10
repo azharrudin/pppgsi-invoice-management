@@ -135,8 +135,10 @@ class InvoiceController extends Controller
         try {
             $id = (int) $id;
             $getInvoice = Invoice::with("invoiceDetails.tax")->with("tenant")->with("bank")->where("id", $id)->where("deleted_at", null)->first();
+            if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
+
             $sumReceipt = Receipt::where("invoice_id", $id)->where("deleted_at", null)->sum("grand_total");
-            $getInvoice->total_paid = $sumReceipt;
+            $getInvoice["total_paid"] = $sumReceipt;
 
             return ["data" => $getInvoice];
         } catch (\Throwable $e) {
@@ -162,7 +164,7 @@ class InvoiceController extends Controller
         try {
             $id = (int) $id;
             $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
-            if ($getInvoice) throw new CustomException("Invoice tidak ditemukan", 404);
+            if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
 
             $validateInvoice = $this->InvoiceService->validateInvoice($request);
             if ($validateInvoice != "") throw new CustomException($validateInvoice, 400);
@@ -207,6 +209,37 @@ class InvoiceController extends Controller
         }
     }
 
+    public function updateStatus(Request $request, $id)
+    {
+        DB::beginTransaction();
+
+        try {
+            $id = (int) $id;
+            $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
+            if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
+
+            Invoice::findOrFail($id)->update([
+                'status' => $request->status
+            ]);
+
+            $invoice = Invoice::where('id', $id)->first();
+
+            return ["data" => $invoice];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+            DB::rollBack();
+
+            if (is_a($e, CustomException::class)) {
+                dd($e);
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $e], $errorStatusCode);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -217,7 +250,7 @@ class InvoiceController extends Controller
         try {
             $id = (int) $id;
             $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
-            if ($getInvoice) throw new CustomException("Invoice tidak ditemukan", 404);
+            if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
 
             Invoice::findOrFail($id)->delete();
             InvoiceDetail::where("invoice_id", $id)->where("deleted_at", null)->delete();

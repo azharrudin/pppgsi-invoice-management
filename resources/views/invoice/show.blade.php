@@ -288,78 +288,41 @@ $configData = Helper::appClasses();
 
         $(document).on('click', '.disetujui', function(event) {
             event.preventDefault();
+            let datas = {}
+            datas.status = 'Disetujui KA';
             $.ajax({
-                url: "{{env('BASE_URL_API')}}" + "/api/invoice/" + id,
-                type: "GET",
+                url: "{{env('BASE_URL_API')}}" + "/api/update-status/" + id,
+                type: "PATCH",
+                data: JSON.stringify(datas),
+                contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                beforeSend: function() {
+                success: function(response) {
+                    $('.indicator-progress').show();
+                    $('.indicator-label').hide();
+
                     Swal.fire({
-                        title: '<h2>Loading...</h2>',
-                        html: sweet_loader + '<h5>Please Wait</h5>',
-                        showConfirmButton: false,
-                        allowOutsideClick: false,
-                        allowEscapeKey: false
-                    });
-                },
-                success: function(res) {
-                    let datas = res.data;
-                    delete datas.bank;
-                    delete datas.tenant;
-                    delete datas.created_at;
-                    delete datas.updated_at;
-                    delete datas.deleted_at;
-                    delete datas.total_paid;
-                    delete datas.id;
-                    datas.details = $.map(datas.invoice_details, function (value) {
-                        let data = {}
-                        data.item = value.item;
-                        data.description = value.description;
-                        data.price = value.price;
-                        data.tax_id = value.tax_id;
-                        data.total_price = value.total_price;
-                        return data;
-                    });
-                    delete datas.invoice_details;
-                    delete datas.invoice_number;
-                    datas.status = 'Disetujui KA';
-                    $.ajax({
-                        url: "{{env('BASE_URL_API')}}" + "/api/invoice/" + id,
-                        type: "PATCH",
-                        data: JSON.stringify(datas),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function(response) {
-                            $('.indicator-progress').show();
-                            $('.indicator-label').hide();
-
-                            Swal.fire({
-                                title: 'Berhasil',
-                                text: 'Berhasil menambahkan Invoice',
-                                icon: 'success',
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                                buttonsStyling: false
-                            })
-
-                            localStorage.removeItem('invoice');
-                            window.location.href = "/invoice/list-invoice"
+                        title: 'Berhasil',
+                        text: 'Berhasil menambahkan Invoice',
+                        icon: 'success',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
                         },
-                        error: function(xhr, status, error) {
-                            Swal.fire({
-                                title: 'Error!',
-                                text: ' You clicked the button!',
-                                icon: 'error',
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                                buttonsStyling: false
-                            })
-                        }
-                    });
+                        buttonsStyling: false
+                    })
+
+                    localStorage.removeItem('invoice');
+                    window.location.href = "/invoice/list-invoice"
                 },
-                error: function(errors) {
-                    console.log(errors);
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: ' You clicked the button!',
+                        icon: 'error',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                        buttonsStyling: false
+                    })
                 }
             });
         });

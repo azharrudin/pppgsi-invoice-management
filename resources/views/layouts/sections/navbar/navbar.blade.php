@@ -34,8 +34,7 @@ $navbarDetached = ($navbarDetached ?? '');
       @endif
 
       <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-
-        @if($configData['hasCustomizer'] == true)
+        {{-- @if($configData['hasCustomizer'] == true)
         <!-- Search -->
         <div class="navbar-nav align-items-center">
           <div class="nav-item navbar-search-wrapper mb-0">
@@ -46,10 +45,10 @@ $navbarDetached = ($navbarDetached ?? '');
           </div>
         </div>
         <!-- /Search -->
-        @endif
+        @endif --}}
 
         <ul class="navbar-nav flex-row align-items-center ms-auto">
-          <!-- Notification -->
+          {{-- <!-- Notification -->
           <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
               <i class="ti ti-bell ti-md"></i>
@@ -235,7 +234,7 @@ $navbarDetached = ($navbarDetached ?? '');
               </li>
             </ul>
           </li>
-          <!--/ Notification -->
+          <!--/ Notification --> --}}
           <!-- User -->
           <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -254,13 +253,9 @@ $navbarDetached = ($navbarDetached ?? '');
                     </div>
                     <div class="flex-grow-1">
                       <span class="fw-medium d-block">
-                        @if (Auth::check())
-                        {{ Auth::user()->name }}
-                        @else
-                        John Doe
-                        @endif
+                        {{ session('data')['name'] }}
                       </span>
-                      <small class="text-muted">Admin</small>
+                      <small class="text-muted">{{ session('data')['level']['name'] }}</small>
                     </div>
                   </div>
                 </a>
