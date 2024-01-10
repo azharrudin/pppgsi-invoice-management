@@ -169,7 +169,7 @@
                     title: "Tanggapan",
                     render: function(data, type, row) {
                         return `<div class="d-flex align-items-center"><a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a><a href="tanda-terima/preview/' ${data.id}
-                            '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="tanda-terima/edit/${data.id}" class="dropdown-item btn-edit" data-id="${data.id}">Edit</a>
+                            '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="tanda-terima/print/${data.id}" class="dropdown-item">Download</a><a href="tanda-terima/edit/${data.id}" class="dropdown-item btn-edit" data-id="${data.id}">Edit</a>
                             <a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="${data.id}">Delete</a></div></div></div>`;
                     }
                 }],
