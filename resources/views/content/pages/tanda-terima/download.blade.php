@@ -109,9 +109,7 @@
         <div class="row">
             <div class="col-4">
                 <div style="border: 1px solid black;" class="p-2">
-                    Iuaran Singking Fund Periode <br />
-                    01 Juni 2023 s/d 30 Juno 2023 <br>
-                    Invoice No. :
+                  {{$data->note}}
                 </div>
                 <p>
                     Apabila dibayar dengan cek/Biyet giro, Pembayaran baru
@@ -126,8 +124,8 @@
                 <div class="ttd" style="width: max-content; float: right;">
 
                     <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
-
-                        <img src="" alt="">
+                    {{ $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' }}<br>
+                    <img src="{{ $data->signature_image }}" alt="">
                     <p class="text-center">
                         <u></u></b><br><span>Building Manager</span>
                     </p>
