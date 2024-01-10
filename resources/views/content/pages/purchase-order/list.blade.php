@@ -135,15 +135,15 @@ $configData = Helper::appClasses();
                 className: 'text-center',
                 render: function(data, type, row) {
                     if (data == 'Terbuat') {
-                        return '<span class="badge" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
+                        return '<span class="badge w-100" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
                     } else if (data == 'Disetujui KA') {
-                        return '<span class="badge" style="background-color : #4EC0D9; " text-capitalized> Disetujui KA </span>';
+                        return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized> Disetujui KA </span>';
                     } else if (data == 'Lunas') {
-                        return '<span class="badge" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
+                        return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
                     } else if (data == 'Terkirim') {
-                        return '<span class="badge" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
+                        return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
                     } else if (data == 'Disetujui BM') {
-                        return '<span class="badge" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
+                        return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
                     }
                 }
             }, {

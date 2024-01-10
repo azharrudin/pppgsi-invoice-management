@@ -113,15 +113,15 @@ $configData = Helper::appClasses();
                 className: 'text-center',
                 render: function(data, type, row) {
                     if (data == 'Wait a response') {
-                        return '<span class="badge" style="background-color : #BFBFBF; " text-capitalized> Wait a response </span>';
+                        return '<span class="w-100 badge" style="background-color : #BFBFBF; " text-capitalized> Wait a response </span>';
                     } else if (data == 'On progress') {
-                        return '<span class="badge" style="background-color : #4EC0D9; " text-capitalized> On progress </span>';
+                        return '<span class="w-100 badge" style="background-color : #4EC0D9; " text-capitalized> On progress </span>';
                     } else if (data == 'Selesai') {
-                        return '<span class="badge" style="background-color : #74D94E; " text-capitalized> Selesai </span>';
+                        return '<span class="w-100 badge" style="background-color : #74D94E; " text-capitalized> Selesai </span>';
                     } else if (data == 'Terkirim') {
-                        return '<span class="badge" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
+                        return '<span class="w-100 badge" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
                     } else if (data == 'Disetujui BM') {
-                        return '<span class="badge" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
+                        return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
                     }
                 }
             }, {

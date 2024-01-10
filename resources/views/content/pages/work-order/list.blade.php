@@ -144,16 +144,16 @@
                     title: "status",
                     render: function(data, type, full, meta) {
                         if (data == "Disetujui KA") {
-                            return '<span class="badge  bg-label-success">' + data +
+                            return '<span class="badge w-100  bg-label-success">' + data +
                                 '</span>'
                         } else if (data == "Disetujui BM") {
-                            return '<span class="badge  bg-label-info">' + data +
+                            return '<span class="badge w-100 bg-label-info">' + data +
                                 '</span>'
                         } else if (data == "Terbuat") {
-                            return '<span class="badge  bg-label-secondary">' + data +
+                            return '<span class="badge w-100 bg-label-secondary">' + data +
                                 '</span>'
                         } else if (data == "Terkirim") {
-                            return '<span class="badge  bg-label-danger">' + data +
+                            return '<span class="badge w-100 bg-label-danger">' + data +
                                 '</span>'
                         }
                     }
