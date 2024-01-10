@@ -140,6 +140,20 @@
                     }
                 }, {
                     class: "text-center",
+                    data: "paid",
+                    name: "paid",
+                    title: "Dibayarkan",
+                    render: function(data, type, row) {
+                        // Check if it is of type 'display'
+                        if (type === 'display') {
+                            return 'Rp. ' + parseFloat(data).toLocaleString('en-US') + ',-';
+                        }
+
+                        // For other types (sorting, filtering, etc.), return the original data
+                        return data;
+                    }
+                }, {
+                    class: "text-center",
                     data: "receipt_date",
                     name: "receipt_date",
                     title: "Tanggal Tanda Terima",

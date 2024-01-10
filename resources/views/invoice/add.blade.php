@@ -165,8 +165,8 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
-                        <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
+                        <button type="button" id="preview" class="btn btn-label-warning d-grid w-100 mb-2">Preview</button>
+                        <button type="submit" id="save" class="btn btn-label-success d-grid w-100 mb-2">Simpan</button>
                         <button type="button" id="batal" class="btn btn-label-danger d-grid w-100">Kembali</button>
                     </div>
                 </div>
@@ -688,16 +688,16 @@ $configData = Helper::appClasses();
             form.addEventListener(
                 "submit",
                 function(event) {
+                    Swal.fire({
+                        title: '<h2>Loading...</h2>',
+                        html: sweet_loader + '<h5>Please Wait</h5>',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    });
                     if (!form.checkValidity()) {
                         event.preventDefault();
                         event.stopPropagation();
-                        Swal.fire({
-                            title: '<h2>Loading...</h2>',
-                            html: sweet_loader + '<h5>Please Wait</h5>',
-                            showConfirmButton: false,
-                            allowOutsideClick: false,
-                            allowEscapeKey: false
-                        });
                         let tenant = $("#tenant").val();
                         let bank = $("#bank").val();
                         let tglKontrak = $("#contract_date").val();
