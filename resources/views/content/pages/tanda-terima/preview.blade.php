@@ -221,7 +221,7 @@ $configData = Helper::appClasses();
     $(document).ready(function() {
 
         var urlSegments = window.location.pathname.split('/');
-        var idIndex = urlSegments.indexOf('preview') + 1;
+        var idIndex = urlSegments.indexOf('show') + 1;
         var id = urlSegments[idIndex];
 
         var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
@@ -248,6 +248,7 @@ $configData = Helper::appClasses();
                 success: function(response) {
                     Swal.close();
                     let result = response.data;
+                    console.log(result);
 
                     $("#receipt_number").val(result.receipt_number);
                     $('#invoice').text(result.invoice.invoice_number);
