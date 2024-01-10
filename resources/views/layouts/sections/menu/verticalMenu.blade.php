@@ -39,22 +39,18 @@ background: linear-gradient(3deg, rgba(97,73,206,1) 0%, rgba(156,98,244,1) 100%)
     @php
     $activeClass = null;
     $currentRouteName = Route::currentRouteName();
-
     if ($currentRouteName === $menu->slug) {
-    $activeClass = 'active';
-    }
-    elseif (isset($menu->submenu)) {
-    if (gettype($menu->slug) === 'array') {
-    foreach($menu->slug as $slug){
-    if (str_contains($currentRouteName,$slug) and strpos($currentRouteName,$slug) === 0) {
-    $activeClass = 'active open';
-    }
-    }
-    }
-    else{
-    if (str_contains($currentRouteName,$menu->slug) and strpos($currentRouteName,$menu->slug) === 0) {
-    $activeClass = 'active open';
-    }
+        $activeClass = 'active';
+    }elseif (isset($menu->submenu)) {
+      if (gettype($menu->submenu) === 'array') {
+        $stringRepresentation= json_encode($menu->submenu);
+        if (str_contains($stringRepresentation,  $currentRouteName)) { 
+          $activeClass = 'active open';
+        }
+    }else{
+      if (str_contains($currentRouteName,$menu->slug) and strpos($currentRouteName,$menu->slug) === 0) {
+        $activeClass = 'active open';
+      }
     }
 
     }

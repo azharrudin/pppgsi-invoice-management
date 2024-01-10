@@ -90,8 +90,8 @@ class InvoiceController extends Controller
         return view('invoice.show');
     }
     
-    public function print(){
-     
+    public function print($id){
+        // return view('invoice.download');
     	$pdf = PDF::loadview('invoice.download');
     	return $pdf->download('laporan-pegawai-pdf.pdf');
     }
