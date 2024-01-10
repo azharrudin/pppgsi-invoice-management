@@ -222,8 +222,10 @@ class InvoiceController extends Controller
                 'status' => $request->status
             ]);
 
+            
             $invoice = Invoice::where('id', $id)->first();
-
+            
+            DB::commit();
             return ["data" => $invoice];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
