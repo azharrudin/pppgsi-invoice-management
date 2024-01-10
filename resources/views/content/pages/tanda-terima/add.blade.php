@@ -136,20 +136,6 @@ $configData = Helper::appClasses();
                                     <input type="text" class="form-control w-px-250 date" id="receipt_date" name="receipt_date" placeholder="Tanggal" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
-<<<<<<< HEAD
-                                <div class="mb-3">
-                                    <div action="/upload" class="dropzone needsclick dz-clickable w-px-250" id="dropzone-basic">
-                                        <div class="dz-message needsclick">
-                                            <span class="note needsclick">Unggah Tanda Tangan</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control w-px-250 " id="signature_name" name="signature_name" placeholder="Nama & Jabatan" required />
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
-
-=======
                             </div>
                             <div class="row px-3 d-flex align-items-center mb-3">
                                 <div class="col-2">
@@ -226,7 +212,6 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
                                 @endif
->>>>>>> 2e34380c9b7211fbd1259c0719594b55ef6b5a8e
                             </div>
                         </div>
                     </div>
@@ -234,18 +219,6 @@ $configData = Helper::appClasses();
             </div>
             <!-- /Invoice Add-->
 
-<<<<<<< HEAD
-            <!-- Invoice Actions -->
-            <div class="col-lg-3 col-12 invoice-actions">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
-                            <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Tanda Terima</span>
-                        </button>
-                        <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
-                        <button type="submit" class="btn btn-label-secondary btn-save d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100 btn-cancel">Batal</button>
-=======
                 <!-- Invoice Actions -->
                 <div class="col-lg-3 col-12 invoice-actions">
                     <div class="card mb-4">
@@ -255,7 +228,6 @@ $configData = Helper::appClasses();
                                 class="btn btn-label-success btn-save d-grid w-100 mb-2">Simpan</button>
                             <button type="button" class="btn btn-label-danger d-grid w-100 btn-cancel">Batal</button>
                         </div>
->>>>>>> 2e34380c9b7211fbd1259c0719594b55ef6b5a8e
                     </div>
                 </div>
             </div>
