@@ -329,9 +329,7 @@ $configData = Helper::appClasses();
                                 buttonsStyling: false
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    window.location.href =
-                                        '{{ route('
-                                    pages - list - tanda - terima ') }}';
+                                    window.location.href ='{{ route("pages-list-tanda-terima") }}';
                                 }
                             });
                         },
