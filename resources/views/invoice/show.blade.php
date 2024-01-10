@@ -291,7 +291,7 @@ $configData = Helper::appClasses();
             let datas = {}
             datas.status = 'Disetujui KA';
             $.ajax({
-                url: "{{env('BASE_URL_API')}}" + "/api/update-status/" + id,
+                url: "{{env('BASE_URL_API')}}" + "/api/invoice/update-status/" + id,
                 type: "PATCH",
                 data: JSON.stringify(datas),
                 contentType: "application/json; charset=utf-8",
