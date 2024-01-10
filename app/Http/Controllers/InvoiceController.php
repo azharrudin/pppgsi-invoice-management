@@ -136,7 +136,7 @@ class InvoiceController extends Controller
             $id = (int) $id;
             $getInvoice = Invoice::with("invoiceDetails.tax")->with("tenant")->with("bank")->where("id", $id)->where("deleted_at", null)->first();
             $sumReceipt = Receipt::where("invoice_id", $id)->where("deleted_at", null)->sum("grand_total");
-            $getInvoice["total_paid"] = $sumReceipt;
+            $getInvoice->total_paid = $sumReceipt;
 
             return ["data" => $getInvoice];
         } catch (\Throwable $e) {
