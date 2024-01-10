@@ -135,8 +135,6 @@ class InvoiceController extends Controller
         try {
             $id = (int) $id;
             $getInvoice = Invoice::with("invoiceDetails.tax")->with("tenant")->with("bank")->where("id", $id)->where("deleted_at", null)->first();
-            if ($getInvoice) throw new CustomException("Invoice tidak ditemukan", 404);
-
             $sumReceipt = Receipt::where("invoice_id", $id)->where("deleted_at", null)->sum("grand_total");
             $getInvoice["total_paid"] = $sumReceipt;
 
