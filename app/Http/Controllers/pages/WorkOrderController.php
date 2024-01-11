@@ -4,6 +4,7 @@ namespace App\Http\Controllers\pages;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use PDF;
 use Illuminate\Support\Facades\Http;
 use Yajra\DataTables\DataTables;
 
@@ -108,5 +109,13 @@ class WorkOrderController extends Controller
             ->setTotalRecords($response->size)
             ->make(true);
 
+    }
+
+    public function print($id){
+        $apiRequest = Http::get(env('BASE_URL_API') .'/api/work-order/'.$id);
+        $response = json_decode($apiRequest->getBody());
+        $data = $response->data;
+    	$pdf = PDF::loadview('content.pages.work-order.download',['data'=>$data]);
+    	return $pdf->stream('work-order.pdf');
     }
 }

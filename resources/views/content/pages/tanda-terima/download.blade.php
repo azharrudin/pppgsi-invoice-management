@@ -1,9 +1,9 @@
 @php
-    function rupiah($angka)
-    {
-        $hasil_rupiah = 'Rp ' . number_format($angka, 2, ',', '.');
-        return $hasil_rupiah;
-    }
+function rupiah($angka)
+{
+$hasil_rupiah = 'Rp ' . number_format($angka, 2, ',', '.');
+return $hasil_rupiah;
+}
 @endphp
 <!doctype html>
 <html lang="en">
@@ -17,7 +17,7 @@
 
     <style>
         body {
-            font-size: 10px;
+            font-size: 12px;
 
         }
 
@@ -74,31 +74,33 @@
         <div style="clear: both;"></div>
 
         <div class="row">
-            <center><b>TANDA TERIMA PEMBAYARAN</b></center>
+            <center><b>TANDA TERIMA PEMBAYARAN</b></center><br>
         </div>
 
         <p style="margin: 0px;">Telah terima Pembayaran tunai/Cek/Giro</p>
-        <div class="row" style="width: 250px;">
-            <table class="table mt-2" style="width:100%">
-                <tbody>
+        <div class="row" style="width: 600px;">
+            <table class="table mt-2" style="width:100%; border-collapse:separate; border-spacing: 0 3px;">
+                <tbody class="mt-2" style=" text-align: left;">
                     <tr>
-                        <td>No. Cek/Giro</td>
-                        <td>:</td>
-                        <td>{{$data->check_number}}</td>
-                        <td>Nama</td>
-                        <td>:</td>
-                        <td>{{$data->check_number}}</td>
+                        <td style="width: 20%;">No. Cek/Giro</td>
+                        <td style="width: 5%;">:</td>
+                        <td style="width: 25%;">{{$data->check_number}}</td>
+                        <td style="width: 17%;">Nama</td>
+                        <td style="width: 5%;">:</td>
+                        <td class="width: 25%;">{{$data->tenant->name}}</td>
                     </tr>
                     <tr>
                         <td>Bank</td>
-                        <td colspan="2"></td>
+                        <td>:</td>
+                        <td>{{$data->bank->name}}</td>
                         <td>Alamat</td>
                         <td>:</td>
-                        <td></td>
+                        <td> {{ $data->tenant->company }} {{ $data->tenant->floor }} {{ $data->tenant->name }}</td>
                     </tr>
-                    <tr class="mt-1">
+                    <tr>
+                        <td>Jumlah</td>
+                        <td>:</td>
                         <td>{{rupiah($data->grand_total)}}</td>
-                        <td colspan="2"> </td>
                         <td>Telepon</td>
                         <td>:</td>
                         <td>{{$data->tenant->phone}}</td>
@@ -106,10 +108,27 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- <div class="row">
+            <div class="col-6">
+                <div class="row">
+                    <div>No. Cek/Giro</div>
+                    <div>{{$data->check_number}}</div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="">Nama</div>
+                    <div class="">:</div>
+                    <div class=""></div>
+                </div>
+            </div>
+        </div> -->
+
         <div class="row">
             <div class="col-4">
                 <div style="border: 1px solid black;" class="p-2">
-                  {{$data->note}}
+                    {{$data->grand_total_spelled}}
                 </div>
                 <p>
                     Apabila dibayar dengan cek/Biyet giro, Pembayaran baru
@@ -124,10 +143,10 @@
                 <div class="ttd" style="width: max-content; float: right;">
 
                     <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
-                    {{ $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' }}<br>
-                    <img src="{{ $data->signature_image }}" alt="">
+                        {{ $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' }}<br>
+                        <img src="{{ $data->signature_image }}" alt="">
                     <p class="text-center">
-                        <u></u></b><br><span>Building Manager</span>
+                        <u></u></b><br><span>{{$data->signature_name}}</span>
                     </p>
                     </p>
 
