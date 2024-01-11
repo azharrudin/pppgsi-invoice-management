@@ -95,6 +95,51 @@
                 }];
         }
 
+        $(document).on('click', '.send-email', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: '<h2>Loading...</h2>',
+                html: sweet_loader + '<h5>Please Wait</h5>',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            });
+            let id = $(this).data('id');
+            let datas = {}
+            datas.status = 'Terkirim';
+            $.ajax({
+                url: "{{env('BASE_URL_API')}}" + "/api/receipt/update-status/" + id,
+                type: "PATCH",
+                data: JSON.stringify(datas),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    Swal.fire({
+                        title: 'Berhasil',
+                        text: 'Berhasil Mengirim Tanda Terima',
+                        icon: 'success',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                        buttonsStyling: false
+                    }).then((result) => {
+                        $('.invoice-list-table').DataTable().ajax.reload();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: ' You clicked the button!',
+                        icon: 'error',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                        buttonsStyling: false
+                    })
+                }
+            });
+        });
+
         $((function() {
             var a = $(".invoice-list-table");
             if (a.length) var e = a.DataTable({
@@ -106,6 +151,18 @@
                     "data": function(d) {
                         d.start = 0;
                         d.page = $(".invoice-list-table").DataTable().page.info().page + 1;
+                    },
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: '<h2>Loading...</h2>',
+                            html: sweet_loader + '<h5>Please Wait</h5>',
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        });
+                    },
+                    complete: function() {
+                        Swal.close();
                     }
                 },
                 columns: [{
@@ -194,12 +251,16 @@
                     title: "Tanggapan",
                     render: function(data, type, row) {
                         let sendMailRow = '';
-                        let editRow = '';
+                        let editButton = '';
+                        let deleteButton = '';
                         if(row.status == 'Disetujui BM' && account.level.id == 10){
-                            sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
+                            sendMailRow = `<a href="#" data-bs-toggle="tooltip" class="text-body send-email" data-id="${data.id}" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>`;
                         }
-                        if(account.level.id == 1){
-
+                        if((account.level.id == 10 && row.status == 'Terbuat') || (account.level.id == 1 && row.status == 'Disetujui KA')){
+                            editButton = `<a href="tanda-terima/edit/${data.id}" class="dropdown-item btn-edit" data-id="${data.id}">Edit</a>`;
+                        }
+                        if((account.level.id == 10)){
+                            deleteButton = `<a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="${data.id}">Delete</a>`;
                         }
                         return `<div class="d-flex align-items-center">
                                     ${sendMailRow}
@@ -207,8 +268,9 @@
                                     <div class="dropdown">
                                         <a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a>
                                         <div class="dropdown-menu dropdown-menu-end">
-                                            <a href="javascript:;" class="dropdown-item">Download</a><a href="tanda-terima/edit/${data.id}" class="dropdown-item btn-edit" data-id="${data.id}">Edit</a>
-                                            <a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="${data.id}">Delete</a>
+                                            <a target="_blank" href="{{url('invoice/tanda-terima/print')}}/`+data.id+`" class="dropdown-item">Download</a>
+                                            ${editButton}
+                                            ${deleteButton}
                                         </div>
                                     </div>
                                 </div>`;

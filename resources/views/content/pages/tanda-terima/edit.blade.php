@@ -124,23 +124,11 @@
 
                             <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
                                 <div class="mb-3">
-                                    <label for="note" class="form-label fw-medium">Tanda Tangan</label>
+                                    <label for="note" class="form-label fw-medium">Tanda Tangan & Materai</label>
                                     <input type="text" class="form-control w-px-250 date" id="signature_date"
                                         name="signature_date" placeholder="Tanggal" />
                                 </div>
-                                <div class="mb-3 prev">
-                                    <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
-                                        <div class="dz-details">
-                                            <div class="dz-thumbnail"> <img class="prev-img" alt=""
-                                                    src="">
-                                                <span class="dz-nopreview">No preview</span>
-                                                <div class="dz-success-mark"></div>
-                                            </div>
-                                        </div><a class="dz-remove" href="javascript:undefined;" data-dz-remove="">Remove
-                                            file</a>
-                                    </div>
-                                </div>
-                                <div class="mb-3 click" style="display: none">
+                                <div class="mb-3">
                                     <div action="/upload" class="dropzone needsclick dz-clickable w-px-250"
                                         id="dropzone-basic">
                                         <div class="dz-message needsclick">
@@ -163,16 +151,14 @@
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas"
+                        <button class="btn btn-primary d-grid w-100 mb-2 kirim-tanda-terima" data-bs-toggle="offcanvas"
                             data-bs-target="#sendInvoiceOffcanvas">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="ti ti-send ti-xs me-2"></i>Kirim Tanda Terima</span>
                         </button>
-                        <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview"
-                            class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
-                        <button type="button"
-                            class="btn btn-label-secondary btn-update d-grid w-100 mb-2">Update</button>
-                        <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
+                        <a href="" class="btn btn-label-warning d-grid w-100 mb-2">Preview</a>
+                        <button type="button" class="btn btn-label-success btn-update d-grid w-100 mb-2">Simpan</button>
+                        <button type="button" class="btn btn-label-danger btn-cancel d-grid w-100">Batal</button>
                     </div>
                 </div>
             </div>
@@ -242,6 +228,7 @@
     </script>
     <script>
         $(document).ready(function() {
+            let account = {!! json_encode(session('data')) !!}
 
             // Date
             $('.date').flatpickr({
@@ -284,7 +271,7 @@
 
             function getDataTandaTerima(id) {
                 $.ajax({
-                    url: "{{ url('api/receipt') }}/" + id,
+                    url: "{{env('BASE_URL_API')}}" + "/api/receipt/" + id,
                     type: "GET",
                     dataType: "json",
                     success: function(res) {
@@ -305,8 +292,7 @@
                             }
                         });
 
-                        $('#signature_date').val(moment(response.signature_date, 'YYYY-MM-DD').format(
-                            'DD-MM-YYYY'));
+                        $('#signature_date').val(response.signature_date ? moment(response.signature_date, 'YYYY-MM-DD').format('DD-MM-YYYY') : '');
                         $(".select-tenant").empty().append('<option value="' + response.tenant_id +
                                 '">' + response.tenant.name + '</option>').val(response.tenant_id)
                             .trigger("change");
@@ -322,6 +308,13 @@
                         } else {
                             $('.dz-nopreview').css('display', 'block');
                             $('.dz-success-mark').css('display', 'none');
+                        }
+                        if(response.status != 'Disetujui BM'){
+                            $('.kirim-tanda-terima').attr('style','display:none !important');
+                            $('.add-payment').attr('style','display:none !important');
+                        }
+                        if(account.level.id != '1'){
+                            $('.data-materai').attr('style','display:none !important');
                         }
                         Swal.close();
                     },
@@ -374,7 +367,7 @@
                 datas.invoice_id = parseInt(invoice);
                 datas.tenant_id = parseInt(tenant);
                 datas.bank_id = parseInt(bank);
-                datas.status = 'Terbuat';
+                datas.status = 'Disetujui BM';
                 datas.receipt_date = moment().format('YYYY-MM-DD');
                 if (!$('img[data-dz-thumbnail]').hasClass('prev-img')) {
                     datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
@@ -382,7 +375,7 @@
                 datas.signature_date = moment(date, 'D-M-YYYY').format('YYYY-MM-DD');
 
                 $.ajax({
-                    url: "{{ url('api/receipt') }}/" + id,
+                    url: "{{env('BASE_URL_API')}}" + "/api/receipt/" + id,
                     type: "PATCH",
                     data: JSON.stringify(datas),
                     contentType: "application/json; charset=utf-8",

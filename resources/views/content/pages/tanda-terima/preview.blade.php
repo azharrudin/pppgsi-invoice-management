@@ -301,7 +301,7 @@ $configData = Helper::appClasses();
             $.ajax({
                 url: "{{env('BASE_URL_API')}}" + "/api/receipt/update-status/" + id,
                 type: "PATCH",
-                dataType: "json",
+                contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(datas),
                 beforeSend: function() {
                     Swal.fire({
@@ -313,56 +313,18 @@ $configData = Helper::appClasses();
                     })
                 },
                 success: function(response) {
-                    let result = response.data;
-                    let datas = {};
-
-                    datas = response.data;
-                    datas.status = "disetujui ka"
-
-                    $.ajax({
-                        url: "{{ url('api/receipt') }}/" + result.id,
-                        type: "PATCH",
-                        data: JSON.stringify(datas),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        beforeSend: function() {
-                            Swal.fire({
-                                title: 'Loading...',
-                                text: "Please wait",
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                                buttonsStyling: false
-                            });
+                    Swal.fire({
+                        title: 'Berhasil',
+                        text: 'Berhasil Menyetujui Invoice',
+                        icon: 'success',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
                         },
-                        success: function(response) {
-                            Swal.fire({
-                                title: 'Berhasil',
-                                text: 'Berhasil update Tanda Terima',
-                                icon: 'success',
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                                buttonsStyling: false
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.href ='{{ route("pages-list-tanda-terima") }}';
-                                }
-                            });
-                        },
-                        error: function(errors) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: errors.responseJSON
-                                    .message,
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                                buttonsStyling: false
-                            })
-                        }
+                        buttonsStyling: false
+                    }).then((result) => {
+                        window.location.href = "/invoice/tanda-terima";
                     });
+                    
                 },
                 error: function(errors) {
                     Swal.fire({

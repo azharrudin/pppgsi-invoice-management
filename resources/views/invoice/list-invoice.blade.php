@@ -10,6 +10,7 @@ $configData = Helper::appClasses();
 {{-- Page Css files --}}
 <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}">
 @endsection
 
 @section('content')
@@ -83,9 +84,14 @@ $configData = Helper::appClasses();
 
 @section('page-script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
     "use strict";
     $((function() {
+
+        var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>`;
 
         let account = {!! json_encode(session('data')) !!}
         let buttonAdd = [];
@@ -99,6 +105,51 @@ $configData = Helper::appClasses();
             }];
         }
 
+        $(document).on('click', '.send-email', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: '<h2>Loading...</h2>',
+                html: sweet_loader + '<h5>Please Wait</h5>',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            });
+            let id = $(this).data('id');
+            let datas = {}
+            datas.status = 'Terkirim';
+            $.ajax({
+                url: "{{env('BASE_URL_API')}}" + "/api/invoice/update-status/" + id,
+                type: "PATCH",
+                data: JSON.stringify(datas),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    Swal.fire({
+                        title: 'Berhasil',
+                        text: 'Berhasil Mengirim Invoice',
+                        icon: 'success',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                        buttonsStyling: false
+                    }).then((result) => {
+                        $('.invoice-list-table').DataTable().ajax.reload();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: ' You clicked the button!',
+                        icon: 'error',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                        buttonsStyling: false
+                    })
+                }
+            });
+        });
+
         var a = $(".invoice-list-table");
         if (a.length) var e = a.DataTable({
             responsive: true,
@@ -110,6 +161,18 @@ $configData = Helper::appClasses();
                 "data": function(d) {
                     d.start = 0;
                     d.page = $(".invoice-list-table").DataTable().page.info().page + 1;
+                },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: '<h2>Loading...</h2>',
+                        html: sweet_loader + '<h5>Please Wait</h5>',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    });
+                },
+                complete: function() {
+                    Swal.close();
                 }
             },
             columns: [{
@@ -203,7 +266,7 @@ $configData = Helper::appClasses();
                     let editButton = '';
                     let deleteButton = '';
                     if(row.status == 'Disetujui BM' && account.level.id == 10){
-                        sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
+                        sendMailRow = `<a href="#" data-bs-toggle="tooltip" class="text-body send-email" data-id="${data}" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>`;
                     }
                     if((account.level.id == 10 && row.status == 'Terbuat') || (account.level.id == 1 && row.status == 'Disetujui KA')){
                         editButton = `<a href="{{ url("invoice/edit")}}/${data}" class="dropdown-item">Edit</a>`;
