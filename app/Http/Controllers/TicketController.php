@@ -217,7 +217,7 @@ class TicketController extends Controller
             $field = $request->input("field");
             $perPage = 10;
 
-            if(is_null($field)) $field = "id";
+            if(is_null($field)) $field = "ticket_number";
 
             $getTicket = Ticket::where("deleted_at", null)->
                 where($field, 'like', '%' . $value . '%')->

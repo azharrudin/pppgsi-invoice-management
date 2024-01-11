@@ -93,6 +93,7 @@ Route::group(['middleware' => 'cekauth'], function () {
             Route::get('/edit/{id}', [LaporanKerusakanController::class, 'edit'])->name('pages-edit-laporan-kerusakan');
             Route::get('/preview/{id}', [LaporanKerusakanController::class, 'preview'])->name('pages-preview-laporan-kerusakan');
             Route::get('/data-damage', [LaporanKerusakanController::class, 'datatable'])->name('data-damage');
+            Route::get('/print/{id}', [LaporanKerusakanController::class, 'print']);
         });
 
         // Work Order

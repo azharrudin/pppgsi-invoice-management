@@ -62,7 +62,7 @@ $configData = Helper::appClasses();
                                     </div> -->
                                 <div class="mb-1">
                                     <label for="scope" class="form-label fw-medium">Scope</label>
-                                    <select class="form-select add w-px-250 select3 select-scope" id="scope" name="scope[]" multiple required>
+                                    <select class="form-select add w-px-250  select-scope" id="scope" name="scope[]" multiple required>
                                     </select>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
@@ -609,7 +609,7 @@ $configData = Helper::appClasses();
         }));
 
         // Select3
-        $(".select-scope").select3({
+        $(".select-scope").select2({
             placeholder: 'Select Scope',
             allowClear: true,
             ajax: {
