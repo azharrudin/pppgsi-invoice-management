@@ -120,7 +120,7 @@ class LaporanKerusakanController extends Controller
         $apiRequest = Http::get(env('BASE_URL_API') .'/api/damage-report/'.$id);
         $response = json_decode($apiRequest->getBody());
         $data = $response->data;
-    	$pdf = PDF::loadview('content.pages.tanda-terima.download',['data'=>$data]);
+    	$pdf = PDF::loadview('content.pages.laporan-kerusakan.download',['data'=>$data]);
     	return $pdf->stream('laporan-kerusakan.pdf');
         // return view('content.pages.tanda-terima.download', ['data'=>$data]);
     }
