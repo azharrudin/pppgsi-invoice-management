@@ -62,14 +62,14 @@ $configData = Helper::appClasses();
                                     </div> -->
                                 <div class="mb-1">
                                     <label for="scope" class="form-label fw-medium">Scope</label>
-                                    <select class="form-select add w-px-250  select-scope" id="scope" name="scope[]" multiple required>
+                                    <select class="form-select add w-px-250 select2 select-scope" id="scope" name="scope[]" multiple required>
                                     </select>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
 
                                 <div class="mb-1">
                                     <label for="classification" class="form-label fw-medium">Classification</label>
-                                    <select class="form-select add w-px-250 select4 select-classification" id="classification" name="classification[]" multiple required>
+                                    <select class="form-select add w-px-250 select2 select-classification" id="classification" name="classification[]" multiple required>
                                     </select>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
@@ -89,6 +89,7 @@ $configData = Helper::appClasses();
                                 </div>
                             </div>
                         </div>
+
                         <div class="py-3 px-3">
                             <div class="card academy-content shadow-none border p-3">
                                 <div class="repeater">
@@ -196,6 +197,7 @@ $configData = Helper::appClasses();
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -277,6 +279,8 @@ $configData = Helper::appClasses();
 </script>
 <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
 </script>
+
+
 <script>
     $(document).ready(function() {
         $('.repeater').repeater({
@@ -367,9 +371,18 @@ $configData = Helper::appClasses();
         Array.prototype.slice.call(savelk).forEach(function(form) {
             $('.indicator-progress').hide();
             $('.indicator-label').show();
+
+
             form.addEventListener(
                 "submit",
                 function(event) {
+
+                    // let scopeValue = $("#scope").val();
+                    // let classificationValue = $("#classification").val();
+
+                    // console.log("Scope:", scopeValue);
+                    // console.log("Classification:", classificationValue);
+
                     if (!form.checkValidity()) {
                         event.preventDefault();
                         event.stopPropagation();
@@ -378,8 +391,8 @@ $configData = Helper::appClasses();
                         let ticketNumber = $(".select-ticket").val();
                         let receiptDate = $("#damage_report_date").val();
                         let actionDate = $("#action_plan_date").val();
-                        let scope = $("#scope").val();
-                        let classification = $("#classification").val();
+
+
 
                         if (!ticketNumber) {
                             $(".select-ticket").addClass("invalid");
@@ -452,9 +465,15 @@ $configData = Helper::appClasses();
                         });
 
                         var allValues = getRepeaterValues();
+
+                        let scope = $("#scope").val().toString();
+                        let classification = $("#classification").val().toString();
+
                         datas.ticket_id = ticket;
                         datas.signatures = signatures;
                         datas.status = "Terbuat";
+                        datas.scope = scope;
+                        datas.classification = classification;
 
                         $.ajax({
                             url: baseUrl + "api/damage-report/",
@@ -559,10 +578,14 @@ $configData = Helper::appClasses();
             });
 
             var allValues = getRepeaterValues();
+            let scope = $("#scope").val().toString();
+            let classification = $("#classification").val().toString();
+
             datas.ticket_id = ticket;
             datas.signatures = signatures;
             datas.status = "Terbuat";
-
+            datas.scope = scope;
+            datas.classification = classification;
 
             localStorage.setItem('damage-report', JSON.stringify(datas));
             window.location.href = "/complain/laporan-kerusakan/show";
@@ -643,15 +666,45 @@ $configData = Helper::appClasses();
             $(this).removeClass("is-invalid");
         }));
 
+        // Select3
+        $(".select-classification").select2({
+            placeholder: 'Select classification',
+            allowClear: true,
+            ajax: {
+                url: "{{ url('api/classification/select') }}",
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        term: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+        });
+
+        $('.select-classification').on("change", (async function(e) {
+            $(this).removeClass("is-invalid");
+        }));
         // Keyup input qty
         $(document).on('input', '.qty', function() {
             var sanitizedValue = $(this).val().replace(/[^0-9]/g, '');
             $(this).val(sanitizedValue);
         });
-
-
-
-
     });
 </script>
 @endsection

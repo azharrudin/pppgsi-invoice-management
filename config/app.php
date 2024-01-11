@@ -168,11 +168,10 @@ return [
     // App\Providers\BroadcastServiceProvider::class,
     App\Providers\EventServiceProvider::class,
     App\Providers\RouteServiceProvider::class,
-        App\Providers\FortifyServiceProvider::class,
-        App\Providers\JetstreamServiceProvider::class,
+    App\Providers\FortifyServiceProvider::class,
+    App\Providers\JetstreamServiceProvider::class,
     App\Providers\MenuServiceProvider::class,
-    Yajra\DataTables\DataTablesServiceProvider::class,
-    Barryvdh\DomPDF\ServiceProvider::class,
+    Barryvdh\Snappy\ServiceProvider::class,
   ])->toArray(),
 
   /*
@@ -191,5 +190,6 @@ return [
     'Helper' => App\Helpers\Helpers::class,
     'PDF' => Barryvdh\DomPDF\Facade::class,
   ])->toArray(),
-
+  'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+  'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 ];

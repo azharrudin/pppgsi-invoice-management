@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Validator;
 use App\Exceptions\CustomException;
 use App\Mail\EmailWithAttachment;
+use App\Models\Invoice;
+use App\Models\Receipt;
 use App\Services\CommonService;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -22,9 +25,8 @@ class MailController extends Controller
     {
         try{
             $rules = [
-                "tenant_id" => ["bail", "required", "numeric"],
-                "file_name" => ["bail", "required", "string"],
-                "file" => ["bail", "required", "string"],
+                "data_id" => ["bail", "required", "numeric"],
+                "data_type" => ["bail", "required", "string"],
             ];
             $errorMessages = [
                 "required" => "Field :attribute harus diisi",
@@ -35,11 +37,38 @@ class MailController extends Controller
             $validator = Validator::make($request->all(), $rules, $errorMessages);
             if ($validator->fails()) throw new CustomException( implode(', ', $validator->errors()->all()), 400);
 
-            $tenantId = $request->input("tenant_id");
-            $tenantExist = $this->CommonService->getDataById("App\Models\Tenant", $tenantId);
-            if(is_null($tenantExist)) throw new CustomException("Tenant tidak ditemukan", 404);
+            $dataId = $request->input("data_id");
+            $dataType = strtolower($request->input("data_type"));
 
-            Mail::to($tenantExist["email"])->send(new EmailWithAttachment($tenantExist, $request->input("file"), $request->input("file_name")));
+            $validDataType = ["invoice"];
+            if(!in_array($dataType, $validDataType)) throw new CustomException("Data type tidak ditemukan");
+
+            $getData = [];
+            $recipient = [];
+            $filePath = "";
+            $fileName = "";
+
+            if($dataType == "invoice"){
+                $getData = Invoice::with("invoiceDetails.tax")->
+                    with("tenant")->
+                    with("bank")->
+                    where("id", $dataId)->
+                    where("deleted_at", null)->first();
+
+                $viewName = "emails.invoice-pdf";
+            }
+
+            $dataJson = json_decode( json_encode($getData) );
+
+            $recipient = $dataJson->tenant;
+            $data = ["data" => $dataJson];
+            $fileName = $dataType . "-" . $getData->id . ".pdf";
+
+            $dataPdf = SnappyPdf::loadView($viewName, $data)->setOption('enable-javascript', true);
+            $filePath = base_path("public/pdf/". $fileName);
+            $dataPdf->save($filePath, true);
+
+            Mail::to($recipient->email)->send(new EmailWithAttachment($recipient, $filePath, $fileName));
 
             return [
                 "message" => "Email berhasil dikirim"
