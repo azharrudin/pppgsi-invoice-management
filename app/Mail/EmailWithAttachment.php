@@ -43,6 +43,8 @@ class EmailWithAttachment extends Mailable
             with: [
                 "tenantName" => $this->tenantData->name,
                 "fileName" => $this->fileName,
+                "month" => date('m', strtotime($this->tenantData->month)),
+                "year" => date('Y', strtotime($this->tenantData->year)),
             ]
         );
     }

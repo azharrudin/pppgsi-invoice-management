@@ -66,7 +66,7 @@ Route::group(['middleware' => 'cekauth'], function () {
             Route::get('/add', [TandaTerimaController::class, 'create']);
             Route::get('/preview', [TandaTerimaController::class, 'show']);
             Route::get('/edit/{id}', [TandaTerimaController::class, 'edit']);
-            Route::get('/preview/{id}', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
+            Route::get('/show/{id}', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
             Route::get('/data-tanda-terima', [TandaTerimaController::class, 'datatable'])->name('data-tanda-terima');
         });
     });

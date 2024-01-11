@@ -200,14 +200,21 @@ $configData = Helper::appClasses();
                 title: "Tanggapan",
                 render: function(data, type, row) {
                     let sendMailRow = '';
-                    let editRow = '';
+                    let editButton = '';
+                    let deleteButton = '';
                     if(row.status == 'Disetujui BM' && account.level.id == 10){
                         sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
+                    }
+                    if((account.level.id == 10 && row.status == 'Terbuat') || (account.level.id == 1 && row.status == 'Disetujui KA')){
+                        editButton = `<a href="{{ url("invoice/edit")}}/${data}" class="dropdown-item">Edit</a>`;
+                    }
+                    if((account.level.id == 10)){
+                        deleteButton = `<div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a>`;
                     }
                     let previewRow = '<a href="{{ url("invoice/show")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
                     return `<div class="d-flex align-items-center">
                             ` + sendMailRow + previewRow + `
-                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a target="_blank" href="{{url('invoice/print')}}/`+data+`" class="dropdown-item">Download</a><a href="{{ url("invoice/edit")}}/` + data + `" class="dropdown-item">Edit</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
+                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a target="_blank" href="{{url('invoice/print')}}/`+data+`" class="dropdown-item">Download</a>${editButton}${deleteButton}</div></div></div>`
                 }
             }],
             order: [

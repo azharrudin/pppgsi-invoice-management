@@ -140,8 +140,8 @@
                                         dapat dicairkan di Bank kami.
                                     </span>
                                 </div>
-
-                                <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
+                                @if (session('data')['level']['id'] == '1')
+                                <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center ">
                                     <div class="mb-3">
                                         <label for="note" class="form-label fw-medium">Tanda Tangan</label>
                                         <input type="text" class="form-control w-px-250 date" id="receipt_date"
@@ -161,8 +161,8 @@
                                             name="signature_name" placeholder="Nama & Jabatan" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -173,15 +173,10 @@
                 <div class="col-lg-3 col-12 invoice-actions">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas"
-                                data-bs-target="#sendInvoiceOffcanvas">
-                                <span class="d-flex align-items-center justify-content-center text-nowrap"><i
-                                        class="ti ti-send ti-xs me-2"></i>Kirim Tanda Terima</span>
-                            </button>
-                            <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
+                            <button class="btn btn-label-warning d-grid w-100 mb-2 btn-preview">Preview</button>
                             <button type="submit"
-                                class="btn btn-label-secondary btn-save d-grid w-100 mb-2">Simpan</button>
-                            <button type="button" class="btn btn-label-secondary d-grid w-100 btn-cancel">Batal</button>
+                                class="btn btn-label-success btn-save d-grid w-100 mb-2">Simpan</button>
+                            <button type="button" class="btn btn-label-danger d-grid w-100 btn-cancel">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -252,6 +247,8 @@
     <script>
         $(document).ready(function() {
 
+            let account = {!! json_encode(session('data')) !!}
+
             // Mendapatkan id dari invoice
             const idInvoice = getParameterByName('id-invoice');
 
@@ -312,21 +309,23 @@
 
             // Dropzone
             let ttdFile = null;
-            const myDropzone = new Dropzone('#dropzone-basic', {
-                parallelUploads: 1,
-                maxFilesize: 10,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png,.gif",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile = file;
-                    });
-                }
-            });
+            if(account.level.id == '1'){
+                const myDropzone = new Dropzone('#dropzone-basic', {
+                    parallelUploads: 1,
+                    maxFilesize: 10,
+                    addRemoveLinks: true,
+                    maxFiles: 1,
+                    acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                    autoQueue: false,
+                    init: function() {
+                        this.on('addedfile', function(file) {
+                            while (this.files.length > this.options.maxFiles) this.removeFile(this
+                                .files[0]);
+                            ttdFile = file;
+                        });
+                    }
+                });
+            }
 
             $(".select-invoice").on('change', function() {
                 validateSelect(this);
@@ -420,14 +419,14 @@
                                     datas[$("#" + inputId).attr("name")] = inputValue;
                                 }
                             });
-                            datas.signature_image = ttdFile;
+                            // datas.signature_image = ttdFile;
                             datas.invoice_id = parseInt(invoice);
                             datas.tenant_id = parseInt(tenant);
                             datas.bank_id = parseInt(bank);
                             datas.status = 'Terbuat';
                             datas.receipt_date = moment().format('YYYY-MM-DD');
                             datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
-                            datas.signature_date = moment(date, 'D-M-YYYY').format('YYYY-MM-DD');
+                            datas.signature_date = date ? moment(date, 'D-M-YYYY').format('YYYY-MM-DD') : null;
                             console.log(datas);
 
                             $.ajax({

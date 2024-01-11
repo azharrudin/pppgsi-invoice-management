@@ -29,9 +29,9 @@ return new class extends Migration
             $table->unsignedInteger("remaining");
             $table->string("grand_total_spelled");
             $table->text("note")->nullable();
-            $table->date("signature_date");
-            $table->mediumText("signature_image");
-            $table->string("signature_name");
+            $table->date("signature_date")->nullable();
+            $table->mediumText("signature_image")->nullable();
+            $table->string("signature_name")->nullable();
             $table->timestamps();
             $table->date("deleted_at")->nullable();
         });
