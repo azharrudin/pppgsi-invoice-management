@@ -171,6 +171,7 @@ return [
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
     App\Providers\MenuServiceProvider::class,
+    Barryvdh\Snappy\ServiceProvider::class,
   ])->toArray(),
 
   /*
@@ -188,5 +189,6 @@ return [
     // 'Example' => App\Facades\Example::class,
     'Helper' => App\Helpers\Helpers::class,
   ])->toArray(),
-
+  'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+  'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 ];

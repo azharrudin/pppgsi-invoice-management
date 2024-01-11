@@ -18,8 +18,8 @@ class EmailWithAttachment extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        protected $tenantData,
-        protected $fileBase64,
+        protected $recipientData,
+        protected $filePath,
         protected $fileName,
     ) {}
 
@@ -41,7 +41,7 @@ class EmailWithAttachment extends Mailable
         return new Content(
             view: 'emails.email-template',
             with: [
-                "tenantName" => $this->tenantData->name,
+                "tenantName" => $this->recipientData->name,
                 "fileName" => $this->fileName,
             ]
         );
@@ -55,7 +55,7 @@ class EmailWithAttachment extends Mailable
     public function attachments(): array
     {
         return [
-            Attachment::fromData(fn () => base64_decode($this->fileBase64), $this->fileName)
+            Attachment::fromPath($this->filePath)
                 ->withMime('application/pdf')
         ];
     }
