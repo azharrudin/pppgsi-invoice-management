@@ -36,7 +36,7 @@ class TicketController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $ticketQuery = Ticket::with("ticketAttachments")->where("deleted_at", null);
+            $ticketQuery = Ticket::with("tenant")->with("ticketAttachments")->where("deleted_at", null);
             if($value){
                 $ticketQuery->where(function ($query) use ($value) {
                     $query->where('ticket_number', 'like', '%' . $value . '%')
@@ -93,7 +93,11 @@ class TicketController extends Controller
             }
 
             DB::commit();
-            $getTicket = Ticket::with("ticketAttachments")->where("id", $saveTicket->id)->where("deleted_at", null)->first();
+            $getTicket = Ticket::with("tenant")->
+                with("ticketAttachments")->
+                where("id", $saveTicket->id)->
+                where("deleted_at", null)->
+                first();
 
             return ["data" => $getTicket];
         } catch (\Throwable $e) {
@@ -117,7 +121,11 @@ class TicketController extends Controller
     {
         try{
             $id = (int) $id;
-            $getTicket = Ticket::with("ticketAttachments")->where("id", $id)->where("deleted_at", null)->first();
+            $getTicket = Ticket::with("tenant")->
+                with("ticketAttachments")->
+                where("id", $id)->
+                where("deleted_at", null)->
+                first();
             if (is_null($getTicket)) throw new CustomException("Ticket tidak ditemukan", 404);
 
             return ["data" => $getTicket];
@@ -159,7 +167,11 @@ class TicketController extends Controller
             }
 
             DB::commit();
-            $getTicket = Ticket::with("ticketAttachments")->where("id", $id)->where("deleted_at", null)->first();
+            $getTicket = Ticket::with("tenant")->
+                with("ticketAttachments")->
+                where("id", $id)->
+                where("deleted_at", null)->
+                first();
 
             return ["data" => $getTicket];
         } catch (\Throwable $e) {

@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string("ticket_number");
             $table->string("reporter_name");
             $table->string("reporter_phone");
-            $table->string("reporter_company");
+            $table->unsignedInteger("tenant_id");
+            $table->foreign('tenant_id')->references('id')->on('tenants');
             $table->string("ticket_title");
             $table->text("ticket_body");
             $table->string("status");

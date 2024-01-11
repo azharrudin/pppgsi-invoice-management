@@ -26,7 +26,7 @@ class TicketSeeder extends Seeder
             Ticket::create([
                 "reporter_name" => $faker->name,
                 "reporter_phone" => "080000123{$dataIndex}",
-                "reporter_company" => $faker->company,
+                "tenant_id" => $count,
                 "ticket_title" => $ticketTitle[$dataIndex],
                 "ticket_body" => $faker->text,
                 "status" => $status[$dataIndex],

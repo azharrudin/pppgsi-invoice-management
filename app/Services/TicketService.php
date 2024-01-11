@@ -21,7 +21,7 @@ class TicketService{
         $rules = [
             "reporter_name" => ["bail", "required", "string"],
             "reporter_phone" => ["bail", "required", "string"],
-            "reporter_company" => ["bail", "required", "string"],
+            "tenant_id" => ["bail", "required", "numeric"],
             "ticket_title" => ["bail", "required", "string"],
             "ticket_body" => ["bail", "required", "string"],
             "status" => ["bail", "required", "string"],
@@ -38,6 +38,12 @@ class TicketService{
 
         $message = "";
         if ($validator->fails()) $message = implode(', ', $validator->errors()->all());
+
+        if($message == ""){
+            $getTenant = $this->CommonService->getDataById("App\Models\Tenant", $request->input("tenant_id"));
+
+            if (is_null($getTenant)) $message = "Tenant tidak ditemukan";
+        }
 
         return $message;
     }
