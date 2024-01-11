@@ -32,38 +32,7 @@ class LoginController extends Controller
 
             if ($records) {
                 $this->setUserSession($records);
-
-                // $urlMenu = env('APP_BO') . "/managementmenu";
-                // $recordsMenu = CallApiHelpers::getAPI($urlMenu);
-                // usort($recordsMenu['data'], function ($a, $b) {
-                //     return $a['order'] - $b['order'];
-                // });
-                // $sortedJson = json_encode($recordsMenu);
-                // Session::put('listMenu', $recordsMenu);
-
-                // $urlRole = env('APP_BO') . "/roles/get/".$records['data']['user']['role_id'];
-                // $recordsRole = CallApiHelpers::getAPI($urlRole);
-
-                // Session::put('SESSION_ROLE_NAME', $records['data']['user']['role_name']);
-                // Session::put('SESSION_ACCESS_KEY', $records['data']['access_token']);
-                // Session::put('SESSION_USER_ID', $records['data']['user']['id']);
-                // Session::put('SESSION_USER_NAME', $records['data']['user']['phone_number']);
-                // Session::put('SESSION_FULL_NAME', $records['data']['user']['name']);
-                // Session::put('SESSION_BRANCH_CODE', $records['data']['user']['kd_cbg']);
-                // Session::put('SESSION_BRANCH_NAME', $records['data']['user']['nm_cabang']);
-
-
-
-                //kebutuhan MDS
-                // session(['SESSION_ACCESS_KEY' => $access_token]);
-                // session(['SESSION_USER_ID' => $user_id]);
-                // session(['SESSION_USER_NAME' => $name]);
-                // session(['SESSION_FULL_NAME' => $full_name]);
-                // session(['SESSION_ROLE_NAME' => $role_name]);
-                // session(['SESSION_BRANCH_CODE' => $kode_cabang]);
-                //
                 echo json_encode(array("message" => "SUCCESS_LOGIN", "credentials" => $records['data']));
-                //return "SUCCESS_LOGIN";
             } else {
                 echo json_encode(array("message" => $records['message'], "error" => $records['status']));
             }

@@ -119,6 +119,9 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
   $(function() {
+    var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>`;
     $("form").submit(function() {
       var email = $("#email").val();
       var password = $("#password").val();
@@ -128,21 +131,20 @@ $configData = Helper::appClasses();
         type: $(this).attr("method"),
         dataType: 'JSON',
         beforeSend: function() {
-          // $("input").attr("disabled", true);
-          // $("#submit-login").html('<i class="fa fa-circle-o-notch fa-spin"></i> Login Proses ');
-          // // $("#submit-login").html('<span class="loader"></span> Proses');
-          // $("button").attr("disabled", true);
-        },
-        complete: function() {
-          // $("textarea").attr("disabled", false);
-          // $("button").attr("disabled", false);
+          Swal.fire({
+                title: '<h2>Loading...</h2>',
+                html: sweet_loader + '<h5>Please Wait</h5>',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            });
         },
         success: function(response) {
           console.log(response);
           if (response.message == "SUCCESS_LOGIN") {
             localStorage.setItem("ACCESS-TOKEN", response.credentials.access_token);
             Swal.fire({
-              title: 'Siip',
+              title: 'Success',
               text: 'Login berhasil, anda akan diarahkan ke dashboard',
               type: 'success',
               customClass: {
