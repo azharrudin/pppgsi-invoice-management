@@ -103,6 +103,7 @@ Route::group(['middleware' => 'cekauth'], function () {
             Route::get('/edit/{id}', [WorkOrderController::class, 'edit'])->name('pages-edit-tanda-terima');
             Route::get('/preview/{id}', [WorkOrderController::class, 'preview'])->name('pages-preview-tanda-terima');
             Route::get('/data-work', [WorkOrderController::class, 'datatable'])->name('data-work');
+            Route::get('/print/{id}', [WorkOrderController::class, 'print']);
         });
     });
 
