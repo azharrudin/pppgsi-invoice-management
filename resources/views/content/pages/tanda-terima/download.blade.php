@@ -78,7 +78,7 @@ return $hasil_rupiah;
         </div>
 
         <p style="margin: 0px;">Telah terima Pembayaran tunai/Cek/Giro</p>
-        <div class="row" style="width: 500px;">
+        <div class="row" style="width: 600px;">
             <table class="table mt-2" style="width:100%; border-collapse:separate; border-spacing: 0 3px;">
                 <tbody class="mt-2" style=" text-align: left;">
                     <tr>
@@ -95,10 +95,12 @@ return $hasil_rupiah;
                         <td>{{$data->bank->name}}</td>
                         <td>Alamat</td>
                         <td>:</td>
-                        <td>  {{ $data->tenant->company }} {{ $data->tenant->floor }} {{ $data->tenant->name }}</td>
+                        <td> {{ $data->tenant->company }} {{ $data->tenant->floor }} {{ $data->tenant->name }}</td>
                     </tr>
                     <tr>
-                        <td colspan="3">{{rupiah($data->grand_total)}}</td>
+                        <td>Jumlah</td>
+                        <td>:</td>
+                        <td>{{rupiah($data->grand_total)}}</td>
                         <td>Telepon</td>
                         <td>:</td>
                         <td>{{$data->tenant->phone}}</td>
