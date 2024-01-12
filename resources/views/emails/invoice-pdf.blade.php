@@ -20,12 +20,7 @@ return $hasil_rupiah;
     <style>
         body {
             font-size: 10pt;
-            /* width: 21cm;
-            min-height: 29.7cm;
-            margin: auto; */
         }
-
-
 
         .main-table,
         .main-table th,
@@ -35,6 +30,49 @@ return $hasil_rupiah;
 
         .main-table th {
             font-size: 12pt;
+        }
+
+        .container {
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+        .p-2 {
+            padding: 0.5rem !important;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .col-12 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .col-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+
+        .mt-2 {
+            margin-top: 0.5rem !important;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
         }
     </style>
 </head>
