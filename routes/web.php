@@ -35,7 +35,10 @@ use App\Http\Controllers\pages\WorkOrderController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+// tes
+Route::get('/tes', function () {
+    return view('desain_pdf.tes');
+});
 // Main Page Route
 Route::get('/page-2', [Page2::class, 'index'])->name('pages-page-2');
 
