@@ -32,7 +32,7 @@ $configData = Helper::appClasses();
                             </div>
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-bold">Nama Perusahaan</label>
-                                <input type="text" class="form-control w-75" name="reporter_company" id="reporter_company" placeholder="Nama Perusahaan" required />
+                                <select name="tenant_id" id="tenant_id" name="tenant" class="mb-3" required></select>
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                             <div class="mb-3">
@@ -134,6 +134,37 @@ $configData = Helper::appClasses();
                 // Logs wL2dvYWwgbW9yZ...
             };
             reader.readAsDataURL(file);
+        });
+
+        $("#tenant_id").select2({
+            placeholder: 'Select Tenant',
+            allowClear: true,
+            ajax: {
+                url: "{{ url('api/tenant/select') }}",
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        value: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+
         });
         var saveTicket = $('.create-ticket');
 

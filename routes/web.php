@@ -126,6 +126,7 @@ Route::group(['middleware' => 'cekauth'], function () {
             Route::get('/add', [MaterialRequestController::class, 'create'])->name('pages-create-tanda-terima');
             Route::get('/data-material-request', [MaterialRequestController::class, 'datatable'])->name('data-material-reques');
             Route::get('/preview', [MaterialRequestController::class, 'preview'])->name('pages-preview-material-request');
+            Route::get('/print/{id}', [MaterialRequestController::class, 'print']);
         });
 
         // Request Order

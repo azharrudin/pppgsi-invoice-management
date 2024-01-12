@@ -5,6 +5,7 @@ namespace App\Http\Controllers\pages;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use PDF;
 use DataTables;
 
 class MaterialRequestController extends Controller
@@ -117,5 +118,14 @@ class MaterialRequestController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function print($id){
+        $apiRequest = Http::get(env('BASE_URL_API') .'/api/work-order/'.$id);
+        $response = json_decode($apiRequest->getBody());
+        $data = $response->data;
+    	$pdf = PDF::loadview('content.pages.material-request.download',['data'=>$data]);
+    	return $pdf->stream('material-request.pdf');
+        // return view('content.pages.material-request.download',['data'=>$data]);
     }
 }

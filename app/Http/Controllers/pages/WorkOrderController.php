@@ -115,7 +115,8 @@ class WorkOrderController extends Controller
         $apiRequest = Http::get(env('BASE_URL_API') .'/api/work-order/'.$id);
         $response = json_decode($apiRequest->getBody());
         $data = $response->data;
-    	$pdf = PDF::loadview('content.pages.work-order.download',['data'=>$data]);
-    	return $pdf->stream('work-order.pdf');
+    	// $pdf = PDF::loadview('content.pages.work-order.download',['data'=>$data]);
+    	// return $pdf->stream('work-order.pdf');
+        return view('content.pages.work-order.download',['data'=>$data]);
     }
 }
