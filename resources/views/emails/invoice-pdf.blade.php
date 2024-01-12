@@ -18,10 +18,23 @@ return $hasil_rupiah;
 
     <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <style>
+        body {
+            font-size: 10pt;
+            /* width: 21cm;
+            min-height: 29.7cm;
+            margin: auto; */
+        }
+
+
+
         .main-table,
         .main-table th,
         .main-table td {
             border: 0.5px solid;
+        }
+
+        .main-table th {
+            font-size: 12pt;
         }
     </style>
 </head>
@@ -29,7 +42,7 @@ return $hasil_rupiah;
 <body>
     <div class="container" id="printContent">
         <header>
-            <img src="{{ public_path('assets/img/header.png') }}" alt="kop surat" width="100%">
+            <img src="https://pppgsi.com/assets/img/header.png" alt="kop surat" width="100%">
         </header>
 
         <div class="row mt-4">
@@ -137,17 +150,20 @@ return $hasil_rupiah;
             </div>
             <div style="clear: both;"></div>
         </div>
-        <div class="row mt-4 text-center">
+        <div class="row mt-4 text-center" style="font-size: 12pt;">
+            <center>
+                <p>
 
-            <p>
-
-                <b><strong>GRAHA SURVEYOR INDONESIA</strong>, Basement 2,
-                    Jl. Jenderal
-                    Gatot
-                    Subroto Kav. 56 Jakarta 12950 Indonesia
-                    Telephone: (021) 5265388, 5265393, 5265114 Fax: (021)
-                    5265239</b>
-            </p>
+                    <b><strong>GRAHA SURVEYOR INDONESIA</strong>, Basement
+                        2,
+                        Jl. Jenderal
+                        Gatot
+                        Subroto Kav. 56 Jakarta 12950 Indonesia
+                        Telephone: (021) 5265388, 5265393, 5265114 Fax:
+                        (021)
+                        5265239</b>
+                </p>
+            </center>
         </div>
     </div>
 

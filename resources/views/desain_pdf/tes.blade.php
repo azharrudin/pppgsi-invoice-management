@@ -11,10 +11,19 @@
 
     <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <style>
+        body {
+            font-size: 10pt;
+
+        }
+
         .main-table,
         .main-table th,
         .main-table td {
             border: 0.5px solid;
+        }
+
+        .main-table th {
+            font-size: 12pt;
         }
     </style>
 </head>
@@ -75,7 +84,15 @@
 
         <div class="row mt-2">
             <div class="col-6">
-                Rp. &emsp;&emsp;&emsp;&nbsp;&nbsp; <b>3.395.000,-</b>
+                <table>
+                    <tr>
+                        <td style="width: 100px;"> Rp.</td>
+                        <td>
+                            <h4>3.395.000,-</h4>
+                        </td>
+                    </tr>
+                </table>
+
             </div>
             <div class="col-6">
                 <table>
@@ -86,7 +103,7 @@
                 </table>
             </div>
             <div class="col-12 mt-2">
-                Terbilang &emsp; <b>Tiga juta tiga ratus sembilan puluh lima rupiah</b>
+                Terbilang &emsp; <h4>Tiga juta tiga ratus sembilan puluh lima rupiah</h4>
             </div>
         </div>
 
