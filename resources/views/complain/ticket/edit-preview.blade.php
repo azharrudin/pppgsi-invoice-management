@@ -131,7 +131,7 @@ $configData = Helper::appClasses();
 
     $(document).on('click', '#back', function(event) {
         event.preventDefault();
-        window.location.href = "/complain/edit-ticket/"+id
+        window.location.href = "{{url('complain/edit-ticket')}}/" + id
     });
 
 

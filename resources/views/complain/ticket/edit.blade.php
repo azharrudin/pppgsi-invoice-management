@@ -47,7 +47,7 @@ $configData = Helper::appClasses();
                             </div>
                             <div class="mb-3">
                                 <label for="formFile" class="form-label fw-bold">Upload Lampiran</label>
-                                <input class="form-control" type="file" name="attachment" id="attachment" placeholder="Pilih Berkas" alt="Pilih Berkas" multiple required>
+                                <input class="form-control" type="file" name="attachment" id="attachment" accept="image/png, image/gif, image/jpeg" placeholder="Pilih Berkas" alt="Pilih Berkas" multiple required>
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                         </div>
@@ -60,11 +60,8 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
-                            <span class="d-flex align-items-center justify-content-center text-nowrap">Kirim Invoice</span>
-                        </button>
+                        <button type="submit" id="save" class="btn btn-primary btn-label-secondary d-grid w-100 mb-2">Simpan</button>
                         <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
-                        <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
                         <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
                     </div>
                 </div>
@@ -115,6 +112,9 @@ $configData = Helper::appClasses();
             $("#ticket_body").val(dataLocal.ticket_body);
             getTenant(dataLocal.tenant_id)
             files = dataLocal.attachment;
+            if (files) {
+                $('#attachment').removeAttr("required");
+            }
         } else {
             getDataTicket(id);
         }
@@ -195,12 +195,20 @@ $configData = Helper::appClasses();
                         datas.status = "Wait a response"
 
                         $.ajax({
-                            url: baseUl + "api/ticket/" + id,
+                            url: baseUrl + "api/ticket/" + id,
                             type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
-
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: '<h2>Loading...</h2>',
+                                    html: sweet_loader + '<h5>Please Wait</h5>',
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false
+                                });
+                            },
                             success: function(response) {
                                 $('.indicator-progress').show();
                                 $('.indicator-label').hide();
@@ -270,7 +278,7 @@ $configData = Helper::appClasses();
                     let data = res.data;
                     console.log(data.ticket_attachments);
                     let attachments = data.ticket_attachments;
-                    for(let i = 0; i < attachments.length ; i++){
+                    for (let i = 0; i < attachments.length; i++) {
                         console.log(attachments[i].attachment);
                         files.push(attachments[i].attachment);
                     }
@@ -282,6 +290,10 @@ $configData = Helper::appClasses();
                     $("#ticket_title").val(data.ticket_title);
                     $("#ticket_body").val(data.ticket_body);
                     getTenant(data.tenant_id);
+
+                    if (files) {
+                        $('#attachment').removeAttr("required");
+                    }
 
                 },
                 error: function(errors) {

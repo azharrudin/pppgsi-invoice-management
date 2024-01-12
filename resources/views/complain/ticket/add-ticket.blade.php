@@ -47,7 +47,7 @@ $configData = Helper::appClasses();
                             </div>
                             <div class="mb-3">
                                 <label for="formFile" class="form-label fw-bold">Upload Lampiran</label>
-                                <input class="form-control" type="file" name="attachment" id="attachment" placeholder="Pilih Berkas" alt="Pilih Berkas" multiple required>
+                                <input class="form-control" type="file" name="attachment" id="attachment" accept="image/png, image/gif, image/jpeg" placeholder="Pilih Berkas" alt="Pilih Berkas" multiple required>
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                         </div>
@@ -192,10 +192,9 @@ $configData = Helper::appClasses();
 
                         datas.attachment = files;
                         datas.status = "Wait a response"
-                        console.log(files);
 
                         $.ajax({
-                            url: baseUrl + "api/ticket",
+                            url:  "{{env('BASE_URL_API')}}" + "/api/ticket",
                             type: "POST",
                             data: JSON.stringify(datas),
                             processData: false,
