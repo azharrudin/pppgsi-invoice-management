@@ -27,7 +27,7 @@
 
         <div class="row">
             <div class="col-12 d-flex justify-content-end">
-                <div style="border: 0.5px solid black; width:max-content; padding: 0 5px;">No. 00722</div>
+                <div style="border: 0.5px solid black; width:max-content; padding: 0 5px;">No. {{$data->receipt_number}}</div>
             </div>
         </div>
 
@@ -47,12 +47,12 @@
                     <tr>
                         <td>No. Cek/Giro</td>
                         <td>&ensp;:</td>
-                        <td></td>
+                        <td>{{$data->check_number}}</td>
                     </tr>
                     <tr>
                         <td>Bank</td>
                         <td>&ensp;:</td>
-                        <td></td>
+                        <td>{{$data->bank->name}}</td>
                     </tr>
                 </table>
             </div>
@@ -61,13 +61,12 @@
                     <tr>
                         <td>Nama</td>
                         <td>&ensp;:</td>
-                        <td>PT. ELV Engineering Indonesia</td>
+                        <td>{{$data->tenant->name}}</td>
                     </tr>
                     <tr>
                         <td>Alamat</td>
                         <td>&ensp;:</td>
-                        <td>Gd. Graha Surveyor Indonesia LL 12 J. Gatot Subroto Kar. 56
-                            Jakarta Selatan</td>
+                        <td>{{ $data->tenant->company }} {{ $data->tenant->floor }} {{ $data->tenant->name }}</td>
                     </tr>
                 </table>
             </div>
@@ -75,18 +74,18 @@
 
         <div class="row mt-2">
             <div class="col-6">
-                Rp. &emsp;&emsp;&emsp;&nbsp;&nbsp; <b>3.395.000,-</b>
+                Rp. &emsp;&emsp;&emsp;&nbsp;&nbsp; <b>{{rupiah($data->grand_total)}}</b>
             </div>
             <div class="col-6">
                 <table>
                     <tr>
                         <td>Telp. </td>
-                        <td>:</td>
+                        <td>:{{$data->tenant->phone}}</td>
                     </tr>
                 </table>
             </div>
             <div class="col-12 mt-2">
-                Terbilang &emsp; <b>Tiga juta tiga ratus sembilan puluh lima rupiah</b>
+                Terbilang &emsp; <b> {{$data->grand_total_spelled}}</b>
             </div>
         </div>
 
@@ -107,10 +106,10 @@
 
                 <div class="ttd" style="width: max-content; float: right;">
 
-                    <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta, 12 Januari 2024
-                        <br><br><br><br>
-                        <img src="" alt="">
-
+                    <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
+                        {{ $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' }}
+                        <br> <img src="{{ $data->signature_image }}" alt=""><br>
+                        {{$data->signature_name}}
                     </p>
 
                 </div>
