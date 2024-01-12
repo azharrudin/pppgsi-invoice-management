@@ -195,7 +195,7 @@ $configData = Helper::appClasses();
                         datas.status = "Wait a response"
 
                         $.ajax({
-                            url: baseUrl + "api/ticket/" + id,
+                            url:  "{{env('BASE_URL_API')}}" + "/api/ticket/" + id,
                             type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
