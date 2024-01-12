@@ -95,26 +95,29 @@ $configData = Helper::appClasses();
                                 <div class="repeater">
                                     <div class="" data-repeater-list="group-a">
                                         <div class="repeater-wrapper " data-repeater-item>
-                                            <div class="row mb-3">
-                                                <div class="col-4">
+                                            <div class="row mb-3 row-mg">
+                                                <div class="col-md-4">
                                                     <label for="note" class="form-label fw-medium">Jenis Masalah
                                                         Kerusakan</label>
                                                     <input type="text" class="form-control" id="category" name="category" placeholder="Jenis Masalah Kerusakan" required />
                                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-md-4">
                                                     <label for="note" class="form-label fw-medium">Lokasi</label>
                                                     <input type="text" class="form-control" id="location" name="location" placeholder="Lokasi" required />
                                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-md-3">
                                                     <label for="note" class="form-label fw-medium">Jumlah</label>
                                                     <input type="text" class="form-control qty" id="total" name="total" placeholder="Jumlah" required />
                                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                                 </div>
-                                                <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                                <div class="col-md-1  px-1-custom">
+                                                    <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -131,7 +134,7 @@ $configData = Helper::appClasses();
 
                                 <hr class="my-3">
                                 <div class="row  text-center mt-4">
-                                    <div class="col-4 signatures">
+                                    <div class="col-md-4 signatures">
                                         <div class="mb-3">
                                             <input type="text" class="form-control add" placeholder="KA. Unit Pelayanan" style="text-align:center;" id="type" name="type" required />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
@@ -152,7 +155,7 @@ $configData = Helper::appClasses();
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
-                                    <div class="col-4 signatures">
+                                    <div class="col-md-4 signatures">
                                         <div class="mb-3">
                                             <input type="text" class="form-control add" placeholder="KA. Unit Pelayanan" style="text-align:center;" id="type" name="type" required />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
@@ -173,7 +176,7 @@ $configData = Helper::appClasses();
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
-                                    <div class="col-4 signatures">
+                                    <div class="col-md-4 signatures">
                                         <div class="mb-3">
                                             <input type="text" class="form-control add" placeholder="KA. Unit Pelayanan" style="text-align:center;" id="type" name="type" required />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
@@ -207,10 +210,6 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        {{-- <button class="btn btn-primary d-grid w-100 mb-2 btn-save" data-bs-toggle="offcanvas"
-                            data-bs-target="#sendInvoiceOffcanvas">
-                            <span class="d-flex align-items-center justify-content-center text-nowrap">Simpan</span>
-                        </button> --}}
                         <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
                         <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
                         <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
@@ -220,51 +219,6 @@ $configData = Helper::appClasses();
             <!-- /Invoice Actions -->
         </div>
     </form>
-
-
-    <!-- Offcanvas -->
-    <!-- Send Invoice Sidebar -->
-    <div class="offcanvas offcanvas-end" id="sendInvoiceOffcanvas" aria-hidden="true">
-        <div class="offcanvas-header my-1">
-            <h5 class="offcanvas-title">Send Invoice</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body pt-0 flex-grow-1">
-            <form>
-                <div class="mb-3">
-                    <label for="invoice-from" class="form-label">From</label>
-                    <input type="text" class="form-control" id="invoice-from" value="shelbyComapny@email.com" placeholder="company@email.com" />
-                </div>
-                <div class="mb-3">
-                    <label for="invoice-to" class="form-label">To</label>
-                    <input type="text" class="form-control" id="invoice-to" value="qConsolidated@email.com" placeholder="company@email.com" />
-                </div>
-                <div class="mb-3">
-                    <label for="invoice-subject" class="form-label">Subject</label>
-                    <input type="text" class="form-control" id="invoice-subject" value="Invoice of purchased Admin Templates" placeholder="Invoice regarding goods" />
-                </div>
-                <div class="mb-3">
-                    <label for="invoice-message" class="form-label">Message</label>
-                    <textarea class="form-control" name="invoice-message" id="invoice-message" cols="3" rows="8">Dear Queen Consolidated,
-          Thank you for your business, always a pleasure to work with you!
-          We have generated a new invoice in the amount of $95.59
-          We would appreciate payment of this invoice by 05/11/2021</textarea>
-                </div>
-                <div class="mb-4">
-                    <span class="badge bg-label-primary">
-                        <i class="ti ti-link ti-xs"></i>
-                        <span class="align-middle">Invoice Attached</span>
-                    </span>
-                </div>
-                <div class="mb-3 d-flex flex-wrap">
-                    <button type="button" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">Send</button>
-                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <!-- /Send Invoice Sidebar -->
-    <!-- /Offcanvas -->
 </div>
 <!-- / Content -->
 
