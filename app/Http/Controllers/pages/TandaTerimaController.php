@@ -96,16 +96,8 @@ class TandaTerimaController extends Controller
     public function print($id){
         $apiRequest = Http::get(env('BASE_URL_API') .'/api/receipt/'.$id);
         $response = json_decode($apiRequest->getBody());
-        // dd($response);
         $data = $response->data;
-        $dataPdf = SnappyPdf::loadView('content.pages.tanda-terima.download',['data'=>$data])->setOption('enable-javascript', true);
-    	// $pdf = SnappyPdf::loadView('content.pages.tanda-terima.download',$data)->setOption('enable-javascript', true);
-        $filePath = base_path("public/pdf/". 'a.pdf');
-        $dataPdf->save($filePath, true);
-        return  [
-            "message" => "Email berhasil dikirim"
-        ];
-    	// return $pdf->stream('tanda-terima.pdf');
-        // return view('content.pages.tanda-terima.download', ['data'=>$data]);
+    	$pdf = PDF::loadview('content.pages.tanda-terima.download',['data'=>$data]);
+    	return $pdf->stream('invoice.pdf');
     }
 }

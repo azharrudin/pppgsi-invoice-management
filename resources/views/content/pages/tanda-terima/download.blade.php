@@ -12,12 +12,13 @@ return $hasil_rupiah;
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Surat Pesan</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+    <link href="{{ public_path('assets/css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    {{-- <script src="{{ public_path('assets/js/html2pdf.bundle.js') }}"></script> --}}
+
 
     <style>
         body {
-            font-size: 12px;
+            font-size: 15px;
 
         }
 
@@ -65,7 +66,7 @@ return $hasil_rupiah;
 <body>
     <div class="container" id="printContent">
         <header>
-            <img src="https://pppgsi.com/assets/img/header.png" alt="kop surat" width="100%">
+            <img src="{{ public_path('assets/img/header.png') }}" alt="kop surat" width="100%">
         </header>
 
         <div class="row" style="float: right;">
@@ -155,33 +156,6 @@ return $hasil_rupiah;
             <div style="clear: both;"></div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-    </script>
-    <script>
-        function downloadPDF(elementId) {
-            var element = document.getElementById(elementId);
-
-            var options = {
-                margin: 0,
-                filename: 'surat.pdf',
-                image: {
-                    type: 'jpeg',
-                    quality: 2
-                },
-                html2canvas: {
-                    scale: 3
-                },
-                jsPDF: {
-                    unit: 'mm',
-                    format: 'a4',
-                    orientation: 'portrait'
-                }
-            };
-
-            html2pdf(element, options);
-        }
-    </script>
 </body>
 
 </html>

@@ -236,17 +236,7 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <!-- <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
-                            <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
-                        </button> -->
-                        <!-- <a type="button" class="btn btn-label-secondary d-grid w-100 mb-2" style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
-                        <a href="#" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Download</a>
-                        <a href="#" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Print</a> -->
                         <button  type="button" id="back" class="btn btn-label-secondary d-grid w-100 mb-2">Kembali</button>
-                        <!-- <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button> -->
-                        <!-- <button class="btn btn-primary d-grid w-100 mb-2">
-                            <span class="d-flex align-items-center justify-content-center text-nowrap">Add Payment</span>
-                        </button> -->
                     </div>
                 </div>
             </div>

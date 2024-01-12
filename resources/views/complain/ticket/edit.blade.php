@@ -22,32 +22,32 @@ $configData = Helper::appClasses();
                         <div class="col-md-12 mb-md-0 mb-3">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-bold">Nama Pelapor</label>
-                                <input type="text" class="form-control w-75" name="reporter_name" id="reporter_name" placeholder="Nama Pelapor" required />
+                                <input type="text" class="form-control" name="reporter_name" id="reporter_name" placeholder="Nama Pelapor" required />
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-bold">Nomor Telepon</label>
-                                <input type="text" class="form-control w-75" name="reporter_phone" id="reporter_phone" placeholder="Nomor Telepon" required />
+                                <input type="text" class="form-control" name="reporter_phone" id="reporter_phone" placeholder="Nomor Telepon" required />
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-bold">Nama Perusahaan</label>
-                                <select name="tenant_id" id="tenant_id" name="tenant" class="mb-3" required></select>
+                                <select name="tenant_id" id="tenant_id" class="mb-3 form-control" required></select>
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-bold">Judul Laporan</label>
-                                <input type="text" class="form-control w-75" name="ticket_title" id="ticket_title" placeholder="Judul Laporan" required />
+                                <input type="text" class="form-control" name="ticket_title" id="ticket_title" placeholder="Judul Laporan" required />
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-bold">Isi laporan</label>
-                                <textarea class="form-control w-75" rows="11" id="ticket_body" name="ticket_body" placeholder="Isi laporan" required></textarea>
+                                <textarea class="form-control" rows="11" id="ticket_body" name="ticket_body" placeholder="Isi laporan" required></textarea>
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                             <div class="mb-3">
                                 <label for="formFile" class="form-label fw-bold">Upload Lampiran</label>
-                                <input class="form-control w-75" type="file" name="attachment" id="attachment" placeholder="Pilih Berkas" alt="Pilih Berkas" multiple required>
+                                <input class="form-control" type="file" name="attachment" id="attachment" placeholder="Pilih Berkas" alt="Pilih Berkas" multiple required>
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                         </div>
@@ -113,6 +113,7 @@ $configData = Helper::appClasses();
             $("#reporter_company").val(dataLocal.reporter_company);
             $("#ticket_title").val(dataLocal.ticket_title);
             $("#ticket_body").val(dataLocal.ticket_body);
+            getTenant(dataLocal.tenant_id)
             files = dataLocal.attachment;
         } else {
             getDataTicket(id);
@@ -194,7 +195,7 @@ $configData = Helper::appClasses();
                         datas.status = "Wait a response"
 
                         $.ajax({
-                            url: "{{env('BASE_URL_API')}}" + "/api/ticket/" + id,
+                            url: baseUl + "api/ticket/" + id,
                             type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -250,6 +251,7 @@ $configData = Helper::appClasses();
             datas.status = "Wait a response"
 
             localStorage.setItem("edit-ticket", JSON.stringify(datas));
+            console.log(datas);
             window.location.href = "/complain/preview-edit-ticket/" + id
         });
 
@@ -261,20 +263,47 @@ $configData = Helper::appClasses();
 
         function getDataTicket(id) {
             $.ajax({
-                url: "{{env('BASE_URL_API')}}" + "/api/ticket/" + id,
+                url: baseUrl + "api/ticket/" + id,
                 type: "GET",
                 dataType: "json",
                 success: function(res) {
                     let data = res.data;
-                    console.log(data);
+                    console.log(data.ticket_attachments);
+                    let attachments = data.ticket_attachments;
+                    for(let i = 0; i < attachments.length ; i++){
+                        console.log(attachments[i].attachment);
+                        files.push(attachments[i].attachment);
+                    }
+
+                    console.log(files);
                     $("#reporter_name").val(data.reporter_name);
                     $("#reporter_phone").val(data.reporter_phone);
                     $("#reporter_company").val(data.reporter_company);
                     $("#ticket_title").val(data.ticket_title);
                     $("#ticket_body").val(data.ticket_body);
+                    getTenant(data.tenant_id);
+
                 },
                 error: function(errors) {
                     console.log(errors);
+                }
+            });
+        }
+
+        function getTenant(id) {
+            $.ajax({
+                url: "{{url('api/tenant')}}/" + id,
+                type: "GET",
+                success: function(response) {
+                    console.log(response);
+                    let data = response.data;
+
+                    let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
+                    $('#tenant_id').prepend(tem);
+
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
                 }
             });
         }

@@ -277,7 +277,7 @@ $configData = Helper::appClasses();
     let data = JSON.parse(localStorage.getItem("invoice"));
     $(document).ready(function() {
         $.ajax({
-            url: baseUrl + "api/invoice/nomor",
+            url: "{{env('BASE_URL_API')}}"  + "/api/invoice/nomor",
             type: "get",
             contentType: "application/json; charset=utf-8",
             dataType: "json",

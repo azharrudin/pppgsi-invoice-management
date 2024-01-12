@@ -14,7 +14,7 @@ class InvoiceController extends Controller
     {
         return view('invoice.list-invoice');
     }
-
+    
     public function add()
     {
         return view('invoice.add');
@@ -55,10 +55,10 @@ class InvoiceController extends Controller
             // $orderBy = $request->columns[$request->order[0]['column']]['data']; harusnya kodenya ini, tapi di harcode dulu sampai diperbaiki apinya.
             $orderBy = 'id';
         }
-        if ($request->page == null) {
+        if($request->page == null){
             $request->page = 1;
         }
-        $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice', [
+        $apiRequest = Http::get(env('BASE_URL_API') .'/api/invoice', [
             'per_page' => $request->length,
             'page' => $request->page,
             'order' => 'id',
@@ -67,7 +67,7 @@ class InvoiceController extends Controller
         ]);
         $response = json_decode($apiRequest->getBody());
         $data = [];
-        if ($response->data) {
+        if($response->data){
             foreach ($response->data as $key => $value) {
                 $data[$key] = $value;
                 $data[$key]->tenant_name = $value->tenant->name;
@@ -77,6 +77,7 @@ class InvoiceController extends Controller
             ->setFilteredRecords($response->size)
             ->setTotalRecords($response->size)
             ->make(true);
+        
     }
 
     public function edit(string $id)
@@ -88,13 +89,12 @@ class InvoiceController extends Controller
     {
         return view('invoice.show', compact('id'));
     }
-
-    public function print($id)
-    {
-        $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice/' . $id);
+    
+    public function print($id){
+        $apiRequest = Http::get(env('BASE_URL_API') .'/api/invoice/'.$id);
         $response = json_decode($apiRequest->getBody());
         $data = $response->data;
-        $pdf = PDF::loadview('invoice.download', ['data' => $data]);
-        return $pdf->stream('invoice.pdf');
+    	$pdf = PDF::loadView('invoice.download',['data'=>$data])->setPaper('a4');
+    	return $pdf->stream('invoice.pdf');
     }
 }

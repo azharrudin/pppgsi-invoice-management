@@ -44,13 +44,13 @@ $configData = Helper::appClasses();
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td style="width: 20%;">
-                                    <label for="salesperson" class="form-label fw-bold fs-5">Nama Perusahaan</label>
+                                    <label for="salesperson" class="form-label fw-bold fs-5 ">Nama Perusahaan</label>
                                 </td>
                                 <td style="width: 5%;" class="mx-auto">
                                     <div class="">:</div>
                                 </td>
                                 <td style="width: 75%;">
-                                    <div id="reporter_company" class="fw-bold fs-5"></div>
+                                    <div id="tenant_id" class="fw-bold fs-5"></div>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
@@ -132,7 +132,7 @@ $configData = Helper::appClasses();
 
     let data = JSON.parse(localStorage.getItem("ticket"));
     $(document).ready(function() {
-       load(data);
+        load(data);
 
     });
 
@@ -150,6 +150,7 @@ $configData = Helper::appClasses();
         $("#ticket_title").text(data.ticket_title);
         $("#ticket_body").text(data.ticket_body);
         getImage(data.attachment);
+        getTenant();
         Swal.close();
     }
 
@@ -207,6 +208,23 @@ $configData = Helper::appClasses();
             temp += `<img class=" my-2 object-fit-cover" style="width: 250px; height: 250px;" src="${images[i]}" alt="">`
         }
         $('.gallery').append(temp);
+    }
+
+    function getTenant() {
+        let idTenant = data.tenant_id;
+        $.ajax({
+            url: "{{url('api/tenant')}}/" + idTenant,
+            type: "GET",
+            success: function(response) {
+                console.log(response);
+                let data = response.data.name;
+                $('#tenant_id').text(data);
+
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
     }
 </script>
 @endsection

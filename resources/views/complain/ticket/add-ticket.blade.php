@@ -32,7 +32,7 @@ $configData = Helper::appClasses();
                             </div>
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-bold">Nama Perusahaan</label>
-                                <select name="tenant_id" id="tenant_id" class="mb-3" required></select>
+                                <select name="tenant_id" id="tenant_id" class="mb-3 form-control" required></select>
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                             <div class="mb-3">
@@ -111,6 +111,7 @@ $configData = Helper::appClasses();
             $("#ticket_title").val(dataLocal.ticket_title);
             $("#ticket_body").val(dataLocal.ticket_body);
             files = dataLocal.attachment;
+            getTenant();
             if (files) {
                 $('#attachment').removeAttr("required");
             }
@@ -164,6 +165,8 @@ $configData = Helper::appClasses();
             }
 
         });
+
+
         var saveTicket = $('.create-ticket');
 
         Array.prototype.slice.call(saveTicket).forEach(function(form) {
@@ -192,7 +195,7 @@ $configData = Helper::appClasses();
                         console.log(files);
 
                         $.ajax({
-                            url: "{{env('BASE_URL_API')}}" + "/api/ticket",
+                            url: baseUrl + "api/ticket",
                             type: "POST",
                             data: JSON.stringify(datas),
                             processData: false,
@@ -266,5 +269,25 @@ $configData = Helper::appClasses();
             window.location.href = "/complain/list-ticket"
         });
     });
+
+
+    function getTenant() {
+        let idTenant = dataLocal.tenant_id;
+        $.ajax({
+            url: "{{url('api/tenant')}}/" + idTenant,
+            type: "GET",
+            success: function(response) {
+                console.log(response);
+                let data = response.data;
+
+                let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
+                $('#tenant_id').prepend(tem);
+
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
 </script>
 @endsection

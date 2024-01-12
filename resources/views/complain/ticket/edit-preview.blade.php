@@ -43,7 +43,7 @@ $configData = Helper::appClasses();
                             <span>:</span>
                         </div>
                         <div class="col-8 fw-bold fs-5">
-                            <div id="reporter_company"></div>
+                            <div id="tenant_id" class="fw-bold fs-5"></div>
                         </div>
                     </div>
                     <div class="row px-3 d-flex align-items-center mb-3">
@@ -87,12 +87,7 @@ $configData = Helper::appClasses();
         <div class="col-lg-3 col-12 invoice-actions">
             <div class="card mb-4">
                 <div class="card-body">
-                    <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
-                        <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
-                    </button>
-                    <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
-                    <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
-                    <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                    <button type="button" id="back" class="btn btn-label-secondary d-grid w-100 mb-2">Kembali</button>
                 </div>
             </div>
         </div>
@@ -131,8 +126,13 @@ $configData = Helper::appClasses();
         $("#ticket_title").text(data.ticket_title);
         $("#ticket_body").text(data.ticket_body);
         getImage(data.attachment);
+        getTenant(data.tenant_id);
     });
 
+    $(document).on('click', '#back', function(event) {
+        event.preventDefault();
+        window.location.href = "/complain/edit-ticket/"+id
+    });
 
 
     $(document).on('click', '#batal', function(event) {
@@ -190,6 +190,22 @@ $configData = Helper::appClasses();
             temp += `<img class="mx-2 my-2 object-fit-cover" style="width: 250px; height: 250px;" src="${images[i]}" alt="">`
         }
         $('.gallery').append(temp);
+    }
+
+    function getTenant(id) {
+        $.ajax({
+            url: "{{url('api/tenant')}}/" + id,
+            type: "GET",
+            success: function(response) {
+                console.log(response);
+                let data = response.data.name;
+                $('#tenant_id').text(data);
+
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
     }
 </script>
 @endsection
