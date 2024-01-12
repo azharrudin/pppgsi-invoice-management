@@ -41,6 +41,11 @@ class Tenant extends Model
         return $this->hasMany(Receipt::class, "tenant_id");
     }
 
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class, "tenant_id");
+    }
+
     public function purchaseOrder(): HasOne
     {
         return $this->hasOne(PurchaseOrder::class, "tenant_id");

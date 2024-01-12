@@ -40,7 +40,7 @@ class MailController extends Controller
             $dataId = $request->input("data_id");
             $dataType = strtolower($request->input("data_type"));
 
-            $validDataType = ["invoice"];
+            $validDataType = ["invoice", "receipt"];
             if(!in_array($dataType, $validDataType)) throw new CustomException("Data type tidak ditemukan");
 
             $getData = [];
@@ -56,8 +56,17 @@ class MailController extends Controller
                     where("deleted_at", null)->first();
 
                 $viewName = "emails.invoice-pdf";
+            } else if($dataType == "receipt"){
+                $getData = Receipt::with("invoice")->
+                    with("tenant")->
+                    with("bank")->
+                    where("id", $dataId)->
+                    where("deleted_at", null)->first();
+
+                $viewName = "emails.receipt-pdf";
             }
 
+            if (is_null($getData)) throw new CustomException("Data dengan id ini tidak ditemukan");
             $dataJson = json_decode( json_encode($getData) );
 
             $recipient = $dataJson->tenant;
