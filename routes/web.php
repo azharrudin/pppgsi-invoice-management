@@ -66,10 +66,10 @@ Route::group(['middleware' => 'cekauth'], function () {
 
         Route::prefix('tanda-terima')->group(function () {
             Route::get('/', [TandaTerimaController::class, 'index'])->name('pages-list-tanda-terima');
-            Route::get('/add', [TandaTerimaController::class, 'create']);
-            Route::get('/preview', [TandaTerimaController::class, 'show']);
-            Route::get('/edit/{id}', [TandaTerimaController::class, 'edit']);
-            Route::get('/show/{id}', [TandaTerimaController::class, 'preview'])->name('pages-preview-tanda-terima');
+            Route::get('/add', [TandaTerimaController::class, 'create'])->name('pages-list-tanda-terima');
+            Route::get('/preview', [TandaTerimaController::class, 'show'])->name('pages-list-tanda-terima');
+            Route::get('/edit/{id}', [TandaTerimaController::class, 'edit'])->name('pages-list-tanda-terima');
+            Route::get('/show/{id}', [TandaTerimaController::class, 'preview'])->name('pages-list-tanda-terima');
             Route::get('/data-tanda-terima', [TandaTerimaController::class, 'datatable'])->name('data-tanda-terima');
             Route::get('/print/{id}', [TandaTerimaController::class, 'print']);
         });
@@ -80,12 +80,12 @@ Route::group(['middleware' => 'cekauth'], function () {
         // Ticket
         Route::prefix('/')->group(function () {
             Route::get('/list-ticket', [TicketListController::class, 'index'])->name('pages-list-ticket');
-            Route::get('/add-ticket', [TicketListController::class, 'add'])->name('pages-add-ticket');
-            Route::get('/preview-ticket', [TicketListController::class, 'preview'])->name('pages-preview-ticket');
+            Route::get('/add-ticket', [TicketListController::class, 'add'])->name('pages-list-ticket');
+            Route::get('/preview-ticket', [TicketListController::class, 'preview'])->name('pages-list-ticket');
             Route::get('/data-ticket', [TicketListController::class, 'datatable'])->name('data-ticket');
-            Route::get('/show-ticket/{id}', [TicketListController::class, 'show'])->name('pages-show-ticket');
-            Route::get('/edit-ticket/{id}', [TicketListController::class, 'edit'])->name('pages-edit-ticket');
-            Route::get('/preview-edit-ticket/{id}', [TicketListController::class, 'editPreview'])->name('pages-edit-preview-ticket');
+            Route::get('/show-ticket/{id}', [TicketListController::class, 'show'])->name('pages-list-ticket');
+            Route::get('/edit-ticket/{id}', [TicketListController::class, 'edit'])->name('pages-list-ticket');
+            Route::get('/preview-edit-ticket/{id}', [TicketListController::class, 'editPreview'])->name('pages-edit-preview-ticket')->name('pages-list-ticket');
         });
 
         // Laporan Kerusakan
