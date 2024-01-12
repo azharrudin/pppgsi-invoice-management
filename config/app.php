@@ -188,7 +188,7 @@ return [
   'aliases' => Facade::defaultAliases()->merge([
     // 'Example' => App\Facades\Example::class,
     'Helper' => App\Helpers\Helpers::class,
-    'PDF' => Barryvdh\DomPDF\Facade::class,
+    // 'PDF' => Barryvdh\DomPDF\Facade::class,
   ])->toArray(),
   'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
   'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
