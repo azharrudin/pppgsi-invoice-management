@@ -29,7 +29,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-5">
                                 <span class="fs-4 d-block text-center mx-auto"><b>LAPORAN KERUSAKAN</b></span>
                                 <span class="d-block text-center mx-auto">Nomor Lk :</span>
-                                <input type="text" class="form-control add w-px-250 mx-auto" id="damage_report_number" name="damage_report_number" placeholder="Nomor LK" required />
+                                <input type="text" class="form-control add w-px-250 mx-auto" id="damage_report_number" placeholder="Nomor LK" required />
                                 <div class="invalid-feedback mx-auto w-px-250">Tidak boleh kosong</div>
                             </div>
                         </div>
@@ -90,43 +90,17 @@ $configData = Helper::appClasses();
                             </div>
                         </div>
 
-                        <div class="py-3 px-3">
+                        <div class="py-3">
                             <div class="card academy-content shadow-none border p-3">
-                                <div class="repeater">
-                                    <div class="" data-repeater-list="group-a">
-                                        <div class="repeater-wrapper " data-repeater-item>
-                                            <div class="row mb-3 row-mg">
-                                                <div class="col-md-4">
-                                                    <label for="note" class="form-label fw-medium">Jenis Masalah
-                                                        Kerusakan</label>
-                                                    <input type="text" class="form-control" id="category" name="category" placeholder="Jenis Masalah Kerusakan" required />
-                                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="note" class="form-label fw-medium">Lokasi</label>
-                                                    <input type="text" class="form-control" id="location" name="location" placeholder="Lokasi" required />
-                                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label for="note" class="form-label fw-medium">Jumlah</label>
-                                                    <input type="text" class="form-control qty" id="total" name="total" placeholder="Jumlah" required />
-                                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                                </div>
-                                                <div class="col-md-1  px-1-custom">
-                                                    <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                </div>
+                                <div class="repeater px-3">
+                                    <div class="" id="details">
 
-                                            </div>
-                                        </div>
                                     </div>
 
-
-
                                     <div class="row pb-4">
-                                        <div class="col-12">
-                                            <button type="button" class="btn btn-primary waves-effect waves-light" data-repeater-create>Tambah Baris</button>
+                                        <div class="col-md-3 px-3">
+                                            <button type="button" class="btn btn-primary waves-effect waves-light w-px-150 btn-add-row-mg">Tambah
+                                                Baris</button>
                                         </div>
                                     </div>
                                 </div>
@@ -211,7 +185,7 @@ $configData = Helper::appClasses();
                 <div class="card mb-4">
                     <div class="card-body">
                         <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
-                        <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
+                        <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
                         <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
                     </div>
                 </div>
@@ -236,35 +210,36 @@ $configData = Helper::appClasses();
 
 
 <script>
-    $(document).ready(function() {
-        $('.repeater').repeater({
-
-        })
-
-        var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+    "use strict";
+    let dataLocal = JSON.parse(localStorage.getItem("laporan-kerusakan"));
+    var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
-
+    $(document).ready(function() {
+        $.ajax({
+            url: baseUrl + "api/damage-report/nomor",
+            type: "get",
+            contentType: "application/json; charset=utf-8",
+            success: function(response) {
+                console.log(response);
+                $('#damage_report_number').val(response);
+            },
+            error: function(errors) {
+                console.log(errors.message);
+            }
+        });
         // Date
         $('.date').flatpickr({
-            dateFormat: 'd-m-Y'
+            dateFormat: 'Y-m-d'
         });
 
-        // Fungsi untuk mengambil value dari setiap baris
-        function getRepeaterValues() {
-            var values = [];
-
-            $('.repeater-wrapper').each(function() {
-                var rowValues = {
-                    category: $(this).find('#category').val(),
-                    location: $(this).find('#location').val(),
-                    total: parseInt($(this).find('#total').val()) || 0
-                };
-
-                values.push(rowValues);
+        const flatPickrEL = $(".date");
+        if (flatPickrEL.length) {
+            flatPickrEL.flatpickr({
+                allowInput: true,
+                monthSelectorType: "static",
+                dateFormat: 'Y-m-d'
             });
-
-            return values;
         }
 
         // Mengambil value tanda tangan
@@ -301,6 +276,8 @@ $configData = Helper::appClasses();
                 });
             }
         });
+
+        getDetails();
 
         let ttdFile3 = null;
         const myDropzone3 = new Dropzone('#dropzone-3', {
@@ -341,7 +318,6 @@ $configData = Helper::appClasses();
                         event.preventDefault();
                         event.stopPropagation();
 
-                        let damageReportNumber = $("#damage_report_number").val();
                         let ticketNumber = $(".select-ticket").val();
                         let receiptDate = $("#damage_report_date").val();
                         let actionDate = $("#action_plan_date").val();
@@ -361,30 +337,28 @@ $configData = Helper::appClasses();
                             },
                             buttonsStyling: false
                         });
+
+                        var damage_report_date = $("#damage_report_date").val();
+                        var action_plan_date = $("#action_plan_date").val();
                         let ticket = $('.select-ticket').val();
-                        let datas = {}
-                        let signatures = []
+                        let datas = {};
+                        let signatures = [];
+                        let detail = [];
 
-                        $('#addLaporanKerusakan').find('.add').each(function() {
-                            var inputId = $(this).attr('id');
-                            var inputValue = $("#" + inputId).val();
-
-                            if (inputId === 'grand_total' || inputId === 'paid' ||
-                                inputId ===
-                                'remaining') {
-                                datas[$("#" + inputId).attr("name")] = parseInt(inputValue,
-                                    10);
-                            } else if (inputId === 'damage_report_date' || inputId ===
-                                'action_plan_date') {
-                                datas[$("#" + inputId).attr("name")] = moment(inputValue,
-                                        'D-M-YYYY')
-                                    .format('YYYY-MM-DD');
-                            } else {
-                                datas[$("#" + inputId).attr("name")] = inputValue;
+                        $('.row-input').each(function(index) {
+                            var input_name = $(this).attr('name');
+                            var input_value = $(this).val();
+                            var input_index = Math.floor(index / 3); // Membagi setiap 5 input menjadi satu objek pada array
+                            if (index % 3 == 0) {
+                                detail[input_index] = {
+                                    category: input_value
+                                };
+                            } else if (index % 3 == 1) {
+                                detail[input_index].location = input_value;
+                            } else if (index % 3 == 2) {
+                                detail[input_index].total = parseInt(input_value);
                             }
                         });
-
-                        datas.details = getRepeaterValues();
 
                         $('.signatures').each(function(index) {
                             let signature = {};
@@ -392,15 +366,7 @@ $configData = Helper::appClasses();
                             $(this).find('.form-control').each(function() {
                                 var inputId = $(this).attr('id');
                                 var inputValue = $("#" + inputId).val();
-
-                                if (inputId.startsWith('date')) {
-                                    signature[$("#" + inputId).attr("name")] =
-                                        moment(inputValue, 'D-M-YYYY')
-                                        .format('YYYY-MM-DD');
-                                } else {
-                                    signature[$("#" + inputId).attr("name")] =
-                                        inputValue;
-                                }
+                                signature[$("#" + inputId).attr("name")] = inputValue;
                             });
 
                             if (ttdFile1 && index === 0) {
@@ -418,7 +384,6 @@ $configData = Helper::appClasses();
                             signatures.push(signature);
                         });
 
-                        var allValues = getRepeaterValues();
 
                         let scope = $("#scope").val().toString();
                         let classification = $("#classification").val().toString();
@@ -427,7 +392,11 @@ $configData = Helper::appClasses();
                         datas.signatures = signatures;
                         datas.status = "Terbuat";
                         datas.scope = scope;
+                        datas.details = detail;
                         datas.classification = classification;
+                        datas.action_plan_date = action_plan_date;
+                        datas.damage_report_date = damage_report_date;
+                        console.log(datas);
 
                         $.ajax({
                             url: baseUrl + "api/damage-report/",
@@ -448,9 +417,12 @@ $configData = Helper::appClasses();
                                         confirmButton: 'btn btn-primary'
                                     },
                                     buttonsStyling: false
-                                })
+                                }).then(function() {
+                                    localStorage.removeItem('damage-report');
+                                    window.location.href = "/complain/laporan-kerusakan"
+                                });
 
-                                window.location.href = "/complain/laporan-kerusakan"
+                                // window.location.href = "/complain/laporan-kerusakan"
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
@@ -476,28 +448,26 @@ $configData = Helper::appClasses();
         $(".btn-preview").on('click', function() {
             let ticket = $('.select-ticket').val();
             let datas = {}
-            let signatures = []
+            let signatures = [];
+            var detail = [];
 
-            $('#addLaporanKerusakan').find('.add').each(function() {
-                var inputId = $(this).attr('id');
-                var inputValue = $("#" + inputId).val();
-
-                if (inputId === 'grand_total' || inputId === 'paid' ||
-                    inputId ===
-                    'remaining') {
-                    datas[$("#" + inputId).attr("name")] = parseInt(inputValue,
-                        10);
-                } else if (inputId === 'damage_report_date' || inputId ===
-                    'action_plan_date') {
-                    datas[$("#" + inputId).attr("name")] = moment(inputValue,
-                            'D-M-YYYY')
-                        .format('YYYY-MM-DD');
-                } else {
-                    datas[$("#" + inputId).attr("name")] = inputValue;
+            var damage_report_date = $("#damage_report_date").val();
+            var action_plan_date = $("#action_plan_date").val();
+            $('.row-input').each(function(index) {
+                var input_name = $(this).attr('name');
+                var input_value = $(this).val();
+                var input_index = Math.floor(index / 3); // Membagi setiap 5 input menjadi satu objek pada array
+                if (index % 3 == 0) {
+                    detail[input_index] = {
+                        category: input_value
+                    };
+                } else if (index % 3 == 1) {
+                    detail[input_index].location = input_value;
+                } else if (index % 3 == 2) {
+                    detail[input_index].total = parseInt(input_value);
                 }
             });
 
-            datas.details = getRepeaterValues();
 
             $('.signatures').each(function(index) {
                 let signature = {};
@@ -505,15 +475,7 @@ $configData = Helper::appClasses();
                 $(this).find('.form-control').each(function() {
                     var inputId = $(this).attr('id');
                     var inputValue = $("#" + inputId).val();
-
-                    if (inputId.startsWith('date')) {
-                        signature[$("#" + inputId).attr("name")] =
-                            moment(inputValue, 'D-M-YYYY')
-                            .format('YYYY-MM-DD');
-                    } else {
-                        signature[$("#" + inputId).attr("name")] =
-                            inputValue;
-                    }
+                    signature[$("#" + inputId).attr("name")] = inputValue;
                 });
 
                 if (ttdFile1 && index === 0) {
@@ -531,7 +493,6 @@ $configData = Helper::appClasses();
                 signatures.push(signature);
             });
 
-            var allValues = getRepeaterValues();
             let scope = $("#scope").val().toString();
             let classification = $("#classification").val().toString();
 
@@ -540,6 +501,10 @@ $configData = Helper::appClasses();
             datas.status = "Terbuat";
             datas.scope = scope;
             datas.classification = classification;
+            datas.details = detail;
+            datas.action_plan_date = action_plan_date;
+            datas.damage_report_date = damage_report_date;
+            console.log(datas);
 
             localStorage.setItem('damage-report', JSON.stringify(datas));
             window.location.href = "/complain/laporan-kerusakan/show";
@@ -660,5 +625,110 @@ $configData = Helper::appClasses();
             $(this).val(sanitizedValue);
         });
     });
+
+    $(document).on('click', '.btn-add-row-mg', function() {
+        // Clone baris terakhir
+        var details = $('#details');
+        var newRow = `
+            <div class="row-mg">
+                <div class="row mb-1 row-mg">
+                    <div class="col-md-4">
+                        <label for="note" class="form-label fw-medium">Jenis Masalah Kerusakan</label>
+                        <input type="text" class="form-control  row-input" id="category" name="category[]" placeholder="Jenis Masalah Kerusakan" required />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="note" class="form-label fw-medium">Lokasi</label>
+                        <input type="text" class="form-control  row-input" id="location" name="location[]" placeholder="Lokasi" required />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="note" class="form-label fw-medium">Jumlah</label>
+                        <input type="text" class="form-control qty  row-input" id="total" name="total[]" placeholder="Jumlah" required />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="col-md-1  px-1-custom">
+                        <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            `;
+        details.append(newRow);
+    });
+
+    $(document).on('click', '.btn-remove-mg', function() {
+        // Hapus baris yang ditekan tombol hapus
+        $(this).closest('.row-mg').remove();
+    });
+
+    function getDetails() {
+        let data = dataLocal;
+        let getDetail = '';
+        let temp = '';
+
+        if (data) {
+            let details = dataLocal.details;
+            for (let i = 0; i < details.length; i++) {
+                temp = `             
+                <div class="row-mg">
+                    <div class="row mb-1 row-mg">
+                        <div class="col-md-4">
+                            <label for="note" class="form-label fw-medium">Jenis Masalah Kerusakan</label>
+                            <input type="text" class="form-control  row-input" id="category" name="category[]" placeholder="Jenis Masalah Kerusakan" required />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="note" class="form-label fw-medium">Lokasi</label>
+                            <input type="text" class="form-control  row-input" id="location" name="location[]" placeholder="Lokasi" required />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="note" class="form-label fw-medium">Jumlah</label>
+                            <input type="text" class="form-control qty  row-input" id="total" name="total[]" placeholder="Jumlah" required />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-md-1  px-1-custom">
+                            <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                `;
+                getDetail = getDetail + temp;
+            }
+
+        } else {
+            temp = `             
+            <div class="row-mg">
+                <div class="row mb-1 row-mg">
+                    <div class="col-md-4">
+                        <label for="note" class="form-label fw-medium">Jenis Masalah Kerusakan</label>
+                        <input type="text" class="form-control  row-input" id="category" name="category[]" placeholder="Jenis Masalah Kerusakan" required />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="note" class="form-label fw-medium">Lokasi</label>
+                        <input type="text" class="form-control  row-input" id="location" name="location[]" placeholder="Lokasi" required />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="note" class="form-label fw-medium">Jumlah</label>
+                        <input type="text" class="form-control qty  row-input" id="total" name="total[]" placeholder="Jumlah" required />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="col-md-1  px-1-custom">
+                        <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            `;
+            $('#details').prepend(temp);
+        }
+    }
 </script>
 @endsection

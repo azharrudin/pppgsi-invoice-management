@@ -28,7 +28,7 @@ class DamageReportController extends Controller
      */
     public function index(Request $request)
     {
-        try{
+        try {
             [
                 "perPage" => $perPage,
                 "page" => $page,
@@ -37,18 +37,15 @@ class DamageReportController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $damageReportQuery = DamageReport::with("damageReportDetails")->
-                with("damageReportSignatures")->
-                with("ticket")->
-                where("deleted_at", null);
-            if($value){
+            $damageReportQuery = DamageReport::with("damageReportDetails")->with("damageReportSignatures")->with("ticket")->where("deleted_at", null);
+            if ($value) {
                 $damageReportQuery->where(function ($query) use ($value) {
                     $query->where('damage_report_number', 'like', '%' . $value . '%')
-                    ->orWhere('scope', 'like', '%' . $value . '%')
-                    ->orWhere('classification', 'like', '%' . $value . '%')
-                    ->orWhere('damage_report_date', 'like', '%' . $value . '%')
-                    ->orWhere('action_plan_date', 'like', '%' . $value . '%')
-                    ->orWhere('status', 'like', '%' . $value . '%');
+                        ->orWhere('scope', 'like', '%' . $value . '%')
+                        ->orWhere('classification', 'like', '%' . $value . '%')
+                        ->orWhere('damage_report_date', 'like', '%' . $value . '%')
+                        ->orWhere('action_plan_date', 'like', '%' . $value . '%')
+                        ->orWhere('status', 'like', '%' . $value . '%');
                 });
             }
             $getTickets = $damageReportQuery->orderBy($order, $sort)->paginate($perPage);
@@ -61,13 +58,13 @@ class DamageReportController extends Controller
                 "per_page" => $perPage,
                 "page" => $page,
                 "size" => $totalCount,
-                "pages" => ceil($totalCount/$perPage)
+                "pages" => ceil($totalCount / $perPage)
             ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -83,49 +80,45 @@ class DamageReportController extends Controller
     {
         DB::beginTransaction();
 
-        try{
+        try {
             $validateDamageReport = $this->DamageReportService->validateDamageReport($request);
-            if($validateDamageReport != "") throw new CustomException($validateDamageReport, 400);
+            if ($validateDamageReport != "") throw new CustomException($validateDamageReport, 400);
 
             $damageReport = DamageReport::create($request->all());
-            if(!is_null($request->input("details"))){
-              foreach ($request->input('details') as $detail) {
-                  DamageReportDetail::create([
-                      'damage_report_id' => $damageReport->id,
-                      'category' => $detail['category'],
-                      'location' => $detail['location'],
-                      'total' => $detail['total'],
-                  ]);
-              }
+            if (!is_null($request->input("details"))) {
+                foreach ($request->input('details') as $detail) {
+                    DamageReportDetail::create([
+                        'damage_report_id' => $damageReport->id,
+                        'category' => $detail['category'],
+                        'location' => $detail['location'],
+                        'total' => $detail['total'],
+                    ]);
+                }
             }
 
-            if(!is_null($request->input("signatures"))){
-              foreach ($request->input('signatures') as $signature) {
-                  DamageReportSignature::create([
-                      'damage_report_id' => $damageReport->id,
-                      'type' => $signature['type'],
-                      'name' => $signature['name'],
-                      'signature' => $signature['signature'],
-                      'date' => $signature['date'],
-                  ]);
-              }
+            if (!is_null($request->input("signatures"))) {
+                foreach ($request->input('signatures') as $signature) {
+                    DamageReportSignature::create([
+                        'damage_report_id' => $damageReport->id,
+                        'type' => $signature['type'],
+                        'name' => $signature['name'],
+                        'signature' => $signature['signature'],
+                        'date' => $signature['date'],
+                    ]);
+                }
             }
 
             DB::commit();
-            $getDamageReport = DamageReport::with("damageReportDetails")->
-                with("damageReportSignatures")->
-                with("ticket")->
-                where("id", $damageReport->id)->
-                where("deleted_at", null)->
-                first();
+            $getDamageReport = DamageReport::with("damageReportDetails")->with("damageReportSignatures")->with("ticket")->where("id", $damageReport->id)->where("deleted_at", null)->first();
 
             return ["data" => $getDamageReport];
-        } catch (\Throwable $e) {
+        } catch (\Exception $e) {
+            dd($e);
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
             DB::rollBack();
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -139,13 +132,9 @@ class DamageReportController extends Controller
      */
     public function show($id)
     {
-        try{
+        try {
             $id = (int) $id;
-            $getDamageReport = DamageReport::with("damageReportDetails")->
-                with("damageReportSignatures")->
-                with("ticket")->
-                where("id", $id)->
-                where("deleted_at", null)->first();
+            $getDamageReport = DamageReport::with("damageReportDetails")->with("damageReportSignatures")->with("ticket")->where("id", $id)->where("deleted_at", null)->first();
             if (is_null($getDamageReport)) throw new CustomException("Laporan kerusakan tidak ditemukan", 404);
 
             return ["data" => $getDamageReport];
@@ -153,7 +142,7 @@ class DamageReportController extends Controller
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -169,48 +158,43 @@ class DamageReportController extends Controller
     {
         DB::beginTransaction();
 
-        try{
+        try {
             $id = (int) $id;
             $damageReportExist = $this->CommonService->getDataById("App\Models\DamageReport", $id);
-            if(is_null($damageReportExist)) throw new CustomException("Laporan kerusakan tidak ditemukan", 404);
+            if (is_null($damageReportExist)) throw new CustomException("Laporan kerusakan tidak ditemukan", 404);
 
             $validateDamageReport = $this->DamageReportService->validateDamageReport($request);
-            if($validateDamageReport != "") throw new CustomException($validateDamageReport, 400);
+            if ($validateDamageReport != "") throw new CustomException($validateDamageReport, 400);
 
             DamageReport::findOrFail($id)->update($request->all());
             DamageReportDetail::where("damage_report_id", $id)->where("deleted_at", null)->delete();
             DamageReportSignature::where("damage_report_id", $id)->where("deleted_at", null)->delete();
 
-            if(!is_null($request->input("details"))){
-              foreach ($request->input('details') as $detail) {
-                  DamageReportDetail::create([
-                      'damage_report_id' => $id,
-                      'category' => $detail['category'],
-                      'location' => $detail['location'],
-                      'total' => $detail['total'],
-                  ]);
-              }
+            if (!is_null($request->input("details"))) {
+                foreach ($request->input('details') as $detail) {
+                    DamageReportDetail::create([
+                        'damage_report_id' => $id,
+                        'category' => $detail['category'],
+                        'location' => $detail['location'],
+                        'total' => $detail['total'],
+                    ]);
+                }
             }
 
-            if(!is_null($request->input("signatures"))){
-              foreach ($request->input('signatures') as $signature) {
-                  DamageReportSignature::create([
-                      'damage_report_id' => $id,
-                      'type' => $signature['type'],
-                      'name' => $signature['name'],
-                      'signature' => $signature['signature'],
-                      'date' => $signature['date'],
-                  ]);
-              }
+            if (!is_null($request->input("signatures"))) {
+                foreach ($request->input('signatures') as $signature) {
+                    DamageReportSignature::create([
+                        'damage_report_id' => $id,
+                        'type' => $signature['type'],
+                        'name' => $signature['name'],
+                        'signature' => $signature['signature'],
+                        'date' => $signature['date'],
+                    ]);
+                }
             }
 
             DB::commit();
-            $getDamageReport = DamageReport::with("damageReportDetails")->
-                with("damageReportSignatures")->
-                with("ticket")->
-                where("id", $id)->
-                where("deleted_at", null)->
-                first();
+            $getDamageReport = DamageReport::with("damageReportDetails")->with("damageReportSignatures")->with("ticket")->where("id", $id)->where("deleted_at", null)->first();
 
             return ["data" => $getDamageReport];
         } catch (\Throwable $e) {
@@ -218,7 +202,7 @@ class DamageReportController extends Controller
             $errorStatusCode = 500;
             DB::rollBack();
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -234,10 +218,10 @@ class DamageReportController extends Controller
     {
         DB::beginTransaction();
 
-        try{
+        try {
             $id = (int) $id;
             $damageReportExist = $this->CommonService->getDataById("App\Models\DamageReport", $id);
-            if(is_null($damageReportExist)) throw new CustomException("Laporan kerusakan tidak ditemukan", 404);
+            if (is_null($damageReportExist)) throw new CustomException("Laporan kerusakan tidak ditemukan", 404);
 
             DamageReport::findOrFail($id)->delete();
             DamageReportDetail::where("damage_report_id", $id)->where("deleted_at", null)->delete();
@@ -250,7 +234,7 @@ class DamageReportController extends Controller
             $errorStatusCode = 500;
             DB::rollBack();
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -261,7 +245,7 @@ class DamageReportController extends Controller
 
     public function select(Request $request)
     {
-        try{
+        try {
             [
                 "page" => $page,
                 "value" => $value
@@ -270,14 +254,14 @@ class DamageReportController extends Controller
             $perPage = 10;
 
             $damageReportQuery = DamageReport::where("deleted_at", null);
-            if($value){
+            if ($value) {
                 $damageReportQuery->where('damage_report_number', 'like', '%' . $value . '%');
             }
             $getDamageReports = $damageReportQuery->select("id", "damage_report_number")->paginate($perPage);
             $totalCount = $getDamageReports->total();
 
             $dataArr = [];
-            foreach($getDamageReports as $damageReportObj){
+            foreach ($getDamageReports as $damageReportObj) {
                 $dataObj = [
                     "id" => $damageReportObj->id,
                     "text" => $damageReportObj->damage_report_number,
@@ -286,7 +270,7 @@ class DamageReportController extends Controller
             }
 
             $pagination = ["more" => false];
-            if($totalCount > ($perPage * $page)) {
+            if ($totalCount > ($perPage * $page)) {
                 $pagination = ["more" => true];
             }
 
@@ -298,7 +282,7 @@ class DamageReportController extends Controller
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -309,7 +293,7 @@ class DamageReportController extends Controller
 
     public function report()
     {
-        try{
+        try {
             $countTenant = Tenant::where("deleted_at", null)->count();
             $countDamageReport = DamageReport::where("deleted_at", null)->count();
             $countDamageReportDone = DamageReport::where("deleted_at", null)->where("status", "like", "%Selesai%")->count();
@@ -323,12 +307,20 @@ class DamageReportController extends Controller
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
 
             return response()->json(['message' => $errorMessage], $errorStatusCode);
         }
+    }
+
+    public function nomor()
+    {
+        $year = now()->year;
+        $maxNumberForYear = DamageReport::whereYear('created_at', $year)->max('damage_report_number') ?: 0;
+        $nomor = str_pad($maxNumberForYear + 1, 5, '0', STR_PAD_LEFT);
+        return $nomor;
     }
 }

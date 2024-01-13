@@ -59,7 +59,10 @@ Route::resource('ticket', TicketController::class);
 
 Route::get("damage-report/select", [DamageReportController::class, "select"]);
 Route::get("damage-report/report", [DamageReportController::class, "report"]);
+Route::get("damage-report/nomor", [DamageReportController::class, "nomor"]);
 Route::resource('damage-report', DamageReportController::class);
+
+
 
 Route::get("work-order/select", [WorkOrderController::class, "select"]);
 Route::get("work-order/report", [WorkOrderController::class, "report"]);
