@@ -1,9 +1,9 @@
 @php
-    function rupiah($angka)
-    {
-        $hasil_rupiah = 'Rp ' . number_format($angka, 2, ',', '.');
-        return $hasil_rupiah;
-    }
+function rupiah($angka)
+{
+$hasil_rupiah = 'Rp ' . number_format($angka, 2, ',', '.');
+return $hasil_rupiah;
+}
 @endphp
 <!doctype html>
 <html lang="en">
@@ -11,15 +11,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Surat Pesan</title>
-    <link href="{{ public_path('assets/css/bootstrap.min.css') }}" rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    {{-- <script src="{{ public_path('assets/js/html2pdf.bundle.js') }}"></script> --}}
+    <title>Invoice</title>
 
+    <link href="{{public_path('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+
+    {{-- <script src="{{public_path('bootstrap/js/bootstrap.bundle.min.js')}}"></script> --}}
     <style>
         body {
-            font-size: 10px;
-
+            font-size: 10pt;
         }
 
         .main-table,
@@ -28,37 +28,51 @@
             border: 0.5px solid;
         }
 
-
-        .container {
-            max-width: 21cm;
-            margin: 0 auto;
-            background: #fff;
-            padding: 1cm;
-
+        .main-table th {
+            font-size: 12pt;
         }
 
-        /* A4 Styles */
-        @media print {
-            body {
-                font-size: 10px;
-                margin: 0;
-                padding: 0;
-            }
+        .container {
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
 
-            .container {
-                width: 21cm;
-                min-height: 29.7cm;
-                margin: auto;
-                /* Center content on the page */
-            }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
 
-            .ttd img {
-                width: 130px;
-            }
+        .p-2 {
+            padding: 0.5rem !important;
+        }
 
-            .row img {
-                width: 180px;
-            }
+        .text-center {
+            text-align: center !important;
+        }
+
+        .col-12 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .col-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+
+        .mt-2 {
+            margin-top: 0.5rem !important;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
         }
     </style>
 </head>
@@ -123,13 +137,13 @@
                 </thead>
                 <tbody>
                     @foreach ($data->invoice_details as $p)
-                        <tr>
-                            <td>{{ $p->item }}</td>
-                            <td>{{ $p->description }}</td>
-                            <td>{{ rupiah($p->price) }}</td>
-                            <td>{{ $p->tax->rate }}%</td>
-                            <td>{{ rupiah($p->total_price) }}</td>
-                        </tr>
+                    <tr>
+                        <td>{{ $p->item }}</td>
+                        <td>{{ $p->description }}</td>
+                        <td>{{ rupiah($p->price) }}</td>
+                        <td>{{ $p->tax->rate }}%</td>
+                        <td>{{ rupiah($p->total_price) }}</td>
+                    </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
@@ -174,47 +188,25 @@
             </div>
             <div style="clear: both;"></div>
         </div>
-        <div class="row mt-4 text-center">
+        <div class="row mt-4 text-center" style="font-size: 12pt;">
+            <center>
+                <p>
 
-            <p>
-
-                <b><strong>GRAHA SURVEYOR INDONESIA</strong>, Basement 2,
-                    Jl. Jenderal
-                    Gatot
-                    Subroto Kav. 56 Jakarta 12950 Indonesia
-                    Telephone: (021) 5265388, 5265393, 5265114 Fax: (021)
-                    5265239</b>
-            </p>
+                    <b><strong>GRAHA SURVEYOR INDONESIA</strong>, Basement
+                        2,
+                        Jl. Jenderal
+                        Gatot
+                        Subroto Kav. 56 Jakarta 12950 Indonesia
+                        Telephone: (021) 5265388, 5265393, 5265114 Fax:
+                        (021)
+                        5265239</b>
+                </p>
+            </center>
         </div>
     </div>
 
-    {{-- <script src="{{ public_path('assets/js/bootstrap.bundle.min.js') }}"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-    </script>
-    <script>
-        function downloadPDF(elementId) {
-            var element = document.getElementById(elementId);
 
-            var options = {
-                margin: 0,
-                filename: 'surat.pdf',
-                image: {
-                    type: 'jpeg',
-                    quality: 2
-                },
-                html2canvas: {
-                    scale: 3
-                },
-                jsPDF: {
-                    unit: 'mm',
-                    format: 'a4',
-                    orientation: 'portrait'
-                }
-            };
 
-            html2pdf(element, options);
-        }
-    </script> --}}
 </body>
 
 </html>

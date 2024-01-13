@@ -11,14 +11,15 @@ return $hasil_rupiah;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Surat Pesan</title>
-    <link href="{{ public_path('assets/css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    {{-- <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script> --}}
+    <title>Invoice</title>
 
+    <link href="{{public_path('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+
+    {{-- <script src="{{public_path('bootstrap/js/bootstrap.bundle.min.js')}}"></script> --}}
     <style>
         body {
-            font-size: 12px;
-
+            font-size: 10pt;
         }
 
         .main-table,
@@ -27,37 +28,51 @@ return $hasil_rupiah;
             border: 0.5px solid;
         }
 
-
-        .container {
-            max-width: 21cm;
-            margin: 0 auto;
-            background: #fff;
-            padding: 1cm;
-
+        .main-table th {
+            font-size: 12pt;
         }
 
-        /* A4 Styles */
-        @media print {
-            body {
-                font-size: 10px;
-                margin: 0;
-                padding: 0;
-            }
+        .container {
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
 
-            .container {
-                width: 21cm;
-                min-height: 29.7cm;
-                margin: auto;
-                /* Center content on the page */
-            }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
 
-            .ttd img {
-                width: 130px;
-            }
+        .p-2 {
+            padding: 0.5rem !important;
+        }
 
-            .row img {
-                width: 180px;
-            }
+        .text-center {
+            text-align: center !important;
+        }
+
+        .col-12 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .col-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+
+        .mt-2 {
+            margin-top: 0.5rem !important;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
         }
     </style>
 </head>
@@ -109,21 +124,7 @@ return $hasil_rupiah;
             </table>
         </div>
 
-        <!-- <div class="row">
-            <div class="col-6">
-                <div class="row">
-                    <div>No. Cek/Giro</div>
-                    <div>{{$data->check_number}}</div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="row">
-                    <div class="">Nama</div>
-                    <div class="">:</div>
-                    <div class=""></div>
-                </div>
-            </div>
-        </div> -->
+
 
         <div class="row">
             <div class="col-4">
@@ -156,32 +157,7 @@ return $hasil_rupiah;
         </div>
     </div>
 
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-    </script>
-    <script>
-        function downloadPDF(elementId) {
-            var element = document.getElementById(elementId);
 
-            var options = {
-                margin: 0,
-                filename: 'surat.pdf',
-                image: {
-                    type: 'jpeg',
-                    quality: 2
-                },
-                html2canvas: {
-                    scale: 3
-                },
-                jsPDF: {
-                    unit: 'mm',
-                    format: 'a4',
-                    orientation: 'portrait'
-                }
-            };
-
-            html2pdf(element, options);
-        }
-    </script> --}}
 </body>
 
 </html>
