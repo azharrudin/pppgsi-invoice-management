@@ -91,10 +91,10 @@ Route::group(['middleware' => 'cekauth'], function () {
         // Laporan Kerusakan
         Route::prefix('laporan-kerusakan')->group(function () {
             Route::get('/', [LaporanKerusakanController::class, 'index'])->name('pages-list-laporan-kerusakan');
-            Route::get('/add', [LaporanKerusakanController::class, 'create'])->name('pages-create-laporan-kerusakan');
-            Route::get('/show', [LaporanKerusakanController::class, 'show'])->name('pages-show-laporan-kerusakan');
-            Route::get('/edit/{id}', [LaporanKerusakanController::class, 'edit'])->name('pages-edit-laporan-kerusakan');
-            Route::get('/preview/{id}', [LaporanKerusakanController::class, 'preview'])->name('pages-preview-laporan-kerusakan');
+            Route::get('/add', [LaporanKerusakanController::class, 'create'])->name('pages-list-laporan-kerusakan');
+            Route::get('/show', [LaporanKerusakanController::class, 'show'])->name('pages-list-laporan-kerusakan');
+            Route::get('/edit/{id}', [LaporanKerusakanController::class, 'edit'])->name('pages-list-laporan-kerusakan');
+            Route::get('/preview/{id}', [LaporanKerusakanController::class, 'preview'])->name('pages-list-laporan-kerusakan');
             Route::get('/data-damage', [LaporanKerusakanController::class, 'datatable'])->name('data-damage');
             Route::get('/print/{id}', [LaporanKerusakanController::class, 'print']);
         });
