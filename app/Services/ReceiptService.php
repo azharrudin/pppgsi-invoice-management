@@ -32,9 +32,9 @@ class ReceiptService{
             "remaining" => ["bail", "required", "numeric"],
             "grand_total_spelled" => ["bail", "required", "string"],
             "note" => ["bail", "nullable", "string"],
-            "signature_date" => ["bail", "required", "date"],
-            "signature_image" => ["bail", "required", "string"],
-            "signature_name" => ["bail", "required", "string"],
+            "signature_date" => ["bail", "nullable", "date"],
+            "signature_image" => ["bail", "nullable", "string"],
+            "signature_name" => ["bail", "nullable", "string"],
         ];
         $errorMessages = [
             "required" => "Field :attribute harus diisi",
