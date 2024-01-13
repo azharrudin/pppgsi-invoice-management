@@ -326,4 +326,43 @@ class InvoiceController extends Controller
             return response()->json(['message' => $errorMessage], $errorStatusCode);
         }
     }
+
+    public function update_status(Request $request, $id)
+    {
+        DB::beginTransaction();
+
+        try{
+            $id = (int) $id;
+            $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
+            if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
+
+            $validateInvoice = $this->InvoiceService->validateStatus($request);
+            if($validateInvoice != "") throw new CustomException($validateInvoice, 400);
+
+            $dataPayload = [ "status" => $request->input("status") ];
+
+            Invoice::findOrFail($id)->update($dataPayload);
+
+            DB::commit();
+            $getInvoice = Invoice::with("invoiceDetails.tax")
+                ->with("tenant")
+                ->with("bank")
+                ->where("id", $id)
+                ->where("deleted_at", null)
+                ->first();
+
+            return ["data" => $getInvoice];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+            DB::rollBack();
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
 }

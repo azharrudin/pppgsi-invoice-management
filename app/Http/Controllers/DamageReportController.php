@@ -331,4 +331,43 @@ class DamageReportController extends Controller
             return response()->json(['message' => $errorMessage], $errorStatusCode);
         }
     }
+
+    public function update_status(Request $request, $id)
+    {
+        DB::beginTransaction();
+
+        try{
+            $id = (int) $id;
+            $getDamageReport = $this->CommonService->getDataById("App\Models\DamageReport", $id);
+            if (is_null($getDamageReport)) throw new CustomException("Damage Report tidak ditemukan", 404);
+
+            $validateDamageReport = $this->DamageReportService->validateStatus($request);
+            if($validateDamageReport != "") throw new CustomException($validateDamageReport, 400);
+
+            $dataPayload = [ "status" => $request->input("status") ];
+
+            DamageReport::findOrFail($id)->update($dataPayload);
+
+            DB::commit();
+            $getDamageReport =  DamageReport::with("damageReportDetails")->
+                with("damageReportSignatures")->
+                with("ticket")->
+                where("id", $id)->
+                where("deleted_at", null)->
+                first();
+
+            return ["data" => $getDamageReport];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+            DB::rollBack();
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
 }

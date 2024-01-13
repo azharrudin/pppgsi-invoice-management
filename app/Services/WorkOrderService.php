@@ -5,6 +5,7 @@ use Validator;
 
 class WorkOrderService{
     protected $CommonService;
+    protected $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "selesai"];
 
     public function __construct(CommonService $CommonService)
     {
@@ -57,30 +58,51 @@ class WorkOrderService{
         if ($validator->fails()) $message = implode(', ', $validator->errors()->all());
 
         if($message == ""){
-            $validScope = ["telekomunikasi", "electric", "plumbing", "civil", "bas", "mdp", "hvac", "lift", "fire system", "genset", "others"];
-            $validClassification = ["previous maintenance routine", "previous maintenance non routine", "repair", "replacement", "vendor"];
             $validKlasifikasi = ["closed", "cancelled", "explanation", "others"];
-
-            $scope = strtolower($request->input("scope"));
-            $classification = strtolower($request->input("classification"));
             $klasifikasi = strtolower($request->input("klasifikasi"));
 
-            if(!in_array($scope, $validScope)) $message = "Scope tidak ditemukan";
-            else if(!in_array($classification, $validClassification)) $message = "Classification tidak ditemukan";
-            else if(!in_array($klasifikasi, $validKlasifikasi)) $message = "Klasifikasi tidak ditemukan";
+            if(!in_array($klasifikasi, $validKlasifikasi)) $message = "Klasifikasi tidak ditemukan";
         }
 
         if($message == ""){
-            $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "lunas"];
             $status = strtolower($request->input("status"));
 
-            if(!in_array($status, $validStatus)) $message = "Status tidak valid";
+            if(!in_array($status, $this->validStatus)) $message = "Status tidak valid";
         }
 
         if($message == ""){
             $getDamageReport = $this->CommonService->getDataById("App\Models\DamageReport", $request->input("damage_report_id"));
 
             if (is_null($getDamageReport)) $message = "Laporan kerusakan tidak ditemukan";
+        }
+
+        return $message;
+    }
+
+    /**
+     * Fungsi yang berfungsi untuk memvalidasi data status yang diinput oleh user
+     *
+     * @param \Illuminate\Http\Request $request Object Request yang berisi input dari user
+     * @return String string yang berisi pesan error
+     */
+    public function validateStatus($request){
+        $rules = [
+            "status" => ["bail", "required", "string"],
+        ];
+        $errorMessages = [
+            "required" => "Field :attribute harus diisi",
+            "string" => "Field :attribute harus diisi dengan string",
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $errorMessages);
+
+        $message = "";
+        if ($validator->fails()) $message = implode(', ', $validator->errors()->all());
+
+        if($message == ""){
+            $status = strtolower($request->input("status"));
+
+            if(!in_array($status, $this->validStatus)) $message = "Status tidak valid";
         }
 
         return $message;

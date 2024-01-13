@@ -352,4 +352,44 @@ class PurchaseRequestController extends Controller
             return response()->json(['message' => $errorMessage], $errorStatusCode);
         }
     }
+
+    public function update_status(Request $request, $id)
+    {
+        DB::beginTransaction();
+
+        try{
+            $id = (int) $id;
+            $getPurchaseRequest = $this->CommonService->getDataById("App\Models\PurchaseRequest", $id);
+            if (is_null($getPurchaseRequest)) throw new CustomException("Purchase Order tidak ditemukan", 404);
+
+            $validatePurchaseRequest = $this->PurchaseRequestService->validateStatus($request);
+            if($validatePurchaseRequest != "") throw new CustomException($validatePurchaseRequest, 400);
+
+            $dataPayload = [ "status" => $request->input("status") ];
+
+            PurchaseRequest::findOrFail($id)->update($dataPayload);
+
+            DB::commit();
+            $getPurchaseRequest =  PurchaseRequest::with("purchaseRequestDetails")->
+                with("purchaseRequestSignatures")->
+                with("materialRequest")->
+                with("department")->
+                where("id", $id)->
+                where("deleted_at", null)->
+                first();
+
+            return ["data" => $getPurchaseRequest];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+            DB::rollBack();
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
 }
