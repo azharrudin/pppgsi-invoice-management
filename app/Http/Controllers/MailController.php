@@ -63,7 +63,7 @@ class MailController extends Controller
                     where("id", $dataId)->
                     where("deleted_at", null)->first();
 
-                $viewName = "emails.receipt-pdf";
+                $viewName = "emails.tanda-terima-pdf";
             }
 
             if (is_null($getData)) throw new CustomException("Data dengan id ini tidak ditemukan");

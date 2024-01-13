@@ -1,9 +1,9 @@
 @php
-function rupiah($angka)
-{
-$hasil_rupiah = 'Rp ' . number_format($angka, 2, ',', '.');
-return $hasil_rupiah;
-}
+    function rupiah($angka)
+    {
+        $hasil_rupiah = 'Rp ' . number_format($angka, 2, ',', '.');
+        return $hasil_rupiah;
+    }
 @endphp
 <!doctype html>
 <html lang="en">
@@ -12,11 +12,8 @@ return $hasil_rupiah;
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Invoice</title>
-
-    <link href="{{asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-
-
-    <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <style>
         body {
             font-size: 10pt;
@@ -84,7 +81,7 @@ return $hasil_rupiah;
         </header>
 
         <div class="row" style="float: right;">
-            <div class="p-2" style="width: 100px; border: 1px solid black;">No . {{$data->receipt_number}}</div>
+            <div class="p-2" style="width: 100px; border: 1px solid black;">No . {{ $data->receipt_number }}</div>
         </div>
         <div style="clear: both;"></div>
 
@@ -99,15 +96,15 @@ return $hasil_rupiah;
                     <tr>
                         <td style="width: 20%;">No. Cek/Giro</td>
                         <td style="width: 5%;">:</td>
-                        <td style="width: 25%;">{{$data->check_number}}</td>
+                        <td style="width: 25%;">{{ $data->check_number }}</td>
                         <td style="width: 17%;">Nama</td>
                         <td style="width: 5%;">:</td>
-                        <td class="width: 25%;">{{$data->tenant->name}}</td>
+                        <td class="width: 25%;">{{ $data->tenant->name }}</td>
                     </tr>
                     <tr>
                         <td>Bank</td>
                         <td>:</td>
-                        <td>{{$data->bank->name}}</td>
+                        <td>{{ $data->bank->name }}</td>
                         <td>Alamat</td>
                         <td>:</td>
                         <td> {{ $data->tenant->company }} {{ $data->tenant->floor }} {{ $data->tenant->name }}</td>
@@ -115,10 +112,10 @@ return $hasil_rupiah;
                     <tr>
                         <td>Jumlah</td>
                         <td>:</td>
-                        <td>{{rupiah($data->grand_total)}}</td>
+                        <td>{{ rupiah($data->grand_total) }}</td>
                         <td>Telepon</td>
                         <td>:</td>
-                        <td>{{$data->tenant->phone}}</td>
+                        <td>{{ $data->tenant->phone }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -129,7 +126,7 @@ return $hasil_rupiah;
         <div class="row">
             <div class="col-4">
                 <div style="border: 1px solid black;" class="p-2">
-                    {{$data->grand_total_spelled}}
+                    {{ $data->grand_total_spelled }}
                 </div>
                 <p>
                     Apabila dibayar dengan cek/Biyet giro, Pembayaran baru
@@ -147,7 +144,7 @@ return $hasil_rupiah;
                         {{ $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' }}<br>
                         <img src="{{ $data->signature_image }}" alt="">
                     <p class="text-center">
-                        <u></u></b><br><span>{{$data->signature_name}}</span>
+                        <u></u></b><br><span>{{ $data->signature_name }}</span>
                     </p>
                     </p>
 
@@ -156,8 +153,6 @@ return $hasil_rupiah;
             <div style="clear: both;"></div>
         </div>
     </div>
-
-
 </body>
 
 </html>

@@ -12,10 +12,7 @@ return $hasil_rupiah;
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Invoice</title>
-
     <link href="{{asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-
-
     <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <style>
         body {
