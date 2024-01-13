@@ -75,8 +75,12 @@ $configData = Helper::appClasses();
 
 @section('page-script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script>
     "use strict";
+    var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>`;
     $((function() {
         var a = $(".invoice-list-table");
         if (a.length) var e = a.DataTable({
@@ -88,6 +92,18 @@ $configData = Helper::appClasses();
                 "data": function(d) {
                     d.start = 0;
                     d.page = $(".invoice-list-table").DataTable().page.info().page + 1;
+                },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: '<h2>Loading...</h2>',
+                        html: sweet_loader + '<h5>Please Wait</h5>',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    });
+                },
+                complete: function() {
+                    Swal.close();
                 }
             },
             columns: [{

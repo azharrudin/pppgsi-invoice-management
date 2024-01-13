@@ -139,7 +139,8 @@ $configData = Helper::appClasses();
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal" id="modal_tax_cancel">Close</button>
             </div>
         </form>
-        </di @endsection @section('page-script') <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}">
+        @endsection
+        @section('page-script') <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}">
         </script>
         <script>
             "use strict";
@@ -163,6 +164,18 @@ $configData = Helper::appClasses();
                         "data": function(d) {
                             d.start = 0;
                             d.page = $(".tax-rates-table").DataTable().page.info().page + 1;
+                        },
+                        beforeSend: function() {
+                            Swal.fire({
+                                title: '<h2>Loading...</h2>',
+                                html: sweet_loader + '<h5>Please Wait</h5>',
+                                showConfirmButton: false,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
+                            });
+                        },
+                        complete: function() {
+                            Swal.close();
                         }
                     },
                     columns: [{
@@ -227,7 +240,7 @@ $configData = Helper::appClasses();
                         }
                     },
                     initComplete: function() {
-                        this.api().columns(7).every((function() {
+                        this.api().columns(1).every((function() {
                             var a = this,
                                 e = $(
                                     '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'

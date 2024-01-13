@@ -50,7 +50,7 @@ $configData = Helper::appClasses();
 <!-- Invoice List Table -->
 <div class="card">
     <div class="card-datatable table-responsive pt-0">
-        <table class="invoice-list-table table"  width="100%">
+        <table class="invoice-list-table table" width="100%">
         </table>
     </div>
 </div>
@@ -60,8 +60,12 @@ $configData = Helper::appClasses();
 
 @section('page-script')
 <script src="{{asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')}}"></script>
+<script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script>
     "use strict";
+    var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>`;
     $((function() {
         var a = $(".invoice-list-table");
         if (a.length) var e = a.DataTable({
@@ -73,6 +77,18 @@ $configData = Helper::appClasses();
                 "data": function(d) {
                     d.start = 0;
                     d.page = $(".invoice-list-table").DataTable().page.info().page + 1;
+                },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: '<h2>Loading...</h2>',
+                        html: sweet_loader + '<h5>Please Wait</h5>',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    });
+                },
+                complete: function() {
+                    Swal.close();
                 }
             },
             columns: [{
@@ -127,7 +143,7 @@ $configData = Helper::appClasses();
 
                     return tanggalHasil;
                 }
-            },{
+            }, {
                 class: "text-center",
                 data: "status",
                 name: "status",

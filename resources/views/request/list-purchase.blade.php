@@ -82,7 +82,6 @@ $configData = Helper::appClasses();
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
-
     $((function() {
         var a = $(".purchase-request-list-table");
         if (a.length) var e = a.DataTable({
@@ -96,6 +95,18 @@ $configData = Helper::appClasses();
                     d.page = $(".purchase-request-list-table").DataTable().page.info()
                         .page +
                         1;
+                },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: '<h2>Loading...</h2>',
+                        html: sweet_loader + '<h5>Please Wait</h5>',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    });
+                },
+                complete: function() {
+                    Swal.close();
                 }
             },
             columns: [{
@@ -186,8 +197,7 @@ $configData = Helper::appClasses();
                 text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Purchase Request</span>',
                 className: "btn btn-primary",
                 action: function(a, e, t, s) {
-                    window.location = '{{ route('
-                    pages - add - purchase - request ') }}';
+                    window.location = baseUrl + "request/add-purchase-request"
                 }
             }],
             responsive: {
