@@ -230,14 +230,14 @@
                                     </div>
 
                                     {{-- Tanda tangan --}}
-                                    <div class="row  text-center mb-5">
-                                        <div class="col-3 signatures">
+                                    <div class="row  text-center mb-5 ttd">
+                                        <div class="col-4 signatures">
                                             <label for="note" class="form-label fw-medium">Diperiksa Oleh :</label>
                                             <input type="text" value="Checked By" id="type1" name="type"
                                                 class="form-control d-none">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  " placeholder="Nama & Jabatan"
-                                                    style="text-align:center;" id="name1" name="name" required />
+                                                    style="text-align:center;" id="name1" name="name"/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
@@ -250,17 +250,17 @@
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control date" placeholder="Tanggal"
-                                                    style="text-align:center;" id="date1" name="date" required />
+                                                    style="text-align:center;" id="date1" name="date"/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
-                                        <div class="col-3 signatures">
+                                        <div class="col-4 signatures">
                                             <label for="note" class="form-label fw-medium">Diperiksa Oleh :</label>
                                             <input type="text" value="Checked By" id="type2" name="type"
                                                 class="form-control d-none">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  " placeholder="Nama & Jabatan"
-                                                    style="text-align:center;" id="name2" name="name" required />
+                                                    style="text-align:center;" id="name2" name="name"/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
@@ -273,17 +273,17 @@
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  date" placeholder="Tanggal"
-                                                    style="text-align:center;" id="date2" name="date" required />
+                                                    style="text-align:center;" id="date2" name="date"/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
-                                        <div class="col-3 signatures">
+                                        <div class="col-4 signatures">
                                             <label for="note" class="form-label fw-medium">Diketahui Oleh :</label>
                                             <input type="text" value="Known By" id="type3" name="type"
                                                 class="form-control d-none">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  " placeholder="Nama & Jabatan"
-                                                    style="text-align:center;" id="name3" name="name" required />
+                                                    style="text-align:center;" id="name3" name="name"/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
@@ -296,13 +296,13 @@
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  date" placeholder="Tanggal"
-                                                    style="text-align:center;" id="date3" name="date" required />
+                                                    style="text-align:center;" id="date3" name="date"/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="row ttd">
                                         <div class="col-2">
                                             <p>
                                                 Lembar
@@ -411,6 +411,13 @@
 
             })
 
+            let account = {!! json_encode(session('data')) !!}
+            var levelId = account.level_id;
+            if (levelId == 10) {
+                $('.ttd').hide();
+            } else {
+                $('.ttd').show();
+            }
             // Date
             $('.date').flatpickr({
                 dateFormat: 'd-m-Y'
