@@ -116,19 +116,20 @@ Route::group(['middleware' => 'cekauth'], function () {
         // Purchase Request
         Route::prefix('/')->group(function () {
             Route::get('/list-purchase-request', [PurchaseRequestController::class, 'index'])->name('pages-purchase-request');
-            Route::get('/add-purchase-request', [PurchaseRequestController::class, 'add'])->name('pages-add-purchase-request');
-            Route::get('/edit/{id}', [PurchaseRequestController::class, 'edit'])->name('pages-edit-purchase-request');
+            Route::get('/add-purchase-request', [PurchaseRequestController::class, 'add'])->name('pages-purchase-request');
+            Route::get('/edit/{id}', [PurchaseRequestController::class, 'edit'])->name('pages-purchase-request');
             Route::get('/data-purchase-request', [PurchaseRequestController::class, 'datatable'])->name('data-purchase-request');
-            Route::get('/preview/{id}', [PurchaseRequestController::class, 'preview'])->name('pages-preview-purchase-request');
-            Route::get('/preview', [PurchaseRequestController::class, 'show'])->name('pages-show-purchase-request');
+            Route::get('/preview/{id}', [PurchaseRequestController::class, 'preview'])->name('pages-purchase-request');
+            Route::get('/show', [PurchaseRequestController::class, 'show'])->name('pages-purchase-request');
         });
 
         // Material Request
         Route::prefix('material-request')->group(function () {
             Route::get('/', [MaterialRequestController::class, 'index'])->name('pages-list-material-request');
-            Route::get('/add', [MaterialRequestController::class, 'create'])->name('pages-create-tanda-terima');
+            Route::get('/add', [MaterialRequestController::class, 'create'])->name('pages-list-material-request');
             Route::get('/data-material-request', [MaterialRequestController::class, 'datatable'])->name('data-material-reques');
-            Route::get('/preview', [MaterialRequestController::class, 'preview'])->name('pages-preview-material-request');
+            Route::get('/preview', [MaterialRequestController::class, 'preview'])->name('pages-list-material-request');
+            Route::get('/edit/{id}', [MaterialRequestController::class, 'edit'])->name('pages-list-material-request');
             Route::get('/print/{id}', [MaterialRequestController::class, 'print']);
         });
 

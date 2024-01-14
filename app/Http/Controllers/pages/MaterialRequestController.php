@@ -93,7 +93,7 @@ class MaterialRequestController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('content.pages.material-request.show');
     }
 
     /**
@@ -101,7 +101,7 @@ class MaterialRequestController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('content.pages.material-request.edit');
     }
 
     /**
