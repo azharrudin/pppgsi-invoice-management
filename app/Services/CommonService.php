@@ -1,6 +1,8 @@
 <?php
 namespace App\Services;
 
+use function PHPUnit\Framework\isNan;
+
 class CommonService{
     /**
      * Fungsi untuk mengambil query yang sering digunakan
@@ -50,5 +52,58 @@ class CommonService{
         $model = new $modelPath;
         $getData = $model::where("id", $id)->where("deleted_at", null)->first();
         return $getData;
+    }
+
+    /**
+     * Fungsi untuk mengecek apakah string yang berisi id classification atau scope ada
+     *
+     * @param string $idStr String yang berisi id yang akan divalidasi
+     * @param string $dataType Tipe dari data yang akan dicek
+     * @return string String yang berisi pesan error
+     */
+    public function checkIfClassficationOrScopeExist($idStr, $dataType){
+        $modelPath = "";
+        if(strtolower($dataType) == "classification") $modelPath = "App\Models\Classification";
+        else if(strtolower($dataType) == "scope") $modelPath = "App\Models\Scope";
+        else return "Data type tidak ditemukan";
+
+        $idArr = array_map('intval', explode(',', preg_replace('/\s+/', '', $idStr)));
+        foreach($idArr as $id){
+            if(!is_numeric($id)) return "Id tidak valid";
+
+            $dataExist = $this->getDataById($modelPath, $id);
+            if(is_null($dataExist)) return $dataType . " tidak ditemukan";
+        }
+
+        return "";
+    }
+
+    /**
+     * Fungsi untuk mengambil data nama classification atau scope
+     *
+     * @param string $idStr String yang berisi id yang akan divalidasi
+     * @param string $dataType Tipe dari data yang akan dicek
+     * @return string String yang nama classification atau scope
+     */
+    public function getClassificationOrScope($idStr, $dataType){
+        $modelPath = "";
+        if(strtolower($dataType) == "classification") $modelPath = "App\Models\Classification";
+        else if(strtolower($dataType) == "scope") $modelPath = "App\Models\Scope";
+        else return "Data type tidak ditemukan";
+
+        $dataName = "";
+        $idArr = array_map('intval', explode(',', preg_replace('/\s+/', '', $idStr)));
+
+        foreach($idArr as $id){
+            if(!is_numeric($id)) continue;
+
+            $dataExist = $this->getDataById($modelPath, $id);
+            if(is_null($dataExist)) continue;
+
+            if($dataName == "") $dataName = $dataExist["name"];
+            else $dataName = $dataName . ", " . $dataExist["name"];
+        }
+
+        return $dataName;
     }
 }

@@ -55,8 +55,12 @@ class DamageReportService{
 
         if($message == ""){
             $getTicket = $this->CommonService->getDataById("App\Models\Ticket", $request->input("ticket_id"));
+            $classificationExist = $this->CommonService->checkIfClassficationOrScopeExist($request->input("classification"), "classification");
+            $scopeExist = $this->CommonService->checkIfClassficationOrScopeExist($request->input("scope"), "scope");
 
             if (is_null($getTicket)) $message = "Ticket tidak ditemukan";
+            else if($classificationExist != "") $message = $classificationExist;
+            else if($scopeExist != "") $message = $scopeExist;
         }
 
         if($message == ""){

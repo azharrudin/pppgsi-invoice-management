@@ -59,9 +59,14 @@ class WorkOrderService{
 
         if($message == ""){
             $validKlasifikasi = ["closed", "cancelled", "explanation", "others"];
+            $classificationExist = $this->CommonService->checkIfClassficationOrScopeExist($request->input("classification"), "classification");
+            $scopeExist = $this->CommonService->checkIfClassficationOrScopeExist($request->input("scope"), "scope");
+
             $klasifikasi = strtolower($request->input("klasifikasi"));
 
             if(!in_array($klasifikasi, $validKlasifikasi)) $message = "Klasifikasi tidak ditemukan";
+            else if($classificationExist != "") $message = $classificationExist;
+            else if($scopeExist != "") $message = $scopeExist;
         }
 
         if($message == ""){

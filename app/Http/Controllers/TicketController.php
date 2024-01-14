@@ -36,7 +36,7 @@ class TicketController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $ticketQuery = Ticket::with("tenant")->with("ticketAttachments")->where("deleted_at", null);
+            $ticketQuery = Ticket::with("tenant")->where("deleted_at", null);
             if($value){
                 $ticketQuery->where(function ($query) use ($value) {
                     $query->where('ticket_number', 'like', '%' . $value . '%')

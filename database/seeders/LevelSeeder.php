@@ -14,7 +14,7 @@ class LevelSeeder extends Seeder
     public function run(): void
     {
         $faker = \Faker\Factory::create();
-        $nameArr = [ "Kepala BM", "Kepala Unit Pelayanan", "Koordinator Teknik", "Leader Cleaning", "Teknisi", "Chie Engineering", "Wawrehouse", "Chief Department", "Chief Finance & Akunting", "Admin", "Vendor" ];
+        $nameArr = [ "Kepala BM", "Kepala Unit Pelayanan", "Koordinator Teknik", "Leader Cleaning", "Teknisi", "Chief Engineering", "Warehouse", "Chief Department", "Chief Finance & Akunting", "Admin", "Vendor", "Superadmin", "Kepala Unit Cleaning", "GA" ];
 
         for($i = 0; $i < count($nameArr); $i++){
             Level::create([

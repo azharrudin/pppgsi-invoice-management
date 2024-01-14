@@ -55,6 +55,10 @@ class DamageReportController extends Controller
             $totalCount = $getTickets->total();
 
             $damageReportArr = $this->CommonService->toArray($getTickets);
+            foreach($damageReportArr as $damageReportObj){
+              $damageReportObj["classification"] = $this->CommonService->getClassificationOrScope($damageReportObj["classification"], "classification");
+              $damageReportObj["scope"] = $this->CommonService->getClassificationOrScope($damageReportObj["scope"], "scope");
+            }
 
             return [
                 "data" => $damageReportArr,
@@ -119,6 +123,9 @@ class DamageReportController extends Controller
                 where("deleted_at", null)->
                 first();
 
+            $getDamageReport["classification"] = $this->CommonService->getClassificationOrScope($getDamageReport["classification"], "classification");
+            $getDamageReport["scope"] = $this->CommonService->getClassificationOrScope($getDamageReport["scope"], "scope");
+
             return ["data" => $getDamageReport];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
@@ -147,6 +154,9 @@ class DamageReportController extends Controller
                 where("id", $id)->
                 where("deleted_at", null)->first();
             if (is_null($getDamageReport)) throw new CustomException("Laporan kerusakan tidak ditemukan", 404);
+
+            $getDamageReport["classification"] = $this->CommonService->getClassificationOrScope($getDamageReport["classification"], "classification");
+            $getDamageReport["scope"] = $this->CommonService->getClassificationOrScope($getDamageReport["scope"], "scope");
 
             return ["data" => $getDamageReport];
         } catch (\Throwable $e) {
@@ -211,6 +221,9 @@ class DamageReportController extends Controller
                 where("id", $id)->
                 where("deleted_at", null)->
                 first();
+
+            $getDamageReport["classification"] = $this->CommonService->getClassificationOrScope($getDamageReport["classification"], "classification");
+            $getDamageReport["scope"] = $this->CommonService->getClassificationOrScope($getDamageReport["scope"], "scope");
 
             return ["data" => $getDamageReport];
         } catch (\Throwable $e) {
@@ -355,6 +368,9 @@ class DamageReportController extends Controller
                 where("id", $id)->
                 where("deleted_at", null)->
                 first();
+
+            $getDamageReport["classification"] = $this->CommonService->getClassificationOrScope($getDamageReport["classification"], "classification");
+            $getDamageReport["scope"] = $this->CommonService->getClassificationOrScope($getDamageReport["scope"], "scope");
 
             return ["data" => $getDamageReport];
         } catch (\Throwable $e) {

@@ -55,6 +55,10 @@ class WorkOrderController extends Controller
             $totalCount = $getTickets->total();
 
             $workOrderArr = $this->CommonService->toArray($getTickets);
+            foreach($workOrderArr as $workOrderObj){
+              $workOrderObj["classification"] = $this->CommonService->getClassificationOrScope($workOrderObj["classification"], "classification");
+              $workOrderObj["scope"] = $this->CommonService->getClassificationOrScope($workOrderObj["scope"], "scope");
+            }
 
             return [
                 "data" => $workOrderArr,
@@ -118,6 +122,9 @@ class WorkOrderController extends Controller
                 where("deleted_at", null)->
                 first();
 
+            $getWorkOrder["classification"] = $this->CommonService->getClassificationOrScope($getWorkOrder["classification"], "classification");
+            $getWorkOrder["scope"] = $this->CommonService->getClassificationOrScope($getWorkOrder["scope"], "scope");
+
             return ["data" => $getWorkOrder];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
@@ -147,6 +154,9 @@ class WorkOrderController extends Controller
                 where("deleted_at", null)->
                 first();
             if (is_null($getWorkOrder)) throw new CustomException("Work order tidak ditemukan", 404);
+
+            $getWorkOrder["classification"] = $this->CommonService->getClassificationOrScope($getWorkOrder["classification"], "classification");
+            $getWorkOrder["scope"] = $this->CommonService->getClassificationOrScope($getWorkOrder["scope"], "scope");
 
             return ["data" => $getWorkOrder];
         } catch (\Throwable $e) {
@@ -209,6 +219,9 @@ class WorkOrderController extends Controller
                 where("id", $id)->
                 where("deleted_at", null)->
                 first();
+
+            $getWorkOrder["classification"] = $this->CommonService->getClassificationOrScope($getWorkOrder["classification"], "classification");
+            $getWorkOrder["scope"] = $this->CommonService->getClassificationOrScope($getWorkOrder["scope"], "scope");
 
             return ["data" => $getWorkOrder];
         } catch (\Throwable $e) {
@@ -356,6 +369,9 @@ class WorkOrderController extends Controller
                 where("id", $id)->
                 where("deleted_at", null)->
                 first();
+
+            $getWorkOrder["classification"] = $this->CommonService->getClassificationOrScope($getWorkOrder["classification"], "classification");
+            $getWorkOrder["scope"] = $this->CommonService->getClassificationOrScope($getWorkOrder["scope"], "scope");
 
             return ["data" => $getWorkOrder];
         } catch (\Throwable $e) {
