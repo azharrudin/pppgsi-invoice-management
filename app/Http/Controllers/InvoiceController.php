@@ -249,7 +249,7 @@ class InvoiceController extends Controller
             $data = $response->data;
 
             $pdf = PDF::loadView('invoice.download', ['data' => $data]);
-            $to = $invoice->tenant->email;;
+            $to = $invoice->tenant->email;
 
             Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $pdf) {
                 $message->to($to)
