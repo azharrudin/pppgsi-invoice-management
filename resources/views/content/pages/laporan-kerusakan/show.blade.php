@@ -21,7 +21,7 @@
             <div class="row invoice-add">
                 <!-- Invoice Add-->
                 <div class="col-lg-9 col-12 mb-lg-0 mb-3">
-                    <div class="card invoice-preview-card" id="previewLaporanKerusakan">
+                    <div class="card invoice-preview-card" id="editLaporanKerusakan">
                         <div class="card-body">
                             <div class="row m-sm-4 m-0">
                                 <div class="col-md-7 mb-md-0 mb-4 ps-0">
@@ -32,7 +32,7 @@
                                     <span class="fs-4 d-block text-center mx-auto"><b>LAPORAN KERUSAKAN</b></span>
                                     <span class="d-block text-center mx-auto">Nomor Lk :</span>
                                     <input type="text" class="form-control add w-px-250 mx-auto"
-                                        id="preview_damage_report_number" name="damage_report_number" placeholder="Nomor LK"
+                                        id="edit_damage_report_number" name="damage_report_number" placeholder="Nomor LK"
                                         required readonly />
                                     <div class="invalid-feedback mx-auto w-px-250">Tidak boleh kosong</div>
                                 </div>
@@ -51,26 +51,26 @@
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Date</label>
                                         <input type="text" class="form-control add w-px-250"
-                                            id="preview_damage_report_date" name="damage_report_date" placeholder="Tanggal"
+                                            id="edit_damage_report_date" name="damage_report_date" placeholder="Tanggal"
                                             required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Scope</label>
-                                        <input type="text" class="form-control add w-px-250" id="preview_scope"
+                                        <input type="text" class="form-control add w-px-250" id="edit_scope"
                                             name="scope" placeholder="Scope" required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Classification</label>
-                                        <input type="text" class="form-control add w-px-250" id="preview_classification"
+                                        <input type="text" class="form-control add w-px-250" id="edit_classification"
                                             name="classification" placeholder="Classification" required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Action Plan Date</label>
                                         <input type="text" class="form-control add w-px-250"
-                                            id="preview_action_plan_date" name="action_plan_date"
+                                            id="edit_action_plan_date" name="action_plan_date"
                                             placeholder="Action Plan Date" required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
@@ -93,24 +93,43 @@
                                                     <div class="col-4">
                                                         <label for="note" class="form-label fw-medium">Jenis Masalah
                                                             Kerusakan</label>
-                                                        <input type="text" class="form-control" id="preview_category"
-                                                            name="category" placeholder="Jenis Masalah Kerusakan" required
-                                                            readonly />
+                                                        <input type="text" class="form-control" id="edit_category"
+                                                            name="category" placeholder="Jenis Masalah Kerusakan"
+                                                            required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
                                                     <div class="col-4">
                                                         <label for="note" class="form-label fw-medium">Lokasi</label>
-                                                        <input type="text" class="form-control" id="preview_location"
+                                                        <input type="text" class="form-control" id="edit_location"
                                                             name="location" placeholder="Lokasi" required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
-                                                    <div class="col-4">
+                                                    <div class="col-3">
                                                         <label for="note" class="form-label fw-medium">Jumlah</label>
-                                                        <input type="text" class="form-control" id="preview_total"
+                                                        <input type="text" class="form-control" id="edit_total"
                                                             name="total" placeholder="Jumlah" required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
+                                                    <a class="mb-3 mx-2 mt-4" style="width: 10px" role="button"
+                                                        data-repeater-delete>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12"
+                                                            height="12" viewBox="0 0 12 12" fill="none">
+                                                            <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
+                                                            <path
+                                                                d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z"
+                                                                fill="#FF4747" />
+                                                        </svg>
+                                                    </a>
                                                 </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="row pb-4">
+                                            <div class="col-12">
+                                                <button type="button" class="btn btn-primary waves-effect waves-light"
+                                                    data-repeater-create>Tambah Baris</button>
                                             </div>
                                         </div>
                                     </div>
@@ -122,13 +141,13 @@
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add"
                                                     placeholder="KA. Unit Pelayanan" style="text-align:center;"
-                                                    id="preview_type-1" name="type" required readonly />
+                                                    id="edit_type-1" name="type" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add "
                                                     placeholder="Nama & Jabatan" style="text-align:center;"
-                                                    id="preview_name-1" name="name" required readonly />
+                                                    id="edit_name-1" name="name" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3 prev-1">
@@ -140,7 +159,7 @@
                                                             <span class="dz-nopreview">No preview</span>
                                                         </div>
                                                     </div>
-                                                    {{-- <a class="dz-remove" id="1" href="javascript:undefined;"
+                                                        {{-- <a class="dz-remove" id="1" href="javascript:undefined;"
                                                             data-dz-remove="">Remove file</a> --}}
                                                 </div>
                                             </div>
@@ -154,7 +173,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add" placeholder="Tanggal"
-                                                    style="text-align:center;" id="preview_date-1" name="date"
+                                                    style="text-align:center;" id="edit_date-1" name="date"
                                                     required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
@@ -163,13 +182,13 @@
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add"
                                                     placeholder="KA. Unit Pelayanan" style="text-align:center;"
-                                                    id="preview_type-2" name="type" required readonly />
+                                                    id="edit_type-2" name="type" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add "
                                                     placeholder="Nama & Jabatan" style="text-align:center;"
-                                                    id="preview_name-2" name="name" required readonly />
+                                                    id="edit_name-2" name="name" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3 prev-2">
@@ -196,7 +215,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add" placeholder="Tanggal"
-                                                    style="text-align:center;" id="preview_date-2" name="date"
+                                                    style="text-align:center;" id="edit_date-2" name="date"
                                                     required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
@@ -205,13 +224,13 @@
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add"
                                                     placeholder="KA. Unit Pelayanan" style="text-align:center;"
-                                                    id="preview_type-3" name="type" required readonly />
+                                                    id="edit_type-3" name="type" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add "
                                                     placeholder="Nama & Jabatan" style="text-align:center;"
-                                                    id="preview_name-3" name="name" required readonly />
+                                                    id="edit_name-3" name="name" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3 prev-3">
@@ -238,7 +257,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add" placeholder="Tanggal"
-                                                    style="text-align:center;" id="preview_date-3" name="date"
+                                                    style="text-align:center;" id="edit_date-3" name="date"
                                                     required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
@@ -259,6 +278,7 @@
                                 class="btn btn-primary d-grid w-100 mb-2">Update</button> --}}
                             {{-- <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview"
                                 class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a> --}}
+                            <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2 btn-edit">Edit Laporan Kerusakan</button>
                             <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
                         </div>
                     </div>
@@ -356,69 +376,98 @@
                     allowOutsideClick: false,
                     allowEscapeKey: false
                 })
+                $.ajax({
+                    url: "{{ url('api/damage-report') }}/" + id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(res) {
+                        let response = res.data;
+                        $('.btn-edit').attr('data-id', id);
+                        // Set value ke form atas
+                        $('#editLaporanKerusakan').find('.form-control').each(function() {
+                            $("#" + $(this).attr('id')).val(response[$(this).attr(
+                                "name")]);
+                        });
+                        $('#edit_damage_report_date').val(moment(response.damage_report_date,
+                            'YYYY-MM-DD').format('DD-MM-YYYY'));
+                        $('#edit_action_plan_date').val(moment(response.action_plan_date, 'YYYY-MM-DD')
+                            .format('DD-MM-YYYY'));
+                        $(".select-ticket").empty().append('<option value="' + response.ticket_id +
+                                '">' + response.ticket_id + '</option>').val(response.ticket_id);
+                        localStorage.setItem('status', response.status);
 
-                let response =  JSON.parse(localStorage.getItem('damage-report'));
+                        // Set value ke repeater
+                        var firstRow = $('.repeater-wrapper').first();
 
-                // Set value ke form atas
-                $('#previewLaporanKerusakan').find('.form-control').each(function() {
-                    $("#" + $(this).attr('id')).val(response[$(this).attr(
-                        "name")]);
+                        for (var i = 0; i < response.damage_report_details.length; i++) {
+                            var rowValues = response.damage_report_details[i];
+
+                            if (i === 0) {
+                                firstRow.find('#edit_category').val(rowValues.category);
+                                firstRow.find('#edit_location').val(rowValues.location);
+                                firstRow.find('#edit_total').val(rowValues.total);
+                            } else {
+                                var newRow = firstRow.clone();
+                                newRow.find('#edit_category').val(rowValues.category);
+                                newRow.find('#edit_location').val(rowValues.location);
+                                newRow.find('#edit_total').val(rowValues.total);
+
+                                $('.repeater [data-repeater-list="group-a"]').append(newRow);
+                            }
+                        }
+
+                        $('.repeater').repeater();
+
+                        // Set value ke form signature
+                        for (let i = 1; i < response.damage_report_signatures.length + 1; i++) {
+                            $("#edit_type-" + i).val(response.damage_report_signatures[i - 1].type);
+                            $("#edit_name-" + i).val(response.damage_report_signatures[i - 1].name);
+                            if (response.damage_report_signatures[i - 1].signature != '') {
+                                $('.prev-img-' + i).attr('src', response.damage_report_signatures[i - 1]
+                                    .signature);
+                            } else {
+                                $('.dz-nopreview').css('display', 'block');
+                            }
+                            $('#edit_date-' + i).val(moment(response.damage_report_signatures[i - 1]
+                                .date, 'YYYY-MM-DD').format('DD-MM-YYYY'));
+                        }
+                        Swal.close();
+                    },
+                    error: function(errors) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: errors.responseJSON
+                                .message,
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        })
+                    }
                 });
-                $('#preview_damage_report_date').val(moment(response.damage_report_date,
-                    'YYYY-MM-DD').format('DD-MM-YYYY'));
-                $('#preview_action_plan_date').val(moment(response.action_plan_date, 'YYYY-MM-DD')
-                    .format('DD-MM-YYYY'));
-                $(".select-ticket").empty().append('<option value="' + response.ticket_id +
-                    '">' + response.ticket_id + '</option>').val(response.ticket_id);
-                localStorage.setItem('status', response.status);
-
-                // Set value ke repeater
-                var firstRow = $('.repeater-wrapper').first();
-
-                for (var i = 0; i < response.details.length; i++) {
-                    var rowValues = response.details[i];
-
-                    if (i === 0) {
-                        firstRow.find('#preview_category').val(rowValues.category);
-                        firstRow.find('#preview_location').val(rowValues.location);
-                        firstRow.find('#preview_total').val(rowValues.total);
-                    } else {
-                        var newRow = firstRow.clone();
-                        newRow.find('#preview_category').val(rowValues.category);
-                        newRow.find('#preview_location').val(rowValues.location);
-                        newRow.find('#preview_total').val(rowValues.total);
-
-                        $('.repeater [data-repeater-list="group-a"]').append(newRow);
-                    }
-                }
-
-                $('.repeater').repeater();
-
-                // Set value ke form signature
-                for (let i = 1; i < response.signatures.length + 1; i++) {
-                    $("#preview_type-" + i).val(response.signatures[i - 1].type);
-                    $("#preview_name-" + i).val(response.signatures[i - 1].name);
-                    if (response.signatures[i - 1].signature != '') {
-                        $('.prev-img-' + i).attr('src', response.signatures[i - 1]
-                            .signature);
-                    } else {
-                        $('.dz-nopreview').css('display', 'block');
-                    }
-                    $('#preview_date-' + i).val(moment(response.signatures[i - 1]
-                        .date, 'YYYY-MM-DD').format('DD-MM-YYYY'));
-                }
-                Swal.close();
             }
+
+            // Button edit
+            $(".btn-edit").on('click', function() {
+                // Mendapatkan nilai data-id dari button yang diklik
+                var id = $(this).data('id');
+
+                // Membentuk URL dengan nilai id
+                var url = window.location.href.replace(/\/preview\/\d+$/, '/edit/' + id);
+
+                // Menggantikan URL saat ini dengan URL yang sudah dibentuk
+                window.location.replace(url);
+            });
 
             // Date
             $('.date').flatpickr({
                 dateFormat: 'd-m-Y'
             });
-
+            
             // Cancel
             $(".btn-cancel").on("click", function() {
                 window.location.href = "/complain/laporan-kerusakan"
-                localStorage.removeItem('damage-report');
             })
 
             // Select2

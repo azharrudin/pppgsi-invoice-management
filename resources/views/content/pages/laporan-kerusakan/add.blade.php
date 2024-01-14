@@ -507,7 +507,7 @@ $configData = Helper::appClasses();
             console.log(datas);
 
             localStorage.setItem('damage-report', JSON.stringify(datas));
-            window.location.href = "/complain/laporan-kerusakan/show";
+            window.location.href = "/complain/laporan-kerusakan/preview";
         })
 
         // Cancel
@@ -630,30 +630,30 @@ $configData = Helper::appClasses();
         // Clone baris terakhir
         var details = $('#details');
         var newRow = `
-            <div class="row-mg">
-                <div class="row mb-1 row-mg">
-                    <div class="col-md-4">
-                        <label for="note" class="form-label fw-medium">Jenis Masalah Kerusakan</label>
-                        <input type="text" class="form-control  row-input" id="category" name="category[]" placeholder="Jenis Masalah Kerusakan" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="note" class="form-label fw-medium">Lokasi</label>
-                        <input type="text" class="form-control  row-input" id="location" name="location[]" placeholder="Lokasi" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="note" class="form-label fw-medium">Jumlah</label>
-                        <input type="text" class="form-control qty  row-input" id="total" name="total[]" placeholder="Jumlah" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-md-1  px-1-custom">
-                        <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
-                            <i class="fas fa-trash"></i>
-                        </a>
+                <div class="row-mg">
+                    <div class="row mb-1 row-mg">
+                        <div class="col-md-4">
+                            <label for="note" class="form-label fw-medium">Jenis Masalah Kerusakan</label>
+                            <input type="text" class="form-control  row-input" id="category" name="category[]" placeholder="Jenis Masalah Kerusakan" value="` + details[i].category + `" required />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="note" class="form-label fw-medium">Lokasi</label>
+                            <input type="text" class="form-control  row-input" id="location" name="location[]" placeholder="Lokasi" value="` + details[i].location + `" required />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="note" class="form-label fw-medium">Jumlah</label>
+                            <input type="text" class="form-control qty  row-input" id="total" name="total[]" value="` + details[i].total + `" placeholder="Jumlah" required />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-md-1  px-1-custom">
+                            <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
             `;
         details.append(newRow);
     });
