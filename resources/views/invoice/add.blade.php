@@ -149,6 +149,11 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
                                 <div class="mb-3">
+                                    <a role="button"  id="deleteTtd" class="btn btn-danger btn-sm text-center text-white" disabled>
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                                <div class="mb-3">
                                     <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
@@ -262,6 +267,11 @@ $configData = Helper::appClasses();
                         ttdFile = file;
                     })
                 }
+            });
+
+                
+            $(document).on('click', '#deleteTtd', function() {
+                myDropzone.removeAllFiles();
             });
         }
 
@@ -482,7 +492,6 @@ $configData = Helper::appClasses();
             }
 
         });
-
 
         $(document).on('click', '.btn-remove-mg', function() {
             // Hapus baris yang ditekan tombol hapus

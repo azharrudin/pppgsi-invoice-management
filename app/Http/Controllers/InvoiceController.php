@@ -11,6 +11,9 @@ use App\Services\CommonService;
 use App\Services\InvoiceService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use PDF;
+use Illuminate\Support\Facades\Mail;
 
 class InvoiceController extends Controller
 {
@@ -209,6 +212,7 @@ class InvoiceController extends Controller
         }
     }
 
+
     public function updateStatus(Request $request, $id)
     {
         DB::beginTransaction();
@@ -222,9 +226,37 @@ class InvoiceController extends Controller
                 'status' => $request->status
             ]);
 
-            
+
             $invoice = Invoice::where('id', $id)->first();
+
+            $invoice = Invoice::where('id', $id)->first();
+            $hariIni = \Carbon\Carbon::now()->locale('id');
+            $bulan = $hariIni->monthName;
+            $tahun = $hariIni->format('Y');
+
+            $dataEmail["tenantName"] = $invoice->tenant->name;
+            $dataEmail["month"] = $bulan;
+            $dataEmail["year"] = $tahun;
+            $dataEmail["total"] = $invoice->grand_total;
+            $dataEmail["terbilang"] = $invoice->grand_total_spelled;
             
+            // $data["email"] = "aatmaninfotech@gmail.com";
+            // $data["title"] = "From ItSolutionStuff.com";
+            // $data["body"] = "This is Demo";
+
+            $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice/' . $id);
+            $response = json_decode($apiRequest->getBody());
+            $data = $response->data;
+
+            $pdf = PDF::loadView('invoice.download', ['data' => $data]);
+            $to = $invoice->tenant->email;;
+
+            Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $pdf) {
+                $message->to($to)
+                    ->subject('Invoice')
+                    ->attachData($pdf->output(), "Invoice.pdf");
+            });
+
             DB::commit();
             return ["data" => $invoice];
         } catch (\Throwable $e) {
@@ -232,8 +264,8 @@ class InvoiceController extends Controller
             $errorStatusCode = 500;
             DB::rollBack();
 
+            dd($e);
             if (is_a($e, CustomException::class)) {
-                dd($e);
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
