@@ -80,6 +80,7 @@
     <script>
         "use strict";
         let account = {!! json_encode(session('data')) !!}
+        console.log(account.level.id);
         let buttonAdd = [];
         var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>

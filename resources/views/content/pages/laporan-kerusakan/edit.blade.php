@@ -130,18 +130,19 @@
 
 
                                     <hr class="my-3">
-                                    <div class="row  text-center mt-4">
+                                    <div class="row  text-center mt-4" id="ttd">
+                                        <!-- KA -->
                                         <div class="col-4 signatures">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add"
                                                     placeholder="KA. Unit Pelayanan" style="text-align:center;"
-                                                    id="edit_type-1" name="type" required />
+                                                    id="edit_type-1" name="type"/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add "
-                                                    placeholder="Nama & Jabatan" style="text-align:center;"
-                                                    id="edit_name-1" name="name" required />
+                                                    placeholder="Koordinator Teknik" style="text-align:center;"
+                                                    id="edit_name-1" name="name"  />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3 prev-1">
@@ -168,21 +169,23 @@
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add date" placeholder="Tanggal"
                                                     style="text-align:center;" id="edit_date-1" name="date"
-                                                    required />
+                                                     />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
+                                        <!-- Akhir KA -->
+                                        <!-- Koor Teknik -->
                                         <div class="col-4 signatures">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add"
                                                     placeholder="KA. Unit Pelayanan" style="text-align:center;"
-                                                    id="edit_type-2" name="type" required />
+                                                    id="edit_type-2" name="type"  />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add "
                                                     placeholder="Nama & Jabatan" style="text-align:center;"
-                                                    id="edit_name-2" name="name" required />
+                                                    id="edit_name-2" name="name"  />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3 prev-2">
@@ -210,21 +213,23 @@
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add date" placeholder="Tanggal"
                                                     style="text-align:center;" id="edit_date-2" name="date"
-                                                    required />
+                                                     />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
+                                        <!-- Akhir koor teknik -->
+                                        <!-- Leader Cleaner -->
                                         <div class="col-4 signatures">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add"
                                                     placeholder="KA. Unit Pelayanan" style="text-align:center;"
-                                                    id="edit_type-3" name="type" required />
+                                                    id="edit_type-3" name="type"  />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add "
                                                     placeholder="Nama & Jabatan" style="text-align:center;"
-                                                    id="edit_name-3" name="name" required />
+                                                    id="edit_name-3" name="name"  />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3 prev-3">
@@ -252,10 +257,11 @@
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add date" placeholder="Tanggal"
                                                     style="text-align:center;" id="edit_date-3" name="date"
-                                                    required />
+                                                     />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
+                                        <!-- Akhir leader cleanar -->
                                     </div>
                                 </div>
                             </div>
@@ -343,6 +349,7 @@
     </script>
     <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
     </script>
+    
     <script>
         $(document).ready(function() {
             $('.repeater').repeater({
@@ -352,6 +359,64 @@
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
 
+            let account = {!! json_encode(session('data')) !!}
+            var levelId = account.level_id;
+
+           
+
+           
+            if (levelId == 2) { // KA
+                $('#edit_type-1').prop('readonly', false);
+                $('#edit_name-1').prop('readonly', false);
+                $('#edit_date-1').prop('disabled', false);
+
+                $('#edit_type-2').prop('readonly', true);
+                $('#edit_name-2').prop('readonly', true);
+                $('#edit_date-2').prop('disabled', true);
+
+                $('#edit_type-3').prop('readonly', true);
+                $('#edit_name-3').prop('readonly', true);
+                $('#edit_date-3').prop('disabled', true);
+            } else if (levelId == 3) { // koor teknik
+                $('#edit_type-1').prop('readonly', true);
+                $('#edit_name-1').prop('readonly', true);
+                $('#edit_date-1').prop('disabled', true);
+
+                $('#edit_type-2').prop('readonly', false);
+                $('#edit_name-2').prop('readonly', false);
+                $('#edit_date-2').prop('disabled', false);
+
+                $('#edit_type-3').prop('readonly', true);
+                $('#edit_name-3').prop('readonly', true);
+                $('#edit_date-3').prop('disabled', true);
+            } else if (levelId == 4) { // leader cleaning
+                $('#edit_type-1').prop('readonly', true);
+                $('#edit_name-1').prop('readonly', true);
+                $('#edit_date-1').prop('disabled', true);
+
+                $('#edit_type-2').prop('readonly', true);
+                $('#edit_name-2').prop('readonly', true);
+                $('#edit_date-2').prop('disabled', true);
+
+                $('#edit_type-3').prop('readonly', false);
+                $('#edit_name-3').prop('readonly', false);
+                $('#edit_date-3').prop('disabled', false);
+            } else { //other
+                $('#edit_type-1').prop('readonly', true);
+                $('#edit_name-1').prop('readonly', true);
+                $('#edit_date-1').prop('disabled', true);
+
+                $('#edit_type-2').prop('readonly', true);
+                $('#edit_name-2').prop('readonly', true);
+                $('#edit_date-2').prop('disabled', true);
+
+                $('#edit_type-3').prop('readonly', true);
+                $('#edit_name-3').prop('readonly', true);
+                $('#edit_date-3').prop('disabled', true);
+            }
+
+          
+            
             // Mendapatkan id dengan cara mengambil dari URL
             var urlSegments = window.location.pathname.split('/');
             var idIndex = urlSegments.indexOf('edit') + 1;

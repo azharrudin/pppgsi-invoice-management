@@ -81,6 +81,8 @@ $configData = Helper::appClasses();
                                 <span class="sr-only">Loading...</span>
                             </div>`;
 
+
+
     $((function() {
         var a = $(".damage-report-list-table");
         if (a.length) var e = a.DataTable({

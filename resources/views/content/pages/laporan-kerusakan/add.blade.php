@@ -48,18 +48,7 @@ $configData = Helper::appClasses();
                                     <input type="text" class="form-control add w-px-250 date" id="damage_report_date" name="damage_report_date" placeholder="Tanggal" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
-                                <!-- <div class="mb-1">
-                                        <label for="note" class="form-label fw-medium">Scope</label>
-                                        <input type="text" class="form-control add w-px-250" id="scope"
-                                            name="scope" placeholder="Scope" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="mb-1">
-                                        <label for="note" class="form-label fw-medium">Classification</label>
-                                        <input type="text" class="form-control add w-px-250" id="classification"
-                                            name="classification" placeholder="Classification" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div> -->
+
                                 <div class="mb-1">
                                     <label for="scope" class="form-label fw-medium">Scope</label>
                                     <select class="form-select add w-px-250 select2 select-scope" id="scope" name="scope[]" multiple required>
@@ -130,14 +119,14 @@ $configData = Helper::appClasses();
 
 
                                 <hr class="my-3">
-                                <div class="row  text-center mt-4">
+                                <div class="row  text-center mt-4" id="ttd">
                                     <div class="col-4 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control add" placeholder="KA. Unit Pelayanan" style="text-align:center;" id="type" name="type" required />
+                                            <input type="text" class="form-control add" placeholder="KA. Unit Pelayanan" style="text-align:center;" id="type" name="type"/>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control add " placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name" required />
+                                            <input type="text" class="form-control add " placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name"/>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -148,17 +137,17 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control add date" placeholder="Tanggal" style="text-align:center;" id="date1" name="date" required />
+                                            <input type="text" class="form-control add date" placeholder="Tanggal" style="text-align:center;" id="date1" name="date"/>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
                                     <div class="col-4 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control add" placeholder="KA. Unit Pelayanan" style="text-align:center;" id="type" name="type" required />
+                                            <input type="text" class="form-control add" placeholder="KA. Unit Pelayanan" style="text-align:center;" id="type" name="type"/>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control add " placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name" required />
+                                            <input type="text" class="form-control add " placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name"/>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -169,17 +158,17 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control add date" placeholder="Tanggal" style="text-align:center;" id="date2" name="date" required />
+                                            <input type="text" class="form-control add date" placeholder="Tanggal" style="text-align:center;" id="date2" name="date" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
                                     <div class="col-4 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control add" placeholder="KA. Unit Pelayanan" style="text-align:center;" id="type" name="type" required />
+                                            <input type="text" class="form-control add" placeholder="KA. Unit Pelayanan" style="text-align:center;" id="type" name="type" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control add " placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name" required />
+                                            <input type="text" class="form-control add " placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -190,7 +179,7 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control add date" placeholder="Tanggal" style="text-align:center;" id="date3" name="date" required />
+                                            <input type="text" class="form-control add date" placeholder="Tanggal" style="text-align:center;" id="date3" name="date" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
@@ -290,6 +279,14 @@ $configData = Helper::appClasses();
         var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
+
+        let account = {!! json_encode(session('data')) !!}
+        var levelId = account.level_id;
+        if (levelId == 10) {
+            $('#ttd').hide();
+        } else {
+            $('#ttd').show();
+        }
 
         // Date
         $('.date').flatpickr({
