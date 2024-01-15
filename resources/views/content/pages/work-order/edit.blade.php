@@ -500,6 +500,94 @@
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
 
+            let account = {!! json_encode(session('data')) !!}
+            var levelId = account.level_id;
+
+           
+
+           
+            if (levelId == 5) { // teknisi
+                $('#technician1').prop('readonly', false);
+                $('#nama1').prop('readonly', false);
+                $('#date1').prop('disabled', false);
+
+                $('#technician2').prop('readonly', true);
+                $('#nama2').prop('readonly', true);
+                $('#date2').prop('disabled', true);
+
+                $('#technician3').prop('readonly', true);
+                $('#nama3').prop('readonly', true);
+                $('#date3').prop('disabled', true);
+
+                $('#technician4').prop('readonly', true);
+                $('#nama4').prop('readonly', true);
+                $('#date4').prop('disabled', true);
+            } else if (levelId == 6) { // Chie Engineering
+                $('#technician1').prop('readonly', true);
+                $('#nama1').prop('readonly', true);
+                $('#date1').prop('disabled', true);
+
+                $('#technician2').prop('readonly', false);
+                $('#nama2').prop('readonly', false);
+                $('#date2').prop('disabled', false);
+
+                $('#technician3').prop('readonly', true);
+                $('#nama3').prop('readonly', true);
+                $('#date3').prop('disabled', true);
+
+                $('#technician4').prop('readonly', true);
+                $('#nama4').prop('readonly', true);
+                $('#date4').prop('disabled', true);
+            } else if (levelId == 7) { // ware house
+                $('#technician1').prop('readonly', true);
+                $('#nama1').prop('readonly', true);
+                $('#date1').prop('disabled', true);
+
+                $('#technician2').prop('readonly', true);
+                $('#nama2').prop('readonly', true);
+                $('#date2').prop('disabled', true);
+
+                $('#technician3').prop('readonly', false);
+                $('#nama3').prop('readonly', false);
+                $('#date3').prop('disabled', false);
+
+                $('#technician4').prop('readonly', true);
+                $('#nama4').prop('readonly', true);
+                $('#date4').prop('disabled', true);
+            } else if (levelId == 1) { // build manager
+                $('#technician1').prop('readonly', true);
+                $('#nama1').prop('readonly', true);
+                $('#date1').prop('disabled', true);
+
+                $('#technician2').prop('readonly', true);
+                $('#nama2').prop('readonly', true);
+                $('#date2').prop('disabled', true);
+
+                $('#technician3').prop('readonly', true);
+                $('#nama3').prop('readonly', true);
+                $('#date3').prop('disabled', true);
+
+                $('#technician4').prop('readonly', false);
+                $('#nama4').prop('readonly', false);
+                $('#date4').prop('disabled', false);
+            } else { //other
+                $('#technician1').prop('readonly', true);
+                $('#nama1').prop('readonly', true);
+                $('#date1').prop('disabled', true);
+
+                $('#technician2').prop('readonly', true);
+                $('#nama2').prop('readonly', true);
+                $('#date2').prop('disabled', true);
+
+                $('#technician3').prop('readonly', true);
+                $('#nama3').prop('readonly', true);
+                $('#date3').prop('disabled', true);
+
+                $('#technician4').prop('readonly', true);
+                $('#nama4').prop('readonly', true);
+                $('#date4').prop('disabled', true);
+            }
+
             // Date
             $('.date').flatpickr({
                 dateFormat: 'd-m-Y'

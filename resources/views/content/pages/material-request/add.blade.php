@@ -78,7 +78,7 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
 
-                                <div class="row mb-3">
+                                <div class="row mb-3 ttd">
                                     <div class="col-md-3">
                                         <label for="note" class="form-label fw-medium mb-3">Prepered by :</label>
                                         <div class="mb-3">
@@ -147,7 +147,7 @@ $configData = Helper::appClasses();
 
 
 
-                                <div class="row">
+                                <div class="row ttd">
                                     <div class="col-md-2">
                                         <span>Lembar</span>
                                     </div>
@@ -211,8 +211,22 @@ $configData = Helper::appClasses();
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
+    
+        
+       
     let dataLocal = JSON.parse(localStorage.getItem("material-request"));
     $(document).ready(function() {
+
+        let account = {!! json_encode(session('data')) !!}
+        var levelId = account.level_id;
+        if (levelId == 10) {
+            $('.ttd').hide();
+        } else {
+            $('.ttd').show();
+        }
+
+        console.log(levelId);
+
         $('.date').flatpickr({
             dateFormat: 'Y-m-d'
         });

@@ -177,15 +177,15 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
 
-                                <label for="note" class="form-label fw-medium">Technician</label>
-                                <div class="row  text-center">
+                                <label for="note" class="form-label fw-medium text-left ttd">Technician</label>
+                                <div class="row  text-center ttd">
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician1" name="technician" style="text-align:center;" required />
+                                            <input type="text" class="form-control" placeholder="Technician" id="technician1" name="technician" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control " placeholder="Nama & Jabatan" id="nama1" name="name" style="text-align:center;" required />
+                                            <input type="text" class="form-control " placeholder="Nama & Jabatan" id="nama1" name="name" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -196,17 +196,17 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" name="date" id="date1" style="text-align:center;" required />
+                                            <input type="text" class="form-control date" placeholder="Tanggal" name="date" id="date1" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician2" name="technician" style="text-align:center;" required />
+                                            <input type="text" class="form-control" placeholder="Technician" id="technician2" name="technician" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control " placeholder="Nama & Jabatan" id="nama2" name="name" style="text-align:center;" required />
+                                            <input type="text" class="form-control " placeholder="Nama & Jabatan" id="nama2" name="name" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -217,17 +217,17 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date2" name="date" style="text-align:center;" required />
+                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date2" name="date" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician3" name="technician" style="text-align:center;" required />
+                                            <input type="text" class="form-control" placeholder="Technician" id="technician3" name="technician" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control " placeholder="Nama & Jabatan" id="nama3" name="name" style="text-align:center;" required />
+                                            <input type="text" class="form-control " placeholder="Nama & Jabatan" id="nama3" name="name" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -238,17 +238,17 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date3" name="date" style="text-align:center;" required />
+                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date3" name="date" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician4" name="technician" style="text-align:center;" required />
+                                            <input type="text" class="form-control" placeholder="Technician" id="technician4" name="technician" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control " placeholder="Nama & Jabatan" id="nama4" name="name" style="text-align:center;" required />
+                                            <input type="text" class="form-control " placeholder="Nama & Jabatan" id="nama4" name="name" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -259,7 +259,7 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date4" name="date" style="text-align:center;" required />
+                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date4" name="date" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
@@ -302,6 +302,18 @@ $configData = Helper::appClasses();
     "use strict";
     let dataLocal = JSON.parse(localStorage.getItem("material-request"));
     $(document).ready(function() {
+        
+        
+
+        let account = {!! json_encode(session('data')) !!}
+        var levelId = account.level_id;
+        if (levelId == 10) {
+            $('.ttd').hide();
+        } else {
+            $('.ttd').show();
+        }
+
+
         // Date
         $('.date').flatpickr({
             dateFormat: 'Y-m-d'
