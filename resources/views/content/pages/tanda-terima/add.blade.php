@@ -282,9 +282,8 @@ $configData = Helper::appClasses();
 </script>
 <script>
     "use strict";
-    let account = {
-        !!json_encode(session('data')) !!
-    }
+    let account = {!!json_encode(session('data')) !!}
+    
     $(document).ready(function() {
 
         // Mendapatkan id dari invoice

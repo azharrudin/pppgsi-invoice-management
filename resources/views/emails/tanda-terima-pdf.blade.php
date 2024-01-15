@@ -12,8 +12,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Invoice</title>
-    <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <link href="{{ public_path('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+
+    {{-- <script src="{{public_path('bootstrap/js/bootstrap.bundle.min.js')}}"></script> --}}
     <style>
         body {
             font-size: 10pt;
@@ -77,7 +80,7 @@
 <body>
     <div class="container" id="printContent">
         <header>
-            <img src="https://pppgsi.com/assets/img/header.png" alt="kop surat" width="100%">
+            <img src="{{ public_path('assets/img/header.png') }}" alt="kop surat" width="100%">
         </header>
 
         <div class="row" style="float: right;">
@@ -153,6 +156,8 @@
             <div style="clear: both;"></div>
         </div>
     </div>
+
+
 </body>
 
 </html>

@@ -12,14 +12,11 @@
     "barryvdh/laravel-dompdf": "^2.0",
     "firebase/php-jwt": "^6.10",
     "guzzlehttp/guzzle": "^7.2",
-    "h4cc/wkhtmltoimage-amd64": "0.12.x",
-    "h4cc/wkhtmltopdf-amd64": "0.12.x",
     "laravel/framework": "^10.23",
     "laravel/jetstream": "4.0.2",
     "laravel/sanctum": "^3.2",
     "laravel/tinker": "^2.8",
     "livewire/livewire": "^3.0",
-    "wemersonjanuario/wkhtmltopdf-windows": "0.12.2.3",
     "yajra/laravel-datatables-oracle": "^10.0"
   },
   "require-dev": {

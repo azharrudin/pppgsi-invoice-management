@@ -108,11 +108,11 @@ $configData = Helper::appClasses();
                 }
             }, {
                 name: "tenant_name",
-                data: "tenant.name",
+                data: "tenant",
                 title: "Perusahan",
                 className: 'text-center',
                 render: function(data, type, row) {
-                    return data;
+                    return data?.name;
                 }
             }, {
                 name: "tenant_name",

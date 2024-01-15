@@ -35,7 +35,7 @@ return [
 
     'pdf' => [
         'enabled' => true,
-        'binary'  => env('WKHTML_PDF_BINARY', '/vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64'),
+        'binary'  => env('WKHTML_PDF_BINARY', '/Users/aprijaelani/dooha/invoice-management-system/vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64'),
         // 'binary'  => env('WKHTML_PDF_BINARY', '/vendor/wemersonjanuario/wkhtmltopdf-windows/bin/64bit/wkhtmltopdf.exe'),
         // 'binary'  => env('WKHTML_PDF_BINARY', "D:\Laravel\invoice-management-system/vendor/wemersonjanuario/wkhtmltopdf-windows/bin/64bit/wkhtmltopdf.exe"),
         'timeout' => false,

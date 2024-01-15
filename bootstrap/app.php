@@ -41,9 +41,6 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
-// class_alias(Barryvdh\Snappy\Facades\SnappyPdf::class, 'PDF');
-// class_alias(Barryvdh\Snappy\Facades\SnappyImage::class, 'SnappyImage');
-
 /*
 |--------------------------------------------------------------------------
 | Return The Application

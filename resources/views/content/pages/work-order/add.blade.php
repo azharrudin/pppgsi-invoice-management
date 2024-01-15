@@ -65,88 +65,20 @@ $configData = Helper::appClasses();
                         </div>
 
                         <div class="row py-3 px-3">
-                            <div class="col-12">
-                                <label for="note" class="form-label fw-medium">Scope </label>
-                                <div class="">
-                                    <div class="form-check form-check-inline check1">
-                                        <input class="form-check-input scope-checkbox" type="checkbox" name="telekomunikasi" id="telekomunikasi" required>
-                                        <label class="form-check-label" for="telekomunikasi">Telekomunikasi</label>
-                                    </div>
-                                    <div class="form-check form-check-inline check1">
-                                        <input class="form-check-input scope-checkbox" type="checkbox" name="electric" id="electric" required>
-                                        <label class="form-check-label" for="electric">Electric</label>
-                                    </div>
-                                    <div class="form-check form-check-inline check1">
-                                        <input class="form-check-input scope-checkbox" type="checkbox" name="plumbing" id="plumbing" required>
-                                        <label class="form-check-label" for="plumbing">Plumbing</label>
-                                    </div>
-                                    <div class="form-check form-check-inline check1">
-                                        <input class="form-check-input scope-checkbox" type="checkbox" name="civil" id="civil" required>
-                                        <label class="form-check-label" for="civil">Civil</label>
-                                    </div>
-                                    <div class="form-check form-check-inline check1">
-                                        <input class="form-check-input scope-checkbox" type="checkbox" name="bas" id="bas" required>
-                                        <label class="form-check-label" for="bas">BAS</label>
-                                    </div>
-                                    <div class="form-check form-check-inline check1">
-                                        <input class="form-check-input scope-checkbox" type="checkbox" name="mdp" id="mdp" required>
-                                        <label class="form-check-label" for="mdp">MDP</label>
-                                    </div>
-                                </div>
-                                <div class="">
-                                    <div class="form-check form-check-inline check1">
-                                        <input class="form-check-input scope-checkbox" type="checkbox" name="telekomunikasi" required id="telekomunikasi2">
-                                        <label class="form-check-label" for="telekomunikasi2">Telekomunikasi</label>
-                                    </div>
-                                    <div class="form-check form-check-inline check1">
-                                        <input class="form-check-input scope-checkbox" type="checkbox" name="hvac" required id="hvac">
-                                        <label class="form-check-label" for="hvac">HVAC</label>
-                                    </div>
-                                    <div class="form-check form-check-inline check1">
-                                        <input class="form-check-input scope-checkbox" type="checkbox" name="lift" required id="lift">
-                                        <label class="form-check-label" for="lift">Lift</label>
-                                    </div>
-                                    <div class="form-check form-check-inline check1">
-                                        <input class="form-check-input scope-checkbox" type="checkbox" name="fire system" required id="fireSystem">
-                                        <label class="form-check-label" for="fireSystem">Fire System</label>
-                                    </div>
-                                    <div class="form-check form-check-inline check1">
-                                        <input class="form-check-input scope-checkbox" type="checkbox" name="genset" required id="genset">
-                                        <label class="form-check-label" for="genset">GENSET</label>
-                                    </div>
-                                    <div class="form-check form-check-inline check1">
-                                        <input class="form-check-input scope-checkbox" type="checkbox" name="others" required id="others">
-                                        <label class="form-check-label" for="others">Others</label>
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="mb-1">
+                                    <label for="scope" class="form-label fw-medium">Scope</label>
+                                    <select class="form-select add w-px-250 select2 select-scope" id="scope" name="scope[]" multiple required>
+                                    </select>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row py-3 px-3">
-                            <div class="col-12">
-                                <label for="note" class="form-label fw-medium">Classification</label>
-                                <div class="">
-                                    <div class="form-check form-check-inline classif">
-                                        <input class="form-check-input classif-checkbox" type="checkbox" name="previous maintenance routine" id="mainRoutine" required>
-                                        <label class="form-check-label" for="mainRoutine">Prev. Maint Routine</label>
-                                    </div>
-                                    <div class="form-check form-check-inline classif">
-                                        <input class="form-check-input classif-checkbox" type="checkbox" name="previous maintenance non routine" id="prevnonroutine" required>
-                                        <label class="form-check-label" for="prevnonroutine">Prev Maint Non
-                                            Routine</label>
-                                    </div>
-                                    <div class="form-check form-check-inline classif">
-                                        <input class="form-check-input classif-checkbox" type="checkbox" name="repair" id="repair" required>
-                                        <label class="form-check-label" for="repair">Repair</label>
-                                    </div>
-                                    <div class="form-check form-check-inline classif">
-                                        <input class="form-check-input classif-checkbox" type="checkbox" name="replacement" id="replacement" required>
-                                        <label class="form-check-label" for="replacement">Replacement</label>
-                                    </div>
-                                    <div class="form-check form-check-inline classif">
-                                        <input class="form-check-input classif-checkbox" type="checkbox" name="vendor" id="vendor" required>
-                                        <label class="form-check-label" for="vendor">Vendor</label>
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="mb-1">
+                                    <label for="classification" class="form-label fw-medium">Classification</label>
+                                    <select class="form-select add w-px-250 select2 select-classification" id="classification" name="classification[]" multiple required>
+                                    </select>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
                         </div>
@@ -679,6 +611,76 @@ $configData = Helper::appClasses();
                 $('.scope-checkbox').prop('disabled', false);
             }
         });
+
+        // Select3
+        $(".select-scope").select2({
+            placeholder: 'Select Scope',
+            allowClear: true,
+            ajax: {
+                url: "{{ url('api/scope/select') }}",
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        term: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+        });
+
+        $('.select-scope').on("change", (async function(e) {
+            $(this).removeClass("is-invalid");
+        }));
+
+        // Select3
+        $(".select-classification").select2({
+            placeholder: 'Select classification',
+            allowClear: true,
+            ajax: {
+                url: "{{ url('api/classification/select') }}",
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        term: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+        });
+
+        $('.select-classification').on("change", (async function(e) {
+            $(this).removeClass("is-invalid");
+        }));
 
         // Classification
         $('.classif-checkbox').change(function() {
