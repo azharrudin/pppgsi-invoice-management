@@ -35,7 +35,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1">300</h3>
-                            <p class="mb-0">Tenant</p>
+                            <p class="mb-0 count_tenant">Tenant</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none me-4">
@@ -44,7 +44,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1">100</h3>
-                            <p class="mb-0">Invoice</p>
+                            <p class="mb-0 count_invoice">Invoice</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
@@ -52,7 +52,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-3">
                     <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
                         <div>
-                            <h3 class="mb-1">Rp. 20.000.000</h3>
+                            <h3 class="mb-1 invoice_paid">Rp. 20.000.000</h3>
                             <p class="mb-0">Terbayarkan</p>
                         </div>
                     </div>
@@ -60,7 +60,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-3">
                     <div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
                         <div>
-                            <h3 class="mb-1">Rp. 5.000.000</h3>
+                            <h3 class="mb-1 invoice_not_paid">Rp. 5.000.000</h3>
                             <p class="mb-0">Belum Dibayarkan</p>
                         </div>
                     </div>
@@ -95,7 +95,7 @@ $configData = Helper::appClasses();
 
         let account = {!! json_encode(session('data')) !!}
         let buttonAdd = [];
-        if(account.level.id == '10'){
+        if (account.level.id == '10') {
             buttonAdd = [{
                 text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Invoice</span>',
                 className: "btn btn-primary",
@@ -108,44 +108,59 @@ $configData = Helper::appClasses();
         $(document).on('click', '.send-email', function(event) {
             event.preventDefault();
             Swal.fire({
-                title: '<h2>Loading...</h2>',
-                html: sweet_loader + '<h5>Please Wait</h5>',
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                allowEscapeKey: false
-            });
-            let id = $(this).data('id');
-            let datas = {}
-            datas.status = 'Terkirim';
-            $.ajax({
-                url: "{{env('BASE_URL_API')}}" + "/api/invoice/update-status/" + id,
-                type: "PATCH",
-                data: JSON.stringify(datas),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(response) {
+                title: 'Apakah anda yakin?',
+                icon: 'warning',
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Ya, Kirim!",
+                cancelButtonText: "Batal",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                    cancelButton: "btn fw-bold btn-active-light-primary"
+                }
+            }).then((result) => {
+                if (result.value) {
+                    let id = $(this).data('id');
+                    let datas = {}
+                    datas.status = 'Terkirim';
                     Swal.fire({
-                        title: 'Berhasil',
-                        text: 'Berhasil Mengirim Invoice',
-                        icon: 'success',
-                        customClass: {
-                            confirmButton: 'btn btn-primary'
-                        },
-                        buttonsStyling: false
-                    }).then((result) => {
-                        $('.invoice-list-table').DataTable().ajax.reload();
+                        title: 'Memeriksa...',
+                        text: "Harap menunggu",
+                        imageUrl: "{{ asset('waiting.gif') }}",
+                        showConfirmButton: false,
+                        allowOutsideClick: false
                     });
-                },
-                error: function(xhr, status, error) {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: ' You clicked the button!',
-                        icon: 'error',
-                        customClass: {
-                            confirmButton: 'btn btn-primary'
+                    $.ajax({
+                        url: "{{env('BASE_URL_API')}}" + "/api/invoice/update-status/" + id,
+                        type: "PATCH",
+                        data: JSON.stringify(datas),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response) {
+                            Swal.fire({
+                                title: 'Berhasil',
+                                text: 'Berhasil Mengirim Invoice',
+                                icon: 'success',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            }).then((result) => {
+                                $('.invoice-list-table').DataTable().ajax.reload();
+                            });
                         },
-                        buttonsStyling: false
-                    })
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: ' You clicked the button!',
+                                icon: 'error',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            })
+                        }
+                    });
                 }
             });
         });
@@ -265,19 +280,19 @@ $configData = Helper::appClasses();
                     let sendMailRow = '';
                     let editButton = '';
                     let deleteButton = '';
-                    if(row.status == 'Disetujui BM' && account.level.id == 10){
+                    if (row.status == 'Disetujui BM' && account.level.id == 10) {
                         sendMailRow = `<a href="#" data-bs-toggle="tooltip" class="text-body send-email" data-id="${data}" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>`;
                     }
-                    if((account.level.id == 10 && row.status == 'Terbuat') || (account.level.id == 1 && row.status == 'Disetujui KA')){
+                    if ((account.level.id == 10 && row.status == 'Terbuat') || (account.level.id == 1 && row.status == 'Disetujui KA')) {
                         editButton = `<a href="{{ url("invoice/edit")}}/${data}" class="dropdown-item">Edit</a>`;
                     }
-                    if((account.level.id == 10)){
+                    if ((account.level.id == 10)) {
                         deleteButton = `<div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a>`;
                     }
                     let previewRow = '<a href="{{ url("invoice/show")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
                     return `<div class="d-flex align-items-center">
                             ` + sendMailRow + previewRow + `
-                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a target="_blank" href="{{url('invoice/print')}}/`+data+`" class="dropdown-item">Download</a>${editButton}${deleteButton}</div></div></div>`
+                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a target="_blank" href="{{url('invoice/print')}}/` + data + `" class="dropdown-item">Download</a>${editButton}${deleteButton}</div></div></div>`
                 }
             }],
             order: [
