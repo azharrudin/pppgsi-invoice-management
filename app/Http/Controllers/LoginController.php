@@ -29,7 +29,6 @@ class LoginController extends Controller
             ];
 
             $records = CallApiHelpers::storeAPI($data, $params);
-            // dd($records);
             if ($records) {
                 $this->setUserSession($records);
                 echo json_encode(array("message" => "SUCCESS_LOGIN", "credentials" => $records['data']));
