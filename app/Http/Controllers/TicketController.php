@@ -36,7 +36,7 @@ class TicketController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $ticketQuery = Ticket::with("tenant")->with("ticketAttachments")->where("deleted_at", null);
+            $ticketQuery = Ticket::with("tenant")->where("deleted_at", null);
             if($value){
                 $ticketQuery->where(function ($query) use ($value) {
                     $query->where('ticket_number', 'like', '%' . $value . '%')
@@ -283,6 +283,44 @@ class TicketController extends Controller
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
+
+    public function update_status(Request $request, $id)
+    {
+        DB::beginTransaction();
+
+        try{
+            $id = (int) $id;
+            $getTicket = $this->CommonService->getDataById("App\Models\Ticket", $id);
+            if (is_null($getTicket)) throw new CustomException("Ticket tidak ditemukan", 404);
+
+            $validateTicket = $this->TicketService->validateStatus($request);
+            if($validateTicket != "") throw new CustomException($validateTicket, 400);
+
+            $dataPayload = [ "status" => $request->input("status") ];
+
+            Ticket::findOrFail($id)->update($dataPayload);
+
+            DB::commit();
+            $getTicket = Ticket::with("tenant")->
+                with("ticketAttachments")->
+                where("id", $id)->
+                where("deleted_at", null)->
+                first();
+
+            return ["data" => $getTicket];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();

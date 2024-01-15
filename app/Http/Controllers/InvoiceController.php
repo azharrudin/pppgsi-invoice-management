@@ -360,27 +360,42 @@ class InvoiceController extends Controller
         }
     }
 
-    public function nomor()
+    public function update_status(Request $request, $id)
     {
-        $romanNumerals = [
-            1 => 'I',
-            2 => 'II',
-            3 => 'III',
-            4 => 'IV',
-            5 => 'V',
-            6 => 'VI',
-            7 => 'VII',
-            8 => 'VIII',
-            9 => 'IX',
-            10 => 'X',
-            11 => 'XI',
-            12 => 'XII',
-        ];
+        DB::beginTransaction();
 
-        $currentMonth = date('n');
-        $currentMonthRoman = $romanNumerals[$currentMonth];
-        $currentYearLastTwoDigits = date('y');
-        $autoIncrement = DB::table('invoices')->whereMonth('created_at', now()->month)->count() + 1;
-        return response()->json(['data' => "GSI-FIN/$currentMonthRoman/$currentYearLastTwoDigits/" . str_pad($autoIncrement, 4, '0', STR_PAD_LEFT)]);
+        try{
+            $id = (int) $id;
+            $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
+            if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
+
+            $validateInvoice = $this->InvoiceService->validateStatus($request);
+            if($validateInvoice != "") throw new CustomException($validateInvoice, 400);
+
+            $dataPayload = [ "status" => $request->input("status") ];
+
+            Invoice::findOrFail($id)->update($dataPayload);
+
+            DB::commit();
+            $getInvoice = Invoice::with("invoiceDetails.tax")
+                ->with("tenant")
+                ->with("bank")
+                ->where("id", $id)
+                ->where("deleted_at", null)
+                ->first();
+
+            return ["data" => $getInvoice];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+            DB::rollBack();
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
     }
 }

@@ -55,6 +55,10 @@ class WorkOrderController extends Controller
             $totalCount = $getTickets->total();
 
             $workOrderArr = $this->CommonService->toArray($getTickets);
+            foreach($workOrderArr as $workOrderObj){
+              $workOrderObj["classification"] = $this->CommonService->getClassificationOrScope($workOrderObj["classification"], "classification");
+              $workOrderObj["scope"] = $this->CommonService->getClassificationOrScope($workOrderObj["scope"], "scope");
+            }
 
             return [
                 "data" => $workOrderArr,
@@ -118,6 +122,9 @@ class WorkOrderController extends Controller
                 where("deleted_at", null)->
                 first();
 
+            $getWorkOrder["classification"] = $this->CommonService->getClassificationOrScope($getWorkOrder["classification"], "classification");
+            $getWorkOrder["scope"] = $this->CommonService->getClassificationOrScope($getWorkOrder["scope"], "scope");
+
             return ["data" => $getWorkOrder];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
@@ -147,6 +154,9 @@ class WorkOrderController extends Controller
                 where("deleted_at", null)->
                 first();
             if (is_null($getWorkOrder)) throw new CustomException("Work order tidak ditemukan", 404);
+
+            $getWorkOrder["classification"] = $this->CommonService->getClassificationOrScope($getWorkOrder["classification"], "classification");
+            $getWorkOrder["scope"] = $this->CommonService->getClassificationOrScope($getWorkOrder["scope"], "scope");
 
             return ["data" => $getWorkOrder];
         } catch (\Throwable $e) {
@@ -209,6 +219,9 @@ class WorkOrderController extends Controller
                 where("id", $id)->
                 where("deleted_at", null)->
                 first();
+
+            $getWorkOrder["classification"] = $this->CommonService->getClassificationOrScope($getWorkOrder["classification"], "classification");
+            $getWorkOrder["scope"] = $this->CommonService->getClassificationOrScope($getWorkOrder["scope"], "scope");
 
             return ["data" => $getWorkOrder];
         } catch (\Throwable $e) {
@@ -324,6 +337,47 @@ class WorkOrderController extends Controller
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
+
+    public function update_status(Request $request, $id)
+    {
+        DB::beginTransaction();
+
+        try{
+            $id = (int) $id;
+            $getWorkOrder = $this->CommonService->getDataById("App\Models\WorkOrder", $id);
+            if (is_null($getWorkOrder)) throw new CustomException("Work Order tidak ditemukan", 404);
+
+            $validateWorkOrder = $this->WorkOrderService->validateStatus($request);
+            if($validateWorkOrder != "") throw new CustomException($validateWorkOrder, 400);
+
+            $dataPayload = [ "status" => $request->input("status") ];
+
+            WorkOrder::findOrFail($id)->update($dataPayload);
+
+            DB::commit();
+            $getWorkOrder =  WorkOrder::with("workOrderDetails")->
+                with("workOrderSignatures")->
+                where("id", $id)->
+                where("deleted_at", null)->
+                first();
+
+            $getWorkOrder["classification"] = $this->CommonService->getClassificationOrScope($getWorkOrder["classification"], "classification");
+            $getWorkOrder["scope"] = $this->CommonService->getClassificationOrScope($getWorkOrder["scope"], "scope");
+
+            return ["data" => $getWorkOrder];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+            DB::rollBack();
 
             if(is_a($e, CustomException::class)){
                 $errorMessage = $e->getMessage();

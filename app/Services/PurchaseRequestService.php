@@ -5,6 +5,7 @@ use Validator;
 
 class PurchaseRequestService{
     protected $CommonService;
+    protected $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "lunas"];
 
     public function __construct(CommonService $CommonService)
     {
@@ -75,10 +76,9 @@ class PurchaseRequestService{
         }
 
         if($message == ""){
-            $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "lunas"];
             $status = strtolower($request->input("status"));
 
-            if(!in_array($status, $validStatus)) $message = "Status tidak valid";
+            if(!in_array($status, $this->validStatus)) $message = "Status tidak valid";
         }
 
         if($message == "" && !is_null($request->input("signatures"))){
@@ -91,6 +91,35 @@ class PurchaseRequestService{
                     break;
                 }
             }
+        }
+
+        return $message;
+    }
+
+    /**
+     * Fungsi yang berfungsi untuk memvalidasi data status yang diinput oleh user
+     *
+     * @param \Illuminate\Http\Request $request Object Request yang berisi input dari user
+     * @return String string yang berisi pesan error
+     */
+    public function validateStatus($request){
+        $rules = [
+            "status" => ["bail", "required", "string"],
+        ];
+        $errorMessages = [
+            "required" => "Field :attribute harus diisi",
+            "string" => "Field :attribute harus diisi dengan string",
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $errorMessages);
+
+        $message = "";
+        if ($validator->fails()) $message = implode(', ', $validator->errors()->all());
+
+        if($message == ""){
+            $status = strtolower($request->input("status"));
+
+            if(!in_array($status, $this->validStatus)) $message = "Status tidak valid";
         }
 
         return $message;

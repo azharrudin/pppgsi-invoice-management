@@ -320,4 +320,43 @@ class PurchaseOrderController extends Controller
             return response()->json(['message' => $errorMessage], $errorStatusCode);
         }
     }
+
+    public function update_status(Request $request, $id)
+    {
+        DB::beginTransaction();
+
+        try{
+            $id = (int) $id;
+            $getPurchaseOrder = $this->CommonService->getDataById("App\Models\PurchaseOrder", $id);
+            if (is_null($getPurchaseOrder)) throw new CustomException("Purchase Order tidak ditemukan", 404);
+
+            $validatePurchaseOrder = $this->PurchaseOrderService->validateStatus($request);
+            if($validatePurchaseOrder != "") throw new CustomException($validatePurchaseOrder, 400);
+
+            $dataPayload = [ "status" => $request->input("status") ];
+
+            PurchaseOrder::findOrFail($id)->update($dataPayload);
+
+            DB::commit();
+            $getPurchaseOrder =  PurchaseOrder::with("purchaseOrderDetails")->
+                with("vendor")->
+                with("tenant")->
+                where("id", $id)->
+                where("deleted_at", null)->
+                first();
+
+            return ["data" => $getPurchaseOrder];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+            DB::rollBack();
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
 }

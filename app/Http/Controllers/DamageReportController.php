@@ -52,6 +52,10 @@ class DamageReportController extends Controller
             $totalCount = $getTickets->total();
 
             $damageReportArr = $this->CommonService->toArray($getTickets);
+            foreach($damageReportArr as $damageReportObj){
+              $damageReportObj["classification"] = $this->CommonService->getClassificationOrScope($damageReportObj["classification"], "classification");
+              $damageReportObj["scope"] = $this->CommonService->getClassificationOrScope($damageReportObj["scope"], "scope");
+            }
 
             return [
                 "data" => $damageReportArr,
@@ -111,6 +115,9 @@ class DamageReportController extends Controller
             DB::commit();
             $getDamageReport = DamageReport::with("damageReportDetails")->with("damageReportSignatures")->with("ticket")->where("id", $damageReport->id)->where("deleted_at", null)->first();
 
+            $getDamageReport["classification"] = $this->CommonService->getClassificationOrScope($getDamageReport["classification"], "classification");
+            $getDamageReport["scope"] = $this->CommonService->getClassificationOrScope($getDamageReport["scope"], "scope");
+
             return ["data" => $getDamageReport];
         } catch (\Exception $e) {
             dd($e);
@@ -136,6 +143,9 @@ class DamageReportController extends Controller
             $id = (int) $id;
             $getDamageReport = DamageReport::with("damageReportDetails")->with("damageReportSignatures")->with("ticket")->where("id", $id)->where("deleted_at", null)->first();
             if (is_null($getDamageReport)) throw new CustomException("Laporan kerusakan tidak ditemukan", 404);
+
+            $getDamageReport["classification"] = $this->CommonService->getClassificationOrScope($getDamageReport["classification"], "classification");
+            $getDamageReport["scope"] = $this->CommonService->getClassificationOrScope($getDamageReport["scope"], "scope");
 
             return ["data" => $getDamageReport];
         } catch (\Throwable $e) {
@@ -195,6 +205,9 @@ class DamageReportController extends Controller
 
             DB::commit();
             $getDamageReport = DamageReport::with("damageReportDetails")->with("damageReportSignatures")->with("ticket")->where("id", $id)->where("deleted_at", null)->first();
+
+            $getDamageReport["classification"] = $this->CommonService->getClassificationOrScope($getDamageReport["classification"], "classification");
+            $getDamageReport["scope"] = $this->CommonService->getClassificationOrScope($getDamageReport["scope"], "scope");
 
             return ["data" => $getDamageReport];
         } catch (\Throwable $e) {
@@ -316,11 +329,45 @@ class DamageReportController extends Controller
         }
     }
 
-    public function nomor()
+    public function update_status(Request $request, $id)
     {
-        $year = now()->year;
-        $maxNumberForYear = DamageReport::whereYear('created_at', $year)->max('damage_report_number') ?: 0;
-        $nomor = str_pad($maxNumberForYear + 1, 5, '0', STR_PAD_LEFT);
-        return $nomor;
+        DB::beginTransaction();
+
+        try{
+            $id = (int) $id;
+            $getDamageReport = $this->CommonService->getDataById("App\Models\DamageReport", $id);
+            if (is_null($getDamageReport)) throw new CustomException("Damage Report tidak ditemukan", 404);
+
+            $validateDamageReport = $this->DamageReportService->validateStatus($request);
+            if($validateDamageReport != "") throw new CustomException($validateDamageReport, 400);
+
+            $dataPayload = [ "status" => $request->input("status") ];
+
+            DamageReport::findOrFail($id)->update($dataPayload);
+
+            DB::commit();
+            $getDamageReport =  DamageReport::with("damageReportDetails")->
+                with("damageReportSignatures")->
+                with("ticket")->
+                where("id", $id)->
+                where("deleted_at", null)->
+                first();
+
+            $getDamageReport["classification"] = $this->CommonService->getClassificationOrScope($getDamageReport["classification"], "classification");
+            $getDamageReport["scope"] = $this->CommonService->getClassificationOrScope($getDamageReport["scope"], "scope");
+
+            return ["data" => $getDamageReport];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+            DB::rollBack();
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
     }
 }

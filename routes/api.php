@@ -44,28 +44,29 @@ Route::resource('bank', BankController::class);
 
 Route::get("invoice/select", [InvoiceController::class, "select"]);
 Route::get("invoice/report", [InvoiceController::class, "report"]);
-Route::get("invoice/nomor", [InvoiceController::class, "nomor"]);
-Route::patch("invoice/update-status/{id}", [InvoiceController::class, "updateStatus"]);
+Route::patch("invoice/update-status/{id}", [InvoiceController::class, "update_status"]);
 Route::resource('invoice', InvoiceController::class);
 
 Route::get("receipt/select", [ReceiptController::class, "select"]);
 Route::get("receipt/report", [ReceiptController::class, "report"]);
-Route::patch("receipt/update-status/{id}", [ReceiptController::class, "updateStatus"]);
+Route::patch("receipt/update-status/{id}", [ReceiptController::class, "update_status"]);
 Route::resource('receipt', ReceiptController::class);
 
 Route::get("ticket/select", [TicketController::class, "select"]);
 Route::get("ticket/report", [TicketController::class, "report"]);
+Route::patch("ticket/update-status/{id}", [TicketController::class, "update_status"]);
 Route::resource('ticket', TicketController::class);
 
 Route::get("damage-report/select", [DamageReportController::class, "select"]);
 Route::get("damage-report/report", [DamageReportController::class, "report"]);
-Route::get("damage-report/nomor", [DamageReportController::class, "nomor"]);
+Route::patch("damage-report/update-status/{id}", [DamageReportController::class, "update_status"]);
 Route::resource('damage-report', DamageReportController::class);
 
 
 
 Route::get("work-order/select", [WorkOrderController::class, "select"]);
 Route::get("work-order/report", [WorkOrderController::class, "report"]);
+Route::patch("work-order/update-status/{id}", [WorkOrderController::class, "update_status"]);
 Route::resource('work-order', WorkOrderController::class);
 
 Route::get("vendor/select", [VendorController::class, "select"]);
@@ -73,14 +74,17 @@ Route::resource('vendor', VendorController::class);
 
 Route::get('material-request/select', [MaterialRequestController::class, "select"]);
 Route::get("material-request/report", [MaterialRequestController::class, "report"]);
+Route::patch("material-request/update-status/{id}", [MaterialRequestController::class, "update_status"]);
 Route::resource('material-request', MaterialRequestController::class);
 
 Route::get("purchase-request/select", [PurchaseRequestController::class, "select"]);
 Route::get("purchase-request/report", [PurchaseRequestController::class, "report"]);
+Route::patch("purchase-request/update-status/{id}", [PurchaseRequestController::class, "update_status"]);
 Route::resource('purchase-request', PurchaseRequestController::class);
 
 Route::get("purchase-order/select", [PurchaseOrderController::class, "select"]);
 Route::get("purchase-order/report", [PurchaseOrderController::class, "report"]);
+Route::patch("purchase-order/update-status/{id}", [PurchaseOrderController::class, "update_status"]);
 Route::resource('purchase-order', PurchaseOrderController::class);
 
 Route::get("department/select", [DepartmentController::class, "select"]);
