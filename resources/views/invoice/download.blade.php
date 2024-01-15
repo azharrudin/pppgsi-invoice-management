@@ -17,8 +17,9 @@ return $hasil_rupiah;
 
     <style>
         body {
-            font-size: 10pt;
+            font-size: 12px;
             font-family: sans-serif;
+
         }
 
         .main-table,
@@ -27,53 +28,38 @@ return $hasil_rupiah;
             border: 0.5px solid;
         }
 
-        .main-table th {
-            font-size: 12pt;
-        }
 
         .container {
-            margin-left: auto;
-            margin-right: auto;
-            width: 100%;
-            padding-left: 15px;
-            padding-right: 15px;
+            max-width: 21cm;
+            margin: 0 auto;
+            background: #fff;
+            padding: 1cm;
+
         }
 
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            margin-right: -15px;
-            margin-left: -15px;
-        }
+        /* A4 Styles */
+        @media print {
+            body {
+                font-size: 12px;
+                margin: 0;
+                padding: 0;
+            }
 
-        .p-2 {
-            padding: 0.5rem !important;
-        }
+            .container {
+                width: 21cm;
+                min-height: 29.7cm;
+                margin: auto;
+                /* Center content on the page */
+            }
 
-        .text-center {
-            text-align: center !important;
-        }
+            .ttd img {
+                width: 130px;
+            }
 
-        .col-12 {
-            flex: 0 0 100%;
-            max-width: 100%;
+            .row img {
+                width: 180px;
+            }
         }
-
-        .col-4 {
-            flex: 0 0 33.333333%;
-            max-width: 33.333333%;
-        }
-
-        .mt-2 {
-            margin-top: 0.5rem !important;
-        }
-
-        .table {
-            width: 100%;
-            margin-bottom: 1rem;
-            color: #212529;
-        }
-    </style>
     </style>
 </head>
 
@@ -87,38 +73,38 @@ return $hasil_rupiah;
             <table class="table" style="width: 100%;">
                 <tbody>
                     <tr>
-                        <td rowspan="3" style="width: 10%; border-left: .5px solid white;  border-top: .5px solid white;  border-bottom: .5px solid white;"><b>Kepada
+                        <td rowspan="3" style="width: 10%;"><b>Kepada
                                 Yth:
                             </b></td>
-                        <td rowspan="3" style="width: 55%; border-left: .5px solid black"><b>
+                        <td rowspan="3" style="width: 50%; border: 0.5px solid black; padding: 10px;"><b>
                                 {{ $data->tenant->company }} <br>
                                 {{ $data->tenant->floor }} <br>
                                 <br>
                                 Up. {{ $data->tenant->name }}</b></td>
-                        <td style="border-left: .5px solid white;  border-top: .5px solid white;  border-bottom: .5px solid white;"></td>
-                        <td style="width: 10%;border: 0.5px solid black;">No. Invoice:
+                        <td style=""></td>
+                        <td style="width: 10%;border: 0.5px solid black; padding: 10px;">No. Invoice:
                             <br>{{ $data->invoice_number }}
                         </td>
-                        <td style="width: 15%;border: 0.5px solid black;">Tanggal: <br>
+                        <td style="width: 15%;border: 0.5px solid black; padding: 10px;">Tanggal: <br>
                             {{ date('d F Y', strtotime($data->invoice_date)) }}
                         </td>
                     </tr>
                     <tr>
 
                         <td style="border: none;"></td>
-                        <td style="border: 0.5px solid black;">No. Kontrak:
+                        <td style="border: 0.5px solid black; padding: 10px;">No. Kontrak:
                             <br> {{ $data->contract_number }}
                         </td>
-                        <td style="border: 0.5px solid black;">Tanggal: <br> {{ date('d F Y', strtotime($data->contract_date)) }}
+                        <td style="border: 0.5px solid black; padding: 10px;">Tanggal: <br> {{ date('d F Y', strtotime($data->contract_date)) }}
                         </td>
                     </tr>
                     <tr>
 
                         <td style="border-left: .5px solid white;  border-top: .5px solid white;  border-bottom: .5px solid white;"></td>
-                        <td style="border: 0.5px solid black;">No. Addendum:
+                        <td style="border: 0.5px solid black; padding: 10px;">No. Addendum:
                             <br> {{ $data->addendum_number }}
                         </td>
-                        <td style="border: 0.5px solid black;">Tanggal: <br>{{ date('d F Y', strtotime($data->addendum_date)) }}
+                        <td style="border: 0.5px solid black; padding: 10px;">Tanggal: <br>{{ date('d F Y', strtotime($data->addendum_date)) }}
                         </td>
                     </tr>
                 </tbody>
@@ -129,31 +115,31 @@ return $hasil_rupiah;
                 <thead>
                     <tr>
                         <th style="width:23%; text-align:left; padding:10px">Uraian</th>
-                        <th style="width:23%; text-align:left;">Keterangan</th>
-                        <th style="width:23%; text-align:left;">Dasar Pengenaan Pajak</th>
-                        <th style="width:8%; text-align:left;">Pajak</th>
-                        <th style="width:23%; text-align:left;">Total (Rp.)</th>
+                        <th style="width:23%; text-align:left; padding:10px">Keterangan</th>
+                        <th style="width:26%; text-align:left; padding:10px">Dasar Pengenaan Pajak</th>
+                        <th style="width:8%; text-align:left; padding:10px">Pajak</th>
+                        <th style="width:20%; text-align:left; padding:10px">Total (Rp.)</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data->invoice_details as $p)
                     <tr>
-                        <td>{{ $p->item }}</td>
-                        <td>{{ $p->description }}</td>
-                        <td>{{ rupiah($p->price) }}</td>
-                        <td>{{ $p->tax->rate }}%</td>
-                        <td>{{ rupiah($p->total_price) }}</td>
+                        <td style="padding:10px">{{ $p->item }}</td>
+                        <td style="padding:10px">{{ $p->description }}</td>
+                        <td style="padding:10px">{{ rupiah($p->price) }}</td>
+                        <td style="padding:10px">{{ $p->tax->rate }}%</td>
+                        <td style="padding:10px">{{ rupiah($p->total_price) }}</td>
                     </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td class="text-right" colspan="4"><b>Total :</b>
+                        <td class="text-right" colspan="4" style="padding:10px"><b>Total :</b>
                         </td>
-                        <td>{{ rupiah($data->grand_total) }}</td>
+                        <td style="padding:10px">{{ rupiah($data->grand_total) }}</td>
                     </tr>
                     <tr>
-                        <td colspan="5"><b>Terbilang: {{ $data->grand_total_spelled }}</b></td>
+                        <td colspan="5" style="padding:10px"><b>Terbilang: {{ $data->grand_total_spelled }}</b></td>
                     </tr>
                 </tfoot>
             </table>
@@ -221,7 +207,7 @@ return $hasil_rupiah;
             </div>
             <div style="clear: both;"></div>
         </div> -->
-        <div class="row mt-4 text-center" style="font-size: 12pt;">
+        <div class="row mt-4 text-center" style="font-size: 12px;">
             <center>
                 <p>
 

@@ -108,7 +108,7 @@ $configData = Helper::appClasses();
                 }
             }, {
                 name: "tenant_name",
-                data: "reporter_company",
+                data: "tenant.name",
                 title: "Perusahan",
                 className: 'text-center',
                 render: function(data, type, row) {

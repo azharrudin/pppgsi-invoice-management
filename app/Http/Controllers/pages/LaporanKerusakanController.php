@@ -29,7 +29,7 @@ class LaporanKerusakanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function preview(string $id)
+    public function preview()
     {
         return view('content.pages.laporan-kerusakan.preview');
     }
@@ -37,7 +37,7 @@ class LaporanKerusakanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(string $id)
     {
         return view('content.pages.laporan-kerusakan.show');
     }

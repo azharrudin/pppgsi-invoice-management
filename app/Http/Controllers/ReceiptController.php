@@ -10,6 +10,9 @@ use App\Services\InvoiceService;
 use App\Services\ReceiptService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use PDF;
+use Illuminate\Support\Facades\Mail;
 
 class ReceiptController extends Controller
 {
@@ -29,7 +32,7 @@ class ReceiptController extends Controller
      */
     public function index(Request $request)
     {
-        try{
+        try {
             [
                 "perPage" => $perPage,
                 "page" => $page,
@@ -39,16 +42,16 @@ class ReceiptController extends Controller
             ] = $this->CommonService->getQuery($request);
 
             $receiptQuery = Receipt::with("invoice")->with("tenant")->with("bank")->where("deleted_at", null);
-            if($value){
+            if ($value) {
                 $receiptQuery->where(function ($query) use ($value) {
                     $query->whereHas('tenant', function ($tenantQuery) use ($value) {
                         $tenantQuery->where('name', 'like', '%' . $value . '%');
                     })
-                    ->orWhere('receipt_number', 'like', '%' . $value . '%')
-                    ->orWhere('grand_total', 'like', '%' . $value . '%')
-                    ->orWhere('status', 'like', '%' . $value . '%')
-                    ->orWhere('receipt_date', 'like', '%' . $value . '%')
-                    ->orWhere('receipt_send_date', 'like', '%' . $value . '%');
+                        ->orWhere('receipt_number', 'like', '%' . $value . '%')
+                        ->orWhere('grand_total', 'like', '%' . $value . '%')
+                        ->orWhere('status', 'like', '%' . $value . '%')
+                        ->orWhere('receipt_date', 'like', '%' . $value . '%')
+                        ->orWhere('receipt_send_date', 'like', '%' . $value . '%');
                 });
             }
             $getReceipts = $receiptQuery->orderBy($order, $sort)->paginate($perPage);
@@ -61,13 +64,13 @@ class ReceiptController extends Controller
                 "per_page" => $perPage,
                 "page" => $page,
                 "size" => $totalCount,
-                "pages" => ceil($totalCount/$perPage)
+                "pages" => ceil($totalCount / $perPage)
             ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -83,9 +86,9 @@ class ReceiptController extends Controller
     {
         DB::beginTransaction();
 
-        try{
+        try {
             $validateReceipt = $this->ReceiptService->validateReceipt($request);
-            if($validateReceipt != "") throw new CustomException($validateReceipt, 400);
+            if ($validateReceipt != "") throw new CustomException($validateReceipt, 400);
 
             $receipt = Receipt::create($request->all());
             $this->InvoiceService->updateInvoiceStatus($request->input("invoice_id"));
@@ -104,7 +107,7 @@ class ReceiptController extends Controller
             $errorStatusCode = 500;
             DB::rollBack();
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -118,13 +121,9 @@ class ReceiptController extends Controller
      */
     public function show($id)
     {
-        try{
+        try {
             $id = (int) $id;
-            $getReceipt = Receipt::with("invoice")->
-                with("tenant")->
-                with("bank")->
-                where("id", $id)->
-                where("deleted_at", null)->first();
+            $getReceipt = Receipt::with("invoice")->with("tenant")->with("bank")->where("id", $id)->where("deleted_at", null)->first();
             if (is_null($getReceipt)) throw new CustomException("Tanda terima tidak ditemukan", 404);
 
             return ["data" => $getReceipt];
@@ -132,7 +131,7 @@ class ReceiptController extends Controller
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -148,13 +147,13 @@ class ReceiptController extends Controller
     {
         DB::beginTransaction();
 
-        try{
+        try {
             $id = (int) $id;
             $receiptExist = $this->CommonService->getDataById("App\Models\Receipt", $id);
-            if(is_null($receiptExist)) throw new CustomException("Tanda terima tidak ditemukan", 404);
+            if (is_null($receiptExist)) throw new CustomException("Tanda terima tidak ditemukan", 404);
 
             $validateReceipt = $this->ReceiptService->validateReceipt($request);
-            if($validateReceipt != "") throw new CustomException($validateReceipt, 400);
+            if ($validateReceipt != "") throw new CustomException($validateReceipt, 400);
 
             Receipt::findOrFail($id)->update($request->all());
             $this->InvoiceService->updateInvoiceStatus($request->input("invoice_id"));
@@ -173,7 +172,7 @@ class ReceiptController extends Controller
             $errorStatusCode = 500;
             DB::rollBack();
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -189,10 +188,10 @@ class ReceiptController extends Controller
     {
         DB::beginTransaction();
 
-        try{
+        try {
             $id = (int) $id;
             $receiptExist = $this->CommonService->getDataById("App\Models\Receipt", $id);
-            if(is_null($receiptExist)) throw new CustomException("Tanda terima tidak ditemukan", 404);
+            if (is_null($receiptExist)) throw new CustomException("Tanda terima tidak ditemukan", 404);
 
             Receipt::findOrFail($id)->delete();
             DB::commit();
@@ -203,7 +202,7 @@ class ReceiptController extends Controller
             $errorStatusCode = 500;
             DB::rollBack();
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -214,7 +213,7 @@ class ReceiptController extends Controller
 
     public function select(Request $request)
     {
-        try{
+        try {
             [
                 "page" => $page,
                 "value" => $value
@@ -222,16 +221,13 @@ class ReceiptController extends Controller
             $field = $request->input("field");
             $perPage = 10;
 
-            if(is_null($field)) $field = "id";
+            if (is_null($field)) $field = "id";
 
-            $getReceipt = Receipt::where("deleted_at", null)->
-                where($field, 'like', '%' . $value . '%')->
-                select("id", $field)->
-                paginate($perPage);
+            $getReceipt = Receipt::where("deleted_at", null)->where($field, 'like', '%' . $value . '%')->select("id", $field)->paginate($perPage);
             $totalCount = $getReceipt->total();
 
             $dataArr = [];
-            foreach($getReceipt as $bankObj){
+            foreach ($getReceipt as $bankObj) {
                 $dataObj = [
                     "id" => $bankObj->id,
                     "text" => $bankObj->$field,
@@ -240,7 +236,7 @@ class ReceiptController extends Controller
             }
 
             $pagination = ["more" => false];
-            if($totalCount > ($perPage * $page)) {
+            if ($totalCount > ($perPage * $page)) {
                 $pagination = ["more" => true];
             }
 
@@ -252,7 +248,7 @@ class ReceiptController extends Controller
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -263,7 +259,7 @@ class ReceiptController extends Controller
 
     public function report()
     {
-        try{
+        try {
             $countTenant = Tenant::where("deleted_at", null)->count();
             $countReceiptSent = Receipt::where("deleted_at", null)->where("status", "like", "%Terkirim%")->count();
             $countReceiptNotSent = Receipt::where("deleted_at", null)->where("status", "!=", "Terkirim")->count();
@@ -277,7 +273,7 @@ class ReceiptController extends Controller
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }

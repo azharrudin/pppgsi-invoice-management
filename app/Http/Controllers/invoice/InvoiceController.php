@@ -94,7 +94,7 @@ class InvoiceController extends Controller
         $apiRequest = Http::get(env('BASE_URL_API') .'/api/invoice/'.$id);
         $response = json_decode($apiRequest->getBody());
         $data = $response->data;
-    	$pdf = PDF::loadView('invoice.download',['data'=>$data])->setPaper('a4');
+    	$pdf = PDF::loadView('invoice.download',['data'=>$data])->setPaper('a4', 'portait');
     	return $pdf->stream('invoice.pdf');
     }
 }
