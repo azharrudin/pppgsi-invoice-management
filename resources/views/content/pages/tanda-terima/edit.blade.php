@@ -401,8 +401,7 @@
                             buttonsStyling: false
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location.href =
-                                    '{{ route('pages-list-tanda-terima') }}';
+                                window.location.href ='{{ url("invoice/tanda-terima") }}';
                             }
                         });
                     },
@@ -423,7 +422,7 @@
 
             // Cancel
             $(".btn-cancel").on('click', function() {
-                window.location.href = '{{ route('pages-list-tanda-terima') }}';
+                window.location.href = '{{ url("invoice/tanda-terima") }}';
             })
 
             $('#paid').on('keyup', function() {

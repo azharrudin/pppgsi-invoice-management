@@ -164,6 +164,7 @@ $configData = Helper::appClasses();
                         </button>
                         <a type="button" class="btn btn-label-secondary d-grid w-100 mb-2 disetujui" style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
                         <a target="_blank" href="{{url('invoice/print/')}}/{{$id}}" id="preview" class="btn btn-label-info d-grid w-100 mb-2">Download</a>
+                        <a target="_blank" href="{{url('invoice/edit/')}}/{{$id}}" id="edit" class="btn btn-warning d-grid w-100 mb-2 edit" style="display: none !important;">Edit</a>
                         <button class="btn btn-primary d-grid w-100 mb-2 add-pay add-payment">
                             <span class="d-flex align-items-center justify-content-center text-nowrap">Add Payment</span>
                         </button>
@@ -308,6 +309,10 @@ $configData = Helper::appClasses();
                 }
                 if(account.level.id != '2' || data.status == 'Disetujui KA'){
                     $('.disetujui').attr('style','display:none !important');
+                }
+
+                if(account.level.id == '1'){
+                    $('.edit').attr('style','display:block');
                 }
                 Swal.close();
             },
