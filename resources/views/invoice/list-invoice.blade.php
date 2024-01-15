@@ -105,74 +105,6 @@ $configData = Helper::appClasses();
             }];
         }
 
-        function updateStatus(params) {
-            $.ajax({
-                url: "{{env('BASE_URL_API')}}" + "/api/mail/send-attachment",
-                type: "PATCH",
-                data: JSON.stringify(datas),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(response) {
-                    Swal.fire({
-                        title: 'Berhasil',
-                        text: 'Berhasil Mengirim Invoice',
-                        icon: 'success',
-                        customClass: {
-                            confirmButton: 'btn btn-primary'
-                        },
-                        buttonsStyling: false
-                    }).then((result) => {
-                        $('.invoice-list-table').DataTable().ajax.reload();
-                    });
-                },
-                error: function(xhr, status, error) {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: ' You clicked the button!',
-                        icon: 'error',
-                        customClass: {
-                            confirmButton: 'btn btn-primary'
-                        },
-                        buttonsStyling: false
-                    })
-                }
-            });
-        }
-
-        function sendEmail(params) {
-            $.ajax({
-                url: "{{env('BASE_URL_API')}}" + "/api/mail/send-attachment",
-                type: "PATCH",
-                data: JSON.stringify(datas),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(response) {
-                    Swal.fire({
-                        title: 'Berhasil',
-                        text: 'Berhasil Mengirim Invoice',
-                        icon: 'success',
-                        customClass: {
-                            confirmButton: 'btn btn-primary'
-                        },
-                        buttonsStyling: false
-                    }).then((result) => {
-                        $('.invoice-list-table').DataTable().ajax.reload();
-                    });
-                },
-                error: function(xhr, status, error) {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: ' You clicked the button!',
-                        icon: 'error',
-                        customClass: {
-                            confirmButton: 'btn btn-primary'
-                        },
-                        buttonsStyling: false
-                    })
-                }
-            });
-        }
-
         $(document).on('click', '.send-email', function(event) {
             event.preventDefault();
             Swal.fire({
@@ -184,8 +116,38 @@ $configData = Helper::appClasses();
             });
             let id = $(this).data('id');
             let datas = {}
-            datas.data_id = id;
-            datas.data_type = 'invoice';
+            datas.status = 'Terkirim';
+            $.ajax({
+                url: "{{env('BASE_URL_API')}}" + "/api/invoice/update-status/" + id,
+                type: "PATCH",
+                data: JSON.stringify(datas),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    Swal.fire({
+                        title: 'Berhasil',
+                        text: 'Berhasil Mengirim Invoice',
+                        icon: 'success',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                        buttonsStyling: false
+                    }).then((result) => {
+                        $('.invoice-list-table').DataTable().ajax.reload();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: ' You clicked the button!',
+                        icon: 'error',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                        buttonsStyling: false
+                    })
+                }
+            });
         });
 
         var a = $(".invoice-list-table");
