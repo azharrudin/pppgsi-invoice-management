@@ -217,6 +217,14 @@ $configData = Helper::appClasses();
                 console.log(errors.message);
             }
         });
+
+        let account = {!! json_encode(session('data')) !!}
+        var levelId = account.level_id;
+        if (levelId == 10) {
+            $('#ttd').hide();
+        } else {
+            $('#ttd').show();
+        }
         // Date
         $('.date').flatpickr({
             dateFormat: 'Y-m-d'
