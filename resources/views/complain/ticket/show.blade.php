@@ -106,7 +106,7 @@ $configData = Helper::appClasses();
                     <!-- <a href="#" class="btn btn-primary d-grid w-100 mb-2">
                             <span class="d-flex align-items-center justify-content-center text-nowrap">Buat Laporan Kerusakan</span>
                         </a> -->
-                    <a href="#" class="btn btn-primary btn-label-secondary d-grid w-100 mb-2">Buat Laporan Kerusakan</a>
+                    <a href="#" class="btn btn-primary btn-label-secondary d-grid w-100 mb-2 add-damage">Buat Laporan Kerusakan</a>
                 </div>
             </div>
         </div>
@@ -138,7 +138,14 @@ $configData = Helper::appClasses();
         var idIndex = urlSegments.indexOf('show-ticket') + 1;
         var id = urlSegments[idIndex];
         getDataTicket(id);
+
+        $(document).on('click', '.add-damage', function(event) {
+            event.preventDefault();
+            window.location.href = "/complain/laporan-kerusakan/add?id-ticket=" + id
+        });
     });
+
+
 
     function getDataTicket(id) {
         $.ajax({

@@ -90,7 +90,7 @@ $configData = Helper::appClasses();
                         </div>
                         <div class="col-md-6 d-flex justify-content-end">
                             <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">Nama Tenant</label>
+                                <label for="note" class="form-label fw-medium">Nama Vendor</label>
                                 <select class="form-select w-px-250 item-details mb-3">
                                     <option selected disabled>Nomor</option>
                                 </select>
