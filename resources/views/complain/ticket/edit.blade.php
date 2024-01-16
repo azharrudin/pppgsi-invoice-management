@@ -271,12 +271,12 @@ $configData = Helper::appClasses();
 
         function getDataTicket(id) {
             $.ajax({
-                url: baseUrl + "api/ticket/" + id,
+                url:  "{{env('BASE_URL_API')}}" + "/api/ticket/" + id,
                 type: "GET",
                 dataType: "json",
                 success: function(res) {
                     let data = res.data;
-                    console.log(data.ticket_attachments);
+                    console.log(data);
                     let attachments = data.ticket_attachments;
                     for (let i = 0; i < attachments.length; i++) {
                         console.log(attachments[i].attachment);

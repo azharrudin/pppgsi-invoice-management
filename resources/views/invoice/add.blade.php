@@ -681,13 +681,6 @@ $configData = Helper::appClasses();
             form.addEventListener(
                 "submit",
                 function(event) {
-                    Swal.fire({
-                        title: '<h2>Loading...</h2>',
-                        html: sweet_loader + '<h5>Please Wait</h5>',
-                        showConfirmButton: false,
-                        allowOutsideClick: false,
-                        allowEscapeKey: false
-                    });
                     if (!form.checkValidity()) {
                         event.preventDefault();
                         event.stopPropagation();

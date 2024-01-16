@@ -50,7 +50,7 @@ $configData = Helper::appClasses();
                                     <div class="">:</div>
                                 </td>
                                 <td style="width: 75%;">
-                                    <div id="reporter_company" class="fw-bold fs-5"></div>
+                                    <div id="tenant_id" class="fw-bold fs-5"></div>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
@@ -159,9 +159,9 @@ $configData = Helper::appClasses();
                 console.log(data);
                 $("#reporter_name").text(data.reporter_name);
                 $("#reporter_phone").text(data.reporter_phone);
-                $("#reporter_company").text(data.reporter_company);
                 $("#ticket_title").text(data.ticket_title);
                 $("#ticket_body").text(data.ticket_body);
+                $("#tenant_id").text(data.tenant.name);
                 getImage(data.ticket_attachments);
                 Swal.close();
             },
@@ -170,8 +170,6 @@ $configData = Helper::appClasses();
             }
         });
     }
-
-
 
     function getImage(images) {
         console.log(images);

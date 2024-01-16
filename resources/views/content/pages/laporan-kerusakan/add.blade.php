@@ -641,7 +641,7 @@ $configData = Helper::appClasses();
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-1  px-1-custom">
-                        <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
+                        <a class="btn-remove-mg mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
                             <i class="fas fa-trash"></i>
                         </a>
                     </div>
@@ -683,7 +683,7 @@ $configData = Helper::appClasses();
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-1  px-1-custom">
-                            <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
+                            <a class="btn-remove-mg mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
                                 <i class="fas fa-trash"></i>
                             </a>
                         </div>
@@ -713,7 +713,7 @@ $configData = Helper::appClasses();
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-1  px-1-custom">
-                        <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
+                        <a class="btn-remove-mg mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
                             <i class="fas fa-trash"></i>
                         </a>
                     </div>

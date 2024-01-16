@@ -45,22 +45,22 @@ $configData = Helper::appClasses();
                                 </div>
                                 <div class="mb-1">
                                     <label for="note" class="form-label fw-medium">Date</label>
-                                    <input type="text" class="form-control add w-px-250 date" id="edit_damage_report_date" name="damage_report_date" placeholder="Tanggal" required />
+                                    <input type="text" class="form-control add w-px-250 date" id="damage_report_date" name="damage_report_date" placeholder="Tanggal" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-1">
                                     <label for="note" class="form-label fw-medium">Scope</label>
-                                    <input type="text" class="form-control add w-px-250" id="edit_scope" name="scope" placeholder="Scope" required />
+                                    <input type="text" class="form-control add w-px-250" id="scope" name="scope" placeholder="Scope" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-1">
                                     <label for="note" class="form-label fw-medium">Classification</label>
-                                    <input type="text" class="form-control add w-px-250" id="edit_classification" name="classification" placeholder="Classification" required />
+                                    <input type="text" class="form-control add w-px-250" id="classification" name="classification" placeholder="Classification" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <div class="mb-1">
                                     <label for="note" class="form-label fw-medium">Action Plan Date</label>
-                                    <input type="text" class="form-control add w-px-250 date" id="edit_action_plan_date" name="action_plan_date" placeholder="Action Plan Date" required />
+                                    <input type="text" class="form-control add w-px-250 date" id="action_plan_date" name="action_plan_date" placeholder="Action Plan Date" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
@@ -76,41 +76,16 @@ $configData = Helper::appClasses();
 
                         <div class="py-3 px-3">
                             <div class="card academy-content shadow-none border p-3">
-                                <div class="repeater">
-                                    <div class="" data-repeater-list="group-a">
-                                        <div class="repeater-wrapper " data-repeater-item>
-                                            <div class="row mb-3 row-mg">
-                                                <div class="col-md-4">
-                                                    <label for="note" class="form-label fw-medium">Jenis Masalah
-                                                        Kerusakan</label>
-                                                    <input type="text" class="form-control" id="category" name="category" placeholder="Jenis Masalah Kerusakan" required />
-                                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="note" class="form-label fw-medium">Lokasi</label>
-                                                    <input type="text" class="form-control" id="location" name="location" placeholder="Lokasi" required />
-                                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label for="note" class="form-label fw-medium">Jumlah</label>
-                                                    <input type="text" class="form-control qty" id="total" name="total" placeholder="Jumlah" required />
-                                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                                </div>
-                                                <div class="col-md-1  px-1-custom">
-                                                    <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                </div>
 
-                                            </div>
-                                        </div>
+                                <div class="repeater">
+                                    <div class="" id="details">
+
                                     </div>
 
-
-
                                     <div class="row pb-4">
-                                        <div class="col-12">
-                                            <button type="button" class="btn btn-primary waves-effect waves-light" data-repeater-create>Tambah Baris</button>
+                                        <div class="col-sm-3 px-3">
+                                            <button type="button" class="btn btn-primary waves-effect waves-light w-px-150 btn-add-row-mg">Tambah
+                                                Baris</button>
                                         </div>
                                     </div>
                                 </div>
@@ -220,17 +195,17 @@ $configData = Helper::appClasses();
 <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
 </script>
 <script>
+    var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>`;
     $(document).ready(function() {
-        $('.repeater').repeater({
-
-        })
         var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
 
         let account = {!! json_encode(session('data')) !!}
         var levelId = account.level_id;
-        
+
         if (levelId == 2) { // KA
             $('#edit_type-1').prop('readonly', false);
             $('#edit_name-1').prop('readonly', false);
@@ -281,8 +256,8 @@ $configData = Helper::appClasses();
             $('#edit_date-3').prop('disabled', true);
         }
 
-        
-        
+
+
         // Mendapatkan id dengan cara mengambil dari URL
         var urlSegments = window.location.pathname.split('/');
         var idIndex = urlSegments.indexOf('edit') + 1;
@@ -628,42 +603,13 @@ $configData = Helper::appClasses();
             dataType: "json",
             success: function(res) {
                 let response = res.data;
-
-                // Set value ke form atas
-                $('#editLaporanKerusakan').find('.form-control').each(function() {
-                    $("#" + $(this).attr('id')).val(response[$(this).attr(
-                        "name")]);
-                });
-                $('#edit_damage_report_date').val(moment(response.damage_report_date,
-                    'YYYY-MM-DD').format('DD-MM-YYYY'));
-                $('#edit_action_plan_date').val(moment(response.action_plan_date, 'YYYY-MM-DD')
-                    .format('DD-MM-YYYY'));
-                $(".select-ticket").empty().append('<option value="' + response.ticket_id +
-                        '">' + response.ticket_id + '</option>').val(response.ticket_id)
-                    .trigger("change");
-                localStorage.setItem('status', response.status);
+                $("#damage_report_date").val(response.damage_report_date);
+                $("#action_plan_date").val(response.action_plan_date);
+                console.log(response);
 
                 // Set value ke repeater
-                var firstRow = $('.repeater-wrapper').first();
-
-                for (var i = 0; i < response.damage_report_details.length; i++) {
-                    var rowValues = response.damage_report_details[i];
-
-                    if (i === 0) {
-                        firstRow.find('#edit_category').val(rowValues.category);
-                        firstRow.find('#edit_location').val(rowValues.location);
-                        firstRow.find('#edit_total').val(rowValues.total);
-                    } else {
-                        var newRow = firstRow.clone();
-                        newRow.find('#edit_category').val(rowValues.category);
-                        newRow.find('#edit_location').val(rowValues.location);
-                        newRow.find('#edit_total').val(rowValues.total);
-
-                        $('.repeater [data-repeater-list="group-a"]').append(newRow);
-                    }
-                }
-
-                $('.repeater').repeater();
+                let details = response.damage_report_details;
+                getDetails(details);
 
                 // Set value ke form signature
                 for (let i = 1; i < response.damage_report_signatures.length + 1; i++) {
@@ -694,5 +640,114 @@ $configData = Helper::appClasses();
             }
         });
     }
+
+
+
+    function getDetails(detailItems) {
+        let details = detailItems;
+        let getDetail = '';
+        let temp = '';
+
+        console.log(details);
+
+        if (details) {
+            for (let i = 0; i < details.length; i++) {
+                console.log('');
+                temp = `             
+                <div class="row-mg">
+                    <div class="row mb-1 row-mg">
+                        <div class="col-md-4">
+                            <label for="note" class="form-label fw-medium">Jenis Masalah Kerusakan</label>
+                            <input type="text" class="form-control  row-input" id="category" name="category[]" value="` + details[i].category + `" placeholder="Jenis Masalah Kerusakan" required />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="note" class="form-label fw-medium">Lokasi</label>
+                            <input type="text" class="form-control  row-input" id="location" name="location[]" value="` + details[i].location + `" placeholder="Lokasi" required />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="note" class="form-label fw-medium">Jumlah</label>
+                            <input type="text" class="form-control qty price row-input" id="total" name="total[]" value="` + details[i].total + `" placeholder="Jumlah" required />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-md-1  px-1-custom">
+                            <a class="mb-3 mx-2 mt-4 btn btn-danger text-white btn-remove-mg" style="width: 10px; height: 38px" role="button" data-repeater-delete>
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                `;
+                getDetail = getDetail + temp;
+            }
+
+        } else {
+            // temp = `             
+            // <div class="row-mg">
+            //     <div class="row mb-1 row-mg">
+            //         <div class="col-md-4">
+            //             <label for="note" class="form-label fw-medium">Jenis Masalah Kerusakan</label>
+            //             <input type="text" class="form-control  row-input" id="category" name="category[]" placeholder="Jenis Masalah Kerusakan" required />
+            //             <div class="invalid-feedback">Tidak boleh kosong</div>
+            //         </div>
+            //         <div class="col-md-4">
+            //             <label for="note" class="form-label fw-medium">Lokasi</label>
+            //             <input type="text" class="form-control  row-input" id="location" name="location[]" placeholder="Lokasi" required />
+            //             <div class="invalid-feedback">Tidak boleh kosong</div>
+            //         </div>
+            //         <div class="col-md-3">
+            //             <label for="note" class="form-label fw-medium">Jumlah</label>
+            //             <input type="text" class="form-control qty price row-input" id="total" name="total[]" placeholder="Jumlah" required />
+            //             <div class="invalid-feedback">Tidak boleh kosong</div>
+            //         </div>
+            //         <div class="col-md-1  px-1-custom">
+            //             <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
+            //                 <i class="fas fa-trash"></i>
+            //             </a>
+            //         </div>
+            //     </div>
+            // </div>
+            // `;
+        }
+        $('#details').prepend(temp);
+    }
+
+    $(document).on('click', '.btn-add-row-mg', function() {
+        // Clone baris terakhir
+        var details = $('#details');
+        var newRow = `
+            <div class="row-mg">
+                <div class="row mb-1 row-mg">
+                    <div class="col-md-4">
+                        <label for="note" class="form-label fw-medium">Jenis Masalah Kerusakan</label>
+                        <input type="text" class="form-control  row-input" id="category" name="category[]" placeholder="Jenis Masalah Kerusakan" required />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="note" class="form-label fw-medium">Lokasi</label>
+                        <input type="text" class="form-control  row-input" id="location" name="location[]" placeholder="Lokasi" required />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="note" class="form-label fw-medium">Jumlah</label>
+                        <input type="text" class="form-control qty  row-input" id="total" name="total[]" placeholder="Jumlah" required />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="col-md-1  px-1-custom">
+                        <a class="mb-3 mx-2 mt-4 btn btn-danger text-white btn-remove-mg" style="width: 10px; height: 38px" role="button" data-repeater-delete>
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            `;
+        details.append(newRow);
+    });
+
+    $(document).on('click', '.btn-remove-mg', function() {
+        // Hapus baris yang ditekan tombol hapus
+        $(this).closest('.row-mg').remove();
+    });
 </script>
 @endsection

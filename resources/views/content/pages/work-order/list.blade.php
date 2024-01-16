@@ -86,6 +86,17 @@ $configData = Helper::appClasses();
         var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>`;
+        let account = {!! json_encode(session('data')) !!}
+        let buttonAdd = [];
+        if (account.level.id == '5') {
+            buttonAdd = [{
+                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Work Order</span>',
+                className: "btn btn-primary",
+                action: function(a, e, t, s) {
+                    window.location = "{{url('complain/work-order/add')}}" ;
+                }
+            }];
+        }
 
         var a = $(".work-order-list-table");
         if (a.length) var e = a.DataTable({
@@ -195,13 +206,7 @@ $configData = Helper::appClasses();
                 search: "",
                 searchPlaceholder: "Search Work Order"
             },
-            buttons: [{
-                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Work Order</span>',
-                className: "btn btn-primary",
-                action: function(a, e, t, s) {
-                    window.location = baseUrl + "complain/work-order/add"
-                }
-            }],
+            buttons: buttonAdd,
             responsive: {
                 details: {
                     display: $.fn.dataTable.Responsive.display.modal({
