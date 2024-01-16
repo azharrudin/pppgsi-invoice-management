@@ -530,7 +530,7 @@ $configData = Helper::appClasses();
                 cache: true,
                 data: function(params) {
                     return {
-                        term: params.term || '',
+                        value: params.term || '',
                         page: params.page || 1
                     }
                 },
@@ -565,7 +565,7 @@ $configData = Helper::appClasses();
                 cache: true,
                 data: function(params) {
                     return {
-                        term: params.term || '',
+                        value: params.term || '',
                         page: params.page || 1
                     }
                 },
@@ -600,7 +600,7 @@ $configData = Helper::appClasses();
                 cache: true,
                 data: function(params) {
                     return {
-                        term: params.term || '',
+                        value: params.term || '',
                         page: params.page || 1
                     }
                 },
