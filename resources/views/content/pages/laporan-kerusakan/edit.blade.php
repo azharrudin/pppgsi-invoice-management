@@ -135,13 +135,13 @@
                                         <div class="col-4 signatures">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add"
-                                                    placeholder="KA. Unit Pelayanan" style="text-align:center;"
+                                                    placeholder="Jabatan" style="text-align:center;"
                                                     id="edit_type-1" name="type"/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add "
-                                                    placeholder="Koordinator Teknik" style="text-align:center;"
+                                                    placeholder="Nama" style="text-align:center;"
                                                     id="edit_name-1" name="name"  />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
@@ -178,13 +178,13 @@
                                         <div class="col-4 signatures">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add"
-                                                    placeholder="KA. Unit Pelayanan" style="text-align:center;"
+                                                    placeholder="Jabatan" style="text-align:center;"
                                                     id="edit_type-2" name="type"  />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add "
-                                                    placeholder="Nama & Jabatan" style="text-align:center;"
+                                                    placeholder="Nama" style="text-align:center;"
                                                     id="edit_name-2" name="name"  />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
@@ -221,14 +221,15 @@
                                         <!-- Leader Cleaner -->
                                         <div class="col-4 signatures">
                                             <div class="mb-3">
+                                                
                                                 <input type="text" class="form-control add"
-                                                    placeholder="KA. Unit Pelayanan" style="text-align:center;"
+                                                    placeholder="Jabatan" style="text-align:center;"
                                                     id="edit_type-3" name="type"  />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add "
-                                                    placeholder="Nama & Jabatan" style="text-align:center;"
+                                                    placeholder="Nama" style="text-align:center;"
                                                     id="edit_name-3" name="name"  />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
@@ -361,11 +362,26 @@
 
             let account = {!! json_encode(session('data')) !!}
             var levelId = account.level_id;
+            var department = account.department.name;
+            var nameUser = account.name;
+            console.log(department);
+            console.log(nameUser);
 
            
+            // var inputValue = $("#edit_type-3").val();
 
+            //     // Mengecek apakah nilai input kosong
+            //     if (inputValue.trim() === '') {
+            //         $("#edit_type-3").val(department);
+            //         $("#edit_name-3").val(nameUser);
+            // }
            
             if (levelId == 2) { // KA
+                var inputValue = $("#edit_type-1").val();
+                if (inputValue.trim() === '') {
+                    $("#edit_type-1").val(department);
+                    $("#edit_name-1").val(nameUser);
+                }
                 $('#edit_type-1').prop('readonly', false);
                 $('#edit_name-1').prop('readonly', false);
                 $('#edit_date-1').prop('disabled', false);
@@ -378,6 +394,11 @@
                 $('#edit_name-3').prop('readonly', true);
                 $('#edit_date-3').prop('disabled', true);
             } else if (levelId == 3) { // koor teknik
+                var inputValue = $("#edit_type-2").val();
+                if (inputValue.trim() === '') {
+                    $("#edit_type-2").val(department);
+                    $("#edit_name-2").val(nameUser);
+                }
                 $('#edit_type-1').prop('readonly', true);
                 $('#edit_name-1').prop('readonly', true);
                 $('#edit_date-1').prop('disabled', true);
@@ -390,6 +411,11 @@
                 $('#edit_name-3').prop('readonly', true);
                 $('#edit_date-3').prop('disabled', true);
             } else if (levelId == 4) { // leader cleaning
+                var inputValue = $("#edit_type-3").val();
+                if (inputValue.trim() === '') {
+                    $("#edit_type-3").val(department);
+                    $("#edit_name-3").val(nameUser);
+                }
                 $('#edit_type-1').prop('readonly', true);
                 $('#edit_name-1').prop('readonly', true);
                 $('#edit_date-1').prop('disabled', true);

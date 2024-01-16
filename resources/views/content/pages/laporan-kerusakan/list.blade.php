@@ -81,7 +81,19 @@ $configData = Helper::appClasses();
                                 <span class="sr-only">Loading...</span>
                             </div>`;
 
-
+        let account = {!! json_encode(session('data')) !!}
+        let levelId = account.level.id;
+        let buttonAdd = [];
+        
+        if(levelId == '10'){
+            buttonAdd =[{
+                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Laporan Kerusakan</span>',
+                className: "btn btn-primary",
+                action: function(a, e, t, s) {
+                    window.location = baseUrl + "complain/laporan-kerusakan/add"
+                }
+            }];
+        }
 
     $((function() {
         var a = $(".damage-report-list-table");
@@ -203,13 +215,7 @@ $configData = Helper::appClasses();
                 search: "",
                 searchPlaceholder: "Search LK"
             },
-            buttons: [{
-                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Laporan Kerusakan</span>',
-                className: "btn btn-primary",
-                action: function(a, e, t, s) {
-                    window.location = baseUrl + "complain/laporan-kerusakan/add"
-                }
-            }],
+            buttons: buttonAdd,
             responsive: {
                 details: {
                     display: $.fn.dataTable.Responsive.display.modal({

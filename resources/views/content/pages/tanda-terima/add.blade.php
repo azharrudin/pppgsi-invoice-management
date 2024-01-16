@@ -131,88 +131,13 @@ $configData = Helper::appClasses();
                             </div>
 
                             <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
-                                <div class="mb-3">
+                                <div class="mb-3 ttd">
                                     <label for="note" class="form-label fw-medium">Tanda Tangan</label>
                                     <input type="text" class="form-control w-px-250 date" id="receipt_date" name="receipt_date" placeholder="Tanggal" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
-                            <div class="row px-3 d-flex align-items-center mb-3">
-                                <div class="col-2">
-                                    <label for="salesperson" class="form-label  fw-medium">Sudah Dibayarkan</label>
-                                </div>
-                                <div class="col-10">
-                                    <input type="text" class="form-control qty price" id="total_paid" name="total_paid"
-                                        placeholder="Sudah Dibayarkan" fdprocessedid="yombzp" required readonly>
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
-                            </div>
-                            <div class="row px-3 d-flex align-items-center mb-3">
-                                <div class="col-2">
-                                    <label for="salesperson" class="form-label  fw-medium">Dibayarkan</label>
-                                </div>
-                                <div class="col-10">
-                                    <input type="text" class="form-control qty price" id="paid" name="paid"
-                                        placeholder="Dibayarkan" fdprocessedid="yombzp" required>
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
-                            </div>
-                            <div class="row px-3 d-flex align-items-center mb-3">
-                                <div class="col-2">
-                                    <label for="salesperson" class="form-label  fw-medium">Sisa Tagihan</label>
-                                </div>
-                                <div class="col-10">
-                                    <input type="text" class="form-control qty price" id="remaining" name="remaining"
-                                        placeholder="Sisa Tagihan" fdprocessedid="yombzp" required>
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
-                            </div>
-                            <div class="row px-3 d-flex align-items-center mb-3">
-                                <div class="col-2">
-                                    <label for="salesperson" class="form-label  fw-medium">Terbilang</label>
-                                </div>
-                                <div class="col-10">
-                                    <input type="text" class="form-control pe-none" id="grand_total_spelled"
-                                        name="grand_total_spelled" placeholder="Terbilang" fdprocessedid="yombzp"
-                                        required>
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
-                            </div>
-
-                            <div class="row py-3 px-3">
-                                <div class="col-md-6 mb-md-0 mb-3">
-                                    <textarea class="form-control" rows="11" id="note" name="note" placeholder="Catatan" required></textarea>
-                                    <br>
-                                    <br>
-                                    <span>
-                                        Apabila dibayar dengan cek / Bilyet giro, Pembayaran baru dianggap sah apabila telah
-                                        dapat dicairkan di Bank kami.
-                                    </span>
-                                </div>
-                                @if (session('data')['level']['id'] == '1')
-                                <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center ">
-                                    <div class="mb-3">
-                                        <label for="note" class="form-label fw-medium">Tanda Tangan</label>
-                                        <input type="text" class="form-control w-px-250 date" id="receipt_date"
-                                            name="receipt_date" placeholder="Tanggal" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <div action="/upload" class="dropzone needsclick dz-clickable w-px-250"
-                                            id="dropzone-basic">
-                                            <div class="dz-message needsclick">
-                                                <span class="note needsclick">Unggah Tanda Tangan</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control w-px-250 " id="signature_name"
-                                            name="signature_name" placeholder="Nama & Jabatan" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                </div>
-                                @endif
-                            </div>
+                     
                         </div>
                     </div>
                 </div>
@@ -288,6 +213,14 @@ $configData = Helper::appClasses();
 <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/flatpickr/flatpickr.js">
 </script>
 <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
+</script>
+<script>
+      let account = {!! json_encode(session('data')) !!}
+        var levelId = account.level_id;
+        console.log(levelId);
+        if (levelId == 10) {
+            $('.ttd').hide();
+        }
 </script>
 <script>
     $(document).ready(function() {
