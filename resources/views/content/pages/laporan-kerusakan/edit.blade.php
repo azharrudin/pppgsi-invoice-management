@@ -90,7 +90,6 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
 
-<<<<<<< HEAD
 
                                 <hr class="my-3">
                                 <div class="row  text-center mt-4">
@@ -107,39 +106,9 @@ $configData = Helper::appClasses();
                                             <div action="/upload" class="dropzone needsclick dz-clickable w-px-270" id="dropzone-1">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
-=======
-                                    <hr class="my-3">
-                                    <div class="row  text-center mt-4" id="ttd">
-                                        <!-- KA -->
-                                        <div class="col-4 signatures">
-                                            <div class="mb-3">
-                                                <input type="text" class="form-control add"
-                                                    placeholder="Jabatan" style="text-align:center;"
-                                                    id="edit_type-1" name="type"/>
-                                                <div class="invalid-feedback">Tidak boleh kosong</div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <input type="text" class="form-control add "
-                                                    placeholder="Nama" style="text-align:center;"
-                                                    id="edit_name-1" name="name"  />
-                                                <div class="invalid-feedback">Tidak boleh kosong</div>
-                                            </div>
-                                            <div class="mb-3 prev-1">
-                                                <div
-                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
-                                                    <div class="dz-details">
-                                                        <div class="dz-thumbnail"> <img class="prev-img-1" alt=""
-                                                                src="">
-                                                            <span class="dz-nopreview">No preview</span>
-                                                        </div>
-                                                    </div>
-                                                    {{-- <a class="dz-remove" id="1" href="javascript:undefined;"
-                                                            data-dz-remove="">Remove file</a> --}}
->>>>>>> 5c46a18b8b3d96336d096c8f2c71a7c6e95f3183
                                                 </div>
                                             </div>
                                         </div>
-<<<<<<< HEAD
                                         <div class="mb-3">
                                             <input type="text" class="form-control add date" placeholder="Tanggal" style="text-align:center;" id="date1" name="date" required />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
@@ -158,39 +127,9 @@ $configData = Helper::appClasses();
                                             <div action="/upload" class="dropzone needsclick dz-clickable w-px-270" id="dropzone-2">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
-=======
-                                        <!-- Akhir KA -->
-                                        <!-- Koor Teknik -->
-                                        <div class="col-4 signatures">
-                                            <div class="mb-3">
-                                                <input type="text" class="form-control add"
-                                                    placeholder="Jabatan" style="text-align:center;"
-                                                    id="edit_type-2" name="type"  />
-                                                <div class="invalid-feedback">Tidak boleh kosong</div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <input type="text" class="form-control add "
-                                                    placeholder="Nama" style="text-align:center;"
-                                                    id="edit_name-2" name="name"  />
-                                                <div class="invalid-feedback">Tidak boleh kosong</div>
-                                            </div>
-                                            <div class="mb-3 prev-2">
-                                                <div
-                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
-                                                    <div class="dz-details">
-                                                        <div class="dz-thumbnail"> <img class="prev-img-2" alt=""
-                                                                src="">
-                                                            <span class="dz-nopreview">No preview</span>
-                                                        </div>
-                                                    </div>
-                                                    {{-- <a class="dz-remove" id="2"
-                                                        href="javascript:undefined;" data-dz-remove="">Remove
-                                                        file</a> --}}
->>>>>>> 5c46a18b8b3d96336d096c8f2c71a7c6e95f3183
                                                 </div>
                                             </div>
                                         </div>
-<<<<<<< HEAD
                                         <div class="mb-3">
                                             <input type="text" class="form-control add date" placeholder="Tanggal" style="text-align:center;" id="date2" name="date" required />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
@@ -209,36 +148,6 @@ $configData = Helper::appClasses();
                                             <div action="/upload" class="dropzone needsclick dz-clickable w-px-270" id="dropzone-3">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
-=======
-                                        <!-- Akhir koor teknik -->
-                                        <!-- Leader Cleaner -->
-                                        <div class="col-4 signatures">
-                                            <div class="mb-3">
-                                                
-                                                <input type="text" class="form-control add"
-                                                    placeholder="Jabatan" style="text-align:center;"
-                                                    id="edit_type-3" name="type"  />
-                                                <div class="invalid-feedback">Tidak boleh kosong</div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <input type="text" class="form-control add "
-                                                    placeholder="Nama" style="text-align:center;"
-                                                    id="edit_name-3" name="name"  />
-                                                <div class="invalid-feedback">Tidak boleh kosong</div>
-                                            </div>
-                                            <div class="mb-3 prev-3">
-                                                <div
-                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
-                                                    <div class="dz-details">
-                                                        <div class="dz-thumbnail"> <img class="prev-img-3" alt=""
-                                                                src="">
-                                                            <span class="dz-nopreview">No preview</span>
-                                                        </div>
-                                                    </div>
-                                                    {{-- <a class="dz-remove" id="3"
-                                                        href="javascript:undefined;" data-dz-remove="">Remove
-                                                        file</a> --}}
->>>>>>> 5c46a18b8b3d96336d096c8f2c71a7c6e95f3183
                                                 </div>
                                             </div>
                                         </div>
@@ -294,7 +203,6 @@ $configData = Helper::appClasses();
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
 
-<<<<<<< HEAD
         let account = {!! json_encode(session('data')) !!}
         var levelId = account.level_id;
 
@@ -306,33 +214,6 @@ $configData = Helper::appClasses();
             $('#edit_type-2').prop('readonly', true);
             $('#edit_name-2').prop('readonly', true);
             $('#edit_date-2').prop('disabled', true);
-=======
-            let account = {!! json_encode(session('data')) !!}
-            var levelId = account.level_id;
-            var department = account.department.name;
-            var nameUser = account.name;
-            console.log(department);
-            console.log(nameUser);
-
-           
-            // var inputValue = $("#edit_type-3").val();
-
-            //     // Mengecek apakah nilai input kosong
-            //     if (inputValue.trim() === '') {
-            //         $("#edit_type-3").val(department);
-            //         $("#edit_name-3").val(nameUser);
-            // }
-           
-            if (levelId == 2) { // KA
-                var inputValue = $("#edit_type-1").val();
-                if (inputValue.trim() === '') {
-                    $("#edit_type-1").val(department);
-                    $("#edit_name-1").val(nameUser);
-                }
-                $('#edit_type-1').prop('readonly', false);
-                $('#edit_name-1').prop('readonly', false);
-                $('#edit_date-1').prop('disabled', false);
->>>>>>> 5c46a18b8b3d96336d096c8f2c71a7c6e95f3183
 
             $('#edit_type-3').prop('readonly', true);
             $('#edit_name-3').prop('readonly', true);
@@ -342,24 +223,9 @@ $configData = Helper::appClasses();
             $('#edit_name-1').prop('readonly', true);
             $('#edit_date-1').prop('disabled', true);
 
-<<<<<<< HEAD
             $('#edit_type-2').prop('readonly', false);
             $('#edit_name-2').prop('readonly', false);
             $('#edit_date-2').prop('disabled', false);
-=======
-                $('#edit_type-3').prop('readonly', true);
-                $('#edit_name-3').prop('readonly', true);
-                $('#edit_date-3').prop('disabled', true);
-            } else if (levelId == 3) { // koor teknik
-                var inputValue = $("#edit_type-2").val();
-                if (inputValue.trim() === '') {
-                    $("#edit_type-2").val(department);
-                    $("#edit_name-2").val(nameUser);
-                }
-                $('#edit_type-1').prop('readonly', true);
-                $('#edit_name-1').prop('readonly', true);
-                $('#edit_date-1').prop('disabled', true);
->>>>>>> 5c46a18b8b3d96336d096c8f2c71a7c6e95f3183
 
             $('#edit_type-3').prop('readonly', true);
             $('#edit_name-3').prop('readonly', true);
@@ -369,24 +235,9 @@ $configData = Helper::appClasses();
             $('#edit_name-1').prop('readonly', true);
             $('#edit_date-1').prop('disabled', true);
 
-<<<<<<< HEAD
             $('#edit_type-2').prop('readonly', true);
             $('#edit_name-2').prop('readonly', true);
             $('#edit_date-2').prop('disabled', true);
-=======
-                $('#edit_type-3').prop('readonly', true);
-                $('#edit_name-3').prop('readonly', true);
-                $('#edit_date-3').prop('disabled', true);
-            } else if (levelId == 4) { // leader cleaning
-                var inputValue = $("#edit_type-3").val();
-                if (inputValue.trim() === '') {
-                    $("#edit_type-3").val(department);
-                    $("#edit_name-3").val(nameUser);
-                }
-                $('#edit_type-1').prop('readonly', true);
-                $('#edit_name-1').prop('readonly', true);
-                $('#edit_date-1').prop('disabled', true);
->>>>>>> 5c46a18b8b3d96336d096c8f2c71a7c6e95f3183
 
             $('#edit_type-3').prop('readonly', false);
             $('#edit_name-3').prop('readonly', false);
