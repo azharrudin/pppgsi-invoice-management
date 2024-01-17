@@ -197,7 +197,6 @@ $configData = Helper::appClasses();
 <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
 </script>
 
-
 <script>
     "use strict";
     let dataLocal = JSON.parse(localStorage.getItem("laporan-kerusakan"));

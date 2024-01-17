@@ -131,7 +131,7 @@ $configData = Helper::appClasses();
                             </div>
 
                             <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
-                                <div class="mb-3">
+                                <div class="mb-3 ttd">
                                     <label for="note" class="form-label fw-medium">Tanda Tangan</label>
                                     <input type="text" class="form-control w-px-250 date" id="receipt_date" name="receipt_date" placeholder="Tanggal" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
@@ -213,9 +213,14 @@ $configData = Helper::appClasses();
 <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
 </script>
 <script>
-    "use strict";
-    let account = {!!json_encode(session('data')) !!}
-    
+      let account = {!! json_encode(session('data')) !!}
+        var levelId = account.level_id;
+        console.log(levelId);
+        if (levelId == 10) {
+            $('.ttd').hide();
+        }
+</script>
+<script>
     $(document).ready(function() {
 
         // Mendapatkan id dari invoice
