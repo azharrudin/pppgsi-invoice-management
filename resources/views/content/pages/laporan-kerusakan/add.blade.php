@@ -121,11 +121,11 @@ $configData = Helper::appClasses();
                                 <div class="row  text-center mt-4" id="ttd">
                                     <div class="col-4 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control add" placeholder="KA. Unit Pelayanan" style="text-align:center;" id="type" name="type"/>
+                                            <input type="text" class="form-control add" placeholder="KA. Unit Pelayanan" style="text-align:center;" id="type" name="type" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control add " placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name"/>
+                                            <input type="text" class="form-control add " placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -136,17 +136,17 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control add date" placeholder="Tanggal" style="text-align:center;" id="date1" name="date"/>
+                                            <input type="text" class="form-control add date" placeholder="Tanggal" style="text-align:center;" id="date1" name="date" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
                                     <div class="col-md-4 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control add" placeholder="KA. Unit Pelayanan" style="text-align:center;" id="type" name="type"/>
+                                            <input type="text" class="form-control add" placeholder="KA. Unit Pelayanan" style="text-align:center;" id="type" name="type" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control add " placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name"/>
+                                            <input type="text" class="form-control add " placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -219,6 +219,7 @@ $configData = Helper::appClasses();
 <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
 </script>
 
+
 <script>
     "use strict";
     let dataLocal = JSON.parse(localStorage.getItem("laporan-kerusakan"));
@@ -226,20 +227,24 @@ $configData = Helper::appClasses();
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
     $(document).ready(function() {
-        $.ajax({
-            url: baseUrl + "api/damage-report/nomor",
-            type: "get",
-            contentType: "application/json; charset=utf-8",
-            success: function(response) {
-                console.log(response);
-                $('#damage_report_number').val(response);
-            },
-            error: function(errors) {
-                console.log(errors.message);
-            }
-        });
-
         let account = {!! json_encode(session('data')) !!}
+
+        const idTicket = getParameterByName('id-ticket');
+
+        if (idTicket) {
+            getDataTicket(idTicket);
+        }
+
+        function getParameterByName(name) {
+            var url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
         var levelId = account.level_id;
         if (levelId == 10) {
             $('#ttd').hide();
@@ -672,6 +677,24 @@ $configData = Helper::appClasses();
         });
     });
 
+    function getDataTicket(id) {
+        $.ajax({
+            url: "{{url('api/damage-report')}}/" + id,
+            type: "GET",
+            success: function(response) {
+                console.log(response);
+                let data = response.data;
+                let tem = `<option value="` + data.id + `" selected>` + data.damage_report_number + `</option>`;
+                $('.select-ticket').prepend(tem);
+
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+
+    }
+
     $(document).on('click', '.btn-add-row-mg', function() {
         // Clone baris terakhir
         var details = $('#details');
@@ -694,7 +717,7 @@ $configData = Helper::appClasses();
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-1  px-1-custom">
-                        <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
+                        <a class="btn-remove-mg mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
                             <i class="fas fa-trash"></i>
                         </a>
                     </div>
@@ -736,7 +759,7 @@ $configData = Helper::appClasses();
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-1  px-1-custom">
-                            <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
+                            <a class="btn-remove-mg mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
                                 <i class="fas fa-trash"></i>
                             </a>
                         </div>
@@ -766,7 +789,7 @@ $configData = Helper::appClasses();
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-1  px-1-custom">
-                        <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
+                        <a class="btn-remove-mg mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
                             <i class="fas fa-trash"></i>
                         </a>
                     </div>

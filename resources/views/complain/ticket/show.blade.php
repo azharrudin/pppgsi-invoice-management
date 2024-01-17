@@ -50,7 +50,7 @@ $configData = Helper::appClasses();
                                     <div class="">:</div>
                                 </td>
                                 <td style="width: 75%;">
-                                    <div id="reporter_company" class="fw-bold fs-5"></div>
+                                    <div id="tenant_id" class="fw-bold fs-5"></div>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
@@ -106,7 +106,7 @@ $configData = Helper::appClasses();
                     <!-- <a href="#" class="btn btn-primary d-grid w-100 mb-2">
                             <span class="d-flex align-items-center justify-content-center text-nowrap">Buat Laporan Kerusakan</span>
                         </a> -->
-                    <a href="#" class="btn btn-primary btn-label-secondary d-grid w-100 mb-2">Buat Laporan Kerusakan</a>
+                    <a href="#" class="btn btn-primary btn-label-secondary d-grid w-100 mb-2 add-damage">Buat Laporan Kerusakan</a>
                 </div>
             </div>
         </div>
@@ -138,7 +138,14 @@ $configData = Helper::appClasses();
         var idIndex = urlSegments.indexOf('show-ticket') + 1;
         var id = urlSegments[idIndex];
         getDataTicket(id);
+
+        $(document).on('click', '.add-damage', function(event) {
+            event.preventDefault();
+            window.location.href = "/complain/laporan-kerusakan/add?id-ticket=" + id
+        });
     });
+
+
 
     function getDataTicket(id) {
         $.ajax({
@@ -159,9 +166,9 @@ $configData = Helper::appClasses();
                 console.log(data);
                 $("#reporter_name").text(data.reporter_name);
                 $("#reporter_phone").text(data.reporter_phone);
-                $("#reporter_company").text(data.reporter_company);
                 $("#ticket_title").text(data.ticket_title);
                 $("#ticket_body").text(data.ticket_body);
+                $("#tenant_id").text(data.tenant.name);
                 getImage(data.ticket_attachments);
                 Swal.close();
             },
@@ -170,8 +177,6 @@ $configData = Helper::appClasses();
             }
         });
     }
-
-
 
     function getImage(images) {
         console.log(images);

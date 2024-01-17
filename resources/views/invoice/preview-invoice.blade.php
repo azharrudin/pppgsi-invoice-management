@@ -39,7 +39,7 @@ $configData = Helper::appClasses();
                                 <div class="row d-flex justify-content-end">
                                     <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">No. Invoice</label>
-                                        <input type="text" class="form-control" id="invoice_number" placeholder="" readonly />
+                                        <input type="text" class="form-control" id="invoice_number" placeholder="" disabled />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="col-md-6 mb-3">
@@ -276,22 +276,6 @@ $configData = Helper::appClasses();
 
     let data = JSON.parse(localStorage.getItem("invoice"));
     $(document).ready(function() {
-        $.ajax({
-            url: "{{env('BASE_URL_API')}}"  + "/api/invoice/nomor",
-            type: "get",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(response) {
-                $('#invoice_number').val(response.data);
-            },
-            error: function(errors) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: errors.responseJSON.message,
-                })
-            }
-        });
         $("#invoice_number").val(data.invoice_number);
         $("#invoice_date").val(data.invoice_date);
         $("#contract_number").val(data.contract_number);

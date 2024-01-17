@@ -76,7 +76,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label for="classification" class="form-label fw-medium">Classification</label>
-                                    <select class="form-select add w-px-250 select2 select-classification" id="classification" name="classification[]" multiple required>
+                                    <select id="classification" name="classification" class="mb-3 select-classification add form-control" required>
                                     </select>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
@@ -234,9 +234,6 @@ $configData = Helper::appClasses();
     "use strict";
     let dataLocal = JSON.parse(localStorage.getItem("material-request"));
     $(document).ready(function() {
-        
-        
-
         let account = {!! json_encode(session('data')) !!}
         var levelId = account.level_id;
         if (levelId == 10) {

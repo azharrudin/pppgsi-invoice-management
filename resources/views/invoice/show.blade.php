@@ -209,50 +209,129 @@ $configData = Helper::appClasses();
             window.location.href = "/invoice/list-invoice"
         });
 
+        $(document).on('click', '.kirim-invoice', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                icon: 'warning',
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Ya, Kirim!",
+                cancelButtonText: "Batal",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                    cancelButton: "btn fw-bold btn-active-light-primary"
+                }
+            }).then((result) => {
+                if (result.value) {
+                    let datas = {}
+                    datas.status = 'Terkirim';
+                    Swal.fire({
+                        title: 'Memeriksa...',
+                        text: "Harap menunggu",
+                        imageUrl: "{{ asset('waiting.gif') }}",
+                        showConfirmButton: false,
+                        allowOutsideClick: false
+                    });
+                    $.ajax({
+                        url: "{{env('BASE_URL_API')}}" + "/api/invoice/update-status/" + id,
+                        type: "PATCH",
+                        data: JSON.stringify(datas),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response) {
+                            $('.indicator-progress').show();
+                            $('.indicator-label').hide();
+
+                            Swal.fire({
+                                title: 'Berhasil',
+                                text: 'Berhasil Mengirim Invoice',
+                                icon: 'success',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            }).then((result) => {
+                                localStorage.removeItem('invoice');
+                                window.location.href = "/invoice/list-invoice";
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: ' You clicked the button!',
+                                icon: 'error',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            })
+                        }
+                    });
+                }
+            });
+        });
+
         $(document).on('click', '.disetujui', function(event) {
             event.preventDefault();
             Swal.fire({
-                title: '<h2>Loading...</h2>',
-                html: sweet_loader + '<h5>Please Wait</h5>',
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                allowEscapeKey: false
-            });
-            let datas = {}
-            datas.status = 'Disetujui KA';
-            $.ajax({
-                url: "{{env('BASE_URL_API')}}" + "/api/invoice/update-status/" + id,
-                type: "PATCH",
-                data: JSON.stringify(datas),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(response) {
-                    $('.indicator-progress').show();
-                    $('.indicator-label').hide();
-
+                title: 'Apakah anda yakin?',
+                icon: 'warning',
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Ya, Kirim!",
+                cancelButtonText: "Batal",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                    cancelButton: "btn fw-bold btn-active-light-primary"
+                }
+            }).then((result) => {
+                if (result.value) {
+                    let datas = {}
+                    datas.status = 'Disetujui KA';
                     Swal.fire({
-                        title: 'Berhasil',
-                        text: 'Berhasil menambahkan Invoice',
-                        icon: 'success',
-                        customClass: {
-                            confirmButton: 'btn btn-primary'
-                        },
-                        buttonsStyling: false
-                    }).then((result) => {
-                        localStorage.removeItem('invoice');
-                        window.location.href = "/invoice/list-invoice";
+                        title: 'Memeriksa...',
+                        text: "Harap menunggu",
+                        imageUrl: "{{ asset('waiting.gif') }}",
+                        showConfirmButton: false,
+                        allowOutsideClick: false
                     });
-                },
-                error: function(xhr, status, error) {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: ' You clicked the button!',
-                        icon: 'error',
-                        customClass: {
-                            confirmButton: 'btn btn-primary'
+                    $.ajax({
+                        url: "{{env('BASE_URL_API')}}" + "/api/invoice/update-status/" + id,
+                        type: "PATCH",
+                        data: JSON.stringify(datas),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response) {
+                            $('.indicator-progress').show();
+                            $('.indicator-label').hide();
+
+                            Swal.fire({
+                                title: 'Berhasil',
+                                text: 'Berhasil Merubah Status',
+                                icon: 'success',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            }).then((result) => {
+                                localStorage.removeItem('invoice');
+                                window.location.href = "/invoice/list-invoice";
+                            });
                         },
-                        buttonsStyling: false
-                    })
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: ' You clicked the button!',
+                                icon: 'error',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            })
+                        }
+                    });
+
                 }
             });
         });
@@ -288,8 +367,8 @@ $configData = Helper::appClasses();
                 $("#grand_total").text(format(data.grand_total));
                 $("#invoice_due_date").text(data.invoice_due_date);
                 $("#term_and_conditions").text(data.term_and_conditions);
-                if(data.materai_name == null && account.level.id != 1){
-                    $('.data-material').attr('style','display:none !important');
+                if (data.materai_name == null && account.level.id != 1) {
+                    $('.data-material').attr('style', 'display:none !important');
                 }
                 $("#materai_date").text(data.materai_date);
                 $("#materai_name").text(data.materai_name);
@@ -301,18 +380,18 @@ $configData = Helper::appClasses();
                     $("#materai-image").css("width", `200px`);
                     $("#materai-image").css("background-position", `center`);
                 }
-                if(data.status != 'Terkirim' || account.level.id != 10){
-                    $('.add-payment').attr('style','display:none !important');
+                if (data.status != 'Terkirim' || account.level.id != 10) {
+                    $('.add-payment').attr('style', 'display:none !important');
                 }
-                if(data.status != 'Disetujui BM' || account.level.id != 10){
-                    $('.kirim-invoice').attr('style','display:none !important');
+                if (data.status != 'Disetujui BM' || account.level.id != 10) {
+                    $('.kirim-invoice').attr('style', 'display:none !important');
                 }
-                if(account.level.id != '2' || data.status == 'Disetujui KA'){
-                    $('.disetujui').attr('style','display:none !important');
+                if (account.level.id != '2' || data.status == 'Disetujui KA') {
+                    $('.disetujui').attr('style', 'display:none !important');
                 }
 
-                if(account.level.id == '1'){
-                    $('.edit').attr('style','display:block');
+                if (account.level.id == '1') {
+                    $('.edit').attr('style', 'display:block');
                 }
                 Swal.close();
             },
