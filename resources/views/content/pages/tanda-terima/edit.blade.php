@@ -140,6 +140,10 @@
                                     <input type="text" class="form-control w-px-250 " id="signature_name"
                                         name="signature_name" placeholder="Nama & Jabatan" />
                                 </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control w-px-250 " id="jabatan"
+                                        name="signature_name" placeholder="Jabatan" value="Kepala BM" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -229,6 +233,24 @@
     <script>
         $(document).ready(function() {
             let account = {!! json_encode(session('data')) !!}
+            var levelId = account.level_id;
+            var department = account.department.name;
+            var nameUser = account.name;
+            console.log(levelId);
+          
+
+            if (levelId == 1) { // BM
+                var inputValue = $("#edit_type-1").val();
+                if (inputValue.trim() === '') {
+                    $("#signature_name").val(nameUser);
+                }
+                $('#signature_date').prop('disabled', false);
+                $('#signature_name').prop('readonly', false);
+              
+            } else { // other
+                $('#signature_date').prop('disabled', true);
+                $('#signature_name').prop('readonly', true);
+            }
 
             // Date
             $('.date').flatpickr({

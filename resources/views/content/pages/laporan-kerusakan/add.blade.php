@@ -29,7 +29,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-5">
                                 <span class="fs-4 d-block text-center mx-auto"><b>LAPORAN KERUSAKAN</b></span>
                                 <span class="d-block text-center mx-auto">Nomor Lk :</span>
-                                <input type="text" class="form-control add w-px-250 mx-auto" id="damage_report_number" placeholder="Nomor LK" required />
+                                <input type="text" class="form-control add w-px-250 mx-auto" id="damage_report_number" name="damage_report_number" placeholder="Nomor LK" disabled />
                                 <div class="invalid-feedback mx-auto w-px-250">Tidak boleh kosong</div>
                             </div>
                         </div>
@@ -81,9 +81,31 @@ $configData = Helper::appClasses();
 
                         <div class="py-3">
                             <div class="card academy-content shadow-none border p-3">
-                                <div class="repeater px-3">
-                                    <div class="" id="details">
-
+                                <div class="repeater">
+                                    <div class="" data-repeater-list="group-a">
+                                        <div class="repeater-wrapper " data-repeater-item>
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <label for="note" class="form-label fw-medium">Jenis Masalah
+                                                        Kerusakan</label>
+                                                    <input type="text" class="form-control" id="category" name="category" placeholder="Jenis Masalah Kerusakan" required />
+                                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label for="note" class="form-label fw-medium">Lokasi</label>
+                                                    <input type="text" class="form-control" id="location" name="location" placeholder="Lokasi" required />
+                                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label for="note" class="form-label fw-medium">Jumlah</label>
+                                                    <input type="text" class="form-control qty money" id="total" name="total" placeholder="Jumlah" required />
+                                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                                </div>
+                                                <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="row pb-4">
@@ -197,7 +219,6 @@ $configData = Helper::appClasses();
 <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
 </script>
 
-
 <script>
     "use strict";
     let dataLocal = JSON.parse(localStorage.getItem("laporan-kerusakan"));
@@ -222,9 +243,33 @@ $configData = Helper::appClasses();
         var levelId = account.level_id;
         if (levelId == 10) {
             $('#ttd').hide();
-        } else {
-            $('#ttd').show();
-        }
+        } 
+
+        //  fungsi untuk money format
+            $(document).on("keyup", ".qty", function(e){
+                 $(this).val(format($(this).val()));
+            });
+            var format = function(num){
+            var str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
+            if(str.indexOf(".") > 0) {
+                parts = str.split(".");
+                str = parts[0];
+            }
+            str = str.split("").reverse();
+            for(var j = 0, len = str.length; j < len; j++) {
+                if(str[j] != ",") {
+                output.push(str[j]);
+                if(i%3 == 0 && j < (len - 1)) {
+                    output.push(",");
+                }
+                i++;
+                }
+            }
+            formatted = output.reverse().join("");
+            return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
+            };
+
+
         // Date
         $('.date').flatpickr({
             dateFormat: 'Y-m-d'

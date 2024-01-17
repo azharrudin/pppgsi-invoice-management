@@ -26,7 +26,7 @@ $configData = Helper::appClasses();
                             <h1 class="text-center"><b>MATERIAL REQUEST</b></h1>
                         </div>
 
-                        <div class="row py-3 px-3">
+                        <div class="row py-3 px-3" >
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Requester</label>
@@ -82,7 +82,10 @@ $configData = Helper::appClasses();
                                     <div class="col-md-3">
                                         <label for="note" class="form-label fw-medium mb-3">Prepered by :</label>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
+                                            <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="name" name="name[]" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="jabatan" name="jabatan[]" />
                                         </div>
                                         <div class="mb-3">
                                             <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd1" style="padding: 5px;">
@@ -98,7 +101,10 @@ $configData = Helper::appClasses();
                                     <div class="col-md-3">
                                         <label for="note" class="form-label fw-medium mb-3">Reviewed by :</label>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
+                                            <input type="text" class="form-control ttd-row" placeholder="Nama" style="text-align:center;" id="name" name="name[]" disabled />
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control ttd-row" placeholder="Jabatan" style="text-align:center;" id="jabatan" name="jabatan[]" value="Chief Department" disabled />
                                         </div>
                                         <div class="mb-3">
                                             <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd2" style="padding: 5px;">
@@ -108,13 +114,16 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="name[]" />
+                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="name[]" disabled/>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="note" class="form-label fw-medium mb-3">Aknowledge by :</label>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="date" name="name[]" />
+                                            <input type="text" class="form-control ttd-row" placeholder="Nama" style="text-align:center;" id="name" name="name[]" disabled/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control ttd-row" placeholder="Jabatan" style="text-align:center;" id="jabatan" name="jabatan[]" value="Chief Finance & Akunting" disabled />
                                         </div>
                                         <div class="mb-3">
                                             <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd3" style="padding: 5px;">
@@ -124,13 +133,16 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
+                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" disabled/>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="note" class="form-label fw-medium mb-3">Approved by :</label>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control ttd-row" placeholder="Nama & Jabatan" style="text-align:center;" id="name" name="name[]" />
+                                            <input type="text" class="form-control ttd-row" placeholder="Nama" style="text-align:center;" id="name" name="name[]" disabled />
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control ttd-row" placeholder="Jabatan" style="text-align:center;" id="jabatan" name="jabatan[]" value="Kepala BM" disabled/>
                                         </div>
                                         <div class="mb-3">
                                             <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd4" style="padding: 5px;">
@@ -140,7 +152,7 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
+                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" disabled/>
                                         </div>
                                     </div>
                                 </div>
@@ -219,13 +231,13 @@ $configData = Helper::appClasses();
 
         let account = {!! json_encode(session('data')) !!}
         var levelId = account.level_id;
-        if (levelId == 10) {
-            $('.ttd').hide();
-        } else {
-            $('.ttd').show();
-        }
+        var department = account.department.name;
+        var nameUser = account.name;
 
-        console.log(levelId);
+        
+        $(".department").val("Warehouse");
+        $(".userName").val(nameUser);
+        
 
         $('.date').flatpickr({
             dateFormat: 'Y-m-d'
