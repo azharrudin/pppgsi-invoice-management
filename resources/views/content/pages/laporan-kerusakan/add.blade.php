@@ -341,6 +341,15 @@ $configData = Helper::appClasses();
                         }
                     } else {
                         event.preventDefault();
+                        Swal.fire({
+                            title: 'Loading...',
+                            text: "Please wait",
+                            customClass: {
+                                confirmButton: 'd-none'
+                            },
+                            buttonsStyling: false
+                        });
+
                         var damage_report_date = $("#damage_report_date").val();
                         var action_plan_date = $("#action_plan_date").val();
                         let ticket = $('.select-ticket').val();
@@ -386,8 +395,6 @@ $configData = Helper::appClasses();
 
                             signatures.push(signature);
                         });
-
-                        
                         let scope = $("#scope").val().toString();
                         let classification = $("#classification").val().toString();
                         datas.ticket_id = ticket;
@@ -425,7 +432,7 @@ $configData = Helper::appClasses();
                             error: function(xhr, status, error) {
                                 Swal.fire({
                                     title: 'Error!',
-                                    text: error,
+                                    text: xhr.responseJSON.message,
                                     icon: 'error',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'
@@ -523,7 +530,7 @@ $configData = Helper::appClasses();
                 cache: true,
                 data: function(params) {
                     return {
-                        value: params.term || '',
+                        term: params.term || '',
                         page: params.page || 1
                     }
                 },
@@ -558,7 +565,7 @@ $configData = Helper::appClasses();
                 cache: true,
                 data: function(params) {
                     return {
-                        value: params.term || '',
+                        term: params.term || '',
                         page: params.page || 1
                     }
                 },
@@ -593,7 +600,7 @@ $configData = Helper::appClasses();
                 cache: true,
                 data: function(params) {
                     return {
-                        value: params.term || '',
+                        term: params.term || '',
                         page: params.page || 1
                     }
                 },
