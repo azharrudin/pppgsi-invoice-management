@@ -280,7 +280,7 @@ $configData = Helper::appClasses();
                     let sendMailRow = '';
                     let editButton = '';
                     let deleteButton = '';
-                    if (account.level.id == 6) {
+                    if (row.status == 'Disetujui BM' && account.level.id == 10) {
                         sendMailRow = `<a href="#" data-bs-toggle="tooltip" class="text-body send-email" data-id="${data}" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>`;
                     }
                     if ((account.level.id == 10 && row.status == 'Terbuat') || (account.level.id == 1 && row.status == 'Disetujui KA')) {
