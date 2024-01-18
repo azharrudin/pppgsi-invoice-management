@@ -38,9 +38,7 @@ class WorkOrderController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $workOrderQuery = WorkOrder::with("workOrderDetails")->
-                with("workOrderSignatures")->
-                where("deleted_at", null);
+            $workOrderQuery = WorkOrder::where("deleted_at", null);
             if($value){
                 $workOrderQuery->where(function ($query) use ($value) {
                     $query->where('work_order_number', 'like', '%' . $value . '%')

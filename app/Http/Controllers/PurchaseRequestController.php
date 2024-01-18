@@ -39,9 +39,7 @@ class PurchaseRequestController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $purchaseRequestQuery = PurchaseRequest::with("purchaseRequestDetails")->
-                with("purchaseRequestSignatures")->
-                with("materialRequest")->
+            $purchaseRequestQuery = PurchaseRequest::with("materialRequest")->
                 with("department")->
                 where("deleted_at", null);
             if($value){

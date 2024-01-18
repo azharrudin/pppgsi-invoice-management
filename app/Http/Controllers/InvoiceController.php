@@ -37,7 +37,7 @@ class InvoiceController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $invoiceQuery = Invoice::with("invoiceDetails.tax")->with("tenant")->with("bank")->where("deleted_at", null);
+            $invoiceQuery = Invoice::with("tenant")->with("bank")->where("deleted_at", null);
             if($value){
                 $invoiceQuery->where(function ($query) use ($value) {
                     $query->whereHas('tenant', function ($tenantQuery) use ($value) {
@@ -50,7 +50,10 @@ class InvoiceController extends Controller
                     ->orWhere('status', 'like', '%' . $value . '%');
                 });
             }
-            $getInvoices = $invoiceQuery->orderBy($order, $sort)->paginate($perPage);
+            $getInvoices = $invoiceQuery
+            ->select("invoice_number", "tenant_id", "bank_id", "grand_total", "invoice_date", "invoice_due_date", "status")
+            ->orderBy($order, $sort)
+            ->paginate($perPage);
             $totalCount = $getInvoices->total();
 
             $invoiceArr = $this->CommonService->toArray($getInvoices);

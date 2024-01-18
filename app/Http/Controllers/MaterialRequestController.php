@@ -36,9 +36,7 @@ class MaterialRequestController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $materialRequestQuery = MaterialRequest::with("materialRequestDetails")->
-                with("materialRequestSignatures")->
-                where("deleted_at", null);
+            $materialRequestQuery = MaterialRequest::where("deleted_at", null);
             if($value){
                 $materialRequestQuery->where(function ($query) use ($value) {
                     $query->where('material_request_number', 'like', '%' . $value . '%')
