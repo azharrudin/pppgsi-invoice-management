@@ -191,7 +191,7 @@ $configData = Helper::appClasses();
                         });
 
                         datas.attachment = files;
-                        datas.status = "Wait a response"
+                        datas.status = "Selesai"
 
                         $.ajax({
                             url:  "{{env('BASE_URL_API')}}" + "/api/ticket",

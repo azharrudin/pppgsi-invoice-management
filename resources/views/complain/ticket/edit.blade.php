@@ -191,8 +191,7 @@ $configData = Helper::appClasses();
                         });
 
                         datas.attachment = files;
-                        console.log(files);
-                        datas.status = "Wait a response"
+                        datas.status = "Selesai"
 
                         $.ajax({
                             url:  "{{env('BASE_URL_API')}}" + "/api/ticket/" + id,
@@ -212,7 +211,6 @@ $configData = Helper::appClasses();
                             success: function(response) {
                                 $('.indicator-progress').show();
                                 $('.indicator-label').hide();
-                                console.log(datas);
                                 Swal.fire({
                                     title: 'Berhasil',
                                     text: 'Berhasil Mengedit Ticket',
@@ -259,7 +257,6 @@ $configData = Helper::appClasses();
             datas.status = "Wait a response"
 
             localStorage.setItem("edit-ticket", JSON.stringify(datas));
-            console.log(datas);
             window.location.href = "/complain/preview-edit-ticket/" + id
         });
 
@@ -274,16 +271,22 @@ $configData = Helper::appClasses();
                 url:  "{{env('BASE_URL_API')}}" + "/api/ticket/" + id,
                 type: "GET",
                 dataType: "json",
+                beforeSend: function() {
+                    Swal.fire({
+                        title: '<h2>Loading...</h2>',
+                        html: sweet_loader + '<h5>Please Wait</h5>',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    });
+                },
                 success: function(res) {
                     let data = res.data;
-                    console.log(data);
                     let attachments = data.ticket_attachments;
                     for (let i = 0; i < attachments.length; i++) {
-                        console.log(attachments[i].attachment);
                         files.push(attachments[i].attachment);
                     }
 
-                    console.log(files);
                     $("#reporter_name").val(data.reporter_name);
                     $("#reporter_phone").val(data.reporter_phone);
                     $("#reporter_company").val(data.reporter_company);
@@ -294,7 +297,7 @@ $configData = Helper::appClasses();
                     if (files) {
                         $('#attachment').removeAttr("required");
                     }
-
+                    Swal.close();
                 },
                 error: function(errors) {
                     console.log(errors);
@@ -307,7 +310,6 @@ $configData = Helper::appClasses();
                 url: "{{url('api/tenant')}}/" + id,
                 type: "GET",
                 success: function(response) {
-                    console.log(response);
                     let data = response.data;
 
                     let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;

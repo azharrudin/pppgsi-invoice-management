@@ -76,7 +76,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label for="classification" class="form-label fw-medium">Classification</label>
-                                    <select id="classification" name="classification" class="mb-3 select-classification add form-control" required>
+                                    <select id="classification" name="classification" class="mb-3 select-classification add form-control" required multiple>
                                     </select>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
