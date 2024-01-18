@@ -232,12 +232,17 @@
                                     {{-- Tanda tangan --}}
                                     <div class="row  text-center mb-5 ttd">
                                         <div class="col-4 signatures">
-                                            <label for="note" class="form-label fw-medium">Diperiksa Oleh :</label>
+                                            <label for="note" class="form-label fw-medium">Diproses Oleh :</label>
                                             <input type="text" value="Checked By" id="type1" name="type"
                                                 class="form-control d-none">
                                             <div class="mb-3">
-                                                <input type="text" class="form-control  " placeholder="Nama & Jabatan"
-                                                    style="text-align:center;" id="name1" name="name"/>
+                                                <input type="text" class="form-control  " placeholder="Nama"
+                                                    style="text-align:center;" id="name1" name="name" />
+                                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <input type="text" class="form-control  " placeholder="Jabatan"
+                                                    style="text-align:center;" id="jabatan1" name="jabatan1" value="Admin"/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
@@ -257,10 +262,15 @@
                                         <div class="col-4 signatures">
                                             <label for="note" class="form-label fw-medium">Diperiksa Oleh :</label>
                                             <input type="text" value="Checked By" id="type2" name="type"
-                                                class="form-control d-none">
+                                                class="form-control d-none" disabled>
                                             <div class="mb-3">
-                                                <input type="text" class="form-control  " placeholder="Nama & Jabatan"
-                                                    style="text-align:center;" id="name2" name="name"/>
+                                                <input type="text" class="form-control  " placeholder="Nama"
+                                                    style="text-align:center;" id="name2" name="name" disabled/>
+                                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <input type="text" class="form-control  " placeholder="Jabatan"
+                                                    style="text-align:center;" id="jabatan2" name="name" value="Kepala Unit" disabled/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
@@ -273,7 +283,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  date" placeholder="Tanggal"
-                                                    style="text-align:center;" id="date2" name="date"/>
+                                                    style="text-align:center;" id="date2" name="date" disabled/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
@@ -282,8 +292,13 @@
                                             <input type="text" value="Known By" id="type3" name="type"
                                                 class="form-control d-none">
                                             <div class="mb-3">
-                                                <input type="text" class="form-control  " placeholder="Nama & Jabatan"
-                                                    style="text-align:center;" id="name3" name="name"/>
+                                                <input type="text" class="form-control  " placeholder="Nama"
+                                                    style="text-align:center;" id="name3" name="name" disabled/>
+                                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <input type="text" class="form-control  " placeholder="Jabatan"
+                                                    style="text-align:center;" id="jabatan3" name="name" value="Kepala BM" disabled/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
@@ -296,7 +311,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  date" placeholder="Tanggal"
-                                                    style="text-align:center;" id="date3" name="date"/>
+                                                    style="text-align:center;" id="date3" name="date" disabled/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
@@ -413,11 +428,18 @@
 
             let account = {!! json_encode(session('data')) !!}
             var levelId = account.level_id;
-            if (levelId == 10) {
-                $('.ttd').hide();
-            } else {
-                $('.ttd').show();
-            }
+            var department = account.department.name;
+            var nameUser = account.name;
+            console.log(levelId);
+          
+
+            if (levelId == 10) { // BM
+                var inputValue = $("#name1").val();
+                if (inputValue.trim() === '') {
+                    $("#name1").val(nameUser);
+                }              
+            } 
+
             // Date
             $('.date').flatpickr({
                 dateFormat: 'd-m-Y'
