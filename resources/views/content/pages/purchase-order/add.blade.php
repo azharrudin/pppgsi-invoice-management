@@ -183,9 +183,21 @@ $configData = Helper::appClasses();
                                         <label for="invoice-message" class="form-label">Message</label>
                                         <textarea class="form-control" name="invoice-message" id="invoice-message" cols="3" rows="8"></textarea>
                                     </div>
-                                    <div class="col-4">
+                                 
+                                </div>
+                            </div>
+                            <div class="row">
+                            <div class="col-6">
                                         <div class="d-flex justify-content-center">
                                             <label for="note" class="form-label fw-medium mb-3 text-center mx-auto">Tanda Tangan</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control add" placeholder="Kepala Unit Pelayanan" value="Kepala Unit Pelayanan" style="text-align:center;" id="jabatan1" name="jabatan1" disabled/>
+                                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control add " placeholder="nama" style="text-align:center;" id="name1" name="name1" disabled/>
+                                            <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
                                             <form action="/upload" class="dropzone needsclick dz-clickable " id="dropzone-basic">
@@ -195,10 +207,32 @@ $configData = Helper::appClasses();
                                             </form>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control w-px-200" placeholder="Tanggal" style="text-align:center;" />
+                                            <input type="text" class="form-control " placeholder="Tanggal" style="text-align:center;" disabled/>
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="col-6">
+                                        <div class="d-flex justify-content-center">
+                                            <label for="note" class="form-label fw-medium mb-3 text-center mx-auto">Tanda Tangan</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control add" placeholder="Kepala BM" value="Kepala BM" style="text-align:center;" id="jabatan2" name="jabatan2" disabled/>
+                                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control add " placeholder="nama" style="text-align:center;" id="name2" name="name2" disabled/>
+                                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <form action="/upload" class="dropzone needsclick dz-clickable " id="dropzone-basic">
+                                                <div class="dz-message needsclick">
+                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control " placeholder="Tanggal" style="text-align:center;" disabled/>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                     </div>

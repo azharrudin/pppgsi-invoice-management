@@ -66,14 +66,16 @@ $configData = Helper::appClasses();
                             <div class="card academy-content shadow-none border p-3">
                                 <div class="">
                                     <div class="">
-                                        <div class="" id="details">
+                                        <div class="table-responsive">
+                                            <div class="" id="details">
 
+                                            </div>
                                         </div>
                                     </div>
 
                                     <div class="row pb-4">
                                         <div class="col-12">
-                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-add-row-mg">Tambah Baris</button>
+                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-add-row-mg mt-2">Tambah Baris</button>
                                         </div>
                                     </div>
                                 </div>
@@ -393,48 +395,46 @@ $configData = Helper::appClasses();
             // Clone baris terakhir
             var $details = $('#details');
             var $newRow = `
-                <div class="mb-3 row-mg">
-                    <div class="row d-flex align-items-end mb-2">
-                        <div class="col-md px-75-custom">
-                            <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control row-input" placeholder="Nomor" name="number[]" required />
-                        </div>
-                        <div class="col-md px-1-custom">
-                            <label for="note" class="form-label fw-medium">Part Number</label>
-                            <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" required />
-                        </div>
-                        <div class="col-md px-1-custom">
-                            <label for="note" class="form-label fw-medium">Deskripsi</label>
-                            <textarea class="form-control row-input" placeholder="Deskripsi" name="description[]"></textarea>
-                        </div>
-                        <div class="col-md px-1-custom">
-                            <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required />
-                        </div>
-                        <div class="col-md-6">
-                            <label for="note" class="form-label fw-medium">Filled Storekeeper Only</label>
-                            <div class="row d-flex justify-content-between align-items-end">
-                                <div class="col-md px-1-custom mb-1-custom">
-                                    <input type="text" class="form-control row-input" placeholder="Stock" name="stock[]" required />
-                                </div>
-                                <div class="col-md px-1-custom mb-1-custom">
-                                    <input type="text" class="form-control row-input" placeholder="Stock Out" name="stock_out[]" required />
-                                </div>
-                                <div class="col-md px-1-custom mb-1-custom">
-                                    <input type="text" class="form-control row-input" placeholder="End Stock" name="end_stock[]" required />
-                                </div>
-                                <div class="col-md px-1-custom mb-1-custom">
-                                    <input type="text" class="form-control row-input" placeholder="Min Stock" name="min_stock" [] required />
-                                </div>
-                                <div class="col-md px-1-custom mb-1-custom">
-                                    <a role="button" class="btn btn-primary text-center btn-remove-mg text-white" disabled>
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                 </div> 
+           
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nomor</th>
+                                <th>Part Number</th>
+                                <th>Deskripsi</th>
+                                <th>Quantity</th>
+                                <th class="text-center">Filled Storekeeper Only</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control form-control" placeholder="Nomor" name="number[]" required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control" placeholder="No. Suku Cadang" name="part_number[]" required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <textarea class="form-control form-control" placeholder="Deskripsi" name="description[]" style="width: 200px;"></textarea>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control" placeholder="Kuantitas" name="quantity[]" required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-between align-items-end">
+                                        <input type="text" class="form-control form-control" placeholder="Stock" name="stock[]" required style="width: 200px;"/>
+                                        <input type="text" class="form-control form-control" placeholder="Stock Out" name="stock_out[]" required style="width: 200px;"/>
+                                        <input type="text" class="form-control form-control" placeholder="End Stock" name="end_stock[]" required style="width: 200px;"/>
+                                        <input type="text" class="form-control form-control" placeholder="Min Stock" name="min_stock" [] required style="width: 200px;"/>
+                                        <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                
             `;
             $details.append($newRow);
         });
@@ -498,48 +498,44 @@ $configData = Helper::appClasses();
         } else {
             console.log();
             temp = `            
-                <div class="mb-3 row-mg">
-                    <div class="row d-flex align-items-end mb-2">
-                        <div class="col-md px-75-custom">
-                            <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control row-input" placeholder="Nomor" name="number[]" required />
-                        </div>
-                        <div class="col-md px-1-custom">
-                            <label for="note" class="form-label fw-medium">Part Number</label>
-                            <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" required />
-                        </div>
-                        <div class="col-md px-1-custom">
-                            <label for="note" class="form-label fw-medium">Deskripsi</label>
-                            <textarea class="form-control row-input" placeholder="Deskripsi" name="description[]"></textarea>
-                        </div>
-                        <div class="col-md px-1-custom">
-                            <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required />
-                        </div>
-                        <div class="col-md-6">
-                            <label for="note" class="form-label fw-medium">Filled Storekeeper Only</label>
-                            <div class="row d-flex justify-content-between align-items-end">
-                                <div class="col-md px-1-custom mb-1-custom">
-                                    <input type="text" class="form-control row-input" placeholder="Stock" name="stock[]" required />
-                                </div>
-                                <div class="col-md px-1-custom mb-1-custom">
-                                    <input type="text" class="form-control row-input" placeholder="Stock Out" name="stock_out[]" required />
-                                </div>
-                                <div class="col-md px-1-custom mb-1-custom">
-                                    <input type="text" class="form-control row-input" placeholder="End Stock" name="end_stock[]" required />
-                                </div>
-                                <div class="col-md px-1-custom mb-1-custom">
-                                    <input type="text" class="form-control row-input" placeholder="Min Stock" name="min_stock" [] required />
-                                </div>
-                                <div class="col-md px-1-custom mb-1-custom">
-                                    <a role="button" class="btn btn-primary text-center btn-remove-mg text-white" disabled>
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                 </div> 
+            <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nomor</th>
+                                <th>Part Number</th>
+                                <th>Deskripsi</th>
+                                <th>Quantity</th>
+                                <th class="text-center">Filled Storekeeper Only</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control form-control" placeholder="Nomor" name="number[]" required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control" placeholder="No. Suku Cadang" name="part_number[]" required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <textarea class="form-control form-control" placeholder="Deskripsi" name="description[]" style="width: 200px;"></textarea>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control" placeholder="Kuantitas" name="quantity[]" required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-between align-items-end">
+                                        <input type="text" class="form-control form-control" placeholder="Stock" name="stock[]" required style="width: 200px;"/>
+                                        <input type="text" class="form-control form-control" placeholder="Stock Out" name="stock_out[]" required style="width: 200px;"/>
+                                        <input type="text" class="form-control form-control" placeholder="End Stock" name="end_stock[]" required style="width: 200px;"/>
+                                        <input type="text" class="form-control form-control" placeholder="Min Stock" name="min_stock" [] required style="width: 200px;"/>
+                                        <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
             `;
             $('#details').prepend(temp);
         }

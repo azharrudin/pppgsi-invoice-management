@@ -138,11 +138,11 @@
                                 </div>
                                 <div class="mb-3">
                                     <input type="text" class="form-control w-px-250 " id="signature_name"
-                                        name="signature_name" placeholder="Nama & Jabatan" />
+                                        name="signature_name" placeholder="Nama" />
                                 </div>
                                 <div class="mb-3">
                                     <input type="text" class="form-control w-px-250 " id="jabatan"
-                                        name="signature_name" placeholder="Jabatan" value="Kepala BM" />
+                                        name="jabatan" placeholder="Jabatan" value="Kepala BM" />
                                 </div>
                             </div>
                         </div>
@@ -240,16 +240,36 @@
           
 
             if (levelId == 1) { // BM
-                var inputValue = $("#edit_type-1").val();
+                let ttdFile = null;
+                const myDropzone = new Dropzone('#dropzone-basic', {
+                    parallelUploads: 1,
+                    maxFilesize: 10,
+                    addRemoveLinks: true,
+                    maxFiles: 1,
+                    acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                    autoQueue: false,
+                    init: function() {
+                        this.on('addedfile', function(file) {
+                            while (this.files.length > this.options.maxFiles) this.removeFile(this
+                                .files[0]);
+                            ttdFile = file;
+                        });
+                    }
+                });
+                var inputValue = $("#signature_name").val();
                 if (inputValue.trim() === '') {
+                     // Dropzone
                     $("#signature_name").val(nameUser);
                 }
                 $('#signature_date').prop('disabled', false);
                 $('#signature_name').prop('readonly', false);
+                $('#jabatan').prop('readonly', false);
+                $("#jabatan").val("Kepala BM");
               
             } else { // other
                 $('#signature_date').prop('disabled', true);
                 $('#signature_name').prop('readonly', true);
+                $('#jabatan').prop('readonly', true);
             }
 
             // Date
@@ -266,23 +286,7 @@
                 buttonsStyling: false
             });
 
-            // Dropzone
-            let ttdFile = null;
-            const myDropzone = new Dropzone('#dropzone-basic', {
-                parallelUploads: 1,
-                maxFilesize: 10,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png,.gif",
-                autoQueue: false,
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this
-                            .files[0]);
-                        ttdFile = file;
-                    });
-                }
-            });
+           
 
             // Mendapatkan id dengan cara mengambil dari URL
             var urlSegments = window.location.pathname.split('/');
@@ -302,16 +306,23 @@
                             let inputName = $(this).attr('name');
                             let inputValue = response[inputName];
 
-                            $("#" + $(this).attr('id')).val(inputValue);
-
-                            // Check if the input is the 'grand_total' field
-                            if (inputName === 'grand_total' || inputName === 'paid' ||
-                                inputName === 'remaining') {
-                                // Format the number using toLocaleString with 'en-US' locale
-                                let formattedValue = parseFloat(inputValue).toLocaleString(
-                                    'en-US');
+                         
+                            if (inputName === 'grand_total' || inputName === 'paid' || inputName === 'remaining') {
+                               
+                                let formattedValue = parseFloat(inputValue).toLocaleString('en-US');
                                 $("#" + $(this).attr('id')).val(formattedValue);
+                            } else if (inputName === 'jabatan') {
+                               
+                                if (inputValue === undefined) {
+                                    inputValue = 'Kepala BM';
+                                }
+                              
+                                $("#" + $(this).attr('id')).val(inputValue);
+                            } else {
+                               
+                                $("#" + $(this).attr('id')).val(inputValue);
                             }
+
                         });
 
                         $('#signature_date').val(response.signature_date ? moment(response.signature_date, 'YYYY-MM-DD').format('DD-MM-YYYY') : '');
