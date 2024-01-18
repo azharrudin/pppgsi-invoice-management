@@ -82,7 +82,7 @@ $configData = Helper::appClasses();
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
                         </div>
-                        <div class="row px-3 d-flex align-items-center mb-3">
+                        <!-- <div class="row px-3 d-flex align-items-center mb-3">
                             <div class="col-2">
                                 <label for="salesperson" class="form-label  fw-medium">Sudah Dibayarkan</label>
                             </div>
@@ -90,7 +90,7 @@ $configData = Helper::appClasses();
                                 <input type="text" class="form-control qty price" id="total_paid" name="total_paid" placeholder="Sudah Dibayarkan" fdprocessedid="yombzp" required readonly>
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row px-3 d-flex align-items-center mb-3">
                             <div class="col-2">
                                 <label for="salesperson" class="form-label  fw-medium">Dibayarkan</label>
@@ -149,8 +149,7 @@ $configData = Helper::appClasses();
                     <div class="card mb-4">
                         <div class="card-body">
                             <button class="btn btn-label-warning d-grid w-100 mb-2 btn-preview">Preview</button>
-                            <button type="submit"
-                                class="btn btn-label-success btn-save d-grid w-100 mb-2">Simpan</button>
+                            <button type="submit" class="btn btn-label-success btn-save d-grid w-100 mb-2">Simpan</button>
                             <button type="button" class="btn btn-label-danger d-grid w-100 btn-cancel">Batal</button>
                         </div>
                     </div>
@@ -216,16 +215,15 @@ $configData = Helper::appClasses();
 </script>
 <script>
       let account = {!! json_encode(session('data')) !!}
-        var levelId = account.level_id;
-        console.log(levelId);
-        if (levelId == 10) {
-            $('.ttd').hide();
-        }
+            var levelId = account.level_id;
+            console.log(levelId);
+            if (levelId == 10) {
+                $('.ttd').hide();
+            }
 </script>
 <script>
     $(document).ready(function() {
 
-            let account = {!! json_encode(session('data')) !!}
 
             // Mendapatkan id dari invoice
             const idInvoice = getParameterByName('id-invoice');
@@ -309,7 +307,7 @@ $configData = Helper::appClasses();
             });
 
             // Dropzone
-            let ttdFile = null;
+            
             if(account.level.id == '1'){
                 const myDropzone = new Dropzone('#dropzone-basic', {
                     parallelUploads: 1,
@@ -457,8 +455,7 @@ $configData = Helper::appClasses();
                                         buttonsStyling: false
                                     }).then((result) => {
                                         if (result.isConfirmed) {
-                                            window.location.href =
-                                                '{{ route('pages-list-tanda-terima') }}';
+                                            window.location.href = "{{ url('invoice/tanda-terima') }}";
                                         }
                                     });
                                 },
@@ -836,14 +833,14 @@ $configData = Helper::appClasses();
                                 datas[$("#" + inputId).attr("name")] = inputValue;
                             }
                         });
-                        datas.signature_image = ttdFile;
+                        // datas.signature_image = ttdFile;
                         datas.invoice_id = parseInt(invoice);
                         datas.tenant_id = parseInt(tenant);
                         datas.bank_id = parseInt(bank);
                         datas.status = 'Terbuat';
                         datas.receipt_date = moment().format('YYYY-MM-DD');
-                        datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
-                        datas.signature_date = moment(date, 'D-M-YYYY').format('YYYY-MM-DD');
+                        // datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
+                        // datas.signature_date = moment(date, 'D-M-YYYY').format('YYYY-MM-DD');
                         console.log(datas);
 
                         $.ajax({
@@ -873,7 +870,7 @@ $configData = Helper::appClasses();
                                     buttonsStyling: false
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        window.location.href ="/invoice/tanda-terima";
+                                        window.location.href = "/invoice/tanda-terima";
                                     }
                                 });
                             },
@@ -1167,7 +1164,6 @@ $configData = Helper::appClasses();
                 }
             }
         });
-    })
-</script>
+    </script>
 
 @endsection

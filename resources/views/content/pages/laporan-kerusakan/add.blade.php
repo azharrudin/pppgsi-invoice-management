@@ -29,7 +29,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-5">
                                 <span class="fs-4 d-block text-center mx-auto"><b>LAPORAN KERUSAKAN</b></span>
                                 <span class="d-block text-center mx-auto">Nomor Lk :</span>
-                                <input type="text" class="form-control add w-px-250 mx-auto" id="damage_report_number" name="damage_report_number" placeholder="Nomor LK" disabled />
+                                <input type="text" class="form-control add w-px-250 mx-auto" id="damage_report_number" placeholder="Nomor LK" required />
                                 <div class="invalid-feedback mx-auto w-px-250">Tidak boleh kosong</div>
                             </div>
                         </div>
@@ -37,7 +37,7 @@ $configData = Helper::appClasses();
 
                         <div class="row py-3 px-3">
                             <div class="col-md-6 mb-md-0 mb-3">
-                                <div class="mb-1 w-px-250">
+                                <div class="mb-1">
                                     <label for="note" class="form-label fw-medium">No Tiket </label>
                                     <select class="form-select select2 w-px-250 select-ticket item-details mb-3" required>
                                     </select>
@@ -332,57 +332,57 @@ $configData = Helper::appClasses();
             return values;
         }
 
-        // Mengambil value tanda tangan
-        let ttdFile1 = null;
-        const myDropzone1 = new Dropzone('#dropzone-1', {
-            parallelUploads: 1,
-            maxFilesize: 10,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            autoQueue: false,
-            init: function() {
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this
-                        .files[0]);
-                    ttdFile1 = file;
-                });
-            }
-        });
+        // // Mengambil value tanda tangan
+        // let ttdFile1 = null;
+        // const myDropzone1 = new Dropzone('#dropzone-1', {
+        //     parallelUploads: 1,
+        //     maxFilesize: 10,
+        //     addRemoveLinks: true,
+        //     maxFiles: 1,
+        //     acceptedFiles: ".jpeg,.jpg,.png",
+        //     autoQueue: false,
+        //     init: function() {
+        //         this.on('addedfile', function(file) {
+        //             while (this.files.length > this.options.maxFiles) this.removeFile(this
+        //                 .files[0]);
+        //             ttdFile1 = file;
+        //         });
+        //     }
+        // });
 
-        let ttdFile2 = null;
-        const myDropzone2 = new Dropzone('#dropzone-2', {
-            parallelUploads: 1,
-            maxFilesize: 10,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            autoQueue: false,
-            init: function() {
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this
-                        .files[0]);
-                    ttdFile2 = file;
-                });
-            }
-        });
+        // let ttdFile2 = null;
+        // const myDropzone2 = new Dropzone('#dropzone-2', {
+        //     parallelUploads: 1,
+        //     maxFilesize: 10,
+        //     addRemoveLinks: true,
+        //     maxFiles: 1,
+        //     acceptedFiles: ".jpeg,.jpg,.png",
+        //     autoQueue: false,
+        //     init: function() {
+        //         this.on('addedfile', function(file) {
+        //             while (this.files.length > this.options.maxFiles) this.removeFile(this
+        //                 .files[0]);
+        //             ttdFile2 = file;
+        //         });
+        //     }
+        // });
 
-        let ttdFile3 = null;
-        const myDropzone3 = new Dropzone('#dropzone-3', {
-            parallelUploads: 1,
-            maxFilesize: 10,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            autoQueue: false,
-            init: function() {
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this
-                        .files[0]);
-                    ttdFile3 = file;
-                });
-            }
-        });
+        // let ttdFile3 = null;
+        // const myDropzone3 = new Dropzone('#dropzone-3', {
+        //     parallelUploads: 1,
+        //     maxFilesize: 10,
+        //     addRemoveLinks: true,
+        //     maxFiles: 1,
+        //     acceptedFiles: ".jpeg,.jpg,.png",
+        //     autoQueue: false,
+        //     init: function() {
+        //         this.on('addedfile', function(file) {
+        //             while (this.files.length > this.options.maxFiles) this.removeFile(this
+        //                 .files[0]);
+        //             ttdFile3 = file;
+        //         });
+        //     }
+        // });
 
         // Create, Insert, Save
         var savelk = $('.create-lk');
@@ -451,37 +451,37 @@ $configData = Helper::appClasses();
 
                         datas.details = getRepeaterValues();
 
-                        $('.signatures').each(function(index) {
-                            let signature = {};
+                        // $('.signatures').each(function(index) {
+                        //     let signature = {};
 
-                            $(this).find('.form-control').each(function() {
-                                var inputId = $(this).attr('id');
-                                var inputValue = $("#" + inputId).val();
+                        //     $(this).find('.form-control').each(function() {
+                        //         var inputId = $(this).attr('id');
+                        //         var inputValue = $("#" + inputId).val();
 
-                                if (inputId.startsWith('date')) {
-                                    signature[$("#" + inputId).attr("name")] =
-                                        moment(inputValue, 'D-M-YYYY')
-                                        .format('YYYY-MM-DD');
-                                } else {
-                                    signature[$("#" + inputId).attr("name")] =
-                                        inputValue;
-                                }
-                            });
+                        //         if (inputId.startsWith('date')) {
+                        //             signature[$("#" + inputId).attr("name")] =
+                        //                 moment(inputValue, 'D-M-YYYY')
+                        //                 .format('YYYY-MM-DD');
+                        //         } else {
+                        //             signature[$("#" + inputId).attr("name")] =
+                        //                 inputValue;
+                        //         }
+                        //     });
 
-                            if (ttdFile1 && index === 0) {
-                                signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                            }
+                        //     if (ttdFile1 && index === 0) {
+                        //         signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
+                        //     }
 
-                            if (ttdFile2 && index === 1) {
-                                signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                            }
+                        //     if (ttdFile2 && index === 1) {
+                        //         signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
+                        //     }
 
-                            if (ttdFile3 && index === 2) {
-                                signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                            }
+                        //     if (ttdFile3 && index === 2) {
+                        //         signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
+                        //     }
 
-                            signatures.push(signature);
-                        });
+                        //     signatures.push(signature);
+                        // });
 
                         var allValues = getRepeaterValues();
 
@@ -489,13 +489,13 @@ $configData = Helper::appClasses();
                         let classification = $("#classification").val().toString();
 
                         datas.ticket_id = ticket;
-                        datas.signatures = signatures;
+                        // datas.signatures = signatures;
                         datas.status = "Terbuat";
                         datas.scope = scope;
                         datas.classification = classification;
 
                         $.ajax({
-                            url: baseUrl + "api/damage-report/",
+                            url: "{{env('BASE_URL_API')}}" + "/api/damage-report",
                             type: "POST",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
