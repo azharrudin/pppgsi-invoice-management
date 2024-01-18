@@ -231,6 +231,7 @@ $configData = Helper::appClasses();
 
         let account = {!! json_encode(session('data')) !!}
         var levelId = account.level_id;
+        console.log(levelId);
         var department = account.department.name;
         var nameUser = account.name;
 

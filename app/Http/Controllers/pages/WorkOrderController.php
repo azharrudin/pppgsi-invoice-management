@@ -94,7 +94,7 @@ class WorkOrderController extends Controller
             'per_page' => $request->length,
             'page' => $request->page,
             'order' => 'id',
-            'sort' => 'asc',
+            'sort' => 'desc',
             'value' => $request->search['value'],
         ]);
         $response = json_decode($apiRequest->getBody());

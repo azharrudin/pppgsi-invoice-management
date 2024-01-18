@@ -722,7 +722,7 @@ $configData = Helper::appClasses();
             // Hapus baris yang ditekan tombol hapus
             $(this).closest('.row-mg').remove();
         });
-
+        
         $(document).on('click', '.btn-add-row-mg', function() {
             // Clone baris terakhir
             var $details = $('#details');
@@ -759,6 +759,7 @@ $configData = Helper::appClasses();
             `;
             $details.append($newRow);
         });
+    });
 
 
     function getDetails() {

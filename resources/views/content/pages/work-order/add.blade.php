@@ -242,7 +242,7 @@ $configData = Helper::appClasses();
 </script>
 <script>
     "use strict";
-    let dataLocal = JSON.parse(localStorage.getItem("material-request"));
+    let dataLocal = JSON.parse(localStorage.getItem("work-order"));
     $(document).ready(function() {
         let account = {!! json_encode(session('data')) !!}
         var levelId = account.level_id;
@@ -361,6 +361,8 @@ $configData = Helper::appClasses();
                             signatures.push(signature);
                         });
 
+                        console.log(datas);
+
                         datas.signatures = signatures;
                         datas.status = "Terbuat";
 
@@ -384,8 +386,8 @@ $configData = Helper::appClasses();
                                     },
                                     buttonsStyling: false
                                 })
-
-                                window.location.href = "/complain/work-order"
+                            
+                                // window.location.href = "/complain/work-order"
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
@@ -488,7 +490,7 @@ $configData = Helper::appClasses();
         // Cancel
         $(".btn-cancel").on("click", function(event) {
             event.preventDefault();
-            localStorage.removeItem('invoice');
+            localStorage.removeItem('work-order');
             window.location.href = "/complain/work-order"
         })
 
@@ -583,7 +585,7 @@ $configData = Helper::appClasses();
                 cache: true,
                 data: function(params) {
                     return {
-                        term: params.term || '',
+                        value: params.term || '',
                         page: params.page || 1
                     }
                 },
@@ -775,22 +777,22 @@ $configData = Helper::appClasses();
                     <div class="row mb-3  d-flex align-items-end">
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Location</label>
-                            <input type="text" class="form-control" id="location" name="location" placeholder="Location" required />
+                            <input type="text" class="form-control" id="location" name="location[]" placeholder="Location" required />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Material Request</label>
-                            <input type="text" class="form-control" id="material-req" name="material-req" placeholder="Material Request" required />
+                            <input type="text" class="form-control" id="material-req" name="material-req[]" placeholder="Material Request" required />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Type /Made In</label>
-                            <input type="text" class="form-control" id="type" name="type" placeholder="Type /Made In" required />
+                            <input type="text" class="form-control" id="type" name="type[]" placeholder="Type /Made In" required />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-2 mb-1-custom"">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control qty" id="qty" name="qty" placeholder="Quantity" required />
+                            <input type="text" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-1 px-1-custom mb-1-custom">
