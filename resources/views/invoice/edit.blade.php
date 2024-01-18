@@ -796,7 +796,7 @@ $configData = Helper::appClasses();
 
                                 Swal.fire({
                                     title: 'Berhasil',
-                                    text: 'Berhasil Meperbarui Invoice',
+                                    text: 'Berhasil Memperbaharui Invoice',
                                     icon: 'success',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'

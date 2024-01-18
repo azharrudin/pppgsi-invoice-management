@@ -98,11 +98,11 @@ $configData = Helper::appClasses();
                                             <td colspan="5">Terbilang</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5" id="grand_total_spelled"></td>
+                                            <td colspan="5" id="grand_total_spelled" style="font-weight:bold; font-size:14px"></td>
                                         </tr>
                                         <tr>
                                             <td colspan="5">
-                                                <span>Jatuh Tempo Tanggal : </span> <span id="invoice_due_date"></span>
+                                                <span>Jatuh Tempo Tanggal : </span> <span id="invoice_due_date" class="fw-bold"></span>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -118,7 +118,7 @@ $configData = Helper::appClasses();
                                 <div class="mb-3">
                                     <label for="note" class="form-label me-2">Syarat & Ketentuan</label>
                                     <br>
-                                    <div class="form-label" id="term_and_conditions">
+                                    <div class="form-label fw-bold" id="term_and_conditions">
                                     </div>
 
                                 </div>

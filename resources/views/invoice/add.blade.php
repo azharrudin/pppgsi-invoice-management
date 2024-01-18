@@ -389,7 +389,7 @@ $configData = Helper::appClasses();
                         </div>
                     </div>
                     <div class="col-md-2 px-1-custom">
-                        <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
+                        <label for="note" class="form-label fw-medium">DPP</label>
                         <input type="text" class="form-control row-input price" placeholder="" name="price[]" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
@@ -412,7 +412,7 @@ $configData = Helper::appClasses();
             $details.append($newRow);
             $("#tax-" + index).select2({
                 width: '100px',
-                placeholder: 'Select Pajak',
+                placeholder: 'Pilih',
                 allowClear: true,
                 ajax: {
                     url: "{{env('BASE_URL_API')}}" + "/api/tax/select",
@@ -696,6 +696,13 @@ $configData = Helper::appClasses();
                         }
 
                     } else {
+                        Swal.fire({
+                            title: '<h2>Loading...</h2>',
+                            html: sweet_loader + '<h5>Please Wait</h5>',
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        });
                         // Submit your form
                         event.preventDefault();
                         let fileTtd = '';
@@ -1002,7 +1009,7 @@ $configData = Helper::appClasses();
                             </div>
                         </div>
                         <div class="col-md-2 px-1-custom">
-                            <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
+                            <label for="note" class="form-label fw-medium">DPP</label>
                             <input type="text" class="form-control row-input price" placeholder="" name="price[]" required value="` + details[i].price + `"/>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
@@ -1043,7 +1050,7 @@ $configData = Helper::appClasses();
             for (let i = 0; i < details.length; i++) {
                 $("#tax-" + i).select2({
                     width: '100px',
-                    placeholder: 'Select Pajak',
+                    placeholder: 'Pilih',
                     allowClear: true,
                     ajax: {
                         url: "{{env('BASE_URL_API')}}" + "/api/tax/select",
@@ -1091,7 +1098,7 @@ $configData = Helper::appClasses();
                         </div>
                     </div>
                     <div class="col-md-2 px-1-custom">
-                        <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
+                        <label for="note" class="form-label fw-medium">DPP</label>
                         <input type="text" class="form-control row-input price" placeholder="" name="price[]" required/>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
