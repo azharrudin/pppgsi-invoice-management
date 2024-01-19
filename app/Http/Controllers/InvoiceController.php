@@ -54,7 +54,7 @@ class InvoiceController extends Controller
                 });
             }
             $getInvoices = $invoiceQuery
-            ->select("invoice_number", "tenant_id", "bank_id", "grand_total", "invoice_date", "invoice_due_date", "status")
+            ->select("invoice_number", "tenant_id", "bank_id", "grand_total", "invoice_date", "invoice_due_date", "status", "id")
             ->orderBy($order, $sort)
             ->paginate($perPage);
             $totalCount = $getInvoices->total();
