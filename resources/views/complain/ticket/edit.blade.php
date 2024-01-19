@@ -194,7 +194,7 @@ $configData = Helper::appClasses();
                         datas.status = "Selesai"
 
                         $.ajax({
-                            url:  "{{env('BASE_URL_API')}}" + "/api/ticket/" + id,
+                            url: "{{url('api/tikcet/)}}"+id,
                             type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -268,7 +268,7 @@ $configData = Helper::appClasses();
 
         function getDataTicket(id) {
             $.ajax({
-                url:  "{{env('BASE_URL_API')}}" + "/api/ticket/" + id,
+                url: "{{url('api/tikcet/)}}"+id,
                 type: "GET",
                 dataType: "json",
                 beforeSend: function() {

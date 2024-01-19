@@ -194,7 +194,7 @@ $configData = Helper::appClasses();
                         datas.status = "Selesai"
 
                         $.ajax({
-                            url:  "{{env('BASE_URL_API')}}" + "/api/ticket",
+                            url: "{{url('api/tikcet)}}/",
                             type: "POST",
                             data: JSON.stringify(datas),
                             processData: false,
