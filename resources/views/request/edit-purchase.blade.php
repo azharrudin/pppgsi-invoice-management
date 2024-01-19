@@ -230,11 +230,16 @@
 
                                     {{-- Tanda tangan --}}
                                     <div class="row  text-center mb-5">
-                                        <div class="col-3 signatures">
-                                            <label for="note" class="form-label fw-medium">Diperiksa Oleh :</label>
+                                        <div class="col-4 signatures">
+                                            <label for="note" class="form-label fw-medium">Diproses Oleh :</label>
                                             <div class="mb-3">
-                                                <input type="text" class="form-control  " placeholder="Nama & Jabatan"
+                                                <input type="text" class="form-control  " placeholder="Nama"
                                                     style="text-align:center;" id="name1" name="name" required />
+                                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <input type="text" class="form-control  " placeholder="Jabatan"
+                                                    style="text-align:center;" id="jabatan1" name="jabatan1" value="Admin" required />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3 prev-1">
@@ -261,15 +266,20 @@
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control date" placeholder="Tanggal"
-                                                    style="text-align:center;" id="date1" name="date" required />
+                                                    style="text-align:center;" id="date1" name="date" />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
-                                        <div class="col-3 signatures">
+                                        <div class="col-4 signatures">
                                             <label for="note" class="form-label fw-medium">Diperiksa Oleh :</label>
                                             <div class="mb-3">
-                                                <input type="text" class="form-control  " placeholder="Nama & Jabatan"
-                                                    style="text-align:center;" id="name2" name="name" required />
+                                                <input type="text" class="form-control  " placeholder="Nama"
+                                                    style="text-align:center;" id="name2" name="name" />
+                                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <input type="text" class="form-control  " placeholder="Jabatan"
+                                                    style="text-align:center;" id="jabatan2" name="jabatan2" value="Kepala Unit"/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3 prev-2">
@@ -296,15 +306,20 @@
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  date" placeholder="Tanggal"
-                                                    style="text-align:center;" id="date2" name="date" required />
+                                                    style="text-align:center;" id="date2" name="date"/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
-                                        <div class="col-3 signatures">
+                                        <div class="col-4 signatures">
                                             <label for="note" class="form-label fw-medium">Diketahui Oleh :</label>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  " placeholder="Nama & Jabatan"
-                                                    style="text-align:center;" id="name3" name="name" required />
+                                                    style="text-align:center;" id="name3" name="name"/>
+                                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <input type="text" class="form-control  " placeholder="Jabatan"
+                                                    style="text-align:center;" id="jabatan3" name="jabatan3" value="Kepala BM"/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3 prev-3">
@@ -331,7 +346,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control  date" placeholder="Tanggal"
-                                                    style="text-align:center;" id="date3" name="date" required />
+                                                    style="text-align:center;" id="date3" name="date"/>
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                         </div>
@@ -445,6 +460,61 @@
 
             })
 
+            let account = {!! json_encode(session('data')) !!}
+            var levelId = account.level_id;
+            var department = account.department.name;
+            var nameUser = account.name;
+            console.log(levelId);
+          
+            if (levelId == 10) { // Admin
+                var inputValue = $("#name1").val();
+                if (inputValue.trim() === '') {
+                    $("#name1").val(nameUser);
+                }
+                $('#name1').prop('readonly', false);
+                $('#date1').prop('disabled', false);
+
+                $('#name2').prop('readonly', true);
+                $('#date2').prop('disabled', true);
+
+                $('#name3').prop('readonly', true);
+                $('#date3').prop('disabled', true);
+            } else if (levelId == 2) { // kepala unit
+                var inputValue = $("#name2").val();
+                if (inputValue.trim() === '') {
+                    $("#name2").val(nameUser);
+                }
+                $('#name1').prop('readonly', true);
+                $('#date1').prop('disabled', true);
+
+                $('#name2').prop('readonly', false);
+                $('#date2').prop('disabled', false);
+
+                $('#name3').prop('readonly', true);
+                $('#date3').prop('disabled', true);
+            } else if (levelId == 1) { // kepala BM
+                var inputValue = $("#name3").val();
+                if (inputValue.trim() === '') {
+                    $("#name3").val(nameUser);
+                }
+                $('#name1').prop('readonly', true);
+                $('#date1').prop('disabled', true);
+
+                $('#name2').prop('readonly', true);
+                $('#date2').prop('disabled', true);
+
+                $('#name3').prop('readonly', false);
+                $('#date3').prop('disabled', false);
+            } else { //other
+                $('#name1').prop('readonly', true);
+                $('#date1').prop('disabled', true);
+
+                $('#name2').prop('readonly', true);
+                $('#date2').prop('disabled', true);
+
+                $('#name3').prop('readonly', true);
+                $('#date3').prop('disabled', true);
+            }
             // Date
             $('.date').flatpickr({
                 dateFormat: 'd-m-Y'

@@ -68,7 +68,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label for="scope" class="form-label fw-medium">Scope</label>
-                                    <select class="form-select add w-px-250 select2 select-scope" id="scope" name="scope[]" multiple required>
+                                    <select class="form-select add w-px-250 select2 select-scope" id="scope" name="scope" multiple required>
                                     </select>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
@@ -76,7 +76,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label for="classification" class="form-label fw-medium">Classification</label>
-                                    <select id="classification" name="classification" class="mb-3 select-classification add form-control" required>
+                                    <select id="classification" name="classification" class="mb-3 select-classification add form-control" required multiple>
                                     </select>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
@@ -109,15 +109,36 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
 
+                                <div class="row py-3">
+                                    <div class="col-12">
+                                        <label for="note" class="form-label fw-medium">Klasifikasi</label>
+                                        <div class="">
+                                            <div class="form-check form-check-inline classif2">
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="closed" id="closed" required>
+                                                <label class="form-check-label" for="closed">Closed
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline classif2">
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="cancelled" id="cancelled" required>
+                                                <label class="form-check-label" for="cancelled">Calceled</label>
+                                            </div>
+                                            <div class="form-check form-check-inline classif2">
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="explanation" id="explanation" required>
+                                                <label class="form-check-label" for="explanation">Explanation</label>
+                                            </div>
+                                            <div class="form-check form-check-inline classif2">
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="others" id="others" required>
+                                                <label class="form-check-label" for="others">Others</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <label for="note" class="form-label fw-medium text-left ttd">Technician</label>
                                 <div class="row  text-center ttd">
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician1" name="technician" style="text-align:center;" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control " placeholder="Nama & Jabatan" id="nama1" name="name" style="text-align:center;" />
+                                            <input type="text" class="form-control" placeholder="Technician" id="technician1" name="name" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -134,13 +155,10 @@ $configData = Helper::appClasses();
                                     </div>
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician2" name="technician" style="text-align:center;" />
+                                            <input type="text" class="form-control" placeholder="Technician" id="technician2" name="name" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control " placeholder="Nama & Jabatan" id="nama2" name="name" style="text-align:center;" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
+
                                         <div class="mb-3">
                                             <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-2" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
@@ -155,11 +173,7 @@ $configData = Helper::appClasses();
                                     </div>
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician3" name="technician" style="text-align:center;" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control " placeholder="Nama & Jabatan" id="nama3" name="name" style="text-align:center;" />
+                                            <input type="text" class="form-control" placeholder="Technician" id="technician3" name="name" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -176,11 +190,7 @@ $configData = Helper::appClasses();
                                     </div>
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician4" name="technician" style="text-align:center;" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control " placeholder="Nama & Jabatan" id="nama4" name="name" style="text-align:center;" />
+                                            <input type="text" class="form-control" placeholder="Technician" id="technician4" name="name" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -232,7 +242,7 @@ $configData = Helper::appClasses();
 </script>
 <script>
     "use strict";
-    let dataLocal = JSON.parse(localStorage.getItem("material-request"));
+    let dataLocal = JSON.parse(localStorage.getItem("work-order"));
     $(document).ready(function() {
         let account = {!! json_encode(session('data')) !!}
         var levelId = account.level_id;
@@ -276,37 +286,44 @@ $configData = Helper::appClasses();
                         }
                     } else {
                         event.preventDefault();
-                        // Swal.fire({
-                        //     title: 'Loading...',
-                        //     text: "Please wait",
-                        //     customClass: {
-                        //         confirmButton: 'd-none'
-                        //     },
-                        //     buttonsStyling: false
-                        // });
                         let lk = $(".select-lk").val();
                         let datas = {}
                         let signatures = [];
+                        let scope = $('#scope').val();
+                        let classification = $('#classification').val();
+                        let date = $('#work_order_date').val();
+                        let action_plan_date = $('#action_plan_date').val();
+                        let finish_plan = $('#finish_plan').val();
+                        let job_description = $('#job_description').val();
 
                         datas.damage_report_id = lk;
-                        $('#addWorkOrder').find('.add').each(function() {
-                            var inputId = $(this).attr('id');
-                            var inputValue = $("#" + inputId).val();
+                        datas.scope = scope.toString();
+                        datas.classification = classification.toString();
+                        datas.work_order_date = date;
+                        datas.action_plan_date = action_plan_date;
+                        datas.finish_plan = finish_plan;
+                        datas.job_description = job_description;
+                        datas.klasifikasi = $('.classif2-checkbox:checked').attr('name');
 
-                            if (inputId === 'work_order_date' || inputId ===
-                                'action_plan_date' || inputId === 'finish_plan') {
-                                datas[$("#" + inputId).attr("name")] = moment(inputValue,
-                                        'D-M-YYYY')
-                                    .format('YYYY-MM-DD');
-                            } else {
-                                datas[$("#" + inputId).attr("name")] = inputValue;
+                        var detail = [];
+                        $('.row-input').each(function(index) {
+                            var input_name = $(this).attr('name');
+                            var input_value = $(this).val();
+                            var input_index = Math.floor(index / 4); // Membagi setiap 5 input menjadi satu objek pada array
+                            if (index % 4 == 0) {
+                                detail[input_index] = {
+                                    location: input_value
+                                };
+                            } else if (index % 4 == 1) {
+                                detail[input_index].material_request = input_value;
+                            } else if (index % 4 == 2) {
+                                detail[input_index].type = input_value;
+                            } else if (index % 4 == 3) {
+                                detail[input_index].quantity = parseInt(input_value);
                             }
                         });
 
-                        datas.scope = $('.scope-checkbox:checked').attr('name');
-                        datas.classification = $('.classif-checkbox:checked').attr('name');
-                        datas.klasifikasi = $('.classif2-checkbox:checked').attr('name');
-                        datas.details = getRepeaterValues();
+                        datas.details = detail;
 
                         $('.signatures').each(function(index) {
                             let signature = {};
@@ -344,11 +361,13 @@ $configData = Helper::appClasses();
                             signatures.push(signature);
                         });
 
+                        console.log(datas);
+
                         datas.signatures = signatures;
                         datas.status = "Terbuat";
 
                         $.ajax({
-                            url: "{{env('BASE_URL_API')}}" + "/api/work-order",
+                            url:  "{{env('BASE_URL_API')}}" + "/api/work-order",
                             type: "POST",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -367,8 +386,8 @@ $configData = Helper::appClasses();
                                     },
                                     buttonsStyling: false
                                 })
-
-                                window.location.href = "/complain/work-order"
+                            
+                                // window.location.href = "/complain/work-order"
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
@@ -471,7 +490,7 @@ $configData = Helper::appClasses();
         // Cancel
         $(".btn-cancel").on("click", function(event) {
             event.preventDefault();
-            localStorage.removeItem('invoice');
+            localStorage.removeItem('work-order');
             window.location.href = "/complain/work-order"
         })
 
@@ -489,9 +508,8 @@ $configData = Helper::appClasses();
                 datas[$("#" + inputId).attr("name")] = inputValue;
             });
 
-            datas.scope = $('.scope-checkbox:checked').attr('name');
-            datas.classification = $('.classif-checkbox:checked').attr('name');
-            datas.klasifikasi = $('.classif2-checkbox:checked').attr('name');
+            datas.scope = $('#scope').val();
+            datas.classification = $('#classification').val();
             var detail = [];
             $('.row-input').each(function(index) {
                 var input_name = $(this).attr('name');
@@ -567,7 +585,7 @@ $configData = Helper::appClasses();
                 cache: true,
                 data: function(params) {
                     return {
-                        term: params.term || '',
+                        value: params.term || '',
                         page: params.page || 1
                     }
                 },
@@ -759,22 +777,22 @@ $configData = Helper::appClasses();
                     <div class="row mb-3  d-flex align-items-end">
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Location</label>
-                            <input type="text" class="form-control" id="location" name="location" placeholder="Location" required />
+                            <input type="text" class="form-control" id="location" name="location[]" placeholder="Location" required />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Material Request</label>
-                            <input type="text" class="form-control" id="material-req" name="material-req" placeholder="Material Request" required />
+                            <input type="text" class="form-control" id="material-req" name="material-req[]" placeholder="Material Request" required />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Type /Made In</label>
-                            <input type="text" class="form-control" id="type" name="type" placeholder="Type /Made In" required />
+                            <input type="text" class="form-control" id="type" name="type[]" placeholder="Type /Made In" required />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-2 mb-1-custom"">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control qty" id="qty" name="qty" placeholder="Quantity" required />
+                            <input type="text" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-1 px-1-custom mb-1-custom">

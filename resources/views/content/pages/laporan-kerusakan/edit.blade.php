@@ -106,7 +106,7 @@
                                                     </div>
                                                     <div class="col-3">
                                                         <label for="note" class="form-label fw-medium">Jumlah</label>
-                                                        <input type="text" class="form-control" id="edit_total"
+                                                        <input type="text" class="form-control qty" id="edit_total"
                                                             name="total" placeholder="Jumlah" required />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
@@ -368,13 +368,7 @@
             console.log(nameUser);
 
            
-            // var inputValue = $("#edit_type-3").val();
-
-            //     // Mengecek apakah nilai input kosong
-            //     if (inputValue.trim() === '') {
-            //         $("#edit_type-3").val(department);
-            //         $("#edit_name-3").val(nameUser);
-            // }
+           
            
             if (levelId == 2) { // KA
                 var inputValue = $("#edit_type-1").val();
@@ -441,7 +435,29 @@
                 $('#edit_date-3').prop('disabled', true);
             }
 
-          
+            //  fungsi untuk money format
+            $(document).on("keyup", ".qty", function(e){
+                 $(this).val(format($(this).val()));
+            });
+            var format = function(num){
+            var str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
+            if(str.indexOf(".") > 0) {
+                parts = str.split(".");
+                str = parts[0];
+            }
+            str = str.split("").reverse();
+            for(var j = 0, len = str.length; j < len; j++) {
+                if(str[j] != ",") {
+                output.push(str[j]);
+                if(i%3 == 0 && j < (len - 1)) {
+                    output.push(",");
+                }
+                i++;
+                }
+            }
+            formatted = output.reverse().join("");
+            return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
+            };
             
             // Mendapatkan id dengan cara mengambil dari URL
             var urlSegments = window.location.pathname.split('/');
@@ -573,56 +589,56 @@
                 return values;
             }
 
-            // let ttdFile1 = null;
-            // const myDropzone1 = new Dropzone('#dropzone-1', {
-            //     parallelUploads: 1,
-            //     maxFilesize: 10,
-            //     addRemoveLinks: true,
-            //     maxFiles: 1,
-            //     acceptedFiles: ".jpeg,.jpg,.png",
-            //     autoQueue: false,
-            //     init: function() {
-            //         this.on('addedfile', function(file) {
-            //             while (this.files.length > this.options.maxFiles) this.removeFile(this
-            //                 .files[0]);
-            //             ttdFile1 = file;
-            //         });
-            //     }
-            // });
+            let ttdFile1 = null;
+            const myDropzone1 = new Dropzone('#dropzone-1', {
+                parallelUploads: 1,
+                maxFilesize: 10,
+                addRemoveLinks: true,
+                maxFiles: 1,
+                acceptedFiles: ".jpeg,.jpg,.png",
+                autoQueue: false,
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        while (this.files.length > this.options.maxFiles) this.removeFile(this
+                            .files[0]);
+                        ttdFile1 = file;
+                    });
+                }
+            });
 
-            // let ttdFile2 = null;
-            // const myDropzone2 = new Dropzone('#dropzone-2', {
-            //     parallelUploads: 1,
-            //     maxFilesize: 10,
-            //     addRemoveLinks: true,
-            //     maxFiles: 1,
-            //     acceptedFiles: ".jpeg,.jpg,.png",
-            //     autoQueue: false,
-            //     init: function() {
-            //         this.on('addedfile', function(file) {
-            //             while (this.files.length > this.options.maxFiles) this.removeFile(this
-            //                 .files[0]);
-            //             ttdFile2 = file;
-            //         });
-            //     }
-            // });
+            let ttdFile2 = null;
+            const myDropzone2 = new Dropzone('#dropzone-2', {
+                parallelUploads: 1,
+                maxFilesize: 10,
+                addRemoveLinks: true,
+                maxFiles: 1,
+                acceptedFiles: ".jpeg,.jpg,.png",
+                autoQueue: false,
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        while (this.files.length > this.options.maxFiles) this.removeFile(this
+                            .files[0]);
+                        ttdFile2 = file;
+                    });
+                }
+            });
 
-            // let ttdFile3 = null;
-            // const myDropzone3 = new Dropzone('#dropzone-3', {
-            //     parallelUploads: 1,
-            //     maxFilesize: 10,
-            //     addRemoveLinks: true,
-            //     maxFiles: 1,
-            //     acceptedFiles: ".jpeg,.jpg,.png",
-            //     autoQueue: false,
-            //     init: function() {
-            //         this.on('addedfile', function(file) {
-            //             while (this.files.length > this.options.maxFiles) this.removeFile(this
-            //                 .files[0]);
-            //             ttdFile3 = file;
-            //         });
-            //     }
-            // });
+            let ttdFile3 = null;
+            const myDropzone3 = new Dropzone('#dropzone-3', {
+                parallelUploads: 1,
+                maxFilesize: 10,
+                addRemoveLinks: true,
+                maxFiles: 1,
+                acceptedFiles: ".jpeg,.jpg,.png",
+                autoQueue: false,
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        while (this.files.length > this.options.maxFiles) this.removeFile(this
+                            .files[0]);
+                        ttdFile3 = file;
+                    });
+                }
+            });
 
             // Create, Save, dan Insert
             var editlk = $('.edit-lk');

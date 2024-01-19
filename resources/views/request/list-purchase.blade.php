@@ -83,6 +83,20 @@ $configData = Helper::appClasses();
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
     $((function() {
+        let account = {!! json_encode(session('data')) !!}
+        let levelId = account.level.id;
+     
+        let buttonAdd = [];
+        
+        if(levelId == '10'){
+            buttonAdd = [{
+                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Purchase Request</span>',
+                className: "btn btn-primary",
+                action: function(a, e, t, s) {
+                    window.location = "{{url('request/add-purchase-request')}}";
+                }
+            }];
+        }
         var a = $(".purchase-request-list-table");
         if (a.length) var e = a.DataTable({
             processing: true,
@@ -193,13 +207,7 @@ $configData = Helper::appClasses();
                 search: "",
                 searchPlaceholder: "Search Purchase Request"
             },
-            buttons: [{
-                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Purchase Request</span>',
-                className: "btn btn-primary",
-                action: function(a, e, t, s) {
-                    window.location = baseUrl + "request/add-purchase-request"
-                }
-            }],
+            buttons: buttonAdd,
             responsive: {
                 details: {
                     display: $.fn.dataTable.Responsive.display.modal({
