@@ -4,13 +4,7 @@ namespace App\Helpers;
 
 use Illuminate\Support\Facades\Session;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-use Spatie\Menu\Link;
-use Spatie\Menu\Html;
-use Spatie\Menu\Menu;
 use Illuminate\Support\Facades\Log;
-// use Monolog\Logger;
-// use Logtail\Monolog\LogtailHandler;
 
 class CallApiHelpers
 {
@@ -42,9 +36,6 @@ class CallApiHelpers
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
-
-
-        // return json_decode($response->getBody()->getContents(), true);
 
     }
 

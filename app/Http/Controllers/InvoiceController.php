@@ -363,7 +363,7 @@ class InvoiceController extends Controller
                 $dataEmail["total"] = $invoice->grand_total;
                 $dataEmail["terbilang"] = $invoice->grand_total_spelled;
     
-                $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice/' . $id);
+                $apiRequest = Http::get('api/invoice/' . $id);
                 $response = json_decode($apiRequest->getBody());
                 $data = $response->data;
     
