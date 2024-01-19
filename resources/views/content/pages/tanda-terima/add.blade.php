@@ -136,7 +136,7 @@ $configData = Helper::appClasses();
                                     <input type="text" class="form-control w-px-250 date" id="receipt_date" name="receipt_date" placeholder="Tanggal" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
-                            </div>                     
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -213,12 +213,12 @@ $configData = Helper::appClasses();
 <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
 </script>
 <script>
-      let account = {!! json_encode(session('data')) !!}
-        var levelId = account.level_id;
-        console.log(levelId);
-        if (levelId == 10) {
-            $('.ttd').hide();
-        }
+    let account = {!! json_encode(session('data')) !!}
+    var levelId = account.level_id;
+    console.log(levelId);
+    if (levelId == 10) {
+        $('.ttd').hide();
+    }
 </script>
 <script>
     $(document).ready(function() {
@@ -239,41 +239,6 @@ $configData = Helper::appClasses();
             if (!results) return null;
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
-
-        function getDataInvoice(id) {
-            $.ajax({
-                url: "{{ url('api/invoice') }}/"+ id,
-                type: "GET",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(res) {
-                    let total_paid = parseFloat(res.data.total_paid);
-                    let grand_total = parseFloat(res.data.grand_total);
-                    let tenant = res.data.tenant;
-                    let bank = res.data.bank;
-                    $("#total_paid").val(total_paid.toLocaleString('en-US'));
-                    $("#grand_total").val(grand_total.toLocaleString('en-US'));
-                    $(".select-bank").empty().append('<option value="' + bank.id + '">' +
-                        bank.name + '</option>').val(bank.id);
-                    $(".select-tenant").empty().append('<option value="' + tenant.id +
-                        '">' + tenant.name + '</option>').val(tenant.id);
-                    $(".select-invoice").empty().append('<option value="' + res.data.id +
-                        '">' + res.data.invoice_number + '</option>').val(res.data.id);
-                    Swal.close();
-                },
-                error: function(xhr, status, error) {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: xhr.responseJSON.message,
-                        icon: 'error',
-                        customClass: {
-                            confirmButton: 'btn btn-primary'
-                        },
-                        buttonsStyling: false
-                    })
-                }
-            });
         }
 
         // Date
@@ -331,19 +296,6 @@ $configData = Helper::appClasses();
             }
         }
 
-        // Get invoice data
-        $(".select-invoice").on("change", function() {
-            Swal.fire({
-                title: 'Loading...',
-                text: "Please wait",
-                customClass: {
-                    confirmButton: 'd-none'
-                },
-                buttonsStyling: false
-            });
-            let id = $(this).val();
-            getDataInvoice(id);
-        })
 
         // Save, Insert, and Create
         var saveTandaTerima = $('.create-tanda-terima');
@@ -733,6 +685,42 @@ $configData = Helper::appClasses();
             }
         });
     })
+
+    function getDataInvoice(id) {
+        console.log(id);
+        $.ajax({
+            url: "{{ url('api/invoice/') }}/" + id,
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(res) {
+                let total_paid = parseFloat(res.data.total_paid);
+                let grand_total = parseFloat(res.data.grand_total);
+                let tenant = res.data.tenant;
+                let bank = res.data.bank;
+                $("#total_paid").val(total_paid.toLocaleString('en-US'));
+                $("#grand_total").val(grand_total.toLocaleString('en-US'));
+                $(".select-bank").empty().append('<option value="' + bank.id + '">' +
+                    bank.name + '</option>').val(bank.id);
+                $(".select-tenant").empty().append('<option value="' + tenant.id +
+                    '">' + tenant.name + '</option>').val(tenant.id);
+                $(".select-invoice").empty().append('<option value="' + res.data.id +
+                    '">' + res.data.invoice_number + '</option>').val(res.data.id);
+                Swal.close();
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: xhr.responseJSON.message,
+                    icon: 'error',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false
+                })
+            }
+        });
+    }
 
     function validateSelect(params) {
         var checkDate = $(params).val();
