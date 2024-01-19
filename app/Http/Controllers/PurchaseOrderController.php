@@ -37,8 +37,7 @@ class PurchaseOrderController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $purchaseOrderQuery = PurchaseOrder::with("purchaseOrderDetails")->
-                with("vendor")->
+            $purchaseOrderQuery = PurchaseOrder::with("vendor")->
                 with("tenant")->
                 where("deleted_at", null);
             if($value){
@@ -53,7 +52,10 @@ class PurchaseOrderController extends Controller
                     ->orWhere('status', 'like', '%' . $value . '%');
                 });
             }
-            $getPurchaseOrder = $purchaseOrderQuery->orderBy($order, $sort)->paginate($perPage);
+            $getPurchaseOrder = $purchaseOrderQuery
+            ->select("purchase_order_number", "vendor_id", "tenant_id", "about", "grand_total", "purchase_order_date", "status")
+            ->orderBy($order, $sort)
+            ->paginate($perPage);
             $totalCount = $getPurchaseOrder->total();
 
             $purchaseOrderArr = $this->CommonService->toArray($getPurchaseOrder);

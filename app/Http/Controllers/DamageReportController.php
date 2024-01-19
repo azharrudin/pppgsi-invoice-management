@@ -37,8 +37,8 @@ class DamageReportController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $damageReportQuery = DamageReport::with("damageReportDetails")->with("damageReportSignatures")->with("ticket")->where("deleted_at", null);
-            if ($value) {
+            $damageReportQuery = DamageReport::with("ticket")->where("deleted_at", null);
+            if($value){
                 $damageReportQuery->where(function ($query) use ($value) {
                     $query->where('damage_report_number', 'like', '%' . $value . '%')
                         ->orWhere('scope', 'like', '%' . $value . '%')

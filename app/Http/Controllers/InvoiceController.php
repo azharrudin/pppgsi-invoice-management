@@ -53,7 +53,10 @@ class InvoiceController extends Controller
                         ->orWhere('status', 'like', '%' . $value . '%');
                 });
             }
-            $getInvoices = $invoiceQuery->orderBy($order, $sort)->paginate($perPage);
+            $getInvoices = $invoiceQuery
+            ->select("invoice_number", "tenant_id", "bank_id", "grand_total", "invoice_date", "invoice_due_date", "status")
+            ->orderBy($order, $sort)
+            ->paginate($perPage);
             $totalCount = $getInvoices->total();
 
             $invoiceArr = $this->CommonService->toArray($getInvoices);
