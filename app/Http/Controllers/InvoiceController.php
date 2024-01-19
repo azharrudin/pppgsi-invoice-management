@@ -215,68 +215,6 @@ class InvoiceController extends Controller
         }
     }
 
-
-    public function updateStatus(Request $request, $id)
-    {
-        DB::beginTransaction();
-
-        try {
-            $id = (int) $id;
-            $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
-            if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
-
-            Invoice::findOrFail($id)->update([
-                'status' => $request->status
-            ]);
-
-
-            $invoice = Invoice::where('id', $id)->first();
-
-            $invoice = Invoice::where('id', $id)->first();
-            $hariIni = \Carbon\Carbon::now()->locale('id');
-            $bulan = $hariIni->monthName;
-            $tahun = $hariIni->format('Y');
-
-            $dataEmail["tenantName"] = $invoice->tenant->name;
-            $dataEmail["month"] = $bulan;
-            $dataEmail["year"] = $tahun;
-            $dataEmail["total"] = $invoice->grand_total;
-            $dataEmail["terbilang"] = $invoice->grand_total_spelled;
-            
-            // $data["email"] = "aatmaninfotech@gmail.com";
-            // $data["title"] = "From ItSolutionStuff.com";
-            // $data["body"] = "This is Demo";
-
-            $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice/' . $id);
-            $response = json_decode($apiRequest->getBody());
-            $data = $response->data;
-
-            $pdf = PDF::loadView('invoice.download', ['data' => $data]);
-            $to = $invoice->tenant->email;
-
-            Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $pdf) {
-                $message->to($to)
-                    ->subject('Invoice')
-                    ->attachData($pdf->output(), "Invoice.pdf");
-            });
-
-            DB::commit();
-            return ["data" => $invoice];
-        } catch (\Throwable $e) {
-            $errorMessage = "Internal server error";
-            $errorStatusCode = 500;
-            DB::rollBack();
-
-            dd($e);
-            if (is_a($e, CustomException::class)) {
-                $errorMessage = $e->getMessage();
-                $errorStatusCode = $e->getStatusCode();
-            }
-
-            return response()->json(['message' => $e], $errorStatusCode);
-        }
-    }
-
     /**
      * Remove the specified resource from storage.
      */
@@ -412,6 +350,34 @@ class InvoiceController extends Controller
             Invoice::findOrFail($id)->update($dataPayload);
 
             DB::commit();
+
+            if($request->input("status") == 'Terkirim'){
+                $invoice = Invoice::where('id', $id)->first();
+                $hariIni = \Carbon\Carbon::now()->locale('id');
+                $bulan = $hariIni->monthName;
+                $tahun = $hariIni->format('Y');
+    
+                $dataEmail["tenantName"] = $invoice->tenant->name;
+                $dataEmail["month"] = $bulan;
+                $dataEmail["year"] = $tahun;
+                $dataEmail["total"] = $invoice->grand_total;
+                $dataEmail["terbilang"] = $invoice->grand_total_spelled;
+    
+                $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice/' . $id);
+                $response = json_decode($apiRequest->getBody());
+                $data = $response->data;
+    
+                $pdf = PDF::loadView('invoice.download', ['data' => $data]);
+                $to = $invoice->tenant->email;
+    
+                Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $pdf) {
+                    $message->to($to)
+                        ->subject('Invoice')
+                        ->attachData($pdf->output(), "Invoice.pdf");
+                });
+            }
+
+            
             $getInvoice = Invoice::with("invoiceDetails.tax")
                 ->with("tenant")
                 ->with("bank")
