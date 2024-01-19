@@ -234,7 +234,7 @@ $configData = Helper::appClasses();
                         allowOutsideClick: false
                     });
                     $.ajax({
-                        url: "{{env('BASE_URL_API')}}" + "/api/invoice/update-status/" + id,
+                        url: "{{url('api/invoice/update-status')}}/" + id,
                         type: "PATCH",
                         data: JSON.stringify(datas),
                         contentType: "application/json; charset=utf-8",
@@ -297,7 +297,7 @@ $configData = Helper::appClasses();
                         allowOutsideClick: false
                     });
                     $.ajax({
-                        url: "{{env('BASE_URL_API')}}" + "/api/invoice/update-status/" + id,
+                        url: "{{url('api/invoice/update-status')}}/" + id,
                         type: "PATCH",
                         data: JSON.stringify(datas),
                         contentType: "application/json; charset=utf-8",
@@ -339,7 +339,7 @@ $configData = Helper::appClasses();
 
     function getDataInvoice(id) {
         $.ajax({
-            url: "{{env('BASE_URL_API')}}" + "/api/invoice/" + id,
+            url: "{{url('api/invoice')}}/" + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {

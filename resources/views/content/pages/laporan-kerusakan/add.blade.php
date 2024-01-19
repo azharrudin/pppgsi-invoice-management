@@ -452,7 +452,7 @@ $configData = Helper::appClasses();
                         datas.action_plan_date = action_plan_date;
                         datas.damage_report_date = damage_report_date;
                         $.ajax({
-                            url: "{{env('BASE_URL_API')}}" + "/api/damage-report",
+                            url: "{{ url('api/damage-report') }}",
                             type: "POST",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",

@@ -353,7 +353,7 @@ $configData = Helper::appClasses();
                     event.preventDefault();
                     var formData = new FormData($('#create-bank')[0]);
                     $.ajax({
-                        url: "{{env('BASE_URL_API')}}" + "/api/bank",
+                        url: "{{url('api/bank')}}",
                         type: "POST",
                         data: formData,
                         processData: false,
@@ -411,7 +411,7 @@ $configData = Helper::appClasses();
                     let id = $('#edit_id').val();
                     var data = $('#edit-bank').serialize();
                     $.ajax({
-                        url: "{{env('BASE_URL_API')}}" + "/api/bank/" + id,
+                        url: "{{url('api/bank')}}/"+ id,
                         type: "PATCH",
                         data: data,
                         success: function(response) {
@@ -459,7 +459,7 @@ $configData = Helper::appClasses();
         let id = $(this).data('id');
 
         $.ajax({
-            url: "{{env('BASE_URL_API')}}" + "/api/bank/" + id,
+            url: "{{url('api/bank')}}/"+ id,
             type: "get",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -485,7 +485,7 @@ $configData = Helper::appClasses();
         let id = $(this).data('id');
 
         $.ajax({
-            url: "{{env('BASE_URL_API')}}" + "/api/bank/" + id,
+            url: "{{url('api/bank')}}/"+ id,
             type: "get",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -541,7 +541,7 @@ $configData = Helper::appClasses();
         })
 
         $.ajax({
-            url: "{{env('BASE_URL_API')}}" + "/api/bank" + "/" + id,
+            url: "{{url('api/bank')}}/"+ id,
             type: "DELETE",
             contentType: false,
             processData: false,

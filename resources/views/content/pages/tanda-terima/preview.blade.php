@@ -193,7 +193,7 @@ $configData = Helper::appClasses();
 
         function getDataPreview(id) {
             $.ajax({
-                url: "{{ env('BASE_URL_API') }}" + "/api/receipt/" + id,
+                url: "{{ url('api/receipt') }}" + id,
                 type: "GET",
                 dataType: "json",
                 beforeSend: function() {
@@ -259,7 +259,7 @@ $configData = Helper::appClasses();
             let datas = {}
             datas.status = 'Disetujui KA';
             $.ajax({
-                url: "{{env('BASE_URL_API')}}" + "/api/receipt/update-status/" + id,
+                url: "{{ url('api/receipt/update-status') }}/"+ id,
                 type: "PATCH",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(datas),

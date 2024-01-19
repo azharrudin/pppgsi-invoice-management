@@ -243,7 +243,7 @@ $configData = Helper::appClasses();
 
         function getDataInvoice(id) {
             $.ajax({
-                url: "{{env('BASE_URL_API')}}" + "/api/invoice/" + id,
+                url: "{{ url('api/invoice') }}/"+ id,
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -412,7 +412,7 @@ $configData = Helper::appClasses();
                         console.log(datas);
 
                         $.ajax({
-                            url: "{{env('BASE_URL_API')}}" + "/api/receipt",
+                            url: "{{ url('api/receipt') }}",
                             type: "POST",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -827,7 +827,7 @@ $configData = Helper::appClasses();
                     console.log(datas);
 
                     $.ajax({
-                        url: "{{env('BASE_URL_API')}}" + "/api/receipt",
+                        url: "{{ url('api/receipt') }}",
                         type: "POST",
                         data: JSON.stringify(datas),
                         contentType: "application/json; charset=utf-8",

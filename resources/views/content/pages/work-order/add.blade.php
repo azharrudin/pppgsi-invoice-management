@@ -367,7 +367,7 @@ $configData = Helper::appClasses();
                         datas.status = "Terbuat";
 
                         $.ajax({
-                            url:  "{{env('BASE_URL_API')}}" + "/api/work-order",
+                            url: "{{ url('api/work-order') }}",
                             type: "POST",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",

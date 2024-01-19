@@ -573,7 +573,7 @@ $configData = Helper::appClasses();
                     data.image = "a";
                     console.log(data);
                     $.ajax({
-                        url: "{{env('BASE_URL_API')}}" + "/api/user",
+                        url: "{{url('api/user')}}",
                         type: "POST",
                         data: data,
                         success: function(response) {
@@ -635,7 +635,7 @@ $configData = Helper::appClasses();
                     data.department_id = parseInt(department);
                     data.status = 'Active';
                     $.ajax({
-                        url: "{{env('BASE_URL_API')}}" + "/api/user/" + id,
+                        url: "{{url('api/user')}}/"+ id,
                         type: "PATCH",
                         data: data,
                         success: function(response) {
@@ -680,7 +680,7 @@ $configData = Helper::appClasses();
         let id = $(this).data('id');
 
         $.ajax({
-            url: "{{env('BASE_URL_API')}}" + "/api/user/" + id,
+            url: "{{url('api/user')}}/"+ id,
             type: "get",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -709,7 +709,7 @@ $configData = Helper::appClasses();
         let id = $(this).data('id');
 
         $.ajax({
-            url: "{{env('BASE_URL_API')}}" + "/api/user/" + id,
+            url: "{{url('api/user')}}/"+ id,
             type: "get",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -767,7 +767,7 @@ $configData = Helper::appClasses();
         })
 
         $.ajax({
-            url: "{{env('BASE_URL_API')}}" + "/api/user" + "/" + id,
+            url: "{{url('api/user')}}/"+ id,
             type: "DELETE",
             contentType: false,
             processData: false,

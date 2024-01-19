@@ -460,7 +460,7 @@ $configData = Helper::appClasses();
                 placeholder: 'Select Pajak',
                 allowClear: true,
                 ajax: {
-                    url: "{{env('BASE_URL_API')}}" + "/api/tax/select",
+                    url: "{{ url('api/tax/select') }}",
                     dataType: 'json',
                     cache: true,
                     data: function(params) {
@@ -524,7 +524,7 @@ $configData = Helper::appClasses();
                 getTotal();
             } else {
                 $.ajax({
-                    url: "{{env('BASE_URL_API')}}" + "/api/tax/" + id,
+                    url: "{{ url('api/tax') }}/"+ id,
                     type: "get",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -552,7 +552,7 @@ $configData = Helper::appClasses();
             let index = $('.tax').index(this);
             let data = 0;
             $.ajax({
-                url: "{{env('BASE_URL_API')}}" + "/api/tax/" + id,
+                url: "{{ url('api/tax') }}/"+ id,
                 type: "get",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -776,7 +776,7 @@ $configData = Helper::appClasses();
                         delete datas['undefined'];
 
                         $.ajax({
-                            url: "{{env('BASE_URL_API')}}" + "/api/invoice/" + id,
+                            url: "{{ url('api/invoice') }}/"+ id,
                             type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -896,13 +896,19 @@ $configData = Helper::appClasses();
     });
 
     function getDataInvoice(id) {
+        Swal.fire({
+            title: '<h2>Loading...</h2>',
+            html: sweet_loader + '<h5>Please Wait</h5>',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        });
         $.ajax({
-            url: "{{env('BASE_URL_API')}}" + "/api/invoice/" + id,
+            url: "{{ url('api/invoice') }}/"+ id,
             type: "GET",
             dataType: "json",
             success: function(res) {
                 let data = res.data;
-
                 const myDropzone = new Dropzone('#dropzone-basic', {
                     parallelUploads: 1,
                     maxFilesize: 3,
@@ -955,9 +961,8 @@ $configData = Helper::appClasses();
                         })
                     }
                 });
-
-                getTenant(data.tenant_id)
-                getBank(data.bank_id)
+                $("#tenant").empty().append("<option value="+data.tenant.id+">"+data.tenant.name+"</option>").val(data.tenant.id).trigger("change");
+                $("#bank").empty().append("<option value="+data.bank.id+">"+data.bank.name+"</option>").val(data.bank.id).trigger("change");
                 $("#invoice_number").val(data.invoice_number);
                 $("#invoice_date").val(data.invoice_date);
                 $("#contract_number").val(data.contract_number);
@@ -978,48 +983,13 @@ $configData = Helper::appClasses();
                 if(account.level.id != '1'){
                     $('.data-materai').attr('style','display:none !important');
                 }
-
+                Swal.close();
             },
             error: function(errors) {
                 console.log(errors);
             }
         });
     }
-
-    function getTenant(id) {
-        $.ajax({
-            url: "{{url('api/tenant')}}/" + id,
-            type: "GET",
-            success: function(response) {
-                let data = response.data;
-                let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
-                $('#tenant').prepend(tem);
-                // $("#company").text(data.company);
-                // $("#floor").text(data.floor);
-                // $("#name_tenant").text(data.name);
-            },
-            error: function(xhr, status, error) {
-                console.log(error);
-            }
-        });
-    }
-
-    function getBank(id) {
-        $.ajax({
-            url: "{{url('api/bank')}}/" + id,
-            type: "GET",
-            success: function(response) {
-                let data = response.data;
-                let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
-                $('#bank').prepend(tem);
-
-            },
-            error: function(xhr, status, error) {
-                console.log(error);
-            }
-        });
-    }
-
 
 
     function getDetails(detailItems) {
@@ -1069,7 +1039,7 @@ $configData = Helper::appClasses();
                 </div>`;
                 getDetail = getDetail + temp;
                 $.ajax({
-                    url: "{{env('BASE_URL_API')}}" + "/api/tax/" + details[i].tax_id,
+                    url: "{{ url('api/tax') }}/"+ details[i].tax_id,
                     type: "GET",
                     success: function(response) {
 
@@ -1090,7 +1060,7 @@ $configData = Helper::appClasses();
                     placeholder: 'Select Pajak',
                     allowClear: true,
                     ajax: {
-                        url: "{{env('BASE_URL_API')}}" + "/api/tax/select",
+                        url: "{{ url('api/tax/select') }}",
                         dataType: 'json',
                         cache: true,
                         data: function(params) {

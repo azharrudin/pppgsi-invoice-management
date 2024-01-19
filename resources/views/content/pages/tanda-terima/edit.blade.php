@@ -297,7 +297,7 @@
 
             function getDataTandaTerima(id) {
                 $.ajax({
-                    url: "{{env('BASE_URL_API')}}" + "/api/receipt/" + id,
+                    url: "{{ url('api/receipt') }}/"+ id,
                     type: "GET",
                     dataType: "json",
                     success: function(res) {
@@ -408,7 +408,7 @@
                 datas.signature_date = moment(date, 'D-M-YYYY').format('YYYY-MM-DD');
 
                 $.ajax({
-                    url: "{{env('BASE_URL_API')}}" + "/api/receipt/" + id,
+                    url: "{{ url('api/receipt') }}/"+ id,
                     type: "PATCH",
                     data: JSON.stringify(datas),
                     contentType: "application/json; charset=utf-8",

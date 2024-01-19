@@ -121,7 +121,7 @@ $configData = Helper::appClasses();
                     allowOutsideClick: false
                 });
                 $.ajax({
-                    url: "{{env('BASE_URL_API')}}" + "/api/receipt/update-status/" + id,
+                    url: "{{ url('api/receipt/update-status') }}/"+ id,
                     type: "PATCH",
                     data: JSON.stringify(datas),
                     contentType: "application/json; charset=utf-8",
@@ -389,7 +389,7 @@ $configData = Helper::appClasses();
         })
 
         $.ajax({
-            url: "{{ env('BASE_URL_API') }}" + "/api/receipt/" + id,
+            url: "{{ url('api/receipt') }}/"+ id,
             type: "DELETE",
             contentType: false,
             processData: false,

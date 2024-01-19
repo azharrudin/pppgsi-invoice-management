@@ -149,7 +149,7 @@ $configData = Helper::appClasses();
 
     function getDataTicket(id) {
         $.ajax({
-            url: "{{env('BASE_URL_API')}}" + "/api/ticket/" + id,
+            url: "{{ url('api/ticket') }}/"+id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
