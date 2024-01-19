@@ -88,10 +88,10 @@ $configData = Helper::appClasses();
                                         <tr>
                                             <td colspan="2"></td>
                                             <td class="">
-                                                <p class="">Total:</p>
+                                                <p class="fw-bold">Total:</p>
                                             </td>
                                             <td colspan="2">
-                                                <p id="grand_total"></p>
+                                                <p id="grand_total" class="fw-bold"></p>
                                             </td>
                                         </tr>
                                         <tr>
