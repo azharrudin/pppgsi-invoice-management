@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
         for($i = 0; $i < 20; $i++){
             $count = $i + 1;
             $departmentIndex = $i % 5 + 1;
-            $levelIndex = $i % 12 + 1;
+            $levelIndex = $i % 14 + 1;
 
             User::create([
                 'username' => "username{$count}",
