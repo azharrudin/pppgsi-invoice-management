@@ -135,22 +135,23 @@ return $hasil_rupiah;
             <table style="vertical-align: top; border-color: white;">
                 <tr>
                     <td>
-                        <div style="border: 1px solid black; height : 155px; padding:10px; width:300px;">
+                        <div style="border: 1px solid black; height : 155px; padding:10px; width:350px">
                             <p class="line-height: 2;">
                                 {{ $data->bank->account_name }} <br />
                                 {{ $data->bank->name }} <br />
                                 CABANG {{ $data->bank->branch_name }} <br />
-                                Account No. : {{ $data->bank->account_number }}
+                                Inv. No. : {{ $data->invoice->invoice_number }}
                             </p>
 
                         </div>
-                        <p style="width: 300px;">
+                        <p>
+                        <br>
                             Apabila dibayar dengan cek/Biyet giro, Pembayaran baru
                             dianggap sah apabila telah dapat dicairkan di Bank kami.
                         </p>
                     </td>
                     <td>
-                        <div class="ttd" style="width: 200px; float: right;">
+                        <div class="ttd" style="width: 250px; float: right;">
                             <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
                                 {{ $data->signature_date ? date('d F Y', strtotime($data->signature_date)) : '' }}<br>
                                 <img src="{{ $data->signature_image }}" width="100px">
