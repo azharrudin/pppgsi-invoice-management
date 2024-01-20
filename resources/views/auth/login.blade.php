@@ -118,6 +118,10 @@ $configData = Helper::appClasses();
 @section('page-script')
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
+   let account = {!! json_encode(session('data')) !!}
+   if(account){
+    location.href = "/dashboard";
+   }
   $(function() {
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                             <span class="sr-only">Loading...</span>
