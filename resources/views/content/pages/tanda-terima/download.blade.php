@@ -106,6 +106,11 @@ return $hasil_rupiah;
                         <td>:</td>
                         <td>{{$data->tenant->phone}}</td>
                     </tr>
+                    <tr>
+                        <td>Terbilang</td>
+                        <td>:</td>
+                        <td colspan="4"> {{$data->grand_total_spelled}}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -127,33 +132,38 @@ return $hasil_rupiah;
         </div> -->
 
         <div class="row">
-            <div class="col-4">
-                <div style="border: 1px solid black;" class="p-2">
-                    {{$data->grand_total_spelled}}
-                </div>
-                <p>
-                    Apabila dibayar dengan cek/Biyet giro, Pembayaran baru
-                    dianggap sah apabila telah dapat dicairkan di Bank kami.
-                </p>
+            <table style="vertical-align: top; border-color: white;">
+                <tr>
+                    <td>
+                        <div style="border: 1px solid black; height : 155px; padding:10px; width:300px;">
+                            <p class="line-height: 2;">
+                                {{ $data->bank->account_name }} <br />
+                                {{ $data->bank->name }} <br />
+                                CABANG {{ $data->bank->branch_name }} <br />
+                                Account No. : {{ $data->bank->account_number }}
+                            </p>
 
-            </div>
-            <div class="col-4"></div>
-            <div class="col-4">
-                <br>
-                <br>
-                <div class="ttd" style="width: max-content; float: right;">
+                        </div>
+                        <p style="width: 300px;">
+                            Apabila dibayar dengan cek/Biyet giro, Pembayaran baru
+                            dianggap sah apabila telah dapat dicairkan di Bank kami.
+                        </p>
+                    </td>
+                    <td>
+                        <div class="ttd" style="width: 200px; float: right;">
+                            <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
+                                {{ $data->signature_date ? date('d F Y', strtotime($data->signature_date)) : '' }}<br>
+                                <img src="{{ $data->signature_image }}" width="100px">
+                            <p class="text-center">
+                                <u>{{ $data->signature_name }}</u></b><br><span>Ka.
+                                    BM</span>
+                            </p>
+                            </p>
 
-                    <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
-                        {{ $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' }}<br>
-                        <img src="{{ $data->signature_image }}" alt="">
-                    <p class="text-center">
-                        <u></u></b><br><span>{{$data->signature_name}}</span>
-                    </p>
-                    </p>
-
-                </div>
-            </div>
-            <div style="clear: both;"></div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </body>
