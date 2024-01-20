@@ -366,7 +366,7 @@ $configData = Helper::appClasses();
                 $("#grand_total").text(format(data.grand_total));
                 $("#invoice_due_date").text(data.invoice_due_date);
                 $("#term_and_conditions").text(data.term_and_conditions);
-                if (data.materai_name == null || account.level.id == 1) {
+                if (data.materai_name != null || account.level.id == 1) {
                     $('.data-material').removeClass('d-none');
                 }
                 $("#materai_date").text(data.materai_date);
@@ -379,7 +379,6 @@ $configData = Helper::appClasses();
                     $("#materai-image").css("width", `200px`);
                     $("#materai-image").css("background-position", `center`);
                 }
-                console.log(data.status);
                 if (data.status == 'Terkirim' && account.level.id == 10) {
                     $('.add-payment').removeClass('d-none');
                 }
