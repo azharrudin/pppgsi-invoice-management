@@ -95,7 +95,7 @@ class TandaTerimaController extends Controller
 
     public function print($id)
     {
-        $url = '/api/receipt/' . $id;
+        $url = env('BASE_URL_API') .'/api/receipt/' . $id;
         $request = Request::create($url, 'GET');
         $response = Route::dispatch($request);
         $responseBody = json_decode($response->getContent());

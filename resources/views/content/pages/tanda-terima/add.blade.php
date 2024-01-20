@@ -147,9 +147,9 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button class="btn btn-label-warning d-grid w-100 mb-2 btn-preview">Preview</button>
-                        <button type="submit" class="btn btn-label-success btn-save d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" class="btn btn-label-danger d-grid w-100 btn-cancel">Batal</button>
+                        <button type="submit" class="btn btn-primary btn-save d-grid w-100 mb-2">Simpan</button>
+                        <button class="btn btn-success d-grid w-100 mb-2 btn-preview">Preview</button>
+                        <button type="button" class="btn btn-secondary d-grid w-100 btn-cancel">Batal</button>
                     </div>
                 </div>
             </div>
