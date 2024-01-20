@@ -150,13 +150,13 @@ $configData = Helper::appClasses();
         <div class="col-lg-3 col-12 invoice-actions">
             <div class="card mb-4">
                 <div class="card-body">
-                    <button class="btn btn-primary d-grid w-100 mb-2 kirim-tanda-terima" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
+                    <button class="btn btn-primary d-grid w-100 mb-2 kirim-tanda-terima d-none" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
                         <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Tanda Terima</span>
                     </button>
-                    <button type="button" class="btn btn-label-secondary btn-status d-grid w-100 mb-2 disetujui" style="background-color: #4EC0D9; color : #fff;">Disetujui</button>
-                    <a target="_blank" href="{{url('invoice/tanda-terima/print/')}}/{{$id}}" id="preview" class="btn btn-label-info d-grid w-100 mb-2">Download</a>
+                    <button type="button" class="btn btn-primary  b  btn-status d-grid w-100 mb-2 disetujui d-none" style="color : #fff;">Disetujui</button>
+                    <a target="_blank" href="{{url('invoice/tanda-terima/print/')}}/{{$id}}" id="preview" class="btn btn-info d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-download ti-xs me-2"></i>Download</span></a>
                     <a target="_blank" href="{{url('invoice/tanda-terima/edit')}}/{{$id}}" id="edit" class="btn btn-warning d-grid w-100 mb-2 edit" style="display: none !important;">Edit</a>
-                    <a href="{{ url('invoice/tanda-terima')}}" id="back" class="btn btn-label-danger d-grid w-100 mb-2">Kembali</a>
+                    <a href="{{ url('invoice/tanda-terima')}}" id="back" class="btn btn-secondary d-grid w-100 mb-2">Kembali</a>
                 </div>
             </div>
         </div>
@@ -193,7 +193,7 @@ $configData = Helper::appClasses();
 
         function getDataPreview(id) {
             $.ajax({
-                url: "{{ url('api/receipt') }}" + id,
+                url: "{{ url('api/receipt') }}/" + id,
                 type: "GET",
                 dataType: "json",
                 beforeSend: function() {
@@ -223,19 +223,16 @@ $configData = Helper::appClasses();
                     $('#receipt_date').text(moment(result.receipt_date).format('DD MMMM YYYY'));
                     $('.prev-img').attr('src', result.signature_image);
                     if(result.signature_name == null && account.level.id != 1){
-                        $('.data-material').attr('style','display:none !important');
+                        $('.data-material').removeClass('d-none');
                     }
                     $('#signature_name').text(result.signature_name);
                     $('#signature_date').text(result.signature_date);
 
-                    if(result.status != 'Disetujui BM' || account.level.id != 10){
-                        $('.kirim-tanda-terima').attr('style','display:none !important');
-                    }
-                    if(account.level.id != '2' || result.status == 'Disetujui KA'){
-                        $('.disetujui').attr('style','display:none !important');
+                    if(account.level.id == '2' || result.status == 'Terbuat'){
+                        $('.disetujui').removeClass('d-none');
                     }
                     if(account.level.id == '1'){
-                        $('.edit').attr('style','display:block');
+                        $('.edit').removeClass('d-none');
                     }
 
                     $('.btn-edit').attr('data-id', id);

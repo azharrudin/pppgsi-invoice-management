@@ -276,7 +276,7 @@ $configData = Helper::appClasses();
                         editButton = `<a href="tanda-terima/edit/${data}" class="dropdown-item btn-edit" data-id="${data}">Edit</a>`;
                     }
                     if ((account.level.id == 10)) {
-                        deleteButton = `<a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="${data.id}">Delete</a>`;
+                        deleteButton = `<a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="${data}">Delete</a>`;
                     }
                     return `<div class="d-flex align-items-center">
                                     ${sendMailRow}

@@ -179,33 +179,6 @@ return $hasil_rupiah;
             </table>
         </div>
 
-        <!-- <div class="row">
-            <div class="col-4" style="border: 1px solid black;">
-                Pembayaran dengan Cek/Bilyet/Transfer atas nama: <br />
-                {{ $data->bank->account_name }} <br />
-                {{ $data->bank->name }} <br />
-                CABANG {{ $data->bank->branch_name }} <br />
-                Account No. : {{ $data->bank->account_number }}
-            </div>
-            <div class="col-4"></div>
-            <div class="col-4">
-                <br>
-                <br>
-                <div class="ttd" style="width: max-content; float: right;">
-
-                    <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
-                        {{ $data->materai_date ? date('d F Y', strtotime($data->materai_date)) : '' }}<br>
-                        <img src="{{ $data->materai_image }}" alt="">
-                    <p class="text-center">
-                        <u>{{ $data->materai_name }}</u></b><br><span>Ka.
-                            BM</span>
-                    </p>
-                    </p>
-
-                </div>
-            </div>
-            <div style="clear: both;"></div>
-        </div> -->
         <div class="row mt-4 text-center" style="font-size: 12px;">
             <center>
                 <p>
