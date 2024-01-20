@@ -164,12 +164,12 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button class="btn btn-primary d-grid w-100 mb-2 kirim-invoice" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
-                            <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
+                        <button class="btn btn-primary d-grid w-100 mb-2 kirim-invoice d-none" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
+                            <span class="d-flex align-items-center justify-content-center text-nowrap d-none"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
                         </button>
-                        <button type="button" id="preview" class="btn btn-label-warning d-grid w-100 mb-2">Preview</button>
-                        <button type="submit" id="save" class="btn btn-label-success d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" id="batal" class="btn btn-label-danger d-grid w-100">Kembali</button>
+                        <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="fa fa-save fa-xs me-2"></i>Simpan</span></button>
+                        <button type="button" id="preview" class="btn btn-success d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-eye ti-xs me-2"></i>Preview</span></button>
+                        <button type="button" id="batal" class="btn btn-secondary d-grid w-100">Kembali</button>
                     </div>
                 </div>
             </div>
@@ -318,6 +318,34 @@ $configData = Helper::appClasses();
             }
 
         });
+
+        function getTenant(id) {
+            $.ajax({
+                url: "{{url('api/tenant')}}/" + id,
+                type: "GET",
+                success: function(response) {
+                    let data = response.data;
+                    $("#tenant").empty().append("<option value="+data.id+">"+data.name+"</option>").val(data.id).trigger("change");
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        function getBank(id) {
+            $.ajax({
+                url: "{{url('api/bank')}}/" + id,
+                type: "GET",
+                success: function(response) {
+                    let data = response.data;
+                    $("#bank").empty().append("<option value="+data.id+">"+data.name+"</option>").val(data.id).trigger("change");
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
 
         if (dataLocal) {
             $("#invoice_number").val(dataLocal.invoice_number);
@@ -683,12 +711,6 @@ $configData = Helper::appClasses();
             }).format(number);
         }
 
-
-
-        if (dataLocal) {
-            console.log('kui');
-        }
-
         var saveInvoice = $('.create-invoice');
 
         Array.prototype.slice.call(saveInvoice).forEach(function(form) {
@@ -921,7 +943,6 @@ $configData = Helper::appClasses();
                     thumbnailHeight: 250,
                     init: function() {
                         if (dataLocal) {
-                            console.log('a');
                             let mockFile = {
                                 dataURL: dataLocal.materai_image
                             };

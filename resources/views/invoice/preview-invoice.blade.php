@@ -307,7 +307,6 @@ $configData = Helper::appClasses();
     });
 
     function format(e) {
-        console.log(e);
         var nStr = e + '';
 
         nStr = nStr.replace(/\,/g, "");
@@ -328,7 +327,6 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
-                console.log(data);
                 $("#company").text(data.company);
                 $("#floor").text(data.floor);
                 $("#name_tenant").text(data.name);
@@ -346,7 +344,6 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
-                console.log(data);
                 $("#bank-name").text(data.name)
             },
             error: function(xhr, status, error) {
@@ -356,7 +353,6 @@ $configData = Helper::appClasses();
     }
 
     function getDetails() {
-        console.log(data.details[0].item);
         let details = data.details;
         let getDetail = '';
         let tem = '';
