@@ -262,14 +262,15 @@ $configData = Helper::appClasses();
                     }
                 }
             }, {
-                data: null,
+                data: 'receipt_number',
+                name : 'tanggapan',
                 title: "Tanggapan",
                 render: function(data, type, row) {
                     let sendMailRow = '';
                     let editButton = '';
                     let deleteButton = '';
                     if (row.status == 'Disetujui BM' && account.level.id == 10) {
-                        sendMailRow = `<a href="#" data-bs-toggle="tooltip" class="text-body send-email" data-id="${data.id}" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>`;
+                        sendMailRow = `<a href="#" data-bs-toggle="tooltip" class="text-body send-email" data-id="${data}" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>`;
                     }
                     if ((account.level.id == 10 && row.status == 'Terbuat') || (account.level.id == 1 && row.status == 'Disetujui KA')) {
                         editButton = `<a href="tanda-terima/edit/${data.id}" class="dropdown-item btn-edit" data-id="${data.id}">Edit</a>`;
@@ -283,7 +284,7 @@ $configData = Helper::appClasses();
                                     <div class="dropdown">
                                         <a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a>
                                         <div class="dropdown-menu dropdown-menu-end">
-                                            <a target="_blank" href="{{url('invoice/tanda-terima/print')}}/` + data.id + `" class="dropdown-item">Download</a>
+                                            <a target="_blank" href="{{url('invoice/tanda-terima/print')}}/` + data + `" class="dropdown-item">Download</a>
                                             ${editButton}
                                             ${deleteButton}
                                         </div>

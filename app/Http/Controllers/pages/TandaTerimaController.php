@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Route;
 use Yajra\DataTables\DataTables;
 use PDF;
 
@@ -90,14 +91,16 @@ class TandaTerimaController extends Controller
             ->setFilteredRecords($response->size)
             ->setTotalRecords($response->size)
             ->make(true);
-
     }
-    
-    public function print($id){
-        $apiRequest = Http::get(env('BASE_URL_API') .'/api/receipt/'.$id);
-        $response = json_decode($apiRequest->getBody());
-        $data = $response->data;
-    	$pdf = PDF::loadview('content.pages.tanda-terima.download',['data'=>$data]);
-    	return $pdf->stream('invoice.pdf');
+
+    public function print($id)
+    {
+        $url = '/api/receipt/' . $id;
+        $request = Request::create($url, 'GET');
+        $response = Route::dispatch($request);
+        $responseBody = json_decode($response->getContent());
+        $data = $responseBody->data;
+        $pdf = PDF::loadview('content.pages.tanda-terima.download', ['data' => $data]);
+        return $pdf->stream('invoice.pdf');
     }
 }
