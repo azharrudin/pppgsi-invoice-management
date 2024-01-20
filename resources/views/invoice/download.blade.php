@@ -76,35 +76,35 @@ return $hasil_rupiah;
                         <td rowspan="3" style="width: 10%;"><b>Kepada
                                 Yth:
                             </b></td>
-                        <td rowspan="3" style="width: 50%; border: 0.5px solid black; padding: 10px;"><b>
+                        <td rowspan="3" style="width: 35%; border: 0.5px solid black; padding: 10px;"><b>
                                 {{ $data->tenant->company }} <br>
                                 {{ $data->tenant->floor }} <br>
                                 <br>
                                 Up. {{ $data->tenant->name }}</b></td>
                         <td style=""></td>
-                        <td style="width: 10%;border: 0.5px solid black; padding: 10px;">No. Invoice:
-                            <br>{{ $data->invoice_number }}
+                        <td style="width: 20%;border: 0.5px solid black; padding: 10px;"><b>No. Invoice:</b> 
+                            <br><b>{{ $data->invoice_number }}</b> 
                         </td>
-                        <td style="width: 15%;border: 0.5px solid black; padding: 10px;">Tanggal: <br>
-                            {{ date('d F Y', strtotime($data->invoice_date)) }}
+                        <td style="width: 20%;border: 0.5px solid black; padding: 10px;"><b>Tanggal:</b><br>
+                            <b> {{ date('d F Y', strtotime($data->invoice_date)) }}</b>
                         </td>
                     </tr>
                     <tr>
 
                         <td style="border: none;"></td>
-                        <td style="border: 0.5px solid black; padding: 10px;">No. Kontrak:
-                            <br> {{ $data->contract_number }}
+                        <td style="border: 0.5px solid black; padding: 10px;"><b> No. Kontrak:
+                            <br> {{ $data->contract_number }}</b>
                         </td>
-                        <td style="border: 0.5px solid black; padding: 10px;">Tanggal: <br> {{ date('d F Y', strtotime($data->contract_date)) }}
+                        <td style="border: 0.5px solid black; padding: 10px;"><b>Tanggal: <br>{{ date('d F Y', strtotime($data->contract_date)) }}</b> 
                         </td>
                     </tr>
                     <tr>
 
                         <td style="border-left: .5px solid white;  border-top: .5px solid white;  border-bottom: .5px solid white;"></td>
-                        <td style="border: 0.5px solid black; padding: 10px;">No. Addendum:
-                            <br> {{ $data->addendum_number }}
+                        <td style="border: 0.5px solid black; padding: 10px;"><b>No. Addendum:
+                            <br> {{ $data->addendum_number }}</b> 
                         </td>
-                        <td style="border: 0.5px solid black; padding: 10px;">Tanggal: <br>{{ date('d F Y', strtotime($data->addendum_date)) }}
+                        <td style="border: 0.5px solid black; padding: 10px;"><b>Tanggal: <br>{{ date('d F Y', strtotime($data->addendum_date)) }}</b> 
                         </td>
                     </tr>
                 </tbody>
@@ -114,11 +114,11 @@ return $hasil_rupiah;
             <table class="table main-table" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th style="width:23%; text-align:left; padding:10px">Uraian</th>
-                        <th style="width:23%; text-align:left; padding:10px">Keterangan</th>
-                        <th style="width:26%; text-align:left; padding:10px">Dasar Pengenaan Pajak</th>
-                        <th style="width:8%; text-align:left; padding:10px">Pajak</th>
-                        <th style="width:20%; text-align:left; padding:10px">Total (Rp.)</th>
+                        <td style="width:23%; text-align:center; padding:10px">Uraian</td>
+                        <td style="width:23%; text-align:center; padding:10px">Keterangan</td>
+                        <td style="width:26%; text-align:center; padding:10px">Dasar Pengenaan Pajak</td>
+                        <td style="width:8%; text-align:center; padding:10px">Pajak</td>
+                        <td style="width:20%; text-align:center; padding:10px">Total (Rp.)</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -136,23 +136,22 @@ return $hasil_rupiah;
                     <tr>
                         <td class="text-right" colspan="4" style="padding:10px"><b>Total :</b>
                         </td>
-                        <td style="padding:10px">{{ rupiah($data->grand_total) }}</td>
+                        <td style="padding:10px"><b>{{ rupiah($data->grand_total) }}</b></td>
                     </tr>
                     <tr>
                         <td colspan="5" style="padding:10px"><b>Terbilang: {{ $data->grand_total_spelled }}</b></td>
                     </tr>
                 </tfoot>
             </table>
-            <p>Jatuh Tempo Tgl : {{ date('d F Y', strtotime($data->invoice_due_date)) }}</p><br>
-            <p>Keterangan : {{ $data->term_and_conditions }}</p><br>
-            <p></p>
+            <p>Jatuh Tempo Tgl : {{ date('d F Y', strtotime($data->invoice_due_date)) }}</p>
+            <p>Keterangan : {{ $data->term_and_conditions }}</p>
         </div>
 
         <div class="row">
             <table style="vertical-align: top; border-color: white;">
                 <tr>
                     <td>
-                        <div style="border: 1px solid black; height : 155px; padding:10px;">
+                        <div style="border: 1px solid black; height : 155px; padding:10px; width:300px;">
                             <p class="line-height: 2;">
                                 Pembayaran dengan Cek/Bilyet/Transfer atas nama: <br />
                                 {{ $data->bank->account_name }} <br />

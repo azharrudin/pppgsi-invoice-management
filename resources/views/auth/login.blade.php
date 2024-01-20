@@ -132,12 +132,12 @@ $configData = Helper::appClasses();
         dataType: 'JSON',
         beforeSend: function() {
           Swal.fire({
-                title: '<h2>Loading...</h2>',
-                html: sweet_loader + '<h5>Please Wait</h5>',
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                allowEscapeKey: false
-            });
+            title: '<h2>Loading...</h2>',
+            html: sweet_loader + '<h5>Please Wait</h5>',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          });
         },
         success: function(response) {
           console.log(response);
@@ -165,6 +165,15 @@ $configData = Helper::appClasses();
         },
         error: function(xhr, status, errorThrown) {
           console.log(xhr);
+          Swal.fire({
+            title: 'Gagal',
+            text: 'Username atau password salah',
+            type: 'danger',
+            customClass: {
+              confirmButton: 'btn btn-primary'
+            },
+            buttonsStyling: false
+          })
           // Swal.fire("Opps..!", "Gagal masuk thrown: " + JSON.stringify(xhr.status) + " " + JSON.stringify(xhr.statusText), "error");
           // $("input").attr("disabled", false);
           // $("#submit-login").html('Masuk');
