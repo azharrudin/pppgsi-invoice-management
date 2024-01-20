@@ -55,7 +55,7 @@ class ReceiptController extends Controller
                 });
             }
             $getReceipts = $receiptQuery
-            ->select("receipt_number", "tenant_id", "invoice_id", "paid", "bank_id", "grand_total", "receipt_date", "receipt_send_date", "status")
+            ->select("receipt_number", "tenant_id", "invoice_id", "paid", "bank_id", "grand_total", "receipt_date", "receipt_send_date", "status", "id")
             ->orderBy($order, $sort)
             ->paginate($perPage);
             $totalCount = $getReceipts->total();
