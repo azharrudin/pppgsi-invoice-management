@@ -137,7 +137,7 @@ $configData = Helper::appClasses();
 
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-md-0 mb-3 data-material d-flex flex-column align-items-center text-center">
+                            <div class="col-md-6 mb-md-0 mb-3 data-material d-flex flex-column align-items-center text-center d-none">
                                 <div class="mb-3">
                                     <label for="note" class="form-label"></label>
                                     <p class="form-label" id="materai_date"></p>
@@ -159,16 +159,16 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button class="btn btn-primary d-grid w-100 mb-2 kirim-invoice" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
+                        <button class="btn btn-primary d-grid w-100 mb-2 kirim-invoice d-none" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
                         </button>
-                        <a type="button" class="btn btn-label-secondary d-grid w-100 mb-2 disetujui" style="background-color: #4EC0D9; color : #fff;">Disetujui</a>
-                        <a target="_blank" href="{{url('invoice/print/')}}/{{$id}}" id="preview" class="btn btn-label-info d-grid w-100 mb-2">Download</a>
-                        <a target="_blank" href="{{url('invoice/edit/')}}/{{$id}}" id="edit" class="btn btn-warning d-grid w-100 mb-2 edit" style="display: none !important;">Edit</a>
-                        <button class="btn btn-primary d-grid w-100 mb-2 add-pay add-payment">
+                        <a type="button" class="btn btn-primary d-grid w-100 mb-2 disetujui d-none" style="color : #fff;"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-check ti-xs me-2"></i>Disetujui</span></a>
+                        <a target="_blank" href="{{url('invoice/print/')}}/{{$id}}" id="preview" class="btn btn-label-info d-grid w-100 mb-2 d-none">Download</a>
+                        <a target="_blank" href="{{url('invoice/edit/')}}/{{$id}}" id="edit" class="btn btn-primary d-grid w-100 mb-2 edit d-none"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-pencil ti-xs me-2"></i>Edit</span></a>
+                        <button class="btn btn-primary d-grid w-100 mb-2 add-pay add-payment d-none">
                             <span class="d-flex align-items-center justify-content-center text-nowrap">Add Payment</span>
                         </button>
-                        <a href="{{ url('invoice/list-invoice')}}" id="back" class="btn btn-label-danger d-grid w-100 mb-2">Kembali</a>
+                        <a href="{{ url('invoice/list-invoice')}}" id="back" class="btn btn-secondary d-grid w-100 mb-2">Kembali</a>
                     </div>
                 </div>
             </div>
@@ -279,7 +279,7 @@ $configData = Helper::appClasses();
                 icon: 'warning',
                 showCancelButton: true,
                 buttonsStyling: false,
-                confirmButtonText: "Ya, Kirim!",
+                confirmButtonText: "Ya, Setuju!",
                 cancelButtonText: "Batal",
                 customClass: {
                     confirmButton: "btn fw-bold btn-primary",
@@ -305,10 +305,9 @@ $configData = Helper::appClasses();
                         success: function(response) {
                             $('.indicator-progress').show();
                             $('.indicator-label').hide();
-
                             Swal.fire({
                                 title: 'Berhasil',
-                                text: 'Berhasil Merubah Status',
+                                text: 'Berhasil Menyetujui Invoice',
                                 icon: 'success',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
@@ -367,8 +366,8 @@ $configData = Helper::appClasses();
                 $("#grand_total").text(format(data.grand_total));
                 $("#invoice_due_date").text(data.invoice_due_date);
                 $("#term_and_conditions").text(data.term_and_conditions);
-                if (data.materai_name == null && account.level.id != 1) {
-                    $('.data-material').attr('style', 'display:none !important');
+                if (data.materai_name == null || account.level.id == 1) {
+                    $('.data-material').removeClass('d-none');
                 }
                 $("#materai_date").text(data.materai_date);
                 $("#materai_name").text(data.materai_name);
@@ -380,18 +379,18 @@ $configData = Helper::appClasses();
                     $("#materai-image").css("width", `200px`);
                     $("#materai-image").css("background-position", `center`);
                 }
-                if (data.status != 'Terkirim' || account.level.id != 10) {
-                    $('.add-payment').attr('style', 'display:none !important');
+                console.log(data.status);
+                if (data.status == 'Terkirim' && account.level.id == 10) {
+                    $('.add-payment').removeClass('d-none');
                 }
-                if (data.status != 'Disetujui BM' || account.level.id != 10) {
-                    $('.kirim-invoice').attr('style', 'display:none !important');
+                if (data.status == 'Disetujui BM' && account.level.id == 10) {
+                    $('.kirim-invoice').removeClass('d-none');
                 }
-                if (account.level.id != '2' || data.status == 'Disetujui KA') {
-                    $('.disetujui').attr('style', 'display:none !important');
+                if (account.level.id == '2' && data.status == 'Terbuat') {
+                    $('.disetujui').removeClass('d-none');
                 }
-
-                if (account.level.id == '1') {
-                    $('.edit').attr('style', 'display:block');
+                if ((account.level.id == '10' && data.status == 'Terbuat') || (data.status == 'Disetujui KA' && account.level.id == '1')) {
+                    $('.edit').removeClass('d-none');
                 }
                 Swal.close();
             },

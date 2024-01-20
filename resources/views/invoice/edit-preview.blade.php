@@ -267,7 +267,6 @@ $configData = Helper::appClasses();
                                 </div>`;
 
     function format(e) {
-        console.log(e);
         var nStr = e + '';
 
         nStr = nStr.replace(/\,/g, "");
@@ -283,7 +282,6 @@ $configData = Helper::appClasses();
 
 
     let data = JSON.parse(localStorage.getItem("edit-invoice"));
-    console.log(data);
     $(document).ready(function() {
         $("#invoice_number").val(data.invoice_number);
         $("#invoice_date").val(data.invoice_date);
@@ -325,7 +323,6 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
-                console.log(data);
                 $("#company").text(data.company);
                 $("#floor").text(data.floor);
                 $("#name_tenant").text(data.name);
@@ -343,7 +340,6 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
-                console.log(data);
                 $("#bank-name").text(data.name)
             },
             error: function(xhr, status, error) {
