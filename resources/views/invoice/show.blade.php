@@ -44,27 +44,27 @@ $configData = Helper::appClasses();
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">Tgl. Invoice</label>
-                                        <input type="text" class="form-control date" name="invoice_date" id="invoice_date" placeholder="" required />
+                                        <input type="text" class="form-control date" name="invoice_date" id="invoice_date" placeholder="" readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">No. Kontrak</label>
-                                        <input type="text" class="form-control" name="contract_number" id="contract_number" placeholder="" required />
+                                        <input type="text" class="form-control" name="contract_number" id="contract_number" placeholder="" readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control  date" name="contract_date" id="contract_date" placeholder="" required />
+                                        <input type="text" class="form-control  date" name="contract_date" id="contract_date" placeholder="" readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="col-md-6 mb-3 ">
                                         <label for="note" class="form-label fw-medium">No. Addendum</label>
-                                        <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" required />
+                                        <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control date" id="addendum_date" name="addendum_date" placeholder="" required />
+                                        <input type="text" class="form-control date" id="addendum_date" name="addendum_date" placeholder="" readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
