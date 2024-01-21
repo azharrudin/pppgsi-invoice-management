@@ -381,7 +381,7 @@ $configData = Helper::appClasses();
                     $("#materai-image").css("background-size", `cover`);
                     $("#materai-image").css("background-repeat", `no-repeat`);
                 }
-                if (data.status == 'Terkirim' && account.level.id == 10) {
+                if ((data.status == 'Terkirim' || data.status == 'Kurang Bayar') && account.level.id == 10) {
                     $('.add-payment').removeClass('d-none');
                 }
                 if (data.status == 'Disetujui BM' && account.level.id == 10) {

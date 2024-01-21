@@ -11,7 +11,7 @@ return $hasil_rupiah;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Surat Pesan</title>
+    <title>Invoice {{ $data->invoice_number }}</title>
     <link href="{{ public_path('assets/css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     {{-- <script src="{{ public_path('assets/js/html2pdf.bundle.js') }}"></script> --}}
 
