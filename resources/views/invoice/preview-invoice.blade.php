@@ -217,13 +217,13 @@ $configData = Helper::appClasses();
                                 <div class="mb-3">
                                     <label for="note" class="form-label">Tanda Tangan & Meterai
                                         (Opsional)</label>
-                                    <p class="form-label" id="materai_date">25 September 2023</p>
+                                    <p class="form-label" id="materai_date"></p>
                                 </div>
                                 <div class="mb-3">
                                     <div id="materai-image"></div>
                                 </div>
                                 <div class="mb-3">
-                                    <p class="form-label" id="materai_name">Dina - Manager Operasional</p>
+                                    <p class="form-label" id="materai_name"></p>
                                 </div>
                             </div>
                         </div>
