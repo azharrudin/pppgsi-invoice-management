@@ -255,45 +255,60 @@ $configData = Helper::appClasses();
         $(".btn-status").on("click", function() {
             let datas = {}
             datas.status = 'Disetujui KA';
-            $.ajax({
-                url: "{{ url('api/receipt/update-status') }}/"+ id,
-                type: "PATCH",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(datas),
-                beforeSend: function() {
-                    Swal.fire({
-                        title: '<h2>Loading...</h2>',
-                        html: sweet_loader + '<h5>Please Wait</h5>',
-                        showConfirmButton: false,
-                        allowOutsideClick: false,
-                        allowEscapeKey: false
-                    })
-                },
-                success: function(response) {
-                    Swal.fire({
-                        title: 'Berhasil',
-                        text: 'Berhasil Menyetujui Invoice',
-                        icon: 'success',
-                        customClass: {
-                            confirmButton: 'btn btn-primary'
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                icon: 'warning',
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Ya, Kirim!",
+                cancelButtonText: "Batal",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                    cancelButton: "btn fw-bold btn-active-light-primary"
+                }
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "{{ url('api/receipt/update-status') }}/"+ id,
+                        type: "PATCH",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(datas),
+                        beforeSend: function() {
+                            Swal.fire({
+                                title: '<h2>Loading...</h2>',
+                                html: sweet_loader + '<h5>Please Wait</h5>',
+                                showConfirmButton: false,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
+                            })
                         },
-                        buttonsStyling: false
-                    }).then((result) => {
-                        window.location.href = "/invoice/tanda-terima";
+                        success: function(response) {
+                            Swal.fire({
+                                title: 'Berhasil',
+                                text: 'Berhasil Menyetujui Invoice',
+                                icon: 'success',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            }).then((result) => {
+                                window.location.href = "/invoice/tanda-terima";
+                            });
+                            
+                        },
+                        error: function(errors) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: errors.responseJSON
+                                    .message,
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            })
+                        }
                     });
-                    
-                },
-                error: function(errors) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: errors.responseJSON
-                            .message,
-                        customClass: {
-                            confirmButton: 'btn btn-primary'
-                        },
-                        buttonsStyling: false
-                    })
                 }
             });
         })
