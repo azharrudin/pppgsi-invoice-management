@@ -226,7 +226,7 @@ $configData = Helper::appClasses();
                         $('.data-material').removeClass('d-none');
                     }
                     $('#signature_name').text(result.signature_name);
-                    $('#signature_date').text(moment(result.signature_date).format('DD MMMM YYYY'));
+                    $('#signature_date').text(result.signature_date ? moment(result.signature_date).format('DD MMMM YYYY'): '');
 
                     if(account.level.id == '2' && result.status == 'Terbuat'){
                         $('.disetujui').removeClass('d-none');
