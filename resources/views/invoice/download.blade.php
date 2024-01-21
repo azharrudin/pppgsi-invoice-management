@@ -76,7 +76,7 @@ return $hasil_rupiah;
                         <td rowspan="3" style="width: 10%;"><b>Kepada
                                 Yth:
                             </b></td>
-                        <td rowspan="3" style="width: 35%; border: 0.5px solid black; padding: 10px;"><b>
+                        <td rowspan="3" style="width: 35%; border: 0.5px solid black; padding: 10px;"><b style="font-size: 16px;">
                                 {{ $data->tenant->company }} <br>
                                 {{ $data->tenant->floor }} <br>
                                 <br>
@@ -90,7 +90,6 @@ return $hasil_rupiah;
                         </td>
                     </tr>
                     <tr>
-
                         <td style="border: none;"></td>
                         <td style="border: 0.5px solid black; padding: 10px;"><b> No. Kontrak:
                             <br> {{ $data->contract_number }}</b>
@@ -110,6 +109,7 @@ return $hasil_rupiah;
                 </tbody>
             </table>
         </div>
+        <br>
         <div class="row">
             <table class="table main-table" style="width: 100%;">
                 <thead>
@@ -128,7 +128,7 @@ return $hasil_rupiah;
                         <td style="padding:10px">{{ $p->description }}</td>
                         <td style="padding:10px">{{ rupiah($p->price) }}</td>
                         <td style="padding:10px">{{ $p->tax->rate }}%</td>
-                        <td style="padding:10px">{{ rupiah($p->total_price) }}</td>
+                        <td style="padding:10px;text-align:right;">{{ rupiah($p->total_price) }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -136,7 +136,7 @@ return $hasil_rupiah;
                     <tr>
                         <td class="text-right" colspan="4" style="padding:10px"><b>Total :</b>
                         </td>
-                        <td style="padding:10px"><b>{{ rupiah($data->grand_total) }}</b></td>
+                        <td style="padding:10px;text-align:right"><b>{{ rupiah($data->grand_total) }}</b></td>
                     </tr>
                     <tr>
                         <td colspan="5" style="padding:10px"><b>Terbilang: {{ $data->grand_total_spelled }}</b></td>
