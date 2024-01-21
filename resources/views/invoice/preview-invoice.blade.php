@@ -213,6 +213,8 @@ $configData = Helper::appClasses();
             $("#materai-image").css("height", `200px`);
             $("#materai-image").css("width", `200px`);
             $("#materai-image").css("background-position", `center`);
+            $("#materai-image").css("background-size", `cover`);
+            $("#materai-image").css("background-repeat", `no-repeat`);
         }
     });
 
