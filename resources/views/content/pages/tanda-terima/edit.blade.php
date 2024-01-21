@@ -373,7 +373,7 @@
                 let invoice = $('.select-invoice').val();
                 let tenant = $('.select-tenant').val();
                 let bank = $('.select-bank').val();
-                let date = $('.date').val();
+                let date = $('.date').val() ? $('.date').val() : null;
 
                 if (!$('.dz-thumbnail img[data-dz-thumbnail]').hasClass('prev-img')) {
                     console.log($('img[data-dz-thumbnail]').attr('src'));
