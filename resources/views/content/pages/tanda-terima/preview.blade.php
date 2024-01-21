@@ -231,7 +231,7 @@ $configData = Helper::appClasses();
                     if(account.level.id == '2' && result.status == 'Terbuat'){
                         $('.disetujui').removeClass('d-none');
                     }
-                    if(account.level.id == '1' || account.level.id == '10'){
+                    if((account.level.id == '1' && result.status == 'Disetujui KA') || account.level.id == '10'){
                         $('.edit').removeClass('d-none');
                     }
 

@@ -153,7 +153,7 @@ return $hasil_rupiah;
                     <td>
                         <div class="ttd" style="width: 250px; float: right;margin-top:10px">
                             <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
-                                {{ $data->signature_date ? date('d F Y', strtotime($data->signature_date)) : '' }}<br>
+                                {{ $data->signature_date ? date('d F Y', strtotime($data->signature_date)) : '' }}<br><br>
                                 <img src="{{ $data->signature_image }}" width="100px">
                             <p class="text-center" style="text-align:center;">
                                 <u>{{ $data->signature_name }}</u></b><br><span>Ka.
