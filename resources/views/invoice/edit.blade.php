@@ -355,7 +355,7 @@ $configData = Helper::appClasses();
             $("#addendum_number").val(dataLocal.addendum_number);
             $("#addendum_date").val(dataLocal.addendum_date);
             $("#grand_total_spelled").val(dataLocal.grand_total_spelled);
-            $(".grand_total").text(format(dataLocal.grand_total));
+            $(".grand_total").text('Rp. '+format(dataLocal.grand_total));
             $("#invoice_due_date").val(dataLocal.invoice_due_date);
             $("#term_and_conditions").val(dataLocal.term_and_conditions);
             $("#materai_date").val(dataLocal.materai_date);
@@ -563,7 +563,6 @@ $configData = Helper::appClasses();
                         let tax = parseInt(data);
                         tax = tax / 100;
                         let totalPrice = price * tax + price;
-                        // console.log(format(totalPrice));
                         $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
                         getTotal();
                     },
@@ -585,15 +584,12 @@ $configData = Helper::appClasses();
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(response) {
-                    console.log(response);
                     let data = response.data.rate;
-                    console.log($(this));
                     let total = 0;
                     let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
                     let tax = parseInt(data);
                     tax = tax / 100;
                     let totalPrice = price * tax + price;
-                    // console.log(format(totalPrice));
                     $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
                     getTotal();
                 },
