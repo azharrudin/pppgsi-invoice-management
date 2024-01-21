@@ -687,7 +687,6 @@ $configData = Helper::appClasses();
     })
 
     function getDataInvoice(id) {
-        console.log(id);
         $.ajax({
             url: "{{ url('api/invoice/') }}/" + id,
             type: "GET",
