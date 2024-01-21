@@ -402,7 +402,11 @@
                 datas.invoice_id = parseInt(invoice);
                 datas.tenant_id = parseInt(tenant);
                 datas.bank_id = parseInt(bank);
-                datas.status = 'Disetujui BM';
+                if(account.level.id == '1'){
+                    datas.status = "Disetujui BM";
+                }else{
+                    datas.status = "Terbuat";
+                }
                 datas.receipt_date = moment().format('YYYY-MM-DD');
                 if (!$('img[data-dz-thumbnail]').hasClass('prev-img')) {
                     datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
