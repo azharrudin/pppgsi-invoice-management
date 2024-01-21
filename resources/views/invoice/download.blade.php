@@ -165,7 +165,7 @@ return $hasil_rupiah;
                     <td>
                         <div class="ttd" style="width: max-content; text-align: center;">
                             <p style="display: block; text-align: center; padding: center; margin: 0;">Jakarta,
-                                {{ $data->materai_date ? date('d F Y', strtotime($data->materai_date)) : '' }}<br>
+                                {{ $data->materai_date ? date('d F Y', strtotime($data->materai_date)) : '' }}<br><br>
                                 <img src="{{ $data->materai_image }}" width="100px">
                             <p class="text-center">
                                 <u>{{ $data->materai_name }}</u></b><br><span>Ka.
