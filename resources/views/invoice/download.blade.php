@@ -148,7 +148,7 @@ return $hasil_rupiah;
         </div>
 
         <div class="row">
-            <table style="vertical-align: top; border-color: white;">
+            <table style="vertical-align: top; border-color: white; width:100%">
                 <tr>
                     <td>
                         <div style="border: 1px solid black; height : 155px; padding:10px; width:300px;">
@@ -163,8 +163,8 @@ return $hasil_rupiah;
                         </div>
                     </td>
                     <td>
-                        <div class="ttd" style="width: max-content; float: right;">
-                            <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
+                        <div class="ttd" style="width: max-content; text-align: center;">
+                            <p style="display: block; text-align: center; padding: center; margin: 0;">Jakarta,
                                 {{ $data->materai_date ? date('d F Y', strtotime($data->materai_date)) : '' }}<br>
                                 <img src="{{ $data->materai_image }}" width="100px">
                             <p class="text-center">
