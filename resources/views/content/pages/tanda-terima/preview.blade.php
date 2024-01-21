@@ -153,7 +153,7 @@ $configData = Helper::appClasses();
                     <button class="btn btn-primary d-grid w-100 mb-2 kirim-tanda-terima d-none" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
                         <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Tanda Terima</span>
                     </button>
-                    <button type="button" class="btn btn-primary  b  btn-status d-grid w-100 mb-2 disetujui d-none" style="color : #fff;"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-check ti-xs me-2"></i>Disetujui</span></button>
+                    <button type="button" class="btn btn-primary btn-status d-grid w-100 mb-2 disetujui d-none" style="color : #fff;"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-check ti-xs me-2"></i>Disetujui</span></button>
                     <a target="_blank" href="{{url('invoice/tanda-terima/print/')}}/{{$id}}" id="preview" class="btn btn-info d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-download ti-xs me-2"></i>Download</span></a>
                     <a target="_blank" href="{{url('invoice/tanda-terima/edit')}}/{{$id}}" id="edit" class="btn btn-warning d-grid w-100 mb-2 edit" style="display: none !important;">Edit</a>
                     <a href="{{ url('invoice/tanda-terima')}}" id="back" class="btn btn-secondary d-grid w-100 mb-2">Kembali</a>
@@ -185,8 +185,8 @@ $configData = Helper::appClasses();
         var id = urlSegments[idIndex];
 
         var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>`;
+                                <span class="sr-only">Loading...</span>
+                            </div>`;
 
         // function pengambil data
         getDataPreview(id);
@@ -228,7 +228,7 @@ $configData = Helper::appClasses();
                     $('#signature_name').text(result.signature_name);
                     $('#signature_date').text(result.signature_date);
 
-                    if(account.level.id == '2' || result.status == 'Terbuat'){
+                    if(account.level.id == '2' && result.status == 'Terbuat'){
                         $('.disetujui').removeClass('d-none');
                     }
                     if(account.level.id == '1'){
