@@ -122,7 +122,7 @@
                                 </span>
                             </div>
 
-                            <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
+                            <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center data-materai">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Tanda Tangan & Materai</label>
                                     <input type="text" class="form-control w-px-250 date" id="signature_date"
@@ -345,6 +345,9 @@
                         if(response.status != 'Disetujui BM'){
                             $('.kirim-tanda-terima').attr('style','display:none !important');
                             $('.add-payment').attr('style','display:none !important');
+                        }
+                        if(account.level.id != '1'){
+                            $('.data-materai').attr('style','display:none !important');
                         }
                         if(account.level.id != '1'){
                             $('.data-materai').attr('style','display:none !important');
