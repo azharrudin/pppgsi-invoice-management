@@ -355,7 +355,7 @@ $configData = Helper::appClasses();
             $("#addendum_number").val(dataLocal.addendum_number);
             $("#addendum_date").val(dataLocal.addendum_date);
             $("#grand_total_spelled").val(dataLocal.grand_total_spelled);
-            $(".grand_total").text('Rp. '+format(dataLocal.grand_total));
+            $(".grand_total").text(format(dataLocal.grand_total));
             $("#invoice_due_date").val(dataLocal.invoice_due_date);
             $("#term_and_conditions").val(dataLocal.term_and_conditions);
             $("#materai_date").val(dataLocal.materai_date);
@@ -381,7 +381,6 @@ $configData = Helper::appClasses();
                 thumbnailHeight: null,
                 init: function() {
                     if (dataLocal) {
-                        console.log('a');
                         let mockFile = {
                             dataURL: dataLocal.materai_image
                         };
