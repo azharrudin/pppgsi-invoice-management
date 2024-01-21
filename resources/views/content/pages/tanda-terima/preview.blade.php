@@ -154,8 +154,8 @@ $configData = Helper::appClasses();
                         <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Tanda Terima</span>
                     </button>
                     <button type="button" class="btn btn-primary btn-status d-grid w-100 mb-2 disetujui d-none" style="color : #fff;"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-check ti-xs me-2"></i>Disetujui</span></button>
+                    <a href="{{url('invoice/tanda-terima/edit')}}/{{$id}}" id="edit" class="btn btn-primary d-grid w-100 mb-2 edit"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-pencil ti-xs me-2"></i>Edit</span></a>
                     <a target="_blank" href="{{url('invoice/tanda-terima/print/')}}/{{$id}}" id="preview" class="btn btn-info d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-download ti-xs me-2"></i>Download</span></a>
-                    <a target="_blank" href="{{url('invoice/tanda-terima/edit')}}/{{$id}}" id="edit" class="btn btn-warning d-grid w-100 mb-2 edit" style="display: none !important;">Edit</a>
                     <a href="{{ url('invoice/tanda-terima')}}" id="back" class="btn btn-secondary d-grid w-100 mb-2">Kembali</a>
                 </div>
             </div>
@@ -231,7 +231,7 @@ $configData = Helper::appClasses();
                     if(account.level.id == '2' && result.status == 'Terbuat'){
                         $('.disetujui').removeClass('d-none');
                     }
-                    if(account.level.id == '1'){
+                    if(account.level.id == '1' || account.level.id == '10'){
                         $('.edit').removeClass('d-none');
                     }
 
@@ -285,7 +285,7 @@ $configData = Helper::appClasses();
                         success: function(response) {
                             Swal.fire({
                                 title: 'Berhasil',
-                                text: 'Berhasil Menyetujui Invoice',
+                                text: 'Berhasil Menyetujui Tanda Terima',
                                 icon: 'success',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'

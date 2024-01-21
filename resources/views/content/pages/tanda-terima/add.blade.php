@@ -33,14 +33,6 @@ $configData = Helper::appClasses();
                                     <dt class="col-sm-6 text-md-end ps-0">
 
                                     </dt>
-                                    {{-- <dd class="col-sm-6 d-flex justify-content-md-end pe-0 ps-0 ps-sm-2">
-                                            <div class="mb-3">
-                                                <label for="note" class="form-label fw-medium">No Tanda Terima:</label>
-                                                <input type="text" class="form-control w-px-150 qty" id="receipt_number"
-                                                    name="receipt_number" placeholder="" required disabled />
-                                                <div class="invalid-feedback">Tidak boleh kosong</div>
-                                            </div>
-                                        </dd> --}}
                                 </dl>
                             </div>
                         </div>

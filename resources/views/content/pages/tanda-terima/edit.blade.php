@@ -155,14 +155,14 @@
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button class="btn btn-primary d-grid w-100 mb-2 kirim-tanda-terima" data-bs-toggle="offcanvas"
+                        <button class="btn btn-primary d-grid w-100 mb-2 kirim-tanda-terima d-none" data-bs-toggle="offcanvas"
                             data-bs-target="#sendInvoiceOffcanvas">
                             <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                     class="ti ti-send ti-xs me-2"></i>Kirim Tanda Terima</span>
-                        </button>
-                        <a href="" class="btn btn-label-warning d-grid w-100 mb-2">Preview</a>
-                        <button type="button" class="btn btn-label-success btn-update d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" class="btn btn-label-danger btn-cancel d-grid w-100">Batal</button>
+                                </button>
+                        <button type="button" class="btn btn-primary btn-update d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="fa fa-save fa-xs me-2"></i>Simpan</span></button>
+                        {{-- <a href="" class="btn btn-success d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-eye ti-xs me-2"></i>Preview</span></a> --}}
+                        <button type="button" class="btn btn-secondary btn-cancel d-grid w-100">Batal</button>
                     </div>
                 </div>
             </div>

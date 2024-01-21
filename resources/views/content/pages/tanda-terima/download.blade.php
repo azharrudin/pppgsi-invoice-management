@@ -11,7 +11,7 @@ return $hasil_rupiah;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Surat Pesan</title>
+    <title>Tanda Terima</title>
     <link href="{{ public_path('assets/css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     {{-- <script src="{{ public_path('assets/js/html2pdf.bundle.js') }}"></script> --}}
 
@@ -79,7 +79,7 @@ return $hasil_rupiah;
         </div>
 
         <p style="margin: 0px;">Telah terima Pembayaran tunai/Cek/Giro</p>
-        <div class="row" style="width: 600px;">
+        <div class="row">
             <table class="table mt-2" style="width:100%; border-collapse:separate; border-spacing: 0 3px;">
                 <tbody class="mt-2" style=" text-align: left;">
                     <tr>
@@ -131,7 +131,7 @@ return $hasil_rupiah;
             </div>
         </div> -->
 
-        <div class="row">
+        <div class="row" style="margin-top:30px">
             <table style="vertical-align: top; border-color: white;">
                 <tr>
                     <td>
@@ -151,11 +151,11 @@ return $hasil_rupiah;
                         </p>
                     </td>
                     <td>
-                        <div class="ttd" style="width: 250px; float: right;">
+                        <div class="ttd" style="width: 250px; float: right;margin-top:10px">
                             <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
                                 {{ $data->signature_date ? date('d F Y', strtotime($data->signature_date)) : '' }}<br>
                                 <img src="{{ $data->signature_image }}" width="100px">
-                            <p class="text-center">
+                            <p class="text-center" style="text-align:center;">
                                 <u>{{ $data->signature_name }}</u></b><br><span>Ka.
                                     BM</span>
                             </p>
