@@ -236,7 +236,6 @@
             var levelId = account.level_id;
             var department = account.department.name;
             var nameUser = account.name;
-            console.log(levelId);
           
 
             if (levelId == 1) { // BM
@@ -475,7 +474,6 @@
             }
 
             function terbilang(bilangan) {
-                console.log(bilangan)
                 bilangan = String(bilangan);
                 let angka = new Array('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
                     '0');

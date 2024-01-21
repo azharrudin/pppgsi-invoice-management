@@ -155,8 +155,8 @@ class ReceiptController extends Controller
             $receiptExist = $this->CommonService->getDataById("App\Models\Receipt", $id);
             if (is_null($receiptExist)) throw new CustomException("Tanda terima tidak ditemukan", 404);
 
-            $validateReceipt = $this->ReceiptService->validateReceipt($request);
-            if ($validateReceipt != "") throw new CustomException($validateReceipt, 400);
+            // $validateReceipt = $this->ReceiptService->validateReceipt($request);
+            // if ($validateReceipt != "") throw new CustomException($validateReceipt, 400);
 
             Receipt::findOrFail($id)->update($request->all());
             $this->InvoiceService->updateInvoiceStatus($request->input("invoice_id"));
