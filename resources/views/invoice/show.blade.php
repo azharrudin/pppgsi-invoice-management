@@ -77,7 +77,7 @@ $configData = Helper::appClasses();
                                     <thead>
                                         <tr>
                                             <th>Uraian</th>
-                                            <th>Keterangan</th>
+                                            <th width="40%">Keterangan</th>
                                             <th>Dasar Pengenaan Pajak</th>
                                             <th>Pajak</th>
                                             <th>Total (Rp.).</th>
@@ -87,10 +87,10 @@ $configData = Helper::appClasses();
 
                                         <tr>
                                             <td colspan="2"></td>
-                                            <td class="">
+                                            <td colspan="2">
                                                 <p class="fw-bold">Total:</p>
                                             </td>
-                                            <td colspan="2">
+                                            <td colspan="2" style="text-align: right;">
                                                 <p id="grand_total" class="fw-bold"></p>
                                             </td>
                                         </tr>
@@ -363,7 +363,7 @@ $configData = Helper::appClasses();
                 $("#addendum_number").val(data.addendum_number);
                 $("#addendum_date").val(data.addendum_date);
                 $("#grand_total_spelled").text(data.grand_total_spelled);
-                $("#grand_total").text(format(data.grand_total));
+                $("#grand_total").text('Rp. '+format(data.grand_total));
                 $("#invoice_due_date").text(data.invoice_due_date);
                 $("#term_and_conditions").text(data.term_and_conditions);
                 if (data.materai_name != null || account.level.id == 1) {
@@ -461,7 +461,7 @@ $configData = Helper::appClasses();
                         <td>` + details[i].description + `</td>
                         <td>` + format(details[i].price) + `</td>
                         <td>` + format(details[i].tax.name) + `</td>
-                        <td>` + format(details[i].total_price) + `</td>
+                        <td style="text-align:right;">Rp. ` + format(details[i].total_price) + `</td>
                     </tr>
             `;
             getDetail = getDetail + tem;

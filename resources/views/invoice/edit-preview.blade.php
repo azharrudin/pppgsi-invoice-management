@@ -71,84 +71,6 @@ $configData = Helper::appClasses();
                             </div>
                         </div>
 
-                        <!-- {{-- Repeater --}}
-                        <div class="repeater d-none">
-                            <div class="" data-repeater-list="group-a">
-                                <div class="row-mg">
-                                    <div class="col-12 d-flex align-items-center justify-content-between">
-                                        <div class="col-sm-2 mb-3 mx-2">
-                                            <label for="note" class="form-label fw-medium">Uraian</label>
-                                            <input type="text" name="uraian" class="form-control w-px-150 row-input" placeholder="" name="item[]" required />
-                                        </div>
-                                        <div class="col-sm-2 mb-3 mx-2">
-                                            <label for="note" class="form-label fw-medium">Keterangan</label>
-                                            <input type="text" class="form-control w-px-150 row-input" placeholder="" name="description[]" required />
-                                        </div>
-                                        <div class="col-sm-2 mb-3 mx-2">
-                                            <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                                            <input type="text" class="form-control w-px-150 row-input price" placeholder="" name="price[]" required />
-                                        </div>
-                                        <div class="col-sm-1 mb-3 mx-2">
-                                            <label for="note" class="form-label fw-medium">Pajak</label>
-                                            <input type="text" class="form-control w-150 row-input tax" placeholder="" name="tax[]" required />
-                                        </div>
-                                        <div class="col-sm-2 mb-3 mx-2">
-                                            <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                                            <input type="text" class="form-control w-px-150 row-input total_price" placeholder="" name="total_price[]" disabled />
-                                        </div>
-                                        <a class="mb-3 mx-2 mt-3 btn-remove-mg" role="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                                                <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
-                                                <path d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z" fill="#FF4747" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row pb-4">
-                                <div class="col-sm-3 px-3">
-                                    <button type="button" class="btn btn-primary waves-effect waves-light w-px-150 btn-add-row-mg">Tambah
-                                        Baris</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- Divider --}}
-                        <div class="px-5 d-none">
-                            <hr class="my-3 mx-n5">
-                        </div>
-
-                        {{-- Total --}}
-                        <div class="col-md-12 d-flex float-end px-5 mb-5 d-none">
-                            <div class="col-6"></div>
-                            <div class="col-6">
-                                {{-- Total --}}
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p>Total</p>
-                                    </div>
-                                    <div>
-                                        <p class="grand_total">0.00</p>
-                                    </div>
-                                </div>
-                                {{-- Divider --}}
-                                <div>
-                                    <hr class="m-0 mx-n7">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 mb-5 d-none">
-                            <div class="col-md-12 mb-2">
-                                <label for="note" class="form-label fw-medium">Terbilang</label>
-                                <input type="text" class="form-control w-full terbilang" id="grand_total_spelled" name="grand_total_spelled" placeholder="Terbilang" disabled />
-                            </div>
-                            <div class="col-md-8 d-flex align-items-center">
-                                <label for="note" class="form-label fw-medium me-2">Jatuh Tempo Tanggal :</label>
-                                <input type="text" class="form-control w-px-250 date" placeholder="Jatuh Tanggal Tempo" id="invoice_due_date" name="invoice_due_date" />
-                            </div>
-                        </div> -->
                         <div class="row my-3 form-label">
                             <div class="table-responsive">
                                 <table class="table">
@@ -165,11 +87,11 @@ $configData = Helper::appClasses();
 
                                         <tr>
                                             <td colspan="2"></td>
-                                            <td class="">
-                                                <p class="">Total:</p>
+                                            <td colspan="2">
+                                                <p class="" style="font-weight: bold;">Total:</p>
                                             </td>
                                             <td colspan="2">
-                                                <p id="grand_total"></p>
+                                                <p id="grand_total" style="font-weight: bold"></p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -217,13 +139,13 @@ $configData = Helper::appClasses();
                                 <div class="mb-3">
                                     <label for="note" class="form-label">Tanda Tangan & Meterai
                                         (Opsional)</label>
-                                    <p class="form-label" id="materai_date">25 September 2023</p>
+                                    <p class="form-label" id="materai_date"></p>
                                 </div>
                                 <div class="mb-3">
                                     <div id="materai-image"></div>
                                 </div>
                                 <div class="mb-3">
-                                    <p class="form-label" id="materai_name">Dina - Manager Operasional</p>
+                                    <p class="form-label" id="materai_name"></p>
                                 </div>
                             </div>
                         </div>
@@ -290,7 +212,7 @@ $configData = Helper::appClasses();
         $("#addendum_number").val(data.addendum_number);
         $("#addendum_date").val(data.addendum_date);
         $("#grand_total_spelled").text(data.grand_total_spelled);
-        $("#grand_total").text(format(data.grand_total));
+        $("#grand_total").text('Rp. ' +format(data.grand_total));
         $("#invoice_due_date").text(data.invoice_due_date);
         $("#term_and_conditions").text(data.term_and_conditions);
         $("#materai_date").text(data.materai_date);
@@ -358,7 +280,7 @@ $configData = Helper::appClasses();
                         <td class="text-nowrap">` + details[i].description + `</td>
                         <td>` + format(details[i].price) + `</td>
                         <td>` + format(details[i].tax_id) + `</td>
-                        <td>` + format(details[i].total_price) + `</td>
+                        <td style="font-weight:bold">Rp. ` + format(details[i].total_price) + `</td>
                     </tr>
             `;
             getDetail = getDetail + tem;
