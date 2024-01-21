@@ -514,7 +514,6 @@ $configData = Helper::appClasses();
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function(response) {
-                        console.log(response);
                         let data = response.data.rate;
                         let total = 0;
                         let tax = parseInt(data);
@@ -1010,7 +1009,7 @@ $configData = Helper::appClasses();
                         </div>
                         <div class="col-md-2 px-1-custom">
                             <label for="note" class="form-label fw-medium">DPP</label>
-                            <input type="text" class="form-control row-input price" placeholder="" name="price[]" required value="` + details[i].price + `"/>
+                            <input type="text" class="form-control row-input price" placeholder="" name="price[]" required value="` + details[i].price.toLocaleString() + `"/>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-2 px-1-custom">
@@ -1020,7 +1019,7 @@ $configData = Helper::appClasses();
                         </div>
                         <div class="col-md-2 px-1-custom">
                             <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                            <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled value="` + details[i].total_price + `"/>
+                            <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled value="` + details[i].total_price.toLocaleString()+ `"/>
                         </div>
                         <div class="col-md-1 px-1-custom">
                             <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
@@ -1031,14 +1030,12 @@ $configData = Helper::appClasses();
                 </div>`;
                 getDetail = getDetail + temp;
                 $.ajax({
-                    url: "{{ url('api/tax') }}"+ details[i].tax_id,
+                    url: "{{ url('api/tax') }}/"+ details[i].tax_id,
                     type: "GET",
                     success: function(response) {
-
                         let data = response.data;
                         let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
                         $('#tax-' + i).prepend(tem);
-                        console.log();
                     },
                     error: function(xhr, status, error) {
                         console.log(error);
