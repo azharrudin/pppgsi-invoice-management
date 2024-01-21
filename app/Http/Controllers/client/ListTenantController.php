@@ -42,7 +42,7 @@ class ListTenantController extends Controller
         if ($request->page == null) {
             $request->page = 1;
         }
-        $apiRequest = Http::get('/api/tenant', [
+        $apiRequest = Http::get(env('BASE_URL_API') .'/api/tenant', [
             'per_page' => $request->length,
             'page' => $request->page,
             'order' => 'id',
