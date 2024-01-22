@@ -212,7 +212,7 @@ $configData = Helper::appClasses();
                     $("#receipt_number").val(result.receipt_number);
                     $('#invoice').text(result.invoice.invoice_number);
                     $('#check_number').text(result.check_number);
-                    $('#bank').text(result.bank.name);
+                    $('#bank').text(result.bank?.name);
                     $('#tenant').text(result.tenant.company);
                     $('#grand_total').text(result.grand_total.toLocaleString('en-EN'));
                     $('#paid').text(result.paid.toLocaleString('en-EN'));
