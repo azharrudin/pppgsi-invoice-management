@@ -81,31 +81,9 @@ $configData = Helper::appClasses();
 
                         <div class="py-3">
                             <div class="card academy-content shadow-none border p-3">
-                                <div class="repeater">
-                                    <div class="" data-repeater-list="group-a">
-                                        <div class="repeater-wrapper " data-repeater-item>
-                                            <div class="row mb-3">
-                                                <div class="col-4">
-                                                    <label for="note" class="form-label fw-medium">Jenis Masalah
-                                                        Kerusakan</label>
-                                                    <input type="text" class="form-control" id="category" name="category" placeholder="Jenis Masalah Kerusakan" required />
-                                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <label for="note" class="form-label fw-medium">Lokasi</label>
-                                                    <input type="text" class="form-control" id="location" name="location" placeholder="Lokasi" required />
-                                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                                </div>
-                                                <div class="col-3">
-                                                    <label for="note" class="form-label fw-medium">Jumlah</label>
-                                                    <input type="text" class="form-control qty money" id="total" name="total" placeholder="Jumlah" required />
-                                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                                </div>
-                                                <a class="mb-3 mx-2 mt-4 btn btn-primary text-white" style="width: 10px; height: 38px" role="button" data-repeater-delete>
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </div>
-                                        </div>
+                                <div class="repeater px-3">
+                                    <div class="" id="details">
+
                                     </div>
 
                                     <div class="row pb-4">
@@ -196,7 +174,7 @@ $configData = Helper::appClasses();
                 <div class="card mb-4">
                     <div class="card-body">
                         <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
+                        {{-- <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button> --}}
                         <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
                     </div>
                 </div>

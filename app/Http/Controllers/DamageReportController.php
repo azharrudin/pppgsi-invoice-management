@@ -100,17 +100,17 @@ class DamageReportController extends Controller
                 }
             }
 
-            if (!is_null($request->input("signatures"))) {
-                foreach ($request->input('signatures') as $signature) {
-                    DamageReportSignature::create([
-                        'damage_report_id' => $damageReport->id,
-                        'type' => $signature['type'],
-                        'name' => $signature['name'],
-                        'signature' => $signature['signature'],
-                        'date' => $signature['date'],
-                    ]);
-                }
-            }
+            // if (!is_null($request->input("signatures"))) {
+            //     foreach ($request->input('signatures') as $signature) {
+            //         DamageReportSignature::create([
+            //             'damage_report_id' => $damageReport->id,
+            //             'type' => $signature['type'],
+            //             'name' => $signature['name'],
+            //             'signature' => $signature['signature'],
+            //             'date' => $signature['date'],
+            //         ]);
+            //     }
+            // }
 
             DB::commit();
             $getDamageReport = DamageReport::with("damageReportDetails")->with("damageReportSignatures")->with("ticket")->where("id", $damageReport->id)->where("deleted_at", null)->first();
