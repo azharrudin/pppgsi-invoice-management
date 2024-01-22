@@ -140,8 +140,8 @@ $configData = Helper::appClasses();
             </div>
         </form>
         @endsection
-        @section('page-script') <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}">
-        </script>
+        @section('page-script')
+        <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
         <script>
             "use strict";
             $.ajaxSetup({

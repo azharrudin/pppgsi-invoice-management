@@ -53,7 +53,7 @@ class PurchaseOrderController extends Controller
                 });
             }
             $getPurchaseOrder = $purchaseOrderQuery
-            ->select("purchase_order_number", "vendor_id", "tenant_id", "about", "grand_total", "purchase_order_date", "status")
+            ->select("id,purchase_order_number", "vendor_id", "tenant_id", "about", "grand_total", "purchase_order_date", "status")
             ->orderBy($order, $sort)
             ->paginate($perPage);
             $totalCount = $getPurchaseOrder->total();

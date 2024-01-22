@@ -144,9 +144,10 @@ Route::group(['middleware' => 'cekauth'], function () {
 
     // Vendor
     Route::prefix('vendor')->group(function () {
-        Route::prefix('/list-tagihan-vendor')->group(function () {
-            Route::get('/', [VendorController::class, 'index'])->name('pages-list-tagihan-vendor');
-        });
+        Route::get('/list-tagihan-vendor', [VendorController::class, 'index'])->name('pages-list-tagihan-vendor');
+        Route::get('/show-tagihan-vendor/{id}', [VendorController::class, 'show'])->name('pages-list-tagihan-vendor');
+        Route::get('/add-tagihan-vendor', [VendorController::class, 'index'])->name('pages-list-tagihan-vendor');
+        Route::get('/data-tagihan-vendor', [VendorController::class, 'datatable'])->name('data-tagihan-vendor');
     });
 
     // Client
