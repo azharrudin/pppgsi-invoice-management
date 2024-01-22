@@ -63,6 +63,9 @@ $configData = Helper::appClasses();
 <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script>
     "use strict";
+    var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>`;
     let account = {!! json_encode(session('data')) !!}
         let levelId = account.level.id;
         let buttonAdd = [];

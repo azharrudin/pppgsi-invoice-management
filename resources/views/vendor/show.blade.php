@@ -140,31 +140,34 @@ $configData = Helper::appClasses();
                             <label for="note" class="form-label fw-medium">Syarat & Ketentuan</label>
                             <div class="row">
                                 <div class="col-xl-6 col-md-12 col-sm-7 col-12">
-                                    <table style="width:100% form-label fw-medium">
-                                        <tbody>
-                                            <tr>
-                                                <td>Delivery</td>
-                                                <td style="width:10%">:</td>
-                                                <td>$12,110.55</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Cara Pembayaran</td>
-                                                <td style="width:10%">:</td>
-                                                <td>$12,110.55</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Kelengkapan tagihan</td>
-                                                <td style="width:10%">:</td>
-                                                <td>$12,110.55</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Alamat Pengiriman</td>
-                                                <td style="width:10%">:</td>
-                                                <td>$12,110.55</td>
-                                            </tr>
+                                    <div class="table-responsive">
+                                        <table style="width:100% form-label fw-medium" class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Delivery</td>
+                                                    <td style="width:10%">:</td>
+                                                    <td>$12,110.55</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Cara Pembayaran</td>
+                                                    <td style="width:10%">:</td>
+                                                    <td>$12,110.55</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Kelengkapan tagihan</td>
+                                                    <td style="width:10%">:</td>
+                                                    <td>$12,110.55</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Alamat Pengiriman</td>
+                                                    <td style="width:10%">:</td>
+                                                    <td>$12,110.55</td>
+                                                </tr>
 
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

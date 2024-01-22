@@ -53,7 +53,7 @@ class PurchaseOrderController extends Controller
                 });
             }
             $getPurchaseOrder = $purchaseOrderQuery
-            ->select("id,purchase_order_number", "vendor_id", "tenant_id", "about", "grand_total", "purchase_order_date", "status")
+            ->select("id","purchase_order_number", "vendor_id", "tenant_id", "about", "grand_total", "purchase_order_date", "status")
             ->orderBy($order, $sort)
             ->paginate($perPage);
             $totalCount = $getPurchaseOrder->total();
@@ -67,7 +67,8 @@ class PurchaseOrderController extends Controller
                 "size" => $totalCount,
                 "pages" => ceil($totalCount/$perPage)
             ];
-        } catch (\Throwable $e) {
+        } catch (\Exception $e) {
+            dd($e);
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
