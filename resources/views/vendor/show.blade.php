@@ -20,7 +20,7 @@ $configData = Helper::appClasses();
         <div class="col-lg-9 col-12 mb-lg-0 mb-3">
             <div class="card invoice-preview-card">
                 <div class="card-body">
-                    <div style="background-image: url('{{asset('assets/img/header.png')}}'); height : 150px; background-size: contain; background-repeat: no-repeat;">
+                    <div style="background-image: url('{{asset('assets/img/header.png')}}'); height : 150px; background-size: contain; background-repeat: no-repeat;" class="set-back">
                     </div>
 
                     <h2 class="mx-auto text-center"><b>PURCHASE ORDER</b></h2>
@@ -31,7 +31,7 @@ $configData = Helper::appClasses();
                                     <span class="fw-normal">Nomor PO</span>
                                 </dt>
                                 <dt class="col-sm-8 ">
-                                    <span class="fw-normal">014/bK-LIFT/BM-PO/II/2019</span>
+                                    <span class="fw-normal" id="purchase_order_number"></span>
                                 </dt>
                             </dl>
                             <dl class="row mb-2 d-flex">
@@ -39,7 +39,7 @@ $configData = Helper::appClasses();
                                     <span class="fw-normal">Tanggal</span>
                                 </dt>
                                 <dt class="col-sm-8 ">
-                                    <span class="fw-normal">22 Februari 2019</span>
+                                    <span class="fw-normal" id="purchase_order_date"></span>
                                 </dt>
                             </dl>
                             <dl class="row mb-2 d-flex mb-4">
@@ -47,17 +47,14 @@ $configData = Helper::appClasses();
                                     <span class="fw-normal">Perihal</span>
                                 </dt>
                                 <dt class="col-sm-8 ">
-                                    <span class="fw-normal">Pengadaan Pulley Car & Pulley CWT (unit Lift No. 8)</span>
+                                    <span class="fw-normal" id="about"></span>
                                 </dt>
                             </dl>
                             <div class="mb-3">
                                 <div class="form-label">
-                                    PT. Focus Media Indonesia <br>
-                                    The Capitil Building Lt.1 <br>
-                                    Jl. Letjen S. Parman Kav. 73 Slipi <br>
-                                    Jakarta Barat <br> <br>
-
-                                    Up. Bp. Chrissandy Dave Winata
+                                    <span id="name_tenant"></span><br>
+                                    <span id="address"></span><br><br>
+                                    <span id="floor"></span><br>
                                 </div>
                             </div>
                         </div>
@@ -65,8 +62,8 @@ $configData = Helper::appClasses();
 
                         </div>
                     </div>
-                    <div class="row px-3 mb-5">
-                        <span class="form-label">Dengan hormat, Sehubungan dengan hasil negosiasi surat No. : 145239092 tanggal 06 februari 2019 perihal penawaran pengadaan sparepart lift, maka dengan ini kami mengajukan nama barang, sbb :</span>
+                    <div class="row px-3 mb-3">
+                        <span class="form-label" id="note"></span>
                     </div>
 
                     <div class="row px-3 mb-3">
@@ -131,45 +128,15 @@ $configData = Helper::appClasses();
                         <div class="col-12">
                             <label for="note" class="form-label fw-medium">Terbilang</label>
                             <br>
-                            <span class="form-label ">Seratus empat puluh tiga juta rupiah</span>
+                            <span class="form-label" id="grand_total_spelled"></span>
                             <hr>
                         </div>
                     </div>
                     <div class="row px-3 mb-3">
                         <div class="col-12">
                             <label for="note" class="form-label fw-medium">Syarat & Ketentuan</label>
-                            <div class="row">
-                                <div class="col-xl-6 col-md-12 col-sm-7 col-12">
-                                    <div class="table-responsive">
-                                        <table style="width:100% form-label fw-medium" class="table">
-                                            <tbody>
-                                                <tr>
-                                                    <td>Delivery</td>
-                                                    <td style="width:10%">:</td>
-                                                    <td>$12,110.55</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Cara Pembayaran</td>
-                                                    <td style="width:10%">:</td>
-                                                    <td>$12,110.55</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Kelengkapan tagihan</td>
-                                                    <td style="width:10%">:</td>
-                                                    <td>$12,110.55</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Alamat Pengiriman</td>
-                                                    <td style="width:10%">:</td>
-                                                    <td>$12,110.55</td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                </div>
-                            </div>
+                            <br>
+                            <span class="form-label" id="term_and_conditions"></span>
                         </div>
                     </div>
 
@@ -182,12 +149,11 @@ $configData = Helper::appClasses();
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <img src="" alt="">
+                                <img id="signatture" src="" alt="">
                             </div>
                             <div class="mb-3">
-                                <div class="form-label">
-                                    Dina - Manager Operasional
-                                </div>
+                                <span class="form-label" id="signature_name">
+                                </span>
                             </div>
 
                         </div>
@@ -218,10 +184,8 @@ $configData = Helper::appClasses();
                         <div class="document">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">Pilih Document</label>
-                                <select name="" id="" class="form-control">
-                                    <option value="">Pilih</option>
-                                </select>
-                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                                <input type="text" name="document[]" id="" class="form-control">
+
                             </div>
                             <div class="mb-3">
                                 <input type="file" class="form-control" placeholder="Pilih Berkas">
@@ -242,25 +206,120 @@ $configData = Helper::appClasses();
 @section('page-script')
 <script src="{{asset('assets/vendor/libs/dropzone/dropzone.js')}}"></script>
 <script src="{{asset('assets/js/forms-file-upload.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
 <script>
-    $(document).ready(function() {
-        $('.repeater').repeater({
-
-        })
+    let account = {!! json_encode(session('data')) !!}
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
-</script>
-<script>
+
+    var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>`;
+    var nomorInvoice;
+    var id;
+    $(document).ready(function() {
+        var urlSegments = window.location.pathname.split('/');
+        var idIndex = urlSegments.indexOf('show-tagihan-vendor') + 1;
+        id = urlSegments[idIndex];
+        getDataTagihanVendor(id);
+    });
+
+    function getVendor(id) {
+        $.ajax({
+            url: "{{url('api/vendor')}}/" + id,
+            type: "GET",
+            success: function(response) {
+                let data = response.data;
+                console.log(data);
+                $("#floor").text(data.floor);
+                $("#address").text(data.address);
+                $("#name_tenant").text(data.name);
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function tglIndo(date) {
+        // Parsing tanggal
+        var tanggalObj = new Date(date);
+
+        // Daftar nama bulan dalam bahasa Indonesia
+        var namaBulan = [
+            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        ];
+
+        // Mendapatkan tahun, bulan, dan hari
+        var tahun = tanggalObj.getFullYear();
+        var bulan = namaBulan[tanggalObj.getMonth()];
+        var hari = tanggalObj.getDate();
+
+        // Format tanggal dalam "d MMMM yyyy" (contoh: 7 Januari 2024)
+        var tanggalFormatted = hari + ' ' + bulan + ' ' + tahun;
+        return tanggalFormatted;
+    }
+
+    function getDataTagihanVendor(id) {
+        $.ajax({
+            url: "{{url('api/purchase-order')}}/" + id,
+            type: "GET",
+            dataType: "json",
+            beforeSend: function() {
+                Swal.fire({
+                    title: '<h2>Loading...</h2>',
+                    html: sweet_loader + '<h5>Please Wait</h5>',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                });
+            },
+            success: function(res) {
+                let data = res.data;
+                console.log(data);
+                id = data.id;
+                nomorInvoice = data.invoice_number;
+                $("#purchase_order_number").text(data.purchase_order_number);
+                $("#purchase_order_date").text(tglIndo(data.purchase_order_date));
+                $("#about").text(data.about);
+                $("#note").text(data.note);
+                $("#grand_total").val(data.grand_total);
+                $("#tax").val(data.tax);
+                $("#subtotal").val(data.subtotal);
+                $("#grand_total_spelled").text(data.grand_total_spelled);
+                $("#term_and_conditions").text(data.term_and_conditions);
+                $("#signature_name").text(data.signature_name);
+                getVendor(data.vendor_id);
+                if (data.signature) {
+                    $("#signatture").css('background-img', 'black');
+                    $("#signatture").css("background-image", `url('` + data.signature + `')`);
+                    $("#signatture").css("height", `200px`);
+                    $("#signatture").css("width", `200px`);
+                    $("#signatture").css("background-position", `center`);
+                    $("#signatture").css("background-size", `cover`);
+                    $("#signatture").css("background-repeat", `no-repeat`);
+                }
+                Swal.close();
+            },
+            error: function(errors) {
+                console.log(errors);
+            }
+        });
+    }
+
+
     $(document).on('click', '.add-doc', function() {
         let documents = $('.documents');
         let newRow = `
         <div class="document">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">Pilih Document</label>
-                                <select name="" id="" class="form-control">
-                                    <option value="">Pilih</option>
-                                </select>
-                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                                <input type="text" name="document[]" id="" class="form-control">
                             </div>
                             <div class="mb-3">
                                 <input type="file" class="form-control" placeholder="Pilih Berkas">
