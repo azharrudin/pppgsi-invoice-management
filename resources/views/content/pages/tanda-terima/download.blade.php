@@ -156,8 +156,7 @@ return $hasil_rupiah;
                                 {{ $data->signature_date ? date('d F Y', strtotime($data->signature_date)) : '' }}<br><br>
                                 <img src="{{ $data->signature_image }}" width="100px">
                             <p class="text-center" style="text-align:center;">
-                                <u>{{ $data->signature_name }}</u></b><br><span>Ka.
-                                    BM</span>
+                                <u>{{ $data->signature_name }}</u></b><br><span>Building Manager</span>
                             </p>
                             </p>
 

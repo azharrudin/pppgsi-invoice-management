@@ -140,10 +140,6 @@
                                     <input type="text" class="form-control w-px-250 " id="signature_name"
                                         name="signature_name" placeholder="Nama" />
                                 </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control w-px-250 " id="jabatan"
-                                        name="jabatan" placeholder="Jabatan" value="Kepala BM" />
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -333,7 +329,7 @@
                                 .invoice_id)
                             .trigger("change");
                         $(".select-bank").empty().append('<option value="' + response.bank_id +
-                                '">' + response.bank.name + '</option>').val(response.bank_id)
+                                '">' + response.bank?.name + '</option>').val(response.bank_id)
                             .trigger("change");
                         if (response.signature_image != '') {
                             $('.prev-img').attr('src', response.signature_image);
