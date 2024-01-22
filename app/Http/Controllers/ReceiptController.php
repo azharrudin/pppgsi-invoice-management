@@ -302,6 +302,32 @@ class ReceiptController extends Controller
             Receipt::findOrFail($id)->update($dataPayload);
 
             DB::commit();
+
+            if($request->input("status") == 'Terkirim'){
+                $receipt = Receipt::where('id', $id)->first();
+                $hariIni = \Carbon\Carbon::now()->locale('id');
+                $bulan = $hariIni->monthName;
+                $tahun = $hariIni->format('Y');
+    
+                $dataEmail["tenantName"] = $receipt->tenant->name;
+                $dataEmail["month"] = $bulan;
+                $dataEmail["year"] = $tahun;
+                $dataEmail["total"] = $receipt->grand_total;
+                $dataEmail["terbilang"] = $receipt->grand_total_spelled;
+    
+                $apiRequest = Http::get(env('BASE_URL_API') . '/api/receipt/' . $id);
+                $response = json_decode($apiRequest->getBody());
+                $data = $response->data;
+    
+                $pdf = PDF::loadView('content.pages.tanda-terima.download', ['data' => $data]);
+                $to = $receipt->tenant->email;
+    
+                Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $pdf) {
+                    $message->to($to)
+                        ->subject('Tanda Terima')
+                        ->attachData($pdf->output(), "Tanda Terima.pdf");
+                });
+            }
             $getReceipt = Receipt::with("invoice")
                 ->with("tenant")
                 ->with("bank")
