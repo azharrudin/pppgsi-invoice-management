@@ -50,6 +50,9 @@ $configData = Helper::appClasses();
                                 <input class="form-control" type="file" name="attachment" id="attachment" accept="image/png, image/gif, image/jpeg" placeholder="Pilih Berkas" alt="Pilih Berkas" multiple required>
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
+                            <div class="row d-flex  align-items-center fw-bold fs-5 mb-3 gallery">
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -293,6 +296,7 @@ $configData = Helper::appClasses();
                     $("#ticket_title").val(data.ticket_title);
                     $("#ticket_body").val(data.ticket_body);
                     getTenant(data.tenant_id);
+                    getImage(data.ticket_attachments);
 
                     if (files) {
                         $('#attachment').removeAttr("required");
@@ -321,8 +325,20 @@ $configData = Helper::appClasses();
                 }
             });
         }
-
-
     });
+
+    function getImage(images) {
+        let temp = '';
+        for (let i = 0; i < images.length; i++) {
+            temp += `
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light">
+                    <img src="${images[i].attachment}"  class="w-100"/>
+                </div>
+            </div>
+            `
+        }
+        $('.gallery').append(temp);
+    }
 </script>
 @endsection

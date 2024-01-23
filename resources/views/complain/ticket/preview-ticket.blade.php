@@ -87,8 +87,7 @@ $configData = Helper::appClasses();
                             </tr>
                         </table>
                     </div>
-                    <div class="d-flex flex-wrap fw-bold fs-5 mb-3 gallery">
-
+                    <div class="row d-flex  align-items-center fw-bold fs-5 mb-3 gallery">
                     </div>
                     <div class="px-3">
                         <button type="button" class="btn btn-primary waves-effect waves-light">Download Semua Lampiran</button>
@@ -205,7 +204,13 @@ $configData = Helper::appClasses();
         console.log(images.length);
         let temp = '';
         for (let i = 0; i < images.length; i++) {
-            temp += `<img class=" my-2 object-fit-cover" style="width: 250px; height: 250px;" src="${images[i]}" alt="">`
+            temp += `
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light">
+                    <img src="${images[i]}" class="w-100"/>
+                </div>
+            </div>
+            `
         }
         $('.gallery').append(temp);
     }

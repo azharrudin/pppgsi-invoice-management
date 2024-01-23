@@ -81,7 +81,7 @@ $configData = Helper::appClasses();
                                 </div>
 
                                 <hr class="my-3">
-                                <div class="row  text-center mt-4">
+                                <!-- <div class="row  text-center mt-4">
                                     <div class="col-md-4 signatures">
                                         <div class="mb-3">
                                             <input type="text" class="form-control add" placeholder="KA. Unit Pelayanan" style="text-align:center;" id="type" name="type" required />
@@ -145,7 +145,7 @@ $configData = Helper::appClasses();
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

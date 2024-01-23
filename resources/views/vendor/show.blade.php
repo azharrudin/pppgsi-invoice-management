@@ -66,7 +66,7 @@ $configData = Helper::appClasses();
                         <span class="form-label" id="note"></span>
                     </div>
 
-                    <div class="row px-3 mb-3">
+                    <div class="row px-3 mb-3 ">
                         <div class="table-responsive border-top">
                             <table class="table m-0">
                                 <thead>
@@ -81,42 +81,35 @@ $configData = Helper::appClasses();
                                         <th>Total (Rp)</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="table-border-bottom-0" id="details">
                                     <tr>
-                                        <td>1</td>
-                                        <td>Pulley Car</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>1</td>
-                                        <td>PCS</td>
-                                        <td>ppn 10%h</td>
-                                        <td>65.000.000</td>
+                                        <td colspan="4"></td>
+                                        <td colspan="2">
+                                            <p class="">Sub Total</p>
+                                        </td>
+                                        <td colspan="2" style="text-align: right;">
+                                            <p id="subtotal" class=""></p>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>1</td>
-                                        <td>Pulley Car</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>1</td>
-                                        <td>PCS</td>
-                                        <td>ppn 10%h</td>
-                                        <td>65.000.000</td>
+                                        <td colspan="4"></td>
+                                        <td colspan="1">
+                                            <p class="">Pajak</p>
+                                        </td>
+                                        <td colspan="1">
+                                            <p class="" id=""></p>
+                                        </td>
+                                        <td colspan="2" style="text-align: right;">
+                                            <p id="tax" class=""></p>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="4" class="align-top px-4 py-4">
-
+                                        <td colspan="4"></td>
+                                        <td colspan="2">
+                                            <p class="">Jumlah Nett</p>
                                         </td>
-                                        <td class="text-end pe-3 py-4">
-                                            <p class="mb-2 pt-3">Subtotal:</p>
-                                            <p class="mb-2">Discount:</p>
-                                            <p class="mb-2">Tax:</p>
-                                            <p class="mb-0 pb-3">Total:</p>
-                                        </td>
-                                        <td class="ps-2 py-4">
-                                            <p class="fw-medium mb-2 pt-3">$154.25</p>
-                                            <p class="fw-medium mb-2">$00.00</p>
-                                            <p class="fw-medium mb-2">$50.00</p>
-                                            <p class="fw-medium mb-0 pb-3">$204.25</p>
+                                        <td colspan="2" style="text-align: right;">
+                                            <p id="grand_total" class=""></p>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -288,13 +281,14 @@ $configData = Helper::appClasses();
                 $("#purchase_order_date").text(tglIndo(data.purchase_order_date));
                 $("#about").text(data.about);
                 $("#note").text(data.note);
-                $("#grand_total").val(data.grand_total);
-                $("#tax").val(data.tax);
-                $("#subtotal").val(data.subtotal);
+                $("#grand_total").text(data.grand_total);
+                $("#tax").text(data.tax);
+                $("#subtotal").text(data.subtotal);
                 $("#grand_total_spelled").text(data.grand_total_spelled);
                 $("#term_and_conditions").text(data.term_and_conditions);
                 $("#signature_name").text(data.signature_name);
                 getVendor(data.vendor_id);
+                getDetails(data.purchase_order_details);
                 if (data.signature) {
                     $("#signatture").css('background-img', 'black');
                     $("#signatture").css("background-image", `url('` + data.signature + `')`);
@@ -328,5 +322,27 @@ $configData = Helper::appClasses();
         `;
         documents.append(newRow);
     });
+
+    function getDetails(detailItems) {
+        let details = detailItems;
+        let getDetail = '';
+        let tem = '';
+        for (let i = 0; i < details.length; i++) {
+            tem = `<tr>
+                        <td>` + details[i].number + `</td>
+                        <td>` + details[i].name + `</td>
+                        <td>` + details[i].specification + `</td>
+                        <td>` + details[i].quantity + `</td>
+                        <td>` + details[i].units + `</td>
+                        <td>` + details[i].price + `</td>
+                        <td>` + details[i].tax + `</td>
+                        <td>` + details[i].total_price + `</td>
+                    </tr>
+            `;
+            getDetail = getDetail + tem;
+        }
+
+        $('#details').prepend(getDetail);
+    }
 </script>
 @endsection
