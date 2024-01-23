@@ -302,7 +302,7 @@ $configData = Helper::appClasses();
         })
 
         $.ajax({
-            url: "{{ url('api/damage-report') }}/"+ id,
+            url: "{{ env('BASE_URL_API')}}" +'/api/damage-report/'+ id,
             type: "DELETE",
             contentType: false,
             processData: false,

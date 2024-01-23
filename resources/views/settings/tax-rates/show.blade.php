@@ -83,7 +83,7 @@ $configData = Helper::appClasses();
     function getDataTax(id) {
         console.log(id);
         $.ajax({
-            url: "{{ url('api/tax') }}/" + id,
+            url: "{{ env('BASE_URL_API')}}" +'/api/tax/' + id,
             type: "GET",
             dataType: "json",
             success: function(res) {

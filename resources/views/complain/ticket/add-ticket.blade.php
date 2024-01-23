@@ -139,7 +139,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Tenant',
             allowClear: true,
             ajax: {
-                url: "{{ url('api/tenant/select') }}",
+                url: "{{ env('BASE_URL_API')}}" +'/api/tenant/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -194,7 +194,7 @@ $configData = Helper::appClasses();
                         datas.status = "Selesai"
 
                         $.ajax({
-                            url: "{{ url('api/ticket') }}",
+                            url: "{{ env('BASE_URL_API')}}" +'/api/ticket',
                             type: "POST",
                             data: JSON.stringify(datas),
                             processData: false,

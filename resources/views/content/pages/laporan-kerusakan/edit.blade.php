@@ -476,7 +476,7 @@
                     allowEscapeKey: false
                 })
                 $.ajax({
-                    url: "{{ url('api/damage-report') }}/"+ id,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/damage-report/'+ id,
                     type: "GET",
                     dataType: "json",
                     success: function(res) {
@@ -727,7 +727,7 @@
                             datas.status = status_cur;
 
                             $.ajax({
-                                url: "{{ url('api/damage-report') }}/"+ id,
+                                url: "{{ env('BASE_URL_API')}}" +'/api/damage-report/'+ id,
                                 type: "PATCH",
                                 data: JSON.stringify(datas),
                                 contentType: "application/json; charset=utf-8",
@@ -838,7 +838,7 @@
                 placeholder: 'Select Ticket',
                 allowClear: true,
                 ajax: {
-                    url: "{{ url('api/ticket/select') }}",
+                    url: "{{ env('BASE_URL_API')}}" +'/api/ticket/select',
                     dataType: 'json',
                     cache: true,
                     data: function(params) {

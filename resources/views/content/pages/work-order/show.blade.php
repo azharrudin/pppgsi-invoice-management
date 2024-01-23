@@ -551,7 +551,7 @@ $configData = Helper::appClasses();
             // Mengambil data lk
             if (response.damage_report_id) {
                 $.ajax({
-                    url: "{{ url('api/damage-report') }}/" + response.damage_report_id,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/damage-report/' + response.damage_report_id,
                     type: "GET",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -954,7 +954,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Damage Report',
             // allowClear: true,
             ajax: {
-                url: "{{ url('api/damage-report/select') }}",
+                url: "{{ env('BASE_URL_API')}}" +'/api/damage-report/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {

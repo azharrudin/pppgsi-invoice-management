@@ -786,7 +786,7 @@
                 placeholder: 'Select Department',
                 allowClear: true,
                 ajax: {
-                    url: "{{ url('api/department/select') }}",
+                    url: "{{ env('BASE_URL_API')}}" +'/api/department/select',
                     dataType: 'json',
                     cache: true,
                     data: function(params) {
@@ -817,7 +817,7 @@
                 placeholder: 'Select Material Request',
                 allowClear: true,
                 ajax: {
-                    url: "{{ url('api/material-request/select') }}",
+                    url: "{{ env('BASE_URL_API')}}" +'/api/material-request/select',
                     dataType: 'json',
                     cache: true,
                     data: function(params) {
@@ -848,7 +848,7 @@
                 var id = $(this).val();
 
                 $.ajax({
-                    url: "{{ url('api/material-request') }}/" + id,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/material-request/' + id,
                     method: 'GET',
                     success: function(res) {
                         let response = res.data;

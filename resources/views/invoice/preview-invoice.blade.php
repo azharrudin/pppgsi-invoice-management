@@ -297,7 +297,7 @@ $configData = Helper::appClasses();
             materai_image: data.materai_image.dataURL
         }
         $.ajax({
-            url: "{{ url('api/invoice') }}",
+            url: "{{ env('BASE_URL_API')}}" +'/api/invoice',
             type: "POST",
             data: JSON.stringify(newData),
             contentType: "application/json; charset=utf-8",

@@ -519,7 +519,7 @@
                     buttonsStyling: false
                 });
                 $.ajax({
-                    url: "{{ url('api/purchase-request') }}/" + id,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/purchase-request/' + id,
                     type: "GET",
                     dataType: "json",
                     success: function(res) {
@@ -542,7 +542,7 @@
 
                         // Mengambil data department
                         $.ajax({
-                            url: "{{ url('api/department') }}/" + response.department_id,
+                            url: "{{ env('BASE_URL_API')}}" +'/api/department/' + response.department_id,
                             type: "GET",
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
@@ -567,7 +567,7 @@
 
                         // Mengambil data material
                         $.ajax({
-                            url: "{{ url('api/material-request') }}/" + response.material_request_id,
+                            url: "{{ env('BASE_URL_API')}}" +'/api/material-request/' + response.material_request_id,
                             type: "GET",
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
@@ -670,7 +670,7 @@
                 placeholder: 'Select Department',
                 allowClear: true,
                 ajax: {
-                    url: "{{ url('api/department/select') }}",
+                    url: "{{ env('BASE_URL_API')}}" +'/api/department/select',
                     dataType: 'json',
                     cache: true,
                     data: function(params) {
@@ -701,7 +701,7 @@
                 placeholder: 'Select Material Request',
                 allowClear: true,
                 ajax: {
-                    url: "{{ url('api/material-request/select') }}",
+                    url: "{{ env('BASE_URL_API')}}" +'/api/material-request/select',
                     dataType: 'json',
                     cache: true,
                     data: function(params) {
@@ -732,7 +732,7 @@
                 var id = $(this).val();
 
                 $.ajax({
-                    url: "{{ url('api/material-request') }}/" + id,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/material-request/' + id,
                     method: 'GET',
                     success: function(res) {
                         let response = res.data;

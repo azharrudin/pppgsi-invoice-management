@@ -261,7 +261,7 @@ $configData = Helper::appClasses();
             allowClear: true,
             minimumResultsForSearch: Infinity,
             ajax: {
-                url: "{{ url('api/tenant/select') }}",
+                url: "{{ env('BASE_URL_API')}}" +'/api/tenant/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -292,7 +292,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Bank',
             allowClear: true,
             ajax: {
-                url: "{{ url('api/bank/select') }}",
+                url: "{{ env('BASE_URL_API')}}" +'/api/bank/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -487,7 +487,7 @@ $configData = Helper::appClasses();
                 placeholder: 'Select Pajak',
                 allowClear: true,
                 ajax: {
-                    url: "{{ url('api/tax/select') }}",
+                    url: "{{ env('BASE_URL_API')}}" +'/api/tax/select',
                     dataType: 'json',
                     cache: true,
                     data: function(params) {
@@ -551,7 +551,7 @@ $configData = Helper::appClasses();
                 getTotal();
             } else {
                 $.ajax({
-                    url: "{{ url('api/tax') }}/"+ id,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/tax/'+ id,
                     type: "get",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -578,7 +578,7 @@ $configData = Helper::appClasses();
             let index = $('.tax').index(this);
             let data = 0;
             $.ajax({
-                url: "{{ url('api/tax') }}/"+ id,
+                url: "{{ env('BASE_URL_API')}}" +'/api/tax/'+ id,
                 type: "get",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -793,7 +793,7 @@ $configData = Helper::appClasses();
                         delete datas['undefined'];
 
                         $.ajax({
-                            url: "{{ url('api/invoice') }}/"+ id,
+                            url: "{{ env('BASE_URL_API')}}" +'/api/invoice'+ id,
                             type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -921,7 +921,7 @@ $configData = Helper::appClasses();
             allowEscapeKey: false
         });
         $.ajax({
-            url: "{{ url('api/invoice') }}/"+ id,
+            url: "{{ env('BASE_URL_API')}}" +'/api/invoice/'+ id,
             type: "GET",
             dataType: "json",
             success: function(res) {
@@ -1055,7 +1055,7 @@ $configData = Helper::appClasses();
                 </div>`;
                 getDetail = getDetail + temp;
                 $.ajax({
-                    url: "{{ url('api/tax') }}/"+ details[i].tax_id,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/tax/'+ details[i].tax_id,
                     type: "GET",
                     success: function(response) {
 
@@ -1076,7 +1076,7 @@ $configData = Helper::appClasses();
                     placeholder: 'Select Pajak',
                     allowClear: true,
                     ajax: {
-                        url: "{{ url('api/tax/select') }}",
+                        url: "{{ env('BASE_URL_API')}}" +'/api/tax/select',
                         dataType: 'json',
                         cache: true,
                         data: function(params) {

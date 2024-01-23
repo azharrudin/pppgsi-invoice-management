@@ -227,7 +227,7 @@
             function getInvoice() {
                 let idInvoice = data.invoice_id;
                 $.ajax({
-                    url: "{{ url('api/invoice') }}/" + idInvoice,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/invoice/' + idInvoice,
                     type: "GET",
                     success: function(response) {
                         let data = response.data;
@@ -242,7 +242,7 @@
             function getTenant() {
                 let idTenant = data.tenant_id;
                 $.ajax({
-                    url: "{{ url('api/tenant') }}/" + idTenant,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/tenant/' + idTenant,
                     type: "GET",
                     success: function(response) {
                         let data = response.data;
@@ -257,7 +257,7 @@
             function getBank() {
                 let idBank = data.bank_id;
                 $.ajax({
-                    url: "{{ url('api/bank') }}/" + idBank,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/bank/' + idBank,
                     type: "GET",
                     success: function(response) {
                         let data = response.data;

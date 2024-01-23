@@ -292,7 +292,7 @@
 
             function getDataTandaTerima(id) {
                 $.ajax({
-                    url: "{{ url('api/receipt') }}/"+ id,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/receipt/'+ id,
                     type: "GET",
                     dataType: "json",
                     success: function(res) {
@@ -410,7 +410,7 @@
                 datas.signature_date = date ? moment(date, 'D-M-YYYY').format('YYYY-MM-DD'): null;
 
                 $.ajax({
-                    url: "{{ url('api/receipt') }}/"+ id,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/receipt/'+ id,
                     type: "PATCH",
                     data: JSON.stringify(datas),
                     contentType: "application/json; charset=utf-8",
@@ -604,7 +604,7 @@
                 placeholder: 'Select Tenant',
                 allowClear: true,
                 ajax: {
-                    url: "{{ url('api/tenant/select') }}",
+                    url: "{{ env('BASE_URL_API')}}" +'/api/tenant/select',
                     dataType: 'json',
                     cache: true,
                     data: function(params) {
@@ -634,7 +634,7 @@
                 placeholder: 'Select Invoice',
                 allowClear: true,
                 ajax: {
-                    url: "{{ url('api/invoice/select') }}",
+                    url: "{{ env('BASE_URL_API')}}" +'/api/invoice/select',
                     dataType: 'json',
                     cache: true,
                     data: function(params) {
@@ -665,7 +665,7 @@
                 placeholder: 'Select Bank',
                 allowClear: true,
                 ajax: {
-                    url: "{{ url('api/bank') }}",
+                    url: "{{ env('BASE_URL_API')}}" +'/api/bank',
                     dataType: 'json',
                     cache: true,
                     data: function(params) {

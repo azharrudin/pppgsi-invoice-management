@@ -131,7 +131,7 @@ $configData = Helper::appClasses();
                         allowOutsideClick: false
                     });
                     $.ajax({
-                        url: "{{ url('api/invoice/update-status') }}/"+id,
+                        url: "{{ env('BASE_URL_API')}}" + '/api/invoice/update-status/'+id,
                         type: "PATCH",
                         data: JSON.stringify(datas),
                         contentType: "application/json; charset=utf-8",

@@ -252,7 +252,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Department',
             allowClear: true,
             ajax: {
-                url: "{{ url('api/department/select') }}",
+                url: "{{ env('BASE_URL_API')}}" +'/api/department/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -283,7 +283,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Level',
             allowClear: true,
             ajax: {
-                url: "{{ url('api/level/select') }}",
+                url: "{{ env('BASE_URL_API')}}" +'/api/level/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -314,7 +314,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Department',
             allowClear: true,
             ajax: {
-                url: "{{ url('api/department/select') }}",
+                url: "{{ env('BASE_URL_API')}}" +'/api/department/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -345,7 +345,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Level',
             allowClear: true,
             ajax: {
-                url: "{{ url('api/level/select') }}",
+                url: "{{ env('BASE_URL_API')}}" +'/api/level/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {

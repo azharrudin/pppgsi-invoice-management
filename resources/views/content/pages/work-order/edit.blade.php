@@ -365,7 +365,7 @@ $configData = Helper::appClasses();
                         datas.status = "Terbuat";
 
                         $.ajax({
-                            url: "{{ url('api/work-order') }}",
+                            url: "{{ env('BASE_URL_API')}}" +'/api/work-order',
                             type: "POST",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -578,7 +578,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Damage Report',
             allowClear: true,
             ajax: {
-                url: "{{ url('api/damage-report/select') }}",
+                url: "{{ env('BASE_URL_API')}}" +'/api/damage-report/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -630,7 +630,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Scope',
             allowClear: true,
             ajax: {
-                url: "{{ url('api/scope/select') }}",
+                url: "{{ env('BASE_URL_API')}}" +'/api/scope/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -665,7 +665,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select classification',
             allowClear: true,
             ajax: {
-                url: "{{ url('api/classification/select') }}",
+                url: "{{ env('BASE_URL_API')}}" +'/api/classification/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {

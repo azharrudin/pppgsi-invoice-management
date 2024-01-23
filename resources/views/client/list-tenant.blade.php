@@ -453,7 +453,7 @@
                             formData.append('status', 'Active');
 
                             $.ajax({
-                                url: "{{ url('api/tenant') }}",
+                                url: "{{ env('BASE_URL_API')}}" +'/api/tenant',
                                 type: "POST",
                                 data: formData,
                                 processData: false,
@@ -514,7 +514,7 @@
 
                             var data = $('#edit-tenant').serialize();
                             $.ajax({
-                                url: "{{ url('api/tenant') }}/" + id,
+                                url: "{{ env('BASE_URL_API')}}" +'/api/tenant/' + id,
                                 type: "PATCH",
                                 data: data,
                                 success: function(response) {

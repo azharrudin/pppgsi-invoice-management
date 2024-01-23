@@ -419,7 +419,7 @@ $configData = Helper::appClasses();
                 })
 
                 $.ajax({
-                    url: "{{ url('api/tax') }}" + "/" + id,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/tax/' + id,
                     type: "DELETE",
                     contentType: false,
                     processData: false,

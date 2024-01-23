@@ -377,7 +377,7 @@
                     allowEscapeKey: false
                 })
                 $.ajax({
-                    url: "{{ url('api/damage-report') }}/" + id,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/damage-report/' + id,
                     type: "GET",
                     dataType: "json",
                     success: function(res) {

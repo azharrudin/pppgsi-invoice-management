@@ -144,7 +144,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Tenant',
             allowClear: true,
             ajax: {
-                url: "{{ url('api/tenant/select') }}",
+                url: "{{ env('BASE_URL_API')}}" +'/api/tenant/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -197,7 +197,7 @@ $configData = Helper::appClasses();
                         datas.status = "Selesai"
 
                         $.ajax({
-                            url: "{{ url('api/ticket') }}/"+id,
+                            url: "{{ env('BASE_URL_API')}}" +'/api/ticket/'+id,
                             type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -271,7 +271,7 @@ $configData = Helper::appClasses();
 
         function getDataTicket(id) {
             $.ajax({
-                url: "{{ url('api/ticket') }}/"+id,
+                url: "{{ env('BASE_URL_API')}}" +'/api/ticket/'+id,
                 type: "GET",
                 dataType: "json",
                 beforeSend: function() {

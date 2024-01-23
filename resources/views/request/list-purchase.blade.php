@@ -294,7 +294,7 @@ $configData = Helper::appClasses();
         })
 
         $.ajax({
-            url: "{{ url('api/purchase-request') }}/"+ id,
+            url: "{{ env('BASE_URL_API')}}" +'/api/purchase-request/'+ id,
             type: "DELETE",
             contentType: false,
             processData: false,

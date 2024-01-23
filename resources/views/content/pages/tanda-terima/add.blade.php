@@ -356,7 +356,7 @@ $configData = Helper::appClasses();
                         console.log(datas);
 
                         $.ajax({
-                            url: "{{ url('api/receipt') }}",
+                            url: "{{ env('BASE_URL_API')}}" +'/api/receipt',
                             type: "POST",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -589,7 +589,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Tenant',
             allowClear: true,
             ajax: {
-                url: "{{ url('api/tenant/select') }}",
+                url: "{{ env('BASE_URL_API')}}" +'/api/tenant/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -619,7 +619,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Invoice',
             allowClear: true,
             ajax: {
-                url: "{{ url('api/invoice/select') }}",
+                url: "{{ env('BASE_URL_API')}}" +'/api/invoice/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -650,7 +650,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Bank',
             allowClear: true,
             ajax: {
-                url: "{{ url('api/bank') }}",
+                url: "{{ env('BASE_URL_API')}}" +'/api/bank',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -680,7 +680,7 @@ $configData = Helper::appClasses();
 
     function getDataInvoice(id) {
         $.ajax({
-            url: "{{ url('api/invoice/') }}/" + id,
+            url: "{{ env('BASE_URL_API')}}" +'/api/invoice/' + id,
             type: "GET",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -806,7 +806,7 @@ $configData = Helper::appClasses();
                     console.log(datas);
 
                     $.ajax({
-                        url: "{{ url('api/receipt') }}",
+                        url: "{{ env('BASE_URL_API')}}" +'/api/receipt',
                         type: "POST",
                         data: JSON.stringify(datas),
                         contentType: "application/json; charset=utf-8",
@@ -1039,7 +1039,7 @@ $configData = Helper::appClasses();
         placeholder: 'Select Tenant',
         allowClear: true,
         ajax: {
-            url: "{{ url('api/tenant/select') }}",
+            url: "{{ env('BASE_URL_API')}}" +'/api/tenant/select',
             dataType: 'json',
             cache: true,
             data: function(params) {
@@ -1069,7 +1069,7 @@ $configData = Helper::appClasses();
         placeholder: 'Select Invoice',
         allowClear: true,
         ajax: {
-            url: "{{ url('api/invoice/select') }}",
+            url: "{{ env('BASE_URL_API')}}" +'/api/invoice/select',
             dataType: 'json',
             cache: true,
             data: function(params) {
@@ -1100,7 +1100,7 @@ $configData = Helper::appClasses();
         placeholder: 'Select Bank',
         allowClear: true,
         ajax: {
-            url: "{{ url('api/bank') }}",
+            url: "{{ env('BASE_URL_API')}}" +'/api/bank',
             dataType: 'json',
             cache: true,
             data: function(params) {
