@@ -47,10 +47,10 @@ return new class extends Migration
         Schema::create('purchase_request_signature', function (Blueprint $table) {
             $table->unsignedInteger("purchase_request_id");
             $table->foreign('purchase_request_id')->references('id')->on('purchase_requests');
-            $table->string("type");
-            $table->string("name");
-            $table->mediumText("signature");
-            $table->date("date");
+            $table->string("type")->nullable();
+            $table->string("name")->nullable();
+            $table->mediumText("signature")->nullable();
+            $table->date("date")->nullable();
             $table->timestamps();
             $table->date("deleted_at")->nullable();
         });

@@ -26,6 +26,7 @@ return new class extends Migration
         });
 
         Schema::create('ticket_attachments', function (Blueprint $table) {
+            $table->increments("id");
             $table->unsignedInteger("ticket_id");
             $table->foreign('ticket_id')->references('id')->on('tickets');
             $table->mediumText("attachment");

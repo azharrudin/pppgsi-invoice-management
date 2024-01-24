@@ -11,6 +11,7 @@ use App\Services\TicketService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Validator;
 class TicketController extends Controller
 {
     protected $CommonService;
@@ -114,6 +115,58 @@ class TicketController extends Controller
         }
     }
 
+    public function add_attachment(Request $request, $id)
+    {
+        DB::beginTransaction();
+
+        try{
+            $id = (int) $id;
+            $ticketExist = $this->CommonService->getDataById("App\Models\Ticket", $id);
+            if (is_null($ticketExist)) throw new CustomException("Ticket tidak ditemukan", 404);
+
+            $rules = [
+                "attachment" => ["bail", "required", "array"],
+                "attachment.*" => ["bail", "required", "string"]
+            ];
+            $errorMessages = [
+                "required" => "Field :attribute harus diisi",
+                "string" => "Field :attribute harus diisi dengan string",
+                "array" => "Field :attribute harus diisi dengan array"
+            ];
+
+            $validator = Validator::make($request->all(), $rules, $errorMessages);
+
+            if ($validator->fails()) throw new CustomException(implode(', ', $validator->errors()->all()), 400);
+
+            foreach($request->input("attachment") as $attachment){
+                TicketAttachment::create([
+                    "ticket_id" => $id,
+                    "attachment" => $attachment
+                ]);
+            }
+
+            DB::commit();
+            $getTicket = Ticket::with("tenant")->
+                with("ticketAttachments")->
+                where("id", $id)->
+                where("deleted_at", null)->
+                first();
+
+            return ["data" => $getTicket];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+            DB::rollBack();
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
+
     /**
      * Display the specified resource.
      */
@@ -207,6 +260,45 @@ class TicketController extends Controller
             DB::commit();
 
             return response()->json(['message' => 'Ticket berhasil dihapus'], 200);
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+            DB::rollBack();
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
+
+    public function delete_attachment(Request $request, $id)
+    {
+        DB::beginTransaction();
+
+        try{
+            $id = (int) $id;
+            $ticketExist = $this->CommonService->getDataById("App\Models\Ticket", $id);
+            if (is_null($ticketExist)) throw new CustomException("Ticket tidak ditemukan", 404);
+
+            $rules = [
+                "attachment_id" => ["bail", "required", "numeric"]
+            ];
+            $errorMessages = [
+                "required" => "Field :attribute harus diisi",
+                "numeric" => "Field :attribute harus diisi dengan angka",
+            ];
+
+            $validator = Validator::make($request->all(), $rules, $errorMessages);
+
+            if ($validator->fails()) throw new CustomException(implode(', ', $validator->errors()->all()), 400);
+
+            TicketAttachment::where("ticket_id", $id)->where("id", $request->input("attachment_id"))->where("deleted_at", null)->delete();
+            DB::commit();
+
+            return response()->json(['message' => 'Attachment tiket berhasil dihapus'], 200);
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
