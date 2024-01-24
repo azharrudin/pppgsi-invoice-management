@@ -37,9 +37,9 @@ class WorkOrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(string $id)
     {
-        return view('content.pages.work-order.show');
+        return view('content.pages.work-order.show', compact('id'));
     }
 
     /**
@@ -53,7 +53,7 @@ class WorkOrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function preview(string $id)
+    public function preview()
     {
         return view('content.pages.work-order.preview');
     }

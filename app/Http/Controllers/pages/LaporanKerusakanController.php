@@ -39,7 +39,7 @@ class LaporanKerusakanController extends Controller
      */
     public function show(string $id)
     {
-        return view('content.pages.laporan-kerusakan.show');
+        return view('content.pages.laporan-kerusakan.show', compact('id'));
     }
 
     /**

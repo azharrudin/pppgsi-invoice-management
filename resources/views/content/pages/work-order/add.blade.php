@@ -36,7 +36,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-3">
                                 <div class="mb-1">
                                     <label for="note" class="form-label fw-medium">No Lap Kerusakan </label>
-                                    <select class="form-select select2 select-lk item-details mb-3" required>
+                                    <select class="form-select select-lk item-details mb-3" id="select-lk" required>
                                     </select>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
@@ -155,7 +155,7 @@ $configData = Helper::appClasses();
                                     </div>
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician2" name="name" style="text-align:center;" />
+                                            <input type="text" class="form-control" placeholder="Technician" id="technician2" name="name" style="text-align:center;" disabled />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
 
@@ -167,13 +167,13 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date2" name="date" style="text-align:center;" />
+                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date2" name="date" style="text-align:center;" disabled />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician3" name="name" style="text-align:center;" />
+                                            <input type="text" class="form-control" placeholder="Technician" id="technician3" name="name" style="text-align:center;" disabled />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -184,13 +184,13 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date3" name="date" style="text-align:center;" />
+                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date3" name="date" style="text-align:center;" disabled />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician4" name="name" style="text-align:center;" />
+                                            <input type="text" class="form-control" placeholder="Technician" id="technician4" name="name" style="text-align:center;" disabled />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -201,7 +201,7 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date4" name="date" style="text-align:center;" />
+                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date4" name="date" style="text-align:center;" disabled />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
@@ -243,8 +243,11 @@ $configData = Helper::appClasses();
 <script>
     "use strict";
     let dataLocal = JSON.parse(localStorage.getItem("work-order"));
+    var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>`;
     $(document).ready(function() {
-        let account = {!! json_encode(session('data')) !!}
+        let account = {!! json_encode(session('data')) !!};
         var levelId = account.level_id;
         if (levelId == 10) {
             $('.ttd').hide();
@@ -252,8 +255,73 @@ $configData = Helper::appClasses();
             $('.ttd').show();
         }
 
+        $("#scope").select2({
+            placeholder: 'Select Scope',
+            allowClear: true,
+            multiple: true,
+            ajax: {
+                url: "{{ env('BASE_URL_API')}}" + '/api/scope/select',
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        term: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
 
-        // Date
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+        });
+
+
+
+        $("#classification").select2({
+            placeholder: 'Select classification',
+            allowClear: true,
+            ajax: {
+                url: "{{ env('BASE_URL_API')}}" + '/api/classification/select',
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        term: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+        });
+
+
+
+
+
         $('.date').flatpickr({
             dateFormat: 'Y-m-d'
         });
@@ -265,6 +333,58 @@ $configData = Helper::appClasses();
                 monthSelectorType: "static",
                 dateFormat: 'Y-m-d'
             });
+        }
+
+        if (dataLocal) {
+            if (dataLocal.scope) {
+                var data = dataLocal.scope.split(',');
+                console.log(data);
+                var scopeSelect = $('#scope');
+                for (var i = 0; i < data.length; i++) {
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{ env('BASE_URL_API')}}" + '/api/scope/' + data[i],
+                    }).then(function(data) {
+                        console.log(data);
+                        // create the option and append to Select2
+                        var option = new Option(data.data.name, data.data.id, true, true);
+                        scopeSelect.append(option).trigger('change');
+
+                        // manually trigger the `select2:select` event
+                        scopeSelect.trigger({
+                            type: 'select2:select',
+                            params: {
+                                data: data
+                            }
+                        });
+                    });
+                }
+            }
+            if (dataLocal.classification) {
+                var data = dataLocal.classification.split(',');
+                console.log(data);
+                var classificationSelect = $('#classification');
+                for (var i = 0; i < data.length; i++) {
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{ env('BASE_URL_API')}}" + '/api/classification/' + data[i],
+                    }).then(function(data) {
+                        console.log(data);
+                        // create the option and append to Select2
+                        var option = new Option(data.data.name, data.data.id, true, true);
+                        classificationSelect.append(option).trigger('change');
+
+                        // manually trigger the `select2:select` event
+                        classificationSelect.trigger({
+                            type: 'select2:select',
+                            params: {
+                                data: data
+                            }
+                        });
+                    });
+                }
+            }
+            load(dataLocal);
         }
 
         getDetails();
@@ -328,20 +448,6 @@ $configData = Helper::appClasses();
                         $('.signatures').each(function(index) {
                             let signature = {};
 
-                            $(this).find('.form-control').each(function() {
-                                var inputId = $(this).attr('id');
-                                var inputValue = $("#" + inputId).val();
-
-                                if (inputId.startsWith('date')) {
-                                    signature[$("#" + inputId).attr("name")] =
-                                        moment(inputValue, 'D-M-YYYY')
-                                        .format('YYYY-MM-DD');
-                                } else {
-                                    signature[$("#" + inputId).attr("name")] =
-                                        inputValue;
-                                }
-                            });
-
                             if (ttdFile1 && index === 0) {
                                 signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
                             }
@@ -367,7 +473,7 @@ $configData = Helper::appClasses();
                         datas.status = "Terbuat";
 
                         $.ajax({
-                            url: "{{ env('BASE_URL_API')}}" +'/api/work-order',
+                            url: "{{ env('BASE_URL_API')}}" + '/api/work-order',
                             type: "POST",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -386,7 +492,7 @@ $configData = Helper::appClasses();
                                     },
                                     buttonsStyling: false
                                 })
-                            
+
                                 // window.location.href = "/complain/work-order"
                             },
                             error: function(xhr, status, error) {
@@ -429,6 +535,7 @@ $configData = Helper::appClasses();
 
         let ttdFile2 = null;
         const myDropzone2 = new Dropzone('#dropzone-2', {
+            clickable: false,
             parallelUploads: 1,
             maxFilesize: 2,
             addRemoveLinks: true,
@@ -446,6 +553,7 @@ $configData = Helper::appClasses();
 
         let ttdFile3 = null;
         const myDropzone3 = new Dropzone('#dropzone-3', {
+            clickable: false,
             parallelUploads: 1,
             maxFilesize: 2,
             addRemoveLinks: true,
@@ -467,6 +575,7 @@ $configData = Helper::appClasses();
             maxFilesize: 2,
             addRemoveLinks: true,
             maxFiles: 1,
+            clickable: false,
             acceptedFiles: ".jpeg,.jpg,.png",
             autoQueue: false,
             init: function() {
@@ -499,17 +608,23 @@ $configData = Helper::appClasses();
             let lk = $(".select-lk").val();
             let datas = {}
             let signatures = [];
+            let scope = $('#scope').val();
+            let classification = $('#classification').val();
+            let date = $('#work_order_date').val();
+            let action_plan_date = $('#action_plan_date').val();
+            let finish_plan = $('#finish_plan').val();
+            let job_description = $('#job_description').val();
+
 
             datas.damage_report_id = lk;
+            datas.scope = scope.toString();
+            datas.classification = classification.toString();
+            datas.work_order_date = date;
+            datas.action_plan_date = action_plan_date;
+            datas.finish_plan = finish_plan;
+            datas.job_description = job_description;
+            datas.klasifikasi = $('.classif2-checkbox:checked').attr('name');
 
-            $('.addWorkOrder').find('.form-control').each(function() {
-                var inputId = $(this).attr('id');
-                var inputValue = $("#" + inputId).val();
-                datas[$("#" + inputId).attr("name")] = inputValue;
-            });
-
-            datas.scope = $('#scope').val();
-            datas.classification = $('#classification').val();
             var detail = [];
             $('.row-input').each(function(index) {
                 var input_name = $(this).attr('name');
@@ -533,35 +648,24 @@ $configData = Helper::appClasses();
             $('.signatures').each(function(index) {
                 let signature = {};
 
-                $(this).find('.form-control').each(function() {
-                    var inputId = $(this).attr('id');
-                    var inputValue = $("#" + inputId).val();
-
-                    if (inputId.startsWith('date')) {
-                        signature[$("#" + inputId).attr("name")] =
-                            moment(inputValue, 'D-M-YYYY')
-                            .format('YYYY-MM-DD');
-                    } else {
-                        signature[$("#" + inputId).attr("name")] =
-                            inputValue;
-                    }
-                });
-
                 if (ttdFile1 && index === 0) {
                     signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
+                    signature['name'] =$('#technician1').val();
+                    signature['date'] =$('#date1').val();
+                    
                 }
 
-                if (ttdFile2 && index === 1) {
-                    signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                }
+                // if (ttdFile2 && index === 1) {
+                //     signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
+                // }
 
-                if (ttdFile3 && index === 2) {
-                    signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                }
+                // if (ttdFile3 && index === 2) {
+                //     signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
+                // }
 
-                if (ttdFile4 && index === 3) {
-                    signature['signature'] = ttdFile4.dataURL || ttdFile4.url;
-                }
+                // if (ttdFile4 && index === 3) {
+                //     signature['signature'] = ttdFile4.dataURL || ttdFile4.url;
+                // }
 
                 signatures.push(signature);
             });
@@ -572,7 +676,7 @@ $configData = Helper::appClasses();
             console.log(datas);
 
             localStorage.setItem('work-order', JSON.stringify(datas));
-            // window.location.href = "/complain/work-order/preview";
+            window.location.href = "/complain/work-order/preview";
         })
 
         // Select2
@@ -580,7 +684,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Damage Report',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/damage-report/select',
+                url: "{{ env('BASE_URL_API')}}" + '/api/damage-report/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -606,15 +710,6 @@ $configData = Helper::appClasses();
             }
         });
 
-        // Keyup input qty
-        $(document).on('input', '.qty', function() {
-            // Menghapus karakter yang bukan angka
-            var sanitizedValue = $(this).val().replace(/[^0-9]/g, '');
-
-            // Menetapkan nilai bersih kembali ke input
-            $(this).val(sanitizedValue);
-        });
-
         // Validasi untuk checkbox hanya bisa pilih satu
         // Scope
         $('.scope-checkbox').change(function() {
@@ -628,70 +723,15 @@ $configData = Helper::appClasses();
         });
 
         // Select3
-        $(".select-scope").select2({
-            placeholder: 'Select Scope',
-            allowClear: true,
-            ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/scope/select',
-                dataType: 'json',
-                cache: true,
-                data: function(params) {
-                    return {
-                        term: params.term || '',
-                        page: params.page || 1
-                    }
-                },
-                processResults: function(data, params) {
-                    var more = data.pagination.more;
-                    if (more === false) {
-                        params.page = 1;
-                        params.abort = true;
-                    }
 
-                    return {
-                        results: data.data,
-                        pagination: {
-                            more: more
-                        }
-                    };
-                }
-            }
-        });
+
 
         $('.select-scope').on("change", (async function(e) {
             $(this).removeClass("is-invalid");
         }));
 
         // Select3
-        $(".select-classification").select2({
-            placeholder: 'Select classification',
-            allowClear: true,
-            ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/classification/select',
-                dataType: 'json',
-                cache: true,
-                data: function(params) {
-                    return {
-                        term: params.term || '',
-                        page: params.page || 1
-                    }
-                },
-                processResults: function(data, params) {
-                    var more = data.pagination.more;
-                    if (more === false) {
-                        params.page = 1;
-                        params.abort = true;
-                    }
 
-                    return {
-                        results: data.data,
-                        pagination: {
-                            more: more
-                        }
-                    };
-                }
-            }
-        });
 
         $('.select-classification').on("change", (async function(e) {
             $(this).removeClass("is-invalid");
@@ -724,6 +764,7 @@ $configData = Helper::appClasses();
             // Hapus baris yang ditekan tombol hapus
             $(this).closest('.row-mg').remove();
         });
+
         $(document).on('click', '.btn-add-row-mg', function() {
             // Clone baris terakhir
             var $details = $('#details');
@@ -747,7 +788,7 @@ $configData = Helper::appClasses();
                     </div>
                     <div class="col-md-2 mb-1-custom"">
                         <label for="note" class="form-label fw-medium">Quantity</label>
-                        <input type="text" class="form-control qty row-input" id="qty" name="qty[]" placeholder="Quantity" required />
+                        <input type="number" class="form-control qty row-input" id="qty" name="qty[]" placeholder="Quantity" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-1 px-1-custom mb-1-custom">
@@ -762,11 +803,67 @@ $configData = Helper::appClasses();
         });
     });
 
+    function load(dataLocale) {
+        Swal.fire({
+            title: '<h2>Loading...</h2>',
+            html: sweet_loader + '<h5>Please Wait</h5>',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        });
+
+        $("#action_plan_date").val(dataLocal.action_plan_date);
+        $("#damage_report_id").val(dataLocal.damage_report_id);
+        $("#finish_plan").val(dataLocal.finish_plan);
+        $("#job_description").val(dataLocal.job_description);
+        $("#work_order_date").val(dataLocal.work_order_date);
+
+
+
+        if (dataLocal.damage_report_id) {
+            getLaporanKerusakan();
+        }
+        // if (dataLocal.scope) {
+        //     getScope();
+        // }
+
+
+
+        Swal.close();
+    }
+
+    function getScope() {
+        var selectedValues = dataLocal.scope.split(',');
+        let temp = '';
+        temp += '<option value="1" data-select2-id="17">Telekomunikasi</option>';
+        console.log($('.select2').siblings());
+    }
+
+    function getLaporanKerusakan() {
+        let id = dataLocal.damage_report_id;
+        $.ajax({
+            url: "{{url('api/damage-report')}}/" + id,
+            type: "GET",
+            success: function(response) {
+                console.log(response);
+                let data = response.data;
+                let tem = `<option value="` + data.id + `" selected>` + data.damage_report_number + `</option>`;
+                $('#select-lk').prepend(tem);
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+
 
     function getDetails() {
         let data = dataLocal;
         let getDetail = '';
         let temp = '';
+
+        console.log(data);
 
         if (data) {
             let details = dataLocal.details;
@@ -777,22 +874,22 @@ $configData = Helper::appClasses();
                     <div class="row mb-3  d-flex align-items-end">
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Location</label>
-                            <input type="text" class="form-control" id="location" name="location[]" placeholder="Location" required />
+                            <input type="text" class="form-control row-input" id="location" name="location[]" placeholder="Location" value="`+details[i].location+`" required />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Material Request</label>
-                            <input type="text" class="form-control" id="material-req" name="material-req[]" placeholder="Material Request" required />
+                            <input type="text" class="form-control row-input" id="material-req" name="material-req[]" placeholder="Material Request" value="`+details[i].material_request+`" required />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Type /Made In</label>
-                            <input type="text" class="form-control" id="type" name="type[]" placeholder="Type /Made In" required />
+                            <input type="text" class="form-control row-input" id="type" name="type[]" placeholder="Type /Made In" required value="`+details[i].type+`"/>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-2 mb-1-custom"">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required />
+                            <input type="number" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required value="`+details[i].quantity+`"/>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-1 px-1-custom mb-1-custom">
