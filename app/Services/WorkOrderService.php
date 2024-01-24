@@ -5,7 +5,7 @@ use Validator;
 
 class WorkOrderService{
     protected $CommonService;
-    protected $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "selesai"];
+    protected $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "disetujui technician", "disetujui chief engineering", "disetujui warehouse", "disetujui building manager", "terkirim", "selesai"];
 
     public function __construct(CommonService $CommonService)
     {
