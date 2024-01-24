@@ -211,9 +211,7 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100 btn-cancel">Batal</button>
+                    <a href="/complain/work-order/add" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Kembali</a>
                     </div>
                 </div>
             </div>
@@ -280,7 +278,9 @@ $configData = Helper::appClasses();
             }
         });
 
-        $('#scope').select2({disabled:'readonly'});
+        $('#scope').select2({
+            disabled: 'readonly'
+        });
 
         if (dataLocal.scope) {
             var data = dataLocal.scope.split(',');
@@ -289,7 +289,7 @@ $configData = Helper::appClasses();
             for (var i = 0; i < data.length; i++) {
                 $.ajax({
                     type: 'GET',
-                    url: "{{ env('BASE_URL_API')}}" + '/api/scope/'+data[i],
+                    url: "{{ env('BASE_URL_API')}}" + '/api/scope/' + data[i],
                 }).then(function(data) {
                     console.log(data);
                     // create the option and append to Select2
@@ -337,7 +337,9 @@ $configData = Helper::appClasses();
             }
         });
 
-        $('#classification').select2({disabled:'readonly'});
+        $('#classification').select2({
+            disabled: 'readonly'
+        });
 
         if (dataLocal.classification) {
             var data = dataLocal.classification.split(',');
@@ -346,7 +348,7 @@ $configData = Helper::appClasses();
             for (var i = 0; i < data.length; i++) {
                 $.ajax({
                     type: 'GET',
-                    url: "{{ env('BASE_URL_API')}}" + '/api/classification/'+data[i],
+                    url: "{{ env('BASE_URL_API')}}" + '/api/classification/' + data[i],
                 }).then(function(data) {
                     console.log(data);
                     // create the option and append to Select2
@@ -366,17 +368,17 @@ $configData = Helper::appClasses();
 
 
         $('.classif2-checkbox').each(function() {
-                var checkboxName = $(this).attr('name').toLowerCase();
+            var checkboxName = $(this).attr('name').toLowerCase();
 
-                if (dataLocal.klasifikasi) {
-                    if ((dataLocal.klasifikasi).toLowerCase() === checkboxName) {
-                        $('.classif2-checkbox').not(this).prop('disabled', true);
-                        $(this).prop('checked', true);
-                    } else {
-                        $(this).prop('checked', false);
-                    }
+            if (dataLocal.klasifikasi) {
+                if ((dataLocal.klasifikasi).toLowerCase() === checkboxName) {
+                    $('.classif2-checkbox').not(this).prop('disabled', true);
+                    $(this).prop('checked', true);
+                } else {
+                    $(this).prop('checked', false);
                 }
-            });
+            }
+        });
 
 
         $('.date').flatpickr({
@@ -403,11 +405,26 @@ $configData = Helper::appClasses();
         const myDropzone1 = new Dropzone('#dropzone-1', {
             parallelUploads: 1,
             maxFilesize: 2,
-            addRemoveLinks: true,
             maxFiles: 1,
             acceptedFiles: ".jpeg,.jpg,.png",
             autoQueue: false,
             init: function() {
+                if (dataLocal) {
+                    // Add a preloaded file to the dropzone with a preview
+                    var mockFile = dataLocal.signatures[0].signature;
+                    if (mockFile) {
+                        this.options.addedfile.call(this, mockFile);
+                        this.options.thumbnail.call(this, mockFile, mockFile.dataURL);
+
+                        $('.dz-image').last().find('img').attr('width', '100%');
+
+
+                        // Optional: Handle the removal of the file
+                        mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+                            // Handle removal logic here
+                        });
+                    }
+                }
                 this.on('addedfile', function(file) {
                     while (this.files.length > this.options.maxFiles) this.removeFile(this
                         .files[0]);
@@ -477,9 +494,9 @@ $configData = Helper::appClasses();
             window.location.href = "/complain/work-order"
         })
 
-       
 
-        
+
+
 
         // Validasi untuk checkbox hanya bisa pilih satu
         // Scope
@@ -502,7 +519,7 @@ $configData = Helper::appClasses();
         }));
 
         // Select3
-      
+
 
         $('.select-classification').on("change", (async function(e) {
             $(this).removeClass("is-invalid");
@@ -550,7 +567,9 @@ $configData = Helper::appClasses();
         $("#damage_report_id").val(dataLocal.damage_report_id);
         $("#finish_plan").val(dataLocal.finish_plan);
         $("#job_description").val(dataLocal.job_description);
+        $("#technician1").val(dataLocal.signatures[0].name);
         $("#work_order_date").val(dataLocal.work_order_date);
+        $("#date1").val(dataLocal.signatures[0].date);
 
 
 
@@ -599,22 +618,22 @@ $configData = Helper::appClasses();
                     <div class="row mb-3  d-flex align-items-end">
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Location</label>
-                            <input type="text" class="form-control" id="location" name="location[]" placeholder="Location" required value="`+details[i].location+`" />
+                            <input type="text" class="form-control" id="location" name="location[]" placeholder="Location" required value="` + details[i].location + `" />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Material Request</label>
-                            <input type="text" class="form-control" id="material-req" name="material-req[]" placeholder="Material Request" required value="`+details[i].material_request+`"/>
+                            <input type="text" class="form-control" id="material-req" name="material-req[]" placeholder="Material Request" required value="` + details[i].material_request + `"/>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Type /Made In</label>
-                            <input type="text" class="form-control" id="type" name="type[]" placeholder="Type /Made In" required value="`+details[i].type+`"/>
+                            <input type="text" class="form-control" id="type" name="type[]" placeholder="Type /Made In" required value="` + details[i].type + `"/>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-3 mb-1-custom"">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="number" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required value="`+details[i].quantity+`"/>
+                            <input type="number" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required value="` + details[i].quantity + `"/>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                     </div>

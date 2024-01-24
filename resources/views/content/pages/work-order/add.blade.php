@@ -247,7 +247,8 @@ $configData = Helper::appClasses();
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
     $(document).ready(function() {
-        let account = {!! json_encode(session('data')) !!};
+        let ttdFile = dataLocal ? dataLocal.signatures[0].signature : null;
+        let account = {!!json_encode(session('data')) !!};
         var levelId = account.level_id;
         if (levelId == 10) {
             $('.ttd').hide();
@@ -286,8 +287,6 @@ $configData = Helper::appClasses();
             }
         });
 
-
-
         $("#classification").select2({
             placeholder: 'Select classification',
             allowClear: true,
@@ -318,12 +317,99 @@ $configData = Helper::appClasses();
             }
         });
 
-
-
-
-
         $('.date').flatpickr({
             dateFormat: 'Y-m-d'
+        });
+
+
+        // Mengambil value tanda tangan
+        let ttdFile1 = null;
+        const myDropzone1 = new Dropzone('#dropzone-1', {
+            parallelUploads: 1,
+            maxFilesize: 2,
+            addRemoveLinks: true,
+            maxFiles: 3,
+            acceptedFiles: ".jpeg,.jpg,.png",
+            autoQueue: false,
+            url: "../uploads/logo",
+            init: function() {
+                if (dataLocal) {
+                    // Add a preloaded file to the dropzone with a preview
+                    var mockFile = dataLocal.signatures[0].signature;
+                    if (mockFile) {
+
+                        this.options.addedfile.call(this, mockFile);
+                        this.options.thumbnail.call(this, mockFile, mockFile.dataURL);
+
+                        $('.dz-image').last().find('img').attr('width', '100%');
+
+
+                        // Optional: Handle the removal of the file
+                        mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+                            // Handle removal logic here
+                        });
+                    }
+                }
+                this.on('addedfile', function(file) {
+                    while (this.files.length > this.options.maxFiles) this.removeFile(this
+                        .files[0]);
+                    ttdFile = file;
+                });
+            }
+        });
+
+        let ttdFile2 = null;
+        const myDropzone2 = new Dropzone('#dropzone-2', {
+            clickable: false,
+            parallelUploads: 1,
+            maxFilesize: 2,
+            addRemoveLinks: true,
+            maxFiles: 1,
+            acceptedFiles: ".jpeg,.jpg,.png",
+            autoQueue: false,
+            init: function() {
+                this.on('addedfile', function(file) {
+                    while (this.files.length > this.options.maxFiles) this.removeFile(this
+                        .files[0]);
+                    ttdFile2 = file;
+                });
+            }
+        });
+
+        let ttdFile3 = null;
+        const myDropzone3 = new Dropzone('#dropzone-3', {
+            clickable: false,
+            parallelUploads: 1,
+            maxFilesize: 2,
+            addRemoveLinks: true,
+            maxFiles: 1,
+            acceptedFiles: ".jpeg,.jpg,.png",
+            autoQueue: false,
+            init: function() {
+                this.on('addedfile', function(file) {
+                    while (this.files.length > this.options.maxFiles) this.removeFile(this
+                        .files[0]);
+                    ttdFile3 = file;
+                });
+            }
+        });
+
+        let ttdFile4 = null;
+        const myDropzone4 = new Dropzone('#dropzone-4', {
+            parallelUploads: 1,
+            maxFilesize: 2,
+            addRemoveLinks: true,
+            maxFiles: 1,
+            clickable: false,
+            acceptedFiles: ".jpeg,.jpg,.png",
+            autoQueue: false,
+            init: function() {
+                this.on('addedfile', function(file) {
+                    while (this.files.length > this.options.maxFiles) this.removeFile(this
+                        .files[0]);
+                    ttdFile4 = file;
+                });
+            }
         });
 
         const flatPickrEL = $(".date");
@@ -406,6 +492,7 @@ $configData = Helper::appClasses();
                         }
                     } else {
                         event.preventDefault();
+                        let fileTtd = ttdFile;
                         let lk = $(".select-lk").val();
                         let datas = {}
                         let signatures = [];
@@ -415,6 +502,7 @@ $configData = Helper::appClasses();
                         let action_plan_date = $('#action_plan_date').val();
                         let finish_plan = $('#finish_plan').val();
                         let job_description = $('#job_description').val();
+
 
                         datas.damage_report_id = lk;
                         datas.scope = scope.toString();
@@ -444,36 +532,17 @@ $configData = Helper::appClasses();
                         });
 
                         datas.details = detail;
-
-                        $('.signatures').each(function(index) {
-                            let signature = {};
-
-                            if (ttdFile1 && index === 0) {
-                                signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                            }
-
-                            if (ttdFile2 && index === 1) {
-                                signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                            }
-
-                            if (ttdFile3 && index === 2) {
-                                signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                            }
-
-                            if (ttdFile4 && index === 3) {
-                                signature['signature'] = ttdFile4.dataURL || ttdFile4.url;
-                            }
-
-                            signatures.push(signature);
-                        });
-
-                        console.log(datas);
+                        let signature = {};
+                        signature['signature'] = ttdFile.dataURL;
+                        signature['name'] = $('#technician1').val();
+                        signature['date'] = $('#date1').val();
+                        signatures.push(signature);
 
                         datas.signatures = signatures;
                         datas.status = "Terbuat";
 
                         $.ajax({
-                            url: "{{ env('BASE_URL_API')}}" + '/api/work-order',
+                            url: "{{ url('/api/work-order')}}",
                             type: "POST",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -485,15 +554,17 @@ $configData = Helper::appClasses();
 
                                 Swal.fire({
                                     title: 'Berhasil',
-                                    text: 'Berhasil menambahkan Laporan Kerusakan.',
+                                    text: 'Berhasil menambahkan Work Order',
                                     icon: 'success',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'
                                     },
                                     buttonsStyling: false
-                                })
+                                }).then(function() {
+                                    localStorage.removeItem('work-order');
+                                    window.location.href = "/complain/work-order"
+                                });
 
-                                // window.location.href = "/complain/work-order"
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
@@ -515,77 +586,7 @@ $configData = Helper::appClasses();
             );
         });
 
-        // Mengambil value tanda tangan
-        let ttdFile1 = null;
-        const myDropzone1 = new Dropzone('#dropzone-1', {
-            parallelUploads: 1,
-            maxFilesize: 2,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            autoQueue: false,
-            init: function() {
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this
-                        .files[0]);
-                    ttdFile1 = file;
-                });
-            }
-        });
 
-        let ttdFile2 = null;
-        const myDropzone2 = new Dropzone('#dropzone-2', {
-            clickable: false,
-            parallelUploads: 1,
-            maxFilesize: 2,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            autoQueue: false,
-            init: function() {
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this
-                        .files[0]);
-                    ttdFile2 = file;
-                });
-            }
-        });
-
-        let ttdFile3 = null;
-        const myDropzone3 = new Dropzone('#dropzone-3', {
-            clickable: false,
-            parallelUploads: 1,
-            maxFilesize: 2,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            autoQueue: false,
-            init: function() {
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this
-                        .files[0]);
-                    ttdFile3 = file;
-                });
-            }
-        });
-
-        let ttdFile4 = null;
-        const myDropzone4 = new Dropzone('#dropzone-4', {
-            parallelUploads: 1,
-            maxFilesize: 2,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            clickable: false,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            autoQueue: false,
-            init: function() {
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this
-                        .files[0]);
-                    ttdFile4 = file;
-                });
-            }
-        });
 
 
         // Fungsi untuk mengambil value dari setiap baris
@@ -605,6 +606,7 @@ $configData = Helper::appClasses();
 
         // Preview before save
         $(".btn-preview").on('click', function() {
+            let fileTtd = ttdFile;
             let lk = $(".select-lk").val();
             let datas = {}
             let signatures = [];
@@ -644,31 +646,11 @@ $configData = Helper::appClasses();
             });
 
             datas.details = detail;
-
-            $('.signatures').each(function(index) {
-                let signature = {};
-
-                if (ttdFile1 && index === 0) {
-                    signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                    signature['name'] =$('#technician1').val();
-                    signature['date'] =$('#date1').val();
-                    
-                }
-
-                // if (ttdFile2 && index === 1) {
-                //     signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                // }
-
-                // if (ttdFile3 && index === 2) {
-                //     signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                // }
-
-                // if (ttdFile4 && index === 3) {
-                //     signature['signature'] = ttdFile4.dataURL || ttdFile4.url;
-                // }
-
-                signatures.push(signature);
-            });
+            let signature = {};
+            signature['signature'] = ttdFile;
+            signature['name'] = $('#technician1').val();
+            signature['date'] = $('#date1').val();
+            signatures.push(signature);
 
             datas.signatures = signatures;
             datas.status = "Terbuat";
@@ -817,7 +799,20 @@ $configData = Helper::appClasses();
         $("#finish_plan").val(dataLocal.finish_plan);
         $("#job_description").val(dataLocal.job_description);
         $("#work_order_date").val(dataLocal.work_order_date);
+        $("#technician1").val(dataLocal.signatures[0].name);
+        $("#date1").val(dataLocal.signatures[0].date);
+        $('.classif2-checkbox').each(function() {
+            var checkboxName = $(this).attr('name').toLowerCase();
 
+            if (dataLocal.klasifikasi) {
+                if ((dataLocal.klasifikasi).toLowerCase() === checkboxName) {
+                    $('.classif2-checkbox').not(this).prop('disabled', true);
+                    $(this).prop('checked', true);
+                } else {
+                    $(this).prop('checked', false);
+                }
+            }
+        });
 
 
         if (dataLocal.damage_report_id) {
@@ -874,22 +869,22 @@ $configData = Helper::appClasses();
                     <div class="row mb-3  d-flex align-items-end">
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Location</label>
-                            <input type="text" class="form-control row-input" id="location" name="location[]" placeholder="Location" value="`+details[i].location+`" required />
+                            <input type="text" class="form-control row-input" id="location" name="location[]" placeholder="Location" value="` + details[i].location + `" required />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Material Request</label>
-                            <input type="text" class="form-control row-input" id="material-req" name="material-req[]" placeholder="Material Request" value="`+details[i].material_request+`" required />
+                            <input type="text" class="form-control row-input" id="material-req" name="material-req[]" placeholder="Material Request" value="` + details[i].material_request + `" required />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Type /Made In</label>
-                            <input type="text" class="form-control row-input" id="type" name="type[]" placeholder="Type /Made In" required value="`+details[i].type+`"/>
+                            <input type="text" class="form-control row-input" id="type" name="type[]" placeholder="Type /Made In" required value="` + details[i].type + `"/>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-2 mb-1-custom"">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="number" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required value="`+details[i].quantity+`"/>
+                            <input type="number" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required value="` + details[i].quantity + `"/>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-1 px-1-custom mb-1-custom">
