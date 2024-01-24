@@ -33,10 +33,10 @@ class DamageReportService{
             "details.*.total" => ["bail", "required", "numeric", "gte:0"],
 
             "signatures" => ["bail", "nullable", "array"],
-            "signatures.*.type" => ["bail", "required", "string"],
-            "signatures.*.name" => ["bail", "required", "string"],
-            "signatures.*.signature" => ["bail", "required", "string"],
-            "signatures.*.date" => ["bail", "required", "string"],
+            "signatures.*.type" => ["bail", "nullable", "string"],
+            "signatures.*.name" => ["bail", "nullable", "string"],
+            "signatures.*.signature" => ["bail", "nullable", "string"],
+            "signatures.*.date" => ["bail", "nullable", "string"],
         ];
         $errorMessages = [
             "required" => "Field :attribute harus diisi",

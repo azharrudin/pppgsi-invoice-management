@@ -37,9 +37,9 @@ class WorkOrderService{
             "details.*.quantity" => ["bail", "required", "numeric", "gte:0"],
 
             "signatures" => ["bail", "nullable", "array"],
-            "signatures.*.name" => ["bail", "required", "string"],
-            "signatures.*.signature" => ["bail", "required", "string"],
-            "signatures.*.date" => ["bail", "required", "date"],
+            "signatures.*.name" => ["bail", "nullable", "string"],
+            "signatures.*.signature" => ["bail", "nullable", "string"],
+            "signatures.*.date" => ["bail", "nullable", "date"],
         ];
         $errorMessages = [
             "required" => "Field :attribute harus diisi",
