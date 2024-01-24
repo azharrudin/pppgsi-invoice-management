@@ -53,6 +53,8 @@ Route::get("receipt/report", [ReceiptController::class, "report"]);
 Route::patch("receipt/update-status/{id}", [ReceiptController::class, "update_status"]);
 Route::resource('receipt', ReceiptController::class);
 
+Route::post("ticket/add-attachment/{id}", [TicketController::class, "add_attachment"]);
+Route::delete("ticket/delete-attachment/{id}", [TicketController::class, "delete_attachment"]);
 Route::get("ticket/select", [TicketController::class, "select"]);
 Route::get("ticket/report", [TicketController::class, "report"]);
 Route::patch("ticket/update-status/{id}", [TicketController::class, "update_status"]);
