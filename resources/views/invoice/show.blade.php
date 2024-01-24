@@ -234,7 +234,7 @@ $configData = Helper::appClasses();
                         allowOutsideClick: false
                     });
                     $.ajax({
-                        url: "{{url('api/invoice/update-status')}}/" + id,
+                        url: "{{env('BASE_URL_API')}}" +'/api/invoice/update-status/' + id,
                         type: "PATCH",
                         data: JSON.stringify(datas),
                         contentType: "application/json; charset=utf-8",
@@ -297,7 +297,7 @@ $configData = Helper::appClasses();
                         allowOutsideClick: false
                     });
                     $.ajax({
-                        url: "{{url('api/invoice/update-status')}}/" + id,
+                        url: "{{env('BASE_URL_API')}}" +'/api/invoice/update-status/' + id,
                         type: "PATCH",
                         data: JSON.stringify(datas),
                         contentType: "application/json; charset=utf-8",
@@ -338,7 +338,7 @@ $configData = Helper::appClasses();
 
     function getDataInvoice(id) {
         $.ajax({
-            url: "{{url('api/invoice')}}/" + id,
+            url: "{{env('BASE_URL_API')}}" +'/api/invoice/' + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
@@ -390,7 +390,9 @@ $configData = Helper::appClasses();
                 if (account.level.id == '2' && data.status == 'Terbuat') {
                     $('.disetujui').removeClass('d-none');
                 }
+                console.log(data.status);
                 if ((account.level.id == '10' && data.status == 'Terbuat') || (data.status == 'Disetujui KA' && account.level.id == '1')) {
+                    console.log('aa');
                     $('.edit').removeClass('d-none');
                 }
                 Swal.close();
@@ -408,7 +410,7 @@ $configData = Helper::appClasses();
 
     function getTenant(id) {
         $.ajax({
-            url: "{{url('api/tenant')}}/" + id,
+            url: "{{env('BASE_URL_API')}}" +'/api/tenant/' + id,
             type: "GET",
             success: function(response) {
                 let data = response.data;
@@ -438,7 +440,7 @@ $configData = Helper::appClasses();
 
     function getBank(id) {
         $.ajax({
-            url: "{{url('api/bank')}}/" + id,
+            url: "{{env('BASE_URL_API')}}" +'/api/bank/' + id,
             type: "GET",
             success: function(response) {
                 let data = response.data;
