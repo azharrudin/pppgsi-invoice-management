@@ -193,7 +193,7 @@ $configData = Helper::appClasses();
 
         function getDataPreview(id) {
             $.ajax({
-                url: "{{ env('BASE_URL_API')}}" +'/api/receipt'/ + id,
+                url: "{{ env('BASE_URL_API')}}" +'/api/receipt/' + id,
                 type: "GET",
                 dataType: "json",
                 beforeSend: function() {
