@@ -103,9 +103,9 @@ Route::group(['middleware' => 'cekauth'], function () {
         Route::prefix('work-order')->group(function () {
             Route::get('/', [WorkOrderController::class, 'index'])->name('pages-list-work-order');
             Route::get('/add', [WorkOrderController::class, 'create'])->name('pages-list-work-order');
-            Route::get('/preview', [WorkOrderController::class, 'show'])->name('pages-list-work-order');
+            Route::get('/preview', [WorkOrderController::class, 'preview'])->name('pages-list-work-order');
             Route::get('/edit/{id}', [WorkOrderController::class, 'edit'])->name('pages-list-work-order');
-            Route::get('/preview/{id}', [WorkOrderController::class, 'preview'])->name('pages-list-work-order');
+            Route::get('/show/{id}', [WorkOrderController::class, 'show'])->name('pages-list-work-order');
             Route::get('/data-work', [WorkOrderController::class, 'datatable'])->name('data-work');
             Route::get('/print/{id}', [WorkOrderController::class, 'print']);
         });
