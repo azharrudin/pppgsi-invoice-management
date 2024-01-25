@@ -104,13 +104,13 @@
                                                             name="location" placeholder="Lokasi" required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
-                                                    <div class="col-3">
+                                                    <div class="col-4">
                                                         <label for="note" class="form-label fw-medium">Jumlah</label>
                                                         <input type="text" class="form-control" id="edit_total"
                                                             name="total" placeholder="Jumlah" required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
-                                                    <a class="mb-3 mx-2 mt-4" style="width: 10px" role="button"
+                                                    {{-- <a class="mb-3 mx-2 mt-4" style="width: 10px" role="button"
                                                         data-repeater-delete>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="12"
                                                             height="12" viewBox="0 0 12 12" fill="none">
@@ -119,19 +119,19 @@
                                                                 d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z"
                                                                 fill="#FF4747" />
                                                         </svg>
-                                                    </a>
+                                                    </a> --}}
                                                 </div>
                                             </div>
                                         </div>
 
 
 
-                                        <div class="row pb-4">
+                                        {{-- <div class="row pb-4">
                                             <div class="col-12">
                                                 <button type="button" class="btn btn-primary waves-effect waves-light"
                                                     data-repeater-create>Tambah Baris</button>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
 
 
@@ -140,13 +140,13 @@
                                         <div class="col-4 signatures">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add"
-                                                    placeholder="KA. Unit Pelayanan" style="text-align:center;"
+                                                    placeholder="Jabatan" style="text-align:center;"
                                                     id="edit_type-1" name="type" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add "
-                                                    placeholder="Nama & Jabatan" style="text-align:center;"
+                                                    placeholder="Nama" style="text-align:center;"
                                                     id="edit_name-1" name="name" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
@@ -181,13 +181,13 @@
                                         <div class="col-4 signatures">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add"
-                                                    placeholder="KA. Unit Pelayanan" style="text-align:center;"
+                                                    placeholder="Jabatan" style="text-align:center;"
                                                     id="edit_type-2" name="type" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add "
-                                                    placeholder="Nama & Jabatan" style="text-align:center;"
+                                                    placeholder="Nama" style="text-align:center;"
                                                     id="edit_name-2" name="name" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
@@ -223,13 +223,13 @@
                                         <div class="col-4 signatures">
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add"
-                                                    placeholder="KA. Unit Pelayanan" style="text-align:center;"
+                                                    placeholder="Jabatan" style="text-align:center;"
                                                     id="edit_type-3" name="type" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="text" class="form-control add "
-                                                    placeholder="Nama & Jabatan" style="text-align:center;"
+                                                    placeholder="Nama" style="text-align:center;"
                                                     id="edit_name-3" name="name" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
@@ -362,7 +362,7 @@
 
             // Mendapatkan id dengan cara mengambil dari URL
             var urlSegments = window.location.pathname.split('/');
-            var idIndex = urlSegments.indexOf('preview') + 1;
+            var idIndex = urlSegments.indexOf('show') + 1;
             var id = urlSegments[idIndex];
 
             getDataLaporanKerusakan(id)

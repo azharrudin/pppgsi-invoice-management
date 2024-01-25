@@ -155,7 +155,7 @@ $configData = Helper::appClasses();
                                     </div>
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician2" name="name" style="text-align:center;" disabled />
+                                            <input type="text" class="form-control" placeholder="Chief Engineering" id="technician2" name="name" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
 
@@ -173,7 +173,7 @@ $configData = Helper::appClasses();
                                     </div>
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician3" name="name" style="text-align:center;" disabled />
+                                            <input type="text" class="form-control" placeholder="Warehouse" id="technician3" name="name" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -190,7 +190,7 @@ $configData = Helper::appClasses();
                                     </div>
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician4" name="name" style="text-align:center;" disabled />
+                                            <input type="text" class="form-control" placeholder="Building Manager" id="technician4" name="name" style="text-align:center;" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -218,7 +218,7 @@ $configData = Helper::appClasses();
                 <div class="card mb-4">
                     <div class="card-body">
                         <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
+                        {{-- <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button> --}}
                         <button type="button" class="btn btn-label-secondary d-grid w-100 btn-cancel">Batal</button>
                     </div>
                 </div>

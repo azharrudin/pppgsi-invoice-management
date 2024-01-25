@@ -197,7 +197,7 @@ $configData = Helper::appClasses();
                 data: null,
                 title: "Tanggapan",
                 render: function(data, type, row) {
-                    return '<div class="d-flex align-items-center"><a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a><a href="laporan-kerusakan/show/' +
+                    return '<div class="d-flex align-items-center"><a href="laporan-kerusakan/show/' +
                         data.id +
                         '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Laporan Kerusakan"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="laporan-kerusakan/edit/' +
                         data.id + '" class="dropdown-item btn-edit" data-id="' +
