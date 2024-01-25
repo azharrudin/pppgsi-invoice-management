@@ -42,9 +42,9 @@ return new class extends Migration
         Schema::create('work_order_signature', function (Blueprint $table) {
             $table->unsignedInteger("work_order_id");
             $table->foreign('work_order_id')->references('id')->on('work_orders');
-            $table->string("name");
-            $table->mediumText("signature");
-            $table->date("date");
+            $table->string("name")->nullable();
+            $table->mediumText("signature")->nullable();
+            $table->date("date")->nullable();
             $table->timestamps();
             $table->date("deleted_at")->nullable();
         });

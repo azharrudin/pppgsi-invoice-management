@@ -38,10 +38,10 @@ return new class extends Migration
         Schema::create('damage_report_signature', function (Blueprint $table) {
             $table->unsignedInteger("damage_report_id");
             $table->foreign('damage_report_id')->references('id')->on('damage_reports');
-            $table->string("type");
-            $table->string("name");
-            $table->mediumText("signature");
-            $table->date("date");
+            $table->string("type")->nullable();
+            $table->string("name")->nullable();
+            $table->mediumText("signature")->nullable();
+            $table->date("date")->nullable();
             $table->timestamps();
             $table->date("deleted_at")->nullable();
         });

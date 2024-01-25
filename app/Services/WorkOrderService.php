@@ -5,7 +5,7 @@ use Validator;
 
 class WorkOrderService{
     protected $CommonService;
-    protected $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "selesai"];
+    protected $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "disetujui technician", "disetujui chief engineering", "disetujui warehouse", "disetujui building manager", "terkirim", "selesai"];
 
     public function __construct(CommonService $CommonService)
     {
@@ -37,9 +37,9 @@ class WorkOrderService{
             "details.*.quantity" => ["bail", "required", "numeric", "gte:0"],
 
             "signatures" => ["bail", "nullable", "array"],
-            "signatures.*.name" => ["bail", "required", "string"],
-            "signatures.*.signature" => ["bail", "required", "string"],
-            "signatures.*.date" => ["bail", "required", "date"],
+            "signatures.*.name" => ["bail", "nullable", "string"],
+            "signatures.*.signature" => ["bail", "nullable", "string"],
+            "signatures.*.date" => ["bail", "nullable", "date"],
         ];
         $errorMessages = [
             "required" => "Field :attribute harus diisi",

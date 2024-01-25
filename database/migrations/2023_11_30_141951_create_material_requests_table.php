@@ -43,10 +43,10 @@ return new class extends Migration
         Schema::create('material_request_signature', function (Blueprint $table) {
             $table->unsignedInteger("material_request_id");
             $table->foreign('material_request_id')->references('id')->on('material_requests');
-            $table->string("type");
-            $table->string("name");
-            $table->mediumText("signature");
-            $table->date("date");
+            $table->string("type")->nullable();
+            $table->string("name")->nullable();
+            $table->mediumText("signature")->nullable();
+            $table->date("date")->nullable();
             $table->timestamps();
             $table->date("deleted_at")->nullable();
         });

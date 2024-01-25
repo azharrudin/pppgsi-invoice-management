@@ -14,6 +14,8 @@ class TicketAttachment extends Model
 
     protected $table = 'ticket_attachments';
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         "ticket_id",
         "attachment",

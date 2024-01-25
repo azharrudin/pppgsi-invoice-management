@@ -31,8 +31,8 @@ class PurchaseOrderService{
             "tax" => ["bail", "required", "numeric"],
             "grand_total_spelled" => ["bail", "required", "string"],
             "term_and_conditions" => ["bail", "required", "string"],
-            "signature" => ["bail", "required", "string"],
-            "signature_name" => ["bail", "required", "string"],
+            "signature" => ["bail", "nullable", "string"],
+            "signature_name" => ["bail", "nullable", "string"],
 
             "details" => ["bail", "required", "array"],
             "details.*.number" => ["bail", "required", "numeric"],
