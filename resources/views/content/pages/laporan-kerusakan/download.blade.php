@@ -25,7 +25,6 @@
             max-width: 21cm;
             margin: 0 auto;
             background: #fff;
-            padding: 1cm;
 
         }
 
