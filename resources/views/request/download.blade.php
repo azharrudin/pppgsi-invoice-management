@@ -183,6 +183,39 @@ return $hasil_rupiah;
                 </tbody>
             </table>
         </div>
+        <div class="row mt-3">
+            <table style="width: 100%;">
+                <tr>
+                    <td style="border: 0.5px solid black;">Diproses Oleh :</td>
+                    <td style="border: 0.5px solid black;">Diperiksa Oleh :</td>
+                    <td style="border: 0.5px solid black;">Diketahui Oleh :</td>
+                </tr>
+                <tr>
+                    <td style="border: 0.5px solid black;"></td>
+                    <td style="border: 0.5px solid black;"></td>
+                    <td style="border: 0.5px solid black;"></td>
+                </tr>
+                <tr class="text-center">
+                    <td style="border: 0.5px solid black;">()</td>
+                    <td style="border: 0.5px solid black;">()</td>
+                    <td style="border: 0.5px solid black;">()</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="row mt-3">
+            <table class="table">
+                <tr>
+                    <td style="width: 80px;">Lembar ke 1 : </td>
+                    <td>Adminstrasi </td>
+                </tr>
+                <tr>
+                    <td>Lembar ke 2 : </td>
+                    <td>Gudang </td>
+                </tr>
+               
+            </table>
+        </div>
     </div>
 </body>
 

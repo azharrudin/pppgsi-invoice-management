@@ -130,9 +130,11 @@
                 <thead>
                     <tr>
                         <td rowspan="2" style="border: 0.5px solid black; text-align:center; padding:10px;">
-                            <b>No.</b>
-                            <br>
-                            No.
+                            <div class="">
+                                <span style="font-weight: bold;">No.</span>
+                                <br>
+                                No.
+                            </div>
                         </td>
                         <td rowspan="2" style="border: 0.5px solid black; text-align:center; padding:10px">
                             <b>PART No.</b>

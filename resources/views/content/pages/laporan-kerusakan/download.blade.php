@@ -106,27 +106,21 @@
         </div>
 
         <div class="row">
-            <table class="table-1">
+            <table style="width: 100%;">
+                <thead>
+                    <tr>
+                        <td style="border: 0.5px solid black; text-align:center; padding:10px">NO</td>
+                        <td style="border: 0.5px solid black; text-align:center; padding:10px">JENIS MASALAH KERUSAKAN</td>
+                        <td style="border: 0.5px solid black; text-align:center; padding:10px">LOKASI</td>
+                        <td style="border: 0.5px solid black; text-align:center; padding:10px">JUMLAH</td>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            <center>No</center>
-                        </td>
-                        <td>
-                            <center>JENIS MASALAH KERUSAKAN</center>
-                        </td>
-                        <td>
-                            <center>LOKASI</center>
-                        </td>
-                        <td>
-                            <center>JUMLAH</center>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td style="border: 0.5px solid black; padding:10px;" class="text-center">a</td>
+                        <td style="border: 0.5px solid black;"></td>
+                        <td style="border: 0.5px solid black;"></td>
+                        <td style="border: 0.5px solid black;"></td>
                     </tr>
                 </tbody>
             </table>
@@ -138,39 +132,46 @@
                     <td>
                         <center>
                             <p>Mengetahui</p>
-                            <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
-                                {{-- $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' --}}<br>
-                                <img src="{{-- $data->signature_image --}}" alt="">
+
+                            {{-- $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' --}}<br>
+                            <img src="{{-- $data->signature_image --}}" alt="">
                             <p class="text-center">
-                                <u></u></b><br><span>Marwoto{{-- $data->signature_name --}}</span>
+                                <span>(){{-- $data->signature_name --}}</span>
                             </p>
+                            <p class="text-center">
+                                <span>Ka. Unit Pelayanan</span>
                             </p>
                         </center>
                     </td>
                     <td>
                         <center>
                             <p>Mengetahui</p>
-                            <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
-                                {{-- $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' --}}<br>
-                                <img src="{{-- $data->signature_image --}}" alt="">
+
+                            {{-- $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' --}}<br>
+                            <img src="{{-- $data->signature_image --}}" alt="">
                             <p class="text-center">
-                                <u></u></b><br><span>Marwoto{{-- $data->signature_name --}}</span>
+                                <span>(){{-- $data->signature_name --}}</span>
                             </p>
+                            <p class="text-center">
+                                <span>Kord. Teknik</span>
                             </p>
                         </center>
                     </td>
                     <td>
                         <center>
                             <p>Mengetahui</p>
-                            <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
-                                {{-- $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' --}}<br>
-                                <img src="{{-- $data->signature_image --}}" alt="">
+
+                            {{-- $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' --}}<br>
+                            <img src="{{-- $data->signature_image --}}" alt="">
                             <p class="text-center">
-                                <u></u></b><br><span>Marwoto{{-- $data->signature_name --}}</span>
+                                <span>(){{-- $data->signature_name --}}</span>
                             </p>
+                            <p class="text-center">
+                                <span>Leader Cleaning</span>
                             </p>
                         </center>
                     </td>
+                   
                 </tr>
             </table>
         </div>
