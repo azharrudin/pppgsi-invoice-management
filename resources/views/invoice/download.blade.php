@@ -73,14 +73,7 @@ return $hasil_rupiah;
             <table class="table" style="width: 100%;">
                 <tbody>
                     <tr>
-                        <td rowspan="3" style="width: 10%;"><b>Kepada
-                                Yth:
-                            </b></td>
-                        <td rowspan="3" style="width: 35%; border: 0.5px solid black; padding: 10px;"><b style="font-size: 10px;">
-                                {{ $data->tenant->company }} <br>
-                                {{ $data->tenant->floor }} <br>
-                                <br>
-                                Up. {{ $data->tenant->name }}</b></td>
+                        <td style="width: 10%;"><b>Kepada Yth:</b></td>
                         <td style=""></td>
                         <td style="width: 20%;border: 0.5px solid black; padding: 10px;"><b>No. Invoice:</b> 
                             <br><b>{{ $data->invoice_number }}</b> 
@@ -88,6 +81,13 @@ return $hasil_rupiah;
                         <td style="width: 20%;border: 0.5px solid black; padding: 10px;"><b>Tanggal:</b><br>
                             <b> {{ date('d F Y', strtotime($data->invoice_date)) }}</b>
                         </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3" style="width: 35%; border: 0.5px solid black; padding: 10px;"><b>
+                            {{ $data->tenant->company }} <br>
+                            {{ $data->tenant->floor }} <br>
+                            <br>
+                            Up. {{ $data->tenant->name }}</b></td>
                     </tr>
                     <tr>
                         <td style="border: none;"></td>

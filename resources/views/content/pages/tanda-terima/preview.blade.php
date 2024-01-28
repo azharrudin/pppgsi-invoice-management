@@ -150,6 +150,12 @@ $configData = Helper::appClasses();
         <div class="col-lg-3 col-12 invoice-actions">
             <div class="card mb-4">
                 <div class="card-body">
+                    <button class="btn btn-primary d-grid w-100 mb-2 kirim-tanda-terima d-none" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
+                        <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Tanda Terima</span>
+                    </button>
+                    <button type="button" class="btn btn-primary btn-status d-grid w-100 mb-2 disetujui d-none" style="color : #fff;"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-check ti-xs me-2"></i>Disetujui</span></button>
+                    <a href="{{url('invoice/tanda-terima/edit')}}/{{$id}}" id="edit" class="btn btn-primary d-grid w-100 mb-2 edit d-none"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-pencil ti-xs me-2"></i>Edit</span></a>
+                    <a target="_blank" href="{{url('invoice/tanda-terima/print/')}}/{{$id}}" id="preview" class="btn btn-info d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-download ti-xs me-2"></i>Download</span></a>
                     <a href="{{ url('invoice/tanda-terima')}}" id="back" class="btn btn-secondary d-grid w-100 mb-2">Kembali</a>
                 </div>
             </div>
