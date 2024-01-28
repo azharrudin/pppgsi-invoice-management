@@ -214,8 +214,6 @@ $configData = Helper::appClasses();
 
     let data = JSON.parse(localStorage.getItem("material-request"));
     $(document).ready(function() {
-        // $("#invoice_number").val(data.invoice_number);
-        // let fileTtd = ttdFile.dataURL;
         $("#requester").val(data.requester);
         $("#department").val(data.department);
         $("#request_date").val(data.request_date);
@@ -284,46 +282,5 @@ $configData = Helper::appClasses();
         window.location.href = "/request/material-request"
     });
 
-    $(document).on('click', '#save', function(event) {
-        event.preventDefault();
-        $.ajax({
-            url: baseUrl + "api/material-request/",
-            type: "POST",
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-
-            success: function(response) {
-                $('.indicator-progress').show();
-                $('.indicator-label').hide();
-
-                Swal.fire({
-                    title: 'Berhasil',
-                    text: 'Berhasil menambahkan Material Request',
-                    icon: 'success',
-                    customClass: {
-                        confirmButton: 'btn btn-primary'
-                    },
-                    buttonsStyling: false
-                });
-
-                // localStorage.removeItem('invoice');
-                // window.location.href = "/invoice/list-invoice"
-
-            },
-            error: function(xhr, status, error) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Semua field harus diisi',
-                    icon: 'error',
-                    customClass: {
-                        confirmButton: 'btn btn-primary'
-                    },
-                    buttonsStyling: false
-                })
-            }
-        });
-        // window.location.href = "/invoice/list-invoice"
-    });
 </script>
 @endsection

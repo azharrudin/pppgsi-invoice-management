@@ -166,15 +166,15 @@ $configData = Helper::appClasses();
                         console.log(data);
                         if (data == 'Terbuat') {
                             return '<span class="badge w-100" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
+                        } else if (data == 'disetujui chief departement') {
+                            return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized>Disetujui Chief Departement </span>';
+                        } else if (data == 'disetujui chief finance') {
+                            return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized> Disetujui Chief Finance & Accounting </span>';
                         } else if (data == 'Disetujui KA') {
-                            return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized> Disetujui KA </span>';
-                        } else if (data == 'Lunas') {
-                            return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
-                        } else if (data == 'Terkirim') {
-                            return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
-                        } else if (data == 'Disetujui BM') {
+                            return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> Disetujui Kepala BM </span>';
+                        } else if (data == 'Disetujui BM' || data == 'disetujui kepala bm') {
                             return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
-                        } else if (data == 'Selesai') {
+                        } else if (data == 'Selesai' || data == 'selesai') {
                             return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized> Selesai </span>';
                         }
                     }
@@ -185,7 +185,7 @@ $configData = Helper::appClasses();
                     render: function(data, type, row) {
                         let editRow = '';
                         let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
-                        let previewRow = '<a href="{{ url("invoice/show")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
+                        let previewRow = '<a href="{{ url("request/material-request/show")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Material Request"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
                         return `<div class="d-flex align-items-center">
                             `  + previewRow + `
                             <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="{{ url("request/material-request/edit")}}/` + data + `" class="dropdown-item">Edit</a>
@@ -194,7 +194,7 @@ $configData = Helper::appClasses();
                 }
             ],
             order: [
-                [1, "desc"]
+                [0, "desc"]
             ],
             dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
             language: {

@@ -152,7 +152,6 @@ $configData = Helper::appClasses();
                                     <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -791,9 +790,9 @@ $configData = Helper::appClasses();
                         datas.grand_total = parseInt(grandTotal);
                         datas.materai_image = fileTtd;
                         delete datas['undefined'];
-
+                        
                         $.ajax({
-                            url: "{{ env('BASE_URL_API')}}" +'/api/invoice'+ id,
+                            url: "{{ env('BASE_URL_API')}}" +'/api/invoice/'+ id,
                             type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",

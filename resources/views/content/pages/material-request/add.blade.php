@@ -45,7 +45,7 @@ $configData = Helper::appClasses();
                                 </div>
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Purchase </label>
-                                    <input type="text" class="form-control" placeholder="Purchase" name="purchase" id="purchase" required />
+                                    <input type="text" class="form-control money-format" placeholder="Purchase" name="purchase" id="purchase" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
@@ -65,29 +65,24 @@ $configData = Helper::appClasses();
                         <div class="py-3 px-3">
                             <div class="card academy-content shadow-none border p-3">
                                 <div class="">
-                                    <div class="">
-                                        <div class="table-responsive">
-                                            <div class="" id="details">
-
-                                            </div>
+                                    <div class="table-responsive">
+                                        <div class="" id="details">
                                         </div>
                                     </div>
-
                                     <div class="row pb-4">
                                         <div class="col-12">
                                             <button type="button" class="btn btn-primary waves-effect waves-light btn-add-row-mg mt-2">Tambah Baris</button>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row mb-3 ttd">
                                     <div class="col-md-3">
                                         <label for="note" class="form-label fw-medium mb-3">Prepered by :</label>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="name" name="name[]" />
+                                            <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="warehouse_name" name="name[]" />
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="jabatan" name="jabatan[]" />
+                                            <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="warehouse_jabatan" name="jabatan[]" readonly/>
                                         </div>
                                         <div class="mb-3">
                                             <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd1" style="padding: 5px;">
@@ -97,7 +92,7 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" />
+                                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="warehouse_date" name="date[]" />
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -109,7 +104,7 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control ttd-row" placeholder="Jabatan" style="text-align:center;" id="jabatan" name="jabatan[]" value="Chief Department" disabled />
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd2" style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick dd" id="ttd2" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -128,7 +123,7 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control ttd-row" placeholder="Jabatan" style="text-align:center;" id="jabatan" name="jabatan[]" value="Chief Finance & Akunting" disabled />
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd3" style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick dd" id="ttd3" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -147,7 +142,7 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control ttd-row" placeholder="Jabatan" style="text-align:center;" id="jabatan" name="jabatan[]" value="Kepala BM" disabled/>
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd4" style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick dd" id="ttd4" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -156,25 +151,6 @@ $configData = Helper::appClasses();
                                         <div class="mb-3">
                                             <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="date" name="date[]" disabled/>
                                         </div>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="row ttd">
-                                    <div class="col-md-2">
-                                        <span>Lembar</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <span>1. Accounting (Putih)</span>
-                                        <br>
-                                        <span>2. Guddang (Merah)</span>
-                                    </div>
-                                    <br>
-                                    <div class="col-md-4">
-                                        <span>3. Purchasing (Hijau)</span>
-                                        <br>
-                                        <span>4. Pemohon (Biru)</span>
                                     </div>
                                 </div>
                             </div>
@@ -188,11 +164,8 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
-                            <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
-                        </button>
+                        <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
                         <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
-                        <button type="submit" id="save" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
                         <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
                     </div>
                 </div>
@@ -233,7 +206,6 @@ $configData = Helper::appClasses();
 
         let account = {!! json_encode(session('data')) !!}
         var levelId = account.level_id;
-        console.log(levelId);
         var department = account.department.name;
         var nameUser = account.name;
 
@@ -397,39 +369,36 @@ $configData = Helper::appClasses();
             var $newRow = `
            
                     <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Nomor</th>
-                                <th>Part Number</th>
-                                <th>Deskripsi</th>
-                                <th>Quantity</th>
-                                <th class="text-center">Filled Storekeeper Only</th>
-                            </tr>
-                        </thead>
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control form-control" placeholder="Nomor" name="number[]" required style="width: 200px;"/>
+                                    <input type="text" class="form-control row-input" placeholder="Nomor" name="number[]" required style="width: 200px;"/>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control form-control" placeholder="No. Suku Cadang" name="part_number[]" required style="width: 200px;"/>
+                                    <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" required style="width: 200px;"/>
                                 </td>
                                 <td>
-                                    <textarea class="form-control form-control" placeholder="Deskripsi" name="description[]" style="width: 200px;"></textarea>
+                                    <textarea class="form-control row-input" placeholder="Deskripsi" name="description[]" style="width: 200px;"></textarea>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control form-control" placeholder="Kuantitas" name="quantity[]" required style="width: 200px;"/>
+                                    <input type="text" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required style="width: 200px;"/>
                                 </td>
                                 <td>
-                                    <div class="d-flex justify-content-between align-items-end">
-                                        <input type="text" class="form-control form-control" placeholder="Stock" name="stock[]" required style="width: 200px;"/>
-                                        <input type="text" class="form-control form-control" placeholder="Stock Out" name="stock_out[]" required style="width: 200px;"/>
-                                        <input type="text" class="form-control form-control" placeholder="End Stock" name="end_stock[]" required style="width: 200px;"/>
-                                        <input type="text" class="form-control form-control" placeholder="Min Stock" name="min_stock" [] required style="width: 200px;"/>
-                                        <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </div>
+                                    <input type="text" class="form-control row-input" placeholder="Stock" name="stock[]" required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control row-input" placeholder="Stock Out" name="stock_out[]" required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control row-input" placeholder="End Stock" name="end_stock[]" required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control row-input" placeholder="Min Stock" name="min_stock" [] required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
+                                        <i class="fas fa-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
@@ -439,107 +408,113 @@ $configData = Helper::appClasses();
             $details.append($newRow);
         });
 
-    });
+        function getDetails() {
+            let data = dataLocal;
+            let getDetail = '';
+            let temp = '';
 
-    function getDetails() {
-        let data = dataLocal;
-        let getDetail = '';
-        let temp = '';
-
-        if (data) {
-            let details = dataLocal.details;
-            console.log(details.length);
-            for (let i = 0; i < details.length; i++) {
-                temp = `
-                <div class="mb-3 row-mg">
-                    <div class="row d-flex align-items-end mb-2">
-                        <div class="col" style="padding-right:0.25rem">
-                            <label for="note" class="form-label fw-medium">Nomor</label>
-                            <input type="text" class="form-control row-input" placeholder="Nomor" name="number[]" value="` + details[i].number + `" required />
-                        </div>
-                        <div class="col px-1">
-                            <label for="note" class="form-label fw-medium">Part Number</label>
-                            <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" value="` + details[i].part_number + `" required />
-                        </div>
-                        <div class="col px-1">
-                            <label for="note" class="form-label fw-medium">Deskripsi</label>
-                            <textarea class="form-control row-input" placeholder="Deskripsi" name="description[]" required />` + details[i].description + `</textarea>
-                        </div>
-                        <div class="col px-1">
-                            <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" value="` + details[i].quantity + `"  required />
-                        </div>
-                        <div class="col-6 px-1">
-                            <label for="note" class="form-label fw-medium">Filled Storekeeper Only</label>
-                            <div class="d-flex justify-content-between align-items-end">
-                                <div class="col px-1">
-                                    <input type="text" class="form-control row-input" placeholder="Stock" name="stock[]" value="` + details[i].stock + `" required />
-                                </div>
-                                <div class="col px-1">
-                                    <input type="text" class="form-control row-input" placeholder="Stock Out" name="stock_out[]" value="` + details[i].stock_out + `" required />
-                                </div>
-                                <div class="col px-1">
-                                    <input type="text" class="form-control row-input" placeholder="End Stock" name="end_stock[]" value="` + details[i].end_stock + `" required />
-                                </div>
-                                <div class="col px-1">
-                                    <input type="text" class="form-control row-input" placeholder="Min Stock" name="min_stock[]" value="` + details[i].min_stock + `" required />
-                                </div>
-                                <a role="button" class="btn btn-primary text-center btn-remove-mg text-white" disabled>
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                 </div> 
-                `;
-                getDetail = getDetail + temp;
-            }
-            $('#details').prepend(getDetail);
-        } else {
-            console.log();
-            temp = `            
-            <table class="table">
+            if (data) {
+                let details = dataLocal.details;
+                for (let i = 0; i < details.length; i++) {
+                    temp = `
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Nomor</th>
                                 <th>Part Number</th>
                                 <th>Deskripsi</th>
                                 <th>Quantity</th>
-                                <th class="text-center">Filled Storekeeper Only</th>
+                                <th class="text-center" colspan="5">Filled Storekeeper Only</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control form-control" placeholder="Nomor" name="number[]" required style="width: 200px;"/>
+                                    <input type="text" class="form-control row-input" placeholder="Nomor" name="number[]" required style="width: 200px;" value="` + details[i].number + `"/>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control form-control" placeholder="No. Suku Cadang" name="part_number[]" required style="width: 200px;"/>
+                                    <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" required style="width: 200px;" value="` + details[i].part_number + `"/>
                                 </td>
                                 <td>
-                                    <textarea class="form-control form-control" placeholder="Deskripsi" name="description[]" style="width: 200px;"></textarea>
+                                    <textarea class="form-control row-input" placeholder="Deskripsi" name="description[]" style="width: 200px;">`+ details[i].description +`</textarea>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control form-control" placeholder="Kuantitas" name="quantity[]" required style="width: 200px;"/>
+                                    <input type="text" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required style="width: 200px;" value="` + details[i].quantity + `"/>
                                 </td>
                                 <td>
-                                    <div class="d-flex justify-content-between align-items-end">
-                                        <input type="text" class="form-control form-control" placeholder="Stock" name="stock[]" required style="width: 200px;"/>
-                                        <input type="text" class="form-control form-control" placeholder="Stock Out" name="stock_out[]" required style="width: 200px;"/>
-                                        <input type="text" class="form-control form-control" placeholder="End Stock" name="end_stock[]" required style="width: 200px;"/>
-                                        <input type="text" class="form-control form-control" placeholder="Min Stock" name="min_stock" [] required style="width: 200px;"/>
-                                        <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </div>
+                                    <input type="text" class="form-control row-input" placeholder="Stock" name="stock[]" required style="width: 200px;" value="` + details[i].stpck + `"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control row-input" placeholder="Stock Out" name="stock_out[]" required style="width: 200px;" value="` + details[i].stock_out + `"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control row-input" placeholder="End Stock" name="end_stock[]" required style="width: 200px;" value="` + details[i].end_stock + `"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control row-input" placeholder="Min Stock" name="min_stock" [] required style="width: 200px;" value="` + details[i].min_stock + `"/>
+                                </td>
+                                <td>
+                                    <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
+                                        <i class="fas fa-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-            `;
-            $('#details').prepend(temp);
+                    `;
+                    getDetail = getDetail + temp;
+                }
+                $('#details').prepend(getDetail);
+            } else {
+                temp = `            
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nomor</th>
+                                <th>Part Number</th>
+                                <th>Deskripsi</th>
+                                <th>Quantity</th>
+                                <th class="text-center" colspan="5">Filled Storekeeper Only</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control row-input" placeholder="Nomor" name="number[]" required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <textarea class="form-control row-input" placeholder="Deskripsi" name="description[]" style="width: 200px;"></textarea>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control row-input" placeholder="Stock" name="stock[]" required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control row-input" placeholder="Stock Out" name="stock_out[]" required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control row-input" placeholder="End Stock" name="end_stock[]" required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control row-input" placeholder="Min Stock" name="min_stock" [] required style="width: 200px;"/>
+                                </td>
+                                <td>
+                                    <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+                $('#details').prepend(temp);
+            }
         }
-        
 
         var saveMaterial = $('.create-material-request');
 
@@ -555,15 +530,18 @@ $configData = Helper::appClasses();
                     } else {
                         // Submit your form
                         event.preventDefault();
-                        // let fileTtd = ttdFile.dataURL;
                         let requester = $("#requester").val();
                         let department = $("#department").val();
                         let request_date = $("#request_date").val();
                         let stock = $("#stock").val();
                         let purchase = $("#purchase").val();
-                        let note = $("#purchase").val();
-
+                        let note = $("#note").val();
                         let datas = {};
+                        let signatures1 = {}
+                        signatures1.type = "prepared by";
+                        signatures1.name = $('#warehouse_name').val();
+                        signatures1.date = $('#warehouse_date').val();
+                        signatures1.signature = ttdFile1.dataURL;
 
                         var details = [];
                         $('.row-input').each(function(index) {
@@ -591,7 +569,6 @@ $configData = Helper::appClasses();
                             }
                         });
 
-
                         datas.details = details;
                         datas.requester = requester;
                         datas.department = department;
@@ -600,34 +577,30 @@ $configData = Helper::appClasses();
                         datas.request_date = request_date;
                         datas.note = note;
                         datas.status = 'Terbuat';
-
-
-                        console.log(datas);
-
-
+                        datas.signatures = [signatures1];
+                        
                         $.ajax({
-                            url: baseUrl + "api/material-request/",
+                            url: "{{ env('BASE_URL_API')}}" + "/api/material-request",
                             type: "POST",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
-
                             success: function(response) {
                                 $('.indicator-progress').show();
                                 $('.indicator-label').hide();
 
                                 Swal.fire({
                                     title: 'Berhasil',
-                                    text: 'Berhasil menambahkan Invoice',
+                                    text: 'Berhasil menambahkan Material Request',
                                     icon: 'success',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'
                                     },
                                     buttonsStyling: false
-                                })
-
-                                localStorage.removeItem('invoice');
-                                window.location.href = "/request/material-request"
+                                }).then(function() {
+                                    localStorage.removeItem('material-request');
+                                    window.location.href = "/request/material-request"
+                                });
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
@@ -648,65 +621,75 @@ $configData = Helper::appClasses();
                 false
             );
         });
-
-    }
-
-    $(document).on('click', '#preview', function(event) {
-        event.preventDefault();
-        let requester = $("#requester").val();
-        let department = $("#department").val();
-        let request_date = $("#request_date").val();
-        let stock = $("#stock").val();
-        let purchase = $("#purchase").val();
-        let note = $("#purchase").val();
-
-        let datas = {};
-
-        var details = [];
-        $('.row-input').each(function(index) {
-            var input_name = $(this).attr('name');
-            var input_value = $(this).val();
-            var input_index = Math.floor(index / 8); // Membagi setiap 5 input menjadi satu objek pada array
-            if (index % 8 == 0) {
-                details[input_index] = {
-                    number: input_value
-                };
-            } else if (index % 8 == 1) {
-                details[input_index].part_number = input_value;
-            } else if (index % 8 == 2) {
-                details[input_index].description = input_value;
-            } else if (index % 8 == 3) {
-                details[input_index].quantity = input_value;
-            } else if (index % 8 == 4) {
-                details[input_index].stock = input_value;
-            } else if (index % 8 == 5) {
-                details[input_index].stock_out = input_value;
-            } else if (index % 8 == 6) {
-                details[input_index].end_stock = input_value;
-            } else if (index % 8 == 7) {
-                details[input_index].min_stock = input_value;
-            }
+    
+        $(document).on('keyup', '.money-format', function(event) {
+            // skip for arrow keys
+            if (event.which >= 37 && event.which <= 40) return;
+            // format number
+            $(this).val(function(index, value) {
+                return value
+                    .replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            });
         });
 
-        console.log(details);
+        $(document).on('click', '#preview', function(event) {
+            event.preventDefault();
+            let requester = $("#requester").val();
+            let department = $("#department").val();
+            let request_date = $("#request_date").val();
+            let stock = $("#stock").val();
+            let purchase = $("#purchase").val();
+            let note = $("#purchase").val();
+
+            let datas = {};
+
+            var details = [];
+            $('.row-input').each(function(index) {
+                var input_name = $(this).attr('name');
+                var input_value = $(this).val();
+                var input_index = Math.floor(index / 8); // Membagi setiap 5 input menjadi satu objek pada array
+                if (index % 8 == 0) {
+                    details[input_index] = {
+                        number: input_value
+                    };
+                } else if (index % 8 == 1) {
+                    details[input_index].part_number = input_value;
+                } else if (index % 8 == 2) {
+                    details[input_index].description = input_value;
+                } else if (index % 8 == 3) {
+                    details[input_index].quantity = input_value;
+                } else if (index % 8 == 4) {
+                    details[input_index].stock = input_value;
+                } else if (index % 8 == 5) {
+                    details[input_index].stock_out = input_value;
+                } else if (index % 8 == 6) {
+                    details[input_index].end_stock = input_value;
+                } else if (index % 8 == 7) {
+                    details[input_index].min_stock = input_value;
+                }
+            });
 
 
-        datas.details = details;
-        datas.requester = requester;
-        datas.department = department;
-        datas.purchase = purchase;
-        datas.stock = stock;
-        datas.request_date = request_date;
-        datas.note = note;
-        datas.status = 'Terbuat';
-        localStorage.setItem("material-request", JSON.stringify(datas));
-        window.location.href = "/request/material-request/preview"
+            datas.details = details;
+            datas.requester = requester;
+            datas.department = department;
+            datas.purchase = purchase;
+            datas.stock = stock;
+            datas.request_date = request_date;
+            datas.note = note;
+            datas.status = 'Terbuat';
+            localStorage.setItem("material-request", JSON.stringify(datas));
+            window.location.href = "/request/material-request/preview"
+        });
+
+        $(document).on('click', '#batal', function(event) {
+            event.preventDefault();
+            localStorage.removeItem('invoice');
+            window.location.href = "/request/material-request"
+        });
+
     });
 
-    $(document).on('click', '#batal', function(event) {
-        event.preventDefault();
-        localStorage.removeItem('invoice');
-        window.location.href = "/request/material-request"
-    });
 </script>
 @endsection

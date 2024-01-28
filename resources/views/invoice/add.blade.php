@@ -503,13 +503,12 @@ $configData = Helper::appClasses();
             let total = 0;
             let price = parseInt($(this).val().replaceAll(',', ''));
             let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
-            console.log(id);
             if (id == 0) {
                 $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(price));
                 getTotal();
             } else {
                 $.ajax({
-                    url: "{{ env('BASE_URL_API')}}" +'/api/tax/select/'+ id,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/tax/'+ id,
                     type: "get",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -519,7 +518,6 @@ $configData = Helper::appClasses();
                         let tax = parseInt(data);
                         tax = tax / 100;
                         let totalPrice = price * tax + price;
-                        // console.log(format(totalPrice));
                         $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
                         getTotal();
                     },
@@ -536,12 +534,11 @@ $configData = Helper::appClasses();
             let index = $('.tax').index(this);
             let data = 0;
             $.ajax({
-                url: "{{ env('BASE_URL_API')}}" +'api/tax/'+ id,
+                url: "{{ env('BASE_URL_API')}}" +'/api/tax/'+ id,
                 type: "get",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(response) {
-                    console.log(response);
                     let data = response.data.rate;
                     console.log($(this));
                     let total = 0;
@@ -790,6 +787,7 @@ $configData = Helper::appClasses();
                                 });
                             },
                             error: function(xhr, status, error) {
+                                console.log(error);
                                 Swal.fire({
                                     title: 'Error!',
                                     text: ' You clicked the button!',
@@ -925,7 +923,7 @@ $configData = Helper::appClasses();
     function getTenant() {
         let idTenant = dataLocal.tenant_id;
         $.ajax({
-            url: "{{url('api/tenant')}}/" + idTenant,
+            url: "{{ env('BASE_URL_API')}}" +"/api/tenant/" + idTenant,
             type: "GET",
             success: function(response) {
                 let data = response.data;
@@ -941,7 +939,7 @@ $configData = Helper::appClasses();
     function getBank() {
         let idBank = dataLocal.bank_id;
         $.ajax({
-            url: "{{url('api/bank')}}/" + idBank,
+            url: "{{ env('BASE_URL_API')}}" +'/api/bank/' + idBank,
             type: "GET",
             success: function(response) {
                 console.log(response);
