@@ -64,7 +64,6 @@ $configData = Helper::appClasses();
                             <span class="d-flex align-items-center justify-content-center text-nowrap">Buat Laporan Kerusakan</span>
                         </a> -->
                         <button type="submit" id="save" class="btn btn-primary btn-label-secondary d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
                         <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
                     </div>
                 </div>
