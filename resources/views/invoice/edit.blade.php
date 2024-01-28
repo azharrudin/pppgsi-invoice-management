@@ -258,9 +258,8 @@ $configData = Helper::appClasses();
         $("#tenant").select2({
             placeholder: 'Select Tenant',
             allowClear: true,
-            minimumResultsForSearch: Infinity,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/tenant/select',
+                url: "{{ env('BASE_URL_API')}}" +'/api/tenant/select?field=company',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -521,6 +520,7 @@ $configData = Helper::appClasses();
         $(document).on('click', '.btn-remove-mg', function() {
             // Hapus baris yang ditekan tombol hapus
             $(this).closest('.row-mg').remove();
+            getTotal();
         });
 
         $(document).on('keydown', '.price', function(event) {

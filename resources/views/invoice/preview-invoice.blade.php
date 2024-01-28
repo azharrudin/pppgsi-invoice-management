@@ -22,9 +22,8 @@ $configData = Helper::appClasses();
             <div class="col-lg-9 col-12 mb-lg-0 mb-3">
                 <div class="card invoice-preview-card">
                     <div class="card-body">
-                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); background-size: contain; background-repeat: no-repeat;" class="set-back">
+                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); height : 150px; background-size: contain; background-repeat: no-repeat;" class="set-back">
                         </div>
-
                         <div class="row px-4">
                             <div class="col-md-6">
                                 <label for="select2Primary" class="form-label">Kepada Yth, </label>
