@@ -84,7 +84,7 @@ $configData = Helper::appClasses();
                                     <tbody class="table-border-bottom-0" id="details">
                                         <tr>
                                             <td colspan="2"></td>
-                                            <td colspan="2">
+                                            <td colspan="1">
                                                 <p class="">Total:</p>
                                             </td>
                                             <td colspan="2" style="text-align: right">
@@ -168,6 +168,7 @@ $configData = Helper::appClasses();
 @endsection
 
 @section('page-script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
@@ -195,7 +196,7 @@ $configData = Helper::appClasses();
         $("#grand_total").text('Rp.'+data.grand_total.toLocaleString());
         $("#invoice_due_date").text(data.invoice_due_date);
         $("#term_and_conditions").text(data.term_and_conditions);
-        $("#materai_date").text(data.materai_date);
+        $("#materai_date").text(data.materai_date ? moment(data.materai_date).format('D MMMM YYYY'):data.materai_date);
         $("#materai_name").text(data.materai_name);
 
         if (data.tenant_id) {

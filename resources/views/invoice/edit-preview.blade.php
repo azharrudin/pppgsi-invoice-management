@@ -87,7 +87,7 @@ $configData = Helper::appClasses();
 
                                         <tr>
                                             <td colspan="2"></td>
-                                            <td colspan="2">
+                                            <td colspan="1">
                                                 <p class="" style="font-weight: bold;">Total:</p>
                                             </td>
                                             <td colspan="2">
@@ -171,6 +171,7 @@ $configData = Helper::appClasses();
 @endsection
 
 @section('page-script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
