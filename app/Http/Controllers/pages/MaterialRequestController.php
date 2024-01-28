@@ -121,7 +121,7 @@ class MaterialRequestController extends Controller
     }
 
     public function print($id){
-        $apiRequest = Http::get(env('BASE_URL_API') .'/api/work-order/'.$id);
+        $apiRequest = Http::get(env('BASE_URL_API') .'/api/material-request/'.$id);
         $response = json_decode($apiRequest->getBody());
         $data = $response->data;
     	$pdf = PDF::loadview('content.pages.material-request.download',['data'=>$data]);

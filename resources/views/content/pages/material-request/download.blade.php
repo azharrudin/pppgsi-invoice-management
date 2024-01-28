@@ -72,9 +72,9 @@
             <table class="table" style="width:100%;">
                 <tbody>
                     <tr>
-                        <td style="padding-left:5px; padding-top:5px; border-top: 0.5px solid black;border-left: 0.5px solid black;border-right: 0.5px solid black;"><b>REQUESTER</b></td>
+                        <td style="padding-left:5px; padding-top:5px; border-top: 0.5px solid black;border-left: 0.5px solid black;border-right: 0.5px solid black;"><b>REQUESTER : </b> <b>{{ $data->requester }}</b></td>
                         <td style="width:10%"></td>
-                        <td style="padding-left:5px; padding-top:5px; border-top: 0.5px solid black;border-right: 0.5px solid black;border-left: 0.5px solid black;"><b>MR . No</b></td>
+                        <td style="padding-left:5px; padding-top:5px; border-top: 0.5px solid black;border-right: 0.5px solid black;border-left: 0.5px solid black;"><b>MR . No : </b> <b>{{ $data->material_request_number }}</b></td>
                     </tr>
                     <tr>
                         <td style="padding-left:5px; padding-bottom:5px;border-bottom: 0.5px solid black;border-left: 0.5px solid black;border-right: 0.5px solid black;">Yang Meminta</td>
@@ -82,9 +82,9 @@
                         <td style="padding-left:5px; padding-bottom:border-bottom: 0.5px solid black;border-right: 0.5px solid black;border-left: 0.5px solid black;">Nomor MR</td>
                     </tr>
                     <tr>
-                        <td style="padding-left:5px; padding-top:5px; border-top: 0.5px solid black;border-left: 0.5px solid black;border-right: 0.5px solid black;"><b>DEPARTMENT</b></td>
+                        <td style="padding-left:5px; padding-top:5px; border-top: 0.5px solid black;border-left: 0.5px solid black;border-right: 0.5px solid black;"><b>DEPARTMENT : </b> {{ $data->department }}</td>
                         <td></td>
-                        <td style="padding-left:5px; padding-top:5px; border-top: 0.5px solid black;border-right: 0.5px solid black;border-left: 0.5px solid black;"><b>DATE</b></td>
+                        <td style="padding-left:5px; padding-top:5px; border-top: 0.5px solid black;border-right: 0.5px solid black;border-left: 0.5px solid black;"><b>DATE : </b> {{ date('d F Y', strtotime($data->request_date)) }}</td>
                     </tr>
                     <tr>
                         <td style="padding-left:5px; padding-bottom:5px;border-bottom: 0.5px solid black;border-left: 0.5px solid black;border-right: 0.5px solid black;">Departmen</td>
@@ -102,7 +102,7 @@
                         <td style="padding-left:80px"><b>Stock</b></td>
                         <td style="width:10%"></td>
                         <td style="width:60% ;padding-left:5px; padding-top:5px; border: 0.5px solid black;" rowspan="5">
-                            <b>Remaks</b>
+                            <b>Remaks : </b> <b>{{ $data->note }}</b>
                             <br>
                             <span>Catatan</span>
                         </td>
@@ -161,16 +161,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($data->material_request_details as $key => $item)
                     <tr>
-                        <td style="border: 0.5px solid black; padding:10px;" class="text-center">a</td>
-                        <td style="border: 0.5px solid black;"></td>
-                        <td style="border: 0.5px solid black;"></td>
-                        <td style="border: 0.5px solid black;"></td>
-                        <td style="border: 0.5px solid black;"></td>
-                        <td style="border: 0.5px solid black;"></td>
-                        <td style="border: 0.5px solid black;"></td>
-                        <td style="border: 0.5px solid black;"></td>
+                        <td style="border: 0.5px solid black; text-align:center;" class="text-center">{{ $item->number }}</td>
+                        <td style="border: 0.5px solid black; text-align:center;">{{ $item->part_number }}</td>
+                        <td style="border: 0.5px solid black; text-align:center;">{{ $item->description }}</td>
+                        <td style="border: 0.5px solid black; text-align:center;">{{ $item->quantity }}</td>
+                        <td style="border: 0.5px solid black; text-align:center;">{{ $item->stock }}</td>
+                        <td style="border: 0.5px solid black; text-align:center;">{{ $item->stock_out }}</td>
+                        <td style="border: 0.5px solid black; text-align:center;">{{ $item->end_stock }}</td>
+                        <td style="border: 0.5px solid black; text-align:center;">{{ $item->min_stock }}</td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -178,28 +180,25 @@
         <div class="row mt-1">
             <table style="width: 100%;">
                 <tr>
-                    <td style="border: 0.5px solid black;">Prepared by :</td>
-                    <td style="border: 0.5px solid black;">Reviewed by :</td>
-                    <td style="border: 0.5px solid black;">Aknowledge by :</td>
-                    <td style="border: 0.5px solid black;">Approved by :</td>
+                    @foreach ($data->material_request_signatures as $item)
+                        <td style="border: 0.5px solid black;">{{ $item->type }} : <br> {{ $item->name}} </td>
+                    @endforeach
                 </tr>
                 <tr>
-                    <td style="border: 0.5px solid black;"></td>
-                    <td style="border: 0.5px solid black;"></td>
-                    <td style="border: 0.5px solid black;"></td>
-                    <td style="border: 0.5px solid black;"></td>
+                    @foreach ($data->material_request_signatures as $item)
+                        <td style="border: 0.5px solid black; text-align:center"><img src="{{ $item->signature }}" width="100px"></td>
+                    @endforeach
                 </tr>
                 <tr class="text-center">
-                    <td style="border: 0.5px solid black;">()</td>
-                    <td style="border: 0.5px solid black;">(Chief Dept)</td>
-                    <td style="border: 0.5px solid black;">(Chief F & A)</td>
-                    <td style="border: 0.5px solid black;">()</td>
+                    <td style="border: 0.5px solid black;">Warehouse</td>
+                    <td style="border: 0.5px solid black;">Chief Department</td>
+                    <td style="border: 0.5px solid black;">Chief Finance & Akunting</td>
+                    <td style="border: 0.5px solid black;">Kepala BM</td>
                 </tr>
                 <tr>
-                    <td style="border: 0.5px solid black;">Date :</td>
-                    <td style="border: 0.5px solid black;">Date :</td>
-                    <td style="border: 0.5px solid black;">Date :</td>
-                    <td style="border: 0.5px solid black;">Date :</td>
+                    @foreach ($data->material_request_signatures as $item)
+                    <td style="border: 0.5px solid black; text-align:center">Date : {{ date('d F Y', strtotime($item->date)) }}</td>
+                    @endforeach
                 </tr>
             </table>
         </div>
