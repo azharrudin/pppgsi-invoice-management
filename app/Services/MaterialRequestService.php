@@ -5,7 +5,7 @@ use Validator;
 
 class MaterialRequestService{
     protected $CommonService;
-    protected $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "selesai"];
+    protected $validStatus = ["terbuat", "disetujui chief departement", "disetujui chief finance", "disetujui kepala bm", "selesai"];
 
     public function __construct(CommonService $CommonService)
     {
