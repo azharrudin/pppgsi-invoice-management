@@ -4,7 +4,7 @@ $configData = Helper::appClasses();
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'Laporan Kerusakan')
+@section('title', 'Work Order')
 
 @section('page-style')
 {{-- Page Css files --}}
@@ -68,7 +68,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label for="scope" class="form-label fw-medium">Scope</label>
-                                    <select class="form-select add w-px-250 select2 select-scope" id="scope" name="scope" multiple required>
+                                    <select class="form-select w-px-250 select2 select-scope" id="scope" name="scope" multiple required>
                                     </select>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
@@ -138,7 +138,7 @@ $configData = Helper::appClasses();
                                 <div class="row  text-center ttd">
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician1" name="name" style="text-align:center;" />
+                                            <input type="text" class="form-control" placeholder="Technician" id="technician1" name="name" style="text-align:center;" required/>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -149,18 +149,18 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" name="date" id="date1" style="text-align:center;" />
+                                            <input type="text" class="form-control date" placeholder="Tanggal" name="date" id="date1" style="text-align:center;" required/>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Chief Engineering" id="technician2" name="name" style="text-align:center;" />
+                                            <input type="text" class="form-control" placeholder="Chief Engineering" id="technician2" name="name" style="text-align:center;" disabled/>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
 
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-2" style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick disabled dd" id="dropzone-2" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -173,11 +173,11 @@ $configData = Helper::appClasses();
                                     </div>
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Warehouse" id="technician3" name="name" style="text-align:center;" />
+                                            <input type="text" class="form-control" placeholder="Warehouse" id="technician3" name="name" style="text-align:center;" disabled/>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-3" style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick disabled dd" id="dropzone-3" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -190,11 +190,11 @@ $configData = Helper::appClasses();
                                     </div>
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Building Manager" id="technician4" name="name" style="text-align:center;" />
+                                            <input type="text" class="form-control" placeholder="Building Manager" id="technician4" name="name" style="text-align:center;" disabled/>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-4" style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick disabled dd" id="dropzone-4" style="padding: 5px;">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -487,10 +487,28 @@ $configData = Helper::appClasses();
                         event.preventDefault();
                         event.stopPropagation();
                         let laporanKerusakan = $('.select-lk').val();
+                        let scope = $("#scope").val();
+                        let classification = $("#classification").val();
+                        console.log(scope);
                         if (!laporanKerusakan) {
                             $('.select-lk').addClass("invalid");
                         }
+                        if(scope.length == 0){
+                            console.log('a');
+                            $('.select-scope').addClass("invalid");
+                        }
+                        if(classification.length == 0){
+                            console.log('a');
+                            $('#classification').addClass("invalid");
+                        }
                     } else {
+                        Swal.fire({
+                            title: '<h2>Loading...</h2>',
+                            html: sweet_loader + '<h5>Please Wait</h5>',
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        });
                         event.preventDefault();
                         let fileTtd = ttdFile;
                         let lk = $(".select-lk").val();
@@ -502,7 +520,6 @@ $configData = Helper::appClasses();
                         let action_plan_date = $('#action_plan_date').val();
                         let finish_plan = $('#finish_plan').val();
                         let job_description = $('#job_description').val();
-
 
                         datas.damage_report_id = lk;
                         datas.scope = scope.toString();
@@ -920,7 +937,7 @@ $configData = Helper::appClasses();
                     </div>
                     <div class="col-md-2 mb-1-custom"">
                         <label for="note" class="form-label fw-medium">Quantity</label>
-                        <input type="text" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required />
+                        <input type="number" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-1 px-1-custom mb-1-custom">
