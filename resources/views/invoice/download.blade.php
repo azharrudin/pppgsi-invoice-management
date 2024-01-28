@@ -76,7 +76,7 @@ return $hasil_rupiah;
                         <td rowspan="3" style="width: 10%;"><b>Kepada
                                 Yth:
                             </b></td>
-                        <td rowspan="3" style="width: 35%; border: 0.5px solid black; padding: 10px;"><b style="font-size: 16px;">
+                        <td rowspan="3" style="width: 35%; border: 0.5px solid black; padding: 10px;"><b style="font-size: 10px;">
                                 {{ $data->tenant->company }} <br>
                                 {{ $data->tenant->floor }} <br>
                                 <br>
