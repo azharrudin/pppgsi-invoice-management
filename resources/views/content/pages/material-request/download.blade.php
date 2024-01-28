@@ -181,7 +181,7 @@
             <table style="width: 100%;">
                 <tr>
                     @foreach ($data->material_request_signatures as $item)
-                        <td style="border: 0.5px solid black;">{{ $item->type }} : <br> {{ $item->name}} </td>
+                        <td style="border: 0.5px solid black; padding-left:10px">{{ $item->type }} : <br> {{ $item->name}} </td>
                     @endforeach
                 </tr>
                 <tr>
