@@ -120,6 +120,7 @@ Route::group(['middleware' => 'cekauth'], function () {
             Route::get('/edit/{id}', [PurchaseRequestController::class, 'edit'])->name('pages-purchase-request');
             Route::get('/data-purchase-request', [PurchaseRequestController::class, 'datatable'])->name('data-purchase-request');
             Route::get('/preview/{id}', [PurchaseRequestController::class, 'preview'])->name('pages-purchase-request');
+            Route::get('/print/{id}', [PurchaseRequestController::class, 'print']);
             Route::get('/show', [PurchaseRequestController::class, 'show'])->name('pages-purchase-request');
         });
 
@@ -140,6 +141,7 @@ Route::group(['middleware' => 'cekauth'], function () {
             Route::get('/add', [PurchaseOrderController::class, 'create'])->name('pages-create-tanda-terima');
             Route::get('/preview', [PurchaseOrderController::class, 'preview'])->name('pages-preview-tanda-terima');
             Route::get('/data-purchase-order', [PurchaseOrderController::class, 'datatable'])->name('data-purchase-order');
+            Route::get('/print/{id}', [PurchaseOrderController::class, 'print']);
         });
     });
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Yajra\DataTables\DataTables;
+use PDF;
 
 class PurchaseRequestController extends Controller
 {
@@ -83,5 +84,14 @@ class PurchaseRequestController extends Controller
             ->setTotalRecords($response->size)
             ->make(true);
 
+    }
+
+    public function print($id){
+        $apiRequest = Http::get(env('BASE_URL_API') .'/api/purchase-request/'.$id);
+        $response = json_decode($apiRequest->getBody());
+        $data = $response->data;
+    	$pdf = PDF::loadview('request.download',['data'=>$data]);
+    	return $pdf->stream('purchase-request.pdf');
+        // return view('content.pages.material-request.download',['data'=>$data]);
     }
 }

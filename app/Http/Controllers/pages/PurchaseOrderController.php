@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use DataTables;
+use PDF;
 
 
 class PurchaseOrderController extends Controller
@@ -119,5 +120,14 @@ class PurchaseOrderController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function print($id){
+        $apiRequest = Http::get(env('BASE_URL_API') .'/api/purchase-order/'.$id);
+        $response = json_decode($apiRequest->getBody());
+        $data = $response->data;
+    	$pdf = PDF::loadview('content.pages.purchase-order.download',['data'=>$data]);
+    	return $pdf->stream('purchase-order.pdf');
+        // return view('content.pages.material-request.download',['data'=>$data]);
     }
 }

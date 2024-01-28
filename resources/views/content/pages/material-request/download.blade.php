@@ -11,28 +11,18 @@
     <style>
         body {
             font-size: 12px;
-
         }
 
-        .main-table,
-        .main-table th,
-        .main-table td {
-            border: 0.5px solid;
-        }
+
 
 
         .container {
             max-width: 21cm;
             margin: 0 auto;
             background: #fff;
-            padding: 1cm;
-
         }
 
-        .table-1 td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
+
 
         /* A4 Styles */
         @media print {
@@ -70,9 +60,9 @@
                             <h5>MATERIAL REQUEST</h5>
                         </u></b></center>
             </h1>
-            <h1>
+            <h1 style="">
                 <center><b>
-                        <h5>PERMINTAAN MATERIAL</h5>
+                        <h6 style="line-height: 0.1;">PERMINTAAN MATERIAL</h6>
                     </b></center>
             </h1>
             <br>
@@ -82,110 +72,163 @@
             <table class="table" style="width:100%;">
                 <tbody>
                     <tr>
-                        <td style="border-top: 0.5px solid black;border-left: 0.5px solid black;border-right: 0.5px solid black;"><b>REQUESTER</b></td>
+                        <td style="padding-left:5px; padding-top:5px; border-top: 0.5px solid black;border-left: 0.5px solid black;border-right: 0.5px solid black;"><b>REQUESTER</b></td>
                         <td style="width:10%"></td>
-                        <td style="border-top: 0.5px solid black;border-right: 0.5px solid black;border-left: 0.5px solid black;"><b>MR . No</b></td>
+                        <td style="padding-left:5px; padding-top:5px; border-top: 0.5px solid black;border-right: 0.5px solid black;border-left: 0.5px solid black;"><b>MR . No</b></td>
                     </tr>
                     <tr>
-                        <td style="border-bottom: 0.5px solid black;border-left: 0.5px solid black;border-right: 0.5px solid black;">Yang Meminta</td>
+                        <td style="padding-left:5px; padding-bottom:5px;border-bottom: 0.5px solid black;border-left: 0.5px solid black;border-right: 0.5px solid black;">Yang Meminta</td>
                         <td></td>
-                        <td style="border-bottom: 0.5px solid black;border-right: 0.5px solid black;border-left: 0.5px solid black;">Nomor MR</td>
+                        <td style="padding-left:5px; padding-bottom:border-bottom: 0.5px solid black;border-right: 0.5px solid black;border-left: 0.5px solid black;">Nomor MR</td>
                     </tr>
                     <tr>
-                        <td style="border-top: 0.5px solid black;border-left: 0.5px solid black;border-right: 0.5px solid black;"><b>DEPARTMENT</b></td>
+                        <td style="padding-left:5px; padding-top:5px; border-top: 0.5px solid black;border-left: 0.5px solid black;border-right: 0.5px solid black;"><b>DEPARTMENT</b></td>
                         <td></td>
-                        <td style="border-top: 0.5px solid black;border-right: 0.5px solid black;border-left: 0.5px solid black;"><b>DATE</b></td>
+                        <td style="padding-left:5px; padding-top:5px; border-top: 0.5px solid black;border-right: 0.5px solid black;border-left: 0.5px solid black;"><b>DATE</b></td>
                     </tr>
                     <tr>
-                        <td style="border-bottom: 0.5px solid black;border-left: 0.5px solid black;border-right: 0.5px solid black;">Departmen</td>
+                        <td style="padding-left:5px; padding-bottom:5px;border-bottom: 0.5px solid black;border-left: 0.5px solid black;border-right: 0.5px solid black;">Departmen</td>
                         <td></td>
-                        <td style="border-bottom: 0.5px solid black;border-right: 0.5px solid black;border-left: 0.5px solid black;">Tanggal</td>
+                        <td style="padding-left:5px; padding-bottom:5px;border-bottom: 0.5px solid black;border-right: 0.5px solid black;border-left: 0.5px solid black;">Tanggal</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="row">
-            <table>
+        <div class="row mt-1">
+            <table class="table" style="width:100%;">
                 <tbody>
                     <tr>
+                        <td style="padding-left:80px"><b>Stock</b></td>
+                        <td style="width:10%"></td>
+                        <td style="width:60% ;padding-left:5px; padding-top:5px; border: 0.5px solid black;" rowspan="5">
+                            <b>Remaks</b>
+                            <br>
+                            <span>Catatan</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:80px">Persediaan</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="py-1"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:80px"><b>Purchase</b></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:80px">Dibeli</td>
                         <td></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-
         <div class="row">
-            <table class="table-1">
+            <table class="table" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <td rowspan="2" style="border: 0.5px solid black; text-align:center; padding:10px;">
+                            <div class="">
+                                <span style="font-weight: bold;">No.</span>
+                                <br>
+                                No.
+                            </div>
+                        </td>
+                        <td rowspan="2" style="border: 0.5px solid black; text-align:center; padding:10px">
+                            <b>PART No.</b>
+                            <br>
+                            No. Suku Cadang
+                        </td>
+                        <td rowspan="2" style="border: 0.5px solid black; text-align:center; padding:10px">
+                            <b>DESCRIPTION</b>
+                            <br>
+                            Keterangan
+                        </td>
+                        <td rowspan="2" style="border: 0.5px solid black; text-align:center; padding:10px">
+                            <b>QTY </b>
+                            <br>
+                            Kuantitas
+                        </td>
+                        <td colspan="4" style="border: 0.5px solid black; text-align:center; padding:10px"><b> FILLED STOREKEEPER ONLY</b></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 0.5px solid black; text-align:center; padding:10px">Stock</td>
+                        <td style="border: 0.5px solid black; text-align:center; padding:10px">Stock Out</td>
+                        <td style="border: 0.5px solid black; text-align:center; padding:10px">End Stock</td>
+                        <td style="border: 0.5px solid black; text-align:center; padding:10px">Min Stock</td>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            <center>No</center>
-                        </td>
-                        <td>
-                            <center>JENIS MASALAH KERUSAKAN</center>
-                        </td>
-                        <td>
-                            <center>LOKASI</center>
-                        </td>
-                        <td>
-                            <center>JUMLAH</center>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td style="border: 0.5px solid black; padding:10px;" class="text-center">a</td>
+                        <td style="border: 0.5px solid black;"></td>
+                        <td style="border: 0.5px solid black;"></td>
+                        <td style="border: 0.5px solid black;"></td>
+                        <td style="border: 0.5px solid black;"></td>
+                        <td style="border: 0.5px solid black;"></td>
+                        <td style="border: 0.5px solid black;"></td>
+                        <td style="border: 0.5px solid black;"></td>
                     </tr>
                 </tbody>
+            </table>
+        </div>
+
+        <div class="row mt-1">
+            <table style="width: 100%;">
+                <tr>
+                    <td style="border: 0.5px solid black;">Prepared by :</td>
+                    <td style="border: 0.5px solid black;">Reviewed by :</td>
+                    <td style="border: 0.5px solid black;">Aknowledge by :</td>
+                    <td style="border: 0.5px solid black;">Approved by :</td>
+                </tr>
+                <tr>
+                    <td style="border: 0.5px solid black;"></td>
+                    <td style="border: 0.5px solid black;"></td>
+                    <td style="border: 0.5px solid black;"></td>
+                    <td style="border: 0.5px solid black;"></td>
+                </tr>
+                <tr class="text-center">
+                    <td style="border: 0.5px solid black;">()</td>
+                    <td style="border: 0.5px solid black;">(Chief Dept)</td>
+                    <td style="border: 0.5px solid black;">(Chief F & A)</td>
+                    <td style="border: 0.5px solid black;">()</td>
+                </tr>
+                <tr>
+                    <td style="border: 0.5px solid black;">Date :</td>
+                    <td style="border: 0.5px solid black;">Date :</td>
+                    <td style="border: 0.5px solid black;">Date :</td>
+                    <td style="border: 0.5px solid black;">Date :</td>
+                </tr>
             </table>
         </div>
 
         <div class="row mt-3">
             <table>
                 <tr>
-                    <td>
-                        <center>
-                            <p>Mengetahui</p>
-                            <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
-                                {{-- $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' --}}<br>
-                                <img src="{{-- $data->signature_image --}}" alt="">
-                            <p class="text-center">
-                                <u></u></b><br><span>Marwoto{{-- $data->signature_name --}}</span>
-                            </p>
-                            </p>
-                        </center>
-                    </td>
-                    <td>
-                        <center>
-                            <p>Mengetahui</p>
-                            <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
-                                {{-- $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' --}}<br>
-                                <img src="{{-- $data->signature_image --}}" alt="">
-                            <p class="text-center">
-                                <u></u></b><br><span>Marwoto{{-- $data->signature_name --}}</span>
-                            </p>
-                            </p>
-                        </center>
-                    </td>
-                    <td>
-                        <center>
-                            <p>Mengetahui</p>
-                            <p style="display: block; text-align: center; padding: 0; margin: 0;">Jakarta,
-                                {{-- $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' --}}<br>
-                                <img src="{{-- $data->signature_image --}}" alt="">
-                            <p class="text-center">
-                                <u></u></b><br><span>Marwoto{{-- $data->signature_name --}}</span>
-                            </p>
-                            </p>
-                        </center>
-                    </td>
+                    <td rowspan="2" style="width:55px;vertical-align: top;">Lembar</td>
+                    <td style="width: 15px;">1.</td>
+                    <td style="width: 60px;">Acounting</td>
+                    <td style="width: 50px;">(Putih)</td>
+                    <td style="width: 15px;"></td>
+                    <td style="width: 15px;">3.</td>
+                    <td style="width: 60px;">Purchasing</td>
+                    <td style="width: 50px;">(Hijau)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                    <td>Gudang</td>
+                    <td>(Merah)</td>
+                    <td></td>
+                    <td>4.</td>
+                    <td>Pemohon</td>
+                    <td>(Biru)</td>
+                    <td></td>
                 </tr>
             </table>
         </div>
-
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
