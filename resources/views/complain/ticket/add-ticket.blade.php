@@ -139,7 +139,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Tenant',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/tenant/select',
+                url: "{{ env('BASE_URL_API')}}" +'/api/tenant/select?field=company',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {

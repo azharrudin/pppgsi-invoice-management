@@ -22,7 +22,7 @@ $configData = Helper::appClasses();
             <div class="col-lg-9 col-12 mb-lg-0 mb-3">
                 <div class="card invoice-preview-card">
                     <div class="card-body">
-                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); background-size: contain; background-repeat: no-repeat;" class="set-back">
+                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); height : 150px; background-size: contain; background-repeat: no-repeat;" class="set-back">
                         </div>
 
                         <div class="row px-4">
@@ -87,7 +87,7 @@ $configData = Helper::appClasses();
 
                                         <tr>
                                             <td colspan="2"></td>
-                                            <td colspan="2">
+                                            <td colspan="1">
                                                 <p class="" style="font-weight: bold;">Total:</p>
                                             </td>
                                             <td colspan="2">
@@ -171,6 +171,7 @@ $configData = Helper::appClasses();
 @endsection
 
 @section('page-script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>

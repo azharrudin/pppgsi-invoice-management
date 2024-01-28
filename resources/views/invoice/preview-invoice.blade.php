@@ -22,9 +22,8 @@ $configData = Helper::appClasses();
             <div class="col-lg-9 col-12 mb-lg-0 mb-3">
                 <div class="card invoice-preview-card">
                     <div class="card-body">
-                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); background-size: contain; background-repeat: no-repeat;" class="set-back">
+                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); height : 150px; background-size: contain; background-repeat: no-repeat;" class="set-back">
                         </div>
-
                         <div class="row px-4">
                             <div class="col-md-6">
                                 <label for="select2Primary" class="form-label">Kepada Yth, </label>
@@ -85,7 +84,7 @@ $configData = Helper::appClasses();
                                     <tbody class="table-border-bottom-0" id="details">
                                         <tr>
                                             <td colspan="2"></td>
-                                            <td colspan="2">
+                                            <td colspan="1">
                                                 <p class="">Total:</p>
                                             </td>
                                             <td colspan="2" style="text-align: right">
@@ -169,6 +168,7 @@ $configData = Helper::appClasses();
 @endsection
 
 @section('page-script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
@@ -196,7 +196,7 @@ $configData = Helper::appClasses();
         $("#grand_total").text('Rp.'+data.grand_total.toLocaleString());
         $("#invoice_due_date").text(data.invoice_due_date);
         $("#term_and_conditions").text(data.term_and_conditions);
-        $("#materai_date").text(data.materai_date);
+        $("#materai_date").text(data.materai_date ? moment(data.materai_date).format('D MMMM YYYY'):data.materai_date);
         $("#materai_name").text(data.materai_name);
 
         if (data.tenant_id) {

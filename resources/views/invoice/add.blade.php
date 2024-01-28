@@ -22,7 +22,7 @@ $configData = Helper::appClasses();
             <div class="col-lg-9 col-12 mb-lg-0 mb-3">
                 <div class="card invoice-preview-card">
                     <div class="card-body">
-                        <div style="background-image: url('{{ asset('assets/img/header.png') }}');  background-size: contain; background-repeat: no-repeat;" class="set-back">
+                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); height : 150px; background-size: contain; background-repeat: no-repeat;" class="set-back">
                         </div>
 
                         <div class="row  px-3">
@@ -283,7 +283,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Tenant',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/tenant/select',
+                url: "{{ env('BASE_URL_API')}}" +'/api/tenant/select?field=company',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -480,6 +480,7 @@ $configData = Helper::appClasses();
         $(document).on('click', '.btn-remove-mg', function() {
             // Hapus baris yang ditekan tombol hapus
             $(this).closest('.row-mg').remove();
+            getTotal();
         });
 
         $(document).on('keydown', '.price', function(event) {
@@ -1007,7 +1008,7 @@ $configData = Helper::appClasses();
                         </div>
                         <div class="col-md-2 px-1-custom">
                             <label for="note" class="form-label fw-medium">DPP</label>
-                            <input type="text" class="form-control row-input price" placeholder="" name="price[]" required value="` + details[i].price.toLocaleString() + `"/>
+                            <input type="text" class="form-control row-input price" placeholder="" name="price[]" required value="` + details[i].price?.toLocaleString() + `"/>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-2 px-1-custom">
@@ -1017,7 +1018,7 @@ $configData = Helper::appClasses();
                         </div>
                         <div class="col-md-2 px-1-custom">
                             <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                            <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled value="` + details[i].total_price.toLocaleString()+ `"/>
+                            <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled value="` + details[i].total_price?.toLocaleString()+ `"/>
                         </div>
                         <div class="col-md-1 px-1-custom">
                             <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
