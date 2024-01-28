@@ -20,7 +20,7 @@ class PurchaseRequestService{
      */
     public function validatePurchaseRequest($request){
         $rules = [
-            "department_id" => ["bail", "required", "numeric"],
+            "department_id" => ["bail", "required", "string"],
             "proposed_purchase_price" => ["bail", "required", "numeric", "gte:0"],
             "budget_status" => ["bail", "required", "string"],
             "request_date" => ["bail", "required", "date"],
@@ -82,7 +82,7 @@ class PurchaseRequestService{
         }
 
         if($message == "" && !is_null($request->input("signatures"))){
-            $validType = ["checked by", "known by"];
+            $validType = ["checked by", "known by", "prepared by"];
 
             foreach($request->input("signatures") as $signature){
                 $type = strtolower($signature['type']);

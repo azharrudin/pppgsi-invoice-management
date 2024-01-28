@@ -41,28 +41,28 @@ $configData = Helper::appClasses();
                                 <div class="col-md-12">
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Departemen </label>
-                                        <input type="text" class="form-control" placeholder="Departement" name="department" id="department" required />
+                                        <input type="text" class="form-control" placeholder="Departement" name="department_id" id="department_id" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Jumlah Anggaran </label>
-                                        <input type="text" class="form-control add qty price" id="total_budget" name="total_budget" placeholder="Jumlah Anggaran" required />
+                                        <input type="text" class="form-control" id="total_budget" name="total_budget" placeholder="Jumlah Anggaran" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Usulan Permintaan </label>
-                                        <input type="text" class="form-control add qty price" id="proposed_purchase_price" name="proposed_purchase_price" placeholder="Usulan Permintaan" required />
+                                        <input type="text" class="form-control" id="proposed_purchase_price" name="proposed_purchase_price" placeholder="Usulan Permintaan" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Sisa Anggaran </label>
-                                        <input type="text" class="form-control add qty price" id="remaining_budget" name="remaining_budget" placeholder="Sisa Anggaran" required />
+                                        <input type="text" class="form-control" id="remaining_budget" name="remaining_budget" placeholder="Sisa Anggaran" readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
@@ -92,13 +92,13 @@ $configData = Helper::appClasses();
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
-                                <div class="col-md-5 mb-0">
+                                <!-- <div class="col-md-5 mb-0">
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Tanggal MR</label>
                                         <input type="text" class="form-control" id="tanggal_mr" name="tanggal_mr" placeholder="Tanggal MR" disabled />
                                         <div class="invalid-feedback" style="display: none">Tidak boleh kosong</div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-md-12 mt-2">
                                     <div class="mb-1">
                                         <textarea class="form-control add" rows="7" style="padding: 15px" id="additional_note" name="additional_note" placeholder="Termin pembayaran, garansi dll" required></textarea>
@@ -112,23 +112,23 @@ $configData = Helper::appClasses();
                         <div class="row py-3 px-3">
                             <div class="col-12">
                                 <div class="">
-                                    <div class="form-check form-check-inline checkbox">
+                                    <div class="form-check form-check-inline checkbox budget_status">
                                         <input class="form-check-input checkbox-check" type="checkbox" name="Sesuai Budget" id="sesuai_budget" required>
                                         <label class="form-check-label" for="sesuai_budget">Sesuai Budget</label>
                                     </div>
-                                    <div class="form-check form-check-inline checkbox">
+                                    <div class="form-check form-check-inline checkbox budget_status">
                                         <input class="form-check-input checkbox-check" type="checkbox" name="Diluar Budget" id="diluar_budget" required>
                                         <label class="form-check-label" for="diluar_budget">Diluar Budget</label>
                                     </div>
-                                    <div class="form-check form-check-inline checkbox">
+                                    <div class="form-check form-check-inline checkbox budget_status">
                                         <input class="form-check-input checkbox-check" type="checkbox" name="penting" id="penting" required>
                                         <label class="form-check-label" for="penting">Penting</label>
                                     </div>
-                                    <div class="form-check form-check-inline checkbox">
+                                    <div class="form-check form-check-inline checkbox budget_status">
                                         <input class="form-check-input checkbox-check" type="checkbox" name="1 Minggu" id="1_minggu" required>
                                         <label class="form-check-label" for="1_minggu">1 Minggu</label>
                                     </div>
-                                    <div class="form-check form-check-inline checkbox">
+                                    <div class="form-check form-check-inline checkbox budget_status">
                                         <input class="form-check-input checkbox-check" type="checkbox" name="1 Bulan" id="1_bulan" required>
                                         <label class="form-check-label" for="1_bulan">1 Bulan</label>
                                     </div>
@@ -161,7 +161,7 @@ $configData = Helper::appClasses();
                                         <label for="note" class="form-label fw-medium">Diproses Oleh :</label>
                                         <input type="text" value="Checked By" id="type1" name="type" class="form-control d-none">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control  " placeholder="Nama" style="text-align:center;" id="name1" name="name" />
+                                            <input type="text" id="warehouse_name" class="form-control" placeholder="Nama" style="text-align:center;" id="name1" name="name" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -176,7 +176,7 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" style="text-align:center;" id="date1" name="date" />
+                                            <input type="text" id="warehouse_date" class="form-control date" placeholder="Tanggal" style="text-align:center;" id="date1" name="date" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
@@ -282,6 +282,23 @@ $configData = Helper::appClasses();
 </script>
 <script>
     let dataLocal = JSON.parse(localStorage.getItem("purchase-request"));
+    var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>`;
+    var lastIndex = null;
+
+    function format(e) {
+        var nStr = e + '';
+        nStr = nStr.replace(/\,/g, "");
+        let x = nStr.split('.');
+        let x1 = x[0];
+        let x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
 
     $(document).ready(function() {
 
@@ -302,8 +319,9 @@ $configData = Helper::appClasses();
         // }
 
         // Date
+        getDetails();
         $('.date').flatpickr({
-            dateFormat: 'd-m-Y'
+            dateFormat: 'Y-m-d'
         });
 
         $("#material_request_id").select2({
@@ -336,16 +354,72 @@ $configData = Helper::appClasses();
 
         });
 
-        getDetails();
+        $('#material_request_id').on("change", (async function(e) {
+            var rekomendasi = $("#material_request_id").select2('data');
+            var data = rekomendasi[0].id;
+            console.log(data);
+            $('#material_request_id').val(data);
 
+        }));
+
+        $(document).on('keydown', '#total_budget', function(event) {
+            var key = event.which;
+            if ((key < 48 || key > 57) && key != 8) event.preventDefault();
+        });
+
+        $(document).on('input', '#total_budget', function(event) {
+            var nStr = event.currentTarget.value + '';
+            nStr = nStr.replace(/\,/g, "");
+            var x = nStr.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            event.currentTarget.value = x1 + x2;
+            // Hapus baris yang ditekan tombol hapus
+            let total = parseInt($(this).val().replaceAll(',', ''));
+
+            let proposed_purchase_price = isNaN(parseInt($(`#proposed_purchase_price`).val().replaceAll(',', ''))) ? 0 : parseInt($(`#proposed_purchase_price`).val().replaceAll(',', ''));
+
+            let remaining_budget = total - proposed_purchase_price;
+
+            $('#remaining_budget').val(format(isNaN(remaining_budget) ? 0 : remaining_budget));
+
+        });
+
+        $(document).on('input', '#proposed_purchase_price', function(event) {
+            var nStr = event.currentTarget.value + '';
+            nStr = nStr.replace(/\,/g, "");
+            var x = nStr.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            event.currentTarget.value = x1 + x2;
+            // Hapus baris yang ditekan tombol hapus
+            let proposed_purchase_price = parseInt($(this).val().replaceAll(',', ''));
+            let total = isNaN(parseInt($(`#total_budget`).val().replaceAll(',', ''))) ? 0 : parseInt($(`#total_budget`).val().replaceAll(',', ''));
+
+            let remaining_budget = total - proposed_purchase_price;
+
+            $('#remaining_budget').val(format(isNaN(remaining_budget) ? 0 : remaining_budget));
+
+        });
 
         $(document).on('click', '.btn-remove-mg', function() {
             // Hapus baris yang ditekan tombol hapus
             $(this).closest('.row-mg').remove();
         });
 
+
+
         $(document).on('click', '.btn-add-row-mg', function() {
             // Clone baris terakhir
+
             var $details = $('#details');
             var $newRow = `
                             <table class="table row-mg">
@@ -358,19 +432,19 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" required style="width: 200px;" />
                                         </td>
                                         <td>
-                                            <input type="date" class="form-control row-input" placeholder="Tanggal" name="last_buy_date[]" required style="width: 200px;" />
+                                            <input type="text" class="date form-control row-input" placeholder="Tanggal" name="last_buy_date[]" required style="width: 200px;" />
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control row-input" placeholder="Kuantitas" name="last_buy_quantity[]" required style="width: 200px;" />
+                                            <input type="number" class="form-control row-input" placeholder="Kuantitas" name="last_buy_quantity[]" required style="width: 200px;" />
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control row-input" placeholder="Persediaan" name="last_buy_stock[]" required style="width: 200px;" />
+                                            <input type="number" class="form-control row-input" placeholder="Persediaan" name="last_buy_stock[]" required style="width: 200px;" />
                                         </td>
                                         <td>
                                             <textarea class="form-control row-input" placeholder="Deskripsi" name="description[]" style="width: 200px;"></textarea>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required style="width: 200px;" />
+                                            <input type="number" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required style="width: 200px;" />
                                         </td>
                                         <td>
                                             <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
@@ -382,6 +456,9 @@ $configData = Helper::appClasses();
                             </table>
             `;
             $details.append($newRow);
+            $('.date').flatpickr({
+                dateFormat: 'Y-m-d'
+            });
         });
 
         function getDetails() {
@@ -460,19 +537,19 @@ $configData = Helper::appClasses();
                                                         <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" required style="width: 200px;" />
                                                     </td>
                                                     <td>
-                                                        <input type="date" class="form-control row-input" placeholder="Tanggal" name="last_buy_date[]" required style="width: 200px;" />
+                                                        <input type="text" class="date form-control row-input" placeholder="Tanggal" name="last_buy_date[]" required style="width: 200px;" />
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control row-input" placeholder="Kuantitas" name="last_buy_quantity[]" required style="width: 200px;" />
+                                                        <input type="number" class="form-control row-input" placeholder="Kuantitas" name="last_buy_quantity[]" required style="width: 200px;" />
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control row-input" placeholder="Persediaan" name="last_buy_stock[]" required style="width: 200px;" />
+                                                        <input type="number" class="form-control row-input" placeholder="Persediaan" name="last_buy_stock[]" required style="width: 200px;" />
                                                     </td>
                                                     <td>
                                                         <textarea class="form-control row-input" placeholder="Deskripsi" name="description[]" style="width: 200px;"></textarea>
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required style="width: 200px;" />
+                                                        <input type="number" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required style="width: 200px;" />
                                                     </td>
                                                     <td>
                                                         <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
@@ -486,8 +563,6 @@ $configData = Helper::appClasses();
                 $('#details').prepend(temp);
             }
         };
-
-
 
 
 
@@ -508,80 +583,71 @@ $configData = Helper::appClasses();
                     } else {
                         event.preventDefault();
                         Swal.fire({
-                            title: 'Loading...',
-                            text: "Please wait",
-                            customClass: {
-                                confirmButton: 'd-none'
-                            },
-                            buttonsStyling: false
-                        });
-                        let material = $('.select-mr').val();
-                        let department = $('.select-department').val();
-                        let datas = {}
-                        let signatures = []
-
-                        $('#addPurchaseRequest').find('.add').each(function() {
-                            var inputId = $(this).attr('id');
-                            var inputValue = $("#" + inputId).val();
-
-                            if (inputId === 'total_budget' || inputId ===
-                                'proposed_purchase_price' ||
-                                inputId === 'remaining_budget') {
-                                var inputValueWithoutComma = inputValue.replace(',', '');
-
-                                datas[$("#" + inputId).attr("name")] = parseInt(
-                                    inputValueWithoutComma, 10);
-                            } else if (inputId === 'tanggal_pr' || inputId ===
-                                'tanggal_mr' || inputId === 'request_date') {
-                                datas[$("#" + inputId).attr("name")] = moment(inputValue,
-                                        'D-M-YYYY')
-                                    .format('YYYY-MM-DD');
-                            } else {
-                                datas[$("#" + inputId).attr("name")] = inputValue;
-                            }
+                            title: '<h2>Loading...</h2>',
+                            html: sweet_loader + '<h5>Please Wait</h5>',
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
                         });
 
-                        datas.details = getRepeaterValues();
+                        
+                        let department_id = parseInt($("#department_id").val());
+                        let proposed_purchase_price = parseInt($("#proposed_purchase_price").val().replaceAll(',', ''));
+                        let budget_status = $('.checkbox-check:checked').attr('name');;
+                        let request_date = $("#request_date").val();
+                        let requester = $("#requester").val();
+                        let total_budget = $("#total_budget").val().replaceAll(',', '');
+                        let remaining_budget = parseInt($("#remaining_budget").val().replaceAll(',', ''));
+                        let material_request_id = parseInt($("#material_request_id").val());
+                        let additional_note = $("#additional_note").val();
 
-                        $('.signatures').each(function(index) {
-                            let signature = {};
+                        let datas = {};
+                        let signatures1 = {}
+                        signatures1.type = "Prepared by";
+                        signatures1.name = $('#warehouse_name').val();
+                        signatures1.date = $('#warehouse_date').val();
+                        signatures1.signature = ttdFile1.dataURL;
 
-                            $(this).find('.form-control').each(function() {
-                                var inputId = $(this).attr('id');
-                                var inputValue = $("#" + inputId).val();
-
-                                if (inputId && inputId.startsWith('date')) {
-                                    signature[$("#" + inputId).attr("name")] =
-                                        moment(inputValue, 'D-M-YYYY')
-                                        .format('YYYY-MM-DD');
-                                } else {
-                                    signature[$("#" + inputId).attr("name")] =
-                                        inputValue;
-                                }
-                            });
-
-                            if (ttdFile1 && index === 0) {
-                                signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
+                        var detail = [];
+                        $('.row-input').each(function(index) {
+                            var input_name = $(this).attr('name');
+                            var input_value = $(this).val();
+                            var input_index = Math.floor(index / 7); // Membagi setiap 5 input menjadi satu objek pada array
+                            if (index % 7 == 0) {
+                                detail[input_index] = {
+                                    number: input_value
+                                };
+                            } else if (index % 7 == 1) {
+                                detail[input_index].part_number = input_value;
+                            } else if (index % 7 == 2) {
+                                detail[input_index].last_buy_date = input_value;
+                            } else if (index % 7 == 3) {
+                                detail[input_index].last_buy_quantity = parseInt(input_value);
+                            } else if (index % 7 == 4) {
+                                detail[input_index].last_buy_stock = parseInt(input_value);
+                            } else if (index % 7 == 5) {
+                                detail[input_index].description = input_value;
+                            } else if (index % 7 == 6) {
+                                detail[input_index].quantity = parseInt(input_value);
                             }
-
-                            if (ttdFile2 && index === 1) {
-                                signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                            }
-
-                            if (ttdFile3 && index === 2) {
-                                signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                            }
-                            signatures.push(signature);
                         });
 
-                        datas.budget_status = $('.checkbox-check:checked').attr('name');
-                        datas.material_request_id = parseInt(material);
-                        datas.department_id = parseInt(department);
-                        datas.signatures = signatures;
-                        datas.status = "Terbuat";
+
+                        datas.details = detail;
+                        datas.department_id = department_id;
+                        datas.proposed_purchase_price = proposed_purchase_price;
+                        datas.budget_status = budget_status;
+                        datas.request_date = request_date;
+                        datas.requester = requester;
+                        datas.total_budget = total_budget;
+                        datas.remaining_budget = remaining_budget;
+                        datas.material_request_id = material_request_id;
+                        datas.additional_note = additional_note;
+                        datas.status = 'Terbuat';
+                        datas.signatures = [signatures1];
                         console.log(datas)
                         $.ajax({
-                            url: baseUrl + "api/purchase-request/",
+                            url: "{{ env('BASE_URL_API')}}" + "/api/purchase-request",
                             type: "POST",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -622,77 +688,6 @@ $configData = Helper::appClasses();
                 false
             );
         });
-
-        // Preview before save
-        $(".btn-preview").on('click', function() {
-            let material = $('.select-mr').val();
-            let department = $('.select-department').val();
-            let datas = {}
-            let signatures = []
-
-            $('#addPurchaseRequest').find('.add').each(function() {
-                var inputId = $(this).attr('id');
-                var inputValue = $("#" + inputId).val();
-
-                if (inputId === 'total_budget' || inputId ===
-                    'proposed_purchase_price' ||
-                    inputId === 'remaining_budget') {
-                    var inputValueWithoutComma = inputValue.replace(',', '');
-
-                    datas[$("#" + inputId).attr("name")] = parseInt(
-                        inputValueWithoutComma, 10);
-                } else if (inputId === 'tanggal_pr' || inputId ===
-                    'tanggal_mr' || inputId === 'request_date') {
-                    datas[$("#" + inputId).attr("name")] = moment(inputValue,
-                            'D-M-YYYY')
-                        .format('YYYY-MM-DD');
-                } else {
-                    datas[$("#" + inputId).attr("name")] = inputValue;
-                }
-            });
-
-            datas.details = getRepeaterValues();
-
-            $('.signatures').each(function(index) {
-                let signature = {};
-
-                $(this).find('.form-control').each(function() {
-                    var inputId = $(this).attr('id');
-                    var inputValue = $("#" + inputId).val();
-
-                    if (inputId && inputId.startsWith('date')) {
-                        signature[$("#" + inputId).attr("name")] =
-                            moment(inputValue, 'D-M-YYYY')
-                            .format('YYYY-MM-DD');
-                    } else {
-                        signature[$("#" + inputId).attr("name")] =
-                            inputValue;
-                    }
-                });
-
-                if (ttdFile1 && index === 0) {
-                    signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                }
-
-                if (ttdFile2 && index === 1) {
-                    signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                }
-
-                if (ttdFile3 && index === 2) {
-                    signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                }
-                signatures.push(signature);
-            });
-
-            datas.budget_status = $('.checkbox-check:checked').attr('name');
-            datas.material_request_id = parseInt(material);
-            datas.department_id = parseInt(department);
-            datas.signatures = signatures;
-            datas.status = "Terbuat";
-
-            localStorage.setItem('purchase-request', JSON.stringify(datas));
-            window.location.href = "/request/preview"
-        })
 
         // Mengambil value tanda tangan
         let ttdFile1 = null;
@@ -747,36 +742,36 @@ $configData = Helper::appClasses();
         // });
 
         // Select2
-        $(".select-department").select2({
-            placeholder: 'Select Department',
-            allowClear: true,
-            ajax: {
-                url: "{{ env('BASE_URL_API')}}" + '/api/department/select',
-                dataType: 'json',
-                cache: true,
-                data: function(params) {
-                    return {
-                        term: params.term || '',
-                        page: params.page || 1,
-                        field: params.name || 'name'
-                    }
-                },
-                processResults: function(data, params) {
-                    var more = data.pagination.more;
-                    if (more === false) {
-                        params.page = 1;
-                        params.abort = true;
-                    }
+        // $(".select-department").select2({
+        //     placeholder: 'Select Department',
+        //     allowClear: true,
+        //     ajax: {
+        //         url: "{{ env('BASE_URL_API')}}" + '/api/department/select',
+        //         dataType: 'json',
+        //         cache: true,
+        //         data: function(params) {
+        //             return {
+        //                 term: params.term || '',
+        //                 page: params.page || 1,
+        //                 field: params.name || 'name'
+        //             }
+        //         },
+        //         processResults: function(data, params) {
+        //             var more = data.pagination.more;
+        //             if (more === false) {
+        //                 params.page = 1;
+        //                 params.abort = true;
+        //             }
 
-                    return {
-                        results: data.data,
-                        pagination: {
-                            more: more
-                        }
-                    };
-                }
-            }
-        });
+        //             return {
+        //                 results: data.data,
+        //                 pagination: {
+        //                     more: more
+        //                 }
+        //             };
+        //         }
+        //     }
+        // });
 
         $(".select-mr").select2({
             placeholder: 'Select Material Request',
@@ -807,36 +802,36 @@ $configData = Helper::appClasses();
                 }
             }
         });
-      
-        $("#department_id").select2({
-            placeholder: 'Select Material Request',
-            allowClear: true,
-            ajax: {
-                url: "{{ env('BASE_URL_API')}}" + '/api/departement/select',
-                dataType: 'json',
-                cache: true,
-                data: function(params) {
-                    return {
-                        term: params.term || '',
-                        page: params.page || 1
-                    }
-                },
-                processResults: function(data, params) {
-                    var more = data.pagination.more;
-                    if (more === false) {
-                        params.page = 1;
-                        params.abort = true;
-                    }
 
-                    return {
-                        results: data.data,
-                        pagination: {
-                            more: more
-                        }
-                    };
-                }
-            }
-        });
+        // $("#department_id").select2({
+        //     placeholder: 'Select Material Request',
+        //     allowClear: true,
+        //     ajax: {
+        //         url: "{{ env('BASE_URL_API')}}" + '/api/departement/select',
+        //         dataType: 'json',
+        //         cache: true,
+        //         data: function(params) {
+        //             return {
+        //                 term: params.term || '',
+        //                 page: params.page || 1
+        //             }
+        //         },
+        //         processResults: function(data, params) {
+        //             var more = data.pagination.more;
+        //             if (more === false) {
+        //                 params.page = 1;
+        //                 params.abort = true;
+        //             }
+
+        //             return {
+        //                 results: data.data,
+        //                 pagination: {
+        //                     more: more
+        //                 }
+        //             };
+        //         }
+        //     }
+        // });
 
         // Mengambil data tanggal untuk material request
         $(".select-mr").on('change', function() {
