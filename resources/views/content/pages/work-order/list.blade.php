@@ -183,6 +183,21 @@ $configData = Helper::appClasses();
                     } else if (data == "Terkirim") {
                         return '<span class="badge w-100" style="background-color : #FF87A7; ">' + data +
                             '</span>'
+                    } else if (data == 'Selesai') {
+                        return '<span class="w-100 badge" style="background-color : #74D94E; " text-capitalized> Selesai </span>';
+                    } else if (data == "Disetujui Warehouse") {
+                        return '<span class="badge w-100" style="background-color : #4E6DD9; " >' + data +
+                            '</span>'
+                    } else if (data == "Disetujui Building Manager") {
+                        return '<span class="badge w-100" style="background-color : #4E6DD9; " >' + data +
+                            '</span>'
+                    
+                    } else if (data == "Disetujui Chief Engineering") {
+                        return '<span class="badge w-100" style="background-color : #4E6DD9; " >' + data +
+                            '</span>'
+                    } else if (data == "Disetujui Technician") {
+                        return '<span class="badge w-100" style="background-color : #4E6DD9; " >' + data +
+                            '</span>'
                     }
                 }
             }, {
