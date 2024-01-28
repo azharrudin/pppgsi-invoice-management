@@ -189,7 +189,7 @@ $configData = Helper::appClasses();
                         return `<div class="d-flex align-items-center">
                             `  + previewRow + `
                             <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a target="_blank" href="{{ url("request/material-request/print")}}/` + data + `"" class="dropdown-item">Download</a><a href="{{ url("request/material-request/edit")}}/` + data + `" class="dropdown-item">Edit</a>
-                            <div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
+                            <div class="dropdown-divider"></div><a href="#" data-id="${data}" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
                     }
                 }
             ],
@@ -251,12 +251,70 @@ $configData = Helper::appClasses();
                         boundary: document.body
                     })
                 }))
-        })), $(".invoice-list-table tbody").on("click", ".delete-record", (function() {
-            e.row($(this).parents("tr")).remove().draw()
         })), setTimeout((() => {
             $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(
                 ".dataTables_length .form-select").removeClass("form-select-sm")
         }), 300)
+
+        $(document).on('click', '.delete-record', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                icon: 'warning',
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonText: "Batal",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                    cancelButton: "btn fw-bold btn-active-light-primary"
+                }
+            }).then((result) => {
+                if (result.value) {
+                    let id = $(this).data('id');
+                    let datas = {}
+                    datas.status = 'Terkirim';
+                    Swal.fire({
+                        title: 'Memeriksa...',
+                        text: "Harap menunggu",
+                        imageUrl: "{{ asset('waiting.gif') }}",
+                        showConfirmButton: false,
+                        allowOutsideClick: false
+                    });
+                    $.ajax({
+                        url: "{{ env('BASE_URL_API')}}" + '/api/material-request/'+id,
+                        type: "DELETE",
+                        data: JSON.stringify(datas),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response) {
+                            Swal.fire({
+                                title: 'Berhasil',
+                                text: 'Berhasil Menghapus Invoice',
+                                icon: 'success',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            }).then((result) => {
+                                $('.invoice-list-table').DataTable().ajax.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: ' You clicked the button!',
+                                icon: 'error',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            })
+                        }
+                    });
+                }
+            });
+        });
     }));
 </script>
 

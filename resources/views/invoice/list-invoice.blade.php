@@ -165,6 +165,66 @@ $configData = Helper::appClasses();
             });
         });
 
+        $(document).on('click', '.delete-record', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                icon: 'warning',
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonText: "Batal",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                    cancelButton: "btn fw-bold btn-active-light-primary"
+                }
+            }).then((result) => {
+                if (result.value) {
+                    let id = $(this).data('id');
+                    let datas = {}
+                    datas.status = 'Terkirim';
+                    Swal.fire({
+                        title: 'Memeriksa...',
+                        text: "Harap menunggu",
+                        imageUrl: "{{ asset('waiting.gif') }}",
+                        showConfirmButton: false,
+                        allowOutsideClick: false
+                    });
+                    $.ajax({
+                        url: "{{ env('BASE_URL_API')}}" + '/api/invoice/'+id,
+                        type: "DELETE",
+                        data: JSON.stringify(datas),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response) {
+                            Swal.fire({
+                                title: 'Berhasil',
+                                text: 'Berhasil Menghapus Invoice',
+                                icon: 'success',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            }).then((result) => {
+                                $('.invoice-list-table').DataTable().ajax.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: ' You clicked the button!',
+                                icon: 'error',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            })
+                        }
+                    });
+                }
+            });
+        });
+
         var a = $(".invoice-list-table");
         if (a.length) var e = a.DataTable({
             responsive: true,
