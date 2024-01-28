@@ -278,7 +278,7 @@ class MaterialRequestController extends Controller
             $status = strtolower($request->input("status", ""));
             $statusArray = explode(",", $status);
 
-            if(is_null($field)) $field = "id";
+            if(is_null($field)) $field = "material_request_number";
 
             $materialRequestQuery = MaterialRequest::where("deleted_at", null)->where($field, 'like', '%' . $value . '%');
             if($status != ""){
