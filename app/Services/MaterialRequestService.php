@@ -64,7 +64,7 @@ class MaterialRequestService{
         }
 
         if($message == "" && !is_null($request->input("signatures"))){
-            $validType = ["prepared by", "reviewed by", "acknowledge by", "approved by"];
+            $validType = ["prepared by", "reviewed by", "aknowledge by", "approved by"];
 
             foreach($request->input("signatures") as $signature){
                 $type = strtolower($signature['type']);
