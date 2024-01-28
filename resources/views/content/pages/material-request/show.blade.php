@@ -86,6 +86,7 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
+                        <button type="button" id="edit" class="btn btn-primary d-grid w-100 mb-2">Edit</button>
                         <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Kembali</button>
                     </div>
                 </div>
@@ -334,6 +335,12 @@ $configData = Helper::appClasses();
         event.preventDefault();
         localStorage.removeItem('material-request');
         window.location.href = "/request/material-request"
+    });
+
+    $(document).on('click', '#edit', function(event) {
+        event.preventDefault();
+        localStorage.removeItem('material-request');
+        window.location.href = "/request/material-request/edit/"+id;
     });
 
     $(document).on('click', '#save', function(event) {

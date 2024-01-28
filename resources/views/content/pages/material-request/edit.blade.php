@@ -306,6 +306,7 @@ $configData = Helper::appClasses();
             datePrepared = value?.date ? value.date : '';
             dropzonePrepared = 'dz-clickable';
             namePrepared = account.name;
+            ttdFile1 = value.signature;
             imagePrepared = `
             <div action="/upload" class="dropzone needsclick ${dropzonePrepared} dd" id="ttd1">
                 <div class="dz-message needsclick">
@@ -374,6 +375,7 @@ $configData = Helper::appClasses();
             dateReviewed = value?.date ? value.date : '';
             dropzoneReviewed = 'dz-clickable';
             nameReviewed = account.name;
+            ttdFile2 = value.signature;
             imageReviewed = `
             <div action="/upload" class="dropzone needsclick ${dropzoneReviewed} dd" id="ttd2">
                 <div class="dz-message needsclick">
@@ -432,7 +434,6 @@ $configData = Helper::appClasses();
     }
 
     function getSignatureChiefFinance(value){
-        console.log(value);
         let disableAknowledge = 'disabled';
         let dropzoneAknowledge = '';
         let imageAknowledge = '';
@@ -444,6 +445,7 @@ $configData = Helper::appClasses();
             dateAknowledge = value?.date ? value.date : '';
             dropzoneAknowledge = 'dz-clickable';
             nameAknowledge = account.name;
+            ttdFile3 = value.signature;
             imageAknowledge = `
             <div action="/upload" class="dropzone needsclick ${dropzoneAknowledge} dd" id="ttd3">
                 <div class="dz-message needsclick">
@@ -513,6 +515,7 @@ $configData = Helper::appClasses();
             dateApproved = value?.date ? value.date : '';
             dropzoneApproved = 'dz-clickable';
             nameApproved = account.name;
+            ttdFile4= value.signature;
             imageApproved = `
             <div action="/upload" class="dropzone needsclick ${dropzoneApproved} dd" id="ttd4">
                 <div class="dz-message needsclick">
@@ -646,7 +649,6 @@ $configData = Helper::appClasses();
                             details[input_index].min_stock = input_value;
                         }
                     });
-
                     datas.details = details;
                     datas.requester = requester;
                     datas.department = department;
@@ -697,7 +699,7 @@ $configData = Helper::appClasses();
 
                     let signature3 = {};
                     if(ttdFile3 != undefined){
-                        signature3.type = 'Aknowledge by';
+                        signature3.type = 'Aknowledge By';
                         signature3.name = $('#finance-name').val();
                         signature3.date = $('#finance-date').val();
                         signature3.signature = ttdFile3;
@@ -732,7 +734,6 @@ $configData = Helper::appClasses();
                         return Object.keys(obj).length === 0;
                     }
                     datas.signatures = signature;
-
                     $.ajax({
                         url: "{{ env('BASE_URL_API')}}" + "/api/material-request/"+id,
                         type: "PATCH",
