@@ -121,7 +121,7 @@ Route::group(['middleware' => 'cekauth'], function () {
             Route::get('/data-purchase-request', [PurchaseRequestController::class, 'datatable'])->name('data-purchase-request');
             Route::get('/preview/{id}', [PurchaseRequestController::class, 'preview'])->name('pages-purchase-request');
             Route::get('/print/{id}', [PurchaseRequestController::class, 'print']);
-            Route::get('/show', [PurchaseRequestController::class, 'show'])->name('pages-purchase-request');
+            Route::get('/show/{id}', [PurchaseRequestController::class, 'show'])->name('pages-purchase-request');
         });
 
         // Material Request
