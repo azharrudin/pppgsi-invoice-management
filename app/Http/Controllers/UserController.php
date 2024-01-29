@@ -112,7 +112,7 @@ class UserController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $userQuery = User::with("department")->with("level")->where("deleted_at", null);
+            $userQuery = User::with("department:name")->with("level")->where("deleted_at", null);
             if($value){
                 $userQuery->where(function ($query) use ($value) {
                     $query->where('name', 'like', '%' . $value . '%')
@@ -122,7 +122,10 @@ class UserController extends Controller
                         ->orWhere('status', 'like', '%' . $value . '%');
                 });
             }
-            $getUsers = $userQuery->orderBy($order, $sort)->paginate($perPage);
+            $getUsers = $userQuery
+            ->select("id","name", "email", "department_id", "level_id", "status")
+            ->orderBy($order, $sort)
+            ->paginate($perPage);
             $totalCount = $getUsers->total();
 
             $userArr = $this->CommonService->toArray($getUsers);

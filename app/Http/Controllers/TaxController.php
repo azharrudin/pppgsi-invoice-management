@@ -42,7 +42,10 @@ class TaxController extends Controller
                     ->orWhere('description', 'like', '%' . $value . '%');
                 });
             }
-            $getTaxs = $taxQuery->orderBy($order, $sort)->paginate($perPage);
+            $getTaxs = $taxQuery
+            ->select("id","name", "rate", "description")
+            ->orderBy($order, $sort)
+            ->paginate($perPage);
             $totalCount = $getTaxs->total();
 
             $taxArr = $this->CommonService->toArray($getTaxs);

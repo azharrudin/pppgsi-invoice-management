@@ -54,7 +54,10 @@ class PurchaseRequestController extends Controller
                     ->orWhere('status', 'like', '%' . $value . '%');
                 });
             }
-            $getPurchaseRequest = $purchaseRequestQuery->orderBy($order, $sort)->paginate($perPage);
+            $getPurchaseRequest = $purchaseRequestQuery
+            ->select("id", "purchase_request_number", "department_id", "proposed_purchase_price", "budget_status", "request_date", "status" )
+            ->orderBy($order, $sort)
+            ->paginate($perPage);
             $totalCount = $getPurchaseRequest->total();
 
             $purchaseRequestArr = $this->CommonService->toArray($getPurchaseRequest);
@@ -66,7 +69,9 @@ class PurchaseRequestController extends Controller
                 "size" => $totalCount,
                 "pages" => ceil($totalCount/$perPage)
             ];
-        } catch (\Throwable $e) {
+        } catch (\Exception $e) {
+
+            dd($e);
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 

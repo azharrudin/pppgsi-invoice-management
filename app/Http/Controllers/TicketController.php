@@ -42,12 +42,15 @@ class TicketController extends Controller
                 $ticketQuery->where(function ($query) use ($value) {
                     $query->where('ticket_number', 'like', '%' . $value . '%')
                     ->orWhere('reporter_name', 'like', '%' . $value . '%')
-                    ->orWhere('reporter_company', 'like', '%' . $value . '%')
+                    ->orWhere('tenant_id', 'like', '%' . $value . '%')
                     ->orWhere('ticket_title', 'like', '%' . $value . '%')
                     ->orWhere('status', 'like', '%' . $value . '%');
                 });
             }
-            $getTickets = $ticketQuery->orderBy($order, $sort)->paginate($perPage);
+            $getTickets = $ticketQuery
+            ->select("id","ticket_number", "reporter_name", "tenant_id", "ticket_title", "status")
+            ->orderBy($order, $sort)
+            ->paginate($perPage);
             $totalCount = $getTickets->total();
 
             $ticketArr = $this->CommonService->toArray($getTickets);
