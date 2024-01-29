@@ -70,7 +70,7 @@ class InvoiceController extends Controller
         if($response->data){
             foreach ($response->data as $key => $value) {
                 $data[$key] = $value;
-                $data[$key]->tenant_name = $value->tenant->name;
+                $data[$key]->tenant_name = $value->tenant->company;
             }
         }
         return DataTables::of($data)

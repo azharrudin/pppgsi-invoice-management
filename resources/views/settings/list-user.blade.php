@@ -635,7 +635,7 @@ $configData = Helper::appClasses();
                     data.department_id = parseInt(department);
                     data.status = 'Active';
                     $.ajax({
-                        url: "{{url('api/user')}}/"+ id,
+                        url: "{{ env('BASE_URL_API')}}"+'/api/user/'+ id,
                         type: "PATCH",
                         data: data,
                         success: function(response) {
@@ -647,13 +647,14 @@ $configData = Helper::appClasses();
                                     confirmButton: 'btn btn-primary'
                                 },
                                 buttonsStyling: false
-                            })
+                            }).then((result) => {
+                                $('#modal_bank_cancel').click();
+                                $('#edit-bank')[0].reset();
+                                $('#edit-bank-data').modal('hide');
+    
+                                $(".list-user-table").DataTable().ajax.reload();
+                            });
 
-                            $('#modal_bank_cancel').click();
-                            $('#edit-bank')[0].reset();
-                            $('#edit-bank-data').modal('hide');
-
-                            $(".list-user-table").DataTable().ajax.reload();
                         },
                         error: function(xhr, status, error) {
                             Swal.fire({

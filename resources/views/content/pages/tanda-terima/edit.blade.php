@@ -300,37 +300,24 @@
                         $('#editTandaTerima').find('.form-control').each(function() {
                             let inputName = $(this).attr('name');
                             let inputValue = response[inputName];
-
-                         
                             if (inputName === 'grand_total' || inputName === 'paid' || inputName === 'remaining') {
-                               
                                 let formattedValue = parseFloat(inputValue).toLocaleString('en-US');
                                 $("#" + $(this).attr('id')).val(formattedValue);
                             } else if (inputName === 'jabatan') {
-                               
                                 if (inputValue === undefined) {
                                     inputValue = 'Kepala BM';
                                 }
-                              
                                 $("#" + $(this).attr('id')).val(inputValue);
                             } else {
-                               
                                 $("#" + $(this).attr('id')).val(inputValue);
                             }
 
                         });
 
                         $('#signature_date').val(response.signature_date ? moment(response.signature_date, 'YYYY-MM-DD').format('DD-MM-YYYY') : '');
-                        $(".select-tenant").empty().append('<option value="' + response.tenant_id +
-                                '">' + response.tenant.name + '</option>').val(response.tenant_id)
-                            .trigger("change");
-                        $(".select-invoice").empty().append('<option value="' + response.invoice_id +
-                                '">' + response.invoice.invoice_number + '</option>').val(response
-                                .invoice_id)
-                            .trigger("change");
-                        $(".select-bank").empty().append('<option value="' + response.bank_id +
-                                '">' + response.bank?.name + '</option>').val(response.bank_id)
-                            .trigger("change");
+                        $(".select-tenant").empty().append('<option value="' + response.tenant_id +'">' + response.tenant.name + '</option>').val(response.tenant_id).trigger("change");
+                        $(".select-invoice").empty().append('<option value="' + response.invoice_id +'">' + response.invoice.invoice_number + '</option>').val(response.invoice_id).trigger("change");
+                        $(".select-bank").empty().append('<option value="' + response.bank_id +'">' + response.bank?.name + '</option>').val(response.bank_id).trigger("change");
                         if (response.signature_image != '') {
                             $('.prev-img').attr('src', response.signature_image);
                         } else {

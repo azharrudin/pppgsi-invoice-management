@@ -42,7 +42,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-3 w-px-250">
                                     <label for="note" class="form-label fw-medium">No Invoice</label>
-                                    <select class="form-select select2 w-px-250 select-invoice item-details mb-3" required>
+                                    <select class="form-select select2 w-px-250 select-invoice item-details mb-3" id="invoice_number" required>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -52,14 +52,14 @@ $configData = Helper::appClasses();
                                 </div>
                                 <div class="mb-3 w-px-250">
                                     <label for="note" class="form-label fw-medium">Bank</label>
-                                    <select class="form-select select2 w-px-250 select-bank item-details mb-3" required>
+                                    <select id="bank" class="form-select select2 w-px-250 select-bank item-details mb-3" required>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6 d-flex justify-content-end">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Nama Tenant</label>
-                                    <select class="form-select select2 w-px-250 select-tenant item-details mb-3" required>
+                                    <select id="tenant" class="form-select select2 w-px-250 select-tenant item-details mb-3" required>
                                     </select>
                                 </div>
                             </div>
@@ -207,7 +207,6 @@ $configData = Helper::appClasses();
 <script>
     let account = {!! json_encode(session('data')) !!}
     var levelId = account.level_id;
-    console.log(levelId);
     if (levelId == 10) {
         $('.ttd').hide();
     }
@@ -215,8 +214,13 @@ $configData = Helper::appClasses();
 <script>
     $(document).ready(function() {
 
+        var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>`;
+        
         // Mendapatkan id dari invoice
         const idInvoice = getParameterByName('id-invoice');
+        let dataLocal = JSON.parse(localStorage.getItem("receipt"));
 
         if (idInvoice) {
             getDataInvoice(idInvoice);
@@ -238,8 +242,109 @@ $configData = Helper::appClasses();
             dateFormat: 'd-m-Y'
         });
 
-        // Dropzone
+        if (dataLocal) {
+            load(dataLocal);
+        }
 
+        function getTenant() {
+            let idTenant = dataLocal.tenant_id;
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" +"/api/tenant/" + idTenant,
+                type: "GET",
+                success: function(response) {
+                    let data = response.data;
+                    let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
+                    $('#tenant').prepend(tem);
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        function getTenant() {
+            let idTenant = dataLocal.tenant_id;
+            console.log(idTenant);
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" +"/api/tenant/" + idTenant,
+                type: "GET",
+                success: function(response) {
+                    let data = response.data;
+                    let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
+                    $('#tenant').prepend(tem);
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        function load(dataLocale) {
+            Swal.fire({
+                title: '<h2>Loading...</h2>',
+                html: sweet_loader + '<h5>Please Wait</h5>',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            });
+
+            $("#grand_total").val(dataLocal.grand_total?.toLocaleString());
+            $("#total_paid").val(dataLocal.total_paid?.toLocaleString());
+            $("#paid").val(dataLocal.paid?.toLocaleString());
+            $("#remaining").val(dataLocal.remaining?.toLocaleString());
+            $("#remaining").val(dataLocal.remaining?.toLocaleString());
+            $("#grand_total_spelled").val(dataLocal.grand_total_spelled);
+            $("#note").val(dataLocal.note);
+            $("#check_number").val(dataLocal.check_number);
+
+
+            if (dataLocal.tenant_id) {
+                getTenant();
+            }
+            if (dataLocal.bank_id) {
+                getBank();
+            }
+            if (dataLocal.invoice_id) {
+                getInvoiceNumber();
+            }
+            Swal.close();
+        }
+
+        function getBank() {
+            let idBank = dataLocal.bank_id;
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" +'/api/bank/' + idBank,
+                type: "GET",
+                success: function(response) {
+                    let data = response.data;
+
+                    let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
+                    $('#bank').prepend(tem);
+
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        function getInvoiceNumber() {
+            let idInvoice = dataLocal.invoice_id;
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" +'/api/invoice/' + idInvoice,
+                type: "GET",
+                success: function(response) {
+                    let data = response.data;
+                    console.log(data);
+                    let tem = `<option value="` + data.id + `" selected>` + data.invoice_number + `</option>`;
+                    $('#invoice_number').prepend(tem);
+
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
 
         // Date
         $('.date').flatpickr({
@@ -319,6 +424,14 @@ $configData = Helper::appClasses();
                     } else {
                         // Submit your form
                         event.preventDefault();
+                        Swal.fire({
+                            title: 'Loading...',
+                            text: "Please wait",
+                            customClass: {
+                                confirmButton: 'd-none'
+                            },
+                            buttonsStyling: false
+                        });
                         let invoice = $('.select-invoice').val();
                         let tenant = $('.select-tenant').val();
                         let bank = $('.select-bank').val();
@@ -353,7 +466,6 @@ $configData = Helper::appClasses();
                         datas.receipt_date = moment().format('YYYY-MM-DD');
                         datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
                         datas.signature_date = date ? moment(date, 'D-M-YYYY').format('YYYY-MM-DD') : null;
-                        console.log(datas);
 
                         $.ajax({
                             url: "{{ env('BASE_URL_API')}}" +'/api/receipt',
@@ -361,16 +473,6 @@ $configData = Helper::appClasses();
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
-                            beforeSend: function() {
-                                Swal.fire({
-                                    title: 'Loading...',
-                                    text: "Please wait",
-                                    customClass: {
-                                        confirmButton: 'd-none'
-                                    },
-                                    buttonsStyling: false
-                                });
-                            },
                             success: function(response) {
                                 Swal.fire({
                                     title: 'Berhasil',
@@ -381,9 +483,8 @@ $configData = Helper::appClasses();
                                     },
                                     buttonsStyling: false
                                 }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        window.location.href = "{{ url('invoice/tanda-terima') }}";
-                                    }
+                                    localStorage.removeItem('receipt');
+                                    window.location.href = "{{ url('invoice/tanda-terima') }}";
                                 });
                             },
                             error: function(errors) {
@@ -423,7 +524,6 @@ $configData = Helper::appClasses();
                 if (inputId === 'grand_total' || inputId === 'paid' || inputId ===
                     'remaining') {
                     var inputValueWithoutComma = inputValue.replace(',', '');
-
                     datas[$("#" + inputId).attr("name")] = parseInt(inputValueWithoutComma, 10);
                 } else if (inputId === 'receipt_date') {
                     datas[$("#" + inputId).attr("name")] = moment(inputValue, 'D-M-YYYY')
@@ -455,13 +555,9 @@ $configData = Helper::appClasses();
         // Keyup dibayarkan
         $('#paid').on('keyup', function() {
             getTotal();
-
             var totalInvoice = $('#grand_total').val().replace(/,/g, '') || 0;
             var paidAmount = $(this).val().replace(/,/g, '') || 0;
-            console.log(totalInvoice)
-
             var remainingAmount = totalInvoice - paidAmount;
-
             $('#remaining').val(remainingAmount.toLocaleString('en-US'));
         });
 
@@ -475,7 +571,6 @@ $configData = Helper::appClasses();
         }
 
         function terbilang(bilangan) {
-            console.log(bilangan)
             bilangan = String(bilangan);
             let angka = new Array('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
                 '0');
@@ -594,7 +689,7 @@ $configData = Helper::appClasses();
                 cache: true,
                 data: function(params) {
                     return {
-                        term: params.term || '',
+                        value: params.term || '',
                         page: params.page || 1
                     }
                 },
@@ -619,13 +714,12 @@ $configData = Helper::appClasses();
             placeholder: 'Select Invoice',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/invoice/select',
+                url: "{{ env('BASE_URL_API')}}" +'/api/invoice/select?status=terkirim',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
                     return {
-                        term: params.term || '',
-                        search: params.term,
+                        value: params.term || '',
                         page: params.page || 1
                     }
                 },
@@ -655,8 +749,7 @@ $configData = Helper::appClasses();
                 cache: true,
                 data: function(params) {
                     return {
-                        term: params.term || '',
-                        search: params.term,
+                        value: params.term || '',
                         page: params.page || 1
                     }
                 },
@@ -739,162 +832,6 @@ $configData = Helper::appClasses();
         getDataInvoice(id);
     })
 
-    // Save, Insert, and Create
-    var saveTandaTerima = $('.create-tanda-terima');
-
-    Array.prototype.slice.call(saveTandaTerima).forEach(function(form) {
-        $('.indicator-progress').hide();
-        $('.indicator-label').show();
-        form.addEventListener(
-            "submit",
-            function(event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault();
-                    event.stopPropagation();
-
-                    let tenant = $('.select-tenant').val();
-                    let invoice = $('.select-invoice').val();
-                    let bank = $(".select-bank").val();
-
-                    if (!invoice) {
-                        $(".select-invoice").addClass("invalid");
-                    }
-                    if (!tenant) {
-                        $(".select-tenant").addClass("invalid");
-                    }
-                    if (!bank) {
-                        $(".select-bank").addClass("invalid");
-                    }
-
-                } else {
-                    // Submit your form
-                    event.preventDefault();
-                    let invoice = $('.select-invoice').val();
-                    let tenant = $('.select-tenant').val();
-                    let bank = $('.select-bank').val();
-                    let date = $('.date').val();
-
-                    let datas = {}
-
-                    $('#addTandaTerima').find('.form-control').each(function() {
-                        var inputId = $(this).attr('id');
-                        var inputValue = $("#" + inputId).val();
-
-                        if (inputId === 'grand_total' || inputId === 'paid' ||
-                            inputId ===
-                            'remaining') {
-                            var inputValueWithoutComma = inputValue.replace(',', '');
-
-                            datas[$("#" + inputId).attr("name")] = parseInt(
-                                inputValueWithoutComma, 10);
-                        } else if (inputId === 'receipt_date') {
-                            datas[$("#" + inputId).attr("name")] = moment(inputValue,
-                                    'D-M-YYYY')
-                                .format('YYYY-MM-DD');
-                        } else {
-                            datas[$("#" + inputId).attr("name")] = inputValue;
-                        }
-                    });
-                    datas.signature_image = ttdFile;
-                    datas.invoice_id = parseInt(invoice);
-                    datas.tenant_id = parseInt(tenant);
-                    datas.bank_id = parseInt(bank);
-                    datas.status = 'Terbuat';
-                    datas.receipt_date = moment().format('YYYY-MM-DD');
-                    datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
-                    datas.signature_date = moment(date, 'D-M-YYYY').format('YYYY-MM-DD');
-                    console.log(datas);
-
-                    $.ajax({
-                        url: "{{ env('BASE_URL_API')}}" +'/api/receipt',
-                        type: "POST",
-                        data: JSON.stringify(datas),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        beforeSend: function() {
-                            Swal.fire({
-                                title: 'Loading...',
-                                text: "Please wait",
-                                customClass: {
-                                    confirmButton: 'd-none'
-                                },
-                                buttonsStyling: false
-                            });
-                        },
-                        success: function(response) {
-                            Swal.fire({
-                                title: 'Berhasil',
-                                text: 'Berhasil menambahkan Tanda Terima',
-                                icon: 'success',
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                                buttonsStyling: false
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.href = "/invoice/tanda-terima";
-                                }
-                            });
-                        },
-                        error: function(errors) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: errors.responseJSON
-                                    .message,
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                                buttonsStyling: false
-                            })
-                        }
-                    });
-                }
-
-                form.classList.add("was-validated");
-            },
-            false
-        );
-    });
-
-    // Preview before save
-    $(".btn-preview").on('click', function() {
-        let datas = {}
-
-        let invoice = $('.select-invoice').val();
-        let tenant = $('.select-tenant').val();
-        let bank = $('.select-bank').val();
-        let date = $('.date').val();
-
-        $('#addTandaTerima').find('.form-control').each(function() {
-            var inputId = $(this).attr('id');
-            var inputValue = $("#" + inputId).val();
-
-            if (inputId === 'grand_total' || inputId === 'paid' || inputId ===
-                'remaining') {
-                var inputValueWithoutComma = inputValue.replace(',', '');
-
-                datas[$("#" + inputId).attr("name")] = parseInt(inputValueWithoutComma, 10);
-            } else if (inputId === 'receipt_date') {
-                datas[$("#" + inputId).attr("name")] = moment(inputValue, 'D-M-YYYY')
-                    .format('YYYY-MM-DD');
-            } else {
-                datas[$("#" + inputId).attr("name")] = inputValue;
-            }
-        });
-        datas.signature_image = ttdFile;
-        datas.invoice_id = parseInt(invoice);
-        datas.tenant_id = parseInt(tenant);
-        datas.bank_id = parseInt(bank);
-        datas.status = 'Terbuat';
-        datas.receipt_date = moment().format('YYYY-MM-DD');
-        datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
-        datas.signature_date = moment(date, 'D-M-YYYY').format('YYYY-MM-DD');
-
-        localStorage.setItem('receipt', JSON.stringify(datas));
-        window.location.href = "/invoice/tanda-terima/preview"
-    })
-
     // Cancel
     $(document).on('click', '.btn-cancel', function(event) {
         event.preventDefault();
@@ -905,13 +842,9 @@ $configData = Helper::appClasses();
     // Keyup dibayarkan
     $('#paid').on('keyup', function() {
         getTotal();
-
         var totalInvoice = $('#grand_total').val().replace(/,/g, '') || 0;
         var paidAmount = $(this).val().replace(/,/g, '') || 0;
-        console.log(totalInvoice)
-
         var remainingAmount = totalInvoice - paidAmount;
-
         $('#remaining').val(remainingAmount.toLocaleString('en-US'));
     });
 
@@ -925,7 +858,6 @@ $configData = Helper::appClasses();
     }
 
     function terbilang(bilangan) {
-        console.log(bilangan)
         bilangan = String(bilangan);
         let angka = new Array('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
             '0');
@@ -1044,7 +976,7 @@ $configData = Helper::appClasses();
             cache: true,
             data: function(params) {
                 return {
-                    term: params.term || '',
+                    value: params.term || '',
                     page: params.page || 1
                 }
             },
@@ -1074,8 +1006,7 @@ $configData = Helper::appClasses();
             cache: true,
             data: function(params) {
                 return {
-                    term: params.term || '',
-                    search: params.term,
+                    value: params.term || '',
                     page: params.page || 1
                 }
             },
@@ -1105,8 +1036,7 @@ $configData = Helper::appClasses();
             cache: true,
             data: function(params) {
                 return {
-                    term: params.term || '',
-                    search: params.term,
+                    value: params.term || '',
                     page: params.page || 1
                 }
             },
