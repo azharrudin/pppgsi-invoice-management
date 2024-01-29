@@ -112,23 +112,23 @@ $configData = Helper::appClasses();
                             <div class="col-12">
                                 <div class="">
                                     <div class="form-check form-check-inline checkbox budget_status">
-                                        <input class="form-check-input checkbox-check" type="checkbox" name="Sesuai Budget" id="sesuai_budget" readonly>
+                                        <input class="form-check-input checkbox-check" type="checkbox" onclick="return false;" name="Sesuai Budget" id="sesuai budget" readonly>
                                         <label class="form-check-label" for="sesuai_budget">Sesuai Budget</label>
                                     </div>
                                     <div class="form-check form-check-inline checkbox budget_status">
-                                        <input class="form-check-input checkbox-check" type="checkbox" name="Diluar Budget" id="diluar_budget" readonly>
+                                        <input class="form-check-input checkbox-check" type="checkbox" onclick="return false;" name="Diluar Budget" id="diluar budget" readonly>
                                         <label class="form-check-label" for="diluar_budget">Diluar Budget</label>
                                     </div>
                                     <div class="form-check form-check-inline checkbox budget_status">
-                                        <input class="form-check-input checkbox-check" type="checkbox" name="penting" id="penting" readonly>
+                                        <input class="form-check-input checkbox-check" type="checkbox" onclick="return false;" name="penting" id="penting" readonly>
                                         <label class="form-check-label" for="penting">Penting</label>
                                     </div>
                                     <div class="form-check form-check-inline checkbox budget_status">
-                                        <input class="form-check-input checkbox-check" type="checkbox" name="1 Minggu" id="1_minggu" readonly>
+                                        <input class="form-check-input checkbox-check" type="checkbox" onclick="return false;" name="1 Minggu" id="1 minggu" readonly>
                                         <label class="form-check-label" for="1_minggu">1 Minggu</label>
                                     </div>
                                     <div class="form-check form-check-inline checkbox budget_status">
-                                        <input class="form-check-input checkbox-check" type="checkbox" name="1 Bulan" id="1_bulan" readonly>
+                                        <input class="form-check-input checkbox-check" type="checkbox" onclick="return false;" name="1 Bulan" id="1 bulan" readonly>
                                         <label class="form-check-label" for="1_bulan">1 Bulan</label>
                                     </div>
                                 </div>
@@ -255,9 +255,8 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 purchase-req-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
-                        <!-- <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button> -->
-                        <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
+                    <button type="button" id="edit" class="btn btn-primary d-grid w-100 mb-2">Edit</button>
+                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Kembali</button>
                     </div>
                 </div>
             </div>
@@ -421,6 +420,16 @@ $configData = Helper::appClasses();
         });
     });
 
+    $(document).on('click', '#batal', function(event) {
+        event.preventDefault();
+        window.location.href = "/request/list-purchase-request"
+    });
+
+    $(document).on('click', '#edit', function(event) {
+        event.preventDefault();
+        window.location.href = "/request/edit/"+id;
+    });
+
     function getDataPurchaseRequest(id) {
         Swal.fire({
             title: '<h2>Loading...</h2>',
@@ -447,6 +456,7 @@ $configData = Helper::appClasses();
                 $("#requester").val(data.requester);
                 $("#material_request_id").val(data.material_request.material_request_number);
                 $("#total_budget").val(format(data.total_budget));
+                $('#'+data.budget_status.toLowerCase()).prop('checked', true);
                 getDetails(data.purchase_request_details);
                 getSignatures(data.purchase_request_signatures);
                 Swal.close();
@@ -538,7 +548,7 @@ $configData = Helper::appClasses();
                 } else if (details[i].type == 'Checked By') {
                     appendChecked = `
                     <div class="col-md-4">
-                        <label for="note" class="form-label fw-medium mb-3">Diketahui Oleh :</label>
+                        <label for="note" class="form-label fw-medium mb-3">Diperiksa Oleh :</label>
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="departement_name" name="name[]" readonly value="${details[i].name}">
                         </div>
@@ -564,7 +574,7 @@ $configData = Helper::appClasses();
                 } else if (details[i].type == 'Known By') {
                     appendKnown = `
                     <div class="col-md-4">
-                        <label for="note" class="form-label fw-medium mb-3">Diperiksa Oleh :</label>
+                        <label for="note" class="form-label fw-medium mb-3">Diketahui Oleh :</label>
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="departement_name" name="name[]" readonly value="${details[i].name}">
                         </div>

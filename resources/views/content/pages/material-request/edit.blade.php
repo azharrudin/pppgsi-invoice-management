@@ -175,6 +175,7 @@ $configData = Helper::appClasses();
                         signatureKepalaBm = details[i];
                     }
                 }
+                
                 let htmlGetSignatureWarehouse = getSignatureWarehouse(signatureWarehouse);
                 let htmlGetSignatureChiefDepartment = getSignatureChiefDepartment(signatureChiefDepartment);
                 let htmlGetSignatureChiefFinance = getSignatureChiefFinance(signatureChiefFinance);
