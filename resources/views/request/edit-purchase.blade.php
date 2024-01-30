@@ -310,7 +310,7 @@ $configData = Helper::appClasses();
         let dateCheckedAttr = '';
         let nameChecked = '';
         let dateChecked = '';
-        if (account.level.id == '2') {
+        if (account.level.id != '2') {
             nameChecked = value?.name ? value.name : '';
             dateChecked = value?.date ? value.date : '';
             dropzoneChecked = 'dz-clickable';
@@ -484,7 +484,7 @@ $configData = Helper::appClasses();
                     }
                 }
 
-                console.log(signatureKepalaBm);
+                console.log(signatureAdmin);
 
                 let htmlGetSignatureAdmin = getSignaturePrepared(signatureAdmin);
                 let htmlGetSignatureKepalaUnit = getSignatureCheked(signatureKepalaUnit);
@@ -495,7 +495,7 @@ $configData = Helper::appClasses();
                 account.level.id == 2 ? dropzoneValue(signatureKepalaUnit, '#ttd2') : '';
                 account.level.id == 1 ? dropzoneValue(signatureKepalaBm, '#ttd3') : '';
 
-           
+
 
                 Swal.close();
             },
@@ -599,7 +599,7 @@ $configData = Helper::appClasses();
     var idIndex = urlSegments.indexOf('edit') + 1;
     id = urlSegments[idIndex];
     $(document).ready(function() {
-      
+
         getDataPurchaseRequest(id);
         // let account = {
         //     !!json_encode(session('data')) !!
@@ -806,11 +806,9 @@ $configData = Helper::appClasses();
                         let material_request_id = parseInt($("#material_request_id").val());
                         let additional_note = $("#additional_note").val();
 
+                       
+
                         let datas = {};
-                        signatures1.type = "Prepared by";
-                        signatures1.name = $('#admin_name').val();
-                        signatures1.date = $('#admin_date').val();
-                        signatures1.signature = ttdFile1.dataURL;
 
                         var detail = [];
                         $('.row-input').each(function(index) {
@@ -838,27 +836,27 @@ $configData = Helper::appClasses();
 
 
                         let signature = [];
-                        if(account.level.id == '1'){
+                        if (account.level.id == '1') {
                             datas.status = 'Disetujui BM';
-                        }else if(account.level.id == '2'){
+                        } else if (account.level.id == '2') {
                             datas.status = 'Disetujui KA';
                         }
 
-                        
-                        if($.type(ttdFile1) == 'object'){
+
+                        if ($.type(ttdFile1) == 'object') {
                             ttdFile1 = ttdFile1.dataURL;
                         }
 
-                        if($.type(ttdFile2) == 'object'){
+                        if ($.type(ttdFile2) == 'object') {
                             ttdFile2 = ttdFile2.dataURL;
                         }
 
-                        if($.type(ttdFile3) == 'object'){
+                        if ($.type(ttdFile3) == 'object') {
                             ttdFile3 = ttdFile3.dataURL;
                         }
 
                         let signature1 = {};
-                        if(ttdFile1 != undefined){
+                        if (ttdFile1 != undefined) {
                             signature1.type = 'Prepared By';
                             signature1.name = $('#admin-name').val();
                             signature1.date = $('#admin-date').val();
@@ -866,7 +864,7 @@ $configData = Helper::appClasses();
                         }
 
                         let signature2 = {};
-                        if(ttdFile2 != undefined){
+                        if (ttdFile2 != undefined) {
                             signature2.type = 'Checked By';
                             signature2.name = $('#unit-name').val();
                             signature2.date = $('#unit-date').val();
@@ -874,7 +872,7 @@ $configData = Helper::appClasses();
                         }
 
                         let signature3 = {};
-                        if(ttdFile3 != undefined){
+                        if (ttdFile3 != undefined) {
                             signature3.type = 'Known By';
                             signature3.name = $('#bm-name').val();
                             signature3.date = $('#bm-date').val();
@@ -882,7 +880,7 @@ $configData = Helper::appClasses();
                         }
 
                         if (!isEmptyObject(signature1)) {
-                        signature.push(signature1);
+                            signature.push(signature1);
                         }
 
                         // Validasi dan tambahkan data dari b ke signature
@@ -892,6 +890,10 @@ $configData = Helper::appClasses();
 
                         if (!isEmptyObject(signature3)) {
                             signature.push(signature3);
+                        }
+
+                        function isEmptyObject(obj) {
+                            return Object.keys(obj).length === 0;
                         }
 
                         datas.details = detail;
@@ -907,7 +909,7 @@ $configData = Helper::appClasses();
                         datas.signatures = signature;
                         console.log(datas)
                         $.ajax({
-                            url: "{{ env('BASE_URL_API')}}" + "/api/purchase-request"+id,
+                            url: "{{ env('BASE_URL_API')}}" + "/api/purchase-request/" + id,
                             type: "POST",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",

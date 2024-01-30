@@ -68,14 +68,14 @@ $configData = Helper::appClasses();
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label for="scope" class="form-label fw-medium">Scope</label>
-                                    <input type="text"  class="form-control"  name="" id="scope">
+                                    <input type="text" class="form-control" name="" id="scope">
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label for="classification" class="form-label fw-medium">Classification</label>
-                                    <input type="text"  class="form-control"  name="" id="classification">
+                                    <input type="text" class="form-control" name="" id="classification">
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
@@ -127,78 +127,8 @@ $configData = Helper::appClasses();
                                 </div>
 
                                 <label for="note" class="form-label fw-medium text-left ttd">Technician</label>
-                                <div class="row  text-center ttd">
-                                    <div class="col-md-3 signatures">
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician1" name="name" style="text-align:center;" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-1" style="padding: 5px;">
-                                                <div class="dz-message needsclick">
-                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" name="date" id="date1" style="text-align:center;" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 signatures">
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician2" name="name" style="text-align:center;" disabled />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-2" style="padding: 5px;">
-                                                <div class="dz-message needsclick">
-                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date2" name="date" style="text-align:center;" disabled />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 signatures">
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician3" name="name" style="text-align:center;" disabled />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-3" style="padding: 5px;">
-                                                <div class="dz-message needsclick">
-                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date3" name="date" style="text-align:center;" disabled />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 signatures">
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician4" name="name" style="text-align:center;" disabled />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-4" style="padding: 5px;">
-                                                <div class="dz-message needsclick">
-                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date4" name="date" style="text-align:center;" disabled />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                    </div>
+                                <div class="row mb-3 mt-3 signatures">
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -242,98 +172,6 @@ $configData = Helper::appClasses();
         var idIndex = urlSegments.indexOf('show') + 1;
         id = urlSegments[idIndex];
         getDataWorkOrder(id);
-
-        
-
-        // Mengambil value tanda tangan
-        // let ttdFile1 = null;
-        // const myDropzone1 = new Dropzone('#dropzone-1', {
-        //     parallelUploads: 1,
-        //     maxFilesize: 2,
-        //     maxFiles: 1,
-        //     acceptedFiles: ".jpeg,.jpg,.png",
-        //     autoQueue: false,
-        //     init: function() {
-        //         if (data) {
-        //             // Add a preloaded file to the dropzone with a preview
-        //             var mockFile = data.signatures[0].signature;
-        //             if (mockFile) {
-        //                 this.options.addedfile.call(this, mockFile);
-        //                 this.options.thumbnail.call(this, mockFile, mockFile.dataURL);
-
-        //                 $('.dz-image').last().find('img').attr('width', '100%');
-
-
-        //                 // Optional: Handle the removal of the file
-        //                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-        //                     // Handle removal logic here
-        //                 });
-        //             }
-        //         }
-        //         this.on('addedfile', function(file) {
-        //             while (this.files.length > this.options.maxFiles) this.removeFile(this
-        //                 .files[0]);
-        //             ttdFile1 = file;
-        //         });
-        //     }
-        // });
-
-        // let ttdFile2 = null;
-        // const myDropzone2 = new Dropzone('#dropzone-2', {
-        //     clickable: false,
-        //     parallelUploads: 1,
-        //     maxFilesize: 2,
-        //     addRemoveLinks: true,
-        //     maxFiles: 1,
-        //     acceptedFiles: ".jpeg,.jpg,.png",
-        //     autoQueue: false,
-        //     init: function() {
-        //         this.on('addedfile', function(file) {
-        //             while (this.files.length > this.options.maxFiles) this.removeFile(this
-        //                 .files[0]);
-        //             ttdFile2 = file;
-        //         });
-        //     }
-        // });
-
-        // let ttdFile3 = null;
-        // const myDropzone3 = new Dropzone('#dropzone-3', {
-        //     clickable: false,
-        //     parallelUploads: 1,
-        //     maxFilesize: 2,
-        //     addRemoveLinks: true,
-        //     maxFiles: 1,
-        //     acceptedFiles: ".jpeg,.jpg,.png",
-        //     autoQueue: false,
-        //     init: function() {
-        //         this.on('addedfile', function(file) {
-        //             while (this.files.length > this.options.maxFiles) this.removeFile(this
-        //                 .files[0]);
-        //             ttdFile3 = file;
-        //         });
-        //     }
-        // });
-
-        // let ttdFile4 = null;
-        // const myDropzone4 = new Dropzone('#dropzone-4', {
-        //     parallelUploads: 1,
-        //     maxFilesize: 2,
-        //     addRemoveLinks: true,
-        //     maxFiles: 1,
-        //     clickable: false,
-        //     acceptedFiles: ".jpeg,.jpg,.png",
-        //     autoQueue: false,
-        //     init: function() {
-        //         this.on('addedfile', function(file) {
-        //             while (this.files.length > this.options.maxFiles) this.removeFile(this
-        //                 .files[0]);
-        //             ttdFile4 = file;
-        //         });
-        //     }
-        // });
-
-        // Cancel
-
     });
 
     function getDataWorkOrder(id) {
@@ -355,8 +193,7 @@ $configData = Helper::appClasses();
                 console.log(data);
                 id = data.id;
                 getLaporanKerusakan(data.damage_report_id);
-
-                $("#no-wo").text('Nomor Work Order : '+data.work_order_number);
+                $("#no-wo").text('Nomor Work Order : ' + data.work_order_number);
                 $("#action_plan_date").val(data.action_plan_date);
                 $("#damage_report_id").val(data.damage_report_id);
                 $("#finish_plan").val(data.finish_plan);
@@ -367,8 +204,8 @@ $configData = Helper::appClasses();
                 getDetails(data.work_order_details);
                 $("#scope").val(data.scope);
                 $("#classification").val(data.classification);
-                $('#'+data.klasifikasi).prop('checked', true);
-
+                $('#' + data.klasifikasi).prop('checked', true);
+                getSignatures(data.work_order_signatures);
                 Swal.close();
             },
             error: function(errors) {
@@ -381,23 +218,122 @@ $configData = Helper::appClasses();
 
     }
 
-    function load(datae) {
-        Swal.fire({
-            title: '<h2>Loading...</h2>',
-            html: sweet_loader + '<h5>Please Wait</h5>',
-            showConfirmButton: false,
-            allowOutsideClick: false,
-            allowEscapeKey: false
-        });
+    function getSignatures(details) {
+        console.log(details);
+        let append = '';
+        let appendPrepared = '';
+        let appendReviewed = '';
+        let appendAknowledge = '';
+        let appendApproved = '';
+        for (let i = 0; i < details.length; i++) {
+            if (details[i].type == 'Prepared By') {
+                appendPrepared = `
+                    <div class="col-md-3">
+                        <label for="note" class="form-label fw-medium mb-3">Prepared by :</label>
+                        <div class="mb-3">
+                            <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="warehouse_name" name="name[]" readonly value="${details[i].name}">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="warehouse_jabatan" name="jabatan[]" readonly value="Warehouse">
+                        </div>
+                        <div class="mb-3">
+                            <div id="warehouse-image"></div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="warehouse_date" name="date[]" value="${details[i].date}" readonly>
+                        </div>
+                    </div>` +
+                    '<script type="text/javascript">' +
+                    '$("#warehouse-image").css("background-color", "black");' +
+                    '$("#warehouse-image").css("background-image", "url(' + details[i].signature + ')");' +
+                    '$("#warehouse-image").css("height", "200px");' +
+                    '$("#warehouse-image").css("width", "200px");' +
+                    '$("#warehouse-image").css("background-position", "center");' +
+                    '$("#warehouse-image").css("background-size", "cover");' +
+                    '$("#warehouse-image").css("background-repeat", "no-repeat");' +
+                    '</' + 'script>';
+            } else if (details[i].type == 'Reviewed By') {
+                appendReviewed = `
+                    <div class="col-md-3">
+                        <label for="note" class="form-label fw-medium mb-3">Prepared by :</label>
+                        <div class="mb-3">
+                            <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="departement_name" name="name[]" readonly value="${details[i].name}">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="departement_jabatan" name="jabatan[]" readonly value="Chief Department">
+                        </div>
+                        <div class="mb-3">
+                            <div id="departement-image"></div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="departement_date" name="date[]" value="${details[i].date}" readonly>
+                        </div>
+                    </div>` +
+                    '<script type="text/javascript">' +
+                    '$("#departement-image").css("background-color", "black");' +
+                    '$("#departement-image").css("background-image", "url(' + details[i].signature + ')");' +
+                    '$("#departement-image").css("height", "200px");' +
+                    '$("#departement-image").css("width", "200px");' +
+                    '$("#departement-image").css("background-position", "center");' +
+                    '$("#departement-image").css("background-size", "cover");' +
+                    '$("#departement-image").css("background-repeat", "no-repeat");' +
+                    '</' + 'script>';
+            } else if (details[i].type == 'Aknowledge By') {
+                appendAknowledge = `
+                    <div class="col-md-3">
+                        <label for="note" class="form-label fw-medium mb-3">Prepared by :</label>
+                        <div class="mb-3">
+                            <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="finance_name" name="name[]" readonly value="${details[i].name}">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="finance_jabatan" name="jabatan[]" readonly value="Chief Finance & Akunting">
+                        </div>
+                        <div class="mb-3">
+                            <div id="finance-image"></div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="finance_date" name="date[]" value="${details[i].date}" readonly>
+                        </div>
+                    </div>` +
+                    '<script type="text/javascript">' +
+                    '$("#finance-image").css("background-color", "black");' +
+                    '$("#finance-image").css("background-image", "url(' + details[i].signature + ')");' +
+                    '$("#finance-image").css("height", "200px");' +
+                    '$("#finance-image").css("width", "200px");' +
+                    '$("#finance-image").css("background-position", "center");' +
+                    '$("#finance-image").css("background-size", "cover");' +
+                    '$("#finance-image").css("background-repeat", "no-repeat");' +
+                    '</' + 'script>';
+            } else if (details[i].type == 'Approved By') {
+                appendApproved = `
+                    <div class="col-md-3">
+                        <label for="note" class="form-label fw-medium mb-3">Prepared by :</label>
+                        <div class="mb-3">
+                            <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="approved_name" name="name[]" readonly value="${details[i].name}">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="approved_jabatan" name="jabatan[]" readonly value="Kepala BM">
+                        </div>
+                        <div class="mb-3">
+                            <div id="approved-image"></div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="approved_date" name="date[]" value="${details[i].date}" readonly>
+                        </div>
+                    </div>` +
+                    '<script type="text/javascript">' +
+                    '$("#approved-image").css("background-color", "black");' +
+                    '$("#approved-image").css("background-image", "url(' + details[i].signature + ')");' +
+                    '$("#approved-image").css("height", "200px");' +
+                    '$("#approved-image").css("width", "200px");' +
+                    '$("#approved-image").css("background-position", "center");' +
+                    '$("#approved-image").css("background-size", "cover");' +
+                    '$("#approved-image").css("background-repeat", "no-repeat");' +
+                    '</' + 'script>';
+            }
+            $('.signatures').html(appendPrepared + appendReviewed + appendAknowledge + appendApproved);
+        }
 
-
-        // if (data.scope) {
-        //     getScope();
-        // }
-
-
-
-        Swal.close();
     }
 
 

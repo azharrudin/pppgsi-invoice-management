@@ -61,7 +61,7 @@ class PurchaseRequestService{
         if ($validator->fails()) $message = implode(', ', $validator->errors()->all());
 
         if($message == ""){
-            $validBudgetStatus = ["sesuai budget", "penting", "1 bulan", "1 minggu", "diluar budget"];
+            $validBudgetStatus = ["sesuai-budget", "penting", "1-bulan", "1-minggu", "diluar-budget"];
 
             $budgetStatus = strtolower($request->input("budget_status"));
             if(!in_array($budgetStatus, $validBudgetStatus)) $message = "Status budget tidak ditemukan";

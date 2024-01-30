@@ -591,7 +591,7 @@ $configData = Helper::appClasses();
                         });
 
                         
-                        let department_id = parseInt($("#department_id").val());
+                        let department_id = $("#department_id").val();
                         let proposed_purchase_price = parseInt($("#proposed_purchase_price").val().replaceAll(',', ''));
                         let budget_status = $('.checkbox-check:checked').attr('name');;
                         let request_date = $("#request_date").val();
@@ -603,7 +603,7 @@ $configData = Helper::appClasses();
 
                         let datas = {};
                         let signatures1 = {}
-                        signatures1.type = "Prepared by";
+                        signatures1.type = "Prepared By";
                         signatures1.name = $('#warehouse_name').val();
                         signatures1.date = $('#warehouse_date').val();
                         signatures1.signature = ttdFile1.dataURL;
@@ -659,15 +659,16 @@ $configData = Helper::appClasses();
 
                                 Swal.fire({
                                     title: 'Berhasil',
-                                    text: 'Berhasil menambahkan Purchase Request.',
+                                    text: 'Berhasil menambahkan Purchase Request',
                                     icon: 'success',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'
                                     },
                                     buttonsStyling: false
-                                })
+                                }).then(function() {
+                                    window.location.href = "/request/list-purchase-request"
+                                });
 
-                                window.location.href = "/request/list-purchase-request"
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
