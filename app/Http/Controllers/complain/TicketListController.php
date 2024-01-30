@@ -53,6 +53,8 @@ class TicketListController extends Controller
         if ($request->page == null) {
             $request->page = 1;
         }
+
+        // dd($request->search['value']);
         $apiRequest = Http::get(env('BASE_URL_API') . '/api/ticket', [
             'per_page' => $request->length,
             'page' => $request->page,

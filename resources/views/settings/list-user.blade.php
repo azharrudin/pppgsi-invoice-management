@@ -401,22 +401,22 @@ $configData = Helper::appClasses();
             columns: [{
                     data: "name",
                     title: "Nama",
-                    name: "Nama"
+                    name: "name"
                 },
                 {
                     data: "email",
                     title: "Email",
-                    name: "Email"
+                    name: "email"
                 },
                 {
-                    data: "department.name",
+                    data: "department",
                     title: "Departement",
                     name: "Departement"
                 },
                 {
                     data: "level.name",
                     title: "Level",
-                    name: "Level"
+                    name: "level.name"
                 },
                 {
                     data: "status",

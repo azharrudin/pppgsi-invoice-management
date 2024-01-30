@@ -117,8 +117,8 @@ class UserController extends Controller
                 $userQuery->where(function ($query) use ($value) {
                     $query->where('name', 'like', '%' . $value . '%')
                         ->orWhere('email', 'like', '%' . $value . '%')
-                        ->orWhere('department', 'like', '%' . $value . '%')
-                        ->orWhere('level', 'like', '%' . $value . '%')
+                        ->orWhere('department_id', 'like', '%' . $value . '%')
+                        ->orWhere('level_id', 'like', '%' . $value . '%')
                         ->orWhere('status', 'like', '%' . $value . '%');
                 });
             }

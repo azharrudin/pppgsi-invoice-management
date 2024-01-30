@@ -91,7 +91,7 @@ $configData = Helper::appClasses();
                 }
             },
             columns: [{
-                name: "invoice_number",
+                name: "ticket_number",
                 data: "ticket_number",
                 title: "No. Ticket",
                 className: 'text-center',
@@ -99,7 +99,7 @@ $configData = Helper::appClasses();
                     return data;
                 }
             }, {
-                name: "tenant_name",
+                name: "reporter_name",
                 data: "reporter_name",
                 title: "Nama Pelapor",
                 className: 'text-center',
@@ -107,7 +107,7 @@ $configData = Helper::appClasses();
                     return data;
                 }
             }, {
-                name: "tenant_name",
+                name: "tenant",
                 data: "tenant",
                 title: "Perusahan",
                 className: 'text-center',
@@ -115,7 +115,7 @@ $configData = Helper::appClasses();
                     return data?.name;
                 }
             }, {
-                name: "tenant_name",
+                name: "ticket_title",
                 data: "ticket_title",
                 title: "Judul Laporan",
                 className: 'text-center',
