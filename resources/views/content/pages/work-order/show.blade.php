@@ -51,14 +51,14 @@ $configData = Helper::appClasses();
                             <div class="col-md-3">
                                 <div class="mb-1">
                                     <label for="note" class="form-label fw-medium">Action Plan </label>
-                                    <input type="text" class="form-control date" id="action_plan_date" name="action_plan_date" placeholder="Action Plan" required />
+                                    <input type="text" class="form-control date" id="action_plan_date" name="action_plan_date" placeholder="Action Plan" readonly />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-1">
                                     <label for="note" class="form-label fw-medium">Finish Plan </label>
-                                    <input type="text" class="form-control date" id="finish_plan" name="finish_plan" placeholder="Finish Plan" required />
+                                    <input type="text" class="form-control date" id="finish_plan" name="finish_plan" placeholder="Finish Plan" readonly />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@ $configData = Helper::appClasses();
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Job deskription:</label>
-                                    <textarea class="form-control add" rows="5" id="job_description" name="job_description" placeholder="Job deskription" required></textarea>
+                                    <textarea class="form-control add" rows="5" id="job_description" name="job_description" placeholder="Job deskription" readonly></textarea>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
@@ -106,20 +106,20 @@ $configData = Helper::appClasses();
                                         <label for="note" class="form-label fw-medium">Klasifikasi</label>
                                         <div class="">
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="closed" id="closed" required>
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="closed" id="closed" readonly>
                                                 <label class="form-check-label" for="closed">Closed
                                                 </label>
                                             </div>
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="cancelled" id="cancelled" required>
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="cancelled" id="cancelled" readonly>
                                                 <label class="form-check-label" for="cancelled">Calceled</label>
                                             </div>
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="explanation" id="explanation" required>
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="explanation" id="explanation" readonly>
                                                 <label class="form-check-label" for="explanation">Explanation</label>
                                             </div>
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="others" id="others" required>
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="others" id="others" readonly>
                                                 <label class="form-check-label" for="others">Others</label>
                                             </div>
                                         </div>
@@ -139,7 +139,8 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <a href="/complain/work-order/add" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Kembali</a>
+                        <button type="button" id="edit" class="btn btn-primary d-grid w-100 mb-2">Edit</button>
+                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Kembali</button>
                     </div>
                 </div>
             </div>
@@ -166,17 +167,28 @@ $configData = Helper::appClasses();
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
     var id;
+    var urlSegments = window.location.pathname.split('/');
+    var idIndex = urlSegments.indexOf('show') + 1;
+    id = urlSegments[idIndex];
 
     $(document).ready(function() {
-        var urlSegments = window.location.pathname.split('/');
-        var idIndex = urlSegments.indexOf('show') + 1;
-        id = urlSegments[idIndex];
         getDataWorkOrder(id);
+    });
+
+    $(document).on('click', '#edit', function(event) {
+        event.preventDefault();
+        window.location.href = "/complain/work-order/edit/" + id;
+    });
+
+    $(document).on('click', '#batal', function(event) {
+        event.preventDefault();
+        window.location.href = "/complain/work-order"
     });
 
     function getDataWorkOrder(id) {
         $.ajax({
-            url: "{{env('BASE_URL_API')}}" + '/api/work-order/' + id,
+            // url: "{{env('BASE_URL_API')}}" + '/api/work-order/' + id,
+            url: "{{url('api/work-order')}}/" + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
@@ -212,29 +224,65 @@ $configData = Helper::appClasses();
                 console.log(errors);
             }
         });
-
-
-
-
     }
 
     function getSignatures(details) {
         console.log(details);
         let append = '';
-        let appendPrepared = '';
-        let appendReviewed = '';
-        let appendAknowledge = '';
-        let appendApproved = '';
+        let appendTechnician = '';
+        let appendChief = '';
+        let appendWarehouse = '';
+        let appendKepala = '';
         for (let i = 0; i < details.length; i++) {
-            if (details[i].type == 'Prepared By') {
-                appendPrepared = `
+            if (details[i].position == "Technician") {
+                appendTechnician = `
                     <div class="col-md-3">
-                        <label for="note" class="form-label fw-medium mb-3">Prepared by :</label>
                         <div class="mb-3">
-                            <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="warehouse_name" name="name[]" readonly value="${details[i].name}">
+                            <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="technician_name" name="name[]" readonly value="${details[i].name}">
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="warehouse_jabatan" name="jabatan[]" readonly value="Warehouse">
+                            <div id="technician-image"></div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="technician_date" name="date[]" value="${details[i].date}" readonly>
+                        </div>
+                    </div>` +
+                    '<script type="text/javascript">' +
+                    '$("#technician-image").css("background-color", "black");' +
+                    '$("#technician-image").css("background-image", "url(' + details[i].signature + ')");' +
+                    '$("#technician-image").css("height", "150px");' +
+                    '$("#technician-image").css("width", "150px");' +
+                    '$("#technician-image").css("background-position", "center");' +
+                    '$("#technician-image").css("background-size", "cover");' +
+                    '$("#technician-image").css("background-repeat", "no-repeat");' +
+                    '</' + 'script>';
+            } else if (details[i].position == "Chief Engineering") {
+                appendChief = `
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="chief_name" name="name[]" readonly value="${details[i].name}">
+                        </div>
+                        <div class="mb-3">
+                            <div id="chief-image"></div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="chief_date" name="date[]" value="${details[i].date}" readonly>
+                        </div>
+                    </div>` +
+                    '<script type="text/javascript">' +
+                    '$("#chief-image").css("background-color", "black");' +
+                    '$("#chief-image").css("background-image", "url(' + details[i].signature + ')");' +
+                    '$("#chief-image").css("height", "150px");' +
+                    '$("#chief-image").css("width", "150px");' +
+                    '$("#chief-image").css("background-position", "center");' +
+                    '$("#chief-image").css("background-size", "cover");' +
+                    '$("#chief-image").css("background-repeat", "no-repeat");' +
+                    '</' + 'script>';
+            } else if (details[i].position == "Warehouse") {
+                appendWarehouse = `
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="warehouse_name" name="name[]" readonly value="${details[i].name}">
                         </div>
                         <div class="mb-3">
                             <div id="warehouse-image"></div>
@@ -246,92 +294,36 @@ $configData = Helper::appClasses();
                     '<script type="text/javascript">' +
                     '$("#warehouse-image").css("background-color", "black");' +
                     '$("#warehouse-image").css("background-image", "url(' + details[i].signature + ')");' +
-                    '$("#warehouse-image").css("height", "200px");' +
-                    '$("#warehouse-image").css("width", "200px");' +
+                    '$("#warehouse-image").css("height", "150px");' +
+                    '$("#warehouse-image").css("width", "150px");' +
                     '$("#warehouse-image").css("background-position", "center");' +
                     '$("#warehouse-image").css("background-size", "cover");' +
                     '$("#warehouse-image").css("background-repeat", "no-repeat");' +
                     '</' + 'script>';
-            } else if (details[i].type == 'Reviewed By') {
-                appendReviewed = `
+            } else if (details[i].position == "Kepala BM") {
+                appendKepala = `
                     <div class="col-md-3">
-                        <label for="note" class="form-label fw-medium mb-3">Prepared by :</label>
                         <div class="mb-3">
-                            <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="departement_name" name="name[]" readonly value="${details[i].name}">
+                            <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="kepala_name" name="name[]" readonly value="${details[i].name}">
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="departement_jabatan" name="jabatan[]" readonly value="Chief Department">
+                            <div id="kepala-image"></div>
                         </div>
                         <div class="mb-3">
-                            <div id="departement-image"></div>
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="departement_date" name="date[]" value="${details[i].date}" readonly>
+                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="kepala_date" name="date[]" value="${details[i].date}" readonly>
                         </div>
                     </div>` +
                     '<script type="text/javascript">' +
-                    '$("#departement-image").css("background-color", "black");' +
-                    '$("#departement-image").css("background-image", "url(' + details[i].signature + ')");' +
-                    '$("#departement-image").css("height", "200px");' +
-                    '$("#departement-image").css("width", "200px");' +
-                    '$("#departement-image").css("background-position", "center");' +
-                    '$("#departement-image").css("background-size", "cover");' +
-                    '$("#departement-image").css("background-repeat", "no-repeat");' +
-                    '</' + 'script>';
-            } else if (details[i].type == 'Aknowledge By') {
-                appendAknowledge = `
-                    <div class="col-md-3">
-                        <label for="note" class="form-label fw-medium mb-3">Prepared by :</label>
-                        <div class="mb-3">
-                            <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="finance_name" name="name[]" readonly value="${details[i].name}">
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="finance_jabatan" name="jabatan[]" readonly value="Chief Finance & Akunting">
-                        </div>
-                        <div class="mb-3">
-                            <div id="finance-image"></div>
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="finance_date" name="date[]" value="${details[i].date}" readonly>
-                        </div>
-                    </div>` +
-                    '<script type="text/javascript">' +
-                    '$("#finance-image").css("background-color", "black");' +
-                    '$("#finance-image").css("background-image", "url(' + details[i].signature + ')");' +
-                    '$("#finance-image").css("height", "200px");' +
-                    '$("#finance-image").css("width", "200px");' +
-                    '$("#finance-image").css("background-position", "center");' +
-                    '$("#finance-image").css("background-size", "cover");' +
-                    '$("#finance-image").css("background-repeat", "no-repeat");' +
-                    '</' + 'script>';
-            } else if (details[i].type == 'Approved By') {
-                appendApproved = `
-                    <div class="col-md-3">
-                        <label for="note" class="form-label fw-medium mb-3">Prepared by :</label>
-                        <div class="mb-3">
-                            <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="approved_name" name="name[]" readonly value="${details[i].name}">
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="approved_jabatan" name="jabatan[]" readonly value="Kepala BM">
-                        </div>
-                        <div class="mb-3">
-                            <div id="approved-image"></div>
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="approved_date" name="date[]" value="${details[i].date}" readonly>
-                        </div>
-                    </div>` +
-                    '<script type="text/javascript">' +
-                    '$("#approved-image").css("background-color", "black");' +
-                    '$("#approved-image").css("background-image", "url(' + details[i].signature + ')");' +
-                    '$("#approved-image").css("height", "200px");' +
-                    '$("#approved-image").css("width", "200px");' +
-                    '$("#approved-image").css("background-position", "center");' +
-                    '$("#approved-image").css("background-size", "cover");' +
-                    '$("#approved-image").css("background-repeat", "no-repeat");' +
+                    '$("#kepala-image").css("background-color", "black");' +
+                    '$("#kepala-image").css("background-image", "url(' + details[i].signature + ')");' +
+                    '$("#kepala-image").css("height", "150px");' +
+                    '$("#kepala-image").css("width", "150px");' +
+                    '$("#kepala-image").css("background-position", "center");' +
+                    '$("#kepala-image").css("background-size", "cover");' +
+                    '$("#kepala-image").css("background-repeat", "no-repeat");' +
                     '</' + 'script>';
             }
-            $('.signatures').html(appendPrepared + appendReviewed + appendAknowledge + appendApproved);
+            $('.signatures').html(appendTechnician + appendChief + appendWarehouse + appendKepala);
         }
 
     }
@@ -367,22 +359,22 @@ $configData = Helper::appClasses();
                     <div class="row mb-3  d-flex align-items-end">
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Location</label>
-                            <input type="text" class="form-control" id="location" name="location[]" placeholder="Location" required value="` + details[i].location + `" />
+                            <input type="text" class="form-control" id="location" name="location[]" placeholder="Location" readonly value="` + details[i].location + `" />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Material Request</label>
-                            <input type="text" class="form-control" id="material-req" name="material-req[]" placeholder="Material Request" required value="` + details[i].material_request + `"/>
+                            <input type="text" class="form-control" id="material-req" name="material-req[]" placeholder="Material Request" readonly value="` + details[i].material_request + `"/>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-3">
                             <label for="note" class="form-label fw-medium">Type /Made In</label>
-                            <input type="text" class="form-control" id="type" name="type[]" placeholder="Type /Made In" required value="` + details[i].type + `"/>
+                            <input type="text" class="form-control" id="type" name="type[]" placeholder="Type /Made In" readonly value="` + details[i].type + `"/>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="col-md-3 mb-1-custom"">
                             <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="number" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required value="` + details[i].quantity + `"/>
+                            <input type="number" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" readonly value="` + details[i].quantity + `"/>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                     </div>
@@ -398,22 +390,22 @@ $configData = Helper::appClasses();
                 <div class="row mb-3  d-flex align-items-end">
                      <div class="col-md-3">
                         <label for="note" class="form-label fw-medium">Location</label>
-                        <input type="text" class="form-control row-input" id="location" name="location[]" placeholder="Location" required />
+                        <input type="text" class="form-control row-input" id="location" name="location[]" placeholder="Location" readonly />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-3">
                         <label for="note" class="form-label fw-medium">Material Request</label>
-                        <input type="text" class="form-control row-input" id="material-req" name="material-req[]" placeholder="Material Request" required />
+                        <input type="text" class="form-control row-input" id="material-req" name="material-req[]" placeholder="Material Request" readonly />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-3">
                         <label for="note" class="form-label fw-medium">Type /Made In</label>
-                        <input type="text" class="form-control row-input" id="type" name="type[]" placeholder="Type /Made In" required />
+                        <input type="text" class="form-control row-input" id="type" name="type[]" placeholder="Type /Made In" readonly />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                     <div class="col-md-3 mb-1-custom"">
                         <label for="note" class="form-label fw-medium">Quantity</label>
-                        <input type="text" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required />
+                        <input type="text" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" readonly />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
                 </div>

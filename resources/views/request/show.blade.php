@@ -255,7 +255,7 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 purchase-req-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                    <button type="button" id="edit" class="btn btn-primary d-grid w-100 mb-2">Edit</button>
+                        <button type="button" id="edit" class="btn btn-primary d-grid w-100 mb-2">Edit</button>
                         <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Kembali</button>
                     </div>
                 </div>
