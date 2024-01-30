@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\CustomException;
+use App\Models\MaterialRequest;
 use App\Models\PurchaseRequest;
 use App\Models\PurchaseRequestDetail;
 use App\Models\PurchaseRequestSignature;
@@ -116,6 +117,9 @@ class PurchaseRequestController extends Controller
                     ]);
                 }
             }
+
+            $dataPayload = [ "status" => "Selesai" ];
+            MaterialRequest::findOrFail($request->input("material_request_id"))->update($dataPayload);
 
             DB::commit();
 

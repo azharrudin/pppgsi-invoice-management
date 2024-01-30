@@ -5,7 +5,7 @@ use Validator;
 
 class PurchaseRequestService{
     protected $CommonService;
-    protected $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "lunas"];
+    protected $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "selesai"];
 
     public function __construct(CommonService $CommonService)
     {

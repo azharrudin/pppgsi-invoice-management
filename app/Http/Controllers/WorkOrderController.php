@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\CustomException;
+use App\Models\DamageReport;
 use App\Models\Receipt;
 use App\Models\Tenant;
 use App\Models\WorkOrder;
@@ -111,6 +112,9 @@ class WorkOrderController extends Controller
                     ]);
                 }
             }
+
+            $dataPayload = [ "status" => "Selesai" ];
+            DamageReport::findOrFail($request->input("damage_report_id"))->update($dataPayload);
 
             DB::commit();
 
