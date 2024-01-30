@@ -74,14 +74,14 @@ class DamageReportService{
                 $type = strtolower($signature["type"]);
                 if(is_null($type)) continue;
 
-                if(
-                    $type != "ka. unit pelayanan" &&
-                    $type != "kord. teknik" &&
-                    $type != "leader cleaning"
-                ){
-                    $message = "Tipe tanda tangan tidak valid";
-                    break;
-                }
+                // if(
+                //     $type != "ka. unit pelayanan" &&
+                //     $type != "kord. teknik" &&
+                //     $type != "leader cleaning"
+                // ){
+                //     $message = "Tipe tanda tangan tidak valid";
+                //     break;
+                // }
             }
         }
 

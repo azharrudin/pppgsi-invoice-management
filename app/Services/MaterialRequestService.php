@@ -5,7 +5,7 @@ use Validator;
 
 class MaterialRequestService{
     protected $CommonService;
-    protected $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "selesai"];
+    protected $validStatus = ["terbuat", "disetujui chief departement", "disetujui chief finance", "disetujui kepala bm", "selesai"];
 
     public function __construct(CommonService $CommonService)
     {
@@ -64,7 +64,7 @@ class MaterialRequestService{
         }
 
         if($message == "" && !is_null($request->input("signatures"))){
-            $validType = ["prepared by", "reviewed by", "acknowledge by", "approved by"];
+            $validType = ["prepared by", "reviewed by", "aknowledge by", "approved by"];
 
             foreach($request->input("signatures") as $signature){
                 $type = strtolower($signature['type']);
