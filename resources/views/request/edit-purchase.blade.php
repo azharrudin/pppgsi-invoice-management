@@ -41,7 +41,8 @@ $configData = Helper::appClasses();
                                 <div class="col-md-12">
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Departemen </label>
-                                        <input type="text" class="form-control" placeholder="Departement" name="department_id" id="department_id" required />
+                                        <select class="form-control w-px-200 select2 " id="department_id" name="department_id" required>
+                                        </select>
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
@@ -87,7 +88,8 @@ $configData = Helper::appClasses();
                                 <div class="col-md-5 mb-0">
                                     <div class="mb-1">
                                         <label for="nomor_mr" class="form-label fw-medium">Nomor MR </label>
-                                        <input type="text" class="form-control" id="material_request_id" name="material_request_id" placeholder="Nomor Material Request" readonly />
+                                        <select class="form-control w-px-200 select2 " id="material_request_id" name="material_request_id" required>
+                                        </select>
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
@@ -112,11 +114,11 @@ $configData = Helper::appClasses();
                             <div class="col-12">
                                 <div class="">
                                     <div class="form-check form-check-inline checkbox budget_status">
-                                        <input class="form-check-input checkbox-check" type="checkbox" name="Sesuai Budget" id="sesuai_budget">
+                                        <input class="form-check-input checkbox-check" type="checkbox" name="Sesuai Budget" id="sesuai-budget">
                                         <label class="form-check-label" for="sesuai_budget">Sesuai Budget</label>
                                     </div>
                                     <div class="form-check form-check-inline checkbox budget_status">
-                                        <input class="form-check-input checkbox-check" type="checkbox" name="Diluar Budget" id="diluar_budget">
+                                        <input class="form-check-input checkbox-check" type="checkbox" name="Diluar Budget" id="diluar-budget">
                                         <label class="form-check-label" for="diluar_budget">Diluar Budget</label>
                                     </div>
                                     <div class="form-check form-check-inline checkbox budget_status">
@@ -124,11 +126,11 @@ $configData = Helper::appClasses();
                                         <label class="form-check-label" for="penting">Penting</label>
                                     </div>
                                     <div class="form-check form-check-inline checkbox budget_status">
-                                        <input class="form-check-input checkbox-check" type="checkbox" name="1 Minggu" id="1_minggu">
+                                        <input class="form-check-input checkbox-check" type="checkbox" name="1 Minggu" id="1-minggu">
                                         <label class="form-check-label" for="1_minggu">1 Minggu</label>
                                     </div>
                                     <div class="form-check form-check-inline checkbox budget_status">
-                                        <input class="form-check-input checkbox-check" type="checkbox" name="1 Bulan" id="1_bulan">
+                                        <input class="form-check-input checkbox-check" type="checkbox" name="1 Bulan" id="1-bulan">
                                         <label class="form-check-label" for="1_bulan">1 Bulan</label>
                                     </div>
                                 </div>
@@ -310,12 +312,12 @@ $configData = Helper::appClasses();
         let dateCheckedAttr = '';
         let nameChecked = '';
         let dateChecked = '';
-        if (account.level.id != '2') {
+        if (account.level.id == '2') {
             nameChecked = value?.name ? value.name : '';
             dateChecked = value?.date ? value.date : '';
             dropzoneChecked = 'dz-clickable';
             nameChecked = account.name;
-            ttdFile2 = value.signature;
+            ttdFile2 = value?.signature ? value.signature : '';
             imageChecked = `
             <div action="/upload" class="dropzone needsclick ${dropzoneChecked} dd" id="ttd2" style="padding: 5px;">
                 <div class="dz-message needsclick">
@@ -385,7 +387,7 @@ $configData = Helper::appClasses();
             dateKnown = value?.date ? value.date : '';
             dropzoneKnown = 'dz-clickable';
             nameKnown = account.name;
-            ttdFile3 = value.signature;
+            ttdFile3 = value?.signature ? value.signature : '';;
             imageKnown = `
             <div action="/upload" class="dropzone needsclick ${dropzoneKnown} dd" id="ttd3" style="padding: 5px;">
                 <div class="dz-message needsclick">
@@ -443,6 +445,35 @@ $configData = Helper::appClasses();
         return appendKnown;
     }
 
+    function getDepartemen(id) {
+        $.ajax({
+            url: "{{ env('BASE_URL_API')}}" + '/api/department/' + id,
+            type: "GET",
+            success: function(response) {
+                let data = response.data;
+                $("#department_id").empty().append("<option value=" + data.id + ">" + data.name + "</option>").val(data.id).trigger("change");
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+  
+    function getMaterial(id) {
+        $.ajax({
+            url: "{{ env('BASE_URL_API')}}" + '/api/material-request/' + id,
+            type: "GET",
+            success: function(response) {
+                console.log(response);
+                let data = response.data;
+                $("#material_request_id").empty().append("<option value=" + data.id + ">" + data.material_request_number + "</option>").val(data.id).trigger("change");
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
     function getDataPurchaseRequest(id) {
         Swal.fire({
             title: '<h2>Loading...</h2>',
@@ -461,8 +492,8 @@ $configData = Helper::appClasses();
                 let details = data.purchase_request_signatures;
                 $("#additional_note").val(data.additional_note);
                 $("#budget_status").val(data.budget_status);
-                $("#department_id").val(data.department_id);
-                $("#material_request_id").val(data.material_request_id);
+                getDepartemen(data.department_id);
+                getMaterial(data.material_request_id);
                 $("#proposed_purchase_price").val(format(data.proposed_purchase_price));
                 $("#purchase_request_number").val(data.purchase_request_number);
                 $("#remaining_budget").val(format(data.remaining_budget));
@@ -494,9 +525,7 @@ $configData = Helper::appClasses();
                 account.level.id == 10 ? dropzoneValue(signatureAdmin, '#ttd1') : '';
                 account.level.id == 2 ? dropzoneValue(signatureKepalaUnit, '#ttd2') : '';
                 account.level.id == 1 ? dropzoneValue(signatureKepalaBm, '#ttd3') : '';
-
-
-
+                setDate();
                 Swal.close();
             },
             error: function(errors) {
@@ -594,6 +623,21 @@ $configData = Helper::appClasses();
         });
     }
 
+    function setDate() {
+        $('.date').flatpickr({
+            dateFormat: 'Y-m-d'
+        });
+
+        const flatPickrEL = $(".date");
+        if (flatPickrEL.length) {
+            flatPickrEL.flatpickr({
+                allowInput: true,
+                monthSelectorType: "static",
+                dateFormat: 'Y-m-d'
+            });
+        }
+    }
+
 
     var urlSegments = window.location.pathname.split('/');
     var idIndex = urlSegments.indexOf('edit') + 1;
@@ -618,9 +662,7 @@ $configData = Helper::appClasses();
         // }
 
         // Date
-        $('.date').flatpickr({
-            dateFormat: 'Y-m-d'
-        });
+
 
         // $("#material_request_id").select2({
         //     placeholder: 'Select Material Request',
@@ -795,19 +837,15 @@ $configData = Helper::appClasses();
                             allowEscapeKey: false
                         });
 
-
-                        let department_id = parseInt($("#department_id").val());
+                        let department_id = $("#department_id").val();
                         let proposed_purchase_price = parseInt($("#proposed_purchase_price").val().replaceAll(',', ''));
-                        let budget_status = $('.checkbox-check:checked').attr('name');;
+                        let budget_status = $('.checkbox-check:checked').attr('id');;
                         let request_date = $("#request_date").val();
                         let requester = $("#requester").val();
                         let total_budget = $("#total_budget").val().replaceAll(',', '');
                         let remaining_budget = parseInt($("#remaining_budget").val().replaceAll(',', ''));
                         let material_request_id = parseInt($("#material_request_id").val());
                         let additional_note = $("#additional_note").val();
-
-                       
-
                         let datas = {};
 
                         var detail = [];
@@ -840,6 +878,8 @@ $configData = Helper::appClasses();
                             datas.status = 'Disetujui BM';
                         } else if (account.level.id == '2') {
                             datas.status = 'Disetujui KA';
+                        } else if (account.level.id == '10') {
+                            datas.status = 'Terbuat';
                         }
 
 
@@ -910,7 +950,7 @@ $configData = Helper::appClasses();
                         console.log(datas)
                         $.ajax({
                             url: "{{ env('BASE_URL_API')}}" + "/api/purchase-request/" + id,
-                            type: "POST",
+                            type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
@@ -921,15 +961,15 @@ $configData = Helper::appClasses();
 
                                 Swal.fire({
                                     title: 'Berhasil',
-                                    text: 'Berhasil menambahkan Purchase Request.',
+                                    text: 'Berhasil Memperbarui Purchase Request',
                                     icon: 'success',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'
                                     },
                                     buttonsStyling: false
-                                })
-
-                                window.location.href = "/request/list-purchase-request"
+                                }).then(function() {
+                                    window.location.href = "/request/list-purchase-request"
+                                });
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
@@ -1020,7 +1060,7 @@ $configData = Helper::appClasses();
         //     }
         // });
 
-        $(".select-mr").select2({
+        $("#material_request_id").select2({
             placeholder: 'Select Material Request',
             allowClear: true,
             ajax: {
@@ -1050,35 +1090,35 @@ $configData = Helper::appClasses();
             }
         });
 
-        // $("#department_id").select2({
-        //     placeholder: 'Select Material Request',
-        //     allowClear: true,
-        //     ajax: {
-        //         url: "{{ env('BASE_URL_API')}}" + '/api/departement/select',
-        //         dataType: 'json',
-        //         cache: true,
-        //         data: function(params) {
-        //             return {
-        //                 term: params.term || '',
-        //                 page: params.page || 1
-        //             }
-        //         },
-        //         processResults: function(data, params) {
-        //             var more = data.pagination.more;
-        //             if (more === false) {
-        //                 params.page = 1;
-        //                 params.abort = true;
-        //             }
+        $("#department_id").select2({
+            placeholder: 'Select Department',
+            allowClear: true,
+            ajax: {
+                url: "{{ env('BASE_URL_API')}}" + '/api/department/select',
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        term: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
 
-        //             return {
-        //                 results: data.data,
-        //                 pagination: {
-        //                     more: more
-        //                 }
-        //             };
-        //         }
-        //     }
-        // });
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+        });
 
         // Mengambil data tanggal untuk material request
         $(".select-mr").on('change', function() {

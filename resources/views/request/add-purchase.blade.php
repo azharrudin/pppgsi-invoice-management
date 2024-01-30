@@ -41,7 +41,8 @@ $configData = Helper::appClasses();
                                 <div class="col-md-12">
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Departemen </label>
-                                        <input type="text" class="form-control" placeholder="Departement" name="department_id" id="department_id" required />
+                                        <select class="form-control w-px-200 select2 " id="department_id" name="department_id" required>
+                                        </select>
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
@@ -113,11 +114,11 @@ $configData = Helper::appClasses();
                             <div class="col-12">
                                 <div class="">
                                     <div class="form-check form-check-inline checkbox budget_status">
-                                        <input class="form-check-input checkbox-check" type="checkbox" name="Sesuai Budget" id="sesuai_budget" required>
+                                        <input class="form-check-input checkbox-check" type="checkbox" name="Sesuai Budget" id="sesuai-budget" required>
                                         <label class="form-check-label" for="sesuai_budget">Sesuai Budget</label>
                                     </div>
                                     <div class="form-check form-check-inline checkbox budget_status">
-                                        <input class="form-check-input checkbox-check" type="checkbox" name="Diluar Budget" id="diluar_budget" required>
+                                        <input class="form-check-input checkbox-check" type="checkbox" name="Diluar Budget" id="diluar-budget" required>
                                         <label class="form-check-label" for="diluar_budget">Diluar Budget</label>
                                     </div>
                                     <div class="form-check form-check-inline checkbox budget_status">
@@ -125,11 +126,11 @@ $configData = Helper::appClasses();
                                         <label class="form-check-label" for="penting">Penting</label>
                                     </div>
                                     <div class="form-check form-check-inline checkbox budget_status">
-                                        <input class="form-check-input checkbox-check" type="checkbox" name="1 Minggu" id="1_minggu" required>
+                                        <input class="form-check-input checkbox-check" type="checkbox" name="1 Minggu" id="1-minggu" required>
                                         <label class="form-check-label" for="1_minggu">1 Minggu</label>
                                     </div>
                                     <div class="form-check form-check-inline checkbox budget_status">
-                                        <input class="form-check-input checkbox-check" type="checkbox" name="1 Bulan" id="1_bulan" required>
+                                        <input class="form-check-input checkbox-check" type="checkbox" name="1 Bulan" id="1-bulan" required>
                                         <label class="form-check-label" for="1_bulan">1 Bulan</label>
                                     </div>
                                 </div>
@@ -165,7 +166,7 @@ $configData = Helper::appClasses();
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control  " placeholder="Jabatan" style="text-align:center;" id="jabatan1" name="jabatan1" value="Admin" />
+                                            <input type="text" class="form-control  " placeholder="Jabatan" style="text-align:center;" id="jabatan1" name="jabatan1" value="Admin" disabled/>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -281,6 +282,7 @@ $configData = Helper::appClasses();
 <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
 </script>
 <script>
+    let account = {!! json_encode(session('data')) !!}
     let dataLocal = JSON.parse(localStorage.getItem("purchase-request"));
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
@@ -319,6 +321,7 @@ $configData = Helper::appClasses();
         // }
 
         // Date
+        $('#warehouse_name').val(account.name);
         getDetails();
         $('.date').flatpickr({
             dateFormat: 'Y-m-d'
@@ -593,7 +596,7 @@ $configData = Helper::appClasses();
                         
                         let department_id = $("#department_id").val();
                         let proposed_purchase_price = parseInt($("#proposed_purchase_price").val().replaceAll(',', ''));
-                        let budget_status = $('.checkbox-check:checked').attr('name');;
+                        let budget_status = $('.checkbox-check:checked').attr('id');;
                         let request_date = $("#request_date").val();
                         let requester = $("#requester").val();
                         let total_budget = $("#total_budget").val().replaceAll(',', '');
@@ -774,6 +777,36 @@ $configData = Helper::appClasses();
         //     }
         // });
 
+        $("#department_id").select2({
+            placeholder: 'Select Department',
+            allowClear: true,
+            ajax: {
+                url: "{{ env('BASE_URL_API')}}" + '/api/department/select',
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        term: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+        });
+
         $(".select-mr").select2({
             placeholder: 'Select Material Request',
             allowClear: true,
@@ -804,35 +837,7 @@ $configData = Helper::appClasses();
             }
         });
 
-        // $("#department_id").select2({
-        //     placeholder: 'Select Material Request',
-        //     allowClear: true,
-        //     ajax: {
-        //         url: "{{ env('BASE_URL_API')}}" + '/api/departement/select',
-        //         dataType: 'json',
-        //         cache: true,
-        //         data: function(params) {
-        //             return {
-        //                 term: params.term || '',
-        //                 page: params.page || 1
-        //             }
-        //         },
-        //         processResults: function(data, params) {
-        //             var more = data.pagination.more;
-        //             if (more === false) {
-        //                 params.page = 1;
-        //                 params.abort = true;
-        //             }
-
-        //             return {
-        //                 results: data.data,
-        //                 pagination: {
-        //                     more: more
-        //                 }
-        //             };
-        //         }
-        //     }
-        // });
+       
 
         // Mengambil data tanggal untuk material request
         $(".select-mr").on('change', function() {

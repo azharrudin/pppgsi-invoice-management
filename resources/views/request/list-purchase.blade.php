@@ -147,7 +147,22 @@ $configData = Helper::appClasses();
                 data: "budget_status",
                 name: "budget_status",
                 title: "Status Budget",
-                className: 'text-center'
+                className: 'text-center',
+                render: function(data, type, full, meta) {
+                    if (full.budget_status == 'sesuai-budget') {
+                        return 'Sesuai Budget';
+                    }else if(full.budget_status == 'diluar-budget'){
+                        return 'Diluar Budget';
+                    }else if(full.budget_status == 'penting'){
+                        return 'Penting';
+                    }else if(full.budget_status == '1-minggu'){
+                        return '1 Minggu';
+                    }else if(full.budget_status == '1-bulan'){
+                        return '1 Bulan';
+                    }else{
+                        return data;
+                    }
+                }
             }, {
                 data: "request_date",
                 name: "request_date",
