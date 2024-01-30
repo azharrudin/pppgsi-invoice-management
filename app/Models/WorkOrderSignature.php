@@ -18,6 +18,7 @@ class WorkOrderSignature extends Model
 
     protected $fillable = [
         "work_order_id",
+        "position",
         "name",
         "signature",
         "date",

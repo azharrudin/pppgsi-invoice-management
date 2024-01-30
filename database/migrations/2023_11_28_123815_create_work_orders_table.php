@@ -43,6 +43,7 @@ return new class extends Migration
             $table->unsignedInteger("work_order_id");
             $table->foreign('work_order_id')->references('id')->on('work_orders');
             $table->string("name")->nullable();
+            $table->string("position")->nullable();
             $table->mediumText("signature")->nullable();
             $table->date("date")->nullable();
             $table->timestamps();
