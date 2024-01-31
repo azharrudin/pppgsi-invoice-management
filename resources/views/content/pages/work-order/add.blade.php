@@ -551,6 +551,7 @@ $configData = Helper::appClasses();
                         datas.details = detail;
                         let signature = {};
                         signature['signature'] = ttdFile.dataURL;
+                        signature['position'] = "Technician";
                         signature['name'] = $('#technician1').val();
                         signature['date'] = $('#date1').val();
                         signatures.push(signature);
@@ -559,7 +560,8 @@ $configData = Helper::appClasses();
                         datas.status = "Terbuat";
 
                         $.ajax({
-                            url: "{{ env('BASE_URL_API')}}" +"/api/work-order",
+                            // url: "{{ env('BASE_URL_API')}}" +"/api/work-order",
+                            url: "{{ url('api/work-order')}}",
                             type: "POST",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -665,6 +667,7 @@ $configData = Helper::appClasses();
             datas.details = detail;
             let signature = {};
             signature['signature'] = ttdFile;
+            signature['position'] = "Technician";
             signature['name'] = $('#technician1').val();
             signature['date'] = $('#date1').val();
             signatures.push(signature);

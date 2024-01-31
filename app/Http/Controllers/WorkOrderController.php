@@ -106,6 +106,7 @@ class WorkOrderController extends Controller
                     WorkOrderSignature::create([
                         'work_order_id' => $workOrder->id,
                         'name' => $signature['name'],
+                        'position' => $signature['position'],
                         'signature' => $signature['signature'],
                         'date' => $signature['date'],
                     ]);
@@ -153,8 +154,8 @@ class WorkOrderController extends Controller
                 first();
             if (is_null($getWorkOrder)) throw new CustomException("Work order tidak ditemukan", 404);
 
-            $getWorkOrder["classification"] = $this->CommonService->getClassificationOrScope($getWorkOrder["classification"], "classification");
-            $getWorkOrder["scope"] = $this->CommonService->getClassificationOrScope($getWorkOrder["scope"], "scope");
+            // $getWorkOrder["classification"] = $this->CommonService->getClassificationOrScope($getWorkOrder["classification"], "classification");
+            // $getWorkOrder["scope"] = $this->CommonService->getClassificationOrScope($getWorkOrder["scope"], "scope");
 
             return ["data" => $getWorkOrder];
         } catch (\Throwable $e) {
@@ -204,6 +205,7 @@ class WorkOrderController extends Controller
                     WorkOrderSignature::create([
                         'work_order_id' => $id,
                         'name' => $signature['name'],
+                        'position' => $signature['position'],
                         'signature' => $signature['signature'],
                         'date' => $signature['date'],
                     ]);

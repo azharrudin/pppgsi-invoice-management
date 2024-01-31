@@ -27,7 +27,7 @@ $configData = Helper::appClasses();
                             </div>
                             <div class="col-md-5">
                                 <span class="fs-2"><b>Work Order</b></span>
-                                <span class="d-block text-center mx-auto">Nomor WO :</span>
+                                <span class="d-block" id="no-wo"> :</span>
                             </div>
                         </div>
                         <hr class="my-3 mx-n4">
@@ -36,7 +36,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-3">
                                 <div class="mb-1">
                                     <label for="note" class="form-label fw-medium">No Lap Kerusakan </label>
-                                    <select class="form-select select2 select-lk item-details mb-3" required>
+                                    <select id="select-lk" class="form-select select2 select-lk item-details mb-3" required>
                                     </select>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
@@ -114,20 +114,20 @@ $configData = Helper::appClasses();
                                         <label for="note" class="form-label fw-medium">Klasifikasi</label>
                                         <div class="">
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="closed" id="closed" required>
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="closed" id="closed">
                                                 <label class="form-check-label" for="closed">Closed
                                                 </label>
                                             </div>
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="cancelled" id="cancelled" required>
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="cancelled" id="cancelled">
                                                 <label class="form-check-label" for="cancelled">Calceled</label>
                                             </div>
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="explanation" id="explanation" required>
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="explanation" id="explanation">
                                                 <label class="form-check-label" for="explanation">Explanation</label>
                                             </div>
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="others" id="others" required>
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="others" id="others">
                                                 <label class="form-check-label" for="others">Others</label>
                                             </div>
                                         </div>
@@ -135,76 +135,8 @@ $configData = Helper::appClasses();
                                 </div>
 
                                 <label for="note" class="form-label fw-medium text-left ttd">Technician</label>
-                                <div class="row  text-center ttd">
-                                    <div class="col-md-3 signatures">
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician1" name="name" style="text-align:center;" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-1" style="padding: 5px;">
-                                                <div class="dz-message needsclick">
-                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" name="date" id="date1" style="text-align:center;" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 signatures">
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician2" name="name" style="text-align:center;" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
+                                <div class="row mb-3 mt-3 text-center signatures">
 
-                                        <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-2" style="padding: 5px;">
-                                                <div class="dz-message needsclick">
-                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date2" name="date" style="text-align:center;" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 signatures">
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician3" name="name" style="text-align:center;" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-3" style="padding: 5px;">
-                                                <div class="dz-message needsclick">
-                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date3" name="date" style="text-align:center;" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 signatures">
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician4" name="name" style="text-align:center;" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-4" style="padding: 5px;">
-                                                <div class="dz-message needsclick">
-                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control date" placeholder="Tanggal" id="date4" name="date" style="text-align:center;" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                    </div>
                                 </div>
 
                             </div>
@@ -217,9 +149,8 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
-                        <button type="button" class="btn btn-label-secondary d-grid w-100 btn-cancel">Batal</button>
+                    <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Update</button>
+                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Kembali</button>
                     </div>
                 </div>
             </div>
@@ -241,19 +172,283 @@ $configData = Helper::appClasses();
 <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
 </script>
 <script>
-    "use strict";
-    let dataLocal = JSON.parse(localStorage.getItem("material-request"));
-    $(document).ready(function() {
-        let account = {!! json_encode(session('data')) !!}
-        var levelId = account.level_id;
-        if (levelId == 10) {
-            $('.ttd').hide();
+    let account = {!! json_encode(session('data')) !!}
+    var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>`;
+    let ttdFile1, ttdFile2, ttdFile3;
+
+    function getSignatureTechnician(value) {
+        let disableTechnician = 'disabled';
+        let dropzoneTechnician = '';
+        let imageTechnician = '';
+        let dateTechnicianAttr = '';
+        let nameTechnician = '';
+        let dateTechnician = '';
+        if (account.level.id == '5') {
+            nameTechnician = value?.name ? value.name : '';
+            dateTechnician = value?.date ? value.date : '';
+            dropzoneTechnician = 'dz-clickable';
+            nameTechnician = account.name;
+            ttdFile1 = value?.signature ? value.signature : '';
+            imageTechnician = `
+            <div action="/upload" class="dropzone needsclick ${dropzoneTechnician} dd" id="ttd1" style="padding: 5px;">
+                <div class="dz-message needsclick">
+                    <span class="note needsclick">Unggah Tanda Tangan</span>
+                </div>
+            </div>
+            `;
         } else {
-            $('.ttd').show();
+            //sudah ttd
+            if (value) {
+                nameTechnician = value.name;
+                dateTechnicianAttr = 'disabled';
+                dateTechnician = value.date ? value.date : '';
+                ttdFile1 = value.signature;
+                imageTechnician = `<div id="unit-image" style="padding: 5px;"></div>` +
+                    '<script type="text/javascript">' +
+                    '$("#unit-image").css("background-color", "black");' +
+                    '$("#unit-image").css("background-image", "url(' + value.signature + ')");' +
+                    '$("#unit-image").css("height", "200px");' +
+                    '$("#unit-image").css("width", "200px");' +
+                    '$("#unit-image").css("background-position", "center");' +
+                    '$("#unit-image").css("background-size", "cover");' +
+                    '$("#unit-image").css("background-repeat", "no-repeat");' +
+                    '</' + 'script>';
+            } else { //belum ttd
+                dateTechnicianAttr = 'disabled';
+                nameTechnician = account.name;
+                imageTechnician = `
+                    <div action="/upload" class="dropzone needsclick ${dropzoneTechnician} dd" id="ttd1" style="padding: 5px;">
+                        <div class="dz-message needsclick">
+                            <span class="note needsclick">Unggah Tanda Tangan</span>
+                        </div>
+                    </div>
+                    `;
+            }
         }
 
+        let appendTechnician = `
+                <div class="col-md-4">                    
+                    <div class="mb-3">
+                        <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Nama" style="text-align:center;" id="technician-name" name="name[]" value="${nameTechnician ? nameTechnician : ''}" ${dateTechnicianAttr} />
+                    </div>
+                    <div class="mb-3">
+                        ${imageTechnician}
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control date ttd-row tanda-tangan" placeholder="Tanggal" style="text-align:center;" id="technician-date" name="name[]" value="${dateTechnician ? dateTechnician : ''}" ${dateTechnicianAttr}/>
+                    </div>
+                </div>
+            `;
+        return appendTechnician;
+    }
 
-        // Date
+    function getDataWorkOrder(id) {
+        $.ajax({
+            // url: "{{env('BASE_URL_API')}}" + '/api/work-order/' + id,
+            url: "{{url('api/work-order')}}/" + id,
+            type: "GET",
+            dataType: "json",
+            beforeSend: function() {
+                Swal.fire({
+                    title: '<h2>Loading...</h2>',
+                    html: sweet_loader + '<h5>Please Wait</h5>',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                });
+            },
+            success: function(res) {
+                var data = res.data;
+                console.log(data);
+                id = data.id;
+                let details = data.work_order_signatures;
+                getLaporanKerusakan(data.damage_report_id);
+                $("#no-wo").text('Nomor Work Order : ' + data.work_order_number);
+                $("#action_plan_date").val(data.action_plan_date);
+                $("#work_order_date").val(data.work_order_date);
+                getLaporanKerusakan(data.damage_report_id);
+                $("#finish_plan").val(data.finish_plan);
+                $("#job_description").val(data.job_description);
+                getDetails(data.work_order_details);
+                getScope(data.scope);
+                getClassification(data.classification);
+                $('#' + data.klasifikasi).prop('checked', true);
+                let signatureTechnician, signatureChief, signatureKepala, signatureWarehouse;
+                for (let i = 0; i < details.length; i++) {
+                    if (details[i].position == 'Technician') {
+                        signatureTechnician = details[i];
+                    } else if (details[i].position == 'Chief Engineering') {
+                        signatureChief = details[i];
+                    } else if (details[i].position == "Warehouse") {
+                        signatureWarehouse = details[i];
+                    } else if (details[i].position == "Kepala BM") {
+                        signatureKepala = details[i];
+                    }
+                }
+
+                let htmlGetSignatureTechnician = getSignatureTechnician(signatureTechnician);
+                // let htmlGetSignatureChief = getSignatureChief(signatureChief);
+                // let htmlGetSignatureWarehouse = getSignatureWarehouse(signatureWarehouse);
+                // let htmlGetSignatureKepala = getSignatureKepala(signatureKepala);
+                $('.signatures').html(htmlGetSignatureTechnician);
+
+                account.level.id == 5 ? dropzoneValue(signatureTechnician, '#ttd1') : '';
+                // account.level.id == 6 ? dropzoneValue(signatureChief, '#ttd2') : '';
+                // account.level.id == 7 ? dropzoneValue(signatureWarehouse, '#ttd3') : '';
+                // account.level.id == 1 ? dropzoneValue(signatureKepala, '#ttd4') : '';
+
+                setDate();
+                Swal.close();
+            },
+            error: function(errors) {
+                console.log(errors);
+            }
+        });
+    }
+
+    function getScope(data) {
+        var data = data.split(',');
+        var scopeSelect = $('#scope');
+        for (var i = 0; i < data.length; i++) {
+            $.ajax({
+                type: 'GET',
+                url: "{{url('api/scope/')}}/" + data[i],
+            }).then(function(data) {
+                // create the option and append to Select2
+                var option = new Option(data.data.name, data.data.id, true, true);
+                scopeSelect.append(option).trigger('change');
+
+                // manually trigger the `select2:select` event
+                scopeSelect.trigger({
+                    type: 'select2:select',
+                    params: {
+                        data: data
+                    }
+                });
+            });
+        }
+    }
+
+    function getClassification(data) {
+        var data = data.split(',');
+        var classificationSelect = $('#classification');
+        for (var i = 0; i < data.length; i++) {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('api/classification')}}/" + data[i],
+            }).then(function(data) {
+                // create the option and append to Select2
+                var option = new Option(data.data.name, data.data.id, true, true);
+                classificationSelect.append(option).trigger('change');
+
+                // manually trigger the `select2:select` event
+                classificationSelect.trigger({
+                    type: 'select2:select',
+                    params: {
+                        data: data
+                    }
+                });
+            });
+        }
+
+    }
+
+    function getDetails(details) {
+        let tem = '';
+        for (let i = 0; i < details.length; i++) {
+            tem += `
+            <div class="mb-3 row-mg">
+                    <div class="row mb-3  d-flex align-items-end">
+                        <div class="col-md-3">
+                            <label for="note" class="form-label fw-medium">Location</label>
+                            <input type="text" class="form-control row-input" id="location" name="location[]" placeholder="Location" value="` + details[i].location + `" required />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="note" class="form-label fw-medium">Material Request</label>
+                            <input type="text" class="form-control row-input" id="material-req" name="material-req[]" placeholder="Material Request" value="` + details[i].material_request + `" required />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="note" class="form-label fw-medium">Type /Made In</label>
+                            <input type="text" class="form-control row-input" id="type" name="type[]" placeholder="Type /Made In" required value="` + details[i].type + `"/>
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-md-2 mb-1-custom"">
+                            <label for="note" class="form-label fw-medium">Quantity</label>
+                            <input type="number" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required value="` + details[i].quantity + `"/>
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
+                        </div>
+                        <div class="col-md-1 px-1-custom mb-1-custom">
+                            <a role="button" class="btn btn-danger text-center btn-remove-mg text-white"  disabled>
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>`;
+        }
+        $('#details').prepend(tem);
+    }
+
+    function getLaporanKerusakan(id) {
+        $.ajax({
+            url: "{{url('api/damage-report')}}/" + id,
+            type: "GET",
+            success: function(response) {
+                console.log(response);
+                let data = response.data;
+                let tem = `<option value="` + data.id + `" selected>` + data.damage_report_number + `</option>`;
+                $('#select-lk').prepend(tem);
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function dropzoneValue(value, id) {
+        const myDropzone = new Dropzone(id, {
+            parallelUploads: 1,
+            maxFilesize: 3,
+            addRemoveLinks: true,
+            maxFiles: 1,
+            acceptedFiles: ".jpeg,.jpg,.png,.gif",
+            autoQueue: false,
+            url: "../uploads/logo",
+            thumbnailWidth: 250,
+            thumbnailHeight: null,
+            init: function() {
+                if (value) {
+                    let mockFile = {
+                        dataURL: value.signature
+                    };
+                    this.options.addedfile.call(this, mockFile);
+                    this.options.thumbnail.call(this, mockFile, value.signature);
+                    $('.dz-image').last().find('img').attr('width', '100%');
+                    // Optional: Handle the removal of the file
+                    mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+                        // Handle removal logic here
+                    });
+                }
+
+                this.on('addedfile', function(file) {
+                    $('.dz-image').last().find('img').attr('width', '100%');
+                    while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
+                    if (id == '#ttd1') {
+                        ttdFile1 = file;
+                    } else if (id == '#ttd2') {
+                        ttdFile2 = file;
+                    } else if (id == '#ttd3') {
+                        ttdFile3 = file;
+                    }
+                })
+            }
+        });
+    }
+
+    function setDate() {
         $('.date').flatpickr({
             dateFormat: 'Y-m-d'
         });
@@ -266,8 +461,13 @@ $configData = Helper::appClasses();
                 dateFormat: 'Y-m-d'
             });
         }
+    }
 
-        getDetails();
+    var urlSegments = window.location.pathname.split('/');
+    var idIndex = urlSegments.indexOf('edit') + 1;
+    id = urlSegments[idIndex];
+    $(document).ready(function() {
+        getDataWorkOrder(id);
         // Create, Insert, Save
         var savewo = $('.create-wo');
 
@@ -286,6 +486,13 @@ $configData = Helper::appClasses();
                         }
                     } else {
                         event.preventDefault();
+                        Swal.fire({
+                            title: '<h2>Loading...</h2>',
+                            html: sweet_loader + '<h5>Please Wait</h5>',
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        });
                         let lk = $(".select-lk").val();
                         let datas = {}
                         let signatures = [];
@@ -324,49 +531,76 @@ $configData = Helper::appClasses();
                         });
 
                         datas.details = detail;
+                        let signature = [];
+                        if (account.level.id == '1') {
+                            datas.status = 'Disetujui BM';
+                        } else if (account.level.id == '2') {
+                            datas.status = 'Disetujui KA';
+                        } else if (account.level.id == '5') {
+                            datas.status = 'Terbuat';
+                        }
 
-                        $('.signatures').each(function(index) {
-                            let signature = {};
 
-                            $(this).find('.form-control').each(function() {
-                                var inputId = $(this).attr('id');
-                                var inputValue = $("#" + inputId).val();
+                        if ($.type(ttdFile1) == 'object') {
+                            ttdFile1 = ttdFile1.dataURL;
+                        }
 
-                                if (inputId.startsWith('date')) {
-                                    signature[$("#" + inputId).attr("name")] =
-                                        moment(inputValue, 'D-M-YYYY')
-                                        .format('YYYY-MM-DD');
-                                } else {
-                                    signature[$("#" + inputId).attr("name")] =
-                                        inputValue;
-                                }
-                            });
+                        if ($.type(ttdFile2) == 'object') {
+                            ttdFile2 = ttdFile2.dataURL;
+                        }
 
-                            if (ttdFile1 && index === 0) {
-                                signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                            }
+                        if ($.type(ttdFile3) == 'object') {
+                            ttdFile3 = ttdFile3.dataURL;
+                        }
 
-                            if (ttdFile2 && index === 1) {
-                                signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                            }
+                        let signature1 = {};
+                        if (ttdFile1 != undefined) {
+                            signature1.position = 'Technician';
+                            signature1.name = $('#technician-name').val();
+                            signature1.date = $('#technician-date').val();
+                            signature1.signature = ttdFile1;
+                        }
 
-                            if (ttdFile3 && index === 2) {
-                                signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                            }
+                        // let signature2 = {};
+                        // if (ttdFile2 != undefined) {
+                        //     signature2.type = 'Checked By';
+                        //     signature2.name = $('#unit-name').val();
+                        //     signature2.date = $('#unit-date').val();
+                        //     signature2.signature = ttdFile2;
+                        // }
 
-                            if (ttdFile4 && index === 3) {
-                                signature['signature'] = ttdFile4.dataURL || ttdFile4.url;
-                            }
+                        // let signature3 = {};
+                        // if (ttdFile3 != undefined) {
+                        //     signature3.type = 'Known By';
+                        //     signature3.name = $('#bm-name').val();
+                        //     signature3.date = $('#bm-date').val();
+                        //     signature3.signature = ttdFile3;
+                        // }
 
-                            signatures.push(signature);
-                        });
+                        if (!isEmptyObject(signature1)) {
+                            signature.push(signature1);
+                        }
 
-                        datas.signatures = signatures;
-                        datas.status = "Terbuat";
+                        // Validasi dan tambahkan data dari b ke signature
+                        // if (!isEmptyObject(signature2)) {
+                        //     signature.push(signature2);
+                        // }
 
+                        // if (!isEmptyObject(signature3)) {
+                        //     signature.push(signature3);
+                        // }
+
+                        function isEmptyObject(obj) {
+                            return Object.keys(obj).length === 0;
+                        }
+
+                        datas.signatures = signature;
+
+                    
                         $.ajax({
-                            url: "{{ env('BASE_URL_API')}}" +'/api/work-order',
-                            type: "POST",
+                            // url: "{{ env('BASE_URL_API')}}" + '/api/work-order',
+                            url: "{{ url('api/work-order')}}/"+id,
+                            type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
@@ -377,15 +611,17 @@ $configData = Helper::appClasses();
 
                                 Swal.fire({
                                     title: 'Berhasil',
-                                    text: 'Berhasil menambahkan Laporan Kerusakan.',
+                                    text: 'Berhasil memperbarui Work Order',
                                     icon: 'success',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'
                                     },
                                     buttonsStyling: false
-                                })
+                                }).then(function() {
+                                    localStorage.removeItem('work-order');
+                                    window.location.href = "/complain/work-order"
+                                });
 
-                                window.location.href = "/complain/work-order"
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
@@ -407,74 +643,7 @@ $configData = Helper::appClasses();
             );
         });
 
-        // Mengambil value tanda tangan
-        let ttdFile1 = null;
-        const myDropzone1 = new Dropzone('#dropzone-1', {
-            parallelUploads: 1,
-            maxFilesize: 2,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            autoQueue: false,
-            init: function() {
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this
-                        .files[0]);
-                    ttdFile1 = file;
-                });
-            }
-        });
 
-        let ttdFile2 = null;
-        const myDropzone2 = new Dropzone('#dropzone-2', {
-            parallelUploads: 1,
-            maxFilesize: 2,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            autoQueue: false,
-            init: function() {
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this
-                        .files[0]);
-                    ttdFile2 = file;
-                });
-            }
-        });
-
-        let ttdFile3 = null;
-        const myDropzone3 = new Dropzone('#dropzone-3', {
-            parallelUploads: 1,
-            maxFilesize: 2,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            autoQueue: false,
-            init: function() {
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this
-                        .files[0]);
-                    ttdFile3 = file;
-                });
-            }
-        });
-
-        let ttdFile4 = null;
-        const myDropzone4 = new Dropzone('#dropzone-4', {
-            parallelUploads: 1,
-            maxFilesize: 2,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            autoQueue: false,
-            init: function() {
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this
-                        .files[0]);
-                    ttdFile4 = file;
-                });
-            }
-        });
 
 
         // Fungsi untuk mengambil value dari setiap baris
@@ -486,99 +655,18 @@ $configData = Helper::appClasses();
         }));
 
         // Cancel
-        $(".btn-cancel").on("click", function(event) {
+        $("#batal").on("click", function(event) {
             event.preventDefault();
-            localStorage.removeItem('invoice');
             window.location.href = "/complain/work-order"
         })
 
-        // Preview before save
-        $(".btn-preview").on('click', function() {
-            let lk = $(".select-lk").val();
-            let datas = {}
-            let signatures = [];
-
-            datas.damage_report_id = lk;
-
-            $('.addWorkOrder').find('.form-control').each(function() {
-                var inputId = $(this).attr('id');
-                var inputValue = $("#" + inputId).val();
-                datas[$("#" + inputId).attr("name")] = inputValue;
-            });
-
-            datas.scope = $('#scope').val();
-            datas.classification = $('#classification').val();
-            var detail = [];
-            $('.row-input').each(function(index) {
-                var input_name = $(this).attr('name');
-                var input_value = $(this).val();
-                var input_index = Math.floor(index / 4); // Membagi setiap 5 input menjadi satu objek pada array
-                if (index % 4 == 0) {
-                    detail[input_index] = {
-                        location: input_value
-                    };
-                } else if (index % 4 == 1) {
-                    detail[input_index].material_request = input_value;
-                } else if (index % 4 == 2) {
-                    detail[input_index].type = input_value;
-                } else if (index % 4 == 3) {
-                    detail[input_index].quantity = parseInt(input_value);
-                }
-            });
-
-            datas.details = detail;
-
-            $('.signatures').each(function(index) {
-                let signature = {};
-
-                $(this).find('.form-control').each(function() {
-                    var inputId = $(this).attr('id');
-                    var inputValue = $("#" + inputId).val();
-
-                    if (inputId.startsWith('date')) {
-                        signature[$("#" + inputId).attr("name")] =
-                            moment(inputValue, 'D-M-YYYY')
-                            .format('YYYY-MM-DD');
-                    } else {
-                        signature[$("#" + inputId).attr("name")] =
-                            inputValue;
-                    }
-                });
-
-                if (ttdFile1 && index === 0) {
-                    signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                }
-
-                if (ttdFile2 && index === 1) {
-                    signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                }
-
-                if (ttdFile3 && index === 2) {
-                    signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                }
-
-                if (ttdFile4 && index === 3) {
-                    signature['signature'] = ttdFile4.dataURL || ttdFile4.url;
-                }
-
-                signatures.push(signature);
-            });
-
-            datas.signatures = signatures;
-            datas.status = "Terbuat";
-
-            console.log(datas);
-
-            localStorage.setItem('work-order', JSON.stringify(datas));
-            // window.location.href = "/complain/work-order/preview";
-        })
 
         // Select2
         $(".select-lk").select2({
             placeholder: 'Select Damage Report',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/damage-report/select',
+                url: "{{ env('BASE_URL_API')}}" + '/api/damage-report/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -613,24 +701,13 @@ $configData = Helper::appClasses();
             $(this).val(sanitizedValue);
         });
 
-        // Validasi untuk checkbox hanya bisa pilih satu
-        // Scope
-        $('.scope-checkbox').change(function() {
-            if ($(this).is(":checked")) {
-                // Menonaktifkan semua checkbox dengan class 'scope-checkbox' kecuali yang sedang dipilih
-                $('.scope-checkbox').not(this).prop('disabled', true);
-            } else {
-                // Mengaktifkan kembali semua checkbox dengan class 'scope-checkbox'
-                $('.scope-checkbox').prop('disabled', false);
-            }
-        });
 
         // Select3
         $(".select-scope").select2({
             placeholder: 'Select Scope',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/scope/select',
+                url: "{{ env('BASE_URL_API')}}" + '/api/scope/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -665,7 +742,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select classification',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/classification/select',
+                url: "{{ env('BASE_URL_API')}}" + '/api/classification/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -691,21 +768,6 @@ $configData = Helper::appClasses();
             }
         });
 
-        $('.select-classification').on("change", (async function(e) {
-            $(this).removeClass("is-invalid");
-        }));
-
-        // Classification
-        $('.classif-checkbox').change(function() {
-            if ($(this).is(":checked")) {
-                // Menonaktifkan semua checkbox dengan class 'classif-checkbox' kecuali yang sedang dipilih
-                $('.classif-checkbox').not(this).prop('disabled', true);
-            } else {
-                // Mengaktifkan kembali semua checkbox dengan class 'classif-checkbox'
-                $('.classif-checkbox').prop('disabled', false);
-            }
-        });
-
         // Classification 2
         $('.classif2-checkbox').change(function() {
             if ($(this).is(":checked")) {
@@ -722,7 +784,7 @@ $configData = Helper::appClasses();
             // Hapus baris yang ditekan tombol hapus
             $(this).closest('.row-mg').remove();
         });
-        
+
         $(document).on('click', '.btn-add-row-mg', function() {
             // Clone baris terakhir
             var $details = $('#details');
@@ -760,86 +822,5 @@ $configData = Helper::appClasses();
             $details.append($newRow);
         });
     });
-
-
-    function getDetails() {
-        let data = dataLocal;
-        let getDetail = '';
-        let temp = '';
-
-        if (data) {
-            let details = dataLocal.details;
-            console.log(details.length);
-            for (let i = 0; i < details.length; i++) {
-                temp = `
-                <div class="mb-3 row-mg">
-                    <div class="row mb-3  d-flex align-items-end">
-                        <div class="col-md-3">
-                            <label for="note" class="form-label fw-medium">Location</label>
-                            <input type="text" class="form-control" id="location" name="location" placeholder="Location" required />
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="note" class="form-label fw-medium">Material Request</label>
-                            <input type="text" class="form-control" id="material-req" name="material-req" placeholder="Material Request" required />
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="note" class="form-label fw-medium">Type /Made In</label>
-                            <input type="text" class="form-control" id="type" name="type" placeholder="Type /Made In" required />
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                        <div class="col-md-2 mb-1-custom"">
-                            <label for="note" class="form-label fw-medium">Quantity</label>
-                            <input type="text" class="form-control qty" id="qty" name="qty" placeholder="Quantity" required />
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                        <div class="col-md-1 px-1-custom mb-1-custom">
-                            <a role="button" class="btn btn-danger text-center btn-remove-mg text-white"  disabled>
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                `;
-                getDetail = getDetail + temp;
-            }
-            $('#details').prepend(getDetail);
-        } else {
-            console.log();
-            temp = `            
-            <div class="mb-3 row-mg">
-                <div class="row mb-3  d-flex align-items-end">
-                     <div class="col-md-3">
-                        <label for="note" class="form-label fw-medium">Location</label>
-                        <input type="text" class="form-control row-input" id="location" name="location[]" placeholder="Location" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="note" class="form-label fw-medium">Material Request</label>
-                        <input type="text" class="form-control row-input" id="material-req" name="material-req[]" placeholder="Material Request" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="note" class="form-label fw-medium">Type /Made In</label>
-                        <input type="text" class="form-control row-input" id="type" name="type[]" placeholder="Type /Made In" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-md-2 mb-1-custom"">
-                        <label for="note" class="form-label fw-medium">Quantity</label>
-                        <input type="text" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-md-1 px-1-custom mb-1-custom">
-                        <a role="button" class="btn btn-danger text-center btn-remove-mg text-white"  disabled>
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            `;
-            $('#details').prepend(temp);
-        }
-    }
 </script>
 @endsection
