@@ -598,8 +598,8 @@ $configData = Helper::appClasses();
 
                     
                         $.ajax({
-                            // url: "{{ env('BASE_URL_API')}}" + '/api/work-order',
-                            url: "{{ url('api/work-order')}}/"+id,
+                            url: "{{ env('BASE_URL_API')}}" + '/api/work-order',
+                            // url: "{{ url('api/work-order')}}/"+id,
                             type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",

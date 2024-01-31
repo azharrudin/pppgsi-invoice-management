@@ -112,7 +112,7 @@ class UserController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $userQuery = User::with("department:name")->with("level")->where("deleted_at", null);
+            $userQuery = User::with("department")->with("level")->where("deleted_at", null);
             if($value){
                 $userQuery->where(function ($query) use ($value) {
                     $query->where('name', 'like', '%' . $value . '%')

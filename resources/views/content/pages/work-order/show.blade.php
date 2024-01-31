@@ -68,14 +68,14 @@ $configData = Helper::appClasses();
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label for="scope" class="form-label fw-medium">Scope</label>
-                                    <input type="text" class="form-control" name="" id="scope">
+                                    <input type="text" class="form-control" name="" id="scope" readonly>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label for="classification" class="form-label fw-medium">Classification</label>
-                                    <input type="text" class="form-control" name="" id="classification">
+                                    <input type="text" class="form-control" name="" id="classification" readonly>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
@@ -187,8 +187,8 @@ $configData = Helper::appClasses();
 
     function getDataWorkOrder(id) {
         $.ajax({
-            // url: "{{env('BASE_URL_API')}}" + '/api/work-order/' + id,
-            url: "{{url('api/work-order')}}/" + id,
+            url: "{{env('BASE_URL_API')}}" + '/api/work-order/' + id,
+            // url: "{{url('api/work-order')}}/" + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
@@ -212,8 +212,8 @@ $configData = Helper::appClasses();
                 $("#job_description").val(data.job_description);
                 $("#work_order_date").val(data.work_order_date);
                 getDetails(data.work_order_details);
-                $("#scope").val(data.scope);
-                $("#classification").val(data.classification);
+                getScope(data.scope);
+                getClassification(data.classification);
                 $('#' + data.klasifikasi).prop('checked', true);
                 getSignatures(data.work_order_signatures);
                 Swal.close();
@@ -224,8 +224,68 @@ $configData = Helper::appClasses();
         });
     }
 
+    function getClassification(data) {
+        var data = data.split(',');
+        var classificationSelect = $('#classification');
+        var temp = '';
+        for (var i = 0; i < data.length; i++) {
+            if (i + 1 == data.length) {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{url('api/classification/')}}/" + data[i],
+                }).then(function(data) {
+                    temp += data.data.name;
+                    temp.substring(0, temp.length - 1)
+                    classificationSelect.val(temp);
+                });
+            } else {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{url('api/classification/')}}/" + data[i],
+                }).then(function(data) {
+                    temp += data.data.name+',';
+                    // create the option and append to Select2
+                    temp.substring(0, temp.length - 1)
+                    classificationSelect.val(temp);
+                });
+            }
+
+        }
+    }
+    function getScope(data) {
+        var data = data.split(',');
+        var scopeSelect = $('#scope');
+        var temp = '';
+        for (var i = 0; i < data.length; i++) {
+            if (i + 1 == data.length) {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{url('api/scope/')}}/" + data[i],
+                }).then(function(data) {
+                    temp += data.data.name;
+                    // create the option and append to Select2
+                    console.log(temp);
+                    temp.substring(0, temp.length - 1)
+                    scopeSelect.val(temp);
+                });
+            } else {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{url('api/scope/')}}/" + data[i],
+                }).then(function(data) {
+                    temp += data.data.name+',';
+                    // create the option and append to Select2
+                    console.log(temp);
+                    temp.substring(0, temp.length - 1)
+                    scopeSelect.val(temp);
+                });
+            }
+
+        }
+    }
+
+
     function getSignatures(details) {
-        console.log(details);
         let append = '';
         let appendTechnician = '';
         let appendChief = '';
@@ -350,7 +410,6 @@ $configData = Helper::appClasses();
 
         if (data) {
             let details = data;
-            console.log(details);
             for (let i = 0; i < details.length; i++) {
                 temp = `
                 <div class="mb-3 row-mg">
@@ -382,7 +441,6 @@ $configData = Helper::appClasses();
             }
             $('#details').prepend(getDetail);
         } else {
-            console.log();
             temp = `            
             <div class="mb-3 row-mg">
                 <div class="row mb-3  d-flex align-items-end">
