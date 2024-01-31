@@ -102,10 +102,8 @@ $configData = Helper::appClasses();
         <div class="col-lg-3 col-12 invoice-actions">
             <div class="card mb-4">
                 <div class="card-body">
-                    <!-- <a href="#" class="btn btn-primary d-grid w-100 mb-2">
-                            <span class="d-flex align-items-center justify-content-center text-nowrap">Buat Laporan Kerusakan</span>
-                        </a> -->
                     <a href="#" class="btn btn-primary btn-label-secondary d-grid w-100 mb-2 add-damage">Buat Laporan Kerusakan</a>
+                    <a href="{{ url('complain/list-ticket')}}" id="back" class="btn btn-secondary d-grid w-100 mb-2">Kembali</a>
                 </div>
             </div>
         </div>

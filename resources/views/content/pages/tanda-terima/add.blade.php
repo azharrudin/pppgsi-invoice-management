@@ -292,7 +292,6 @@ $configData = Helper::appClasses();
             $("#total_paid").val(dataLocal.total_paid?.toLocaleString());
             $("#paid").val(dataLocal.paid?.toLocaleString());
             $("#remaining").val(dataLocal.remaining?.toLocaleString());
-            $("#remaining").val(dataLocal.remaining?.toLocaleString());
             $("#grand_total_spelled").val(dataLocal.grand_total_spelled);
             $("#note").val(dataLocal.note);
             $("#check_number").val(dataLocal.check_number);
@@ -554,11 +553,12 @@ $configData = Helper::appClasses();
 
         // Keyup dibayarkan
         $('#paid').on('keyup', function() {
-            getTotal();
             var totalInvoice = $('#grand_total').val().replace(/,/g, '') || 0;
+            var hasPaid = $('#total_paid').val().replace(/,/g, '') || 0;
             var paidAmount = $(this).val().replace(/,/g, '') || 0;
-            var remainingAmount = totalInvoice - paidAmount;
+            var remainingAmount = totalInvoice - hasPaid - paidAmount;
             $('#remaining').val(remainingAmount.toLocaleString('en-US'));
+            getTotal();
         });
 
         // Fungsi terbilang
