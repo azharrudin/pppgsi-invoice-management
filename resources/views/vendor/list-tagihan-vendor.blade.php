@@ -74,6 +74,15 @@ $configData = Helper::appClasses();
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    let account = {!! json_encode(session('data')) !!}
+    let table = '';
+    console.log(account);
+    if(account.level_id == '11'){
+        table = "{{ route('data-vendor') }}";
+    }else{
+        table = "{{ route('data-tagihan-vendor') }}";
+    }
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
@@ -84,7 +93,7 @@ $configData = Helper::appClasses();
             serverSide: true,
             deferRender: true,
             ajax: {
-                url: "{{ route('data-tagihan-vendor') }}",
+                url: table,
                 "data": function(d) {
                     d.start = 0;
                     d.page = $(".list-vendor-table").DataTable().page.info().page + 1;
@@ -174,8 +183,8 @@ $configData = Helper::appClasses();
                     }
                 }
             }, {
-                data: "id",
-                name: "Tanggapan",
+                data: "vendor_id",
+                name: "vendor_id",
                 title: "Tanggapan",
                 render: function(data, type, row) {
                     console.log(data);

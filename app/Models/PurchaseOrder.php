@@ -67,4 +67,9 @@ class PurchaseOrder extends Model
     {
         return $this->hasMany(PurchaseOrderDetail::class, "purchase_order_id");
     }
+
+    public function vendorAttachment(): HasMany
+    {
+        return $this->hasMany(VendorAttachment::class, "purchase_order_id");
+    }
 }

@@ -4,7 +4,7 @@ $configData = Helper::appClasses();
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'Laporan Kerusakan')
+@section('title', 'Work Order')
 
 @section('page-style')
 {{-- Page Css files --}}

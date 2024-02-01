@@ -160,8 +160,12 @@ $configData = Helper::appClasses();
         <div class="col-lg-3 col-12 invoice-actions">
             <div class="card mb-4">
                 <div class="card-body">
-                    <button type="button" id="edit" class="btn btn-primary d-grid w-100 mb-2">Edit</button>
-                    <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Kembali</button>
+                    <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
+                        <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim</span>
+                    </button>
+                    <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
+                    <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
+                    <button type="button" class="btn btn-label-secondary d-grid w-100">Batal</button>
                 </div>
             </div>
 
@@ -221,21 +225,11 @@ $configData = Helper::appClasses();
                                 </div>`;
     var nomorInvoice;
     var id;
-    var urlSegments = window.location.pathname.split('/');
-    var idIndex = urlSegments.indexOf('show-tagihan-vendor') + 1;
-    id = urlSegments[idIndex];
     $(document).ready(function() {
+        var urlSegments = window.location.pathname.split('/');
+        var idIndex = urlSegments.indexOf('edit-tagihan-vendor') + 1;
+        id = urlSegments[idIndex];
         getDataTagihanVendor(id);
-    });
-
-    $(document).on('click', '#batal', function(event) {
-        event.preventDefault();
-        window.location.href = "/vendor/list-tagihan-vendor";
-    });
-
-    $(document).on('click', '#edit', function(event) {
-        event.preventDefault();
-        window.location.href = "/vendor/edit-tagihan-vendor/"+id;
     });
 
     function getVendor(id) {
@@ -327,15 +321,29 @@ $configData = Helper::appClasses();
     $(document).on('click', '.add-doc', function() {
         let documents = $('.documents');
         let newRow = `
-        <div class="document">
+        <div class="documents">
+                        <div class="document">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">Pilih Document</label>
-                                <input type="text" name="document[]" id="" class="form-control">
+                                <select name="document[]" id="document" class="form-control">
+                                    <option value="">Pilih Document</option>
+                                    <option value="Faktur Pembelian">Faktur Pembelian</option>
+                                    <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
+                                    <option value="Purchase Order">Purchase Order(PO)</option>
+                                    <option value="Delivery Order">Delivery Order(DO)</option>
+                                    <option value="Berita Acara Pembayaran">Berita Acara Pembayaran(BAP)</option>
+                                    <option value="Berita Acara Kemajuan Pekerjaan">Berita Acara Kemajuan Pekerjaan(BAPK)</option>
+                                    <option value="Berita Acara Serah Terima">Berita Acara Serah Terima</option>
+                                    <option value="Progress Kerja">Progress Kerja</option>
+                                    <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
+                                    <option value="Faktur Pajak">Faktur Pajak</option>
+                                </select>
                             </div>
                             <div class="mb-3">
-                                <input type="file" class="form-control" placeholder="Pilih Berkas">
+                                <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment" name="attachment">
                             </div>
                         </div>
+                    </div>
         `;
         documents.append(newRow);
     });

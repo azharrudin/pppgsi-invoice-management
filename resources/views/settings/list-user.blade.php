@@ -399,7 +399,11 @@ $configData = Helper::appClasses();
                 {
                     data: "department",
                     title: "Departement",
-                    name: "Departement"
+                    name: "Departement",
+                    render: function(data, type, row) {
+                        console.log(data);
+                        return data?.name;
+                    }  
                 },
                 {
                     data: "level.name",
