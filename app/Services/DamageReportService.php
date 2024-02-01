@@ -5,7 +5,7 @@ use Validator;
 
 class DamageReportService{
     protected $CommonService;
-    protected $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "selesai"];
+    protected $validStatus = ["terbuat", "disetujui ka", "disetujui kt", "disetujui lc", "selesai"];
 
     public function __construct(CommonService $CommonService)
     {
