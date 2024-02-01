@@ -44,7 +44,8 @@ class InvoiceController extends Controller
             if ($value) {
                 $invoiceQuery->where(function ($query) use ($value) {
                     $query->whereHas('tenant', function ($tenantQuery) use ($value) {
-                        $tenantQuery->where('name', 'like', '%' . $value . '%');
+                        $tenantQuery->where('name', 'like', '%' . $value . '%')
+                        ->orWhere('company', 'like', '%' . $value . '%');
                     })
                         ->orwhere('invoice_number', 'like', '%' . $value . '%')
                         ->orWhere('grand_total', 'like', '%' . $value . '%')

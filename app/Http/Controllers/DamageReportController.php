@@ -7,6 +7,7 @@ use App\Models\DamageReport;
 use App\Models\DamageReportDetail;
 use App\Models\DamageReportSignature;
 use App\Models\Tenant;
+use App\Models\Ticket;
 use App\Services\CommonService;
 use App\Services\DamageReportService;
 use Illuminate\Http\Request;
@@ -111,6 +112,9 @@ class DamageReportController extends Controller
             //         ]);
             //     }
             // }
+
+            $dataPayload = [ "status" => "Selesai" ];
+            Ticket::findOrFail($request->input("ticket_id"))->update($dataPayload);
 
             DB::commit();
             $getDamageReport = DamageReport::with("damageReportDetails")->with("damageReportSignatures")->with("ticket")->where("id", $damageReport->id)->where("deleted_at", null)->first();
