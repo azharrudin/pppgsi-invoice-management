@@ -176,7 +176,7 @@ $configData = Helper::appClasses();
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
-    let ttdFile1, ttdFile2, ttdFile3;
+    let ttdFile1, ttdFile2, ttdFile3, ttdFile4;
 
     function getSignatureTechnician(value) {
         let disableTechnician = 'disabled';
@@ -209,8 +209,8 @@ $configData = Helper::appClasses();
                     '<script type="text/javascript">' +
                     '$("#unit-image").css("background-color", "black");' +
                     '$("#unit-image").css("background-image", "url(' + value.signature + ')");' +
-                    '$("#unit-image").css("height", "200px");' +
-                    '$("#unit-image").css("width", "200px");' +
+                    '$("#unit-image").css("height", "150px");' +
+                    '$("#unit-image").css("width", "150px");' +
                     '$("#unit-image").css("background-position", "center");' +
                     '$("#unit-image").css("background-size", "cover");' +
                     '$("#unit-image").css("background-repeat", "no-repeat");' +
@@ -229,7 +229,7 @@ $configData = Helper::appClasses();
         }
 
         let appendTechnician = `
-                <div class="col-md-4">                    
+                <div class="col-md-3">                    
                     <div class="mb-3">
                         <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Nama" style="text-align:center;" id="technician-name" name="name[]" value="${nameTechnician ? nameTechnician : ''}" ${dateTechnicianAttr} />
                     </div>
@@ -244,10 +244,208 @@ $configData = Helper::appClasses();
         return appendTechnician;
     }
 
+    function getSignatureChief(value) {
+        let disableChief = 'disabled';
+        let dropzoneChief = '';
+        let imageChief = '';
+        let dateChiefAttr = '';
+        let nameChief = '';
+        let dateChief = '';
+        if (account.level.id == '6') {
+            nameChief = value?.name ? value.name : '';
+            dateChief = value?.date ? value.date : '';
+            dropzoneChief = 'dz-clickable';
+            nameChief = account.name;
+            ttdFile2 = value?.signature ? value.signature : '';
+            imageChief = `
+            <div action="/upload" class="dropzone needsclick ${dropzoneChief} dd" id="ttd2" style="padding: 5px;">
+                <div class="dz-message needsclick">
+                    <span class="note needsclick">Unggah Tanda Tangan</span>
+                </div>
+            </div>
+            `;
+        } else {
+            //sudah ttd
+            if (value) {
+                nameChief = value.name;
+                dateChiefAttr = 'disabled';
+                dateChief = value.date ? value.date : '';
+                ttdFile2 = value.signature;
+                imageChief = `<div id="chief-image" style="padding: 5px;"></div>` +
+                    '<script type="text/javascript">' +
+                    '$("#chief-image").css("background-color", "black");' +
+                    '$("#chief-image").css("background-image", "url(' + value.signature + ')");' +
+                    '$("#chief-image").css("height", "150px");' +
+                    '$("#chief-image").css("width", "150px");' +
+                    '$("#chief-image").css("background-position", "center");' +
+                    '$("#chief-image").css("background-size", "cover");' +
+                    '$("#chief-image").css("background-repeat", "no-repeat");' +
+                    '</' + 'script>';
+            } else { //belum ttd
+                dateChiefAttr = 'disabled';
+                nameChief = account.name;
+                imageChief = `
+                    <div action="/upload" class="dropzone needsclick ${dropzoneChief} dd" id="ttd2" style="padding: 5px;">
+                        <div class="dz-message needsclick">
+                            <span class="note needsclick">Unggah Tanda Tangan</span>
+                        </div>
+                    </div>
+                    `;
+            }
+        }
+
+        let appendChief = `
+                <div class="col-md-3">                    
+                    <div class="mb-3">
+                        <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Nama" style="text-align:center;" id="chief-name" name="name[]" value="${nameChief ? nameChief : ''}" ${dateChiefAttr} />
+                    </div>
+                    <div class="mb-3">
+                        ${imageChief}
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control date ttd-row tanda-tangan" placeholder="Tanggal" style="text-align:center;" id="chief-date" name="name[]" value="${dateChief ? dateChief : ''}" ${dateChiefAttr}/>
+                    </div>
+                </div>
+            `;
+        return appendChief;
+    }
+  
+    function getSignatureWarehouse(value) {
+        let disableWarehouse = 'disabled';
+        let dropzoneWarehouse = '';
+        let imageWarehouse = '';
+        let dateWarehouseAttr = '';
+        let nameWarehouse = '';
+        let dateWarehouse = '';
+        if (account.level.id == '7') {
+            nameWarehouse = value?.name ? value.name : '';
+            dateWarehouse = value?.date ? value.date : '';
+            dropzoneWarehouse = 'dz-clickable';
+            nameWarehouse = account.name;
+            ttdFile3 = value?.signature ? value.signature : '';
+            imageWarehouse = `
+            <div action="/upload" class="dropzone needsclick ${dropzoneWarehouse} dd" id="ttd3" style="padding: 5px;">
+                <div class="dz-message needsclick">
+                    <span class="note needsclick">Unggah Tanda Tangan</span>
+                </div>
+            </div>
+            `;
+        } else {
+            //sudah ttd
+            if (value) {
+                nameWarehouse = value.name;
+                dateWarehouseAttr = 'disabled';
+                dateWarehouse = value.date ? value.date : '';
+                ttdFile3 = value.signature;
+                imageWarehouse = `<div id="warehouse-image" style="padding: 5px;"></div>` +
+                    '<script type="text/javascript">' +
+                    '$("#warehouse-image").css("background-color", "black");' +
+                    '$("#warehouse-image").css("background-image", "url(' + value.signature + ')");' +
+                    '$("#warehouse-image").css("height", "150px");' +
+                    '$("#warehouse-image").css("width", "150px");' +
+                    '$("#warehouse-image").css("background-position", "center");' +
+                    '$("#warehouse-image").css("background-size", "cover");' +
+                    '$("#warehouse-image").css("background-repeat", "no-repeat");' +
+                    '</' + 'script>';
+            } else { //belum ttd
+                dateWarehouseAttr = 'disabled';
+                nameWarehouse = account.name;
+                imageWarehouse = `
+                    <div action="/upload" class="dropzone needsclick ${dropzoneWarehouse} dd" id="ttd3" style="padding: 5px;">
+                        <div class="dz-message needsclick">
+                            <span class="note needsclick">Unggah Tanda Tangan</span>
+                        </div>
+                    </div>
+                    `;
+            }
+        }
+
+        let appendWarehouse = `
+                <div class="col-md-3">                    
+                    <div class="mb-3">
+                        <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Nama" style="text-align:center;" id="warehouse-name" name="name[]" value="${nameWarehouse ? nameWarehouse : ''}" ${dateWarehouseAttr} />
+                    </div>
+                    <div class="mb-3">
+                        ${imageWarehouse}
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control date ttd-row tanda-tangan" placeholder="Tanggal" style="text-align:center;" id="warehouse-date" name="name[]" value="${dateWarehouse ? dateWarehouse : ''}" ${dateWarehouseAttr}/>
+                    </div>
+                </div>
+            `;
+        return appendWarehouse;
+    }
+
+    function getSignatureKepala(value) {
+        let disableKepala = 'disabled';
+        let dropzoneKepala = '';
+        let imageKepala = '';
+        let dateKepalaAttr = '';
+        let nameKepala = '';
+        let dateKepala = '';
+        if (account.level.id == '1') {
+            nameKepala = value?.name ? value.name : '';
+            dateKepala = value?.date ? value.date : '';
+            dropzoneKepala = 'dz-clickable';
+            nameKepala = account.name;
+            ttdFile4 = value?.signature ? value.signature : '';
+            imageKepala = `
+            <div action="/upload" class="dropzone needsclick ${dropzoneKepala} dd" id="ttd4" style="padding: 5px;">
+                <div class="dz-message needsclick">
+                    <span class="note needsclick">Unggah Tanda Tangan</span>
+                </div>
+            </div>
+            `;
+        } else {
+            //sudah ttd
+            if (value) {
+                nameKepala = value.name;
+                dateKepalaAttr = 'disabled';
+                dateKepala = value.date ? value.date : '';
+                ttdFile4 = value.signature;
+                imageKepala = `<div id="kepala-image" style="padding: 5px;"></div>` +
+                    '<script type="text/javascript">' +
+                    '$("#kepala-image").css("background-color", "black");' +
+                    '$("#kepala-image").css("background-image", "url(' + value.signature + ')");' +
+                    '$("#kepala-image").css("height", "150px");' +
+                    '$("#kepala-image").css("width", "150px");' +
+                    '$("#kepala-image").css("background-position", "center");' +
+                    '$("#kepala-image").css("background-size", "cover");' +
+                    '$("#kepala-image").css("background-repeat", "no-repeat");' +
+                    '</' + 'script>';
+            } else { //belum ttd
+                dateKepalaAttr = 'disabled';
+                nameKepala = account.name;
+                imageKepala = `
+                    <div action="/upload" class="dropzone needsclick ${dropzoneKepala} dd" id="ttd4" style="padding: 5px;">
+                        <div class="dz-message needsclick">
+                            <span class="note needsclick">Unggah Tanda Tangan</span>
+                        </div>
+                    </div>
+                    `;
+            }
+        }
+
+        let appendKepala = `
+                <div class="col-md-3">                    
+                    <div class="mb-3">
+                        <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Nama" style="text-align:center;" id="kepala-name" name="name[]" value="${nameKepala ? nameKepala : ''}" ${dateKepalaAttr} />
+                    </div>
+                    <div class="mb-3">
+                        ${imageKepala}
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control date ttd-row tanda-tangan" placeholder="Tanggal" style="text-align:center;" id="kepala-date" name="name[]" value="${dateKepala ? dateKepala : ''}" ${dateKepalaAttr}/>
+                    </div>
+                </div>
+            `;
+        return appendKepala;
+    }
+
     function getDataWorkOrder(id) {
         $.ajax({
-            // url: "{{env('BASE_URL_API')}}" + '/api/work-order/' + id,
-            url: "{{url('api/work-order')}}/" + id,
+            url: "{{env('BASE_URL_API')}}" + '/api/work-order/' + id,
+            // url: "{{url('api/work-order')}}/" + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
@@ -289,15 +487,15 @@ $configData = Helper::appClasses();
                 }
 
                 let htmlGetSignatureTechnician = getSignatureTechnician(signatureTechnician);
-                // let htmlGetSignatureChief = getSignatureChief(signatureChief);
-                // let htmlGetSignatureWarehouse = getSignatureWarehouse(signatureWarehouse);
-                // let htmlGetSignatureKepala = getSignatureKepala(signatureKepala);
-                $('.signatures').html(htmlGetSignatureTechnician);
+                let htmlGetSignatureChief = getSignatureChief(signatureChief);
+                let htmlGetSignatureWarehouse = getSignatureWarehouse(signatureWarehouse);
+                let htmlGetSignatureKepala = getSignatureKepala(signatureKepala);
+                $('.signatures').html(htmlGetSignatureTechnician+htmlGetSignatureChief+htmlGetSignatureWarehouse+htmlGetSignatureKepala);
 
                 account.level.id == 5 ? dropzoneValue(signatureTechnician, '#ttd1') : '';
-                // account.level.id == 6 ? dropzoneValue(signatureChief, '#ttd2') : '';
-                // account.level.id == 7 ? dropzoneValue(signatureWarehouse, '#ttd3') : '';
-                // account.level.id == 1 ? dropzoneValue(signatureKepala, '#ttd4') : '';
+                account.level.id == 6 ? dropzoneValue(signatureChief, '#ttd2') : '';
+                account.level.id == 7 ? dropzoneValue(signatureWarehouse, '#ttd3') : '';
+                account.level.id == 1 ? dropzoneValue(signatureKepala, '#ttd4') : '';
 
                 setDate();
                 Swal.close();
@@ -442,6 +640,8 @@ $configData = Helper::appClasses();
                         ttdFile2 = file;
                     } else if (id == '#ttd3') {
                         ttdFile3 = file;
+                    } else if (id == '#ttd4') {
+                        ttdFile4 = file;
                     }
                 })
             }
@@ -534,8 +734,10 @@ $configData = Helper::appClasses();
                         let signature = [];
                         if (account.level.id == '1') {
                             datas.status = 'Disetujui BM';
-                        } else if (account.level.id == '2') {
-                            datas.status = 'Disetujui KA';
+                        } else if (account.level.id == '7') {
+                            datas.status = 'Disetujui Warehouse';
+                        } else if (account.level.id == '6') {
+                            datas.status = 'Disetujui Chief Engineering';
                         } else if (account.level.id == '5') {
                             datas.status = 'Terbuat';
                         }
@@ -552,6 +754,10 @@ $configData = Helper::appClasses();
                         if ($.type(ttdFile3) == 'object') {
                             ttdFile3 = ttdFile3.dataURL;
                         }
+                      
+                        if ($.type(ttdFile4) == 'object') {
+                            ttdFile4 = ttdFile4.dataURL;
+                        }
 
                         let signature1 = {};
                         if (ttdFile1 != undefined) {
@@ -560,25 +766,45 @@ $configData = Helper::appClasses();
                             signature1.date = $('#technician-date').val();
                             signature1.signature = ttdFile1;
                         }
+                       
+                        let signature2 = {};
+                        if (ttdFile2 != undefined) {
+                            signature2.position = 'Chief Engineering';
+                            signature2.name = $('#chief-name').val();
+                            signature2.date = $('#chief-date').val();
+                            signature2.signature = ttdFile2;
+                        }
+                      
+                        let signature3 = {};
+                        if (ttdFile3 != undefined) {
+                            signature3.position = 'Warehouse';
+                            signature3.name = $('#warehouse-name').val();
+                            signature3.date = $('#warehouse-date').val();
+                            signature3.signature = ttdFile3;
+                        }
 
-                        // let signature2 = {};
-                        // if (ttdFile2 != undefined) {
-                        //     signature2.type = 'Checked By';
-                        //     signature2.name = $('#unit-name').val();
-                        //     signature2.date = $('#unit-date').val();
-                        //     signature2.signature = ttdFile2;
-                        // }
-
-                        // let signature3 = {};
-                        // if (ttdFile3 != undefined) {
-                        //     signature3.type = 'Known By';
-                        //     signature3.name = $('#bm-name').val();
-                        //     signature3.date = $('#bm-date').val();
-                        //     signature3.signature = ttdFile3;
-                        // }
+                        let signature4 = {};
+                        if (ttdFile4 != undefined) {
+                            signature4.position = 'Kepala BM';
+                            signature4.name = $('#kepala-name').val();
+                            signature4.date = $('#kepala-date').val();
+                            signature4.signature = ttdFile4;
+                        }
 
                         if (!isEmptyObject(signature1)) {
                             signature.push(signature1);
+                        }
+
+                        if (!isEmptyObject(signature2)) {
+                            signature.push(signature2);
+                        }
+                    
+                        if (!isEmptyObject(signature3)) {
+                            signature.push(signature3);
+                        }
+                       
+                        if (!isEmptyObject(signature4)) {
+                            signature.push(signature4);
                         }
 
                         // Validasi dan tambahkan data dari b ke signature
@@ -598,7 +824,7 @@ $configData = Helper::appClasses();
 
                     
                         $.ajax({
-                            url: "{{ env('BASE_URL_API')}}" + '/api/work-order',
+                            url: "{{ env('BASE_URL_API')}}" + '/api/work-order/'+id,
                             // url: "{{ url('api/work-order')}}/"+id,
                             type: "PATCH",
                             data: JSON.stringify(datas),

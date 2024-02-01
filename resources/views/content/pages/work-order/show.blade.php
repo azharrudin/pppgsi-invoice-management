@@ -125,8 +125,6 @@ $configData = Helper::appClasses();
                                         </div>
                                     </div>
                                 </div>
-
-                                <label for="note" class="form-label fw-medium text-left ttd">Technician</label>
                                 <div class="row mb-3 mt-3 signatures">
                                 </div>
                             </div>
