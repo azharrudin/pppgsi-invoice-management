@@ -286,18 +286,6 @@
                         "data": function(d) {
                             d.start = 0;
                             d.page = $(".list-tenant-table").DataTable().page.info().page + 1;
-                        },
-                        beforeSend: function() {
-                            Swal.fire({
-                                title: 'Memeriksa...',
-                                text: "Harap menunggu",
-                                html: sweet_loader + '<h5>Please Wait</h5>',
-                                showConfirmButton: false,
-                                allowOutsideClick: false
-                            });
-                        },
-                        complete: function() {
-                            Swal.close();
                         }
                     },
                     columns: [{
