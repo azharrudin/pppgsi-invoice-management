@@ -122,16 +122,6 @@ $configData = Helper::appClasses();
                                 </div>`;
 
     let data = JSON.parse(localStorage.getItem("material-request"));
-    // $(document).ready(function() {
-    //     $("#requester").val(data.requester);
-    //     $("#department").val(data.department);
-    //     $("#request_date").val(data.request_date);
-    //     $("#stock").val(data.stock);
-    //     $("#purchase").val(data.purchase);
-    //     $("#note").val(data.note);
-    //     getDetails();
-
-    // });
     var urlSegments = window.location.pathname.split('/');
     var idIndex = urlSegments.indexOf('edit') + 1;
     id = urlSegments[idIndex];
@@ -334,7 +324,6 @@ $configData = Helper::appClasses();
                 '</'+'script>';
             }else{//belum ttd
                 datePreparedAttr = 'disabled';
-                namePrepared = account.name;
                 imagePrepared = `
                 <div action="/upload" class="dropzone needsclick ${dropzonePrepared} dd" id="ttd1">
                     <div class="dz-message needsclick">
@@ -404,7 +393,6 @@ $configData = Helper::appClasses();
                 '</'+'script>';
             }else{//belum ttd
                 dateReviewedAttr = 'disabled';
-                nameReviewed = account.name;
                 imageReviewed = `
                 <div action="/upload" class="dropzone needsclick ${dropzoneReviewed} dd" id="ttd2">
                     <div class="dz-message needsclick">

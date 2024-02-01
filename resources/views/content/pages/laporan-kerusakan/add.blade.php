@@ -398,7 +398,6 @@ $configData = Helper::appClasses();
 
                         $('.signatures').each(function(index) {
                             let signature = {};
-
                             $(this).find('.form-control').each(function() {
                                 var inputId = $(this).attr('id');
                                 var inputValue = $("#" + inputId).val();
@@ -423,7 +422,7 @@ $configData = Helper::appClasses();
                         let classification = $("#classification").val().toString();
                         datas.ticket_id = ticket;
                         datas.signatures = signatures;
-                        datas.status = "Terbuat";
+                        datas.status = "terbuat";
                         datas.scope = scope;
                         datas.details = detail;
                         datas.classification = classification;

@@ -31,56 +31,56 @@
                                 <div class="col-md-5">
                                     <span class="fs-4 d-block text-center mx-auto"><b>LAPORAN KERUSAKAN</b></span>
                                     <span class="d-block text-center mx-auto">Nomor Lk :</span>
-                                    <input type="text" class="form-control add w-px-250 mx-auto"
+                                    <input type="text" class="form-control add mx-auto"
                                         id="edit_damage_report_number" name="damage_report_number" placeholder="Nomor LK"
                                         required readonly />
-                                    <div class="invalid-feedback mx-auto w-px-250">Tidak boleh kosong</div>
+                                    <div class="invalid-feedback mx-auto">Tidak boleh kosong</div>
                                 </div>
                             </div>
                             <hr class="my-3 mx-n4">
 
                             <div class="row py-3 px-3">
-                                <div class="col-md-6 mb-md-0 mb-3">
-                                    <div class="mb-1 w-px-250">
+                                <div class="col-md-4 mb-md-0 mb-3">
+                                    <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">No Tiket </label>
-                                        <select class="form-select select2 w-px-250 select-ticket item-details mb-3"
-                                            required>
-                                        </select>
+                                        <input type="text" class="form-control add"
+                                            id="edit_damage_report_no" name="damage_report_date" placeholder="Tanggal"
+                                            required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
+                                </div>
+                                <div class="col-md-4 mb-md-0 mb-3">
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Date</label>
-                                        <input type="text" class="form-control add w-px-250"
+                                        <input type="text" class="form-control add"
                                             id="edit_damage_report_date" name="damage_report_date" placeholder="Tanggal"
                                             required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="mb-1">
-                                        <label for="note" class="form-label fw-medium">Scope</label>
-                                        <input type="text" class="form-control add w-px-250" id="edit_scope"
-                                            name="scope" placeholder="Scope" required readonly />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="mb-1">
-                                        <label for="note" class="form-label fw-medium">Classification</label>
-                                        <input type="text" class="form-control add w-px-250" id="edit_classification"
-                                            name="classification" placeholder="Classification" required readonly />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-md-0 mb-3">
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Action Plan Date</label>
-                                        <input type="text" class="form-control add w-px-250"
+                                        <input type="text" class="form-control add"
                                             id="edit_action_plan_date" name="action_plan_date"
                                             placeholder="Action Plan Date" required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 d-flex justify-content-end">
-                                    <div class="div">
-                                        Kepada Yth. <br>
-                                        Dept. Service BM <br>
-                                        PPKP GRAHA SURVEYOR INDONESIA <br>
-                                        Jakarta
+                                <div class="col-md-6 mb-md-0 mb-3">
+                                    <div class="mb-1">
+                                        <label for="note" class="form-label fw-medium">Scope</label>
+                                        <input type="text" class="form-control add" id="edit_scope"
+                                            name="scope" placeholder="Scope" required readonly />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-md-0 mb-3">
+                                    <div class="mb-1">
+                                        <label for="note" class="form-label fw-medium">Classification</label>
+                                        <input type="text" class="form-control add" id="edit_classification"
+                                            name="classification" placeholder="Classification" required readonly />
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
                             </div>
@@ -110,28 +110,9 @@
                                                             name="total" placeholder="Jumlah" required readonly />
                                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                                     </div>
-                                                    {{-- <a class="mb-3 mx-2 mt-4" style="width: 10px" role="button"
-                                                        data-repeater-delete>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12"
-                                                            height="12" viewBox="0 0 12 12" fill="none">
-                                                            <circle cx="6" cy="6" r="6" fill="#D9D9D9" />
-                                                            <path
-                                                                d="M6.70432 5.99276L8.85224 3.8544C8.9463 3.76053 8.99915 3.63323 8.99915 3.50049C8.99915 3.36775 8.9463 3.24045 8.85224 3.14659C8.75818 3.05273 8.63061 3 8.49759 3C8.36456 3 8.23699 3.05273 8.14293 3.14659L6 5.28994L3.85707 3.14659C3.76301 3.05273 3.63544 3 3.50241 3C3.36939 3 3.24182 3.05273 3.14776 3.14659C3.0537 3.24045 3.00085 3.36775 3.00085 3.50049C3.00085 3.63323 3.0537 3.76053 3.14776 3.8544L5.29568 5.99276L3.14776 8.13113C3.10094 8.17747 3.06378 8.23259 3.03842 8.29334C3.01306 8.35408 3 8.41923 3 8.48503C3 8.55083 3.01306 8.61598 3.03842 8.67672C3.06378 8.73746 3.10094 8.79259 3.14776 8.83893C3.19419 8.88565 3.24944 8.92273 3.31031 8.94804C3.37118 8.97335 3.43647 8.98637 3.50241 8.98637C3.56836 8.98637 3.63365 8.97335 3.69452 8.94804C3.75539 8.92273 3.81063 8.88565 3.85707 8.83893L6 6.69558L8.14293 8.83893C8.18937 8.88565 8.24461 8.92273 8.30548 8.94804C8.36635 8.97335 8.43164 8.98637 8.49759 8.98637C8.56353 8.98637 8.62882 8.97335 8.68969 8.94804C8.75056 8.92273 8.80581 8.88565 8.85224 8.83893C8.89906 8.79259 8.93622 8.73746 8.96158 8.67672C8.98694 8.61598 9 8.55083 9 8.48503C9 8.41923 8.98694 8.35408 8.96158 8.29334C8.93622 8.23259 8.89906 8.17747 8.85224 8.13113L6.70432 5.99276Z"
-                                                                fill="#FF4747" />
-                                                        </svg>
-                                                    </a> --}}
                                                 </div>
                                             </div>
                                         </div>
-
-
-
-                                        {{-- <div class="row pb-4">
-                                            <div class="col-12">
-                                                <button type="button" class="btn btn-primary waves-effect waves-light"
-                                                    data-repeater-create>Tambah Baris</button>
-                                            </div>
-                                        </div> --}}
                                     </div>
 
 
@@ -139,15 +120,15 @@
                                     <div class="row  text-center mt-4">
                                         <div class="col-4 signatures">
                                             <div class="mb-3">
-                                                <input type="text" class="form-control add"
-                                                    placeholder="Jabatan" style="text-align:center;"
-                                                    id="edit_type-1" name="type" required readonly />
-                                                <div class="invalid-feedback">Tidak boleh kosong</div>
-                                            </div>
-                                            <div class="mb-3">
                                                 <input type="text" class="form-control add "
                                                     placeholder="Nama" style="text-align:center;"
                                                     id="edit_name-1" name="name" required readonly />
+                                                <div class="invalid-feedback">Tidak boleh kosong</div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <input type="text" class="form-control add"
+                                                    placeholder="Kepala Unit Pelayanan" style="text-align:center;"
+                                                    id="edit_type-1" name="type" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3 prev-1">
@@ -159,8 +140,6 @@
                                                             <span class="dz-nopreview">No preview</span>
                                                         </div>
                                                     </div>
-                                                        {{-- <a class="dz-remove" id="1" href="javascript:undefined;"
-                                                            data-dz-remove="">Remove file</a> --}}
                                                 </div>
                                             </div>
                                             <div class="mb-3 click-1" style="display: none">
@@ -180,29 +159,25 @@
                                         </div>
                                         <div class="col-4 signatures">
                                             <div class="mb-3">
-                                                <input type="text" class="form-control add"
-                                                    placeholder="Jabatan" style="text-align:center;"
-                                                    id="edit_type-2" name="type" required readonly />
+                                                <input type="text" class="form-control add "
+                                                placeholder="Nama" style="text-align:center;"
+                                                id="edit_name-2" name="name" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <input type="text" class="form-control add "
-                                                    placeholder="Nama" style="text-align:center;"
-                                                    id="edit_name-2" name="name" required readonly />
+                                                <input type="text" class="form-control add"
+                                                    placeholder="Koordinator Teknik" style="text-align:center;"
+                                                    id="edit_type-2" name="type" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3 prev-2">
                                                 <div
                                                     class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
                                                     <div class="dz-details">
-                                                        <div class="dz-thumbnail"> <img class="prev-img-2" alt=""
-                                                                src="">
+                                                        <div class="dz-thumbnail"> <img class="prev-img-2" alt="" src="">
                                                             <span class="dz-nopreview">No preview</span>
                                                         </div>
                                                     </div>
-                                                    {{-- <a class="dz-remove" id="2"
-                                                        href="javascript:undefined;" data-dz-remove="">Remove
-                                                        file</a> --}}
                                                 </div>
                                             </div>
                                             <div class="mb-3 click-2" style="display: none">
@@ -222,15 +197,15 @@
                                         </div>
                                         <div class="col-4 signatures">
                                             <div class="mb-3">
-                                                <input type="text" class="form-control add"
-                                                    placeholder="Jabatan" style="text-align:center;"
-                                                    id="edit_type-3" name="type" required readonly />
+                                                <input type="text" class="form-control add "
+                                                placeholder="Nama" style="text-align:center;"
+                                                id="edit_name-3" name="name" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3">
-                                                <input type="text" class="form-control add "
-                                                    placeholder="Nama" style="text-align:center;"
-                                                    id="edit_name-3" name="name" required readonly />
+                                                <input type="text" class="form-control add"
+                                                    placeholder="Leader Cleaning" style="text-align:center;"
+                                                    id="edit_type-3" name="type" required readonly />
                                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                                             </div>
                                             <div class="mb-3 prev-3">
@@ -278,7 +253,7 @@
                                 class="btn btn-primary d-grid w-100 mb-2">Update</button> --}}
                             {{-- <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview"
                                 class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a> --}}
-                            <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2 btn-edit">Edit Laporan Kerusakan</button>
+                            <a href="{{url('complain/laporan-kerusakan/edit/')}}/{{$id}}" id="edit" class="btn btn-primary d-grid w-100 mb-2 edit d-none"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-pencil ti-xs me-2"></i>Edit</span></a>
                             <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
                         </div>
                     </div>
@@ -353,9 +328,7 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('.repeater').repeater({
-
-            })
+            let account = {!! json_encode(session('data')) !!}
             var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
@@ -392,9 +365,7 @@
                             'YYYY-MM-DD').format('DD-MM-YYYY'));
                         $('#edit_action_plan_date').val(moment(response.action_plan_date, 'YYYY-MM-DD')
                             .format('DD-MM-YYYY'));
-                        $(".select-ticket").empty().append('<option value="' + response.ticket_id +
-                                '">' + response.ticket_id + '</option>').val(response.ticket_id);
-                        localStorage.setItem('status', response.status);
+                        $('#edit_damage_report_no').val(response.ticket?.ticket_number);
 
                         // Set value ke repeater
                         var firstRow = $('.repeater-wrapper').first();
@@ -431,6 +402,11 @@
                             $('#edit_date-' + i).val(moment(response.damage_report_signatures[i - 1]
                                 .date, 'YYYY-MM-DD').format('DD-MM-YYYY'));
                         }
+
+                        if(account.level.id == 10 || (account.level.id == 4 & response.status == 'Terbuat') || (account.level.id == 3 & response.status == 'Disetujui LC') || (account.level.id == 2 & response.status == 'Disetujui KT')){
+                            $('.edit').removeClass('d-none');
+                        }
+                        
                         Swal.close();
                     },
                     error: function(errors) {

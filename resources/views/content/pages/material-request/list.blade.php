@@ -151,7 +151,6 @@ $configData = Helper::appClasses();
                     title: "Status",
                     className: 'text-center',
                     render: function(data, type, row) {
-                        console.log(data);
                         if (data == 'Terbuat') {
                             return '<span class="badge w-100" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
                         } else if (data == 'disetujui chief departement') {
@@ -263,11 +262,11 @@ $configData = Helper::appClasses();
                     let datas = {}
                     datas.status = 'Terkirim';
                     Swal.fire({
-                        title: 'Memeriksa...',
-                        text: "Harap menunggu",
-                        imageUrl: "{{ asset('waiting.gif') }}",
+                        title: '<h2>Loading...</h2>',
+                        html: sweet_loader + '<h5>Please Wait</h5>',
                         showConfirmButton: false,
-                        allowOutsideClick: false
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
                     });
                     $.ajax({
                         url: "{{ env('BASE_URL_API')}}" + '/api/material-request/'+id,

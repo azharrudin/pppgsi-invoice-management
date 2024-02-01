@@ -261,91 +261,91 @@ $configData = Helper::appClasses();
             }
         });
 
-        const myDropzone2 = new Dropzone('#ttd2', {
-            parallelUploads: 1,
-            maxFilesize: 3,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            autoQueue: false,
-            url: "../uploads/logo2",
-            init: function() {
-                if (dataLocal) {
-                    // Add a preloaded file to the dropzone with a preview
-                    var mockFile = dataLocal.materai_image;
-                    if (mockFile) {
-                        this.options.addedfile.call(this, mockFile);
-                        this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
+        // const myDropzone2 = new Dropzone('#ttd2', {
+        //     parallelUploads: 1,
+        //     maxFilesize: 3,
+        //     addRemoveLinks: true,
+        //     maxFiles: 1,
+        //     acceptedFiles: ".jpeg,.jpg,.png,.gif",
+        //     autoQueue: false,
+        //     url: "../uploads/logo2",
+        //     init: function() {
+        //         if (dataLocal) {
+        //             // Add a preloaded file to the dropzone with a preview
+        //             var mockFile = dataLocal.materai_image;
+        //             if (mockFile) {
+        //                 this.options.addedfile.call(this, mockFile);
+        //                 this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
 
-                        // Optional: Handle the removal of the file
-                        mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-                            // Handle removal logic here
-                        });
-                    }
-                }
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
-                    ttdFile2 = file;
-                })
-            }
-        });
+        //                 // Optional: Handle the removal of the file
+        //                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+        //                     // Handle removal logic here
+        //                 });
+        //             }
+        //         }
+        //         this.on('addedfile', function(file) {
+        //             while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
+        //             ttdFile2 = file;
+        //         })
+        //     }
+        // });
 
-        const myDropzone3 = new Dropzone('#ttd3', {
-            parallelUploads: 1,
-            maxFilesize: 3,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            autoQueue: false,
-            url: "../uploads/logo4",
-            init: function() {
-                if (dataLocal) {
-                    // Add a preloaded file to the dropzone with a preview
-                    var mockFile = dataLocal.materai_image;
-                    if (mockFile) {
-                        this.options.addedfile.call(this, mockFile);
-                        this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
+        // const myDropzone3 = new Dropzone('#ttd3', {
+        //     parallelUploads: 1,
+        //     maxFilesize: 3,
+        //     addRemoveLinks: true,
+        //     maxFiles: 1,
+        //     acceptedFiles: ".jpeg,.jpg,.png,.gif",
+        //     autoQueue: false,
+        //     url: "../uploads/logo4",
+        //     init: function() {
+        //         if (dataLocal) {
+        //             // Add a preloaded file to the dropzone with a preview
+        //             var mockFile = dataLocal.materai_image;
+        //             if (mockFile) {
+        //                 this.options.addedfile.call(this, mockFile);
+        //                 this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
 
-                        // Optional: Handle the removal of the file
-                        mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-                            // Handle removal logic here
-                        });
-                    }
-                }
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
-                    ttdFile3 = file;
-                })
-            }
-        });
-        const myDropzone4 = new Dropzone('#ttd4', {
-            parallelUploads: 1,
-            maxFilesize: 3,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            autoQueue: false,
-            url: "../uploads/logo4",
-            init: function() {
-                if (dataLocal) {
-                    // Add a preloaded file to the dropzone with a preview
-                    var mockFile = dataLocal.materai_image;
-                    if (mockFile) {
-                        this.options.addedfile.call(this, mockFile);
-                        this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
+        //                 // Optional: Handle the removal of the file
+        //                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+        //                     // Handle removal logic here
+        //                 });
+        //             }
+        //         }
+        //         this.on('addedfile', function(file) {
+        //             while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
+        //             ttdFile3 = file;
+        //         })
+        //     }
+        // });
+        // const myDropzone4 = new Dropzone('#ttd4', {
+        //     parallelUploads: 1,
+        //     maxFilesize: 3,
+        //     addRemoveLinks: true,
+        //     maxFiles: 1,
+        //     acceptedFiles: ".jpeg,.jpg,.png,.gif",
+        //     autoQueue: false,
+        //     url: "../uploads/logo4",
+        //     init: function() {
+        //         if (dataLocal) {
+        //             // Add a preloaded file to the dropzone with a preview
+        //             var mockFile = dataLocal.materai_image;
+        //             if (mockFile) {
+        //                 this.options.addedfile.call(this, mockFile);
+        //                 this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
 
-                        // Optional: Handle the removal of the file
-                        mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-                            // Handle removal logic here
-                        });
-                    }
-                }
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
-                    ttdFile4 = file;
-                })
-            }
-        });
+        //                 // Optional: Handle the removal of the file
+        //                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+        //                     // Handle removal logic here
+        //                 });
+        //             }
+        //         }
+        //         this.on('addedfile', function(file) {
+        //             while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
+        //             ttdFile4 = file;
+        //         })
+        //     }
+        // });
 
         if (dataLocal) {
             $("#requester").val(dataLocal.requester);
@@ -530,6 +530,13 @@ $configData = Helper::appClasses();
                     } else {
                         // Submit your form
                         event.preventDefault();
+                        Swal.fire({
+                            title: '<h2>Loading...</h2>',
+                            html: sweet_loader + '<h5>Please Wait</h5>',
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        });
                         let requester = $("#requester").val();
                         let department = $("#department").val();
                         let request_date = $("#request_date").val();
@@ -538,7 +545,7 @@ $configData = Helper::appClasses();
                         let note = $("#note").val();
                         let datas = {};
                         let signatures1 = {}
-                        signatures1.type = "prepared by";
+                        signatures1.type = "Prepared By";
                         signatures1.name = $('#warehouse_name').val();
                         signatures1.date = $('#warehouse_date').val();
                         signatures1.signature = ttdFile1.dataURL;
