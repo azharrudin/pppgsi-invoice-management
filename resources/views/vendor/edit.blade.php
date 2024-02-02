@@ -14,194 +14,190 @@ $configData = Helper::appClasses();
 @section('content')
 <!-- Content -->
 <div class="container-xxl flex-grow-1 container-p-y">
+    <form id="create-vendor" class="create-vendor" novalidate>
+        <div class="row invoice-add">
+            <!-- Invoice Add-->
+            <div class="col-lg-9 col-12 mb-lg-0 mb-3">
+                <div class="card invoice-preview-card">
+                    <div class="card-body">
+                        <div style="background-image: url('{{asset('assets/img/header.png')}}'); height : 150px; background-size: contain; background-repeat: no-repeat;" class="set-back">
+                        </div>
 
-    <div class="row invoice-add">
-        <!-- Invoice Add-->
-        <div class="col-lg-9 col-12 mb-lg-0 mb-3">
-            <div class="card invoice-preview-card">
-                <div class="card-body">
-                    <div style="background-image: url('{{asset('assets/img/header.png')}}'); height : 150px; background-size: contain; background-repeat: no-repeat;" class="set-back">
-                    </div>
-
-                    <h2 class="mx-auto text-center"><b>PURCHASE ORDER</b></h2>
-                    <div class="row  m-0 p-3">
-                        <div class="col-md-6 mb-md-0 ps-0">
-                            <dl class="row mb-2 d-flex">
-                                <dt class="col-sm-4">
-                                    <span class="fw-normal">Nomor PO</span>
-                                </dt>
-                                <dt class="col-sm-8 ">
-                                    <span class="fw-normal" id="purchase_order_number"></span>
-                                </dt>
-                            </dl>
-                            <dl class="row mb-2 d-flex">
-                                <dt class="col-sm-4">
-                                    <span class="fw-normal">Tanggal</span>
-                                </dt>
-                                <dt class="col-sm-8 ">
-                                    <span class="fw-normal" id="purchase_order_date"></span>
-                                </dt>
-                            </dl>
-                            <dl class="row mb-2 d-flex mb-4">
-                                <dt class="col-sm-4">
-                                    <span class="fw-normal">Perihal</span>
-                                </dt>
-                                <dt class="col-sm-8 ">
-                                    <span class="fw-normal" id="about"></span>
-                                </dt>
-                            </dl>
-                            <div class="mb-3">
-                                <div class="form-label">
-                                    <span id="name_tenant"></span><br>
-                                    <span id="address"></span><br><br>
-                                    <span id="floor"></span><br>
+                        <h2 class="mx-auto text-center"><b>PURCHASE ORDER</b></h2>
+                        <div class="row  m-0 p-3">
+                            <div class="col-md-6 mb-md-0 ps-0">
+                                <dl class="row mb-2 d-flex">
+                                    <dt class="col-sm-4">
+                                        <span class="fw-normal">Nomor PO</span>
+                                    </dt>
+                                    <dt class="col-sm-8 ">
+                                        <span class="fw-normal" id="purchase_order_number"></span>
+                                    </dt>
+                                </dl>
+                                <dl class="row mb-2 d-flex">
+                                    <dt class="col-sm-4">
+                                        <span class="fw-normal">Tanggal</span>
+                                    </dt>
+                                    <dt class="col-sm-8 ">
+                                        <span class="fw-normal" id="purchase_order_date"></span>
+                                    </dt>
+                                </dl>
+                                <dl class="row mb-2 d-flex mb-4">
+                                    <dt class="col-sm-4">
+                                        <span class="fw-normal">Perihal</span>
+                                    </dt>
+                                    <dt class="col-sm-8 ">
+                                        <span class="fw-normal" id="about"></span>
+                                    </dt>
+                                </dl>
+                                <div class="mb-3">
+                                    <div class="form-label">
+                                        <span id="name_tenant"></span><br>
+                                        <span id="address"></span><br><br>
+                                        <span id="floor"></span><br>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-5">
+                            <div class="col-md-5">
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="row px-3 mb-3">
-                        <span class="form-label" id="note"></span>
-                    </div>
+                        <div class="row px-3 mb-3">
+                            <span class="form-label" id="note"></span>
+                        </div>
 
-                    <div class="row px-3 mb-3 ">
-                        <div class="table-responsive border-top">
-                            <table class="table m-0">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama barang</th>
-                                        <th>Spesifikasi</th>
-                                        <th>Quantity</th>
-                                        <th>Satuan</th>
-                                        <th>Harga Satuan</th>
-                                        <th>Pajak</th>
-                                        <th>Total (Rp)</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-border-bottom-0" id="details">
-                                    <tr>
-                                        <td colspan="4"></td>
-                                        <td colspan="2">
-                                            <p class="">Sub Total</p>
-                                        </td>
-                                        <td colspan="2" style="text-align: right;">
-                                            <p id="subtotal" class=""></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4"></td>
-                                        <td colspan="1">
-                                            <p class="">Pajak</p>
-                                        </td>
-                                        <td colspan="1">
-                                            <p class="" id=""></p>
-                                        </td>
-                                        <td colspan="2" style="text-align: right;">
-                                            <p id="tax" class=""></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4"></td>
-                                        <td colspan="2">
-                                            <p class="">Jumlah Nett</p>
-                                        </td>
-                                        <td colspan="2" style="text-align: right;">
-                                            <p id="grand_total" class=""></p>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="row px-3 mb-3 ">
+                            <div class="table-responsive border-top">
+                                <table class="table m-0">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama barang</th>
+                                            <th>Spesifikasi</th>
+                                            <th>Quantity</th>
+                                            <th>Satuan</th>
+                                            <th>Harga Satuan</th>
+                                            <th>Pajak</th>
+                                            <th>Total (Rp)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0" id="details">
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td colspan="2">
+                                                <p class="">Sub Total</p>
+                                            </td>
+                                            <td colspan="2" style="text-align: right;">
+                                                <p id="subtotal" class=""></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td colspan="1">
+                                                <p class="">Pajak</p>
+                                            </td>
+                                            <td colspan="1">
+                                                <p class="" id=""></p>
+                                            </td>
+                                            <td colspan="2" style="text-align: right;">
+                                                <p id="tax" class=""></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td colspan="2">
+                                                <p class="">Jumlah Nett</p>
+                                            </td>
+                                            <td colspan="2" style="text-align: right;">
+                                                <p id="grand_total" class=""></p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row px-3">
-                        <div class="col-12">
-                            <label for="note" class="form-label fw-medium">Terbilang</label>
-                            <br>
-                            <span class="form-label" id="grand_total_spelled"></span>
-                            <hr>
+                        <div class="row px-3">
+                            <div class="col-12">
+                                <label for="note" class="form-label fw-medium">Terbilang</label>
+                                <br>
+                                <span class="form-label" id="grand_total_spelled"></span>
+                                <hr>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row px-3 mb-3">
-                        <div class="col-12">
-                            <label for="note" class="form-label fw-medium">Syarat & Ketentuan</label>
-                            <br>
-                            <span class="form-label" id="term_and_conditions"></span>
+                        <div class="row px-3 mb-3">
+                            <div class="col-12">
+                                <label for="note" class="form-label fw-medium">Syarat & Ketentuan</label>
+                                <br>
+                                <span class="form-label" id="term_and_conditions"></span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row py-3 px-3">
-                        <div class="col-md-4 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
-                            <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">Tanda Tangan</label>
-                                <div class="form-label">
-                                    25 September 2023
+                        <div class="row py-3 px-3">
+                            <div class="col-md-4 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
+                                <div class="mb-3">
+                                    <label for="note" class="form-label fw-medium">Tanda Tangan</label>
+                                    <div class="form-label">
+                                        25 September 2023
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="mb-3">
-                                <img id="signatture" src="" alt="">
-                            </div>
-                            <div class="mb-3">
-                                <span class="form-label" id="signature_name">
-                                </span>
-                            </div>
+                                <div class="mb-3">
+                                    <img id="signatture" src="" alt="">
+                                </div>
+                                <div class="mb-3">
+                                    <span class="form-label" id="signature_name">
+                                    </span>
+                                </div>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Invoice Add-->
-
-        <!-- Invoice Actions -->
-        <div class="col-lg-3 col-12 invoice-actions">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
-                        <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim</span>
-                    </button>
-                    <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
-                    <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
-                    <button type="button" class="btn btn-label-secondary d-grid w-100">Batal</button>
-                </div>
-            </div>
-
-            <div class="card mb-4">
-                <div class="card-body">
-                    <p class="text-center">Kelengkapan Document</p>
-                    <button type="button" class="btn  d-grid w-100 mb-2 add-doc" style="color : #fff;background-color : #4EC0D9;"><span class="d-flex align-items-center justify-content-center text-nowrap">+</span></button>
-                    <div class="documents">
-                        <div class="document">
-                            <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">Pilih Document</label>
-                                <select name="document[]" id="document" class="form-control">
-                                    <option value="">Pilih Document</option>
-                                    <option value="Faktur Pembelian">Faktur Pembelian</option>
-                                    <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
-                                    <option value="Purchase Order">Purchase Order(PO)</option>
-                                    <option value="Delivery Order">Delivery Order(DO)</option>
-                                    <option value="Berita Acara Pembayaran">Berita Acara Pembayaran(BAP)</option>
-                                    <option value="Berita Acara Kemajuan Pekerjaan">Berita Acara Kemajuan Pekerjaan(BAPK)</option>
-                                    <option value="Berita Acara Serah Terima">Berita Acara Serah Terima</option>
-                                    <option value="Progress Kerja">Progress Kerja</option>
-                                    <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
-                                    <option value="Faktur Pajak">Faktur Pajak</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment" name="attachment">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- /Invoice Actions -->
-    </div>
+            <!-- /Invoice Add-->
 
+            <!-- Invoice Actions -->
+            <div class="col-lg-3 col-12 invoice-actions">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <button type="submit" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
+                        <button type="button" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p class="text-center">Kelengkapan Document</p>
+                        <button type="button" class="btn  d-grid w-100 mb-2 add-doc" style="color : #fff;background-color : #4EC0D9;"><span class="d-flex align-items-center justify-content-center text-nowrap">+</span></button>
+                        <div class="documents" id="documents">
+                            <!-- <div class="document">
+                                <div class="mb-3">
+                                    <label for="note" class="form-label fw-medium">Pilih Document</label>
+                                    <select name="document[]" class="form-control row-input" required>
+                                        <option value="">Pilih Document</option>
+                                        <option value="Faktur Pembelian">Faktur Pembelian</option>
+                                        <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
+                                        <option value="Purchase Order">Purchase Order(PO)</option>
+                                        <option value="Delivery Order">Delivery Order(DO)</option>
+                                        <option value="Berita Acara Pembayaran">Berita Acara Pembayaran(BAP)</option>
+                                        <option value="Berita Acara Kemajuan Pekerjaan">Berita Acara Kemajuan Pekerjaan(BAPK)</option>
+                                        <option value="Berita Acara Serah Terima">Berita Acara Serah Terima</option>
+                                        <option value="Progress Kerja">Progress Kerja</option>
+                                        <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
+                                        <option value="Faktur Pajak">Faktur Pajak</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="file" class="form-control row-input" placeholder="Pilih Berkas" name="attachment[]" required>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Invoice Actions -->
+        </div>
+    </form>
 </div>
 <!-- / Content -->
 
@@ -223,6 +219,7 @@ $configData = Helper::appClasses();
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
+    var lastIndex = null;
     var nomorInvoice;
     var id;
     $(document).ready(function() {
@@ -230,6 +227,92 @@ $configData = Helper::appClasses();
         var idIndex = urlSegments.indexOf('edit-tagihan-vendor') + 1;
         id = urlSegments[idIndex];
         getDataTagihanVendor(id);
+
+        var saveVendor = $('.create-vendor');
+
+        Array.prototype.slice.call(saveVendor).forEach(function(form) {
+            $('.indicator-progress').hide();
+            $('.indicator-label').show();
+            form.addEventListener(
+                "submit",
+                function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+
+                    } else {
+                        Swal.fire({
+                            title: '<h2>Loading...</h2>',
+                            html: sweet_loader + '<h5>Please Wait</h5>',
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        });
+                        // Submit your form
+                        event.preventDefault();
+
+                        var attachments = [];
+                        $('.row-input').each(function(index) {
+                            var input_name = $(this).attr('name');
+                            var input_value = $(this).val();
+                            var input_index = Math.floor(index / 2); // Membagi setiap 5 input menjadi satu objek pada array
+                            if (index % 2 == 0) {
+                                attachments[input_index] = {
+                                    uraian: input_value
+                                };
+                            } else if (index % 2 == 1) {
+                                attachments[input_index].attachment = input_value;
+                            }
+                        });
+
+                        let datas = {};
+                        datas.attachments = attachments;
+                        console.log(datas);
+                        $.ajax({
+                            // url: "{{ env('BASE_URL_API')}}" + '/api/invoice',
+                            url: "{{url('api/vendor-invoice/add-attachment')}}/"+id,
+                            type: "POST",
+                            data: JSON.stringify(datas),
+                            processData: false,
+                            contentType: false,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function(response) {
+                                $('.indicator-progress').show();
+                                $('.indicator-label').hide();
+
+                                Swal.fire({
+                                    title: 'Berhasil',
+                                    text: 'Berhasil memperbarui Purchase Order',
+                                    icon: 'success',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                }).then(function() {
+                                    window.location.href = "/vendor/list-tagihan-vendor";
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                console.log(error);
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: ' You clicked the button!',
+                                    icon: 'error',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                })
+                            }
+                        });
+                    }
+
+                    form.classList.add("was-validated");
+                },
+                false
+            );
+        });
     });
 
     function getVendor(id) {
@@ -285,7 +368,6 @@ $configData = Helper::appClasses();
             },
             success: function(res) {
                 let data = res.data;
-                console.log(data);
                 id = data.id;
                 nomorInvoice = data.invoice_number;
                 $("#purchase_order_number").text(data.purchase_order_number);
@@ -300,6 +382,8 @@ $configData = Helper::appClasses();
                 $("#signature_name").text(data.signature_name);
                 getVendor(data.vendor_id);
                 getDetails(data.purchase_order_details);
+                getAttachments(data.vendor_attachment);
+                attachments();
                 if (data.signature) {
                     $("#signatture").css('background-img', 'black');
                     $("#signatture").css("background-image", `url('` + data.signature + `')`);
@@ -317,15 +401,64 @@ $configData = Helper::appClasses();
         });
     }
 
+    function attachments() {
+        const fileInput = $("#attachment-0");
+        const fileInputVal = $("#attachment-val-0");
+        // Listen for the change event so we can capture the file
+        fileInput.change(function(e){
+           // Get a reference to the file
+           const file = e.target.files[0];
 
-    $(document).on('click', '.add-doc', function() {
-        let documents = $('.documents');
-        let newRow = `
-        <div class="documents">
+            // Encode the file using the FileReader API
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                fileInputVal.val(reader.result);
+                console.log(reader.result);
+                // Logs data:<type>;base64,wL2dvYWwgbW9yZ...
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    function getAttachments(attachments) {
+        let data = attachments;
+        let getDetail = '';
+        let temp = '';
+
+        if (data.length < 0) {
+            let details = data;
+            for (let i = 0; i < details.length; i++) {
+                temp = `             
+                <div class="document">
+                                <div class="mb-3">
+                                    <label for="note" class="form-label fw-medium">Pilih Document</label>
+                                    <select name="document[]" id="document" class="form-control row-input" required>
+                                        <option value="">Pilih Document</option>
+                                        <option value="Faktur Pembelian">Faktur Pembelian</option>
+                                        <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
+                                        <option value="Purchase Order">Purchase Order(PO)</option>
+                                        <option value="Delivery Order">Delivery Order(DO)</option>
+                                        <option value="Berita Acara Pembayaran">Berita Acara Pembayaran(BAP)</option>
+                                        <option value="Berita Acara Kemajuan Pekerjaan">Berita Acara Kemajuan Pekerjaan(BAPK)</option>
+                                        <option value="Berita Acara Serah Terima">Berita Acara Serah Terima</option>
+                                        <option value="Progress Kerja">Progress Kerja</option>
+                                        <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
+                                        <option value="Faktur Pajak">Faktur Pajak</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="file" class="form-control row-input" placeholder="Pilih Berkas" id="attachment-${i}" name="attachment[]" required>
+                                </div>
+                            </div>`;
+                getDetail = getDetail + temp;
+            }
+            $('#documents').prepend(getDetail);
+        } else {
+            temp = `             
                         <div class="document">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">Pilih Document</label>
-                                <select name="document[]" id="document" class="form-control">
+                                <select name="document[]" id="document" class="form-control row-input" required>
                                     <option value="">Pilih Document</option>
                                     <option value="Faktur Pembelian">Faktur Pembelian</option>
                                     <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
@@ -340,12 +473,62 @@ $configData = Helper::appClasses();
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment" name="attachment">
+                                <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment-0" required name="attachment">
+                                <input type="hidden" class="form-control row-input" placeholder="Pilih Berkas" id="attachment-val-0" required name="attachment">
+                            </div>
+                    </div>`;
+            $('#documents').prepend(temp);
+        }
+    }
+
+    $(document).on('click', '.add-doc', function() {
+        var index = lastIndex ? lastIndex + 1 : $('.document').length;
+        lastIndex = index;
+        let documents = $('.documents');
+        let newRow = `
+        <div class="documents">
+                        <div class="document">
+                            <div class="mb-3">
+                                <label for="note" class="form-label fw-medium">Pilih Document</label>
+                                <select name="document[]" id="document" class="form-control row-input" required>
+                                    <option value="">Pilih Document</option>
+                                    <option value="Faktur Pembelian">Faktur Pembelian</option>
+                                    <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
+                                    <option value="Purchase Order">Purchase Order(PO)</option>
+                                    <option value="Delivery Order">Delivery Order(DO)</option>
+                                    <option value="Berita Acara Pembayaran">Berita Acara Pembayaran(BAP)</option>
+                                    <option value="Berita Acara Kemajuan Pekerjaan">Berita Acara Kemajuan Pekerjaan(BAPK)</option>
+                                    <option value="Berita Acara Serah Terima">Berita Acara Serah Terima</option>
+                                    <option value="Progress Kerja">Progress Kerja</option>
+                                    <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
+                                    <option value="Faktur Pajak">Faktur Pajak</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <input type="file" class="form-control " placeholder="Pilih Berkas" id="attachment-${lastIndex}" required name="attachment">
+                                <input type="hidden" class="form-control row-input" placeholder="Pilih Berkas" id="attachment-val-${lastIndex}" required name="attachment">
                             </div>
                         </div>
                     </div>
         `;
         documents.append(newRow);
+        const fileInput = $("#attachment-" + index);
+        const fileInputVal = $("#attachment-val-"+index);
+        console.log(fileInput);
+        // Listen for the change event so we can capture the file
+        fileInput.change(function(e){
+           // Get a reference to the file
+           const file = e.target.files[0];
+
+            // Encode the file using the FileReader API
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                fileInputVal.val(reader.result);
+                console.log(reader.result);
+                // Logs data:<type>;base64,wL2dvYWwgbW9yZ...
+            };
+            reader.readAsDataURL(file);
+        });
     });
 
     function getDetails(detailItems) {

@@ -168,29 +168,8 @@ $configData = Helper::appClasses();
             <div class="card mb-4">
                 <div class="card-body">
                     <p class="text-center">Kelengkapan Document</p>
-                    <button type="button" class="btn  d-grid w-100 mb-2 add-doc" style="color : #fff;background-color : #4EC0D9;"><span class="d-flex align-items-center justify-content-center text-nowrap">+</span></button>
-                    <div class="documents">
-                        <div class="document">
-                            <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">Pilih Document</label>
-                                <select name="document[]" id="document" class="form-control">
-                                    <option value="">Pilih Document</option>
-                                    <option value="Faktur Pembelian">Faktur Pembelian</option>
-                                    <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
-                                    <option value="Purchase Order">Purchase Order(PO)</option>
-                                    <option value="Delivery Order">Delivery Order(DO)</option>
-                                    <option value="Berita Acara Pembayaran">Berita Acara Pembayaran(BAP)</option>
-                                    <option value="Berita Acara Kemajuan Pekerjaan">Berita Acara Kemajuan Pekerjaan(BAPK)</option>
-                                    <option value="Berita Acara Serah Terima">Berita Acara Serah Terima</option>
-                                    <option value="Progress Kerja">Progress Kerja</option>
-                                    <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
-                                    <option value="Faktur Pajak">Faktur Pajak</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment" name="attachment">
-                            </div>
-                        </div>
+                    <!-- <button type="button" class="btn  d-grid w-100 mb-2 add-doc" style="color : #fff;background-color : #4EC0D9;"><span class="d-flex align-items-center justify-content-center text-nowrap">+</span></button> -->
+                    <div class="documents" id="documents">
                     </div>
                 </div>
             </div>
@@ -209,7 +188,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
 <script>
-    let account = {!! json_encode(session('data')) !!}
+    // let account = {!! json_encode(session('data')) !!}
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -235,7 +214,7 @@ $configData = Helper::appClasses();
 
     $(document).on('click', '#edit', function(event) {
         event.preventDefault();
-        window.location.href = "/vendor/edit-tagihan-vendor/"+id;
+        window.location.href = "/vendor/edit-tagihan-vendor/" + id;
     });
 
     function getVendor(id) {
@@ -306,6 +285,7 @@ $configData = Helper::appClasses();
                 $("#signature_name").text(data.signature_name);
                 getVendor(data.vendor_id);
                 getDetails(data.purchase_order_details);
+                getAttachments(data.vendor_attachment);
                 if (data.signature) {
                     $("#signatture").css('background-img', 'black');
                     $("#signatture").css("background-image", `url('` + data.signature + `')`);
@@ -321,6 +301,70 @@ $configData = Helper::appClasses();
                 console.log(errors);
             }
         });
+    }
+
+
+    function getAttachments(attachments) {
+        let data = attachments;
+        let getDetail = '';
+        let temp = '';
+        console.log(data);
+
+        if (data.length > 0) {
+            let details = data;
+            for (let i = 0; i < details.length; i++) {
+                console.log('a');
+                temp = `             
+                <div class="document">
+                                <div class="mb-3">
+                                    <label for="note" class="form-label fw-medium">Pilih Document</label>
+                                    <select name="document[]" id="document" class="form-control row-input" required>
+                                        <option value="">Pilih Document</option>
+                                        <option value="Faktur Pembelian">Faktur Pembelian</option>
+                                        <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
+                                        <option value="Purchase Order">Purchase Order(PO)</option>
+                                        <option value="Delivery Order">Delivery Order(DO)</option>
+                                        <option value="Berita Acara Pembayaran">Berita Acara Pembayaran(BAP)</option>
+                                        <option value="Berita Acara Kemajuan Pekerjaan">Berita Acara Kemajuan Pekerjaan(BAPK)</option>
+                                        <option value="Berita Acara Serah Terima">Berita Acara Serah Terima</option>
+                                        <option value="Progress Kerja">Progress Kerja</option>
+                                        <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
+                                        <option value="Faktur Pajak">Faktur Pajak</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="file" class="form-control row-input" placeholder="Pilih Berkas" id="attachment-${i}" name="attachment[]" required>
+                                </div>
+                            </div>`;
+                getDetail = getDetail + temp;
+            }
+            $('#documents').prepend(getDetail);
+        } else {
+            temp = `             
+                        <div class="document">
+                            <div class="mb-3">
+                                <label for="note" class="form-label fw-medium">Pilih Document</label>
+                                <select name="document[]" id="document" class="form-control row-input" required>
+                                    <option value="">Pilih Document</option>
+                                    <option value="Faktur Pembelian">Faktur Pembelian</option>
+                                    <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
+                                    <option value="Purchase Order">Purchase Order(PO)</option>
+                                    <option value="Delivery Order">Delivery Order(DO)</option>
+                                    <option value="Berita Acara Pembayaran">Berita Acara Pembayaran(BAP)</option>
+                                    <option value="Berita Acara Kemajuan Pekerjaan">Berita Acara Kemajuan Pekerjaan(BAPK)</option>
+                                    <option value="Berita Acara Serah Terima">Berita Acara Serah Terima</option>
+                                    <option value="Progress Kerja">Progress Kerja</option>
+                                    <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
+                                    <option value="Faktur Pajak">Faktur Pajak</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment-0" required name="attachment">
+                                <input type="hidden" class="form-control row-input" placeholder="Pilih Berkas" id="attachment-val-0" required name="attachment">
+                            </div>
+                    </div>`;
+            $('#documents').prepend(temp);
+        }
     }
 
 

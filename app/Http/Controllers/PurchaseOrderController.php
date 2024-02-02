@@ -142,6 +142,7 @@ class PurchaseOrderController extends Controller
             $id = (int) $id;
             $getPurchaseOPurchaseOrder = PurchaseOrder::with("purchaseOrderDetails")->
                 with("vendor")->
+                with("vendorAttachment")->
                 with("tenant")->
                 where("id", $id)->
                 where("deleted_at", null)->
