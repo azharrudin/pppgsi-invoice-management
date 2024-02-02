@@ -305,25 +305,25 @@ class ReceiptController extends Controller
             DB::commit();
 
             if($request->input("status") == 'Terkirim'){
-                $receipt = Receipt::where('id', $id)->first();
+                $receipt = Receipt::with('invoice', 'tenant')->where('id', $id)->first();
                 $hariIni = \Carbon\Carbon::now()->locale('id');
                 $bulan = $hariIni->monthName;
                 $tahun = $hariIni->format('Y');
-    
-                $dataEmail["tenantName"] = $receipt->tenant->name;
+                $dataEmail["tenantName"] = $receipt->tenant->company;
                 $dataEmail["month"] = $bulan;
                 $dataEmail["year"] = $tahun;
-                $dataEmail["total"] = $receipt->grand_total;
+                $dataEmail["paid"] = $receipt->paid;
                 $dataEmail["terbilang"] = $receipt->grand_total_spelled;
-    
+                $dataEmail["invoice"] = $receipt->invoice->invoice_number;
+
                 $apiRequest = Http::get(env('BASE_URL_API') . '/api/receipt/' . $id);
                 $response = json_decode($apiRequest->getBody());
                 $data = $response->data;
-    
+
                 $pdf = PDF::loadView('content.pages.tanda-terima.download', ['data' => $data]);
                 $to = $receipt->tenant->email;
-    
-                Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $pdf) {
+
+                Mail::send('emails.email-template-tandaterima',['data' =>$dataEmail], function ($message) use ($to, $pdf) {
                     $message->to($to)
                         ->subject('Tanda Terima')
                         ->attachData($pdf->output(), "Tanda Terima.pdf");

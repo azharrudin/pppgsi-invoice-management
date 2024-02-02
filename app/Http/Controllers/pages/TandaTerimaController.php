@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\pages;
 
 use App\Http\Controllers\Controller;
+use App\Models\Receipt;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Yajra\DataTables\DataTables;
 use PDF;
+use Mail;
 
 class TandaTerimaController extends Controller
 {
