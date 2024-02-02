@@ -64,7 +64,7 @@ $configData = Helper::appClasses();
                             <span class="d-flex align-items-center justify-content-center text-nowrap">Buat Laporan Kerusakan</span>
                         </a> -->
                         <button type="submit" id="save" class="btn btn-primary btn-label-secondary d-grid w-100 mb-2">Simpan</button>
-                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Kembali</button>
                     </div>
                 </div>
             </div>
@@ -190,7 +190,7 @@ $configData = Helper::appClasses();
                         });
 
                         datas.attachment = files;
-                        datas.status = "Selesai"
+                        datas.status = "On progress"
 
                         $.ajax({
                             url: "{{ env('BASE_URL_API')}}" +'/api/ticket',

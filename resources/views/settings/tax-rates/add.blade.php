@@ -47,7 +47,7 @@ $configData = Helper::appClasses();
                     <div class="card-body">
                         <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
                         <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button>
-                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Batal</button>
+                        <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Kembali</button>
                     </div>
                 </div>
             </div>

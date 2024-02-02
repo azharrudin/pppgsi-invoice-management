@@ -175,7 +175,7 @@ $configData = Helper::appClasses();
                     <div class="card-body">
                         <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
                         {{-- <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button> --}}
-                        <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
+                        <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Kembali</button>
                     </div>
                 </div>
             </div>
@@ -422,7 +422,7 @@ $configData = Helper::appClasses();
                         let classification = $("#classification").val().toString();
                         datas.ticket_id = ticket;
                         datas.signatures = signatures;
-                        datas.status = "terbuat";
+                        datas.status = "Terbuat";
                         datas.scope = scope;
                         datas.details = detail;
                         datas.classification = classification;

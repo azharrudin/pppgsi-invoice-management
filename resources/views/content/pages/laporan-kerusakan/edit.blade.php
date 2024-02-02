@@ -143,10 +143,8 @@
                 <div class="col-lg-3 col-12 invoice-actions">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <button type="submit" id="edit"
-                                class="btn btn-primary d-grid w-100 mb-2">Update</button>
-                            <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button>
-                            <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
+                            <button type="submit" id="edit" class="btn btn-primary d-grid w-100 mb-2">Update</button>
+                            <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Kembali</button>
                         </div>
                     </div>
                 </div>
