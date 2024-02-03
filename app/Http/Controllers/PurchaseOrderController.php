@@ -7,6 +7,7 @@ use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderDetail;
 use App\Models\PurchaseOrderSignature;
 use App\Models\Tenant;
+use App\Models\Vendor;
 use App\Services\CommonService;
 use App\Services\PurchaseOrderService;
 use Illuminate\Http\Request;
@@ -304,11 +305,11 @@ class PurchaseOrderController extends Controller
     public function report()
     {
         try{
-            $countTenant = Tenant::where("deleted_at", null)->count();
+            $countVendor = Vendor::where("deleted_at", null)->count();
             $countPurchaseOrder = PurchaseOrder::where("deleted_at", null)->count();
 
             return [
-                "count_tenant" => $countTenant,
+                "count_vendor" => $countVendor,
                 "count_purchase_order" => $countPurchaseOrder,
             ];
         } catch (\Throwable $e) {
