@@ -351,7 +351,7 @@
                 <div class="col-lg-3 col-12 purchase-req-actions">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
+                            <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Kembali</button>
                         </div>
                     </div>
                 </div>

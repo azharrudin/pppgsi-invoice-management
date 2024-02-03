@@ -166,7 +166,7 @@ $configData = Helper::appClasses();
                         <button class="btn btn-primary d-grid w-100 mb-2 kirim-invoice d-none" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
                             <span class="d-flex align-items-center justify-content-center text-nowrap d-none"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
                         </button>
-                        <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="fa fa-save fa-xs me-2"></i>Simpan</span></button>
+                        <button type="submit" id="save" class="btn btn-primary btn-update d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="fa fa-save fa-xs me-2"></i>Simpan</span></button>
                         <button type="button" id="preview" class="btn btn-success d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-eye ti-xs me-2"></i>Preview</span></button>
                         <button type="button" id="batal" class="btn btn-secondary d-grid w-100">Kembali</button>
                     </div>
@@ -997,6 +997,12 @@ $configData = Helper::appClasses();
                 }
                 if(account.level.id != '1'){
                     $('.data-materai').attr('style','display:none !important');
+                }
+                if(account.level.id == '1'){
+                    $('.btn-remove-mg').addClass('d-none');
+                    $('.btn-add-row-mg').addClass('d-none');
+                    $(".btn-update span").html('<i class="ti ti-check ti-xs me-2"></i>Disetujui Kepala BM');
+                    $('#materai_name').attr('readonly',true);
                 }
                 Swal.close();
             },

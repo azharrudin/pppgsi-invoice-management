@@ -158,7 +158,7 @@
                                 </button>
                         <button type="button" class="btn btn-primary btn-update d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="fa fa-save fa-xs me-2"></i>Simpan</span></button>
                         {{-- <a href="" class="btn btn-success d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-eye ti-xs me-2"></i>Preview</span></a> --}}
-                        <button type="button" class="btn btn-secondary btn-cancel d-grid w-100">Batal</button>
+                        <button type="button" class="btn btn-secondary btn-cancel d-grid w-100">Kembali</button>
                     </div>
                 </div>
             </div>
@@ -253,11 +253,11 @@
                 });
                 var inputValue = $("#signature_name").val();
                 if (inputValue.trim() === '') {
-                     // Dropzone
                     $("#signature_name").val(nameUser);
+                    $("#signature_name").prop('readonly', true);
+                    $(".btn-update span").html('<i class="ti ti-check ti-xs me-2"></i>Disetujui Kepala BM');
                 }
                 $('#signature_date').prop('disabled', false);
-                $('#signature_name').prop('readonly', false);
                 $('#jabatan').prop('readonly', false);
                 $("#jabatan").val("Kepala BM");
               

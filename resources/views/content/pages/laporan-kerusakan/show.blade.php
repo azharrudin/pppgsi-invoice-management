@@ -254,7 +254,7 @@
                             {{-- <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview"
                                 class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a> --}}
                             <a href="{{url('complain/laporan-kerusakan/edit/')}}/{{$id}}" id="edit" class="btn btn-primary d-grid w-100 mb-2 edit d-none"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-pencil ti-xs me-2"></i>Edit</span></a>
-                            <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Batal</button>
+                            <button type="button" class="btn btn-label-secondary btn-cancel d-grid w-100">Kembali</button>
                         </div>
                     </div>
                 </div>

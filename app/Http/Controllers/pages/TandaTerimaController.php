@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\pages;
 
 use App\Http\Controllers\Controller;
+use App\Models\Receipt;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Yajra\DataTables\DataTables;
 use PDF;
+use Mail;
 
 class TandaTerimaController extends Controller
 {
@@ -84,7 +86,7 @@ class TandaTerimaController extends Controller
         if ($response->data) {
             foreach ($response->data as $key => $value) {
                 $data[$key] = $value;
-                $data[$key]->tenant_name = $value->tenant->name;
+                $data[$key]->tenant_name = $value->tenant->company;
             }
         }
         return DataTables::of($data)
