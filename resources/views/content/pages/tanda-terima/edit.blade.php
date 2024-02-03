@@ -253,11 +253,11 @@
                 });
                 var inputValue = $("#signature_name").val();
                 if (inputValue.trim() === '') {
-                     // Dropzone
                     $("#signature_name").val(nameUser);
+                    $("#signature_name").prop('readonly', true);
+                    $(".btn-update span").html('<i class="ti ti-check ti-xs me-2"></i>Disetujui Kepala BM');
                 }
                 $('#signature_date').prop('disabled', false);
-                $('#signature_name').prop('readonly', false);
                 $('#jabatan').prop('readonly', false);
                 $("#jabatan").val("Kepala BM");
               

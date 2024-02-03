@@ -323,9 +323,9 @@ class ReceiptController extends Controller
                 $pdf = PDF::loadView('content.pages.tanda-terima.download', ['data' => $data]);
                 $to = $receipt->tenant->email;
 
-                Mail::send('emails.email-template-tandaterima',['data' =>$dataEmail], function ($message) use ($to, $pdf) {
+                Mail::send('emails.email-template-tandaterima',['data' =>$dataEmail], function ($message) use ($to, $pdf, $dataEmail) {
                     $message->to($to)
-                        ->subject('Tanda Terima')
+                        ->subject('Tanda Terima Pembayaran No Invoice : '.$dataEmail['invoice'])
                         ->attachData($pdf->output(), "Tanda Terima.pdf");
                 });
             }
