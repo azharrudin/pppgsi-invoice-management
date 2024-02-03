@@ -363,6 +363,7 @@ class InvoiceController extends Controller
                 $dataEmail["year"] = $tahun;
                 $dataEmail["total"] = $invoice->grand_total;
                 $dataEmail["terbilang"] = $invoice->grand_total_spelled;
+                $dataEmail["invoice_number"] = $invoice->invoice_number;
     
                 $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice/' . $id);
                 $response = json_decode($apiRequest->getBody());
@@ -371,13 +372,13 @@ class InvoiceController extends Controller
                 $pdf = PDF::loadView('invoice.download', ['data' => $data]);
                 $to = $invoice->tenant->email;
     
-                Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $pdf) {
+                Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $pdf, $dataEmail) {
                     $message->to($to)
-                        ->subject('Invoice')
+                        ->subject('Invoice No Invoice : '.$dataEmail['invoice_number'])
                         ->attachData($pdf->output(), "Invoice.pdf");
                 });
             }
-
+ 
             
             $getInvoice = Invoice::with("invoiceDetails.tax")
                 ->with("tenant")

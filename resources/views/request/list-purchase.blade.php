@@ -109,18 +109,6 @@ $configData = Helper::appClasses();
                     d.page = $(".purchase-request-list-table").DataTable().page.info()
                         .page +
                         1;
-                },
-                beforeSend: function() {
-                    Swal.fire({
-                        title: '<h2>Loading...</h2>',
-                        html: sweet_loader + '<h5>Please Wait</h5>',
-                        showConfirmButton: false,
-                        allowOutsideClick: false,
-                        allowEscapeKey: false
-                    });
-                },
-                complete: function() {
-                    Swal.close();
                 }
             },
             columns: [{

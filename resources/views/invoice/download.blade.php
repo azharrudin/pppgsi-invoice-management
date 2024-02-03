@@ -74,7 +74,23 @@ return $hasil_rupiah;
                 <tbody>
                     <tr>
                         <td style="width: 10%;"><b>Kepada Yth:</b></td>
-                        <td style=""></td>
+                        {{-- <td style=""></td> --}}
+                        {{-- <td style="width: 20%;border: 0.5px solid black; padding: 10px;"><b>No. Invoice:</b> 
+                            <br><b>{{ $data->invoice_number }}</b> 
+                        </td>
+                        <td style="width: 20%;border: 0.5px solid black; padding: 10px;"><b>Tanggal:</b><br>
+                            <b> {{ date('d F Y', strtotime($data->invoice_date)) }}</b>
+                        </td> --}}
+                    </tr>
+                    <tr>
+                        <td rowspan="4" style="width: 35%; border: 0.5px solid black; padding: 10px;"><b>
+                            {{ $data->tenant->company }} <br>
+                            {{ $data->tenant->floor }} <br>
+                            <br>
+                            Up. {{ $data->tenant->name }}</b></td>
+                    </tr>
+                    <tr>
+                        <td style="border: none;"></td>
                         <td style="width: 20%;border: 0.5px solid black; padding: 10px;"><b>No. Invoice:</b> 
                             <br><b>{{ $data->invoice_number }}</b> 
                         </td>
@@ -83,22 +99,14 @@ return $hasil_rupiah;
                         </td>
                     </tr>
                     <tr>
-                        <td rowspan="3" style="width: 35%; border: 0.5px solid black; padding: 10px;"><b>
-                            {{ $data->tenant->company }} <br>
-                            {{ $data->tenant->floor }} <br>
-                            <br>
-                            Up. {{ $data->tenant->name }}</b></td>
-                    </tr>
-                    <tr>
-                        <td style="border: none;"></td>
-                        <td style="border: 0.5px solid black; padding: 10px;"><b> No. Kontrak:
-                            <br> {{ $data->contract_number }}</b>
+                        <td style="border-left: .5px solid white;  border-top: .5px solid white;  border-bottom: .5px solid white;"></td>
+                        <td style="border: 0.5px solid black; padding: 10px;"><b>No. Addendum:
+                            <br> {{ $data->addendum_number }}</b> 
                         </td>
-                        <td style="border: 0.5px solid black; padding: 10px;"><b>Tanggal: <br>{{ date('d F Y', strtotime($data->contract_date)) }}</b> 
+                        <td style="border: 0.5px solid black; padding: 10px;"><b>Tanggal: <br>{{ date('d F Y', strtotime($data->addendum_date)) }}</b> 
                         </td>
                     </tr>
                     <tr>
-
                         <td style="border-left: .5px solid white;  border-top: .5px solid white;  border-bottom: .5px solid white;"></td>
                         <td style="border: 0.5px solid black; padding: 10px;"><b>No. Addendum:
                             <br> {{ $data->addendum_number }}</b> 
