@@ -33,6 +33,8 @@ class VendorInvoiceController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
+            $vendorId = $request->input("vendor_id", null);
+
             $purchaseOrderQuery = PurchaseOrder::with("vendor")->
                 with("tenant")->
                 where("deleted_at", null)->
@@ -47,6 +49,9 @@ class VendorInvoiceController extends Controller
                     ->orWhere('grand_total', 'like', '%' . $value . '%')
                     ->orWhere('purchase_order_date', 'like', '%' . $value . '%');
                 });
+            }
+            if(!is_null($vendorId)){
+              $purchaseOrderQuery = $purchaseOrderQuery->where("vendor_id", $vendorId);
             }
             $getPurchaseOrder = $purchaseOrderQuery
             ->select("purchase_order_number", "vendor_id", "tenant_id", "about", "grand_total", "purchase_order_date", "status")
