@@ -247,12 +247,12 @@ $configData = Helper::appClasses();
                     return data;
                 }
             }, {
-                name: "tenant_name",
-                data: "tenant_name",
+                name: "tenant",
+                data: "tenant",
                 title: "Tenant",
                 className: 'text-center',
                 render: function(data, type, row) {
-                    return data;
+                    return data?.company;
                 }
             }, {
                 name: "grand_total",

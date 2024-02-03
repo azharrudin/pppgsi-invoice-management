@@ -160,7 +160,7 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button type="submit" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
+                        <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Update</button>
                         <button type="button" class="btn btn-label-secondary d-grid w-100">Batal</button>
                     </div>
                 </div>
@@ -269,8 +269,8 @@ $configData = Helper::appClasses();
                         datas.attachments = attachments;
                         console.log(datas);
                         $.ajax({
-                            // url: "{{ env('BASE_URL_API')}}" + '/api/invoice',
-                            url: "{{url('api/vendor-invoice/add-attachment')}}/"+id,
+                            url: "{{env('BASE_URL_API')}}" +'/api/purchase-order/' + id,
+                            // url: "{{url('api/vendor-invoice/add-attachment')}}/" + id,
                             type: "POST",
                             data: JSON.stringify(datas),
                             processData: false,
@@ -354,7 +354,8 @@ $configData = Helper::appClasses();
 
     function getDataTagihanVendor(id) {
         $.ajax({
-            url: "{{url('api/purchase-order')}}/" + id,
+            url: "{{env('BASE_URL_API')}}" +'/api/purchase-order/' + id,
+            // url: "{{url('api/purchase-order')}}/" + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
@@ -368,22 +369,22 @@ $configData = Helper::appClasses();
             },
             success: function(res) {
                 let data = res.data;
+                console.log(data);
                 id = data.id;
                 nomorInvoice = data.invoice_number;
                 $("#purchase_order_number").text(data.purchase_order_number);
                 $("#purchase_order_date").text(tglIndo(data.purchase_order_date));
                 $("#about").text(data.about);
                 $("#note").text(data.note);
-                $("#grand_total").text(data.grand_total);
-                $("#tax").text(data.tax);
-                $("#subtotal").text(data.subtotal);
+                $("#grand_total").text('Rp. '+format(data.grand_total));
+                $("#tax").text('Rp. '+format(data.tax));
+                $("#subtotal").text('Rp. '+ format(data.subtotal));
                 $("#grand_total_spelled").text(data.grand_total_spelled);
                 $("#term_and_conditions").text(data.term_and_conditions);
                 $("#signature_name").text(data.signature_name);
                 getVendor(data.vendor_id);
                 getDetails(data.purchase_order_details);
                 getAttachments(data.vendor_attachment);
-                attachments();
                 if (data.signature) {
                     $("#signatture").css('background-img', 'black');
                     $("#signatture").css("background-image", `url('` + data.signature + `')`);
@@ -401,38 +402,58 @@ $configData = Helper::appClasses();
         });
     }
 
-    function attachments() {
-        const fileInput = $("#attachment-0");
-        const fileInputVal = $("#attachment-val-0");
-        // Listen for the change event so we can capture the file
-        fileInput.change(function(e){
-           // Get a reference to the file
-           const file = e.target.files[0];
+    function format(e) {
+        var nStr = e + '';
 
-            // Encode the file using the FileReader API
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                fileInputVal.val(reader.result);
-                console.log(reader.result);
-                // Logs data:<type>;base64,wL2dvYWwgbW9yZ...
-            };
-            reader.readAsDataURL(file);
-        });
+        nStr = nStr.replace(/\,/g, "");
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
     }
+
+    function selectElement(details) {    
+        for (let i = 0; i < details.length; i++) {
+            let element = $('#document-'+i);
+            element.val(details[i].uraian);
+        }
+      
+    }
+
+    function openLink(details) {
+        for (let i = 0; i < details.length; i++) {
+            $('#file-attachment-'+i).click(function(e) {
+                var pdfResult = details[i].attachment;
+                let pdfWindow = window.open("");
+                pdfWindow.document.write("<iframe width='100%' height='100%' src=' "+ pdfResult + "'></iframe>");
+            });
+        }
+    }
+
+    $(document).on('click', '.btn-remove-mg', function() {
+         // Hapus baris yang ditekan tombol hapus
+         $(this).closest('.document').remove();
+        getTotal();
+    });
 
     function getAttachments(attachments) {
         let data = attachments;
+        console.log(data);
         let getDetail = '';
         let temp = '';
 
-        if (data.length < 0) {
+        if (data.length > 0) {
             let details = data;
             for (let i = 0; i < details.length; i++) {
                 temp = `             
                 <div class="document">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Pilih Document</label>
-                                    <select name="document[]" id="document" class="form-control row-input" required>
+                                    <select name="document[]" id="document-${i}" class="form-control row-input" required>
                                         <option value="">Pilih Document</option>
                                         <option value="Faktur Pembelian">Faktur Pembelian</option>
                                         <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
@@ -447,12 +468,26 @@ $configData = Helper::appClasses();
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="file" class="form-control row-input" placeholder="Pilih Berkas" id="attachment-${i}" name="attachment[]" required>
+                                    <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment-${i}" name="attachment[]">
+                                </div>
+                                <div class="mb-3">
+                                    <div class="d-flex gap-4">
+                                        <a target="_blank" style="width:120px;" href="" id="file-attachment-${i}" class="btn btn-primary btn-sm d-flex justify-content-center align-items-center">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </a>
+                                        <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                    <input type="hidden" class="form-control row-input" placeholder="Pilih Berkas" id="attachment-val-${id}" required name="attachment" value="${details[i].attachment}">
                                 </div>
                             </div>`;
                 getDetail = getDetail + temp;
             }
             $('#documents').prepend(getDetail);
+            handleAttachments(details);
+            selectElement(details);
+            openLink(details);
         } else {
             temp = `             
                         <div class="document">
@@ -478,6 +513,47 @@ $configData = Helper::appClasses();
                             </div>
                     </div>`;
             $('#documents').prepend(temp);
+        }
+    }
+
+    function handleAttachments(details) {
+        if (details) {
+            for (let i = 0; i < details.length; i++) {
+                console.log('ahh');
+                const fileInput = $("#attachment-"+i);
+                const fileInputVal = $("#attachment-val-"+i);
+                // Listen for the change event so we can capture the file
+                fileInput.change(function(e) {
+                    // Get a reference to the file
+                    const file = e.target.files[0];
+
+                    // Encode the file using the FileReader API
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        fileInputVal.val(reader.result);
+                        console.log(reader.result);
+                        // Logs data:<type>;base64,wL2dvYWwgbW9yZ...
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        } else {
+            const fileInput = $("#attachment-0");
+            const fileInputVal = $("#attachment-val-0");
+            // Listen for the change event so we can capture the file
+            fileInput.change(function(e) {
+                // Get a reference to the file
+                const file = e.target.files[0];
+
+                // Encode the file using the FileReader API
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    fileInputVal.val(reader.result);
+                    console.log(reader.result);
+                    // Logs data:<type>;base64,wL2dvYWwgbW9yZ...
+                };
+                reader.readAsDataURL(file);
+            });
         }
     }
 
@@ -513,12 +589,12 @@ $configData = Helper::appClasses();
         `;
         documents.append(newRow);
         const fileInput = $("#attachment-" + index);
-        const fileInputVal = $("#attachment-val-"+index);
+        const fileInputVal = $("#attachment-val-" + index);
         console.log(fileInput);
         // Listen for the change event so we can capture the file
-        fileInput.change(function(e){
-           // Get a reference to the file
-           const file = e.target.files[0];
+        fileInput.change(function(e) {
+            // Get a reference to the file
+            const file = e.target.files[0];
 
             // Encode the file using the FileReader API
             const reader = new FileReader();
@@ -542,9 +618,9 @@ $configData = Helper::appClasses();
                         <td>` + details[i].specification + `</td>
                         <td>` + details[i].quantity + `</td>
                         <td>` + details[i].units + `</td>
-                        <td>` + details[i].price + `</td>
+                        <td>` + 'Rp. ' + format(details[i].price) + `</td>
                         <td>` + details[i].tax + `</td>
-                        <td>` + details[i].total_price + `</td>
+                        <td>` + 'Rp. ' + format(details[i].total_price) + `</td>
                     </tr>
             `;
             getDetail = getDetail + tem;
