@@ -7,6 +7,12 @@
       "slug": "pages-home"
     },
     {
+      "icon": "",
+      "url": "/to-do-list",
+      "name": "To Do List",
+      "slug": "pages-to-do"
+    },
+    {
       "name": "Invoice",
       "icon": "icon-invoice",
       "slug": "pages-invoice",
