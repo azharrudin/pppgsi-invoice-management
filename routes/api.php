@@ -108,4 +108,5 @@ Route::resource('classification', ClassificationController::class);
 Route::get("scope/select", [ScopeController::class, "select"]);
 Route::resource('scope', ScopeController::class);
 
+Route::get("vendor-invoice/report", [VendorInvoiceController::class, "report"]);
 Route::get("vendor-invoice/", [VendorInvoiceController::class, "index"]);
