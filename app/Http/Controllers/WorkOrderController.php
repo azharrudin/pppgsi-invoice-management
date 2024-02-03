@@ -284,13 +284,23 @@ class WorkOrderController extends Controller
             ] = $this->CommonService->getQuery($request);
             $field = $request->input("field");
             $perPage = 10;
+            $status = strtolower($request->input("status", ""));
+            $statusArray = explode(",", $status);
 
             if(is_null($field)) $field = "id";
 
-            $getWorkOrder = WorkOrder::where("deleted_at", null)->
-                where($field, 'like', '%' . $value . '%')->
-                select("id", $field)->
-                paginate($perPage);
+            $workOrderQuery = WorkOrder::where("deleted_at", null)->where($field, 'like', '%' . $value . '%');
+            if($status != ""){
+                $workOrderQuery->where(function ($query) use ($statusArray) {
+                    $length = count($statusArray);
+
+                    for($i = 0; $i < $length; $i++){
+                        $statusFromArray = trim($statusArray[$i]);
+                        $query->orWhere('status', 'like', '%' . $statusFromArray . '%');
+                    }
+                });
+            }
+            $getWorkOrder = $workOrderQuery->select("id", $field)->paginate($perPage);
             $totalCount = $getWorkOrder->total();
 
             $dataArr = [];

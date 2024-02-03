@@ -225,13 +225,23 @@ class ReceiptController extends Controller
             ] = $this->CommonService->getQuery($request);
             $field = $request->input("field");
             $perPage = 10;
+            $status = strtolower($request->input("status", ""));
+            $statusArray = explode(",", $status);
 
             if(is_null($field)) $field = "id";
 
-            $getReceipt = Receipt::where("deleted_at", null)->
-                where($field, 'like', '%' . $value . '%')->
-                select("id", $field)->
-                paginate($perPage);
+            $receiptQuery = Receipt::where("deleted_at", null)->where($field, 'like', '%' . $value . '%');
+            if($status != ""){
+                $receiptQuery->where(function ($query) use ($statusArray) {
+                    $length = count($statusArray);
+
+                    for($i = 0; $i < $length; $i++){
+                        $statusFromArray = trim($statusArray[$i]);
+                        $query->orWhere('status', 'like', '%' . $statusFromArray . '%');
+                    }
+                });
+            }
+            $getReceipt = $receiptQuery->select("id", $field)->paginate($perPage);
             $totalCount = $getReceipt->total();
 
             $dataArr = [];

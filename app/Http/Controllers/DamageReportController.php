@@ -282,10 +282,22 @@ class DamageReportController extends Controller
             ] = $this->CommonService->getQuery($request);
 
             $perPage = 10;
+            $status = strtolower($request->input("status", ""));
+            $statusArray = explode(",", $status);
 
             $damageReportQuery = DamageReport::where("deleted_at", null);
             if($value){
                 $damageReportQuery->where('damage_report_number', 'like', '%' . $value . '%');
+            }
+            if($status != ""){
+                $damageReportQuery->where(function ($query) use ($statusArray) {
+                    $length = count($statusArray);
+
+                    for($i = 0; $i < $length; $i++){
+                        $statusFromArray = trim($statusArray[$i]);
+                        $query->orWhere('status', 'like', '%' . $statusFromArray . '%');
+                    }
+                });
             }
             $getDamageReports = $damageReportQuery->select("id", "damage_report_number")->paginate($perPage);
             $totalCount = $getDamageReports->total();

@@ -322,13 +322,23 @@ class TicketController extends Controller
             ] = $this->CommonService->getQuery($request);
             $field = $request->input("field");
             $perPage = 10;
+            $status = strtolower($request->input("status", ""));
+            $statusArray = explode(",", $status);
 
             if(is_null($field)) $field = "id";
 
-            $getTicket = Ticket::where("deleted_at", null)->
-                where($field, 'like', '%' . $value . '%')->
-                select("id", $field)->
-                paginate($perPage);
+            $ticketQuery = Ticket::where("deleted_at", null)->where($field, 'like', '%' . $value . '%');
+            if($status != ""){
+                $ticketQuery->where(function ($query) use ($statusArray) {
+                    $length = count($statusArray);
+
+                    for($i = 0; $i < $length; $i++){
+                        $statusFromArray = trim($statusArray[$i]);
+                        $query->orWhere('status', 'like', '%' . $statusFromArray . '%');
+                    }
+                });
+            }
+            $getTicket = $ticketQuery->select("id", $field)->paginate($perPage);
             $totalCount = $getTicket->total();
 
             $dataArr = [];
