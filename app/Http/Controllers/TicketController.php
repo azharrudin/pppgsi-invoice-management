@@ -9,6 +9,7 @@ use App\Models\TicketAttachment;
 use App\Services\CommonService;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 use Validator;
@@ -372,11 +373,22 @@ class TicketController extends Controller
         }
     }
 
-    public function report()
+    public function report(Request $request)
     {
         try{
-            $countTenant = Tenant::where("deleted_at", null)->count();
-            $countTicket = Ticket::where("deleted_at", null)->count();
+            [
+                "start" => $start,
+                "end" => $end,
+            ] = $this->CommonService->getQuery($request);
+
+            if(is_null($start)) $start = Carbon::now()->firstOfMonth();
+            if(is_null($end)){
+                $end = Carbon::now()->lastOfMonth();
+                $end->setTime(23, 59, 59);
+            }
+
+            $countTenant = Tenant::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
+            $countTicket = Ticket::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
 
             return [
                 "count_tenant" => $countTenant,

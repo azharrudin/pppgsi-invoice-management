@@ -10,6 +10,7 @@ use App\Models\Tenant;
 use App\Services\CommonService;
 use App\Services\InvoiceService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
@@ -304,13 +305,30 @@ class InvoiceController extends Controller
         }
     }
 
-    public function report()
+    public function report(Request $request)
     {
         try{
-            $countTenant = Tenant::where("deleted_at", null)->count();
-            $countInvoice = Invoice::where("deleted_at", null)->count();
-            $sumInvoicePaid = Invoice::where("deleted_at", null)->where("status", 'like', '%Lunas%')->sum("grand_total");
-            $sumInvoiceNotPaid = Invoice::where("deleted_at", null)->where("status", '!=', 'Lunas')->sum("grand_total");
+            [
+                "start" => $start,
+                "end" => $end,
+            ] = $this->CommonService->getQuery($request);
+
+            if(is_null($start)) $start = Carbon::now()->firstOfMonth();
+            if(is_null($end)){
+                $end = Carbon::now()->lastOfMonth();
+                $end->setTime(23, 59, 59);
+            }
+
+            $countTenant = Tenant::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
+            $countInvoice = Invoice::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
+            $sumInvoicePaid = Invoice::where("deleted_at", null)->
+                whereBetween("created_at", [$start, $end])->
+                where("status", 'like', '%Lunas%')->
+                sum("grand_total");
+            $sumInvoiceNotPaid = Invoice::where("deleted_at", null)->
+                whereBetween("created_at", [$start, $end])->
+                where("status", '!=', 'Lunas')->
+                sum("grand_total");
 
             return [
                 "count_tenant" => $countTenant,

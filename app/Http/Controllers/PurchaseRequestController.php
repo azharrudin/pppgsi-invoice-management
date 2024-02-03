@@ -12,6 +12,7 @@ use App\Models\Tenant;
 use App\Services\CommonService;
 use App\Services\PurchaseRequestService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 
@@ -340,12 +341,26 @@ class PurchaseRequestController extends Controller
         }
     }
 
-    public function report()
+    public function report(Request $request)
     {
         try{
-            $countTenant = Tenant::where("deleted_at", null)->count();
-            $countReceipt = Receipt::where("deleted_at", null)->count();
-            $countReceiptPaid = Receipt::where("deleted_at", null)->where("status", "like", "%Lunas%")->sum("grand_total");
+            [
+                "start" => $start,
+                "end" => $end,
+            ] = $this->CommonService->getQuery($request);
+
+            if(is_null($start)) $start = Carbon::now()->firstOfMonth();
+            if(is_null($end)){
+                $end = Carbon::now()->lastOfMonth();
+                $end->setTime(23, 59, 59);
+            }
+
+            $countTenant = Tenant::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
+            $countReceipt = Receipt::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
+            $countReceiptPaid = Receipt::where("deleted_at", null)->
+                whereBetween("created_at", [$start, $end])->
+                where("status", "like", "%Lunas%")->
+                sum("grand_total");
 
             return [
                 "count_tenant" => $countTenant,
