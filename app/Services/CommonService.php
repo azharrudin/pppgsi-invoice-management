@@ -1,6 +1,8 @@
 <?php
 namespace App\Services;
 
+use Illuminate\Support\Carbon;
+
 use function PHPUnit\Framework\isNan;
 
 class CommonService{
@@ -16,6 +18,14 @@ class CommonService{
         $order = $request->input("order", "created_at");
         $sort = $request->input("sort", "desc");
         $value = $request->input("value");
+        $start = $request->input("start", null);
+        $end = $request->input("end", null);
+
+        if(!is_null($start)) $start = Carbon::parse($start);
+        if(!is_null($end)) {
+          $end = Carbon::parse($end);
+          $end->setTime(23, 59, 59);
+        }
 
         return [
             "perPage" => $perPage,
@@ -23,6 +33,8 @@ class CommonService{
             "order" => $order,
             "sort" => $sort,
             "value" => $value,
+            "start" => $start,
+            "end" => $end,
         ];
     }
 

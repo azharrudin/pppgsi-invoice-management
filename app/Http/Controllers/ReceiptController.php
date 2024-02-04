@@ -9,6 +9,7 @@ use App\Services\CommonService;
 use App\Services\InvoiceService;
 use App\Services\ReceiptService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use PDF;
@@ -224,10 +225,23 @@ class ReceiptController extends Controller
             ] = $this->CommonService->getQuery($request);
             $field = $request->input("field");
             $perPage = 10;
+            $status = strtolower($request->input("status", ""));
+            $statusArray = explode(",", $status);
 
             if (is_null($field)) $field = "id";
 
-            $getReceipt = Receipt::where("deleted_at", null)->where($field, 'like', '%' . $value . '%')->select("id", $field)->paginate($perPage);
+            $receiptQuery = Receipt::where("deleted_at", null)->where($field, 'like', '%' . $value . '%');
+            if($status != ""){
+                $receiptQuery->where(function ($query) use ($statusArray) {
+                    $length = count($statusArray);
+
+                    for($i = 0; $i < $length; $i++){
+                        $statusFromArray = trim($statusArray[$i]);
+                        $query->orWhere('status', 'like', '%' . $statusFromArray . '%');
+                    }
+                });
+            }
+            $getReceipt = $receiptQuery->select("id", $field)->paginate($perPage);
             $totalCount = $getReceipt->total();
 
             $dataArr = [];
@@ -261,12 +275,29 @@ class ReceiptController extends Controller
         }
     }
 
-    public function report()
+    public function report(Request $request)
     {
-        try {
-            $countTenant = Tenant::where("deleted_at", null)->count();
-            $countReceiptSent = Receipt::where("deleted_at", null)->where("status", "like", "%Terkirim%")->count();
-            $countReceiptNotSent = Receipt::where("deleted_at", null)->where("status", "!=", "Terkirim")->count();
+        try{
+            [
+                "start" => $start,
+                "end" => $end,
+            ] = $this->CommonService->getQuery($request);
+
+            if(is_null($start)) $start = Carbon::now()->firstOfMonth();
+            if(is_null($end)){
+                $end = Carbon::now()->lastOfMonth();
+                $end->setTime(23, 59, 59);
+            }
+
+            $countTenant = Tenant::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
+            $countReceiptSent = Receipt::where("deleted_at", null)->
+                whereBetween("created_at", [$start, $end])->
+                where("status", "like", "%Terkirim%")->
+                count();
+            $countReceiptNotSent = Receipt::where("deleted_at", null)->
+                whereBetween("created_at", [$start, $end])->
+                where("status", "!=", "Terkirim")->
+                count();
 
             return [
                 "count_tenant" => $countTenant,

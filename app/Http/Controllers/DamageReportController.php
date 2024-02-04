@@ -11,6 +11,7 @@ use App\Models\Ticket;
 use App\Services\CommonService;
 use App\Services\DamageReportService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class DamageReportController extends Controller
@@ -269,10 +270,22 @@ class DamageReportController extends Controller
             ] = $this->CommonService->getQuery($request);
 
             $perPage = 10;
+            $status = strtolower($request->input("status", ""));
+            $statusArray = explode(",", $status);
 
             $damageReportQuery = DamageReport::where("deleted_at", null);
             if ($value) {
                 $damageReportQuery->where('damage_report_number', 'like', '%' . $value . '%');
+            }
+            if($status != ""){
+                $damageReportQuery->where(function ($query) use ($statusArray) {
+                    $length = count($statusArray);
+
+                    for($i = 0; $i < $length; $i++){
+                        $statusFromArray = trim($statusArray[$i]);
+                        $query->orWhere('status', 'like', '%' . $statusFromArray . '%');
+                    }
+                });
             }
             $getDamageReports = $damageReportQuery->select("id", "damage_report_number")->paginate($perPage);
             $totalCount = $getDamageReports->total();
@@ -308,12 +321,26 @@ class DamageReportController extends Controller
         }
     }
 
-    public function report()
+    public function report(Request $request)
     {
-        try {
-            $countTenant = Tenant::where("deleted_at", null)->count();
-            $countDamageReport = DamageReport::where("deleted_at", null)->count();
-            $countDamageReportDone = DamageReport::where("deleted_at", null)->where("status", "like", "%Selesai%")->count();
+        try{
+            [
+                "start" => $start,
+                "end" => $end,
+            ] = $this->CommonService->getQuery($request);
+
+            if(is_null($start)) $start = Carbon::now()->firstOfMonth();
+            if(is_null($end)){
+                $end = Carbon::now()->lastOfMonth();
+                $end->setTime(23, 59, 59);
+            }
+
+            $countTenant = Tenant::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
+            $countDamageReport = DamageReport::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
+            $countDamageReportDone = DamageReport::where("deleted_at", null)->
+                whereBetween("created_at", [$start, $end])->
+                where("status", "like", "%Selesai%")->
+                count();
 
             return [
                 "count_tenant" => $countTenant,

@@ -9,6 +9,7 @@ use App\Models\MaterialRequestSignature;
 use App\Services\CommonService;
 use App\Services\MaterialRequestService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class MaterialRequestController extends Controller
@@ -325,12 +326,29 @@ class MaterialRequestController extends Controller
         }
     }
 
-    public function report()
+    public function report(Request $request)
     {
         try{
-            $countMaterialRequest = MaterialRequest::where("deleted_at", null)->count();
-            $countMaterialRequestOngoing = MaterialRequest::where("deleted_at", null)->where("status", "!=", "Selesai")->count();
-            $countMaterialRequestDone = MaterialRequest::where("deleted_at", null)->where("status", "like", "%Selesai%")->count();
+            [
+                "start" => $start,
+                "end" => $end,
+            ] = $this->CommonService->getQuery($request);
+
+            if(is_null($start)) $start = Carbon::now()->firstOfMonth();
+            if(is_null($end)){
+                $end = Carbon::now()->lastOfMonth();
+                $end->setTime(23, 59, 59);
+            }
+
+            $countMaterialRequest = MaterialRequest::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
+            $countMaterialRequestOngoing = MaterialRequest::where("deleted_at", null)->
+                whereBetween("created_at", [$start, $end])->
+                where("status", "!=", "Selesai")->
+                count();
+            $countMaterialRequestDone = MaterialRequest::where("deleted_at", null)->
+                whereBetween("created_at", [$start, $end])->
+                where("status", "like", "%Selesai%")->
+                count();
 
             return [
                 "count_material_request" => $countMaterialRequest,
