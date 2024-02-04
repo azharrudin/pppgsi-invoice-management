@@ -35,7 +35,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-4 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
-                            <h3 class="mb-1">300</h3>
+                            <h3 class="mb-1 count_tenant">0</h3>
                             <p class="mb-0">Tenant</p>
                         </div>
                     </div>
@@ -43,7 +43,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-4 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
-                            <h3 class="mb-1">50</h3>
+                            <h3 class="mb-1 count_receipt_sent">0</h3>
                             <p class="mb-0">Tanda Terima Terkirim</p>
                         </div>
                     </div>
@@ -51,8 +51,8 @@ $configData = Helper::appClasses();
                 <div class="col-sm-4 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
                         <div>
-                            <h3 class="mb-1">8</h3>
-                            <p class="mb-0">Tanda Terima Terkirim</p>
+                            <h3 class="mb-1 count_receipt_not_sent">0</h3>
+                            <p class="mb-0">Tanda Belum Terima Terkirim</p>
                         </div>
                     </div>
                 </div>
@@ -93,6 +93,32 @@ $configData = Helper::appClasses();
                 window.location = baseUrl + "invoice/tanda-terima/add"
             }
         }];
+    }
+
+    setHeader();
+
+    function setHeader() {
+        Swal.fire({
+            title: '<h2>Loading...</h2>',
+            html: sweet_loader + '<h5>Please Wait</h5>',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        });
+        $.ajax({
+            url: "{{ env('BASE_URL_API')}}" +'/api/receipt/report',
+            type: "GET",
+            dataType: "json",
+            success: function(res) {
+                $('.count_tenant').html(res.count_tenant);
+                $('.count_receipt_sent').html(res.count_receipt_sent);
+                $('.count_receipt_not_sent').html(res.count_receipt_not_sent);
+                Swal.close();
+            },
+            error: function(errors) {
+                console.log(errors);
+            }
+        });
     }
 
     $(document).on('click', '.send-email', function(event) {

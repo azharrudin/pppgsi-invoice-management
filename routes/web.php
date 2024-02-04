@@ -162,6 +162,11 @@ Route::group(['middleware' => 'cekauth'], function () {
             Route::get('/', [ListTenantController::class, 'index'])->name('pages-list-tenant');
             Route::get('/data-tenant', [ListTenantController::class, 'datatable'])->name('data-tenant');
         });
+        Route::prefix('/list-vendor')->group(function () {
+            Route::get('/', [VendorController::class, 'listVendor'])->name('pages-list-vendor');
+            Route::get('/add', [VendorController::class, 'add'])->name('pages-add-vendor');
+            Route::get('/data-vendor', [VendorController::class, 'datatableListVendor'])->name('data-tenant');
+        });
     });
 
     // Report

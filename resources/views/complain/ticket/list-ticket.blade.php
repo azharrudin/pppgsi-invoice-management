@@ -27,7 +27,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-6">
                     <div class="d-flex justify-content-center align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div class="text-center">
-                            <h3 class="mb-1">300</h3>
+                            <h3 class="mb-1 count_tenant">0</h3>
                             <p class="mb-0">Tenant</p>
                         </div>
                     </div>
@@ -36,8 +36,8 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-6">
                     <div class="d-flex justify-content-center align-items-start card-widget-2 pb-3 pb-sm-0">
                         <div class="text-center">
-                            <h3 class="mb-1">50</h3>
-                            <p class="mb-0">Invoice</p>
+                            <h3 class="mb-1 count_ticket">0</h3>
+                            <p class="mb-0">Total Ticket</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
@@ -66,7 +66,34 @@ $configData = Helper::appClasses();
         var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>`;
+        
+        setHeader();
+
+        function setHeader() {
+            Swal.fire({
+                title: '<h2>Loading...</h2>',
+                html: sweet_loader + '<h5>Please Wait</h5>',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            });
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" +'/api/ticket/report',
+                type: "GET",
+                dataType: "json",
+                success: function(res) {
+                    console.log(res);
+                    $('.count_tenant').html(res.count_tenant);
+                    $('.count_ticket').html(res.count_ticket);
+                    Swal.close();
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
+        }
         var a = $(".ticket-list-table");
+        
         if (a.length) var e = a.DataTable({
             processing: true,
             serverSide: true,

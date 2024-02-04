@@ -34,7 +34,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-4 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
-                            <h3 class="mb-1">300</h3>
+                            <h3 class="mb-1 count_tenant">0</h3>
                             <p class="mb-0">Tenant</p>
                         </div>
                     </div>
@@ -43,7 +43,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-4 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
-                            <h3 class="mb-1">50</h3>
+                            <h3 class="mb-1 count_receipt">0</h3>
                             <p class="mb-0">Tanda Terima</p>
                         </div>
                     </div>
@@ -52,7 +52,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-4 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
                         <div>
-                            <h3 class="mb-1">Rp. 20.000.000</h3>
+                            <h3 class="mb-1 count_receipt_paid">0</h3>
                             <p class="mb-0">Terbayarkan</p>
                         </div>
                     </div>
@@ -96,6 +96,32 @@ $configData = Helper::appClasses();
                     window.location = "{{url('complain/work-order/add')}}" ;
                 }
             }];
+        }
+
+        setHeader();
+
+        function setHeader() {
+            Swal.fire({
+                title: '<h2>Loading...</h2>',
+                html: sweet_loader + '<h5>Please Wait</h5>',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            });
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" +'/api/work-order/report',
+                type: "GET",
+                dataType: "json",
+                success: function(res) {
+                    $('.count_tenant').html(res.count_tenant);
+                    $('.count_receipt_paid').html(res.count_receipt_paid);
+                    $('.count_receipt').html(res.count_receipt);
+                    Swal.close();
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
         }
 
         var a = $(".work-order-list-table");

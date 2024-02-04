@@ -34,8 +34,8 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-3">
                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
-                            <h3 class="mb-1">300</h3>
-                            <p class="mb-0 count_tenant">Tenant</p>
+                            <h3 class="mb-1 count_tenant">0</h3>
+                            <p class="mb-0">Tenant</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none me-4">
@@ -43,8 +43,8 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-3">
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
-                            <h3 class="mb-1">100</h3>
-                            <p class="mb-0 count_invoice">Invoice</p>
+                            <h3 class="mb-1 count_invoice">0</h3>
+                            <p class="mb-0">Invoice</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
@@ -52,7 +52,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-3">
                     <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
                         <div>
-                            <h3 class="mb-1 invoice_paid">Rp. 20.000.000</h3>
+                            <h3 class="mb-1 invoice_paid">0</h3>
                             <p class="mb-0">Terbayarkan</p>
                         </div>
                     </div>
@@ -60,7 +60,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-3">
                     <div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
                         <div>
-                            <h3 class="mb-1 invoice_not_paid">Rp. 5.000.000</h3>
+                            <h3 class="mb-1 invoice_not_paid">0</h3>
                             <p class="mb-0">Belum Dibayarkan</p>
                         </div>
                     </div>
@@ -103,6 +103,33 @@ $configData = Helper::appClasses();
                     window.location = "{{url('invoice/add-invoice')}}"
                 }
             }];
+        }
+
+        setHeader();
+
+        function setHeader() {
+            Swal.fire({
+                title: '<h2>Loading...</h2>',
+                html: sweet_loader + '<h5>Please Wait</h5>',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            });
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" +'/api/invoice/report',
+                type: "GET",
+                dataType: "json",
+                success: function(res) {
+                    $('.count_tenant').html(res.count_tenant);
+                    $('.count_invoice').html(res.count_invoice);
+                    $('.invoice_paid').html('Rp. '+parseInt(res.invoice_paid).toLocaleString('en-US'));
+                    $('.invoice_not_paid').html('Rp. '+parseInt(res.invoice_not_paid).toLocaleString('en-US'));
+                    Swal.close();
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
         }
 
         $(document).on('click', '.send-email', function(event) {

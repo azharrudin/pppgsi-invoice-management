@@ -368,7 +368,7 @@ $configData = Helper::appClasses();
             var $details = $('#details');
             var $newRow = `
            
-                    <table class="table">
+                    <table class="table row-mg">
                         <tbody>
                             <tr>
                                 <td>

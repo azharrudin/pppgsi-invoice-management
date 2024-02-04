@@ -33,7 +33,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
-                            <h3 class="mb-1">300</h3>
+                            <h3 class="mb-1 count_material_request">0</h3>
                             <p class="mb-0">Material Request</p>
                         </div>
                     </div>
@@ -42,7 +42,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
-                            <h3 class="mb-1">100</h3>
+                            <h3 class="mb-1 count_material_request_ongoing">0</h3>
                             <p class="mb-0">Sedang Berjalan</p>
                         </div>
                     </div>
@@ -51,7 +51,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
                         <div>
-                            <h3 class="mb-1">100</h3>
+                            <h3 class="mb-1 count_material_request_done">0</h3>
                             <p class="mb-0">Selesai</p>
                         </div>
                     </div>
@@ -83,19 +83,46 @@ $configData = Helper::appClasses();
                             </div>`;
     $((function() {
         let account = {!! json_encode(session('data')) !!}
-     let levelId = account.level.id;
+        let levelId = account.level.id;
      
         let buttonAdd = [];
         
         if(levelId == '7'){
             buttonAdd = [{
-                    text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Material Request</span>',
-                    className: "btn btn-primary",
-                    action: function(a, e, t, s) {
-                        window.location = "{{url('request/material-request/add')}}";
-                    }
-                }];
+                            text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Material Request</span>',
+                            className: "btn btn-primary",
+                            action: function(a, e, t, s) {
+                                window.location = "{{url('request/material-request/add')}}";
+                            }
+                        }];
         }
+
+        setHeader();
+
+        function setHeader() {
+            Swal.fire({
+                title: '<h2>Loading...</h2>',
+                html: sweet_loader + '<h5>Please Wait</h5>',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            });
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" +'/api/material-request/report',
+                type: "GET",
+                dataType: "json",
+                success: function(res) {
+                    $('.count_material_request').html(res.count_material_request);
+                    $('.count_material_request_done').html(res.count_material_request_done);
+                    $('.count_material_request_ongoing').html(res.count_material_request_ongoing);
+                    Swal.close();
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
+        }
+
         var a = $(".invoice-list-table");
         if (a.length) var e = a.DataTable({
             processing: true,

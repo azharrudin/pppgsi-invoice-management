@@ -27,7 +27,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
-                            <h3 class="mb-1">300</h3>
+                            <h3 class="mb-1">0</h3>
                             <p class="mb-0">Tenant</p>
                         </div>
                     </div>
@@ -36,7 +36,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
-                            <h3 class="mb-1">50</h3>
+                            <h3 class="mb-1">0</h3>
                             <p class="mb-0">Tanda Terima</p>
                         </div>
                     </div>
@@ -45,7 +45,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
                         <div>
-                            <h3 class="mb-1">Rp. 20.000.000</h3>
+                            <h3 class="mb-1">Rp. 0</h3>
                             <p class="mb-0">Terbayarkan</p>
                         </div>
                     </div>
@@ -77,15 +77,9 @@ $configData = Helper::appClasses();
 
     let account = {!! json_encode(session('data')) !!}
     let table = '';
-    console.log(account);
-    if(account.level_id == '11'){
-        table = "{{ route('data-vendor') }}";
-    }else{
-        table = "{{ route('data-tagihan-vendor') }}";
-    }
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>`;
+                            <span class="sr-only">Loading...</span>
+                        </div>`;
     $((function() {
         var a = $(".list-vendor-table");
         if (a.length) var e = a.DataTable({
@@ -93,63 +87,51 @@ $configData = Helper::appClasses();
             serverSide: true,
             deferRender: true,
             ajax: {
-                url: table,
+                url: "{{ url('client/list-vendor/data-vendor') }}",
                 "data": function(d) {
                     d.start = 0;
                     d.page = $(".list-vendor-table").DataTable().page.info().page + 1;
                 }
             },
             columns: [{
-                name: "No. PO",
-                data: "purchase_order_number",
-                title: "No. PO",
+                name: "Nama Perusahaan",
+                data: "name",
+                title: "Nama Perusahaan",
                 className: 'text-center',
                 render: function(data, type, row) {
                     return data;
                 }
             }, {
-                name: "Vendor",
-                data: "vendor_name",
-                title: "Vendor",
+                name: "Email",
+                data: "email",
+                title: "Email",
                 className: 'text-center',
                 render: function(data, type, row) {
                     return data;
                 }
             }, {
-                name: "Perihal",
-                data: "about",
-                title: "Perihal",
+                name: "Telepon",
+                data: "phone",
+                title: "Telepon",
                 className: 'text-center',
                 render: function(data, type, row) {
                     return data;
                 }
             }, {
-                name: "Total",
-                data: "grand_total",
-                title: "Total",
+                name: "Alamat",
+                data: "address",
+                title: "Alamat",
                 className: 'text-center',
                 render: function(data, type, row) {
-                    return new Intl.NumberFormat("id-ID", {
-                        style: "currency",
-                        currency: "IDR"
-                    }).format(data)
+                    return data;
                 }
             }, {
-                name: "Tanggal PO",
-                data: "purchase_order_date",
-                title: "Tanggal PO",
+                name: "Lantai",
+                data: "floor",
+                title: "Lantai",
                 className: 'text-center',
                 render: function(data, type, full, meta) {
-                    var tanggalAwal = data;
-
-                    var bagianTanggal = tanggalAwal.split('-');
-                    var tahun = bagianTanggal[0];
-                    var bulan = bagianTanggal[1];
-                    var hari = bagianTanggal[2];
-
-                    var tanggalHasil = hari + '/' + bulan + '/' + tahun;
-
-                    return tanggalHasil;
+                    return data;
                 }
             }, {
                 class: "text-center",
@@ -158,16 +140,10 @@ $configData = Helper::appClasses();
                 title: "Status",
                 className: 'text-center',
                 render: function(data, type, row) {
-                    if (data == 'Terbuat') {
-                        return '<span class="badge w-100" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
+                    if (data == 'Active') {
+                        return '<span class="badge w-100" style="background-color : #7367f0; " text-capitalized> Active </span>';
                     } else if (data == 'Disetujui KA') {
                         return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized> Disetujui KA </span>';
-                    } else if (data == 'Lunas') {
-                        return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
-                    } else if (data == 'Terkirim') {
-                        return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
-                    } else if (data == 'Disetujui BM') {
-                        return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
                     }
                 }
             }, {
@@ -194,7 +170,13 @@ $configData = Helper::appClasses();
                 search: "",
                 searchPlaceholder: "Search Tanda Terima"
             },
-            buttons: [],
+            buttons: [{
+                        text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Vendor</span>',
+                        className: "btn btn-primary",
+                        action: function(a, e, t, s) {
+                            window.location = "{{url('client/list-vendor')}}"
+                        }
+                    }],
             responsive: {
                 details: {
                     display: $.fn.dataTable.Responsive.display.modal({

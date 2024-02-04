@@ -4,7 +4,7 @@
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'List Tenant')
+@section('title', 'List Vendor')
 
 @section('content')
 
@@ -58,7 +58,7 @@
     {{-- Datatables --}}
     <div class="card">
         <div class="card-datatable table-responsive pt-0">
-            <table class="list-tenant-table table">
+            <table class="list-vendor-table table">
                 <thead>
                 </thead>
             </table>
@@ -66,11 +66,11 @@
     </div>
 
     {{-- Card Add --}}
-    <div class="modal fade" id="create-tenant-data" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal fade" id="create-vendor-data" data-bs-backdrop="static" tabindex="-1">
         <div class="modal-dialog">
-            <form class="modal-content create-tenant" id="create-tenant" novalidate>
+            <form class="modal-content create-vendor" id="create-vendor" novalidate>
                 <div class="modal-header">
-                    <h5 class="modal-title" id="backDropModalTitle">Tambah Tenant</h5>
+                    <h5 class="modal-title" id="backDropModalTitle">Tambah Vendor</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body addTenant">
@@ -78,7 +78,7 @@
                         <div class="col mb-3">
                             <label for="nameBackdrop" class="form-label">Nama PIC</label>
                             <input type="text" id="name" name="name" class="form-control"
-                                placeholder="Masukan Nama Tenant" required>
+                                placeholder="Masukan Nama Vendor" required>
                             <div class="invalid-feedback"> Please enter your name. </div>
                         </div>
                         <div class="col mb-3">
@@ -114,7 +114,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal"
                         id="modal_tenant_cancel">Close</button>
-                    <button type="submit" class="btn btn-primary save-tenant        ">
+                    <button type="submit" class="btn btn-primary save-vendor        ">
                         <span class="indicator-label">Simpan</span>
                         <span class="indicator-progress">
                             Please wait...
@@ -128,12 +128,12 @@
     </div>
 
     {{-- Card Edit --}}
-    <div class="modal fade" id="edit-tenant-data" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal fade" id="edit-vendor-data" data-bs-backdrop="static" tabindex="-1">
         <div class="modal-dialog">
-            <form class="modal-content edit-tenant" id="edit-tenant" novalidate>
+            <form class="modal-content edit-vendor" id="edit-vendor" novalidate>
                 <input type="hidden" id="edit_id">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="backDropModalTitle">Edit Tenant</h5>
+                    <h5 class="modal-title" id="backDropModalTitle">Edit Vendor</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -142,7 +142,7 @@
                             <div class="col mb-3">
                                 <label for="nameBackdrop" class="form-label">Nama PIC</label>
                                 <input type="text" id="edit_name" name="name" class="form-control"
-                                    placeholder="Masukan Nama Tenant" required>
+                                    placeholder="Masukan Nama Vendor" required>
                                 <div class="invalid-feedback"> Please enter your name. </div>
                             </div>
                             <div class="col mb-3">
@@ -184,7 +184,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal"
                             id="modal_tenant_cancel">Close</button>
-                        <button type="submit" class="btn btn-primary save-tenant">
+                        <button type="submit" class="btn btn-primary save-vendor">
                             <span class="indicator-label">Simpan</span>
                             <span class="indicator-progress">
                                 Please wait...
@@ -198,12 +198,12 @@
     </div>
 
     {{-- Card Preview --}}
-    <div class="modal fade" id="preview-tenant-data" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal fade" id="preview-vendor-data" data-bs-backdrop="static" tabindex="-1">
         <div class="modal-dialog">
-            <form class="modal-content edit-tenant" id="edit-tenant" novalidate>
+            <form class="modal-content edit-vendor" id="edit-vendor" novalidate>
                 <input type="hidden" id="preview_id">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="backDropModalTitle">Preview Tenant</h5>
+                    <h5 class="modal-title" id="backDropModalTitle">Preview Vendor</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -212,7 +212,7 @@
                             <div class="col mb-3">
                                 <label for="nameBackdrop" class="form-label">Nama PIC</label>
                                 <input type="text" id="preview_name" name="name" class="form-control"
-                                    placeholder="Masukan Nama Tenant" required readonly>
+                                    placeholder="Masukan Nama Vendor" required readonly>
                                 <div class="invalid-feedback"> Please enter your name. </div>
                             </div>
                             <div class="col mb-3">
@@ -277,42 +277,63 @@
                             </div>`;
 
         $((function() {
-            var a = $(".list-tenant-table");
+            var a = $(".list-vendor-table");
             if (a.length) var e = a.DataTable({
                 processing: true,
                 serverSide: true,
                 deferRender: true,
                 ajax: {
-                    url: "{{ url('client/list-tenant/data-tenant') }}",
+                    url: "{{ url('client/list-vendor/data-vendor') }}",
                     "data": function(d) {
                         d.start = 0;
-                        d.page = $(".list-tenant-table").DataTable().page.info().page + 1;
+                        d.page = $(".list-vendor-table").DataTable().page.info().page + 1;
                     }
                 },
                 columns: [{
                     data: "id",
                     name: "id",
                     className: "d-none",
-                },{
+                },
+                {
+                    name: "Nama Perusahaan",
                     data: "name",
-                    name: "name",
-                    title: "Nama PIC"
-                }, {
+                    title: "Nama Perusahaan",
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        return data;
+                    }
+                },{
+                    name: "Email",
                     data: "email",
-                    name: "email",
-                    title: "Email"
+                    title: "Email",
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        return data;
+                    }
                 }, {
+                    name: "Telepon",
                     data: "phone",
-                    name: "phone",
-                    title: "Phone"
+                    title: "Telepon",
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        return data;
+                    }
                 }, {
-                    data: "company",
-                    name: "company",
-                    title: "Company"
+                    name: "Alamat",
+                    data: "address",
+                    title: "Alamat",
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        return data;
+                    }
                 }, {
+                    name: "Lantai",
                     data: "floor",
-                    name: "floor",
-                    title: "Floor"
+                    title: "Lantai",
+                    className: 'text-center',
+                    render: function(data, type, full, meta) {
+                        return data;
+                    }
                 }, {
                     class: "text-center",
                     data: "status",
@@ -332,7 +353,7 @@
                     <div class="d-flex align-items-center">
                     <a href="javascript:void(0)"  id="button-edit" data-bs-toggle="modal" data-id="` + data.id + `" class="text-body"><i class="ti ti-pencil mx-2 ti-sm"></i></a>
                     <a href="javascript:void(0)"  id="button-preview" data-bs-toggle="modal" data-id="` + data.id + `" class="text-body"><i class="ti ti-eye mx-2 ti-sm"></i></a>
-                    <a href="#"  id="button-delete-` + data.id + `"  data-id="` + data.id + `" class="text-body button-delete"><i class="ti ti-trash mx-2 ti-sm"></i></a>
+                    <a href="javascript:void(0)"  id="button-delete"  data-id="` + data.id + `" class="text-body"><i class="ti ti-trash mx-2 ti-sm"></i></a>
                     </div>`;
                     }
                 }],
@@ -343,14 +364,14 @@
                 language: {
                     sLengthMenu: "Show _MENU_",
                     search: "",
-                    searchPlaceholder: "Search Tenant"
+                    searchPlaceholder: "Search Vendor"
                 },
                 buttons: [{
-                    text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tenant</span>',
+                    text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Vendor</span>',
                     className: "btn btn-primary",
                     attr: {
                         'data-bs-toggle': 'modal',
-                        'data-bs-target': '#create-tenant-data'
+                        'data-bs-target': '#create-vendor-data'
                     }
                 }],
                 responsive: {
@@ -399,14 +420,16 @@
                             boundary: document.body
                         })
                     }))
+            })), $(".list-vendor-table tbody").on("click", ".delete-record", (function() {
+                e.row($(this).parents("tr")).remove().draw()
             })), setTimeout((() => {
                 $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(
                     ".dataTables_length .form-select").removeClass("form-select-sm")
             }), 300)
         }));
 
-        var createTenant = $(".create-tenant");
-        var editTenant = $(".edit-tenant");
+        var createTenant = $(".create-vendor");
+        var editTenant = $(".edit-vendor");
 
         // Create, Add dan Save
         Array.prototype.slice.call(createTenant).forEach(function(form) {
@@ -440,7 +463,7 @@
                         formData.append('status', 'Active');
 
                         $.ajax({
-                            url: "{{ env('BASE_URL_API')}}" +'/api/tenant',
+                            url: "{{ env('BASE_URL_API')}}" +'/api/vendor',
                             type: "POST",
                             data: formData,
                             processData: false,
@@ -451,7 +474,7 @@
 
                                 Swal.fire({
                                     title: 'Berhasil',
-                                    text: 'Berhasil menambahkan tenant',
+                                    text: 'Berhasil Menambahkan Tenant',
                                     icon: 'success',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'
@@ -460,8 +483,8 @@
                                 })
 
                                 $('#modal_tenant_cancel').click();
-                                $('#create-tenant')[0].reset();
-                                $(".list-tenant-table").DataTable().ajax.reload();
+                                $('#create-vendor')[0].reset();
+                                $(".list-vendor-table").DataTable().ajax.reload();
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
@@ -499,9 +522,9 @@
                         let id = $("#edit_id").val();
                         let formData = new FormData();
 
-                        var data = $('#edit-tenant').serialize();
+                        var data = $('#edit-vendor').serialize();
                         $.ajax({
-                            url: "{{ env('BASE_URL_API')}}" +'/api/tenant/' + id,
+                            url: "{{ env('BASE_URL_API')}}" +'/api/vendor/' + id,
                             type: "PATCH",
                             data: data,
                             success: function(response) {
@@ -510,7 +533,7 @@
 
                                 Swal.fire({
                                     title: 'Berhasil',
-                                    text: 'Berhasil memperbarui tenant',
+                                    text: 'Berhasil memperbarui Tenant',
                                     icon: 'success',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'
@@ -519,8 +542,8 @@
                                 })
 
                                 $('#modal_tenant_cancel').click();
-                                $('#edit-tenant')[0].reset();
-                                $(".list-tenant-table").DataTable().ajax.reload();
+                                $('#edit-vendor')[0].reset();
+                                $(".list-vendor-table").DataTable().ajax.reload();
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
@@ -572,7 +595,7 @@
                 })
 
                 $.ajax({
-                    url: baseUrl + "api/tenant/" + id,
+                    url: baseUrl + "api/vendor/" + id,
                     type: "GET",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -587,7 +610,7 @@
                         $('#edit_phone').val(result.phone);
                         $('#edit_company').val(result.company);
                         $('#edit_floor').val(result.floor);
-                        $('#edit-tenant-data').modal('show');
+                        $('#edit-vendor-data').modal('show');
                         Swal.close();
                     },
                     error: function(errors) {
@@ -612,7 +635,7 @@
                 })
 
                 $.ajax({
-                    url: baseUrl + "api/tenant/" + id,
+                    url: baseUrl + "api/vendor/" + id,
                     type: "GET",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -627,7 +650,7 @@
                         $('#preview_phone').val(result.phone);
                         $('#preview_company').val(result.company);
                         $('#preview_floor').val(result.floor);
-                        $('#preview-tenant-data').modal('show');
+                        $('#preview-vendor-data').modal('show');
                         Swal.close();
                     },
                     error: function(errors) {
@@ -639,124 +662,7 @@
                     }
                 });
             });
-
-            $(document).on('click', '.delete-record', function(event) {
-                event.preventDefault();
-                Swal.fire({
-                    title: 'Apakah anda yakin?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    buttonsStyling: false,
-                    confirmButtonText: "Ya, Hapus!",
-                    cancelButtonText: "Batal",
-                    customClass: {
-                        confirmButton: "btn fw-bold btn-primary",
-                        cancelButton: "btn fw-bold btn-active-light-primary"
-                    }
-                }).then((result) => {
-                    if (result.value) {
-                        let id = $(this).data('id');
-                        let datas = {}
-                        datas.status = 'Terkirim';
-                        Swal.fire({
-                            title: 'Memeriksa...',
-                            text: "Harap menunggu",
-                            imageUrl: "{{ asset('waiting.gif') }}",
-                            showConfirmButton: false,
-                            allowOutsideClick: false
-                        });
-                        $.ajax({
-                            url: "{{ env('BASE_URL_API')}}" + '/api/invoice/'+id,
-                            type: "DELETE",
-                            data: JSON.stringify(datas),
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function(response) {
-                                Swal.fire({
-                                    title: 'Berhasil',
-                                    text: 'Berhasil Menghapus Invoice',
-                                    icon: 'success',
-                                    customClass: {
-                                        confirmButton: 'btn btn-primary'
-                                    },
-                                    buttonsStyling: false
-                                }).then((result) => {
-                                    $('.invoice-list-table').DataTable().ajax.reload();
-                                });
-                            },
-                            error: function(xhr, status, error) {
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: ' You clicked the button!',
-                                    icon: 'error',
-                                    customClass: {
-                                        confirmButton: 'btn btn-primary'
-                                    },
-                                    buttonsStyling: false
-                                })
-                            }
-                        });
-                    }
-                });
-            });
         });
-
-        $(document).on('click', '.button-delete', function(event) {
-            let id = $(this).data('id');
-            console.log(id);
-            event.stopPropagation();
-            Swal.fire({
-                text: "Apakah Ingin menghapus Tenant ini  ?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, send!",
-                cancelButtonText: "No, cancel",
-                customClass: {
-                    confirmButton: "btn fw-bold btn-primary",
-                    cancelButton: "btn fw-bold btn-active-light-primary"
-                }
-            }).then(async function(result) {
-                if (result.value) {
-                    Swal.fire({
-                        title: 'Memeriksa...',
-                        text: "Harap menunggu",
-                        imageUrl: "{{ asset('waiting.gif') }}",
-                        showConfirmButton: false,
-                        allowOutsideClick: false
-                    });
-                    $.ajax({
-                        url: "{{ env('BASE_URL_API')}}" +'/api/tenant/' + id,
-                        type: "DELETE",
-                        contentType: false,
-                        processData: false,
-                        async: true,
-                        success: function(response, result) {
-                            Swal.fire({
-                                title: 'Berhasil',
-                                text: 'Berhasil Menghapus Tenant',
-                                icon: 'success',
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                                buttonsStyling: false
-                            }).then(async function(res) {
-                                $(".list-tenant-table").DataTable().ajax.reload(); 
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: error,
-                            });
-                        }
-                    });
-                    // window.location.href = "/pja";
-                }
-            });
-        });
-        
     </script>
 
 @endsection

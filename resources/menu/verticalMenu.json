@@ -90,7 +90,7 @@
           "slug": "pages-list-tenant"
         },
         {
-          "url": "/list-vendor",
+          "url": "client/list-vendor",
           "name": "List Vendor",
           "slug": "pages-list-vendor"
         }
