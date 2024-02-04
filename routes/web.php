@@ -53,6 +53,7 @@ Route::post('auth/login', [LoginController::class, 'login'])->name('auth.login')
 Route::group(['middleware' => 'cekauth'], function () {
     Route::get('/dashboard', [HomePage::class, 'index'])->name('pages-home');
     Route::get('/to-do-list', [TodoListController::class, 'index'])->name('pages-to-do');
+    Route::get('/to-do-list/{url?}/{status?}', [TodoListController::class, 'datatable'])->name('pages-to-do-data');
 
     Route::prefix('invoice')->group(function () {
         Route::prefix('/')->group(function () {

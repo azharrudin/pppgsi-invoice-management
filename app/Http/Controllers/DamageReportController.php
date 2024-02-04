@@ -273,7 +273,7 @@ class DamageReportController extends Controller
             $status = strtolower($request->input("status", ""));
             $statusArray = explode(",", $status);
 
-            $damageReportQuery = DamageReport::where("deleted_at", null);
+            $damageReportQuery = DamageReport::where("deleted_at", null)->where('status','disetujui ka');
             if ($value) {
                 $damageReportQuery->where('damage_report_number', 'like', '%' . $value . '%');
             }

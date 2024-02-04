@@ -687,6 +687,7 @@ $configData = Helper::appClasses();
             allowClear: true,
             ajax: {
                 url: "{{ env('BASE_URL_API')}}" + '/api/damage-report/select',
+                // url: "{{ url('/api/damage-report/select')}}",
                 dataType: 'json',
                 cache: true,
                 data: function(params) {

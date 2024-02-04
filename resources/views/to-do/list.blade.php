@@ -4,11 +4,11 @@ $configData = Helper::appClasses();
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'Tax Rates')
+@section('title', 'Todo List')
 
 @section('content')
 
-<nav aria-label="breadcrumb">
+<!-- <nav aria-label="breadcrumb">
     <ol class="breadcrumb breadcrumb-style1">
         <li class="breadcrumb-item">
             <a href="#">Tax Rates</a>
@@ -17,424 +17,432 @@ $configData = Helper::appClasses();
             <a href="#">List</a>
         </li>
     </ol>
-</nav>
-
-{{-- Card --}}
-<div class="card mb-4">
-    <div class="card-widget-separator-wrapper">
-        <div class="card-body card-widget-separator">
-            <div class="row gy-4 gy-sm-1">
-                <div class="col-sm-6 col-lg-4">
-                    <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
-                        <div>
-                            <h3 class="mb-1">300</h3>
-                            <p class="mb-0">Tenant</p>
-                        </div>
-                    </div>
-                    <hr class="d-none d-sm-block d-lg-none me-4">
-                </div>
-                <div class="col-sm-6 col-lg-4">
-                    <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
-                        <div>
-                            <h3 class="mb-1">50</h3>
-                            <p class="mb-0">Tanda Terima</p>
-                        </div>
-                    </div>
-                    <hr class="d-none d-sm-block d-lg-none">
-                </div>
-                <div class="col-sm-6 col-lg-4">
-                    <div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
-                        <div>
-                            <h3 class="mb-1">Rp. 20.000.000</h3>
-                            <p class="mb-0">Terbayarkan</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+</nav> -->
 
 {{-- Datatables --}}
-<div class="card">
-    <div class="card-datatable table-responsive pt-0">
-        <table class="tax-rates-table table">
+<div class="row" id="tables">
 
-        </table>
-    </div>
-</div>
-
-<div class="modal fade" id="edit-tax-data" data-bs-backdrop="static" tabindex="-1">
-    <div class="modal-dialog">
-        <form class="modal-content edit-tax" id="edit-tax" novalidate>
-            <input type="hidden" id="edit_id">
-            <div class="modal-header">
-                <h5 class="modal-title" id="backDropModalTitle">Edit Tax</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12 mb-md-0 mb-3">
-                        <div class="mb-3">
-                            <label for="note" class="form-label fw-bold">Nama</label>
-                            <input type="text" class="form-control" placeholder="Nama" name="edit-name" id="edit-name" required />
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="note" class="form-label fw-bold">Rates</label>
-                            <input type="number" class="form-control" placeholder="Rates" name="edit-rate" id="edit-rate" required />
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="note" class="form-label fw-bold">Keterangan</label>
-                            <textarea class="form-control" rows="6" placeholder="Keterangan" name="edit-description" id="edit-description" required></textarea>
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal" id="modal_tax_cancel">Close</button>
-                <button type="submit" class="btn btn-primary save-tax">
-                    Simpan
-                </button>
-            </div>
-        </form>
-    </div>
 </div>
 
 
-<div class="modal fade" id="preview-tax-data" data-bs-backdrop="static" tabindex="-1">
-    <div class="modal-dialog">
-        <form class="modal-content edit-tax" id="edit-tax" novalidate>
-            <input type="hidden" id="preview_id">
-            <div class="modal-header">
-                <h5 class="modal-title" id="backDropModalTitle">Preview Pajak</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12 mb-md-0 mb-3">
-                        <div class="mb-3">
-                            <label for="note" class="form-label fw-bold">Nama</label>
-                            <input type="text" class="form-control" placeholder="Nama" name="preview-name" id="preview-name" readonly />
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="note" class="form-label fw-bold">Rates</label>
-                            <input type="number" class="form-control" placeholder="Rates" name="preview-rate" id="preview-rate" readonly />
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="note" class="form-label fw-bold">Keterangan</label>
-                            <textarea class="form-control" rows="6" placeholder="Keterangan" name="preview-description" id="preview-description" readonly></textarea>
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                    </div>
-                </div>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal" id="modal_tax_cancel">Close</button>
-            </div>
-        </form>
-        @endsection
-        @section('page-script')
-        <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
-        <script>
-            "use strict";
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+@endsection
+@section('page-script')
+<script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
+<script>
+    "use strict";
+    let account = {!! json_encode(session('data')) !!};
+    var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
-            $((function() {
-                var a = $(".tax-rates-table ");
-                if (a.length) var e = a.DataTable({
-                    processing: true,
-                    serverSide: true,
-                    deferRender: true,
-                    ajax: {
-                        url: "{{ route('data-tax') }}",
-                        "data": function(d) {
-                            d.start = 0;
-                            d.page = $(".tax-rates-table").DataTable().page.info().page + 1;
-                        }
-                    },
-                    columns: [{
-                            data: "name",
-                            title: "Nama Pajak",
-                            name: "name",
-                            className: 'text-center',
-                        },
-                        {
-                            title: "Pajak",
-                            data: "rate",
-                            name: "rate",
-                            className: 'text-center',
-                        },
-                        {
-                            data: "id",
-                            name: "tanggapan",
-                            title: "Tanggapan",
-                            render: function(data, type, row) {
-                                return `
-                        <div class="d-flex align-items-center">
-                        <a href="javascript:void(0)"  id="button-edit" data-bs-toggle="modal" data-id="` + data + `" class="text-body"><i class="ti ti-pencil mx-2 ti-sm"></i></a>
-                        <a href="javascript:void(0)"  id="button-preview" data-bs-toggle="modal" data-id="` + data + `" class="text-body"><i class="ti ti-eye mx-2 ti-sm"></i></a>
-                        <a href="javascript:void(0)"  id="button-delete"  data-id="` + data + `" class="text-body"><i class="ti ti-trash mx-2 ti-sm"></i></a>
-                        </div>`;
-                            }
-                        },
-                    ],
-                    order: [
-                        [1, "desc"]
-                    ],
-                    dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-                    language: {
-                        sLengthMenu: "Show _MENU_",
-                        search: "",
-                        searchPlaceholder: "Cari Pajak"
-                    },
-                    buttons: [{
-                        text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tax</span>',
-                        className: "btn btn-primary",
-                        action: function(a, e, t, s) {
-                            window.location = "{{route('pages-create-tax-rates')}}"
-                        }
-                    }],
-                    responsive: {
-                        details: {
-                            display: $.fn.dataTable.Responsive.display.modal({
-                                header: function(a) {
-                                    return "Details of " + a.data().full_name
-                                }
-                            }),
-                            type: "column",
-                            renderer: function(a, e, t) {
-                                var s = $.map(t, (function(a, e) {
-                                    return "" !== a.title ? '<tr data-dt-row="' + a
-                                        .rowIndex + '" data-dt-column="' + a
-                                        .columnIndex + '"><td>' + a.title +
-                                        ":</td> <td>" + a.data + "</td></tr>" : ""
-                                })).join("");
-                                return !!s && $('<table class="table"/><tbody />').append(s)
-                            }
-                        }
-                    },
-                    initComplete: function() {
-                        this.api().columns(1).every((function() {
-                            var a = this,
-                                e = $(
-                                    '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
-                                ).appendTo(".purchase_status").on("change", (
-                                    function() {
-                                        var e = $.fn.dataTable.util.escapeRegex($(
-                                            this).val());
-                                        a.search(e ? "^" + e + "$" : "", !0, !1)
-                                            .draw()
-                                    }));
-                            a.data().unique().sort().each((function(a, t) {
-                                e.append('<option value="' + a +
-                                    '" class="text-capitalize">' + a +
-                                    "</option>")
-                            }))
-                        }))
-                    }
-                });
-                a.on("draw.dt", (function() {
-                    [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((
-                        function(a) {
-                            return new bootstrap.Tooltip(a, {
-                                boundary: document.body
-                            })
-                        }))
-                })), $(".tax-rates-table tbody").on("click", ".delete-record", (function() {
-                    e.row($(this).parents("tr")).remove().draw()
-                })), setTimeout((() => {
-                    $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(
-                        ".dataTables_length .form-select").removeClass("form-select-sm")
-                }), 300)
-            }));
-
-            var editTax = $(".edit-tax");
-
-            Array.prototype.slice.call(editTax).forEach(function(form) {
-                form.addEventListener(
-                    "submit",
-                    function(event) {
-                        if (!form.checkValidity()) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        } else {
-                            // Submit your form
-                            event.preventDefault();
-                            let id = $('#edit_id').val();
-                            let name = $('#edit-name').val();
-                            let rate = $('#edit-rate').val();
-                            let description = $('#edit-description').val();
-                            let data = {};
-                            data.name = name;
-                            data.rate = rate;
-                            data.description = description;
-
-                            $.ajax({
-                                url: baseUrl + "api/tax/" + id,
-                                type: "PATCH",
-                                data: data,
-                                success: function(response) {
-                                    Swal.fire({
-                                        title: 'Berhasil',
-                                        text: 'Berhasil Memperbarui Tax',
-                                        icon: 'success',
-                                        customClass: {
-                                            confirmButton: 'btn btn-primary'
-                                        },
-                                        buttonsStyling: false
-                                    })
-
-                                    $('#modal_tax_cancel').click();
-                                    $('#edit-tax')[0].reset();
-                                    $('#edit-tax-data').modal('hide');
-
-                                    $(".tax-rates-table").DataTable().ajax.reload();
-                                },
-                                error: function(xhr, status, error) {
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: ' You clicked the button!',
-                                        icon: 'error',
-                                        customClass: {
-                                            confirmButton: 'btn btn-primary'
-                                        },
-                                        buttonsStyling: false
-                                    })
-                                }
-                            });
-                        }
-
-                        form.classList.add("was-validated");
-                    },
-                    false
-                );
-            });
-
-            $(document).on('click', '#button-edit', function(event) {
-                let id = $(this).data('id');
-                $.ajax({
-                    url: baseUrl + "api/tax/" + id,
-                    type: "get",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(response) {
-                        $('#edit_id').val(response.data.id);
-                        $("#edit-name").val(response.data.name);
-                        $("#edit-rate").val(response.data.rate);
-                        $("#edit-description").val(response.data.description);
-                        $('#edit-tax-data').modal('show')
-                    },
-                    error: function(errors) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: errors.responseJSON.message,
-                        })
-                    }
-                });
-            });
-
-            $(document).on('click', '#button-preview', function(event) {
-                let id = $(this).data('id');
-
-                $.ajax({
-                    url: baseUrl + "api/tax/" + id,
-                    type: "get",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(response) {
-                        $('#preview_id').val(response.data.id);
-                        $('#preview-name').val(response.data.name);
-                        $('#preview-rate').val(response.data.rate);
-                        $('#preview-description').val(response.data.description);
-
-                        $('#preview-tax-data').modal('show')
-                    },
-                    error: function(errors) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: errors.responseJSON.message,
-                        })
-                    }
-                });
-            });
-
-            $(document).on('click', '#button-delete', function(event) {
-                let id = $(this).data('id');
-                event.stopPropagation();
-                Swal.fire({
-                    text: "Apakah Ingin menghapus Tax ini  ?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    buttonsStyling: false,
-                    confirmButtonText: "Yes, send!",
-                    cancelButtonText: "No, cancel",
-                    customClass: {
-                        confirmButton: "btn fw-bold btn-primary",
-                        cancelButton: "btn fw-bold btn-active-light-primary"
-                    }
-                }).then(async function(result) {
-                    if (result.value) {
-                        var formData = new FormData();
-                        hapusTax(id);
-                        // window.location.href = "/pja";
-                    }
-                });
-            });
-
-            function hapusTax(id) {
-                Swal.fire({
-                    title: '<h2>Loading...</h2>',
-                    html: sweet_loader + '<h5>Please Wait</h5>',
-                    showConfirmButton: false,
-                    allowOutsideClick: false,
-                    allowEscapeKey: false
-                })
-
-                $.ajax({
-                    url: "{{ env('BASE_URL_API')}}" +'/api/tax/' + id,
-                    type: "DELETE",
-                    contentType: false,
-                    processData: false,
-                    async: true,
-                    success: function(response, result) {
-                        Swal.fire({
-                            title: 'Berhasil',
-                            text: 'Berhasil Tax Bank',
-                            icon: 'success',
-                            customClass: {
-                                confirmButton: 'btn btn-primary'
-                            },
-                            buttonsStyling: false
-                        }).then(async function(res) {
-                            $(".tax-rates-table").DataTable().ajax.reload();
-                        });
-                        // resolve();
-                    },
-                    error: function(xhr, status, error) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: error,
-                        });
-                    }
-                });
+    $((function() {
+       
+        let columnsInvoice = [{
+            name: "invoice_number",
+            data: "invoice_number",
+            title: "No. Invoice",
+            render: function(data, type, row) {
+                return data;
             }
-        </script>
+        }, {
+            name: "tenant",
+            data: "tenant",
+            title: "Tenant",
+            render: function(data, type, row) {
+                return data?.company;
+            }
+        }, {
+            data: "id",
+            name: "tanggapan",
+            title: "Tanggapan",
+            render: function(data, type, row) {
+                let sendMailRow = '';
+                let editButton = '';
+                let deleteButton = '';
+                if (row.status == 'Disetujui BM' && account.level.id == 10) {
+                    sendMailRow = `<a href="#" data-bs-toggle="tooltip" class="text-body send-email" data-id="${data}" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>`;
+                }
+                if ((account.level.id == 10 && row.status == 'Terbuat') || (account.level.id == 1 && row.status == 'Disetujui KA')) {
+                    editButton = `<a href="{{ url("invoice/edit")}}/${data}" class="dropdown-item">Edit</a>`;
+                }
+                if ((account.level.id == 10)) {
+                    deleteButton = `<div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a>`;
+                }
+                let previewRow = '<a href="{{ url("invoice/show")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
+                return `<div class="d-flex align-items-center">
+                                                    ` + sendMailRow + previewRow + `
+                                                    <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a target="_blank" href="{{url('invoice/print')}}/` + data + `" class="dropdown-item">Download</a>${editButton}${deleteButton}</div></div></div>`
+            }
 
-        @endsection
+        }];
+
+        let columnTandaTerima = [{
+            data: "receipt_number",
+            name: "receipt_number",
+            title: "No Tanda Terima",
+            render: function(data, type, row) {
+                return data;
+            }
+        }, {
+            data: "tenant_name",
+            name: "tenant_name",
+            title: "Tenant",
+            render: function(data, type, row) {
+                return data;
+            }
+        }, {
+            data: 'id',
+            name: 'tanggapan',
+            title: "Tanggapan",
+            render: function(data, type, row) {
+                let sendMailRow = '';
+                let editButton = '';
+                let deleteButton = '';
+                if (row.status == 'Disetujui BM' && account.level.id == 10) {
+                    sendMailRow = `<a href="#" data-bs-toggle="tooltip" class="text-body send-email" data-id="${data}" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>`;
+                }
+                if ((account.level.id == 10 && row.status == 'Terbuat') || (account.level.id == 1 && row.status == 'Disetujui KA')) {
+                    editButton = `<a href="tanda-terima/edit/${data}" class="dropdown-item btn-edit" data-id="${data}">Edit</a>`;
+                }
+                if ((account.level.id == 10)) {
+                    deleteButton = `<a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="${data}">Delete</a>`;
+                }
+                return `<div class="d-flex align-items-center">
+                                    ${sendMailRow}
+                                    <a href="invoice/tanda-terima/show/${data}" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Show Tanda Terima"><i class="ti ti-eye mx-2 ti-sm"></i></a>
+                                    <div class="dropdown">
+                                        <a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a target="_blank" href="{{url('invoice/tanda-terima/print')}}/` + data + `" class="dropdown-item">Download</a>
+                                            ${editButton}
+                                            ${deleteButton}
+                                        </div>
+                                    </div>
+                                </div>`;
+            }
+        }];
+
+
+        let columnTicket = [{
+            name: "ticket_number",
+            data: "ticket_number",
+            title: "No. Ticket",
+            className: 'text-center',
+            render: function(data, type, row) {
+                return data;
+            }
+        }, {
+            name: "reporter_name",
+            data: "reporter_name",
+            title: "Nama Pelapor",
+            className: 'text-center',
+            render: function(data, type, row) {
+                return data;
+            }
+        }, {
+            data: "id",
+            name: "tanggapan",
+            title: "Tanggapan",
+            render: function(data, type, row) {
+                let editRow = '';
+                let previewRow = '<a href="{{ url("complain/show-ticket")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
+                return `<div class="d-flex align-items-center">
+                            ` + previewRow + `
+                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="{{ url("complain/edit-ticket")}}/` + data + `" class="dropdown-item">Edit</a>
+                            <div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
+            }
+        }]
+
+        let columnLaporanKerusakan = [{
+            data: "damage_report_number",
+            name: "damage_report_number",
+            title: "No LK",
+            className: 'text-center'
+        }, {
+            data: "scope",
+            name: "scope",
+            title: "Scope",
+            className: 'text-center'
+        }, {
+            data: 'id',
+            name: 'tanggapan',
+            title: "Tanggapan",
+            render: function(data, type, row) {
+                return '<div class="d-flex align-items-center"><a href="/complain/laporan-kerusakan/show/' +
+                    data +
+                    '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Laporan Kerusakan"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="/complain/laporan-kerusakan/edit/' +
+                    data + '" class="dropdown-item btn-edit" data-id="' +
+                    data +
+                    '">Edit</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="' +
+                    data + '">Delete</a></div></div></div>'
+            }
+        }];
+
+        let columnWorkOrder = [{
+            data: "work_order_number",
+            name: "work_order_number",
+            title: "No. Work Order"
+        }, {
+            data: "scope",
+            name: "scope",
+            title: "Scope"
+        }, {
+            data: "id",
+            name: "tanggapan",
+            title: "Tanggapan",
+            render: function(data, type, row) {
+                return '<div class="d-flex align-items-center"><a href="/complain/work-order/show/' +
+                    data +
+                    '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="/complain/work-order/print/' +
+                    data + '" class="dropdown-item">Download</a><a href="/complain/work-order/edit/' +
+                    data + '" class="dropdown-item btn-edit" data-id="' +
+                    data +
+                    '">Edit</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>'
+            }
+        }];
+
+        let columnMaterialRequest = [{
+            name: "material_request_number",
+            data: "material_request_number",
+            title: "No. Material Request",
+            className: 'text-center'
+        }, {
+            name: "requester",
+            data: "requester",
+            title: "Requester",
+            className: 'text-center'
+        }, {
+            data: "id",
+            name: "tanggapan",
+            title: "Tanggapan",
+            render: function(data, type, row) {
+                let editRow = '';
+                let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
+                let previewRow = '<a href="{{ url("request/material-request/show")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Material Request"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
+                return `<div class="d-flex align-items-center">
+                            ` + previewRow + `
+                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a target="_blank" href="{{ url("request/material-request/print")}}/` + data + `"" class="dropdown-item">Download</a><a href="{{ url("request/material-request/edit")}}/` + data + `" class="dropdown-item">Edit</a>
+                            <div class="dropdown-divider"></div><a href="#" data-id="${data}" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
+            }
+        }];
+
+        let columnPurchaseRequest = [{
+            data: "purchase_request_number",
+            name: "purchase_request_number",
+            title: "Purchase Request Number",
+            className: 'text-center'
+        }, {
+            data: "department",
+            name: "department",
+            title: "Department",
+            className: 'text-center',
+            render: function(data, type, row) {
+                return data?.name;
+            }
+        }, {
+            data: "id",
+            name: "id",
+            title: "Tanggapan",
+            render: function(data, type, row) {
+                return '<div class="d-flex align-items-center"><a href="/request/show/' +
+                    data +
+                    '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="/request/edit/' +
+                    data + '" class="dropdown-item btn-edit" data-id="' +
+                    data +
+                    '">Edit</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="' +
+                    data + '">Delete</a></div></div></div>'
+            }
+        }];
+
+
+        var columnPurchaseOrder = [{
+            name: "No. PO",
+            data: "purchase_order_number",
+            title: "No. PO",
+            className: 'text-center',
+            render: function(data, type, row) {
+                return data;
+            }
+        }, {
+            name: "Vendor",
+            data: "vendor_name",
+            title: "Vendor",
+            className: 'text-center',
+            render: function(data, type, row) {
+                return data;
+            }
+        }, {
+            data: "id",
+            name: "Tanggapan",
+            title: "Tanggapan",
+            render: function(data, type, row) {
+                console.log(data);
+                let editRow = '';
+                let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
+                let previewRow = '<a href="{{ url("invoice/show")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
+                return `<div class="d-flex align-items-center">
+                            ` + previewRow + `
+                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="{{ url("invoice/edit")}}/` + data + `" class="dropdown-item">Edit</a>
+                            <div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
+            }
+        }];
+
+        let columnTagihanVendor = [{
+                name: "No. PO",
+                data: "purchase_order_number",
+                title: "No. PO",
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return data;
+                }
+            }, {
+                name: "Vendor",
+                data: "vendor_name",
+                title: "Vendor",
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return data;
+                }
+            }, {
+                data: "vendor_id",
+                name: "vendor_id",
+                title: "Tanggapan",
+                render: function(data, type, row) {
+                    console.log(data);
+                    let editRow = '';
+                    let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
+                    let previewRow = '<a href="{{ url("vendor/show-tagihan-vendor")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Tagihan Vendor"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
+                    return `<div class="d-flex align-items-center">
+                            ` + previewRow + `
+                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="{{ url("vendor/edit-tagihan-vendor")}}/` + data + `" class="dropdown-item">Edit</a>
+                            <div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
+                }
+            }];
+
+        var urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/";
+        var urlTandaTerima = "{{ url('invoice/tanda-terima/data-tanda-terima') }}";
+        var urlLaporanKerusakan = "{{ url('complain/laporan-kerusakan/data-damage') }}";
+        var urlTicket = "{{ url('complain/data-ticket') }}";
+        var urlWorkOrder = "{{ url('complain/work-order/data-work') }}";
+        var urlMaterialRequest = "{{ url('request/material-request/data-material-request') }}";
+        var urlPurchaseRequest = "{{ url('request/data-purchase-request') }}";
+        var urlPurchaseOrder = "{{ url('request/purchase-order/data-purchase-order') }}";
+        var urlVendorInvoice = "{{ url('vendor/data-tagihan-vendor') }}";
+
+        console.log(account);
+        //KA
+        if(account.level_id == 2){
+            urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/terbuat";
+            urlTandaTerima = "{{ url('to-do-list') }}"+"/receipt"+"/terbuat";
+            urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/terbuat";
+            urlPurchaseRequest = "{{ url('to-do-list') }}"+"/purchase-request"+"/terbuat";
+            
+            tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
+            tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
+            tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
+            tableSetting('Task Purchase Request', 'purchase-request-table', columnPurchaseRequest, urlPurchaseRequest)
+        //WareHouse
+        }else if(account.level_id == 7){
+            urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Disetujui Chief Engineering";   
+            tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
+        //chieEnginer
+        }else if(account.level_id == 6){
+            urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Terbuat";   
+            tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
+        }else{
+            tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
+            tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
+            tableSetting('Task Ticket', 'ticket-table', columnTicket, urlTicket);
+            tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
+            tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
+            tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest)
+            tableSetting('Task Purchase Request', 'purchase-request-table', columnPurchaseRequest, urlPurchaseRequest)
+            tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
+            tableSetting('Task Tagihan Vendor', 'tagihan-table', columnTagihanVendor, urlVendorInvoice)
+        }
+       
+
+        if(account.id == 2){
+
+        }
+
+       
+    }));
+
+    function tableSetting(title, table, column, url) {
+        let temp = `    
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-datatable table-responsive pt-0">
+                            <table class="${table} table">
+
+                            </table>
+                        </div>
+                    </div>
+                </div>`;
+        $('#tables').append(temp);
+        var invoiceTable = $("." + table);
+        if (invoiceTable.length) {
+            var dt_project = invoiceTable.DataTable({
+                processing: true,
+                serverSide: true,
+                deferRender: true,
+                ajax: {
+                    url: url,
+                    "data": function(d) {
+                        d.start = 0;
+                        d.page = invoiceTable.DataTable().page.info().page + 1;
+                    }
+                },
+                columns: column,
+                order: [
+                    [0, 'desc']
+                ],
+
+                dom: `<"div pt-3 px-3"<"head-label-` + table + `">>` +
+                    `<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3">><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>`,
+
+                responsive: {
+                    details: {
+                        display: $.fn.dataTable.Responsive.display.modal({
+                            header: function(row) {
+                                var data = row.data();
+                                return 'Details of "' + data['project_name'] + '" Project';
+                            }
+                        }),
+                        type: 'column',
+                        renderer: function(api, rowIdx, columns) {
+                            var data = $.map(columns, function(col, i) {
+                                return col.title !== '' // ? Do not show row in modal popup if title is blank (for check box)
+                                    ?
+                                    '<tr data-dt-row="' +
+                                    col.rowIndex +
+                                    '" data-dt-column="' +
+                                    col.columnIndex +
+                                    '">' +
+                                    '<td>' +
+                                    col.title +
+                                    ':' +
+                                    '</td> ' +
+                                    '<td>' +
+                                    col.data +
+                                    '</td>' +
+                                    '</tr>' :
+                                    '';
+                            }).join('');
+
+                            return data ? $('<table class="table"/><tbody />').append(data) : false;
+                        }
+                    }
+                }
+            });
+            $('div.head-label-' + table).html('<h2 class="card-title mb-0">' + title + '</h2>');
+        }
+        setTimeout(() => {
+            $('.dataTables_filter .form-control').removeClass('form-control-sm');
+            $('.dataTables_length .form-select').removeClass('form-select-sm');
+        }, 300);
+    }
+</script>
+
+@endsection
