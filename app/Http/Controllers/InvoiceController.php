@@ -376,7 +376,7 @@ class InvoiceController extends Controller
                 $bulan = $hariIni->monthName;
                 $tahun = $hariIni->format('Y');
     
-                $dataEmail["tenantName"] = $invoice->tenant->name;
+                $dataEmail["tenantName"] = $invoice->tenant->name ?? '';
                 $dataEmail["month"] = $bulan;
                 $dataEmail["year"] = $tahun;
                 $dataEmail["total"] = $invoice->grand_total;
@@ -388,7 +388,7 @@ class InvoiceController extends Controller
                 $data = $response->data;
     
                 $pdf = PDF::loadView('invoice.download', ['data' => $data]);
-                $to = $invoice->tenant->email;
+                $to = $invoice->tenant->email ?? '';
     
                 Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $pdf, $dataEmail) {
                     $message->to($to)

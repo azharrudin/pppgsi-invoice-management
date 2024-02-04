@@ -84,10 +84,10 @@ return $hasil_rupiah;
                     </tr>
                     <tr>
                         <td rowspan="4" style="width: 35%; border: 0.5px solid black; padding: 10px;"><b>
-                            {{ $data->tenant->company }} <br>
-                            {{ $data->tenant->floor }} <br>
+                            {{ $data->tenant->company ?? '' }} <br>
+                            {{ $data->tenant->floor ?? '' }} <br>
                             <br>
-                            Up. {{ $data->tenant->name }}</b></td>
+                            Up. {{ $data->tenant->name ?? '' }}</b></td>
                     </tr>
                     <tr>
                         <td style="border: none;"></td>

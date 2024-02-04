@@ -102,7 +102,7 @@
                         <td style="width: 25%;">{{ $data->check_number }}</td>
                         <td style="width: 17%;">Nama</td>
                         <td style="width: 5%;">:</td>
-                        <td class="width: 25%;">{{ $data->tenant->name }}</td>
+                        <td class="width: 25%;">{{ $data->tenant->name ?? '' }}</td>
                     </tr>
                     <tr>
                         <td>Bank</td>
@@ -110,7 +110,7 @@
                         <td>{{ $data->bank->name }}</td>
                         <td>Alamat</td>
                         <td>:</td>
-                        <td> {{ $data->tenant->company }} {{ $data->tenant->floor }} {{ $data->tenant->name }}</td>
+                        <td> {{ $data->tenant->company ?? '' }} {{ $data->tenant->floor ?? '' }} {{ $data->tenant->name ?? '' }}</td>
                     </tr>
                     <tr>
                         <td>Jumlah</td>
@@ -118,7 +118,7 @@
                         <td>{{ rupiah($data->grand_total) }}</td>
                         <td>Telepon</td>
                         <td>:</td>
-                        <td>{{ $data->tenant->phone }}</td>
+                        <td>{{ $data->tenant->phone ?? '' }}</td>
                     </tr>
                 </tbody>
             </table>

@@ -340,7 +340,7 @@ class ReceiptController extends Controller
                 $hariIni = \Carbon\Carbon::now()->locale('id');
                 $bulan = $hariIni->monthName;
                 $tahun = $hariIni->format('Y');
-                $dataEmail["tenantName"] = $receipt->tenant->company;
+                $dataEmail["tenantName"] = $receipt->tenant->company ?? '';
                 $dataEmail["month"] = $bulan;
                 $dataEmail["year"] = $tahun;
                 $dataEmail["paid"] = $receipt->paid;
@@ -352,7 +352,7 @@ class ReceiptController extends Controller
                 $data = $response->data;
 
                 $pdf = PDF::loadView('content.pages.tanda-terima.download', ['data' => $data]);
-                $to = $receipt->tenant->email;
+                $to = $receipt->tenant->email ?? '';
 
                 Mail::send('emails.email-template-tandaterima',['data' =>$dataEmail], function ($message) use ($to, $pdf, $dataEmail) {
                     $message->to($to)
