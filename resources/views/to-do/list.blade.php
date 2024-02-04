@@ -84,11 +84,11 @@ $configData = Helper::appClasses();
                 return data;
             }
         }, {
-            data: "tenant_name",
-            name: "tenant_name",
+            data: "tenant",
+            name: "tenant",
             title: "Tenant",
             render: function(data, type, row) {
-                return data;
+                return data?.name;
             }
         }, {
             data: 'id',
@@ -328,10 +328,21 @@ $configData = Helper::appClasses();
         var urlPurchaseRequest = "{{ url('request/data-purchase-request') }}";
         var urlPurchaseOrder = "{{ url('request/purchase-order/data-purchase-order') }}";
         var urlVendorInvoice = "{{ url('vendor/data-tagihan-vendor') }}";
-
-        console.log(account);
+        
+        //BM
+        if(account.level_id == 1){
+            urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Disetujui KA";
+            urlTandaTerima = "{{ url('to-do-list') }}"+"/receipt"+"/Disetujui KA";
+            urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Disetujui Warehouse";   
+            urlMaterialRequest =  "{{ url('to-do-list') }}"+"/material-request"+"/disetujui chief finance";   
+            urlPurchaseRequest =  "{{ url('to-do-list') }}"+"/purchase-request"+"/Disetujui KA";   
+            tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
+            tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
+            tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder);
+            tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest);
+            tableSetting('Task Purchase Request', 'purchase-request-table', columnPurchaseRequest, urlPurchaseRequest)
         //KA
-        if(account.level_id == 2){
+        }else if(account.level_id == 2){
             urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/terbuat";
             urlTandaTerima = "{{ url('to-do-list') }}"+"/receipt"+"/terbuat";
             urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/terbuat";
@@ -341,14 +352,23 @@ $configData = Helper::appClasses();
             tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
             tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
             tableSetting('Task Purchase Request', 'purchase-request-table', columnPurchaseRequest, urlPurchaseRequest)
-        //WareHouse
+        //Chief Engineering
+        } else if(account.level_id == 6){
+            urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Terbuat";   
+            tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
+        //Warehouse
         }else if(account.level_id == 7){
             urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Disetujui Chief Engineering";   
             tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
+        //Chief Department
+        }else if(account.level_id == 8){
+            urlMaterialRequest =  "{{ url('to-do-list') }}"+"/material-request"+"/Terbuat";   
+            tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest)
         //chieEnginer
-        }else if(account.level_id == 6){
-            urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Terbuat";   
-            tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
+        }else if(account.level_id == 9){
+            urlMaterialRequest =  "{{ url('to-do-list') }}"+"/material-request"+"/disetujui chief departement";   
+            tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest)
+        //chieEnginer
         }else{
             tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
             tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
@@ -360,13 +380,6 @@ $configData = Helper::appClasses();
             tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
             tableSetting('Task Tagihan Vendor', 'tagihan-table', columnTagihanVendor, urlVendorInvoice)
         }
-       
-
-        if(account.id == 2){
-
-        }
-
-       
     }));
 
     function tableSetting(title, table, column, url) {
