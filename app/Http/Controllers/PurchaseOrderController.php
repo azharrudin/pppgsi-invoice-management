@@ -332,7 +332,7 @@ class PurchaseOrderController extends Controller
             $countPurchaseOrder = PurchaseOrder::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
 
             return [
-                "count_vendor" => $countVendor,
+                "count_vendor" => $countTenant,
                 "count_purchase_order" => $countPurchaseOrder,
             ];
         } catch (\Throwable $e) {
