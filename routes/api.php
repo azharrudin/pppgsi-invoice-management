@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('tenant/select', [TenantController::class, "select"]);
+Route::get('tenant/report', [TenantController::class, "report"]);
 Route::resource('tenant', TenantController::class);
 
 Route::get("bank/select", [BankController::class, "select"]);
@@ -71,6 +72,7 @@ Route::patch("work-order/update-status/{id}", [WorkOrderController::class, "upda
 Route::resource('work-order', WorkOrderController::class);
 
 Route::get("vendor/select", [VendorController::class, "select"]);
+Route::get('vendor/report', [VendorController::class, "report"]);
 Route::resource('vendor', VendorController::class);
 
 Route::get('material-request/select', [MaterialRequestController::class, "select"]);
@@ -95,6 +97,7 @@ Route::get("level/select", [LevelController::class, "select"]);
 Route::resource('level', LevelController::class);
 
 Route::post('user/login', [UserController::class, "login"]);
+Route::get('user/report', [UserController::class, "report"]);
 Route::resource('user', UserController::class);
 
 Route::get("tax/select", [TaxController::class, "select"]);
