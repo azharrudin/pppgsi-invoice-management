@@ -86,7 +86,7 @@ class TandaTerimaController extends Controller
         if ($response->data) {
             foreach ($response->data as $key => $value) {
                 $data[$key] = $value;
-                $data[$key]->tenant_name = $value->tenant->company;
+                $data[$key]->tenant_name = $value->tenant->company ?? '';
             }
         }
         return DataTables::of($data)
