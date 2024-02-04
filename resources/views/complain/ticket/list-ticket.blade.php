@@ -127,7 +127,11 @@ $configData = Helper::appClasses();
                 title: "Perusahan",
                 className: 'text-center',
                 render: function(data, type, row) {
-                    return data?.company;
+                    if(data != null){
+                        return data?.company;
+                    }else{
+                        return '';
+                    }
                 }
             }, {
                 name: "ticket_title",
