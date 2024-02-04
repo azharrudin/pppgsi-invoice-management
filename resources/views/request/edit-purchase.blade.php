@@ -259,7 +259,6 @@ $configData = Helper::appClasses();
         } else {
             //sudah ttd
             if (value) {
-                namePrepared = value.name;
                 datePreparedAttr = 'disabled';
                 datePrepared = value.date ? value.date : '';
                 ttdFile1 = value.signature;
@@ -275,7 +274,6 @@ $configData = Helper::appClasses();
                     '</' + 'script>';
             } else { //belum ttd
                 datePreparedAttr = 'disabled';
-                namePrepared = account.name;
                 imagePrepared = `
                     <div action="/upload" class="dropzone needsclick ${datePreparedAttr} dd" id="ttd1" style="padding: 5px;">
                         <div class="dz-message needsclick">
@@ -344,7 +342,6 @@ $configData = Helper::appClasses();
                     '</' + 'script>';
             } else { //belum ttd
                 dateCheckedAttr = 'disabled';
-                nameChecked = account.name;
                 imageChecked = `
                     <div action="/upload" class="dropzone needsclick ${dropzoneChecked} dd" id="ttd2" style="padding: 5px;">
                         <div class="dz-message needsclick">
@@ -414,7 +411,6 @@ $configData = Helper::appClasses();
                     '</' + 'script>';
             } else { //belum ttd
                 dateKnownAttr = 'disabled';
-                nameKnown = account.name;
                 imageKnown = `
                     <div action="/upload" class="dropzone needsclick ${dropzoneKnown} dd" id="ttd3" style="padding: 5px;">
                         <div class="dz-message needsclick">
@@ -424,7 +420,6 @@ $configData = Helper::appClasses();
                     `;
             }
         }
-        console.log(imageKnown);
         let appendKnown = `
                 <div class="col-md-4">
                     <label for="note" class="form-label fw-medium mb-3">Diketahui by :</label>
@@ -440,8 +435,7 @@ $configData = Helper::appClasses();
                     <div class="mb-3">
                         <input type="text" class="form-control date ttd-row tanda-tangan" placeholder="Tanggal" style="text-align:center;" id="bm-date" name="name[]" value="${dateKnown ? dateKnown : ''}" ${dateKnownAttr}/>
                     </div>
-                </div>
-            `;
+                </div>`;
         return appendKnown;
     }
 

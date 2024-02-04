@@ -533,7 +533,7 @@ $configData = Helper::appClasses();
                             <div id="admin-image"></div>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="warehouse_date" name="date[]" value="${details[i].date}" readonly>
+                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="warehouse_date" name="date[]" value="${moment(details[i].date, "YYYY-MM-DD").format("D MMMM YYYY")}" readonly>
                         </div>
                     </div>` +
                         '<script type="text/javascript">' +
