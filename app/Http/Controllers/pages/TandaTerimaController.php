@@ -87,6 +87,7 @@ class TandaTerimaController extends Controller
             foreach ($response->data as $key => $value) {
                 $data[$key] = $value;
                 $data[$key]->tenant_name = $value->tenant->company ?? '';
+                $data[$key]->total_invoice = $value->invoice->grand_total ?? '';
             }
         }
         return DataTables::of($data)
@@ -97,10 +98,8 @@ class TandaTerimaController extends Controller
 
     public function print($id)
     {
-        $url = env('BASE_URL_API') .'/api/receipt/' . $id;
-        $request = Request::create($url, 'GET');
-        $response = Route::dispatch($request);
-        $responseBody = json_decode($response->getContent());
+        $apiRequest = Http::get(env('BASE_URL_API') . '/api/receipt/'.$id);
+        $responseBody = json_decode($apiRequest->getBody());
         $data = $responseBody->data;
         $pdf = PDF::loadview('content.pages.tanda-terima.download', ['data' => $data]);
         return $pdf->stream('invoice.pdf');

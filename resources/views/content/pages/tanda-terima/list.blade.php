@@ -212,8 +212,8 @@ $configData = Helper::appClasses();
                 }
             }, {
                 class: "text-center",
-                data: "grand_total",
-                name: "grand_total",
+                data: "total_invoice",
+                name: "total_invoice",
                 title: "Total",
                 render: function(data, type, row) {
                     // Check if it is of type 'display'

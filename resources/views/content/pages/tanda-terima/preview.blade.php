@@ -75,7 +75,7 @@ $configData = Helper::appClasses();
 
                     <div class="row px-3 d-flex align-items-center">
                         <div class="col-2">
-                            <label for="salesperson" class="form-label  fw-medium">Total Invoice</label>
+                            <label for="salesperson" class="form-label fw-medium">Total Invoice</label>
                         </div>
                         <div class="col-10">
                             Rp. <span id="grand_total" name="grand_total"></span>,-
@@ -208,13 +208,14 @@ $configData = Helper::appClasses();
                 success: function(response) {
                     Swal.close();
                     let result = response.data;
+                    console.log(result);
 
                     $("#receipt_number").val(result.receipt_number);
                     $('#invoice').text(result.invoice.invoice_number);
                     $('#check_number').text(result.check_number);
                     $('#bank').text(result.bank?.name);
                     $('#tenant').text(result.tenant.company);
-                    $('#grand_total').text(result.grand_total.toLocaleString('en-EN'));
+                    $('#grand_total').text(result.invoice?.grand_total.toLocaleString('en-EN'));
                     $('#paid').text(result.paid.toLocaleString('en-EN'));
                     $('#remaining').text(result.remaining.toLocaleString('en-EN'));
                     $('#grand_total_spelled').text(result.grand_total_spelled);
