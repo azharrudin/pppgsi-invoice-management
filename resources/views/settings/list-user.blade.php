@@ -34,28 +34,11 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
-                            <h3 class="mb-1">300</h3>
-                            <p class="mb-0">Tenant</p>
+                            <h3 class="mb-1 count-user">0</h3>
+                            <p class="mb-0">User</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none me-4">
-                </div>
-                <div class="col-sm-6 col-lg-4">
-                    <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
-                        <div>
-                            <h3 class="mb-1">50</h3>
-                            <p class="mb-0">Tanda Terima</p>
-                        </div>
-                    </div>
-                    <hr class="d-none d-sm-block d-lg-none">
-                </div>
-                <div class="col-sm-6 col-lg-4">
-                    <div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
-                        <div>
-                            <h3 class="mb-1">Rp. 20.000.000</h3>
-                            <p class="mb-0">Terbayarkan</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -277,6 +260,30 @@ $configData = Helper::appClasses();
                 }
             }
         });
+
+        setHeader();
+
+        function setHeader() {
+            Swal.fire({
+                title: '<h2>Loading...</h2>',
+                html: sweet_loader + '<h5>Please Wait</h5>',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            });
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" +'/api/user/report',
+                type: "GET",
+                dataType: "json",
+                success: function(res) {
+                    $('.count-user').html(res.count_user);
+                    Swal.close();
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
+        }
 
         $("#level_id").select2({
             dropdownParent: $("#create-bank-data"),

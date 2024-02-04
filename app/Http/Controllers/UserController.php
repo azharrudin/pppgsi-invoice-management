@@ -265,7 +265,7 @@ class UserController extends Controller
                 $end->setTime(23, 59, 59);
             }
 
-            $countUser = User::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
+            $countUser = User::where("deleted_at", null)->count();
 
             return [
                 "count_user" => $countUser,
