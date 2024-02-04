@@ -95,8 +95,7 @@ class VendorInvoiceController extends Controller
             $validator = Validator::make($request->all(), $rules, $errorMessages);
 
             if ($validator->fails()) throw new CustomException(implode(', ', $validator->errors()->all()), 400);
-            
-
+            VendorAttachment::where("purchase_order_id", $id)->where("deleted_at", null)->delete();
             foreach ($request->input("attachments") as $attachment) {
                 VendorAttachment::create([
                     "purchase_order_id" => $id,

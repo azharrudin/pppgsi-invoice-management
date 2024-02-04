@@ -168,30 +168,10 @@ $configData = Helper::appClasses();
             <div class="card mb-4">
                 <div class="card-body">
                     <p class="text-center">Kelengkapan Document</p>
-                    <button type="button" class="btn  d-grid w-100 mb-2 add-doc" style="color : #fff;background-color : #4EC0D9;"><span class="d-flex align-items-center justify-content-center text-nowrap">+</span></button>
-                    <div class="documents">
-                        <div class="document">
-                            <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">Pilih Document</label>
-                                <select name="document[]" id="document" class="form-control">
-                                    <option value="">Pilih Document</option>
-                                    <option value="Faktur Pembelian">Faktur Pembelian</option>
-                                    <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
-                                    <option value="Purchase Order">Purchase Order(PO)</option>
-                                    <option value="Delivery Order">Delivery Order(DO)</option>
-                                    <option value="Berita Acara Pembayaran">Berita Acara Pembayaran(BAP)</option>
-                                    <option value="Berita Acara Kemajuan Pekerjaan">Berita Acara Kemajuan Pekerjaan(BAPK)</option>
-                                    <option value="Berita Acara Serah Terima">Berita Acara Serah Terima</option>
-                                    <option value="Progress Kerja">Progress Kerja</option>
-                                    <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
-                                    <option value="Faktur Pajak">Faktur Pajak</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment" name="attachment">
-                            </div>
-                        </div>
-                    </div>
+                    <!-- <button type="button" class="btn  d-grid w-100 mb-2 add-doc" style="color : #fff;background-color : #4EC0D9;"><span class="d-flex align-items-center justify-content-center text-nowrap">+</span></button> -->
+                    <ol class="documents" id="documents">
+
+                    </ol>
                 </div>
             </div>
         </div>
@@ -209,7 +189,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
 <script>
-    let account = {!! json_encode(session('data')) !!}
+    // let account = {!! json_encode(session('data')) !!}
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -235,7 +215,7 @@ $configData = Helper::appClasses();
 
     $(document).on('click', '#edit', function(event) {
         event.preventDefault();
-        window.location.href = "/vendor/edit-tagihan-vendor/"+id;
+        window.location.href = "/vendor/edit-tagihan-vendor/" + id;
     });
 
     function getVendor(id) {
@@ -277,7 +257,8 @@ $configData = Helper::appClasses();
 
     function getDataTagihanVendor(id) {
         $.ajax({
-            url: "{{url('api/purchase-order')}}/" + id,
+            url: "{{env('BASE_URL_API')}}" +'/api/purchase-order/' + id,
+            // url: "{{url('api/purchase-order')}}/" + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
@@ -298,14 +279,15 @@ $configData = Helper::appClasses();
                 $("#purchase_order_date").text(tglIndo(data.purchase_order_date));
                 $("#about").text(data.about);
                 $("#note").text(data.note);
-                $("#grand_total").text(data.grand_total);
-                $("#tax").text(data.tax);
-                $("#subtotal").text(data.subtotal);
+                $("#grand_total").text('Rp. ' + format(data.grand_total));
+                $("#tax").text('Rp .' + format(data.tax));
+                $("#subtotal").text('Rp.' + format(data.subtotal));
                 $("#grand_total_spelled").text(data.grand_total_spelled);
                 $("#term_and_conditions").text(data.term_and_conditions);
                 $("#signature_name").text(data.signature_name);
                 getVendor(data.vendor_id);
                 getDetails(data.purchase_order_details);
+                getAttachments(data.vendor_attachment);
                 if (data.signature) {
                     $("#signatture").css('background-img', 'black');
                     $("#signatture").css("background-image", `url('` + data.signature + `')`);
@@ -322,6 +304,51 @@ $configData = Helper::appClasses();
             }
         });
     }
+
+    function format(e) {
+        var nStr = e + '';
+
+        nStr = nStr.replace(/\,/g, "");
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+
+    function getAttachments(attachments) {
+        let data = attachments;
+        let getDetail = '';
+        let temp = '';
+        let openTab = '';
+        console.log(data);
+
+        if (data.length > 0) {
+            let details = data;
+            for (let i = 0; i < details.length; i++) {
+                console.log('a');
+                temp = `<li><a href="javascript:void(0)" class="text-dark" id="attachment-${i}"> ${details[i].uraian}</a></li>`;
+                getDetail = getDetail + temp;
+            }
+            $('#documents').prepend(getDetail);
+            openLink(details);
+        } else {}
+
+    }
+
+    function openLink(details) {
+        for (let i = 0; i < details.length; i++) {
+            $('#attachment-'+i).click(function(e) {
+                var pdfResult = details[i].attachment;
+                let pdfWindow = window.open("");
+                pdfWindow.document.write("<iframe width='100%' height='100%' src=' "+ pdfResult + "'></iframe>");
+            });
+        }
+    }
+
 
 
     $(document).on('click', '.add-doc', function() {
@@ -351,9 +378,9 @@ $configData = Helper::appClasses();
                         <td>` + details[i].specification + `</td>
                         <td>` + details[i].quantity + `</td>
                         <td>` + details[i].units + `</td>
-                        <td>` + details[i].price + `</td>
+                        <td>` + 'Rp. ' + format(details[i].price) + `</td>
                         <td>` + details[i].tax + `</td>
-                        <td>` + details[i].total_price + `</td>
+                        <td>` + 'Rp. ' + format(details[i].total_price) + `</td>
                     </tr>
             `;
             getDetail = getDetail + tem;

@@ -66,6 +66,7 @@ class InvoiceController extends Controller
             'value' => $request->search['value'],
         ]);
         $response = json_decode($apiRequest->getBody());
+        // dd($response->data[0]->tenant->company);
         $data = [];
         if($response->data){
             foreach ($response->data as $key => $value) {

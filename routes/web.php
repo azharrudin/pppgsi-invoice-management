@@ -24,6 +24,7 @@ use App\Http\Controllers\pages\LaporanKerusakanController;
 use App\Http\Controllers\pages\MaterialRequestController;
 use App\Http\Controllers\pages\TandaTerimaController;
 use App\Http\Controllers\pages\WorkOrderController;
+use App\Http\Controllers\TodoListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,7 @@ Route::post('auth/login', [LoginController::class, 'login'])->name('auth.login')
 
 Route::group(['middleware' => 'cekauth'], function () {
     Route::get('/dashboard', [HomePage::class, 'index'])->name('pages-home');
+    Route::get('/to-do-list', [TodoListController::class, 'index'])->name('pages-to-do');
 
     Route::prefix('invoice')->group(function () {
         Route::prefix('/')->group(function () {
