@@ -11,7 +11,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-style1">
             <li class="breadcrumb-item">
-                <a href="#">Tenant</a>
+                <a href="#">Vendor</a>
             </li>
             <li class="breadcrumb-item active">
                 <a href="#">List</a>
@@ -28,7 +28,7 @@
                         <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                             <div>
                                 <h3 class="mb-1">300</h3>
-                                <p class="mb-0">Tenant</p>
+                                <p class="mb-0">Vendor</p>
                             </div>
                         </div>
                         <hr class="d-none d-sm-block d-lg-none me-4">
@@ -73,48 +73,47 @@
                     <h5 class="modal-title" id="backDropModalTitle">Tambah Vendor</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body addTenant">
+                <div class="modal-body addVendor">
                     <div class="row">
                         <div class="col mb-3">
-                            <label for="nameBackdrop" class="form-label">Nama PIC</label>
+                            <label for="nameBackdrop" class="form-label">Nama Perusahaan</label>
                             <input type="text" id="name" name="name" class="form-control"
-                                placeholder="Masukan Nama Vendor" required>
-                            <div class="invalid-feedback"> Please enter your name. </div>
+                                placeholder="Nama Perusahaan" required>
+                            <div class="invalid-feedback"> Masukan nama perusahaan. </div>
                         </div>
                         <div class="col mb-3">
                             <label for="nameBackdrop" class="form-label">Email</label>
                             <input type="email" id="email" name="email" class="form-control"
                                 placeholder="Masukan Email" required>
-                            <div class="invalid-feedback"> Please enter your Email. </div>
+                            <div class="invalid-feedback"> Masukan Email. </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-3">
                             <label for="nameBackdrop" class="form-label">Telepon</label>
                             <input type="text" id="phone" name="phone" class="form-control"
-                                placeholder="Masukan Telepon" required>
-                            <div class="invalid-feedback"> Please enter your phone. </div>
+                                placeholder="Masukan Nomor Telepon" required>
+                            <div class="invalid-feedback"> Masukan Nomor Telepon. </div>
                         </div>
                         <div class="col mb-3">
-                            <label for="nameBackdrop" class="form-label">Company</label>
-                            <input type="text" id="company" name="company" class="form-control"
-                                placeholder="Masukan Company" required>
-                            <div class="invalid-feedback"> Please enter your Company. </div>
+                            <label for="nameBackdrop" class="form-label">Lantai</label>
+                            <input type="text" id="floor" name="floor" class="form-control"
+                                placeholder="Masukan Lantai" required>
+                            <div class="invalid-feedback"> Masukan Lantai. </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-3">
-                            <label for="nameBackdrop" class="form-label">Floor</label>
-                            <input type="text" id="floor" name="floor" class="form-control"
-                                placeholder="Masukan Lantai" required>
-                            <div class="invalid-feedback"> Please enter your floor. </div>
+                            <label for="nameBackdrop" class="form-label">Alamat</label>
+                            <textarea name="address" id="address" class="form-control" cols="30" rows="3"></textarea>
+                            <div class="invalid-feedback"> Masukan Alamat. </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal"
-                        id="modal_tenant_cancel">Close</button>
-                    <button type="submit" class="btn btn-primary save-vendor        ">
+                        id="modal_vendor_cancel">Close</button>
+                    <button type="submit" class="btn btn-primary save-vendor">
                         <span class="indicator-label">Simpan</span>
                         <span class="indicator-progress">
                             Please wait...
@@ -137,10 +136,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="modal-body editTenant">
+                    <div class="modal-body editVendor">
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="nameBackdrop" class="form-label">Nama PIC</label>
+                                <label for="nameBackdrop" class="form-label">Nama Perusahaan</label>
                                 <input type="text" id="edit_name" name="name" class="form-control"
                                     placeholder="Masukan Nama Vendor" required>
                                 <div class="invalid-feedback"> Please enter your name. </div>
@@ -160,30 +159,23 @@
                                 <div class="invalid-feedback"> Please enter your phone. </div>
                             </div>
                             <div class="col mb-3">
-                                <label for="nameBackdrop" class="form-label">Company</label>
-                                <input type="text" id="edit_company" name="company" class="form-control"
-                                    placeholder="Masukan Company" required>
-                                <div class="invalid-feedback"> Please enter your Company. </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label for="nameBackdrop" class="form-label">Floor</label>
+                                <label for="nameBackdrop" class="form-label">Lantai</label>
                                 <input type="text" id="edit_floor" name="floor" class="form-control"
                                     placeholder="Masukan Lantai" required>
                                 <div class="invalid-feedback"> Please enter your floor. </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col mb-3">
-                                <label for="nameBackdrop" class="form-label">Status</label>
-                                <select id="edit_status" class="form-select select2 item-details mb-3">
-                                </select>
-                                <div class="invalid-feedback"> Please enter your status. </div>
+                                <label for="nameBackdrop" class="form-label">Alamat</label>
+                                <textarea name="address" id="edit_address" cols="30" rows="3" class="form-control"></textarea>
+                                <div class="invalid-feedback"> Please enter your Address. </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal"
-                            id="modal_tenant_cancel">Close</button>
+                            id="modal_vendor_cancel">Close</button>
                         <button type="submit" class="btn btn-primary save-vendor">
                             <span class="indicator-label">Simpan</span>
                             <span class="indicator-progress">
@@ -207,19 +199,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="modal-body previewTenant">
+                    <div class="modal-body previewVendor">
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="nameBackdrop" class="form-label">Nama PIC</label>
+                                <label for="nameBackdrop" class="form-label">Nama Perusahaan</label>
                                 <input type="text" id="preview_name" name="name" class="form-control"
                                     placeholder="Masukan Nama Vendor" required readonly>
-                                <div class="invalid-feedback"> Please enter your name. </div>
+                                <div class="invalid-feedback"> Masukan Nama Perusahaan. </div>
                             </div>
                             <div class="col mb-3">
                                 <label for="nameBackdrop" class="form-label">Email</label>
                                 <input type="email" id="preview_email" name="email" class="form-control"
                                     placeholder="Masukan Email" required readonly>
-                                <div class="invalid-feedback"> Please enter your Email. </div>
+                                <div class="invalid-feedback"> Masukan Email. </div>
                             </div>
                         </div>
                         <div class="row">
@@ -227,25 +219,24 @@
                                 <label for="nameBackdrop" class="form-label">Telepon</label>
                                 <input type="text" id="preview_phone" name="phone" class="form-control"
                                     placeholder="Masukan Telepon" required readonly>
-                                <div class="invalid-feedback"> Please enter your phone. </div>
+                                <div class="invalid-feedback"> Masukan Telepon. </div>
                             </div>
                             <div class="col mb-3">
-                                <label for="nameBackdrop" class="form-label">Company</label>
-                                <input type="text" id="preview_company" name="company" class="form-control"
-                                    placeholder="Masukan Company" required readonly>
-                                <div class="invalid-feedback"> Please enter your Company. </div>
+                                <label for="nameBackdrop" class="form-label">Lantai</label>
+                                <input type="text" id="preview_floor" name="floor" class="form-control"
+                                    placeholder="Masukan Lantai" required readonly>
+                                <div class="invalid-feedback"> Masukan Lantai. </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="nameBackdrop" class="form-label">Floor</label>
-                                <input type="text" id="preview_floor" name="floor" class="form-control"
-                                    placeholder="Masukan Lantai" required readonly>
-                                <div class="invalid-feedback"> Please enter your floor. </div>
+                                <label for="nameBackdrop" class="form-label">Alamat</label>
+                                <textarea name="address" id="preview_address" cols="30" rows="3" class="form-control"></textarea>
+                                <div class="invalid-feedback"> Masukan Alamat. </div>
                             </div>
                             <div class="col mb-3">
                                 <label for="nameBackdrop" class="form-label">Status</label>
-                                <select id="preview_status" class="form-select select2 item-details mb-3" readonly>
+                                <select id="preview_status" class="form-select select2 item-details mb-3" disabled>
                                 </select>
                                 <div class="invalid-feedback"> Please enter your status. </div>
                             </div>
@@ -253,7 +244,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal"
-                            id="modal_tenant_cancel">Close</button>
+                            id="modal_vendor_cancel">Close</button>
                     </div>
                 </div>
             </form>
@@ -353,7 +344,7 @@
                     <div class="d-flex align-items-center">
                     <a href="javascript:void(0)"  id="button-edit" data-bs-toggle="modal" data-id="` + data.id + `" class="text-body"><i class="ti ti-pencil mx-2 ti-sm"></i></a>
                     <a href="javascript:void(0)"  id="button-preview" data-bs-toggle="modal" data-id="` + data.id + `" class="text-body"><i class="ti ti-eye mx-2 ti-sm"></i></a>
-                    <a href="javascript:void(0)"  id="button-delete"  data-id="` + data.id + `" class="text-body"><i class="ti ti-trash mx-2 ti-sm"></i></a>
+                    <a href="#"  id="button-delete-` + data.id + `"  data-id="` + data.id + `" class="text-body button-delete"><i class="ti ti-trash mx-2 ti-sm"></i></a>
                     </div>`;
                     }
                 }],
@@ -420,19 +411,17 @@
                             boundary: document.body
                         })
                     }))
-            })), $(".list-vendor-table tbody").on("click", ".delete-record", (function() {
-                e.row($(this).parents("tr")).remove().draw()
             })), setTimeout((() => {
                 $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(
                     ".dataTables_length .form-select").removeClass("form-select-sm")
             }), 300)
         }));
 
-        var createTenant = $(".create-vendor");
-        var editTenant = $(".edit-vendor");
+        var createVendor = $(".create-vendor");
+        var editVendor = $(".edit-vendor");
 
         // Create, Add dan Save
-        Array.prototype.slice.call(createTenant).forEach(function(form) {
+        Array.prototype.slice.call(createVendor).forEach(function(form) {
             $('.indicator-progress').hide();
             $('.indicator-label').show();
             form.addEventListener(
@@ -453,7 +442,7 @@
                         })
                         let formData = new FormData();
 
-                        $('.addTenant').find('.form-control').each(function() {
+                        $('.addVendor').find('.form-control').each(function() {
                             var inputId = $(this).attr('id');
                             var inputValue = $("#" + inputId).val();
 
@@ -474,7 +463,7 @@
 
                                 Swal.fire({
                                     title: 'Berhasil',
-                                    text: 'Berhasil Menambahkan Tenant',
+                                    text: 'Berhasil Menambahkan Vendor',
                                     icon: 'success',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'
@@ -482,7 +471,7 @@
                                     buttonsStyling: false
                                 })
 
-                                $('#modal_tenant_cancel').click();
+                                $('#modal_vendor_cancel').click();
                                 $('#create-vendor')[0].reset();
                                 $(".list-vendor-table").DataTable().ajax.reload();
                             },
@@ -507,7 +496,7 @@
         });
 
         // Edit dan Update
-        Array.prototype.slice.call(editTenant).forEach(function(form) {
+        Array.prototype.slice.call(editVendor).forEach(function(form) {
             $('.indicator-progress').hide();
             $('.indicator-label').show();
             form.addEventListener(
@@ -517,12 +506,20 @@
                         event.preventDefault();
                         event.stopPropagation();
                     } else {
+                        $('#edit-vendor-data').modal('hide');
+                        Swal.fire({
+                            title: 'Memeriksa...',
+                            text: "Harap menunggu",
+                            imageUrl: "{{ asset('waiting.gif') }}",
+                            showConfirmButton: false,
+                            allowOutsideClick: false
+                        });
                         // Submit your form
                         event.preventDefault();
                         let id = $("#edit_id").val();
                         let formData = new FormData();
-
                         var data = $('#edit-vendor').serialize();
+                        data += '&status=Active';
                         $.ajax({
                             url: "{{ env('BASE_URL_API')}}" +'/api/vendor/' + id,
                             type: "PATCH",
@@ -533,17 +530,15 @@
 
                                 Swal.fire({
                                     title: 'Berhasil',
-                                    text: 'Berhasil memperbarui Tenant',
+                                    text: 'Berhasil memperbarui Vendor',
                                     icon: 'success',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'
                                     },
                                     buttonsStyling: false
+                                }).then(async function(res) {
+                                    $(".list-vendor-table").DataTable().ajax.reload(); 
                                 })
-
-                                $('#modal_tenant_cancel').click();
-                                $('#edit-vendor')[0].reset();
-                                $(".list-vendor-table").DataTable().ajax.reload();
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
@@ -595,7 +590,7 @@
                 })
 
                 $.ajax({
-                    url: baseUrl + "api/vendor/" + id,
+                    url: "{{ env('BASE_URL_API')}}" + "/api/vendor/" + id,
                     type: "GET",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -609,6 +604,7 @@
                         $('#edit_email').val(result.email);
                         $('#edit_phone').val(result.phone);
                         $('#edit_company').val(result.company);
+                        $('#edit_address').val(result.address);
                         $('#edit_floor').val(result.floor);
                         $('#edit-vendor-data').modal('show');
                         Swal.close();
@@ -635,7 +631,7 @@
                 })
 
                 $.ajax({
-                    url: baseUrl + "api/vendor/" + id,
+                    url: "{{ env('BASE_URL_API')}}" + "/api/vendor/" + id,
                     type: "GET",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -649,6 +645,7 @@
                         $('#preview_email').val(result.email);
                         $('#preview_phone').val(result.phone);
                         $('#preview_company').val(result.company);
+                        $('#preview_address').val(result.address);
                         $('#preview_floor').val(result.floor);
                         $('#preview-vendor-data').modal('show');
                         Swal.close();
@@ -661,6 +658,61 @@
                         })
                     }
                 });
+            });
+        });
+
+        $(document).on('click', '.button-delete', function(e){
+            e.stopPropagation();
+            let id = $(this).data('id');
+            event.stopPropagation();
+            Swal.fire({
+                text: "Apakah Ingin menghapus Vendor ini  ?",
+                icon: "warning",
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Yes, send!",
+                cancelButtonText: "No, cancel",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                    cancelButton: "btn fw-bold btn-active-light-primary"
+                }
+            }).then(async function(result) {
+                if (result.value) {
+                    Swal.fire({
+                        title: 'Memeriksa...',
+                        text: "Harap menunggu",
+                        imageUrl: "{{ asset('waiting.gif') }}",
+                        showConfirmButton: false,
+                        allowOutsideClick: false
+                    });
+                    $.ajax({
+                        url: "{{ env('BASE_URL_API')}}" +'/api/vendor/' + id,
+                        type: "DELETE",
+                        contentType: false,
+                        processData: false,
+                        async: true,
+                        success: function(response, result) {
+                            Swal.fire({
+                                title: 'Berhasil',
+                                text: 'Berhasil Menghapus Vendor',
+                                icon: 'success',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            }).then(async function(res) {
+                                $(".list-vendor-table").DataTable().ajax.reload(); 
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: error,
+                            });
+                        }
+                    });
+                }
             });
         });
     </script>

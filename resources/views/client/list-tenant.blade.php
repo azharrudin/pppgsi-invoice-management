@@ -703,7 +703,6 @@
 
         $(document).on('click', '.button-delete', function(event) {
             let id = $(this).data('id');
-            console.log(id);
             event.stopPropagation();
             Swal.fire({
                 text: "Apakah Ingin menghapus Tenant ini  ?",
