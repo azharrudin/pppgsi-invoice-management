@@ -70,7 +70,7 @@
                                 <div class="col-md-6 mb-md-0 mb-3">
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Scope</label>
-                                        <input type="text" class="form-control add" id="edit_scope"
+                                        <input type="text" class="form-control add" id="scope"
                                             name="scope" placeholder="Scope" required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
@@ -78,7 +78,7 @@
                                 <div class="col-md-6 mb-md-0 mb-3">
                                     <div class="mb-1">
                                         <label for="note" class="form-label fw-medium">Classification</label>
-                                        <input type="text" class="form-control add" id="edit_classification"
+                                        <input type="text" class="form-control add" id="classification"
                                             name="classification" placeholder="Classification" required readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
@@ -338,9 +338,67 @@
             var idIndex = urlSegments.indexOf('show') + 1;
             var id = urlSegments[idIndex];
 
-            getDataLaporanKerusakan(id)
+            getDataLaporanKerusakan(id);
+            function getScope(data) {
+                var data = data.split(',');
+                var scopeSelect = $('#scope');
+                var temp = '';
+                for (var i = 0; i < data.length; i++) {
+                    if (i + 1 == data.length) {
+                        $.ajax({
+                            type: 'GET',
+                            url: "{{url('api/scope/')}}/" + data[i],
+                        }).then(function(data) {
+                            temp += data.data.name;
+                            // create the option and append to Select2
+                            console.log(temp);
+                            temp.substring(0, temp.length - 1)
+                            scopeSelect.val(temp);
+                        });
+                    } else {
+                        $.ajax({
+                            type: 'GET',
+                            url: "{{url('api/scope/')}}/" + data[i],
+                        }).then(function(data) {
+                            temp += data.data.name+',';
+                            // create the option and append to Select2
+                            console.log(temp);
+                            temp.substring(0, temp.length - 1)
+                            scopeSelect.val(temp);
+                        });
+                    }
 
-            // Get data from API
+                }
+            }
+            function getClassification(data) {
+                var data = data.split(',');
+                var classificationSelect = $('#classification');
+                var temp = '';
+                for (var i = 0; i < data.length; i++) {
+                    if (i + 1 == data.length) {
+                        $.ajax({
+                            type: 'GET',
+                            url: "{{url('api/classification/')}}/" + data[i],
+                        }).then(function(data) {
+                            temp += data.data.name;
+                            temp.substring(0, temp.length - 1)
+                            classificationSelect.val(temp);
+                        });
+                    } else {
+                        $.ajax({
+                            type: 'GET',
+                            url: "{{url('api/classification/')}}/" + data[i],
+                        }).then(function(data) {
+                            temp += data.data.name+',';
+                            // create the option and append to Select2
+                            temp.substring(0, temp.length - 1)
+                            classificationSelect.val(temp);
+                        });
+                    }
+
+                }
+            }
+                // Get data from API
             function getDataLaporanKerusakan(id) {
                 Swal.fire({
                     title: '<h2>Loading...</h2>',
@@ -350,17 +408,21 @@
                     allowEscapeKey: false
                 })
                 $.ajax({
-                    url: "{{ env('BASE_URL_API')}}" +'/api/damage-report/' + id,
+                    // url: "{{ env('BASE_URL_API')}}" +'/api/damage-report/' + id,
+                    url: "{{ url('/api/damage-report/')}}/" + id,
                     type: "GET",
                     dataType: "json",
                     success: function(res) {
                         let response = res.data;
+                        console.log(response);
                         $('.btn-edit').attr('data-id', id);
                         // Set value ke form atas
                         $('#editLaporanKerusakan').find('.form-control').each(function() {
                             $("#" + $(this).attr('id')).val(response[$(this).attr(
                                 "name")]);
                         });
+                        getScope(response.scope);
+                        getClassification(response.classification);
                         $('#edit_damage_report_date').val(moment(response.damage_report_date,
                             'YYYY-MM-DD').format('DD-MM-YYYY'));
                         $('#edit_action_plan_date').val(moment(response.action_plan_date, 'YYYY-MM-DD')

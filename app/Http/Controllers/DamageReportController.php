@@ -149,8 +149,8 @@ class DamageReportController extends Controller
             $getDamageReport = DamageReport::with("damageReportDetails")->with("damageReportSignatures")->with("ticket")->where("id", $id)->where("deleted_at", null)->first();
             if (is_null($getDamageReport)) throw new CustomException("Laporan kerusakan tidak ditemukan", 404);
 
-            $getDamageReport["classification"] = $this->CommonService->getClassificationOrScope($getDamageReport["classification"], "classification");
-            $getDamageReport["scope"] = $this->CommonService->getClassificationOrScope($getDamageReport["scope"], "scope");
+            // $getDamageReport["classification"] = $this->CommonService->getClassificationOrScope($getDamageReport["classification"], "classification");
+            // $getDamageReport["scope"] = $this->CommonService->getClassificationOrScope($getDamageReport["scope"], "scope");
 
             return ["data" => $getDamageReport];
         } catch (\Throwable $e) {

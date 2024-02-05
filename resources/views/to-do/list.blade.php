@@ -49,7 +49,7 @@ $configData = Helper::appClasses();
             data: "tenant",
             title: "Tenant",
             render: function(data, type, row) {
-                return data?.company;
+                return data?.company ? data?.company : '';
             }
         }, {
             data: "id",
@@ -88,7 +88,7 @@ $configData = Helper::appClasses();
             name: "tenant",
             title: "Tenant",
             render: function(data, type, row) {
-                return data?.name;
+                return data?.company ? data?.company : '';
             }
         }, {
             data: 'id',
@@ -237,7 +237,7 @@ $configData = Helper::appClasses();
             title: "Department",
             className: 'text-center',
             render: function(data, type, row) {
-                return data?.name;
+                return data ? data : '';
             }
         }, {
             data: "id",

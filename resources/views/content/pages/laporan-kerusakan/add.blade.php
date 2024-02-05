@@ -58,7 +58,7 @@ $configData = Helper::appClasses();
 
                                 <div class="mb-1">
                                     <label for="classification" class="form-label fw-medium">Classification</label>
-                                    <select class="form-select add w-px-250 select2 select-classification" id="classification" name="classification[]" multiple required>
+                                    <select class="form-select add w-px-250 select2 select-classification" id="classification" name="classification" multiple required>
                                     </select>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
@@ -96,7 +96,7 @@ $configData = Helper::appClasses();
 
 
                                 <hr class="my-3">
-                                <div class="row  text-center mt-4" id="ttd">
+                                <!-- <div class="row  text-center mt-4" id="ttd">
                                     <div class="col-4 signatures">
                                         <div class="mb-3">
                                             <input type="text" class="form-control add" placeholder="KA. Unit Pelayanan" style="text-align:center;" id="type" name="type" />
@@ -160,7 +160,7 @@ $configData = Helper::appClasses();
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
@@ -205,7 +205,7 @@ $configData = Helper::appClasses();
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
     $(document).ready(function() {
-        let account = {!! json_encode(session('data')) !!}
+        let account = {!! json_encode(session('data')) !!};
 
         const idTicket = getParameterByName('id-ticket');
 
@@ -268,69 +268,69 @@ $configData = Helper::appClasses();
         }
 
         // Mengambil value tanda tangan
-        let ttdFile1 = null;
-        const myDropzone1 = new Dropzone('#dropzone-1', {
-            parallelUploads: 1,
-            maxFilesize: 10,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            autoQueue: false,
-            init: function() {
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this
-                        .files[0]);
-                    ttdFile1 = file;
-                });
-            }
-        });
+        // let ttdFile1 = null;
+        // const myDropzone1 = new Dropzone('#dropzone-1', {
+        //     parallelUploads: 1,
+        //     maxFilesize: 10,
+        //     addRemoveLinks: true,
+        //     maxFiles: 1,
+        //     acceptedFiles: ".jpeg,.jpg,.png",
+        //     autoQueue: false,
+        //     init: function() {
+        //         this.on('addedfile', function(file) {
+        //             while (this.files.length > this.options.maxFiles) this.removeFile(this
+        //                 .files[0]);
+        //             ttdFile1 = file;
+        //         });
+        //     }
+        // });
 
-        $(document).on('keyup', '.price', function(event) {
-            // skip for arrow keys
-            if (event.which >= 37 && event.which <= 40) return;
-            // format number
-            $(this).val(function(index, value) {
-                return value
-                    .replace(/\D/g, "")
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            });
-        });
+        // $(document).on('keyup', '.price', function(event) {
+        //     // skip for arrow keys
+        //     if (event.which >= 37 && event.which <= 40) return;
+        //     // format number
+        //     $(this).val(function(index, value) {
+        //         return value
+        //             .replace(/\D/g, "")
+        //             .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        //     });
+        // });
 
-        let ttdFile2 = null;
-        const myDropzone2 = new Dropzone('#dropzone-2', {
-            parallelUploads: 1,
-            maxFilesize: 10,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            autoQueue: false,
-            init: function() {
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this
-                        .files[0]);
-                    ttdFile2 = file;
-                });
-            }
-        });
+        // let ttdFile2 = null;
+        // const myDropzone2 = new Dropzone('#dropzone-2', {
+        //     parallelUploads: 1,
+        //     maxFilesize: 10,
+        //     addRemoveLinks: true,
+        //     maxFiles: 1,
+        //     acceptedFiles: ".jpeg,.jpg,.png",
+        //     autoQueue: false,
+        //     init: function() {
+        //         this.on('addedfile', function(file) {
+        //             while (this.files.length > this.options.maxFiles) this.removeFile(this
+        //                 .files[0]);
+        //             ttdFile2 = file;
+        //         });
+        //     }
+        // });
 
         getDetails();
 
-        let ttdFile3 = null;
-        const myDropzone3 = new Dropzone('#dropzone-3', {
-            parallelUploads: 1,
-            maxFilesize: 10,
-            addRemoveLinks: true,
-            maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            autoQueue: false,
-            init: function() {
-                this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this
-                        .files[0]);
-                    ttdFile3 = file;
-                });
-            }
-        });
+        // let ttdFile3 = null;
+        // const myDropzone3 = new Dropzone('#dropzone-3', {
+        //     parallelUploads: 1,
+        //     maxFilesize: 10,
+        //     addRemoveLinks: true,
+        //     maxFiles: 1,
+        //     acceptedFiles: ".jpeg,.jpg,.png",
+        //     autoQueue: false,
+        //     init: function() {
+        //         this.on('addedfile', function(file) {
+        //             while (this.files.length > this.options.maxFiles) this.removeFile(this
+        //                 .files[0]);
+        //             ttdFile3 = file;
+        //         });
+        //     }
+        // });
 
         // Create, Insert, Save
         var savelk = $('.create-lk');
@@ -343,13 +343,6 @@ $configData = Helper::appClasses();
             form.addEventListener(
                 "submit",
                 function(event) {
-
-                    // let scopeValue = $("#scope").val();
-                    // let classificationValue = $("#classification").val();
-
-                    // console.log("Scope:", scopeValue);
-                    // console.log("Classification:", classificationValue);
-
                     if (!form.checkValidity()) {
                         event.preventDefault();
                         event.stopPropagation();
@@ -366,14 +359,12 @@ $configData = Helper::appClasses();
                     } else {
                         event.preventDefault();
                         Swal.fire({
-                            title: 'Loading...',
-                            text: "Please wait",
-                            customClass: {
-                                confirmButton: 'd-none'
-                            },
-                            buttonsStyling: false
+                            title: '<h2>Loading...</h2>',
+                            html: sweet_loader + '<h5>Please Wait</h5>',
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
                         });
-
                         var damage_report_date = $("#damage_report_date").val();
                         var action_plan_date = $("#action_plan_date").val();
                         let ticket = $('.select-ticket').val();
@@ -396,40 +387,21 @@ $configData = Helper::appClasses();
                             }
                         });
 
-                        $('.signatures').each(function(index) {
-                            let signature = {};
-                            $(this).find('.form-control').each(function() {
-                                var inputId = $(this).attr('id');
-                                var inputValue = $("#" + inputId).val();
-                                signature[$("#" + inputId).attr("name")] = inputValue;
-                            });
-
-                            if (ttdFile1 && index === 0) {
-                                signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                            }
-
-                            if (ttdFile2 && index === 1) {
-                                signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                            }
-
-                            if (ttdFile3 && index === 2) {
-                                signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                            }
-
-                            signatures.push(signature);
-                        });
-                        let scope = $("#scope").val().toString();
-                        let classification = $("#classification").val().toString();
+                       
+                        let scope = $("#scope").val();
+                        let classification = $("#classification").val();
                         datas.ticket_id = ticket;
                         datas.signatures = signatures;
                         datas.status = "Terbuat";
-                        datas.scope = scope;
+                        datas.scope = scope.toString();
                         datas.details = detail;
-                        datas.classification = classification;
+                        datas.classification = classification.toString();;
                         datas.action_plan_date = action_plan_date;
                         datas.damage_report_date = damage_report_date;
+                        console.log(datas);
                         $.ajax({
-                            url: "{{ env('BASE_URL_API')}}" +'/api/damage-report',
+                            // url: "{{ env('BASE_URL_API')}}" +'/api/damage-report',
+                            url: "{{url('/api/damage-report')}}",
                             type: "POST",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -473,70 +445,7 @@ $configData = Helper::appClasses();
         });
 
         // Preview before save
-        $(".btn-preview").on('click', function() {
-            let ticket = $('.select-ticket').val();
-            let datas = {}
-            let signatures = [];
-            var detail = [];
-
-            var damage_report_date = $("#damage_report_date").val();
-            var action_plan_date = $("#action_plan_date").val();
-            $('.row-input').each(function(index) {
-                var input_name = $(this).attr('name');
-                var input_value = $(this).val();
-                var input_index = Math.floor(index / 3); // Membagi setiap 5 input menjadi satu objek pada array
-                if (index % 3 == 0) {
-                    detail[input_index] = {
-                        category: input_value
-                    };
-                } else if (index % 3 == 1) {
-                    detail[input_index].location = input_value;
-                } else if (index % 3 == 2) {
-                    detail[input_index].total = parseInt(input_value);
-                }
-            });
-
-
-            $('.signatures').each(function(index) {
-                let signature = {};
-
-                $(this).find('.form-control').each(function() {
-                    var inputId = $(this).attr('id');
-                    var inputValue = $("#" + inputId).val();
-                    signature[$("#" + inputId).attr("name")] = inputValue;
-                });
-
-                if (ttdFile1 && index === 0) {
-                    signature['signature'] = ttdFile1.dataURL || ttdFile1.url;
-                }
-
-                if (ttdFile2 && index === 1) {
-                    signature['signature'] = ttdFile2.dataURL || ttdFile2.url;
-                }
-
-                if (ttdFile3 && index === 2) {
-                    signature['signature'] = ttdFile3.dataURL || ttdFile3.url;
-                }
-
-                signatures.push(signature);
-            });
-
-            let scope = $("#scope").val().toString();
-            let classification = $("#classification").val().toString();
-
-            datas.ticket_id = ticket;
-            datas.signatures = signatures;
-            datas.status = "Terbuat";
-            datas.scope = scope;
-            datas.classification = classification;
-            datas.details = detail;
-            datas.action_plan_date = action_plan_date;
-            datas.damage_report_date = damage_report_date;
-            console.log(datas);
-
-            localStorage.setItem('damage-report', JSON.stringify(datas));
-            window.location.href = "/complain/laporan-kerusakan/preview";
-        })
+        
 
         // Cancel
         $(".btn-cancel").on("click", function() {
@@ -773,8 +682,9 @@ $configData = Helper::appClasses();
                 </div>
             </div>
             `;
-            $('#details').prepend(temp);
         }
+        $('#details').prepend(temp);
+
     }
 </script>
 @endsection
