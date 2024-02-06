@@ -293,6 +293,9 @@ $configData = Helper::appClasses();
             if (details[i].position == "Technician") {
                 appendTechnician = `
                     <div class="col-md-3">
+                        <div class="mb-3 text-center">
+                            <span class="">Technician</span>
+                        </div>
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="technician_name" name="name[]" readonly value="${details[i].name}">
                         </div>
@@ -315,6 +318,9 @@ $configData = Helper::appClasses();
             } else if (details[i].position == "Chief Engineering") {
                 appendChief = `
                     <div class="col-md-3">
+                        <div class="mb-3 text-center">
+                            <span class="">Chief Engineering</span>
+                        </div>
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="chief_name" name="name[]" readonly value="${details[i].name}">
                         </div>
@@ -337,6 +343,9 @@ $configData = Helper::appClasses();
             } else if (details[i].position == "Warehouse") {
                 appendWarehouse = `
                     <div class="col-md-3">
+                        <div class="mb-3 text-center">
+                            <span class="">Warehouse</span>
+                        </div>
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="warehouse_name" name="name[]" readonly value="${details[i].name}">
                         </div>
@@ -359,6 +368,9 @@ $configData = Helper::appClasses();
             } else if (details[i].position == "Kepala BM") {
                 appendKepala = `
                     <div class="col-md-3">
+                        <div class="mb-3 text-center">
+                            <span class="">Kepala BM</span>
+                        </div>
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="kepala_name" name="name[]" readonly value="${details[i].name}">
                         </div>

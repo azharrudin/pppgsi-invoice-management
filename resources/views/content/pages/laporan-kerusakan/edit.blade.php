@@ -362,8 +362,8 @@ $configData = Helper::appClasses();
                 allowEscapeKey: false
             })
             $.ajax({
-                // url: "{{ env('BASE_URL_API')}}" + '/api/damage-report/' + id,
-                url: "{{ url('/api/damage-report/')}}/" + id,
+                url: "{{ env('BASE_URL_API')}}" + '/api/damage-report/' + id,
+                // url: "{{ url('/api/damage-report/')}}/" + id,
                 type: "GET",
                 dataType: "json",
                 success: function(res) {
@@ -865,8 +865,8 @@ $configData = Helper::appClasses();
                             datas.signatures = signature;
                             console.log(datas);
                             $.ajax({
-                                // url: "{{ env('BASE_URL_API')}}" + '/api/damage-report/' + id,
-                                url: "{{ url('/api/damage-report/')}}/" + id,
+                                url: "{{ env('BASE_URL_API')}}" + '/api/damage-report/' + id,
+                                // url: "{{ url('/api/damage-report/')}}/" + id,
                                 type: "PATCH",
                                 data: JSON.stringify(datas),
                                 contentType: "application/json; charset=utf-8",
