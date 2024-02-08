@@ -11,6 +11,7 @@ use App\Http\Controllers\MaterialRequestController;
 use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\PurchaseRequestController;
 use App\Http\Controllers\ReceiptController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ScopeController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\TenantController;
@@ -113,3 +114,5 @@ Route::resource('scope', ScopeController::class);
 
 Route::get("vendor-invoice/report", [VendorInvoiceController::class, "report"]);
 Route::get("vendor-invoice/", [VendorInvoiceController::class, "index"]);
+
+Route::get("report/dashboard", [ReportController::class, "dashboard"]);
