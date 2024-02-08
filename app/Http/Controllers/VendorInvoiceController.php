@@ -82,6 +82,10 @@ class VendorInvoiceController extends Controller
         }
     }
 
+    public function add_attachment(){
+        
+    }
+
     public function report(Request $request)
     {
         try{
