@@ -269,7 +269,7 @@ $configData = Helper::appClasses();
                         datas.attachments = attachments;
                         console.log(datas);
                         $.ajax({
-                            url: "{{env('BASE_URL_API')}}" +'/api/purchase-order/' + id,
+                            url: "{{env('BASE_URL_API')}}" +'/api/vendor-invoice/add-attachment/' + id,
                             // url: "{{url('api/vendor-invoice/add-attachment')}}/" + id,
                             type: "POST",
                             data: JSON.stringify(datas),
@@ -354,8 +354,8 @@ $configData = Helper::appClasses();
 
     function getDataTagihanVendor(id) {
         $.ajax({
-            // url: "{{env('BASE_URL_API')}}" +'/api/purchase-order/' + id,
-            url: "{{url('api/purchase-order')}}/" + id,
+            url: "{{env('BASE_URL_API')}}" +'/api/purchase-order/' + id,
+            // url: "{{url('api/purchase-order')}}/" + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
@@ -468,7 +468,7 @@ $configData = Helper::appClasses();
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment-${i}" name="attachment[]">
+                                    <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment-${i}" name="attachment[]" required>
                                 </div>
                                 <div class="mb-3">
                                     <div class="d-flex gap-4">
@@ -508,7 +508,7 @@ $configData = Helper::appClasses();
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment-0" name="attachment[]">
+                                    <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment-0" name="attachment[]" required>
                                 </div>
                                 <div class="mb-3">
                                     <div class="d-flex gap-4">
@@ -590,7 +590,7 @@ $configData = Helper::appClasses();
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment-${index}" name="attachment[]">
+                                    <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment-${index}" name="attachment[]" required>
                                 </div>
                                 <div class="mb-3">
                                     <div class="d-flex gap-4">
