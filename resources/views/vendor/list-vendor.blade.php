@@ -88,7 +88,7 @@
                     <div class="row">
                         <div class="col mb-3">
                             <label for="nameBackdrop" class="form-label">Alamat</label>
-                            <textarea name="address" id="address" class="form-control" cols="30" rows="3"></textarea>
+                            <textarea name="address" id="address" class="form-control" cols="30" rows="3" required></textarea>
                             <div class="invalid-feedback"> Masukan Alamat. </div>
                         </div>
                     </div>
@@ -151,7 +151,7 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="nameBackdrop" class="form-label">Alamat</label>
-                                <textarea name="address" id="edit_address" cols="30" rows="3" class="form-control"></textarea>
+                                <textarea name="address" id="edit_address" cols="30" rows="3" class="form-control" required></textarea>
                                 <div class="invalid-feedback"> Please enter your Address. </div>
                             </div>
                         </div>
@@ -161,10 +161,6 @@
                             id="modal_vendor_cancel">Close</button>
                         <button type="submit" class="btn btn-primary save-vendor">
                             <span class="indicator-label">Simpan</span>
-                            <span class="indicator-progress">
-                                Please wait...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                            </span>
                         </button>
                     </div>
                 </div>

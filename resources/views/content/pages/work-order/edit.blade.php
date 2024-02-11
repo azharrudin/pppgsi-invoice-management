@@ -229,7 +229,10 @@ $configData = Helper::appClasses();
         }
 
         let appendTechnician = `
-                <div class="col-md-3">                    
+                <div class="col-md-3">      
+                    <div class="mb-3 text-center">
+                        <span class="">Technician</span>
+                    </div>              
                     <div class="mb-3">
                         <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Nama" style="text-align:center;" id="technician-name" name="name[]" value="${nameTechnician ? nameTechnician : ''}" ${dateTechnicianAttr} />
                     </div>
@@ -295,7 +298,10 @@ $configData = Helper::appClasses();
         }
 
         let appendChief = `
-                <div class="col-md-3">                    
+                <div class="col-md-3">  
+                    <div class="mb-3 text-center">
+                        <span class="">Chief Engineering</span>
+                    </div>                  
                     <div class="mb-3">
                         <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Nama" style="text-align:center;" id="chief-name" name="name[]" value="${nameChief ? nameChief : ''}" ${dateChiefAttr} />
                     </div>
@@ -361,7 +367,10 @@ $configData = Helper::appClasses();
         }
 
         let appendWarehouse = `
-                <div class="col-md-3">                    
+                <div class="col-md-3">
+                    <div class="mb-3 text-center">
+                        <span class="">Warehouse</span>
+                    </div>                    
                     <div class="mb-3">
                         <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Nama" style="text-align:center;" id="warehouse-name" name="name[]" value="${nameWarehouse ? nameWarehouse : ''}" ${dateWarehouseAttr} />
                     </div>
@@ -427,7 +436,10 @@ $configData = Helper::appClasses();
         }
 
         let appendKepala = `
-                <div class="col-md-3">                    
+                <div class="col-md-3">
+                    <div class="mb-3 text-center">
+                        <span class="">Kepala BM</span>
+                    </div>                    
                     <div class="mb-3">
                         <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Nama" style="text-align:center;" id="kepala-name" name="name[]" value="${nameKepala ? nameKepala : ''}" ${dateKepalaAttr} />
                     </div>

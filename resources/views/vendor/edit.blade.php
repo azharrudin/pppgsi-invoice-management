@@ -354,8 +354,8 @@ $configData = Helper::appClasses();
 
     function getDataTagihanVendor(id) {
         $.ajax({
-            url: "{{env('BASE_URL_API')}}" +'/api/purchase-order/' + id,
-            // url: "{{url('api/purchase-order')}}/" + id,
+            // url: "{{env('BASE_URL_API')}}" +'/api/purchase-order/' + id,
+            url: "{{url('api/purchase-order')}}/" + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
@@ -445,9 +445,9 @@ $configData = Helper::appClasses();
         console.log(data);
         let getDetail = '';
         let temp = '';
+        let details = data;
 
         if (data.length > 0) {
-            let details = data;
             for (let i = 0; i < details.length; i++) {
                 temp = `             
                 <div class="document">
@@ -490,34 +490,43 @@ $configData = Helper::appClasses();
             openLink(details);
         } else {
             temp = `             
-                        <div class="document">
-                            <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">Pilih Document</label>
-                                <select name="document[]" id="document" class="form-control row-input" required>
-                                    <option value="">Pilih Document</option>
-                                    <option value="Faktur Pembelian">Faktur Pembelian</option>
-                                    <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
-                                    <option value="Purchase Order">Purchase Order(PO)</option>
-                                    <option value="Delivery Order">Delivery Order(DO)</option>
-                                    <option value="Berita Acara Pembayaran">Berita Acara Pembayaran(BAP)</option>
-                                    <option value="Berita Acara Kemajuan Pekerjaan">Berita Acara Kemajuan Pekerjaan(BAPK)</option>
-                                    <option value="Berita Acara Serah Terima">Berita Acara Serah Terima</option>
-                                    <option value="Progress Kerja">Progress Kerja</option>
-                                    <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
-                                    <option value="Faktur Pajak">Faktur Pajak</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment-0" required name="attachment">
-                                <input type="hidden" class="form-control row-input" placeholder="Pilih Berkas" id="attachment-val-0" required name="attachment">
-                            </div>
-                    </div>`;
+            <div class="document">
+                                <div class="mb-3">
+                                    <label for="note" class="form-label fw-medium">Pilih Document</label>
+                                    <select name="document[]" id="document-0" class="form-control row-input" required>
+                                        <option value="">Pilih Document</option>
+                                        <option value="Faktur Pembelian">Faktur Pembelian</option>
+                                        <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
+                                        <option value="Purchase Order">Purchase Order(PO)</option>
+                                        <option value="Delivery Order">Delivery Order(DO)</option>
+                                        <option value="Berita Acara Pembayaran">Berita Acara Pembayaran(BAP)</option>
+                                        <option value="Berita Acara Kemajuan Pekerjaan">Berita Acara Kemajuan Pekerjaan(BAPK)</option>
+                                        <option value="Berita Acara Serah Terima">Berita Acara Serah Terima</option>
+                                        <option value="Progress Kerja">Progress Kerja</option>
+                                        <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
+                                        <option value="Faktur Pajak">Faktur Pajak</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment-0" name="attachment[]">
+                                </div>
+                                <div class="mb-3">
+                                    <div class="d-flex gap-4">
+                                        
+                                        <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                    <input type="hidden" class="form-control row-input" placeholder="Pilih Berkas" id="attachment-val-0" required name="attachment">
+                                </div>
+                            </div>`;
             $('#documents').prepend(temp);
+            handleAttachments(details);
         }
     }
 
     function handleAttachments(details) {
-        if (details) {
+        if (details.length > 0) {
             for (let i = 0; i < details.length; i++) {
                 console.log('ahh');
                 const fileInput = $("#attachment-"+i);
@@ -538,6 +547,7 @@ $configData = Helper::appClasses();
                 });
             }
         } else {
+            console.log('ah');
             const fileInput = $("#attachment-0");
             const fileInputVal = $("#attachment-val-0");
             // Listen for the change event so we can capture the file
@@ -562,31 +572,36 @@ $configData = Helper::appClasses();
         lastIndex = index;
         let documents = $('.documents');
         let newRow = `
-        <div class="documents">
-                        <div class="document">
-                            <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">Pilih Document</label>
-                                <select name="document[]" id="document" class="form-control row-input" required>
-                                    <option value="">Pilih Document</option>
-                                    <option value="Faktur Pembelian">Faktur Pembelian</option>
-                                    <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
-                                    <option value="Purchase Order">Purchase Order(PO)</option>
-                                    <option value="Delivery Order">Delivery Order(DO)</option>
-                                    <option value="Berita Acara Pembayaran">Berita Acara Pembayaran(BAP)</option>
-                                    <option value="Berita Acara Kemajuan Pekerjaan">Berita Acara Kemajuan Pekerjaan(BAPK)</option>
-                                    <option value="Berita Acara Serah Terima">Berita Acara Serah Terima</option>
-                                    <option value="Progress Kerja">Progress Kerja</option>
-                                    <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
-                                    <option value="Faktur Pajak">Faktur Pajak</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <input type="file" class="form-control " placeholder="Pilih Berkas" id="attachment-${lastIndex}" required name="attachment">
-                                <input type="hidden" class="form-control row-input" placeholder="Pilih Berkas" id="attachment-val-${lastIndex}" required name="attachment">
-                            </div>
-                        </div>
-                    </div>
-        `;
+                             <div class="document">
+                                <div class="mb-3">
+                                    <label for="note" class="form-label fw-medium">Pilih Document</label>
+                                    <select name="document[]" id="document-${index}" class="form-control row-input" required>
+                                        <option value="">Pilih Document</option>
+                                        <option value="Faktur Pembelian">Faktur Pembelian</option>
+                                        <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
+                                        <option value="Purchase Order">Purchase Order(PO)</option>
+                                        <option value="Delivery Order">Delivery Order(DO)</option>
+                                        <option value="Berita Acara Pembayaran">Berita Acara Pembayaran(BAP)</option>
+                                        <option value="Berita Acara Kemajuan Pekerjaan">Berita Acara Kemajuan Pekerjaan(BAPK)</option>
+                                        <option value="Berita Acara Serah Terima">Berita Acara Serah Terima</option>
+                                        <option value="Progress Kerja">Progress Kerja</option>
+                                        <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
+                                        <option value="Faktur Pajak">Faktur Pajak</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment-${index}" name="attachment[]">
+                                </div>
+                                <div class="mb-3">
+                                    <div class="d-flex gap-4">
+                                        
+                                        <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                    <input type="hidden" class="form-control row-input" placeholder="Pilih Berkas" id="attachment-val-${index}" required name="attachment">
+                                </div>
+                            </div>`;
         documents.append(newRow);
         const fileInput = $("#attachment-" + index);
         const fileInputVal = $("#attachment-val-" + index);

@@ -408,8 +408,8 @@
                     allowEscapeKey: false
                 })
                 $.ajax({
-                    // url: "{{ env('BASE_URL_API')}}" +'/api/damage-report/' + id,
-                    url: "{{ url('/api/damage-report/')}}/" + id,
+                    url: "{{ env('BASE_URL_API')}}" +'/api/damage-report/' + id,
+                    // url: "{{ url('/api/damage-report/')}}/" + id,
                     type: "GET",
                     dataType: "json",
                     success: function(res) {
@@ -465,9 +465,8 @@
                                 .date, 'YYYY-MM-DD').format('DD-MM-YYYY'));
                         }
 
-                        if(account.level.id == 10 || (account.level.id == 4 & response.status == 'Terbuat') || (account.level.id == 3 & response.status == 'Disetujui LC') || (account.level.id == 2 & response.status == 'Disetujui KT')){
-                            $('.edit').removeClass('d-none');
-                        }
+                      
+                        $('.edit').removeClass('d-none');
                         
                         Swal.close();
                     },
