@@ -20,7 +20,23 @@ $configData = Helper::appClasses();
 @endsection
 
 @section('content')
-<div class="container-xxl flex-grow-1 container-p-y">
+
+<div class="container-xxl flex-grow-1">
+    <div class="d-flex justify-content-between mb-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-style1">
+                <li class="breadcrumb-item">
+                    <a href="#">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <a href="#">Home</a>
+                </li>
+            </ol>
+        </nav>
+
+        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#filter-form">Filter</button>
+    </div>
+
     <div class="row mb-4">
         <!-- View sales -->
         <div class="col-md-6  col-12">
@@ -160,7 +176,7 @@ $configData = Helper::appClasses();
         </div>
         <div class="col-md-9">
             <div class="card">
-                <div class="card-datatable table-responsive pt-0">
+                <!-- <div class="card-datatable table-responsive pt-0">
                     <table class="invoice-list-table table">
                         <thead>
                             <tr>
@@ -173,7 +189,7 @@ $configData = Helper::appClasses();
                             </tr>
                         </thead>
                     </table>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -236,6 +252,38 @@ $configData = Helper::appClasses();
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="modal fade" id="filter-form" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <form class="modal-content filter-submit" id=" filter-submit" novalidate>
+            <div class="modal-header">
+                <h5 class="modal-title" id="backDropModalTitle">Filter Option</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="nameBackdrop" class="form-label">Tanggal Awal</label>
+                        <input type="date" id="tanggal-awal" name="tanggal-awal" class="form-control">
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nameBackdrop" class="form-label">Tanggal Akhir</label>
+                        <input type="date" id="tanggal-akhir" name="tanggal-akhir" class="form-control">
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal" id="modal_bank_cancel">Reset</button>
+                <button type="submit" class="btn btn-primary save-bank">
+                    Apply
+                </button>
+
+            </div>
+        </form>
     </div>
 </div>
 @endsection

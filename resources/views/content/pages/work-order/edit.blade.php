@@ -114,20 +114,20 @@ $configData = Helper::appClasses();
                                         <label for="note" class="form-label fw-medium">Klasifikasi</label>
                                         <div class="">
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="closed" id="closed">
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="closed" id="Closed">
                                                 <label class="form-check-label" for="closed">Closed
                                                 </label>
                                             </div>
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="cancelled" id="cancelled">
-                                                <label class="form-check-label" for="cancelled">Calceled</label>
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="cancelled" id="Cancelled">
+                                                <label class="form-check-label" for="cancelled">Cancelled</label>
                                             </div>
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="explanation" id="explanation">
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="explanation" id="Explanation">
                                                 <label class="form-check-label" for="explanation">Explanation</label>
                                             </div>
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="others" id="others">
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="others" id="Others">
                                                 <label class="form-check-label" for="others">Others</label>
                                             </div>
                                         </div>
@@ -149,7 +149,7 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                    <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Update</button>
+                        <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Update</button>
                         <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Kembali</button>
                     </div>
                 </div>
@@ -315,7 +315,7 @@ $configData = Helper::appClasses();
             `;
         return appendChief;
     }
-  
+
     function getSignatureWarehouse(value) {
         let disableWarehouse = 'disabled';
         let dropzoneWarehouse = '';
@@ -454,6 +454,25 @@ $configData = Helper::appClasses();
         return appendKepala;
     }
 
+    function disabledFlatDate(id, value) {
+        $("#" + id).val(value);
+        $("#" + id).removeAttr('required');
+        $("#" + id).attr('readonly', true);
+    }
+
+    function getDateValues(data) {
+        if (account.level.id != 1) {
+            $("#action_plan_date").val(data.action_plan_date);
+            $("#work_order_date").val(data.work_order_date);
+            $("#finish_plan").val(data.finish_plan);
+            setDate();
+        } else {
+            disabledFlatDate("action_plan_date", data.action_plan_date);
+            disabledFlatDate("work_order_date", data.work_order_date);
+            disabledFlatDate("finish_plan", data.finish_plan);
+        }
+    }
+
     function getDataWorkOrder(id) {
         $.ajax({
             url: "{{env('BASE_URL_API')}}" + '/api/work-order/' + id,
@@ -471,18 +490,15 @@ $configData = Helper::appClasses();
             },
             success: function(res) {
                 var data = res.data;
-                console.log(data);
                 id = data.id;
+                getDateValues(data);
+
                 let details = data.work_order_signatures;
-                getLaporanKerusakan(data.damage_report_id);
                 $("#no-wo").text('Nomor Work Order : ' + data.work_order_number);
-                $("#action_plan_date").val(data.action_plan_date);
-                $("#work_order_date").val(data.work_order_date);
                 getLaporanKerusakan(data.damage_report_id);
-                $("#finish_plan").val(data.finish_plan);
-                $("#job_description").val(data.job_description);
                 getDetails(data.work_order_details);
                 getScope(data.scope);
+                $("#job_description").val(data.job_description);
                 getClassification(data.classification);
                 $('#' + data.klasifikasi).prop('checked', true);
                 let signatureTechnician, signatureChief, signatureKepala, signatureWarehouse;
@@ -502,14 +518,14 @@ $configData = Helper::appClasses();
                 let htmlGetSignatureChief = getSignatureChief(signatureChief);
                 let htmlGetSignatureWarehouse = getSignatureWarehouse(signatureWarehouse);
                 let htmlGetSignatureKepala = getSignatureKepala(signatureKepala);
-                $('.signatures').html(htmlGetSignatureTechnician+htmlGetSignatureChief+htmlGetSignatureWarehouse+htmlGetSignatureKepala);
+                $('.signatures').html(htmlGetSignatureTechnician + htmlGetSignatureChief + htmlGetSignatureWarehouse + htmlGetSignatureKepala);
 
                 account.level.id == 5 ? dropzoneValue(signatureTechnician, '#ttd1') : '';
                 account.level.id == 6 ? dropzoneValue(signatureChief, '#ttd2') : '';
                 account.level.id == 7 ? dropzoneValue(signatureWarehouse, '#ttd3') : '';
                 account.level.id == 1 ? dropzoneValue(signatureKepala, '#ttd4') : '';
 
-                setDate();
+
                 Swal.close();
             },
             error: function(errors) {
@@ -538,6 +554,10 @@ $configData = Helper::appClasses();
                     }
                 });
             });
+        }
+        if (account.level.id == 1) {
+            scopeSelect.prop("disabled", true);
+            scopeSelect.removeAttr('required');
         }
     }
 
@@ -602,7 +622,47 @@ $configData = Helper::appClasses();
         $('#details').prepend(tem);
     }
 
+    // Select2
+    function selectLaporan() {
+        $(".select-lk").select2({
+            placeholder: 'Select Damage Report',
+            allowClear: true,
+            ajax: {
+                url: "{{ env('BASE_URL_API')}}" + '/api/damage-report/select',
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        term: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+        });
+    }
+
     function getLaporanKerusakan(id) {
+        if (account.level.id != 1) {
+            selectLaporan();
+        }else{
+            $('#select-lk').removeAttr('required');
+            $('#select-lk').attr('disabled', true);
+        }
+
         $.ajax({
             url: "{{url('api/damage-report')}}/" + id,
             type: "GET",
@@ -766,7 +826,7 @@ $configData = Helper::appClasses();
                         if ($.type(ttdFile3) == 'object') {
                             ttdFile3 = ttdFile3.dataURL;
                         }
-                      
+
                         if ($.type(ttdFile4) == 'object') {
                             ttdFile4 = ttdFile4.dataURL;
                         }
@@ -778,7 +838,7 @@ $configData = Helper::appClasses();
                             signature1.date = $('#technician-date').val();
                             signature1.signature = ttdFile1;
                         }
-                       
+
                         let signature2 = {};
                         if (ttdFile2 != undefined) {
                             signature2.position = 'Chief Engineering';
@@ -786,7 +846,7 @@ $configData = Helper::appClasses();
                             signature2.date = $('#chief-date').val();
                             signature2.signature = ttdFile2;
                         }
-                      
+
                         let signature3 = {};
                         if (ttdFile3 != undefined) {
                             signature3.position = 'Warehouse';
@@ -810,11 +870,11 @@ $configData = Helper::appClasses();
                         if (!isEmptyObject(signature2)) {
                             signature.push(signature2);
                         }
-                    
+
                         if (!isEmptyObject(signature3)) {
                             signature.push(signature3);
                         }
-                       
+
                         if (!isEmptyObject(signature4)) {
                             signature.push(signature4);
                         }
@@ -834,9 +894,9 @@ $configData = Helper::appClasses();
 
                         datas.signatures = signature;
 
-                    
+
                         $.ajax({
-                            url: "{{ env('BASE_URL_API')}}" + '/api/work-order/'+id,
+                            url: "{{ env('BASE_URL_API')}}" + '/api/work-order/' + id,
                             // url: "{{ url('api/work-order')}}/"+id,
                             type: "PATCH",
                             data: JSON.stringify(datas),
@@ -899,36 +959,8 @@ $configData = Helper::appClasses();
         })
 
 
-        // Select2
-        $(".select-lk").select2({
-            placeholder: 'Select Damage Report',
-            allowClear: true,
-            ajax: {
-                url: "{{ env('BASE_URL_API')}}" + '/api/damage-report/select',
-                dataType: 'json',
-                cache: true,
-                data: function(params) {
-                    return {
-                        term: params.term || '',
-                        page: params.page || 1
-                    }
-                },
-                processResults: function(data, params) {
-                    var more = data.pagination.more;
-                    if (more === false) {
-                        params.page = 1;
-                        params.abort = true;
-                    }
 
-                    return {
-                        results: data.data,
-                        pagination: {
-                            more: more
-                        }
-                    };
-                }
-            }
-        });
+
 
         // Keyup input qty
         $(document).on('input', '.qty', function() {

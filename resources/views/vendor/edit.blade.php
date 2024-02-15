@@ -626,11 +626,13 @@ $configData = Helper::appClasses();
         let details = detailItems;
         let getDetail = '';
         let tem = '';
+        let specification='';
         for (let i = 0; i < details.length; i++) {
+            specification ? details[i].specification : '';
             tem = `<tr>
                         <td>` + details[i].number + `</td>
                         <td>` + details[i].name + `</td>
-                        <td>` + details[i].specification + `</td>
+                        <td>` +  specification+ `</td>
                         <td>` + details[i].quantity + `</td>
                         <td>` + details[i].units + `</td>
                         <td>` + 'Rp. ' + format(details[i].price) + `</td>
