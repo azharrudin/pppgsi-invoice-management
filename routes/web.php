@@ -143,6 +143,7 @@ Route::group(['middleware' => 'cekauth'], function () {
             Route::get('/', [PurchaseOrderController::class, 'index'])->name('pages-list-material-request');
             Route::get('/add', [PurchaseOrderController::class, 'create'])->name('pages-create-tanda-terima');
             Route::get('/preview', [PurchaseOrderController::class, 'preview'])->name('pages-preview-tanda-terima');
+            Route::get('/show/{id}', [PurchaseOrderController::class, 'show'])->name('pages-preview-tanda-terima');
             Route::get('/data-purchase-order', [PurchaseOrderController::class, 'datatable'])->name('data-purchase-order');
             Route::get('/print/{id}', [PurchaseOrderController::class, 'print']);
         });

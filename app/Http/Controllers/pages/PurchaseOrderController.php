@@ -95,7 +95,7 @@ class PurchaseOrderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('content.pages.purchase-order.show');
     }
 
     /**
