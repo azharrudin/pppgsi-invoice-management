@@ -196,8 +196,9 @@ $configData = Helper::appClasses();
                     } else if (data == "Disetujui BM") {
                         return '<span class="badge w-100" style="background-color : #4E6DD9; ">' + data +
                             '</span>'
-                    } else if (data == "disetujui KT") {
-                        return '<span class="badge w-100" style="background-color : #74D94E; ">Disetujui KT</span>'
+                    } else if (data == "Disetujui KT") {
+                        return '<span class="badge w-100" style="background-color : #74D94E; ">' + data +
+                            '</span>'
                     } else if (data == "Terbuat") {
                         return '<span class="badge w-100" style="background-color : #BFBFBF; " >' + data +
                             '</span>'

@@ -730,9 +730,9 @@ $configData = Helper::appClasses();
 
 
                             if (account.level.id == '4') {
-                                datas.status = 'disetujui LC';
+                                datas.status = 'Disetujui LC';
                             } else if (account.level.id == '3') {
-                                datas.status = 'disetujui KT';
+                                datas.status = 'Disetujui KT';
                             } else if (account.level.id == '2') {
                                 datas.status = 'Disetujui KA';
                             } else if (account.level.id == '10') {
