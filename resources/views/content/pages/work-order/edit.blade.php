@@ -520,7 +520,7 @@ $configData = Helper::appClasses();
                 if(account.level.id != 10){
                     $('.btn-remove-mg').remove();
                     $('.btn-add-row-mg').remove();
-                    $('.form-control').attr('disabled', 'disabled');
+                    $('.form-control').attr('readonly', 'readonly');
                 }
 
                 let htmlGetSignatureTechnician = getSignatureTechnician(signatureTechnician);

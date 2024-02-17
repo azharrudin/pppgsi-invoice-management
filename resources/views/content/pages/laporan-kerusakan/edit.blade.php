@@ -350,7 +350,7 @@ $configData = Helper::appClasses();
                     let htmlGetSignatureKoordinatorTeknik = getSignatureKoordinatorTeknik(signatureKoordinatorTeknik);
                     let htmlGignatureKepalaUnitPelayanan = getSignatureKepalaUnitPelayanan(signatureKepalaUnitPelayanan);
 
-                    $('.signatures').html(htmlGignatureKepalaUnitPelayanan + htmlGetSignatureKoordinatorTeknik + htmlGetSignatureLeaderCleaning);
+                    $('.signatures').html(htmlGetSignatureLeaderCleaning + htmlGetSignatureKoordinatorTeknik + htmlGignatureKepalaUnitPelayanan);
                     account.level.id == 4 ? dropzoneValue(signatureLeaderCleaing, '#ttd1') : '';
                     account.level.id == 3 ? dropzoneValue(signatureKoordinatorTeknik, '#ttd2') : '';
                     account.level.id == 2 ? dropzoneValue(signatureKepalaUnitPelayanan, '#ttd3') : '';
@@ -376,7 +376,6 @@ $configData = Helper::appClasses();
                     if(account.level.id != 10){
                         $('.btn-remove-mg').remove();
                         $('.btn-add-row-mg').remove();
-                        $('.form-control').attr('disabled', 'disabled');
                         $('.select2').attr('disabled', 'disabled');
                     }
                     Swal.close();
