@@ -232,7 +232,7 @@
             var levelId = account.level_id;
             var department = account.department.name;
             var nameUser = account.name;
-          
+          console.log(levelId);
 
             if (levelId == 1) { // BM
                 let ttdFile = null;
@@ -252,7 +252,7 @@
                     }
                 });
                 var inputValue = $("#signature_name").val();
-                if (inputValue.trim() === '') {
+                if (levelId != 1) {
                     $("#signature_name").val(nameUser);
                     $("#signature_name").prop('readonly', true);
                     $(".btn-update span").html('<i class="ti ti-check ti-xs me-2"></i>Disetujui Kepala BM');

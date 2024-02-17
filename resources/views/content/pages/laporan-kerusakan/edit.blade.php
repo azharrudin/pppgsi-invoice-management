@@ -143,75 +143,6 @@ $configData = Helper::appClasses();
         var department = account.department.name;
         var nameUser = account.name;
         let ttdFile1, ttdFile2, ttdFile3;
-
-
-
-
-        // if (levelId == 2) { // KA
-        //     var inputValue = $("#edit_type-1").val();
-        //     if (inputValue.trim() === '') {
-        //         $("#edit_type-1").val(department);
-        //         $("#edit_name-1").val(nameUser);
-        //     }
-        //     $('#edit_type-1').prop('readonly', false);
-        //     $('#edit_name-1').prop('readonly', false);
-        //     $('#edit_date-1').prop('disabled', false);
-
-        //     $('#edit_type-2').prop('readonly', true);
-        //     $('#edit_name-2').prop('readonly', true);
-        //     $('#edit_date-2').prop('disabled', true);
-
-        //     $('#edit_type-3').prop('readonly', true);
-        //     $('#edit_name-3').prop('readonly', true);
-        //     $('#edit_date-3').prop('disabled', true);
-        // } else if (levelId == 3) { // koor teknik
-        //     var inputValue = $("#edit_type-2").val();
-        //     if (inputValue.trim() === '') {
-        //         $("#edit_type-2").val(department);
-        //         $("#edit_name-2").val(nameUser);
-        //     }
-        //     $('#edit_type-1').prop('readonly', true);
-        //     $('#edit_name-1').prop('readonly', true);
-        //     $('#edit_date-1').prop('disabled', true);
-
-        //     $('#edit_type-2').prop('readonly', false);
-        //     $('#edit_name-2').prop('readonly', false);
-        //     $('#edit_date-2').prop('disabled', false);
-
-        //     $('#edit_type-3').prop('readonly', true);
-        //     $('#edit_name-3').prop('readonly', true);
-        //     $('#edit_date-3').prop('disabled', true);
-        // } else if (levelId == 4) { // leader cleaning
-        //     var inputValue = $("#edit_type-3").val();
-        //     if (inputValue.trim() === '') {
-        //         $("#edit_type-3").val(department);
-        //         $("#edit_name-3").val(nameUser);
-        //     }
-        //     $('#edit_type-1').prop('readonly', true);
-        //     $('#edit_name-1').prop('readonly', true);
-        //     $('#edit_date-1').prop('disabled', true);
-
-        //     $('#edit_type-2').prop('readonly', true);
-        //     $('#edit_name-2').prop('readonly', true);
-        //     $('#edit_date-2').prop('disabled', true);
-
-        //     $('#edit_type-3').prop('readonly', false);
-        //     $('#edit_name-3').prop('readonly', false);
-        //     $('#edit_date-3').prop('disabled', false);
-        // } else { //other
-        //     $('#edit_type-1').prop('readonly', true);
-        //     $('#edit_name-1').prop('readonly', true);
-        //     $('#edit_date-1').prop('disabled', true);
-
-        //     $('#edit_type-2').prop('readonly', true);
-        //     $('#edit_name-2').prop('readonly', true);
-        //     $('#edit_date-2').prop('disabled', true);
-
-        //     $('#edit_type-3').prop('readonly', true);
-        //     $('#edit_name-3').prop('readonly', true);
-        //     $('#edit_date-3').prop('disabled', true);
-        // }
-
         //  fungsi untuk money format
         $(document).on("keyup", ".qty", function(e) {
             $(this).val(format($(this).val()));
@@ -368,7 +299,6 @@ $configData = Helper::appClasses();
                 dataType: "json",
                 success: function(res) {
                     let response = res.data;
-                    console.log(response);
                     getScope(response.scope);
                     getClassification(response.classification);
                     let details= response.damage_report_signatures;
@@ -443,6 +373,12 @@ $configData = Helper::appClasses();
                     }
                     getDetails(response.damage_report_details);
                     setDate();
+                    if(account.level.id != 10){
+                        $('.btn-remove-mg').remove();
+                        $('.btn-add-row-mg').remove();
+                        $('.form-control').attr('disabled', 'disabled');
+                        $('.select2').attr('disabled', 'disabled');
+                    }
                     Swal.close();
                 },
                 error: function(errors) {
@@ -511,7 +447,7 @@ $configData = Helper::appClasses();
             let datePrepared = '';
             if (account.level.id == '4') {
                 namePrepared = value?.name ? value.name : '';
-                datePrepared = value?.date ? value.date : '';
+                datePrepared = value?.date ? moment(value.date, 'YYYY-MM-DD').format('DD-MM-YYYY') : '';
                 dropzonePrepared = 'dz-clickable';
                 namePrepared = account.name;
                 ttdFile1 = value?.signature;
@@ -527,7 +463,7 @@ $configData = Helper::appClasses();
                 if (value) {
                     namePrepared = value.name;
                     datePreparedAttr = 'disabled';
-                    datePrepared = value.date ? value.date : '';
+                    datePrepared = value.date ? moment(value.date, 'YYYY-MM-DD').format('DD-MM-YYYY') : '';
                     ttdFile1 = value?.signature;
                     imagePrepared = `<div id="leaderCleaning-image"></div>` +
                         '<script type="text/javascript">' +
@@ -559,7 +495,7 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Jabatan" style="text-align:center;" id="lc-jabatan" name="jabatan[]" value="Leader Cleaning" disabled />
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 container d-flex justify-content-center align-items-center">
                             ${imagePrepared}
                         </div>
                         <div class="mb-3">
@@ -579,7 +515,7 @@ $configData = Helper::appClasses();
             let dateReviewed = '';
             if (account.level.id == '3') {
                 nameReviewed = value?.name ? value.name : '';
-                dateReviewed = value?.date ? value.date : '';
+                dateReviewed = value?.date ? moment(value.date, 'YYYY-MM-DD').format('DD-MM-YYYY') : '';
                 dropzoneReviewed = 'dz-clickable';
                 nameReviewed = account.name;
                 ttdFile2 = value?.signature;
@@ -597,7 +533,7 @@ $configData = Helper::appClasses();
                     nameReviewed = value.name;
                     dateReviewedAttr = 'disabled';
                     ttdFile2 = value?.signature;
-                    dateReviewed = value?.date ? value.date : '';
+                    dateReviewed = value?.date ? moment(value.date, 'YYYY-MM-DD').format('DD-MM-YYYY') : '';
                     imageReviewed = `<div id="koordinatorTeknik-image"></div>` +
                         '<script type="text/javascript">' +
                         '$("#koordinatorTeknik-image").css("background-color", "black");' +
@@ -628,7 +564,7 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Jabatan" style="text-align:center;" id="kt-jabatan" name="jabatan[]" value="Koordinator Teknik" disabled />
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 container d-flex justify-content-center align-items-center">
                             ${imageReviewed}
                         </div>
                         <div class="mb-3">
@@ -648,7 +584,7 @@ $configData = Helper::appClasses();
             let dateAknowledge = '';
             if (account.level.id == '2') {
                 nameAknowledge = value?.name ? value.name : '';
-                dateAknowledge = value?.date ? value.date : '';
+                dateAknowledge = value?.date ? moment(value.date, 'YYYY-MM-DD').format('DD-MM-YYYY') : '';
                 dropzoneAknowledge = 'dz-clickable';
                 nameAknowledge = account.name;
                 ttdFile3 = value?.signature;
@@ -664,7 +600,7 @@ $configData = Helper::appClasses();
                 if (value) {
                     nameAknowledge = value.name;
                     dateAknowledgeAttr = 'disabled';
-                    dateAknowledge = value.date ? value.date : '';
+                    dateAknowledge = value.date ? moment(value.date, 'YYYY-MM-DD').format('DD-MM-YYYY') : '';
                     ttdFile3 = value?.signature;
                     nameAknowledge = account.name;
                     imageAknowledge = `<div id="kepalaUnitPelayanan-image"></div>` +
@@ -698,7 +634,7 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Jabatan" style="text-align:center;" id="ka-jabatan" name="jabatan[]" value="Kepala Unit Pelayanan" disabled />
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 container d-flex justify-content-center align-items-center">
                             ${imageAknowledge}
                         </div>
                         <div class="mb-3">
@@ -714,7 +650,7 @@ $configData = Helper::appClasses();
 
         function setDate() {
             $('.date').flatpickr({
-                dateFormat: 'Y-m-d'
+                dateFormat: 'd-m-Y'
             });
 
             const flatPickrEL = $(".date");
@@ -722,7 +658,7 @@ $configData = Helper::appClasses();
                 flatPickrEL.flatpickr({
                     allowInput: true,
                     monthSelectorType: "static",
-                    dateFormat: 'Y-m-d'
+                    dateFormat: 'd-m-Y'
                 });
             }
         }

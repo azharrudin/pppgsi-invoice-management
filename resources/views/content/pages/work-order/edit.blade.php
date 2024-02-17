@@ -68,7 +68,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label for="scope" class="form-label fw-medium">Scope</label>
-                                    <select class="form-select add w-px-250 select2 select-scope" id="scope" name="scope" multiple required>
+                                    <select class="form-select add w-px-250 select2 select-scope form-control" id="scope" name="scope" multiple required>
                                     </select>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
@@ -187,7 +187,7 @@ $configData = Helper::appClasses();
         let dateTechnician = '';
         if (account.level.id == '5') {
             nameTechnician = value?.name ? value.name : '';
-            dateTechnician = value?.date ? value.date : '';
+            dateTechnician = value?.date ? moment(value.date, 'Y-MM-DD').format('DD-MM-YYYY') : '';
             dropzoneTechnician = 'dz-clickable';
             nameTechnician = account.name;
             ttdFile1 = value?.signature ? value.signature : '';
@@ -203,7 +203,7 @@ $configData = Helper::appClasses();
             if (value) {
                 nameTechnician = value.name;
                 dateTechnicianAttr = 'disabled';
-                dateTechnician = value.date ? value.date : '';
+                dateTechnician = value.date ? moment(value.date, 'Y-MM-DD').format('DD-MM-YYYY') : '';
                 ttdFile1 = value.signature;
                 imageTechnician = `<div id="unit-image" style="padding: 5px;"></div>` +
                     '<script type="text/javascript">' +
@@ -256,7 +256,7 @@ $configData = Helper::appClasses();
         let dateChief = '';
         if (account.level.id == '6') {
             nameChief = value?.name ? value.name : '';
-            dateChief = value?.date ? value.date : '';
+            dateChief = value?.date ? moment(value.date, 'Y-MM-DD').format('DD-MM-YYYY') : '';
             dropzoneChief = 'dz-clickable';
             nameChief = account.name;
             ttdFile2 = value?.signature ? value.signature : '';
@@ -272,7 +272,7 @@ $configData = Helper::appClasses();
             if (value) {
                 nameChief = value.name;
                 dateChiefAttr = 'disabled';
-                dateChief = value.date ? value.date : '';
+                dateChief = value.date ? moment(value.date, 'Y-MM-DD').format('DD-MM-YYYY') : '';
                 ttdFile2 = value.signature;
                 imageChief = `<div id="chief-image" style="padding: 5px;"></div>` +
                     '<script type="text/javascript">' +
@@ -325,7 +325,7 @@ $configData = Helper::appClasses();
         let dateWarehouse = '';
         if (account.level.id == '7') {
             nameWarehouse = value?.name ? value.name : '';
-            dateWarehouse = value?.date ? value.date : '';
+            dateWarehouse = value?.date ? moment(value.date, 'Y-MM-DD').format('DD-MM-YYYY') : '';
             dropzoneWarehouse = 'dz-clickable';
             nameWarehouse = account.name;
             ttdFile3 = value?.signature ? value.signature : '';
@@ -341,7 +341,7 @@ $configData = Helper::appClasses();
             if (value) {
                 nameWarehouse = value.name;
                 dateWarehouseAttr = 'disabled';
-                dateWarehouse = value.date ? value.date : '';
+                dateWarehouse = value.date ? moment(value.date, 'Y-MM-DD').format('DD-MM-YYYY') : '';
                 ttdFile3 = value.signature;
                 imageWarehouse = `<div id="warehouse-image" style="padding: 5px;"></div>` +
                     '<script type="text/javascript">' +
@@ -394,7 +394,7 @@ $configData = Helper::appClasses();
         let dateKepala = '';
         if (account.level.id == '1') {
             nameKepala = value?.name ? value.name : '';
-            dateKepala = value?.date ? value.date : '';
+            dateKepala = value?.date ? moment(value.date, 'Y-MM-DD').format('DD-MM-YYYY') : '';
             dropzoneKepala = 'dz-clickable';
             nameKepala = account.name;
             ttdFile4 = value?.signature ? value.signature : '';
@@ -410,7 +410,7 @@ $configData = Helper::appClasses();
             if (value) {
                 nameKepala = value.name;
                 dateKepalaAttr = 'disabled';
-                dateKepala = value.date ? value.date : '';
+                dateKepala = value.date ? moment(value.date, 'Y-MM-DD').format('DD-MM-YYYY') : '';
                 ttdFile4 = value.signature;
                 imageKepala = `<div id="kepala-image" style="padding: 5px;"></div>` +
                     '<script type="text/javascript">' +
@@ -473,10 +473,15 @@ $configData = Helper::appClasses();
         }
     }
 
+    function date() {
+        $('.date').flatpickr({
+            dateFormat: 'Y-m-d'
+        });
+    }
+
     function getDataWorkOrder(id) {
         $.ajax({
             url: "{{env('BASE_URL_API')}}" + '/api/work-order/' + id,
-            // url: "{{url('api/work-order')}}/" + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
@@ -492,7 +497,6 @@ $configData = Helper::appClasses();
                 var data = res.data;
                 id = data.id;
                 getDateValues(data);
-
                 let details = data.work_order_signatures;
                 $("#no-wo").text('Nomor Work Order : ' + data.work_order_number);
                 getLaporanKerusakan(data.damage_report_id);
@@ -513,19 +517,22 @@ $configData = Helper::appClasses();
                         signatureKepala = details[i];
                     }
                 }
+                if(account.level.id != 10){
+                    $('.btn-remove-mg').remove();
+                    $('.btn-add-row-mg').remove();
+                    $('.form-control').attr('disabled', 'disabled');
+                }
 
                 let htmlGetSignatureTechnician = getSignatureTechnician(signatureTechnician);
                 let htmlGetSignatureChief = getSignatureChief(signatureChief);
                 let htmlGetSignatureWarehouse = getSignatureWarehouse(signatureWarehouse);
                 let htmlGetSignatureKepala = getSignatureKepala(signatureKepala);
                 $('.signatures').html(htmlGetSignatureTechnician + htmlGetSignatureChief + htmlGetSignatureWarehouse + htmlGetSignatureKepala);
-
                 account.level.id == 5 ? dropzoneValue(signatureTechnician, '#ttd1') : '';
                 account.level.id == 6 ? dropzoneValue(signatureChief, '#ttd2') : '';
                 account.level.id == 7 ? dropzoneValue(signatureWarehouse, '#ttd3') : '';
                 account.level.id == 1 ? dropzoneValue(signatureKepala, '#ttd4') : '';
-
-
+                date();
                 Swal.close();
             },
             error: function(errors) {
@@ -554,10 +561,6 @@ $configData = Helper::appClasses();
                     }
                 });
             });
-        }
-        if (account.level.id == 1) {
-            scopeSelect.prop("disabled", true);
-            scopeSelect.removeAttr('required');
         }
     }
 
@@ -667,7 +670,6 @@ $configData = Helper::appClasses();
             url: "{{url('api/damage-report')}}/" + id,
             type: "GET",
             success: function(response) {
-                console.log(response);
                 let data = response.data;
                 let tem = `<option value="` + data.id + `" selected>` + data.damage_report_number + `</option>`;
                 $('#select-lk').prepend(tem);
@@ -722,7 +724,7 @@ $configData = Helper::appClasses();
 
     function setDate() {
         $('.date').flatpickr({
-            dateFormat: 'Y-m-d'
+            dateFormat: 'd-m-Y'
         });
 
         const flatPickrEL = $(".date");
@@ -730,7 +732,7 @@ $configData = Helper::appClasses();
             flatPickrEL.flatpickr({
                 allowInput: true,
                 monthSelectorType: "static",
-                dateFormat: 'Y-m-d'
+                dateFormat: 'd-m-Y'
             });
         }
     }

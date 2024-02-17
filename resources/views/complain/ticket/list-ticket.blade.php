@@ -66,6 +66,18 @@ $configData = Helper::appClasses();
         var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>`;
+        let account = {!! json_encode(session('data')) !!}
+
+        let buttonAdd = [];
+        if (account.level.id == '10') {
+            buttonAdd =[{
+                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Ticket</span>',
+                className: "btn btn-primary",
+                action: function(a, e, t, s) {
+                    window.location = "{{url('complain/add-ticket')}}"
+                }
+            }];
+        }
         
         setHeader();
 
@@ -181,13 +193,7 @@ $configData = Helper::appClasses();
                 search: "",
                 searchPlaceholder: "Search Ticket"
             },
-            buttons: [{
-                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Ticket</span>',
-                className: "btn btn-primary",
-                action: function(a, e, t, s) {
-                    window.location = "{{url('complain/add-ticket')}}"
-                }
-            }],
+            buttons: buttonAdd,
             responsive: {
                 details: {
                     display: $.fn.dataTable.Responsive.display.modal({
