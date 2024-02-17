@@ -52,7 +52,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
                         <div>
                             <h3 class="mb-1 count_receipt_not_sent">0</h3>
-                            <p class="mb-0">Tanda Belum Terima Terkirim</p>
+                            <p class="mb-0">Tanda Terima Belum Terkirim</p>
                         </div>
                     </div>
                 </div>
