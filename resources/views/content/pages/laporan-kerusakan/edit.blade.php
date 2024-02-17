@@ -376,8 +376,7 @@ $configData = Helper::appClasses();
                     if(account.level.id != 10){
                         $('.btn-remove-mg').remove();
                         $('.btn-add-row-mg').remove();
-                        $('.row-input').attr('readonly', 'readonly');
-                        $('.data-input').attr('disabled', 'disabled');
+                        $('.data-input, .select-classification, .row-input').attr('disabled', 'disabled');
                         $('.select2').attr('disabled', 'disabled');
                     }
                     Swal.close();
@@ -683,7 +682,7 @@ $configData = Helper::appClasses();
                         let damageReportNumber = $("#damage_report_number").val();
                         let ticketNumber = $(".select-ticket").val();
                         let receiptDate = $("#damage_report_date").val();
-                        let actionDate = $("#action_plan_date").val();
+                        let actionDate = moment($("#action_plan_date").val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                         let scope = $("#scope").val();
                         let classification = $("#classification").val();
                         
@@ -709,9 +708,9 @@ $configData = Helper::appClasses();
                             let classification = $("#classification").val();
                             let signature = [];
                             let ticketNumber = $(".select-ticket").val();
-                            let receiptDate = $("#edit_damage_report_date").val();
-                            let actionDate = $("#edit_action_plan_date").val();
-                            var damage_report_date = $("#edit_damage_report_date").val();
+                            let receiptDate = moment($("#edit_damage_report_date").val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
+                            let actionDate = moment($("#edit_action_plan_date").val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
+                            var damage_report_date = moment($("#edit_damage_report_date").val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
 
 
                             $('.row-input').each(function(index) {
@@ -756,7 +755,7 @@ $configData = Helper::appClasses();
                             if (ttdFile1 != undefined) {
                                 signature1.type = 'Dilaporkan';
                                 signature1.name = $('#lc-name').val();
-                                signature1.date = $('#lc-date').val();
+                                signature1.date = moment($('#lc-date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                                 signature1.signature = ttdFile1;
                             }
 
@@ -764,7 +763,7 @@ $configData = Helper::appClasses();
                             if (ttdFile2 != undefined) {
                                 signature2.type = 'Diterima';
                                 signature2.name = $('#kt-name').val();
-                                signature2.date = $('#kt-date').val();
+                                signature2.date = moment($('#kt-date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                                 signature2.signature = ttdFile2;
                             }
 
@@ -772,7 +771,7 @@ $configData = Helper::appClasses();
                             if (ttdFile3 != undefined) {
                                 signature3.type = 'Mengetahui';
                                 signature3.name = $('#ka-name').val();
-                                signature3.date = $('#ka-date').val();
+                                signature3.date = moment($('#ka-date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                                 signature3.signature = ttdFile3;
                             }
 
@@ -803,7 +802,6 @@ $configData = Helper::appClasses();
                             console.log(datas);
                             $.ajax({
                                 url: "{{ env('BASE_URL_API')}}" + '/api/damage-report/' + id,
-                                // url: "{{ url('/api/damage-report/')}}/" + id,
                                 type: "PATCH",
                                 data: JSON.stringify(datas),
                                 contentType: "application/json; charset=utf-8",
