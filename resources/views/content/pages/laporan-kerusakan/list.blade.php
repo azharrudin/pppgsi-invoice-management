@@ -197,8 +197,7 @@ $configData = Helper::appClasses();
                         return '<span class="badge w-100" style="background-color : #4E6DD9; ">' + data +
                             '</span>'
                     } else if (data == "disetujui KT") {
-                        return '<span class="badge w-100" style="background-color : #74D94E; ">' + data +
-                            '</span>'
+                        return '<span class="badge w-100" style="background-color : #74D94E; ">Disetujui KT</span>'
                     } else if (data == "Terbuat") {
                         return '<span class="badge w-100" style="background-color : #BFBFBF; " >' + data +
                             '</span>'

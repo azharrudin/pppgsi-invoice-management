@@ -47,7 +47,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-4 mb-md-0 mb-3">
                                 <div class="mb-1">
                                     <label for="note" class="form-label fw-medium">Date</label>
-                                    <input type="text" class="form-control date" id="edit_damage_report_date" name="damage_report_date" placeholder="Tanggal" required />
+                                    <input type="text" class="form-control date data-input" id="edit_damage_report_date" name="damage_report_date" placeholder="Tanggal" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-1">
                                     <label for="note" class="form-label fw-medium">Action Plan Date</label>
-                                    <input type="text" class="form-control date" id="edit_action_plan_date" name="action_plan_date" placeholder="Action Plan Date" required />
+                                    <input type="text" class="form-control date data-input" id="edit_action_plan_date" name="action_plan_date" placeholder="Action Plan Date" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
@@ -376,6 +376,8 @@ $configData = Helper::appClasses();
                     if(account.level.id != 10){
                         $('.btn-remove-mg').remove();
                         $('.btn-add-row-mg').remove();
+                        $('.row-input').attr('readonly', 'readonly');
+                        $('.data-input').attr('disabled', 'disabled');
                         $('.select2').attr('disabled', 'disabled');
                     }
                     Swal.close();
