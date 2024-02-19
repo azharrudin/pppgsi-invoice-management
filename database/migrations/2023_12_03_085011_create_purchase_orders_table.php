@@ -20,11 +20,7 @@ return new class extends Migration
             $table->unsignedInteger("grand_total");
             $table->date("purchase_order_date");
             $table->string("status");
-            $table->unsignedInteger("tenant_id");
-            $table->foreign('tenant_id')->references('id')->on('tenants');
             $table->text("note");
-            $table->unsignedInteger("subtotal");
-            $table->unsignedInteger("tax");
             $table->string("grand_total_spelled");
             $table->text("term_and_conditions");
             $table->mediumText("signature")->nullable();
@@ -42,7 +38,8 @@ return new class extends Migration
             $table->integer("quantity");
             $table->string("units");
             $table->unsignedInteger("price");
-            $table->string("tax");
+            $table->unsignedInteger("tax_id");
+            $table->foreign('tax_id')->references('id')->on('taxes');
             $table->unsignedInteger("total_price");
             $table->timestamps();
             $table->date("deleted_at")->nullable();

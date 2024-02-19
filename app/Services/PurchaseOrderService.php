@@ -25,10 +25,7 @@ class PurchaseOrderService{
             "grand_total" => ["bail", "required", "numeric", "gte:0"],
             "purchase_order_date" => ["bail", "required", "date"],
             "status" => ["bail", "required", "string"],
-            "tenant_id" => ["bail", "required", "numeric"],
             "note" => ["bail", "required", "string"],
-            "subtotal" => ["bail", "required", "numeric"],
-            "tax" => ["bail", "required", "numeric"],
             "grand_total_spelled" => ["bail", "required", "string"],
             "term_and_conditions" => ["bail", "required", "string"],
             "signature" => ["bail", "nullable", "string"],
@@ -41,7 +38,7 @@ class PurchaseOrderService{
             "details.*.quantity" => ["bail", "required", "numeric"],
             "details.*.units" => ["bail", "required", "string"],
             "details.*.price" => ["bail", "required", "numeric"],
-            "details.*.tax" => ["bail", "required", "string"],
+            "details.*.tax_id" => ["bail", "required", "numeric"],
             "details.*.total_price" => ["bail", "required", "numeric"],
         ];
         $errorMessages = [

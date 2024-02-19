@@ -24,7 +24,7 @@ class PurchaseOrderDetail extends Model
         "quantity",
         "units",
         "price",
-        "tax",
+        "tax_id",
         "total_price",
         "deleted_at",
     ];
@@ -34,5 +34,10 @@ class PurchaseOrderDetail extends Model
     public function purchaseOrder(): BelongsTo
     {
         return $this->BelongsTo(PurchaseOrder::class, "purchase_order_id");
+    }
+
+    public function tax(): BelongsTo
+    {
+        return $this->belongsTo(Tax::class, "tax_id");
     }
 }

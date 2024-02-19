@@ -190,10 +190,14 @@ $configData = Helper::appClasses();
                 title: "Status",
                 className: 'text-center',
                 render: function(data, type, full, meta) {
+                    console.log(data);
                     if (data == "Disetujui KA") {
                         return '<span class="badge w-100" style="background-color : #4EC0D9; " >' + data +
                             '</span>'
                     } else if (data == "Disetujui BM") {
+                        return '<span class="badge w-100" style="background-color : #4E6DD9; ">' + data +
+                            '</span>'
+                    }  else if (data == "Disetujui LC") {
                         return '<span class="badge w-100" style="background-color : #4E6DD9; ">' + data +
                             '</span>'
                     } else if (data == "Disetujui KT") {

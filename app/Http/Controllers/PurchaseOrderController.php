@@ -30,7 +30,7 @@ class PurchaseOrderController extends Controller
      */
     public function index(Request $request)
     {
-        try{
+        try {
             [
                 "perPage" => $perPage,
                 "page" => $page,
@@ -39,25 +39,23 @@ class PurchaseOrderController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $purchaseOrderQuery = PurchaseOrder::with("vendor")->
-                with("tenant")->
-                where("deleted_at", null);
-            if($value){
+            $purchaseOrderQuery = PurchaseOrder::with("vendor")->where("deleted_at", null);
+            if ($value) {
                 $purchaseOrderQuery->where(function ($query) use ($value) {
                     $query->whereHas('vendor', function ($vendorQuery) use ($value) {
                         $vendorQuery->where('name', 'like', '%' . $value . '%');
                     })
-                    ->orWhere('purchase_order_number', 'like', '%' . $value . '%')
-                    ->orWhere('about', 'like', '%' . $value . '%')
-                    ->orWhere('grand_total', 'like', '%' . $value . '%')
-                    ->orWhere('purchase_order_date', 'like', '%' . $value . '%')
-                    ->orWhere('status', 'like', '%' . $value . '%');
+                        ->orWhere('purchase_order_number', 'like', '%' . $value . '%')
+                        ->orWhere('about', 'like', '%' . $value . '%')
+                        ->orWhere('grand_total', 'like', '%' . $value . '%')
+                        ->orWhere('purchase_order_date', 'like', '%' . $value . '%')
+                        ->orWhere('status', 'like', '%' . $value . '%');
                 });
             }
             $getPurchaseOrder = $purchaseOrderQuery
-            ->select("id","purchase_order_number", "vendor_id", "tenant_id", "about", "grand_total", "purchase_order_date", "status")
-            ->orderBy($order, $sort)
-            ->paginate($perPage);
+                ->select("id", "purchase_order_number", "vendor_id", "about", "grand_total", "purchase_order_date", "status")
+                ->orderBy($order, $sort)
+                ->paginate($perPage);
             $totalCount = $getPurchaseOrder->total();
 
             $purchaseOrderArr = $this->CommonService->toArray($getPurchaseOrder);
@@ -67,14 +65,14 @@ class PurchaseOrderController extends Controller
                 "per_page" => $perPage,
                 "page" => $page,
                 "size" => $totalCount,
-                "pages" => ceil($totalCount/$perPage)
+                "pages" => ceil($totalCount / $perPage)
             ];
         } catch (\Exception $e) {
             dd($e);
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -90,13 +88,13 @@ class PurchaseOrderController extends Controller
     {
         DB::beginTransaction();
 
-        try{
+        try {
             $validatePurchaseOrder = $this->PurchaseOrderService->validatePurchaseOrder($request);
-            if($validatePurchaseOrder != "") throw new CustomException($validatePurchaseOrder, 400);
+            if ($validatePurchaseOrder != "") throw new CustomException($validatePurchaseOrder, 400);
 
             $purchaseOrder = PurchaseOrder::create($request->all());
 
-            foreach($request->input("details") as $detail){
+            foreach ($request->input("details") as $detail) {
                 PurchaseOrderDetail::create([
                     "purchase_order_id" => $purchaseOrder->id,
                     "number" => $detail["number"],
@@ -105,19 +103,14 @@ class PurchaseOrderController extends Controller
                     "quantity" => $detail["quantity"],
                     "units" => $detail["units"],
                     "price" => $detail["price"],
-                    "tax" => $detail["tax"],
+                    "tax_id" => $detail["tax"],
                     "total_price" => $detail["total_price"],
                 ]);
             }
 
             DB::commit();
 
-            $getPurchaseOrder = PurchaseOrder::with("purchaseOrderDetails")->
-                with("vendor")->
-                with("tenant")->
-                where("id", $purchaseOrder->id)->
-                where("deleted_at", null)->
-                first();
+            $getPurchaseOrder = PurchaseOrder::with("purchaseOrderDetails")->with("vendor")->where("id", $purchaseOrder->id)->where("deleted_at", null)->first();
 
             return ["data" => $getPurchaseOrder];
         } catch (\Throwable $e) {
@@ -126,7 +119,7 @@ class PurchaseOrderController extends Controller
 
             DB::rollBack();
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -140,15 +133,9 @@ class PurchaseOrderController extends Controller
      */
     public function show($id)
     {
-        try{
+        try {
             $id = (int) $id;
-            $getPurchaseOPurchaseOrder = PurchaseOrder::with("purchaseOrderDetails")->
-                with("vendor")->
-                with("vendorAttachment")->
-                with("tenant")->
-                where("id", $id)->
-                where("deleted_at", null)->
-                first();
+            $getPurchaseOPurchaseOrder = PurchaseOrder::with("purchaseOrderDetails")->with("vendor")->with("vendorAttachment")->where("id", $id)->where("deleted_at", null)->first();
             if (is_null($getPurchaseOPurchaseOrder)) throw new CustomException("Purchase order tidak ditemukan", 404);
 
             return ["data" => $getPurchaseOPurchaseOrder];
@@ -156,7 +143,7 @@ class PurchaseOrderController extends Controller
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -172,18 +159,18 @@ class PurchaseOrderController extends Controller
     {
         DB::beginTransaction();
 
-        try{
+        try {
             $id = (int) $id;
             $purchaseOrderExist = $this->CommonService->getDataById("App\Models\PurchaseOrder", $id);
             if (is_null($purchaseOrderExist)) throw new CustomException("Purchase order tidak ditemukan", 404);
 
             $validatePurchaseOrder = $this->PurchaseOrderService->validatePurchaseOrder($request);
-            if($validatePurchaseOrder != "") throw new CustomException($validatePurchaseOrder, 400);
+            if ($validatePurchaseOrder != "") throw new CustomException($validatePurchaseOrder, 400);
 
             PurchaseOrder::findOrFail($id)->update($request->all());
             PurchaseOrderDetail::where("purchase_order_id", $id)->where("deleted_at", null)->delete();
 
-            foreach($request->input("details") as $detail){
+            foreach ($request->input("details") as $detail) {
                 PurchaseOrderDetail::create([
                     "purchase_order_id" => $id,
                     "number" => $detail["number"],
@@ -192,19 +179,14 @@ class PurchaseOrderController extends Controller
                     "quantity" => $detail["quantity"],
                     "units" => $detail["units"],
                     "price" => $detail["price"],
-                    "tax" => $detail["tax"],
+                    "tax_id" => $detail["tax"],
                     "total_price" => $detail["total_price"],
                 ]);
             }
 
             DB::commit();
 
-            $getPurchaseOrder = PurchaseOrder::with("purchaseOrderDetails")->
-                with("vendor")->
-                with("tenant")->
-                where("id", $id)->
-                where("deleted_at", null)->
-                first();
+            $getPurchaseOrder = PurchaseOrder::with("purchaseOrderDetails")->with("vendor")->where("id", $id)->where("deleted_at", null)->first();
 
             return ["data" => $getPurchaseOrder];
         } catch (\Throwable $e) {
@@ -213,7 +195,7 @@ class PurchaseOrderController extends Controller
 
             DB::rollBack();
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -229,7 +211,7 @@ class PurchaseOrderController extends Controller
     {
         DB::beginTransaction();
 
-        try{
+        try {
             $id = (int) $id;
             $purchaseOrderExist = $this->CommonService->getDataById("App\Models\PurchaseOrder", $id);
             if (is_null($purchaseOrderExist)) throw new CustomException("Purchase order tidak ditemukan", 404);
@@ -246,7 +228,7 @@ class PurchaseOrderController extends Controller
 
             DB::rollBack();
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -257,7 +239,7 @@ class PurchaseOrderController extends Controller
 
     public function select(Request $request)
     {
-        try{
+        try {
             [
                 "page" => $page,
                 "value" => $value
@@ -267,14 +249,14 @@ class PurchaseOrderController extends Controller
             $status = strtolower($request->input("status", ""));
             $statusArray = explode(",", $status);
 
-            if(is_null($field)) $field = "id";
+            if (is_null($field)) $field = "id";
 
             $purchaseOrderQuery = PurchaseOrder::where("deleted_at", null)->where($field, 'like', '%' . $value . '%');
-            if($status != ""){
+            if ($status != "") {
                 $purchaseOrderQuery->where(function ($query) use ($statusArray) {
                     $length = count($statusArray);
 
-                    for($i = 0; $i < $length; $i++){
+                    for ($i = 0; $i < $length; $i++) {
                         $statusFromArray = trim($statusArray[$i]);
                         $query->orWhere('status', 'like', '%' . $statusFromArray . '%');
                     }
@@ -284,7 +266,7 @@ class PurchaseOrderController extends Controller
             $totalCount = $getPurchaseOrder->total();
 
             $dataArr = [];
-            foreach($getPurchaseOrder as $purchaseOrder){
+            foreach ($getPurchaseOrder as $purchaseOrder) {
                 $dataObj = [
                     "id" => $purchaseOrder->id,
                     "text" => $purchaseOrder->$field,
@@ -293,7 +275,7 @@ class PurchaseOrderController extends Controller
             }
 
             $pagination = ["more" => false];
-            if($totalCount > ($perPage * $page)) {
+            if ($totalCount > ($perPage * $page)) {
                 $pagination = ["more" => true];
             }
 
@@ -305,7 +287,7 @@ class PurchaseOrderController extends Controller
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -316,14 +298,14 @@ class PurchaseOrderController extends Controller
 
     public function report(Request $request)
     {
-        try{
+        try {
             [
                 "start" => $start,
                 "end" => $end,
             ] = $this->CommonService->getQuery($request);
 
-            if(is_null($start)) $start = Carbon::now()->firstOfMonth();
-            if(is_null($end)){
+            if (is_null($start)) $start = Carbon::now()->firstOfMonth();
+            if (is_null($end)) {
                 $end = Carbon::now()->lastOfMonth();
                 $end->setTime(23, 59, 59);
             }
@@ -339,7 +321,7 @@ class PurchaseOrderController extends Controller
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -352,25 +334,20 @@ class PurchaseOrderController extends Controller
     {
         DB::beginTransaction();
 
-        try{
+        try {
             $id = (int) $id;
             $getPurchaseOrder = $this->CommonService->getDataById("App\Models\PurchaseOrder", $id);
             if (is_null($getPurchaseOrder)) throw new CustomException("Purchase Order tidak ditemukan", 404);
 
             $validatePurchaseOrder = $this->PurchaseOrderService->validateStatus($request);
-            if($validatePurchaseOrder != "") throw new CustomException($validatePurchaseOrder, 400);
+            if ($validatePurchaseOrder != "") throw new CustomException($validatePurchaseOrder, 400);
 
-            $dataPayload = [ "status" => $request->input("status") ];
+            $dataPayload = ["status" => $request->input("status")];
 
             PurchaseOrder::findOrFail($id)->update($dataPayload);
 
             DB::commit();
-            $getPurchaseOrder =  PurchaseOrder::with("purchaseOrderDetails")->
-                with("vendor")->
-                with("tenant")->
-                where("id", $id)->
-                where("deleted_at", null)->
-                first();
+            $getPurchaseOrder =  PurchaseOrder::with("purchaseOrderDetails")->with("vendor")->with("tenant")->where("id", $id)->where("deleted_at", null)->first();
 
             return ["data" => $getPurchaseOrder];
         } catch (\Throwable $e) {
@@ -378,7 +355,7 @@ class PurchaseOrderController extends Controller
             $errorStatusCode = 500;
             DB::rollBack();
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }

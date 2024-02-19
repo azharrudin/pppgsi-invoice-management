@@ -521,6 +521,8 @@ $configData = Helper::appClasses();
                     $('.btn-remove-mg').remove();
                     $('.btn-add-row-mg').remove();
                     $('.form-control').attr('readonly', 'readonly');
+                    $('.form-check-input').attr('disabled', 'disabled');
+                    
                 }
 
                 let htmlGetSignatureTechnician = getSignatureTechnician(signatureTechnician);
