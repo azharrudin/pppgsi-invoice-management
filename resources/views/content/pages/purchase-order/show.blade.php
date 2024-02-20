@@ -82,7 +82,7 @@ $configData = Helper::appClasses();
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0" id="details">
-                                    <tr>
+                                    <!-- <tr>
                                         <td colspan="4"></td>
                                         <td colspan="2">
                                             <p class="">Sub Total</p>
@@ -90,8 +90,8 @@ $configData = Helper::appClasses();
                                         <td colspan="2" style="text-align: right;">
                                             <p id="subtotal" class=""></p>
                                         </td>
-                                    </tr>
-                                    <tr>
+                                    </tr> -->
+                                    <!-- <tr>
                                         <td colspan="4"></td>
                                         <td colspan="1">
                                             <p class="">Pajak</p>
@@ -102,11 +102,11 @@ $configData = Helper::appClasses();
                                         <td colspan="2" style="text-align: right;">
                                             <p id="tax" class=""></p>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
                                         <td colspan="4"></td>
                                         <td colspan="2">
-                                            <p class="">Jumlah Nett</p>
+                                            <p class="">Total</p>
                                         </td>
                                         <td colspan="2" style="text-align: right;">
                                             <p id="grand_total" class=""></p>
@@ -134,7 +134,7 @@ $configData = Helper::appClasses();
                     </div>
 
                     <div class="row py-3 px-3">
-                        <div class="col-md-4 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
+                        <div class="col-md-4 mb-md-0 mb-3 d-flex flex-column align-items-center text-center data-material">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">Tanda Tangan</label>
                                 <div class="form-label">
@@ -160,12 +160,20 @@ $configData = Helper::appClasses();
         <div class="col-lg-3 col-12 invoice-actions">
             <div class="card mb-4">
                 <div class="card-body">
-                    <button type="button" id="edit" class="btn btn-primary d-grid w-100 mb-2">Edit</button>
-                    <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Kembali</button>
+                    <button class="btn btn-primary d-grid w-100 mb-2 kirim-invoice d-none" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
+                        <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim purchase Order</span>
+                    </button>
+                    <a type="button" class="btn btn-primary d-grid w-100 mb-2 disetujui d-none" style="color : #fff;"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-check ti-xs me-2"></i>Disetujui</span></a>
+                    <!-- <a target="_blank" href="{{url('invoice/print/')}}/{{$id}}" id="preview" class="btn btn-info d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-download ti-xs me-2"></i>Download</span></a> -->
+                    <a target="_blank" href="{{url('request/purchase-order/edit/')}}/{{$id}}" id="edit" class="btn btn-primary d-grid w-100 mb-2 edit d-none"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-pencil ti-xs me-2"></i>Edit</span></a>
+                    <!-- <button class="btn btn-primary d-grid w-100 mb-2 add-pay add-payment d-none">
+                            <span class="d-flex align-items-center justify-content-center text-nowrap">Add Payment</span>
+                        </button> -->
+                    <a href="{{ url('request/purchase-order')}}" id="back" class="btn btn-secondary d-grid w-100 mb-2">Kembali</a>
                 </div>
             </div>
 
-          
+
         </div>
         <!-- /Invoice Actions -->
     </div>
@@ -181,7 +189,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
 <script>
-    // let account = {!! json_encode(session('data')) !!}
+    let account = {!! json_encode(session('data')) !!}
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -205,10 +213,74 @@ $configData = Helper::appClasses();
         window.location.href = "/vendor/list-tagihan-vendor";
     });
 
-    $(document).on('click', '#edit', function(event) {
+
+    $(document).on('click', '.disetujui', function(event) {
         event.preventDefault();
-        window.location.href = "/vendor/edit-tagihan-vendor/" + id;
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            icon: 'warning',
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonText: "Ya, Setuju!",
+            cancelButtonText: "Batal",
+            customClass: {
+                confirmButton: "btn fw-bold btn-primary",
+                cancelButton: "btn fw-bold btn-active-light-primary"
+            }
+        }).then((result) => {
+            if (result.value) {
+                let datas = {}
+                datas.status = 'Disetujui KA';
+                Swal.fire({
+                    title: 'Memeriksa...',
+                    text: "Harap menunggu",
+                    imageUrl: "{{ asset('waiting.gif') }}",
+                    showConfirmButton: false,
+                    allowOutsideClick: false
+                });
+                $.ajax({
+                    url: "{{url('api/purchase-order/update-status')}}/" + id,
+                    // url: "{{env('BASE_URL_API')}}" + '/api/invoice/update-status/' + id,
+                    type: "PATCH",
+                    data: JSON.stringify(datas),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(response) {
+                        $('.indicator-progress').show();
+                        $('.indicator-label').hide();
+                        Swal.fire({
+                            title: 'Berhasil',
+                            text: 'Berhasil Menyetujui Purchase Order',
+                            icon: 'success',
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        }).then((result) => {
+                            window.location.href = "/request/purchase-order";
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: ' You clicked the button!',
+                            icon: 'error',
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        })
+                    }
+                });
+
+            }
+        });
     });
+
+    // $(document).on('click', '#edit', function(event) {
+    //     event.preventDefault();
+    //     window.location.href = "/vendor/edit-tagihan-vendor/" + id;
+    // });
 
     function getVendor(id) {
         $.ajax({
@@ -249,8 +321,8 @@ $configData = Helper::appClasses();
 
     function getDataTagihanVendor(id) {
         $.ajax({
-            url: "{{env('BASE_URL_API')}}" +'/api/purchase-order/' + id,
-            // url: "{{url('api/purchase-order')}}/" + id,
+            // url: "{{env('BASE_URL_API')}}" +'/api/purchase-order/' + id,
+            url: "{{url('api/purchase-order')}}/" + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
@@ -277,9 +349,11 @@ $configData = Helper::appClasses();
                 $("#grand_total_spelled").text(data.grand_total_spelled);
                 $("#term_and_conditions").text(data.term_and_conditions);
                 $("#signature_name").text(data.signature_name);
+                if (data.signature != null || account.level.id == 1) {
+                    $('.data-material').removeClass('d-none');
+                }
                 getVendor(data.vendor_id);
                 getDetails(data.purchase_order_details);
-                getAttachments(data.vendor_attachment);
                 if (data.signature) {
                     $("#signatture").css('background-img', 'black');
                     $("#signatture").css("background-image", `url('` + data.signature + `')`);
@@ -288,6 +362,20 @@ $configData = Helper::appClasses();
                     $("#signatture").css("background-position", `center`);
                     $("#signatture").css("background-size", `cover`);
                     $("#signatture").css("background-repeat", `no-repeat`);
+                }
+                if ((data.status == 'Terkirim' || data.status == 'Kurang Bayar') && account.level.id == 10) {
+                    $('.add-payment').removeClass('d-none');
+                }
+                if (data.status == 'Disetujui BM' && account.level.id == 10) {
+                    $('.kirim-invoice').removeClass('d-none');
+                }
+                if (account.level.id == '2' && data.status == 'Terbuat') {
+                    $('.disetujui').removeClass('d-none');
+                }
+                console.log(data.status);
+                if ((account.level.id == '10' && data.status == 'Terbuat') || (data.status == 'Disetujui KA' && account.level.id == '1')) {
+                    console.log('aa');
+                    $('.edit').removeClass('d-none');
                 }
                 Swal.close();
             },
@@ -311,32 +399,14 @@ $configData = Helper::appClasses();
         return x1 + x2;
     }
 
-    function getAttachments(attachments) {
-        let data = attachments;
-        let getDetail = '';
-        let temp = '';
-        let openTab = '';
-        console.log(data);
 
-        if (data.length > 0) {
-            let details = data;
-            for (let i = 0; i < details.length; i++) {
-                console.log('a');
-                temp = `<li><a href="javascript:void(0)" class="text-dark" id="attachment-${i}"> ${details[i].uraian}</a></li>`;
-                getDetail = getDetail + temp;
-            }
-            $('#documents').prepend(getDetail);
-            openLink(details);
-        } else {}
-
-    }
 
     function openLink(details) {
         for (let i = 0; i < details.length; i++) {
-            $('#attachment-'+i).click(function(e) {
+            $('#attachment-' + i).click(function(e) {
                 var pdfResult = details[i].attachment;
                 let pdfWindow = window.open("");
-                pdfWindow.document.write("<iframe width='100%' height='100%' src=' "+ pdfResult + "'></iframe>");
+                pdfWindow.document.write("<iframe width='100%' height='100%' src=' " + pdfResult + "'></iframe>");
             });
         }
     }

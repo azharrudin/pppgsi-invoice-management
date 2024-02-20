@@ -142,8 +142,9 @@ Route::group(['middleware' => 'cekauth'], function () {
         Route::prefix('purchase-order')->group(function () {
             Route::get('/', [PurchaseOrderController::class, 'index'])->name('pages-list-purchase-order');
             Route::get('/add', [PurchaseOrderController::class, 'create'])->name('pages-list-purchase-order');
-            Route::get('/preview', [PurchaseOrderController::class, 'preview'])->name('pages-preview-tanda-terima');
-            Route::get('/show/{id}', [PurchaseOrderController::class, 'show'])->name('pages-preview-tanda-terima');
+            Route::get('/preview', [PurchaseOrderController::class, 'preview'])->name('pages-list-purchase-order');
+            Route::get('/show/{id}', [PurchaseOrderController::class, 'show'])->name('pages-list-purchase-order');
+            Route::get('/edit/{id}', [PurchaseOrderController::class, 'edit'])->name('pages-list-purchase-order');
             Route::get('/data-purchase-order', [PurchaseOrderController::class, 'datatable'])->name('data-purchase-order');
             Route::get('/print/{id}', [PurchaseOrderController::class, 'print']);
         });

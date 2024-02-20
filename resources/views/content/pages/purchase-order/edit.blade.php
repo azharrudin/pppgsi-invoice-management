@@ -4,7 +4,7 @@ $configData = Helper::appClasses();
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'Tanda Terima')
+@section('title', 'Invoice')
 
 @section('page-style')
 {{-- Page Css files --}}
@@ -16,122 +16,121 @@ $configData = Helper::appClasses();
 @section('content')
 <!-- Content -->
 <div class="container-xxl flex-grow-1 container-p-y">
+    <form id="create-purchase-order" class="create-purchase-order" novalidate>
+        <div class="row invoice-add">
+            <!-- Invoice Add-->
+            <div class="col-lg-9 col-12 mb-lg-0 mb-3">
+                <div class="card invoice-preview-card">
+                    <div class="card-body">
+                        <div style="background-image: url('{{asset('assets/img/header.png')}}'); height : 150px; background-size: contain; background-repeat: no-repeat;">
+                        </div>
 
-    <div class="row invoice-add">
-        <!-- Invoice Add-->
-        <div class="col-lg-9 col-12 mb-lg-0 mb-3">
-            <div class="card invoice-preview-card">
-                <div class="card-body">
-                    <div style="background-image: url('{{asset('assets/img/header.png')}}'); height : 150px; background-size: contain; background-repeat: no-repeat;">
-                    </div>
-
-                    <h2 class="mx-auto text-center"><b>PURCHASE ORDER</b></h2>
-                    <div class="row  m-0 px-3">
-                        <div class="col-md-6 mb-md-0 ps-0">
-                            <dl class="row mb-2 d-flex align-items-center">
-                                <dt class="col-sm-4">
-                                    <span class="fw-normal">Nomor PO</span>
-                                </dt>
-                                <dd class="col-sm-8 ">
-                                    <div class="input-group input-group-merge">
-                                        <input type="text" class="form-control date" placeholder="Nomor" disabled>
-                                    </div>
-                                </dd>
-                            </dl>
-                            <dl class="row mb-2 d-flex align-items-center">
-                                <dt class="col-sm-4">
-                                    <span class="fw-normal">Tanggal </span>
-                                </dt>
-                                <dd class="col-sm-8 ">
-                                    <div class="input-group input-group-merge">
-                                        <input type="text" class="form-control date" placeholder="Tanggal">
-                                    </div>
-                                </dd>
-                            </dl>
-                            <dl class="row mb-2 d-flex align-items-center">
-                                <dt class="col-sm-4">
-                                    <span class="fw-normal">Perihal</span>
-                                </dt>
-                                <dd class="col-sm-8 ">
-                                    <div class="input-group input-group-merge disabled">
-                                        <input type="text" class="form-control " placeholder="Perihal">
-                                    </div>
-                                </dd>
-                            </dl>
-                            <div class="mb-3">
-                                <label for="invoice-message" class="form-label">Nama Vendor</label>
-                                <br>
-                                <select name="vendor" id="vendor" class="mb-3" required>
-                                </select>
+                        <h2 class="mx-auto text-center"><b>PURCHASE ORDER</b></h2>
+                        <div class="row  m-0 px-3">
+                            <div class="col-md-6 mb-md-0 ps-0">
+                                <dl class="row mb-2 d-flex align-items-center">
+                                    <dt class="col-sm-4">
+                                        <span class="fw-normal">Nomor PO</span>
+                                    </dt>
+                                    <dd class="col-sm-8 ">
+                                        <div class="input-group input-group-merge">
+                                            <input type="text" class="form-control date" placeholder="Nomor" id="purchase_order_number" disabled>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <dl class="row mb-2 d-flex align-items-center">
+                                    <dt class="col-sm-4">
+                                        <span class="fw-normal">Tanggal </span>
+                                    </dt>
+                                    <dd class="col-sm-8 ">
+                                        <input type="text" class="form-control date" placeholder="Tanggal" id="purchase_order_date" name="purchase_order_date" required>
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </dd>
+                                </dl>
+                                <dl class="row mb-2 d-flex align-items-center">
+                                    <dt class="col-sm-4">
+                                        <span class="fw-normal">Perihal</span>
+                                    </dt>
+                                    <dd class="col-sm-8 ">
+                                        <input type="text" class="form-control " placeholder="Perihal" id="about" name="about" required>
+                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                                    </dd>
+                                </dl>
+                                <div class="mb-3">
+                                    <label for="invoice-message" class="form-label">Nama Vendor</label>
+                                    <br>
+                                    <select name="vendor" id="vendor_id" name="vendor_id" class="mb-3" required>
+                                    </select>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row px-3">
-                        <div class="col-12">
-                            <textarea class="form-control" name="invoice-message" id="invoice-message" cols="3" rows="8" placeholder="Penjelasan untuk permintaan ISI PURCHASING ORDER"></textarea>
-                        </div>
-                    </div>
-
-
-                    <div class="py-3 px-3">
-                        <div class="card academy-content shadow-none border p-3">
-                            <div class="table-responsive">
-                                <div class="" id="details">
-                                </div>
-
-                                <div class="row pb-4">
-                                    <div class="col-12">
-                                        <button type="button" class="btn btn-primary waves-effect waves-light btn-add-row-mg mt-2">Tambah Baris</button>
-                                    </div>
-                                </div>
+                        <div class="row px-3">
+                            <div class="col-12">
+                                <textarea class="form-control" name="note" id="note" cols="3" rows="8" placeholder="Penjelasan untuk permintaan ISI PURCHASING ORDER" required></textarea>
+                                <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
-                            <hr>
-                            <div class="row p-0 p-sm-4">
-                                <div class="col-md-6 mb-md-0 mb-3">
+                        </div>
 
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="row">
+
+                        <div class="py-3 px-3">
+                            <div class="card academy-content shadow-none border p-3">
+                                {{-- Tambah Baris --}}
+                                <div class="table-responsive">
+                                    <div class="" id="details">
+                                    </div>
+
+                                    <div class="row pb-4">
                                         <div class="col-12">
-                                            <div class="d-flex justify-content-between mb-2">
-                                                <span class="w-px-100">Subtotal</span>
-                                                <span class="fw-medium">$00.00</span>
-                                            </div>
-                                            <hr>
-                                            <div class="d-flex justify-content-between mb-2">
-                                                <span class="w-px-100">Pajak</span>
-                                                <span class="fw-medium">$00.00</span>
-                                            </div>
-                                            <hr>
-                                            <div class="d-flex justify-content-between mb-2">
-                                                <span class="w-px-100">Jumlah Nett</span>
-                                                <span class="fw-medium">$00.00</span>
-                                            </div>
-                                            <hr>
+                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-add-row-mg mt-2">Tambah Baris</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-12 mb-2">
-                                    <label for="note" class="form-label fw-medium">Terbilang</label>
-                                    <input type="text" class="form-control terbilang" id="grand_total_spelled" name="grand_total_spelled" placeholder="Terbilang" disabled />
+
+                                {{-- Divider --}}
+                                <div class="row py-3 px-3">
+                                    <hr class="my-3 mx-auto">
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-md-0 mb-3">
-                                    <div class="mb-3">
-                                        <label for="note" class="form-label fw-medium me-2">Syarat & Ketentuan</label>
-                                        <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll" required></textarea>
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
+
+                                <div class="row p-0 p-sm-4">
+                                    <div class="col-md-6 mb-md-0 mb-3">
+
                                     </div>
-                                    <div class="mb-3 text-center">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <span class="w-px-100">Total</span>
+                                                    <span class="fw-medium grand_total"></span>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mb-3">
+                                    <div class="col-md-12 mb-2">
+                                        <label for="note" class="form-label fw-medium">Terbilang</label>
+                                        <input type="text" class="form-control terbilang" id="grand_total_spelled" name="grand_total_spelled" placeholder="Terbilang" disabled />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-md-0 mb-3">
                                         <div class="mb-3">
-                                            <label for="note" class="form-label fw-medium">Tanda Tangan & Meterai
-                                                (Opsional)</label>
-                                            <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" name="materai_date" />
+                                            <label for="note" class="form-label fw-medium me-2">Syarat & Ketentuan</label>
+                                            <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll" required></textarea>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center data-materai">
+                                        <div class="mb-3">
+                                            <label for="note" class="form-label fw-medium">Tanda Tangan</label>
                                         </div>
                                         <div class="mb-3">
                                             <div action="/upload" class="dropzone needsclick dz-clickable w-px-250" id="dropzone-basic">
@@ -141,35 +140,33 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control w-px-250" placeholder="Nama dan Jabatan" id="materai_date" name="materai_date" />
+                                            <input type="text" class="form-control w-px-250 " id="signature_name" placeholder="Nama & Jabatan" name="signature_name" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- /Invoice Add-->
+            <!-- /Invoice Add-->
 
-        <!-- Invoice Actions -->
-        <div class="col-lg-3 col-12 invoice-actions">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
-                        <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim Tanda Terima</span>
-                    </button>
-                    <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
-                    <button type="button" class="btn btn-label-secondary d-grid w-100 mb-2">Simpan</button>
-                    <button type="button" class="btn btn-label-secondary d-grid w-100">Kembali</button>
+            <!-- purchase req Actions -->
+            <div class="col-lg-3 col-12 purchase-req-actions">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
+                        <!-- <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button> -->
+                        <button type="button" id="batal" class="btn btn-label-secondary btn-cancel d-grid w-100">Kembali</button>
+                    </div>
                 </div>
             </div>
+            <!-- /purchase req Actions -->
         </div>
-        <!-- /Invoice Actions -->
-    </div>
-
+    </form>
 </div>
 <!-- / Content -->
 
@@ -180,10 +177,474 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
+    let account = {!! json_encode(session('data')) !!}
+    var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>`;
+    var lastIndex = null;
+
+    var id;
+    var urlSegments = window.location.pathname.split('/');
+    var idIndex = urlSegments.indexOf('edit') + 1;
+    id = urlSegments[idIndex];
+
+    function format(e) {
+        var nStr = e + '';
+        nStr = nStr.replace(/\,/g, "");
+        let x = nStr.split('.');
+        let x1 = x[0];
+        let x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
     $(document).ready(function() {
-        getDetails();
+        getDataPurchaseOrder(id);
         setDate();
     });
+
+    function getVendor(id) {
+        $.ajax({
+            url: "{{url('api/vendor')}}/" + id,
+            type: "GET",
+            success: function(response) {
+                let data = response.data;
+                $("#vendor_id").empty().append("<option value=" + data.id + ">" + data.name + "</option>").val(data.id).trigger("change");
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function getDataPurchaseOrder(id) {
+        $.ajax({
+            // url: "{{env('BASE_URL_API')}}" + '/api/purchase-order/' + id,
+            url: "{{url('api/purchase-order')}}/" + id,
+            type: "GET",
+            dataType: "json",
+            beforeSend: function() {
+                Swal.fire({
+                    title: '<h2>Loading...</h2>',
+                    html: sweet_loader + '<h5>Please Wait</h5>',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                });
+            },
+            success: function(res) {
+                let data = res.data;
+                console.log(data);
+                id = data.id;
+                nomorInvoice = data.invoice_number;
+                $("#purchase_order_number").val(data.purchase_order_number);
+                $("#purchase_order_date").val(data.purchase_order_date);
+                $("#about").val(data.about);
+                $("#note").val(data.note);
+                $(".grand_total").text(format(data.grand_total));
+                $("#grand_total_spelled").val(data.grand_total_spelled);
+                $("#term_and_conditions").val(data.term_and_conditions);
+                // $("#signature_name").text(data.signature_name);
+                getVendor(data.vendor_id);
+                getDetails(data.purchase_order_details);
+                if (account.level.id != '1') {
+                    $('.data-materai').attr('style', 'display:none !important');
+                }
+                if (account.level.id == '1') {
+                    $('.btn-remove-mg').addClass('d-none');
+                    $('.btn-add-row-mg').addClass('d-none');
+                    $(".btn-update span").html('<i class="ti ti-check ti-xs me-2"></i>Disetujui Kepala BM');
+                    $('#materai_name').attr('readonly', true);
+                }
+                // getAttachments(data.vendor_attachment);
+                // if (data.signature) {
+                //     $("#signatture").css('background-img', 'black');
+                //     $("#signatture").css("background-image", `url('` + data.signature + `')`);
+                //     $("#signatture").css("height", `200px`);
+                //     $("#signatture").css("width", `200px`);
+                //     $("#signatture").css("background-position", `center`);
+                //     $("#signatture").css("background-size", `cover`);
+                //     $("#signatture").css("background-repeat", `no-repeat`);
+                // }
+                Swal.close();
+            },
+            error: function(errors) {
+                console.log(errors);
+            }
+        });
+    }
+
+    $(document).on('click', '#batal', function(event) {
+        event.preventDefault();
+        window.location.href = "/request/purchase-order";
+    });
+
+
+    $(document).on('input', '.price', function(event) {
+        var nStr = event.currentTarget.value + '';
+        nStr = nStr.replace(/\,/g, "");
+        var x = nStr.split('.');
+        var x1 = x[0];
+        var x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        event.currentTarget.value = x1 + x2;
+        // Hapus baris yang ditekan tombol hapus
+        let index = $('.price').index(this);
+        let total = 0;
+        let price = parseInt($(this).val().replaceAll(',', ''));
+        let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
+        if (id == 0) {
+            $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(price));
+            getTotal();
+        } else {
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    let data = response.data.rate;
+                    let total = 0;
+                    let tax = parseInt(data);
+                    tax = tax / 100;
+                    let totalPrice = price * tax + price;
+                    $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
+                    getTotal();
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
+        }
+
+    });
+
+
+    $(document).on('input', '.price', function(event) {
+        var nStr = event.currentTarget.value + '';
+        nStr = nStr.replace(/\,/g, "");
+        var x = nStr.split('.');
+        var x1 = x[0];
+        var x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        event.currentTarget.value = x1 + x2;
+        // Hapus baris yang ditekan tombol hapus
+        let index = $('.price').index(this);
+        let total = 0;
+        let price = parseInt($(this).val().replaceAll(',', ''));
+        let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
+        if (id == 0) {
+            $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(price));
+            getTotal();
+        } else {
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    let data = response.data.rate;
+                    let total = 0;
+                    let tax = parseInt(data);
+                    tax = tax / 100;
+                    let totalPrice = price * tax + price;
+                    $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
+                    getTotal();
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
+        }
+
+    });
+
+
+    var savePurchaseOrder = $('.create-purchase-order');
+
+    Array.prototype.slice.call(savePurchaseOrder).forEach(function(form) {
+        $('.indicator-progress').hide();
+        $('.indicator-label').show();
+        form.addEventListener(
+            "submit",
+            function(event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    // let tenant = $("#tenant").val();
+                    // let bank = $("#bank").val();
+                    // let tglKontrak = $("#contract_date").val();
+
+                    // if (!tenant) {
+                    //     $("#tenant").addClass("invalid");
+                    // }
+                    // if (!bank) {
+                    //     $("#bank").addClass("invalid");
+                    // }
+
+                } else {
+                    Swal.fire({
+                        title: '<h2>Loading...</h2>',
+                        html: sweet_loader + '<h5>Please Wait</h5>',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    });
+                    // Submit your form
+                    event.preventDefault();
+                    let tenant = $("#tenant").val();
+                    let purchaseOrderDate = $("#purchase_order_date").val();
+                    let about = $("#about").val();
+                    let vendorId = $("#vendor_id").val();
+                    let note = $("#note").val();
+                    let grandTotalSpelled = $("#grand_total_spelled").val();
+                    let grandTotal = parseInt($(".grand_total").text().replaceAll(',', ''));
+                    let termAndConditions = $("#term_and_conditions").val();
+
+                    var detail = [];
+                    $('.row-input').each(function(index) {
+                        var input_name = $(this).attr('name');
+                        var input_value = $(this).val();
+                        var input_index = Math.floor(index / 8); // Membagi setiap 5 input menjadi satu objek pada array
+                        if (index % 8 == 0) {
+                            detail[input_index] = {
+                                number: parseInt(input_value)
+                            };
+                        } else if (index % 8 == 1) {
+                            detail[input_index].name = input_value;
+                        } else if (index % 8 == 2) {
+                            detail[input_index].specification = input_value;
+                        } else if (index % 8 == 3) {
+                            detail[input_index].quantity = parseInt(input_value);
+                        } else if (index % 8 == 4) {
+                            detail[input_index].units = input_value;
+                        } else if (index % 8 == 5) {
+                            detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
+                        } else if (index % 8 == 6) {
+                            detail[input_index].tax = parseInt(input_value);
+                        } else if (index % 8 == 7) {
+                            detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
+                        }
+                    });
+
+                    let datas = {};
+                    // $('.create-invoice').find('.form-control').each(function() {
+                    //     var inputId = $(this).attr('id');
+                    //     var inputValue = $("#" + inputId).val();
+                    //     datas[$("#" + inputId).attr("name")] = inputValue;
+                    // });
+
+                    datas.details = detail;
+                    datas.vendor_id = parseInt(vendorId);
+                    if (account.level.id == '1') {
+                        datas.status = "Terkirim";
+                    } else {
+                        datas.status = "Terbuat";
+                    }
+                    datas.about = about;
+                    datas.grand_total = parseInt(grandTotal);
+                    datas.purchase_order_date = purchaseOrderDate;
+                    datas.grand_total_spelled = grandTotalSpelled;
+                    datas.term_and_conditions = termAndConditions;
+                    datas.note = note;
+                    // delete datas['undefined'];
+                    console.log(datas);
+
+                    $.ajax({
+                        url: "{{url('api/purchase-order')}}/" + id,
+                        type: "PATCH",
+                        data: JSON.stringify(datas),
+                        processData: false,
+                        contentType: false,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response) {
+                            $('.indicator-progress').show();
+                            $('.indicator-label').hide();
+
+                            Swal.fire({
+                                title: 'Berhasil',
+                                text: 'Berhasil Memperbarui Purchase Order',
+                                icon: 'success',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            }).then(function() {
+                                window.location.href = "/request/purchase-order";
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(error);
+                            Swal.fire({
+                                title: 'Error!',
+                                text: ' You clicked the button!',
+                                icon: 'error',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            })
+                        }
+                    });
+                }
+
+                form.classList.add("was-validated");
+            },
+            false
+        );
+    });
+
+
+    $(document).on('input', '.tax', function(event) {
+        let id = event.currentTarget.value;
+        let index = $('.tax').index(this);
+        let data = 0;
+        $.ajax({
+            url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
+            type: "get",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(response) {
+                let data = response.data.rate;
+                console.log($(this));
+                let total = 0;
+                let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+                let tax = parseInt(data);
+                tax = tax / 100;
+                let totalPrice = price * tax + price;
+                // console.log(format(totalPrice));
+                $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
+                getTotal();
+            },
+            error: function(errors) {
+                console.log(errors);
+            }
+        });
+    });
+
+    function getTotal() {
+        let totalArr = [];
+        let tempTotal = document.getElementsByClassName('total_price');
+        for (let i = 0; i < tempTotal.length; i++) {
+            var slipOdd = parseInt(tempTotal[i].value.replaceAll(',', ''));
+            totalArr.push(Number(slipOdd));
+        }
+
+        let sum = 0;
+        for (let i = 0; i < totalArr.length; i++) {
+            sum += totalArr[i];
+        }
+        $('.grand_total').text(format(sum));
+        $('.terbilang').val(terbilang(sum));
+
+    }
+
+    function terbilang(bilangan) {
+        bilangan = String(bilangan);
+        let angka = new Array('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+        let kata = new Array('', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan');
+        let tingkat = new Array('', 'Ribu', 'Juta', 'Milyar', 'Triliun');
+
+        let panjang_bilangan = bilangan.length;
+        let kalimat = "";
+        let subkalimat = "";
+        let kata1 = "";
+        let kata2 = "";
+        let kata3 = "";
+        let i = 0;
+        let j = 0;
+
+        /* pengujian panjang bilangan */
+        if (panjang_bilangan > 15) {
+            kalimat = "Diluar Batas";
+            return kalimat;
+        }
+
+        /* mengambil angka-angka yang ada dalam bilangan, dimasukkan ke dalam array */
+        for (i = 1; i <= panjang_bilangan; i++) {
+            angka[i] = bilangan.substr(-(i), 1);
+        }
+
+        i = 1;
+        j = 0;
+        kalimat = "";
+
+        /* mulai proses iterasi terhadap array angka */
+        while (i <= panjang_bilangan) {
+
+            subkalimat = "";
+            kata1 = "";
+            kata2 = "";
+            kata3 = "";
+
+            /* untuk Ratusan */
+            if (angka[i + 2] != "0") {
+                if (angka[i + 2] == "1") {
+                    kata1 = "Seratus";
+                } else {
+                    kata1 = kata[angka[i + 2]] + " Ratus";
+                }
+            }
+
+            /* untuk Puluhan atau Belasan */
+            if (angka[i + 1] != "0") {
+                if (angka[i + 1] == "1") {
+                    if (angka[i] == "0") {
+                        kata2 = "Sepuluh";
+                    } else if (angka[i] == "1") {
+                        kata2 = "Sebelas";
+                    } else {
+                        kata2 = kata[angka[i]] + " Belas";
+                    }
+                } else {
+                    kata2 = kata[angka[i + 1]] + " Puluh";
+                }
+            }
+
+            /* untuk Satuan */
+            if (angka[i] != "0") {
+                if (angka[i + 1] != "1") {
+                    kata3 = kata[angka[i]];
+                }
+            }
+
+            /* pengujian angka apakah tidak nol semua, lalu ditambahkan tingkat */
+            if ((angka[i] != "0") || (angka[i + 1] != "0") || (angka[i + 2] != "0")) {
+                subkalimat = kata1 + " " + kata2 + " " + kata3 + " " + tingkat[j] + " ";
+            }
+
+            /* gabungkan variabe sub kalimat (untuk Satu blok 3 angka) ke variabel kalimat */
+            kalimat = subkalimat + kalimat;
+            i = i + 3;
+            j = j + 1;
+
+        }
+
+        /* mengganti Satu Ribu jadi Seribu jika diperlukan */
+        if ((angka[5] == "0") && (angka[6] == "0")) {
+            kalimat = kalimat.replace("Satu Ribu", "Seribu");
+        }
+
+        return (kalimat.trim().replace(/\s{2,}/g, ' ')) + " Rupiah";
+    }
+
+    const rupiah = (number) => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR"
+        }).format(number);
+    }
+
+
     $(document).on('click', '.btn-remove-mg', function() {
         // Hapus baris yang ditekan tombol hapus
         $(this).closest('.row-mg').remove();
@@ -191,35 +652,44 @@ $configData = Helper::appClasses();
 
     $(document).on('click', '.btn-add-row-mg', function() {
         // Clone baris terakhir
-
+        var index = lastIndex ? lastIndex + 1 : $('.tax').length;
+        lastIndex = index;
         var $details = $('#details');
         var $newRow = `
-        <table class="table row-mg">
+            <table class="table row-mg">
                 <tbody>
                     <tr>
                         <td>
-                            <input type="text" class="form-control row-input" placeholder="Nomor" name="number[]" required style="width: 200px;" />
+                            <input type="number" class="form-control row-input" placeholder="Nomor" name="number[]" required style="width: 200px;" />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
                             <input type="text" class="form-control row-input" placeholder="Nama Barang" name="name[]" required style="width: 200px;" />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
                             <input type="text" class="form-control row-input" placeholder="Spesifikasi" name="specification[]" required style="width: 200px;" />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <input type="text" class="form-control row-input" placeholder="Quantity" name="quantity[]" required style="width: 200px;" />
+                            <input type="number" class="form-control row-input" placeholder="Quantity" name="quantity[]" required style="width: 200px;" />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
                             <input type="text" class="form-control row-input" placeholder="Satuan" name="units[]" required style="width: 200px;" />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <input type="text" class="form-control row-input" placeholder="Harga Satuan" name="price[]" required style="width: 200px;" />
+                            <input type="text" class="form-control row-input price" placeholder="Harga Satuan" name="price[]" required style="width: 200px;" />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <input type="text" class="form-control row-input" placeholder="Pajak" name="tax[]" required style="width: 200px;" />
+                            <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-${index}" required></select>
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <input type="text" class="form-control row-input" placeholder="Jumlah" name="total_price[]" required style="width: 200px;" />
+                            <input type="text" disabled class="form-control row-input total_price" placeholder="Jumlah" name="total_price[]" required style="width: 200px;" />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
                             <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
@@ -228,68 +698,154 @@ $configData = Helper::appClasses();
                         </td>
                     </tr>
                 </tbody>
-            </table> `;
+            </table>`;
         $details.append($newRow);
+        $("#tax-" + index).select2({
+            placeholder: 'Pilih',
+            allowClear: true,
+            ajax: {
+                url: "{{ env('BASE_URL_API')}}" + '/api/tax/select',
+                dataType: 'json',
+                cache: true,
+                data: function(params) {
+                    return {
+                        value: params.term || '',
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    var more = data.pagination.more;
+                    if (more === false) {
+                        params.page = 1;
+                        params.abort = true;
+                    }
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: more
+                        }
+                    };
+                }
+            }
+
+        });
     });
 
-    function getDetails() {
-        let getDetail = '';
-        let temp = '';
-        temp = `            
-            <table class="table row-mg">
-                <thead>
-                    <tr>
-                        <th>Nomor</th>
-                        <th>Nama Barang</th>
-                        <th>Spesifikasi</th>
-                        <th>Quantity</th>
-                        <th>Satuan</th>
-                        <th>Harga Satuan</th>
-                        <th>Pajak</th>
-                        <th>Jumlah</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
+    function getDetails(details) {
+        let tem = "";
+        for (let i = 0; i < details.length; i++) {
+            console.log(details[i].specification);
+            let specification = details[i].specification ? details[i].specification : '';
+            console.log(specification);
+            tem += `
+                    <tr class="row-mg">
                         <td>
-                            <input type="text" class="form-control row-input" placeholder="Nomor" name="number[]" required style="width: 200px;" />
+                            <input type="number" class="form-control row-input" placeholder="Nomor" name="number[]"  value="` + details[i].number + `"  required style="width: 200px;" />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <input type="text" class="form-control row-input" placeholder="Nama Barang" name="name[]" required style="width: 200px;" />
+                            <input type="text" class="form-control row-input" placeholder="Nama Barang" name="name[]"  value="` + details[i].name + `" required style="width: 200px;" />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <input type="text" class="form-control row-input" placeholder="Spesifikasi" name="specification[]" required style="width: 200px;" />
+                            <input type="text" class="form-control row-input" placeholder="Spesifikasi" name="specification[]" value="` + specification + `" required style="width: 200px;" />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <input type="text" class="form-control row-input" placeholder="Quantity" name="quantity[]" required style="width: 200px;" />
+                            <input type="number" class="form-control row-input" placeholder="Quantity" name="quantity[]" value="` + details[i].quantity + `" required style="width: 200px;" />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <input type="text" class="form-control row-input" placeholder="Satuan" name="units[]" required style="width: 200px;" />
+                            <input type="text" class="form-control row-input" placeholder="Satuan" name="units[]" value="` + details[i].units + `" required style="width: 200px;" />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <input type="text" class="form-control row-input" placeholder="Harga Satuan" name="price[]" required style="width: 200px;" />
+                            <input type="text" class="form-control row-input price" placeholder="Harga Satuan" name="price[]" value="` + details[i].price + `" required style="width: 200px;" />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <input type="text" class="form-control row-input" placeholder="Pajak" name="tax[]" required style="width: 200px;" />
+                            <select class="form-control row-input tax" placeholder="Pajak" name="tax[]" value="` + details[i].tax_id + `" id="tax-${i}" required></select>
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <input type="text" class="form-control row-input" placeholder="Jumlah" name="total_price[]" required style="width: 200px;" />
+                            <input type="text" disabled class="form-control row-input total_price" placeholder="Jumlah" name="total_price[]"  value="` + details[i].total_price + `" required style="width: 200px;" />
+                            <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
                             <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
                                 <i class="fas fa-trash"></i>
                             </a>
                         </td>
-                    </tr>
-                </tbody>
-            </table> `;
-        $('#details').prepend(temp);
+                    </tr>`;
 
-    };
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + details[i].tax_id,
+                type: "GET",
+                success: function(response) {
 
+                    let data = response.data;
+                    let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
+                    $('#tax-' + i).prepend(tem);
+                    console.log();
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+        let getDetail = `
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nomor</th>
+                            <th>Nama Barang</th>
+                            <th>Spesifikasi</th>
+                            <th>Quantity</th>
+                            <th>Satuan</th>
+                            <th>Harga Satuan</th>
+                            <th>Pajak</th>
+                            <th>Jumlah</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${tem}
+                    </tbody>
+                </table>`;
+        $('#details').prepend(getDetail);
+        for (let i = 0; i < details.length; i++) {
+            $("#tax-" + i).select2({
+                width: '100px',
+                placeholder: 'Select Pajak',
+                allowClear: true,
+                ajax: {
+                    url: "{{ env('BASE_URL_API')}}" + '/api/tax/select',
+                    dataType: 'json',
+                    cache: true,
+                    data: function(params) {
+                        return {
+                            value: params.term || '',
+                            page: params.page || 1
+                        }
+                    },
+                    processResults: function(data, params) {
+                        var more = data.pagination.more;
+                        if (more === false) {
+                            params.page = 1;
+                            params.abort = true;
+                        }
+                        return {
+                            results: data.data,
+                            pagination: {
+                                more: more
+                            }
+                        };
+                    }
+                }
 
-
+            });
+        }
+    }
 
     function setDate() {
         $('.date').flatpickr({
@@ -307,8 +863,7 @@ $configData = Helper::appClasses();
     }
 
 
-
-    $("#vendor").select2({
+    $("#vendor_id").select2({
         placeholder: 'Select Vendor',
         allowClear: true,
         ajax: {

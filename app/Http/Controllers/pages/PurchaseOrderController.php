@@ -95,7 +95,7 @@ class PurchaseOrderController extends Controller
      */
     public function show(string $id)
     {
-        return view('content.pages.purchase-order.show');
+        return view('content.pages.purchase-order.show', compact('id'));
     }
 
     /**
@@ -103,7 +103,7 @@ class PurchaseOrderController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('content.pages.purchase-order.edit', compact('id'));
     }
 
     /**

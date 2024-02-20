@@ -93,7 +93,7 @@ class PurchaseOrderController extends Controller
             if ($validatePurchaseOrder != "") throw new CustomException($validatePurchaseOrder, 400);
 
             $purchaseOrder = PurchaseOrder::create($request->all());
-            // dd($request->input("details"));
+
             foreach ($request->input("details") as $detail) {
                 PurchaseOrderDetail::create([
                     "purchase_order_id" => $purchaseOrder->id,
