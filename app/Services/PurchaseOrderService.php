@@ -38,7 +38,7 @@ class PurchaseOrderService{
             "details.*.quantity" => ["bail", "required", "numeric"],
             "details.*.units" => ["bail", "required", "string"],
             "details.*.price" => ["bail", "required", "numeric"],
-            "details.*.tax_id" => ["bail", "required", "numeric"],
+            "details.*.tax" => ["bail", "required", "numeric"],
             "details.*.total_price" => ["bail", "required", "numeric"],
         ];
         $errorMessages = [
@@ -63,10 +63,10 @@ class PurchaseOrderService{
 
         if($message == ""){
             $vendorExist = $this->CommonService->getDataById("App\Models\Vendor", $request->input("vendor_id"));
-            $tenantExist = $this->CommonService->getDataById("App\Models\Tenant", $request->input("tenant_id"));
+            // $tenantExist = $this->CommonService->getDataById("App\Models\Tenant", $request->input("tenant_id"));
 
             if(is_null($vendorExist)) $message = "Vendor tidak ditemukan";
-            else if(is_null($tenantExist)) $message = "Tenant tidak ditemukan";
+            // else if(is_null($tenantExist)) $message = "Tenant tidak ditemukan";
         }
 
         return $message;

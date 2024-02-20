@@ -30,4 +30,9 @@ class Tax extends Model
     {
         return $this->hasMany(InvoiceDetail::class, "tax_id");
     }
+    
+    public function PurchaseOrderDetails(): HasMany
+    {
+        return $this->hasMany(PurchaseOrder::class, "tax_id");
+    }
 }

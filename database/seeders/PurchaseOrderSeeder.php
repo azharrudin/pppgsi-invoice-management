@@ -53,7 +53,7 @@ class PurchaseOrderSeeder extends Seeder
                     "quantity" => $j,
                     "units" => "pcs",
                     "price" => $totalPrice,
-                    "tax_id" => $i,
+                    "tax_id" => 10,
                     "total_price" => $totalPrice,
                     "deleted_at" => null,
                 ]);
