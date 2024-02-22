@@ -185,7 +185,7 @@ $configData = Helper::appClasses();
                         } else if (data == 'disetujui chief finance') {
                             return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized> Disetujui Chief Finance & Accounting </span>';
                         } else if (data == 'Disetujui KA') {
-                            return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> Disetujui Kepala BM </span>';
+                            return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> Disetujui Kepala KA </span>';
                         } else if (data == 'Disetujui BM' || data == 'disetujui kepala bm') {
                             return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
                         } else if (data == 'Selesai' || data == 'selesai') {

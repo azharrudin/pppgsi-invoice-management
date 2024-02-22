@@ -237,7 +237,7 @@ $configData = Helper::appClasses();
             title: "Department",
             className: 'text-center',
             render: function(data, type, row) {
-                return data ? data : '';
+                return data.name ? data.name : '';
             }
         }, {
             data: "id",
@@ -264,19 +264,18 @@ $configData = Helper::appClasses();
                 return data;
             }
         }, {
-            name: "Vendor",
-            data: "vendor_name",
+            name: "vendor",
+            data: "vendor",
             title: "Vendor",
             className: 'text-center',
             render: function(data, type, row) {
-                return data;
+                return data.name ? data.name : '';
             }
         }, {
             data: "id",
             name: "Tanggapan",
             title: "Tanggapan",
             render: function(data, type, row) {
-                console.log(data);
                 let editRow = '';
                 let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
                 let previewRow = '<a href="{{ url("invoice/show")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
@@ -308,7 +307,6 @@ $configData = Helper::appClasses();
                 name: "vendor_id",
                 title: "Tanggapan",
                 render: function(data, type, row) {
-                    console.log(data);
                     let editRow = '';
                     let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
                     let previewRow = '<a href="{{ url("vendor/show-tagihan-vendor")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Tagihan Vendor"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
@@ -319,8 +317,8 @@ $configData = Helper::appClasses();
                 }
             }];
 
-        var urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/";
-        var urlTandaTerima = "{{ url('invoice/tanda-terima/data-tanda-terima') }}";
+        var urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Disetujui Bm";
+        var urlTandaTerima = "{{ url('to-do-list') }}"+"/receipt"+"/Disetujui Bm";
         var urlLaporanKerusakan = "{{ url('complain/laporan-kerusakan/data-damage') }}";
         var urlTicket = "{{ url('complain/data-ticket') }}";
         var urlWorkOrder = "{{ url('complain/work-order/data-work') }}";
@@ -334,24 +332,34 @@ $configData = Helper::appClasses();
             urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Disetujui KA";
             urlTandaTerima = "{{ url('to-do-list') }}"+"/receipt"+"/Disetujui KA";
             urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Disetujui Warehouse";   
-            urlMaterialRequest =  "{{ url('to-do-list') }}"+"/material-request"+"/disetujui chief finance";   
+            urlMaterialRequest =  "{{ url('to-do-list') }}"+"/material-request"+"/Disetujui KA";   
             urlPurchaseRequest =  "{{ url('to-do-list') }}"+"/purchase-request"+"/Disetujui KA";   
+            urlPurchaseOrder =  "{{ url('to-do-list') }}"+"/purchase-order"+"/Disetujui KA";   
+            urlTicket = "{{ url('to-do-list') }}"+"/ticket"+"/Disetujui KA";   
+            urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/Disetujui KA";   
             tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
             tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
+            tableSetting('Task Ticket', 'ticket-table', columnTicket, urlTicket);
+            tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
             tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder);
             tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest);
             tableSetting('Task Purchase Request', 'purchase-request-table', columnPurchaseRequest, urlPurchaseRequest)
+            tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
         //KA
         }else if(account.level_id == 2){
-            urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/terbuat";
+            urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Terbuat";
             urlTandaTerima = "{{ url('to-do-list') }}"+"/receipt"+"/terbuat";
             urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/terbuat";
+            urlTicket = "{{ url('to-do-list') }}"+"/ticket"+"/on progress";
             urlPurchaseRequest = "{{ url('to-do-list') }}"+"/purchase-request"+"/terbuat";
+            urlPurchaseOrder = "{{ url('to-do-list') }}"+"/purchase-order"+"/terbuat";
             
             tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
             tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
+            tableSetting('Task Ticket', 'ticket-table', columnTicket, urlTicket);
             tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
             tableSetting('Task Purchase Request', 'purchase-request-table', columnPurchaseRequest, urlPurchaseRequest)
+            tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
         //Chief Engineering
         } else if(account.level_id == 6){
             urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Terbuat";   
@@ -372,13 +380,13 @@ $configData = Helper::appClasses();
         }else{
             tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
             tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
-            tableSetting('Task Ticket', 'ticket-table', columnTicket, urlTicket);
-            tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
-            tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
-            tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest)
-            tableSetting('Task Purchase Request', 'purchase-request-table', columnPurchaseRequest, urlPurchaseRequest)
-            tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
-            tableSetting('Task Tagihan Vendor', 'tagihan-table', columnTagihanVendor, urlVendorInvoice)
+            // tableSetting('Task Ticket', 'ticket-table', columnTicket, urlTicket);
+            // tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
+            // tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
+            // tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest)
+            // tableSetting('Task Purchase Request', 'purchase-request-table', columnPurchaseRequest, urlPurchaseRequest)
+            // tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
+            // tableSetting('Task Tagihan Vendor', 'tagihan-table', columnTagihanVendor, urlVendorInvoice)
         }
     }));
 
