@@ -114,20 +114,20 @@ $configData = Helper::appClasses();
                                         <label for="note" class="form-label fw-medium">Klasifikasi</label>
                                         <div class="">
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="closed" id="Closed">
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="closed" id="closed">
                                                 <label class="form-check-label" for="closed">Closed
                                                 </label>
                                             </div>
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="cancelled" id="Cancelled">
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="cancelled" id="cancelled">
                                                 <label class="form-check-label" for="cancelled">Cancelled</label>
                                             </div>
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="explanation" id="Explanation">
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="explanation" id="explanation">
                                                 <label class="form-check-label" for="explanation">Explanation</label>
                                             </div>
                                             <div class="form-check form-check-inline classif2">
-                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="others" id="Others">
+                                                <input class="form-check-input classif2-checkbox" type="checkbox" name="others" id="others">
                                                 <label class="form-check-label" for="others">Others</label>
                                             </div>
                                         </div>
@@ -495,6 +495,7 @@ $configData = Helper::appClasses();
             },
             success: function(res) {
                 var data = res.data;
+                console.log(data);
                 id = data.id;
                 getDateValues(data);
                 let details = data.work_order_signatures;

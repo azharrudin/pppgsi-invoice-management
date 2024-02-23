@@ -179,6 +179,8 @@ Route::group(['middleware' => 'cekauth'], function () {
         // Report Invoice
         Route::prefix('/report-invoice')->group(function () {
             Route::get('/', [ReportInvoiceController::class, 'index'])->name('pages-report-invoice');
+            Route::get('/file-export', [ReportInvoiceController::class, 'fileExport']);
+
         });
 
         // Report Tanda Terima

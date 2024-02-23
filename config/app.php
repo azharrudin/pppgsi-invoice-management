@@ -172,6 +172,7 @@ return [
     App\Providers\JetstreamServiceProvider::class,
     App\Providers\MenuServiceProvider::class,
     Barryvdh\DomPDF\ServiceProvider::class,
+    Maatwebsite\Excel\ExcelServiceProvider::class,
   ])->toArray(),
 
   /*
@@ -189,5 +190,6 @@ return [
     // 'Example' => App\Facades\Example::class,
     'Helper' => App\Helpers\Helpers::class,
     'PDF' => Barryvdh\DomPDF\Facade::class,
+    'Excel' => Maatwebsite\Excel\Facades\Excel::class,
   ])->toArray(),
 ];
