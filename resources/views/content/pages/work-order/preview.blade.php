@@ -114,7 +114,7 @@ $configData = Helper::appClasses();
                                             </div>
                                             <div class="form-check form-check-inline classif2">
                                                 <input class="form-check-input classif2-checkbox" type="checkbox" name="cancelled" id="cancelled" required>
-                                                <label class="form-check-label" for="cancelled">Calceled</label>
+                                                <label class="form-check-label" for="cancelled">Cancelled</label>
                                             </div>
                                             <div class="form-check form-check-inline classif2">
                                                 <input class="form-check-input classif2-checkbox" type="checkbox" name="explanation" id="explanation" required>

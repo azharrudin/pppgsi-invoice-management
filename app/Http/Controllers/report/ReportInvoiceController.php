@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Http;
 
 class ReportInvoiceController extends Controller
 {
@@ -15,8 +16,11 @@ class ReportInvoiceController extends Controller
         return view("report.report-invoice");
     }
 
-    public function fileExport() 
+    public function fileExport()
     {
-        return Excel::download(new ReportInvoiceExport(), 'users-collection.xlsx');
-    }        
+        $apiRequest = Http::get(env('BASE_URL_API') .'/api/invoice/invoice-report-export');
+        $response = json_decode($apiRequest->getBody());
+        dd($response);
+        return Excel::download(new ReportInvoiceExport(), 'report-invoice.xlsx');
+    }
 }

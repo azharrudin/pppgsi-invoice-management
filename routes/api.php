@@ -47,6 +47,7 @@ Route::resource('bank', BankController::class);
 
 Route::get("invoice/select", [InvoiceController::class, "select"]);
 Route::get("invoice/report", [InvoiceController::class, "report"]);
+Route::get("invoice/invoice-report-export", [InvoiceController::class, "invoiceReportExport"]);
 Route::patch("invoice/update-status/{id}", [InvoiceController::class, "update_status"]);
 Route::resource('invoice', InvoiceController::class);
 

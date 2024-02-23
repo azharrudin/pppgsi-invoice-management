@@ -46,7 +46,7 @@ class InvoiceController extends Controller
                 $invoiceQuery->where(function ($query) use ($value) {
                     $query->whereHas('tenant', function ($tenantQuery) use ($value) {
                         $tenantQuery->where('name', 'like', '%' . $value . '%')
-                        ->orWhere('company', 'like', '%' . $value . '%');
+                            ->orWhere('company', 'like', '%' . $value . '%');
                     })
                         ->orwhere('invoice_number', 'like', '%' . $value . '%')
                         ->orWhere('grand_total', 'like', '%' . $value . '%')
@@ -56,9 +56,9 @@ class InvoiceController extends Controller
                 });
             }
             $getInvoices = $invoiceQuery
-            ->select("invoice_number", "tenant_id", "bank_id", "grand_total", "invoice_date", "invoice_due_date", "status", "id")
-            ->orderBy($order, $sort)
-            ->paginate($perPage);
+                ->select("invoice_number", "tenant_id", "bank_id", "grand_total", "invoice_date", "invoice_due_date", "status", "id")
+                ->orderBy($order, $sort)
+                ->paginate($perPage);
             $totalCount = $getInvoices->total();
 
             $invoiceArr = $this->CommonService->toArray($getInvoices);
@@ -310,28 +310,22 @@ class InvoiceController extends Controller
 
     public function report(Request $request)
     {
-        try{
+        try {
             [
                 "start" => $start,
                 "end" => $end,
             ] = $this->CommonService->getQuery($request);
 
-            if(is_null($start)) $start = Carbon::now()->firstOfMonth();
-            if(is_null($end)){
+            if (is_null($start)) $start = Carbon::now()->firstOfMonth();
+            if (is_null($end)) {
                 $end = Carbon::now()->lastOfMonth();
                 $end->setTime(23, 59, 59);
             }
 
             $countTenant = Tenant::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
             $countInvoice = Invoice::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
-            $sumInvoicePaid = Invoice::where("deleted_at", null)->
-                whereBetween("created_at", [$start, $end])->
-                where("status", 'like', '%Lunas%')->
-                sum("grand_total");
-            $sumInvoiceNotPaid = Invoice::where("deleted_at", null)->
-                whereBetween("created_at", [$start, $end])->
-                where("status", '!=', 'Lunas')->
-                sum("grand_total");
+            $sumInvoicePaid = Invoice::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->where("status", 'like', '%Lunas%')->sum("grand_total");
+            $sumInvoiceNotPaid = Invoice::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->where("status", '!=', 'Lunas')->sum("grand_total");
 
             return [
                 "count_tenant" => $countTenant,
@@ -356,48 +350,48 @@ class InvoiceController extends Controller
     {
         DB::beginTransaction();
 
-        try{
+        try {
             $id = (int) $id;
             $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
             if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
 
             $validateInvoice = $this->InvoiceService->validateStatus($request);
-            if($validateInvoice != "") throw new CustomException($validateInvoice, 400);
+            if ($validateInvoice != "") throw new CustomException($validateInvoice, 400);
 
-            $dataPayload = [ "status" => $request->input("status") ];
+            $dataPayload = ["status" => $request->input("status")];
 
             Invoice::findOrFail($id)->update($dataPayload);
 
             DB::commit();
 
-            if($request->input("status") == 'Terkirim'){
+            if ($request->input("status") == 'Terkirim') {
                 $invoice = Invoice::where('id', $id)->first();
                 $hariIni = \Carbon\Carbon::now()->locale('id');
                 $bulan = $hariIni->monthName;
                 $tahun = $hariIni->format('Y');
-    
+
                 $dataEmail["tenantName"] = $invoice->tenant->name ?? '';
                 $dataEmail["month"] = $bulan;
                 $dataEmail["year"] = $tahun;
                 $dataEmail["total"] = $invoice->grand_total;
                 $dataEmail["terbilang"] = $invoice->grand_total_spelled;
                 $dataEmail["invoice_number"] = $invoice->invoice_number;
-    
+
                 $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice/' . $id);
                 $response = json_decode($apiRequest->getBody());
                 $data = $response->data;
-    
+
                 $pdf = PDF::loadView('invoice.download', ['data' => $data]);
                 $to = $invoice->tenant->email ?? '';
-    
-                Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $pdf, $dataEmail) {
+
+                Mail::send('emails.email-template', ['data' => $dataEmail], function ($message) use ($to, $pdf, $dataEmail) {
                     $message->to($to)
-                        ->subject('Invoice No Invoice : '.$dataEmail['invoice_number'])
+                        ->subject('Invoice No Invoice : ' . $dataEmail['invoice_number'])
                         ->attachData($pdf->output(), "Invoice.pdf");
                 });
             }
- 
-            
+
+
             $getInvoice = Invoice::with("invoiceDetails.tax")
                 ->with("tenant")
                 ->with("bank")
@@ -411,7 +405,58 @@ class InvoiceController extends Controller
             $errorStatusCode = 500;
             DB::rollBack();
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
+
+    public function invoiceReportExport(Request $request)
+    {
+        try {
+            [
+                // "perPage" => $perPage,
+                // "page" => $page,
+                // "order" => $order,
+                // "sort" => $sort,
+                "value" => $value
+            ] = $this->CommonService->getQuery($request);
+
+            $invoiceQuery = Invoice::with("invoiceDetails.tax")->with("tenant")->with("bank")->where("deleted_at", null);
+            if ($value) {
+                $invoiceQuery->where(function ($query) use ($value) {
+                    $query->whereHas('tenant', function ($tenantQuery) use ($value) {
+                        $tenantQuery->where('name', 'like', '%' . $value . '%')
+                            ->orWhere('company', 'like', '%' . $value . '%');
+                    })
+                        ->orwhere('invoice_number', 'like', '%' . $value . '%')
+                        ->orWhere('grand_total', 'like', '%' . $value . '%')
+                        ->orWhere('invoice_date', 'like', '%' . $value . '%')
+                        ->orWhere('invoice_due_date', 'like', '%' . $value . '%')
+                        ->orWhere('status', 'like', '%' . $value . '%');
+                });
+            }
+            $getInvoices = $invoiceQuery
+                ->select("invoice_number", "tenant_id", "bank_id", "grand_total", "invoice_date", "invoice_due_date", "status", "id")->get();
+            // $totalCount = $getInvoices->total();
+
+            $invoiceArr = $this->CommonService->toArray($getInvoices);
+
+            return [
+                "data" => $invoiceArr,
+                // "per_page" => $perPage,
+                // "page" => $page,
+                // "size" => $totalCount,
+                // "pages" => ceil($totalCount / $perPage)
+            ];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }

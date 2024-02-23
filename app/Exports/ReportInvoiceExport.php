@@ -20,6 +20,13 @@ class ReportInvoiceExport implements FromCollection, WithMapping, ShouldAutoSize
     use Exportable;
     private $i = 1;
 
+    // function __construct($from_date, $to_date)
+    // {
+    //     $this->from_date = $from_date;
+    //     $this->to_date = $to_date;
+    // }
+
+    
     public function collection()
     {
         return collect([

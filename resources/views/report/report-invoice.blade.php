@@ -87,6 +87,11 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
     "use strict";
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $((function() {
 
         var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
@@ -100,17 +105,57 @@ $configData = Helper::appClasses();
                 text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Invoice</span>',
                 className: "btn btn-primary",
                 action: function(a, e, t, s) {
-                    window.location = "{{url('invoice/add-invoice')}}"
+                    $.ajax({
+                        url: "{{ env('BASE_URL_API')}}" + '/api/invoice/' + id,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(res) {
+
+                        },
+                        error: function(errors) {
+                            console.log(errors);
+                        }
+                    });
+                    // window.location = "{{url('invoice/add-invoice')}}"
                 }
             }];
         }
         buttonAdd = [{
-                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Tarik Report .XLSX</span>',
-                className: "btn btn-primary",
-                action: function(a, e, t, s) {
-                    window.location = "{{url('invoice/add-invoice')}}"
-                }
-            }];
+            text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Tarik Report .XLSX</span>',
+            className: "btn btn-primary",
+            action: function(a, e, t, s) {
+                // $.ajax({
+                //     url: "{{url('api/invoice/invoice-report-export')}}",
+                //     type: "GET",
+                //     dataType: "json",
+                //     success: function(res) {
+                //         console.log(res.data);
+                //         let data = res.data;
+                //         console.log(typeof(data));
+                //         let datas = {};
+                //         datas.data = data;
+                //         $.ajax({
+                //             url: "{{url('report/report-invoice/file-export')}}",
+                //             type: "POST",
+                //             data: JSON.stringify(datas),
+                //             contentType: "application/json; charset=utf-8",
+                //             dataType: "json",
+                //             success : function (res){
+                //                 console.log(res);
+                //             },
+                //             error: function(errors) {
+                //                 console.log(errors);
+                //             }
+                //         });
+                //     },
+                //     error: function(errors) {
+                //         console.log(errors);
+                //     }
+                // });
+                console.log('s');
+                window.location = "{{url('report/report-invoice/file-export')}}"
+            }
+        }];
 
         setHeader();
 
@@ -123,14 +168,14 @@ $configData = Helper::appClasses();
                 allowEscapeKey: false
             });
             $.ajax({
-                url: "{{ env('BASE_URL_API')}}" +'/api/invoice/report',
+                url: "{{ env('BASE_URL_API')}}" + '/api/invoice/report',
                 type: "GET",
                 dataType: "json",
                 success: function(res) {
                     $('.count_tenant').html(res.count_tenant);
                     $('.count_invoice').html(res.count_invoice);
-                    $('.invoice_paid').html('Rp. '+parseInt(res.invoice_paid).toLocaleString('en-US'));
-                    $('.invoice_not_paid').html('Rp. '+parseInt(res.invoice_not_paid).toLocaleString('en-US'));
+                    $('.invoice_paid').html('Rp. ' + parseInt(res.invoice_paid).toLocaleString('en-US'));
+                    $('.invoice_not_paid').html('Rp. ' + parseInt(res.invoice_not_paid).toLocaleString('en-US'));
                     Swal.close();
                 },
                 error: function(errors) {
@@ -165,7 +210,7 @@ $configData = Helper::appClasses();
                         allowOutsideClick: false
                     });
                     $.ajax({
-                        url: "{{ env('BASE_URL_API')}}" + '/api/invoice/update-status/'+id,
+                        url: "{{ env('BASE_URL_API')}}" + '/api/invoice/update-status/' + id,
                         type: "PATCH",
                         data: JSON.stringify(datas),
                         contentType: "application/json; charset=utf-8",
@@ -225,7 +270,7 @@ $configData = Helper::appClasses();
                         allowOutsideClick: false
                     });
                     $.ajax({
-                        url: "{{ env('BASE_URL_API')}}" + '/api/invoice/'+id,
+                        url: "{{ env('BASE_URL_API')}}" + '/api/invoice/' + id,
                         type: "DELETE",
                         data: JSON.stringify(datas),
                         contentType: "application/json; charset=utf-8",
@@ -280,7 +325,7 @@ $configData = Helper::appClasses();
                 render: function(data, type, row) {
                     return data;
                 }
-            },{
+            }, {
                 name: "invoice_date",
                 data: "invoice_date",
                 title: "Tanggal Buat",
@@ -297,7 +342,7 @@ $configData = Helper::appClasses();
 
                     return tanggalHasil;
                 }
-            },{
+            }, {
                 title: "Umur Piutang",
                 data: "invoice_date",
                 className: 'text-center',
@@ -305,10 +350,10 @@ $configData = Helper::appClasses();
                     let creted = new Date(data);
                     let today = new Date();
                     let diffTime = Math.abs(today - creted);
-                    let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+                    let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                     return diffDays;
                 }
-            },{
+            }, {
                 name: "tenant_name",
                 data: "tenant_name",
                 title: "Perusahaan",
@@ -316,10 +361,10 @@ $configData = Helper::appClasses();
                 render: function(data, type, row) {
                     return data;
                 }
-            },{
-                title : "Nama Tagihan",
+            }, {
+                title: "Nama Tagihan",
                 className: 'text-center',
-            },{
+            }, {
                 name: "grand_total",
                 data: "grand_total",
                 title: "Total Invoice",
@@ -330,8 +375,8 @@ $configData = Helper::appClasses();
                         currency: "IDR"
                     }).format(data)
                 }
-            },{
-                title : "Sisa Tagihan",
+            }, {
+                title: "Sisa Tagihan",
                 className: 'text-center',
             }],
             order: [
