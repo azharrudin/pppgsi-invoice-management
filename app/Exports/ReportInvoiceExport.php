@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Invoice;
+use DateTime;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -20,39 +21,44 @@ class ReportInvoiceExport implements FromCollection, WithMapping, ShouldAutoSize
     use Exportable;
     private $i = 1;
 
-    // function __construct($from_date, $to_date)
-    // {
-    //     $this->from_date = $from_date;
-    //     $this->to_date = $to_date;
-    // }
+    function __construct($data)
+    {
+        $this->data = $data;
+    }
 
     
     public function collection()
     {
-        return collect([
-            [
-                'name' => 'Povilas',
-                'surname' => 'Korop',
-                'email' => 'povilas@laraveldaily.com',
-                'twitter' => '@povilaskorop'
-            ],
-            [
-                'name' => 'Taylor',
-                'surname' => 'Otwell',
-                'email' => 'taylor@laravel.com',
-                'twitter' => '@taylorotwell'
-            ]
-        ]);
+        return collect($this->data);
     }
+    
 
     public function map($data): array
     {
+        $now = new DateTime();
+        $tagihan = '';
+        $twitter = '';
+        if(isset($data->tagihan)){
+            $tagihan = 'a';
+        }else{
+            $tagihan = '';
+        }
+
+        if(isset($data->twiter)){
+            $twitter = 'a';
+        }else{
+            $twitter = '';
+        }
+        
         return [
             $this->i++,
-            $data['name'],
-            $data['surname'],
-            $data['email'],
-            $data['twitter'],
+            $data->invoice_number,
+            $data->invoice_date,
+            (strtotime(date('Ymd')) -  strtotime($data->invoice_date)) / 86400 +1 .' Hari',
+            $data->tenant->name,
+            $tagihan,
+            "Rp " . number_format($data->grand_total, 2, ',', '.'),
+            $twitter,
         ];
     }
 
@@ -60,10 +66,13 @@ class ReportInvoiceExport implements FromCollection, WithMapping, ShouldAutoSize
     {
         return [
             'No',
-            'Nama',
-            'Surname',
-            'Email',
-            'Twitter'
+            'Nomor Invoice',
+            'Tanggal Dibuat',
+            'Umur Piutang',
+            'Perusahaan',
+            'Tagihan',
+            'Total Invoice',
+            'Sisa Tagihan'
         ];
     }
 

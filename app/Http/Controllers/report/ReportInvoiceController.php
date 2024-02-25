@@ -20,7 +20,7 @@ class ReportInvoiceController extends Controller
     {
         $apiRequest = Http::get(env('BASE_URL_API') .'/api/invoice/invoice-report-export');
         $response = json_decode($apiRequest->getBody());
-        dd($response);
-        return Excel::download(new ReportInvoiceExport(), 'report-invoice.xlsx');
+        $data = $response->data;
+        return Excel::download(new ReportInvoiceExport($data), 'report-invoice.xlsx');
     }
 }

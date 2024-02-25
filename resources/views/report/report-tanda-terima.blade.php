@@ -224,25 +224,28 @@ $configData = Helper::appClasses();
                     // For other types (sorting, filtering, etc.), return the original data
                     return data;
                 }
-            }, {
-                class: "text-center",
-                data: "paid",
-                name: "paid",
-                title: "Dibayarkan",
-                render: function(data, type, row) {
-                    // Check if it is of type 'display'
-                    if (type === 'display') {
-                        return 'Rp. ' + parseFloat(data).toLocaleString('en-US') + ',-';
-                    }
-
-                    // For other types (sorting, filtering, etc.), return the original data
-                    return data;
-                }
-            }, {
+            },{
                 class: "text-center",
                 data: "receipt_date",
                 name: "receipt_date",
                 title: "Tanggal Tanda Terima",
+                render: function(data, type, full, meta) {
+                    var tanggalAwal = data;
+
+                    var bagianTanggal = tanggalAwal.split('-');
+                    var tahun = bagianTanggal[0];
+                    var bulan = bagianTanggal[1];
+                    var hari = bagianTanggal[2];
+
+                    var tanggalHasil = hari + '/' + bulan + '/' + tahun;
+
+                    return tanggalHasil;
+                }
+            },{
+                class: "text-center",
+                data: "receipt_send_date",
+                name: "receipt_send_date",
+                title: "Tanggal Kirim",
                 render: function(data, type, full, meta) {
                     var tanggalAwal = data;
 
@@ -261,18 +264,11 @@ $configData = Helper::appClasses();
                 name: "status",
                 title: "Status",
                 render: function(data, type, full, meta) {
-                    if (data == "Disetujui KA") {
-                        return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized>' + data +
+                    if (data == "Terkirim") {
+                        return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized>' + data +
                             '</span>'
-                    } else if (data == "Disetujui BM") {
-                        return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized>' + data +
-                            '</span>'
-                    } else if (data == "Terbuat") {
-                        return '<span class="badge w-100" style="background-color : #BFBFBF; " text-capitalized>' + data +
-                            '</span>'
-                    } else if (data == "Terkirim") {
-                        return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized>' + data +
-                            '</span>'
+                    }else{
+                        return '<span class="badge w-100" style="background-color : #FF4747; " text-capitalized>Belum Terkirim</span>'
                     }
                 }
             }, {
@@ -370,67 +366,6 @@ $configData = Helper::appClasses();
         }), 300)
 
     }));
-
-    $(document).on('click', '.btn-delete', function(event) {
-        let id = $(this).data('id');
-        console.log(id);
-        event.stopPropagation();
-        Swal.fire({
-            text: "Apakah Ingin menghapus Tanda Terima ini  ?",
-            icon: "warning",
-            showCancelButton: true,
-            buttonsStyling: false,
-            confirmButtonText: "Yes, send!",
-            cancelButtonText: "No, cancel",
-            customClass: {
-                confirmButton: "btn fw-bold btn-primary",
-                cancelButton: "btn fw-bold btn-active-light-primary"
-            }
-        }).then(async function(result) {
-            if (result.value) {
-                var formData = new FormData();
-                hapusReceipt(id);
-            }
-        });
-    });
-
-    function hapusReceipt(id) {
-        Swal.fire({
-            title: '<h2>Loading...</h2>',
-            html: sweet_loader + '<h5>Please Wait</h5>',
-            showConfirmButton: false,
-            allowOutsideClick: false,
-            allowEscapeKey: false
-        })
-
-        $.ajax({
-            url: "{{ env('BASE_URL_API')}}" +'api/receipt/'+ id,
-            type: "DELETE",
-            contentType: false,
-            processData: false,
-            async: true,
-            success: function(response, result) {
-                Swal.fire({
-                    title: 'Berhasil',
-                    text: 'Berhasil Hapus Tanda Terima',
-                    icon: 'success',
-                    customClass: {
-                        confirmButton: 'btn btn-primary'
-                    },
-                    buttonsStyling: false
-                }).then(async function(res) {
-                    $(".invoice-list-table").DataTable().ajax.reload();
-                });
-            },
-            error: function(xhr, status, error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: error,
-                });
-            }
-        });
-    }
 </script>
 
 @endsection
