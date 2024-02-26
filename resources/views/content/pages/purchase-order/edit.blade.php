@@ -239,6 +239,9 @@ $configData = Helper::appClasses();
                 console.log(data);
                 id = data.id;
                 nomorInvoice = data.invoice_number;
+                if(data.status !='Terbuat'){
+                    $('.form-control').attr('readonly', 'readonly');
+                }
                 $("#purchase_order_number").val(data.purchase_order_number);
                 $("#purchase_order_date").val(data.purchase_order_date);
                 $("#about").val(data.about);

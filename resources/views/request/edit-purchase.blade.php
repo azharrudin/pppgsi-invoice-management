@@ -483,6 +483,9 @@ $configData = Helper::appClasses();
             success: function(res) {
                 console.log(res);
                 var data = res.data;
+                if(data.status !='Terbuat'){
+                    $('.form-control').attr('readonly', 'readonly');
+                }
                 let details = data.purchase_request_signatures;
                 $("#additional_note").val(data.additional_note);
                 $("#budget_status").val(data.budget_status);
