@@ -299,6 +299,9 @@ $configData = Helper::appClasses();
                 dataType: "json",
                 success: function(res) {
                     let response = res.data;
+                    if(response.status !='Terbuat'){
+                        $('.form-control').attr('readonly', 'readonly');
+                    }
                     getScope(response.scope);
                     getClassification(response.classification);
                     let details= response.damage_report_signatures;

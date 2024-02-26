@@ -976,6 +976,10 @@ $configData = Helper::appClasses();
                         })
                     }
                 });
+
+                if(data.status !='Terbuat'){
+                    $('.form-control').attr('readonly', 'readonly');
+                }
                 $("#tenant").empty().append("<option value="+data.tenant.id+">"+data.tenant.name+"</option>").val(data.tenant.id).trigger("change");
                 $("#bank").empty().append("<option value="+data.bank.id+">"+data.bank.name+"</option>").val(data.bank.id).trigger("change");
                 $("#invoice_number").val(data.invoice_number);

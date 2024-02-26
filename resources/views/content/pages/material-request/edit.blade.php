@@ -144,6 +144,11 @@ $configData = Helper::appClasses();
             dataType: "json",
             success: function(res) {
                 let data = res.data;
+                // if(data.status != 'Terbuat'){
+                //     $('.form-control').attr('readonly', 'readonly');
+                // }
+                // console.log(data.status);
+
                 let details = data.material_request_signatures;
                 $("#requester").val(data.requester);
                 $("#department").val(data.department);

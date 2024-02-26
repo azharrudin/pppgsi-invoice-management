@@ -314,6 +314,12 @@
 
                         });
 
+                        console.log(response);
+
+                        if(response.status !='Terbuat'){
+                            $('.form-control').attr('readonly', 'readonly');
+                        }
+
                         $('#signature_date').val(response.signature_date ? moment(response.signature_date, 'YYYY-MM-DD').format('DD-MM-YYYY') : '');
                         $(".select-tenant").empty().append('<option value="' + response.tenant_id +'">' + response.tenant.name + '</option>').val(response.tenant_id).trigger("change");
                         $(".select-invoice").empty().append('<option value="' + response.invoice_id +'">' + response.invoice.invoice_number + '</option>').val(response.invoice_id).trigger("change");
