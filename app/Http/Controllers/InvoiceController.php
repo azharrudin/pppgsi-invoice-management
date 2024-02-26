@@ -62,6 +62,11 @@ class InvoiceController extends Controller
             $totalCount = $getInvoices->total();
 
             $invoiceArr = $this->CommonService->toArray($getInvoices);
+            foreach($invoiceArr as $invoiceObj){
+                $totalPaid = Receipt::where("invoice_id", $invoiceObj["id"])->where("deleted_at", null)->sum("paid");
+                $invoiceObj["total_paid"] = $totalPaid;
+                $invoiceObj["remaining"] = $invoiceObj["grand_total"] - $totalPaid;
+            }
 
             return [
                 "data" => $invoiceArr,
