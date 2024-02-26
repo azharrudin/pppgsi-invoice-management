@@ -53,12 +53,17 @@ class InvoiceController extends Controller
                 });
             }
             $getInvoices = $invoiceQuery
-            ->select("invoice_number", "tenant_id", "bank_id", "grand_total", "invoice_date", "invoice_due_date", "status")
+            ->select("id", "invoice_number", "tenant_id", "bank_id", "grand_total", "invoice_date", "invoice_due_date", "status")
             ->orderBy($order, $sort)
             ->paginate($perPage);
             $totalCount = $getInvoices->total();
 
             $invoiceArr = $this->CommonService->toArray($getInvoices);
+            foreach($invoiceArr as $invoiceObj){
+                $totalPaid = Receipt::where("invoice_id", $invoiceObj["id"])->where("deleted_at", null)->sum("paid");
+                $invoiceObj["total_paid"] = $totalPaid;
+                $invoiceObj["remaining"] = $invoiceObj["grand_total"] - $totalPaid;
+            }
 
             return [
                 "data" => $invoiceArr,
