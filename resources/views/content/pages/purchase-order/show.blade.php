@@ -321,8 +321,8 @@ $configData = Helper::appClasses();
 
     function getDataTagihanVendor(id) {
         $.ajax({
-            // url: "{{env('BASE_URL_API')}}" +'/api/purchase-order/' + id,
-            url: "{{url('api/purchase-order')}}/" + id,
+            url: "{{env('BASE_URL_API')}}" +'/api/purchase-order/' + id,
+            // url: "{{url('api/purchase-order')}}/" + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
@@ -443,7 +443,7 @@ $configData = Helper::appClasses();
                         <td>` + details[i].quantity + `</td>
                         <td>` + details[i].units + `</td>
                         <td>` + 'Rp. ' + format(details[i].price) + `</td>
-                        <td>` + details[i].tax + `</td>
+                        <td>` + details[i].tax_id + `</td>
                         <td>` + 'Rp. ' + format(details[i].total_price) + `</td>
                     </tr>
             `;

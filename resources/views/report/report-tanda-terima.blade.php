@@ -81,19 +81,17 @@ $configData = Helper::appClasses();
     "use strict";
     let account = {!! json_encode(session('data')) !!}
     let buttonAdd = [];
+
+    buttonAdd = [{
+            text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Export</span>',
+            className: "btn btn-primary",
+            action: function(a, e, t, s) {
+                window.location = "{{url('report/report-tanda-terima/file-export')}}"
+            }
+        }];
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
-
-    if (account.level.id == '10') {
-        buttonAdd = [{
-            text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Tanda Terima</span>',
-            className: "btn btn-primary",
-            action: function(a, e, t, s) {
-                window.location = baseUrl + "invoice/tanda-terima/add"
-            }
-        }];
-    }
 
     setHeader();
 

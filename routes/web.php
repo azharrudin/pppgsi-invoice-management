@@ -180,12 +180,12 @@ Route::group(['middleware' => 'cekauth'], function () {
         Route::prefix('/report-invoice')->group(function () {
             Route::get('/', [ReportInvoiceController::class, 'index'])->name('pages-report-invoice');
             Route::get('/file-export', [ReportInvoiceController::class, 'fileExport']);
-
         });
 
         // Report Tanda Terima
         Route::prefix('/report-tanda-terima')->group(function () {
             Route::get('/', [ReportTandaTerimaController::class, 'index'])->name('pages-report-tenda-terima');
+            Route::get('/file-export', [ReportTandaTerimaController::class, 'fileExport']);
         });
 
         // Report Tagihan

@@ -135,7 +135,7 @@ class PurchaseOrderController extends Controller
     {
         try {
             $id = (int) $id;
-            $getPurchaseOPurchaseOrder = PurchaseOrder::with("purchaseOrderDetails")->with("vendor")->with("vendorAttachment")->where("id", $id)->where("deleted_at", null)->first();
+            $getPurchaseOPurchaseOrder = PurchaseOrder::with("purchaseOrderDetails.tax")->with("vendor")->with("vendorAttachment")->where("id", $id)->where("deleted_at", null)->first();
             if (is_null($getPurchaseOPurchaseOrder)) throw new CustomException("Purchase order tidak ditemukan", 404);
 
             return ["data" => $getPurchaseOPurchaseOrder];

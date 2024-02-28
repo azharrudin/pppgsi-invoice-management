@@ -178,6 +178,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
     let account = {!! json_encode(session('data')) !!}
+    let ttdFile = null;
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
@@ -221,8 +222,8 @@ $configData = Helper::appClasses();
 
     function getDataPurchaseOrder(id) {
         $.ajax({
-            // url: "{{env('BASE_URL_API')}}" + '/api/purchase-order/' + id,
-            url: "{{url('api/purchase-order')}}/" + id,
+            url: "{{env('BASE_URL_API')}}" + '/api/purchase-order/' + id,
+            // url: "{{url('api/purchase-order')}}/" + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
@@ -239,9 +240,47 @@ $configData = Helper::appClasses();
                 console.log(data);
                 id = data.id;
                 nomorInvoice = data.invoice_number;
-                if(data.status !='Terbuat'){
+                const myDropzone = new Dropzone('#dropzone-basic', {
+                    parallelUploads: 1,
+                    maxFilesize: 3,
+                    addRemoveLinks: true,
+                    maxFiles: 1,
+                    acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                    autoQueue: false,
+                    url: "../uploads/logo",
+                    thumbnailWidth: 250,
+                    thumbnailHeight: 250,
+                    init: function() {
+                        let mockFile = {
+                            dataURL: data.signature
+                        };
+
+                        ttdFile = mockFile
+                        if (data.signature) {
+                            this.options.addedfile.call(this, mockFile);
+                            this.options.thumbnail.call(this, mockFile, data.signature);
+
+                            $('.dz-image').last().find('img').attr('width', '100%');
+
+                            // Optional: Handle the removal of the file
+                            mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+                                // Handle removal logic here
+                            });
+                        }
+                        this.on('addedfile', function(file) {
+                            $('.dz-image').last().find('img').attr('width', '100%');
+                            while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
+                            ttdFile = file;
+                        })
+                    }
+                });
+                if (data.status != 'Terbuat') {
                     $('.form-control').attr('readonly', 'readonly');
+                    if (data.status == "Disetujui KA"){
+                        $('#signature_name').removeAttr('readonly');
+                    }
                 }
+                
                 $("#purchase_order_number").val(data.purchase_order_number);
                 $("#purchase_order_date").val(data.purchase_order_date);
                 $("#about").val(data.about);
@@ -249,7 +288,7 @@ $configData = Helper::appClasses();
                 $(".grand_total").text(format(data.grand_total));
                 $("#grand_total_spelled").val(data.grand_total_spelled);
                 $("#term_and_conditions").val(data.term_and_conditions);
-                // $("#signature_name").text(data.signature_name);
+                $("#signature_name").val(data.signature_name);
                 getVendor(data.vendor_id);
                 getDetails(data.purchase_order_details);
                 if (account.level.id != '1') {
@@ -411,7 +450,8 @@ $configData = Helper::appClasses();
                     let grandTotalSpelled = $("#grand_total_spelled").val();
                     let grandTotal = parseInt($(".grand_total").text().replaceAll(',', ''));
                     let termAndConditions = $("#term_and_conditions").val();
-
+                    let signature = ttdFile.dataURL;
+                    let signatureName = $('#signature_name').val();
                     var detail = [];
                     $('.row-input').each(function(index) {
                         var input_name = $(this).attr('name');
@@ -458,11 +498,15 @@ $configData = Helper::appClasses();
                     datas.grand_total_spelled = grandTotalSpelled;
                     datas.term_and_conditions = termAndConditions;
                     datas.note = note;
+                    datas.signature = signature;
+                    datas.signature_name = signatureName;
+
                     // delete datas['undefined'];
                     console.log(datas);
 
                     $.ajax({
-                        url: "{{url('api/purchase-order')}}/" + id,
+                        url: "{{env('BASE_URL_API')}}" + '/api/purchase-order/' + id,
+                        // url: "{{url('api/purchase-order')}}/" + id,
                         type: "PATCH",
                         data: JSON.stringify(datas),
                         processData: false,

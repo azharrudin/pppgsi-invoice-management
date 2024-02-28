@@ -361,10 +361,12 @@ $configData = Helper::appClasses();
                 render: function(data, type, row) {
                     return data;
                 }
-            }, {
-                title: "Nama Tagihan",
-                className: 'text-center',
-            }, {
+            }, 
+            // {
+            //     title: "Nama Tagihan",
+            //     className: 'text-center',
+            // }, 
+            {
                 name: "grand_total",
                 data: "grand_total",
                 title: "Total Invoice",
@@ -377,7 +379,16 @@ $configData = Helper::appClasses();
                 }
             }, {
                 title: "Sisa Tagihan",
+                name: "remaining",
+                data: "remaining",
                 className: 'text-center',
+                render: function(data, type, row) {
+                    return new Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR"
+                    }).format(data)
+                }
+
             }],
             order: [
                 [3, "desc"]

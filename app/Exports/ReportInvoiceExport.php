@@ -35,30 +35,14 @@ class ReportInvoiceExport implements FromCollection, WithMapping, ShouldAutoSize
 
     public function map($data): array
     {
-        $now = new DateTime();
-        $tagihan = '';
-        $twitter = '';
-        if(isset($data->tagihan)){
-            $tagihan = 'a';
-        }else{
-            $tagihan = '';
-        }
-
-        if(isset($data->twiter)){
-            $twitter = 'a';
-        }else{
-            $twitter = '';
-        }
-        
         return [
             $this->i++,
             $data->invoice_number,
             $data->invoice_date,
             (strtotime(date('Ymd')) -  strtotime($data->invoice_date)) / 86400 +1 .' Hari',
             $data->tenant->name,
-            $tagihan,
             "Rp " . number_format($data->grand_total, 2, ',', '.'),
-            $twitter,
+            "Rp " . number_format($data->remaining, 2, ',', '.'),
         ];
     }
 
@@ -70,7 +54,6 @@ class ReportInvoiceExport implements FromCollection, WithMapping, ShouldAutoSize
             'Tanggal Dibuat',
             'Umur Piutang',
             'Perusahaan',
-            'Tagihan',
             'Total Invoice',
             'Sisa Tagihan'
         ];

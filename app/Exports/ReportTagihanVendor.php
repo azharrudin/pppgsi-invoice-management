@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class ReportTandaTerimaExport implements FromCollection, WithMapping, ShouldAutoSize, WithHeadings
+class ReportTagihanVendor implements FromCollection, WithMapping, ShouldAutoSize, WithHeadings
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -31,35 +31,26 @@ class ReportTandaTerimaExport implements FromCollection, WithMapping, ShouldAuto
  
      public function map($data): array
      {
-        $status ='';
-
-        if($data->status =='Terkirim'){
-            $status = 'Terkirim';
-        }else{
-            $status = 'Belum Terkirim';
-        }
-         
          return [
              $this->i++,
-             $data->receipt_number,
-             $data->tenant->name,
-             $data->invoice->grand_total,
-             $data->receipt_date,
-             $data->receipt_send_date,
-             $status
+             $data->purchase_order_number,
+             $data->purchase_order_date,
+             $data->vendor_name,
+             $data->about,
+             $data->grand_total,
          ];
      }
  
      public function headings(): array
      {
          return [
-             "No",
-             "No Tanda Terima",
-             "Tenant",
-             "Total",
-             "Tanggal Tanda Terima",
-             "Tanggal Kirim",
-             "Status",
+             'No',
+             'No. PO',
+             'Tanggal PO',
+             'Perusahaan',
+             'Perihal',
+             'Total Tagihan',
+            
          ];
      }
 }
