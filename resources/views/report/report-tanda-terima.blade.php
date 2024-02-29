@@ -18,7 +18,7 @@ $configData = Helper::appClasses();
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb breadcrumb-style1">
         <li class="breadcrumb-item">
-            <a href="#">Tanda Terima</a>
+            <a href="#">Report Tanda Terima / List</a>
         </li>
         <li class="breadcrumb-item active">
             <a href="#">List</a>
@@ -83,7 +83,7 @@ $configData = Helper::appClasses();
     let buttonAdd = [];
 
     buttonAdd = [{
-            text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Export</span>',
+            text: '<span class="d-md-inline-block d-none">Buat Tanda Terima</span>',
             className: "btn btn-primary",
             action: function(a, e, t, s) {
                 window.location = "{{url('report/report-tanda-terima/file-export')}}"
@@ -186,7 +186,7 @@ $configData = Helper::appClasses();
             serverSide: true,
             deferRender: true,
             ajax: {
-                url: "{{ url('invoice/tanda-terima/data-tanda-terima') }}",
+                url: "{{ url('report/report-tanda-terima/data-tanda-terima') }}",
                 "data": function(d) {
                     d.start = 0;
                     d.page = $(".invoice-list-table").DataTable().page.info().page + 1;

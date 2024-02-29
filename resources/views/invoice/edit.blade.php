@@ -149,7 +149,7 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" />
+                                    <input type="text" class="form-control tanda-tangan w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
@@ -892,7 +892,7 @@ $configData = Helper::appClasses();
             datas.details = detail;
             datas.tenant_id = parseInt(tenant);
             datas.bank_id = parseInt(bank);
-            datas.status = 'terbuat';
+            datas.status = 'Terbuat';
             datas.contract_date = tglKontrak
             datas.opening_paragraph = "Bapak/Ibu Qwerty";
             datas.invoice_due_date = tglJatuhTempo;
@@ -978,8 +978,9 @@ $configData = Helper::appClasses();
                 });
 
                 if(data.status !='Terbuat'){
-                    $('.form-control').attr('readonly', 'readonly');
+                    $('.form-control').attr('readonly');
                 }
+
                 $("#tenant").empty().append("<option value="+data.tenant.id+">"+data.tenant.name+"</option>").val(data.tenant.id).trigger("change");
                 $("#bank").empty().append("<option value="+data.bank.id+">"+data.bank.name+"</option>").val(data.bank.id).trigger("change");
                 $("#invoice_number").val(data.invoice_number);
@@ -1006,7 +1007,7 @@ $configData = Helper::appClasses();
                     $('.btn-remove-mg').addClass('d-none');
                     $('.btn-add-row-mg').addClass('d-none');
                     $(".btn-update span").html('<i class="ti ti-check ti-xs me-2"></i>Disetujui Kepala BM');
-                    $('#materai_name').attr('readonly',true);
+                    $('#materai_name').removeAttr('readonly');
                 }
                 Swal.close();
             },

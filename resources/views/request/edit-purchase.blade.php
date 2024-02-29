@@ -483,8 +483,14 @@ $configData = Helper::appClasses();
             success: function(res) {
                 console.log(res);
                 var data = res.data;
-                if(data.status !='Terbuat'){
+                if((data.status !='Terbuat' &&  account.level.id == 10)){
+                    $('.btn-remove-mg').remove();
+                    $('.btn-add-row-mg').remove();
                     $('.form-control').attr('readonly', 'readonly');
+                    $('.form-check-input').attr('disabled', 'disabled');
+                    $('.date').removeClass('date');
+                    $("#save").addClass('d-none');
+                    $(".tanda-tangan").prop("disabled", true);
                 }
                 let details = data.purchase_request_signatures;
                 $("#additional_note").val(data.additional_note);

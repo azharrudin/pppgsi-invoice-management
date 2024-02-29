@@ -299,9 +299,7 @@ $configData = Helper::appClasses();
                 dataType: "json",
                 success: function(res) {
                     let response = res.data;
-                    if(response.status !='Terbuat'){
-                        $('.form-control').attr('readonly', 'readonly');
-                    }
+                   
                     getScope(response.scope);
                     getClassification(response.classification);
                     let details= response.damage_report_signatures;
@@ -375,6 +373,7 @@ $configData = Helper::appClasses();
                             .date, 'YYYY-MM-DD').format('DD-MM-YYYY'));
                     }
                     getDetails(response.damage_report_details);
+                    
                     setDate();
                     if(account.level.id != 10){
                         $('.btn-remove-mg').remove();
@@ -382,6 +381,14 @@ $configData = Helper::appClasses();
                         $('.data-input, .select-classification, .row-input').attr('disabled', 'disabled');
                         $('.select2').attr('disabled', 'disabled');
                     }
+                    if(response.status !='Terbuat' && account.level.id == 10){
+                            $('.form-control').attr('readonly', 'readonly');
+                            $('.btn-remove-mg').remove();
+                            $('.btn-add-row-mg').remove();
+                            $('.data-input, .select-classification, .row-input').attr('disabled', 'disabled');
+                            $('.select2').attr('disabled', 'disabled');
+                            $("#edit").addClass('d-none');
+                        }
                     Swal.close();
                 },
                 error: function(errors) {

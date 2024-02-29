@@ -186,6 +186,7 @@ Route::group(['middleware' => 'cekauth'], function () {
         Route::prefix('/report-tanda-terima')->group(function () {
             Route::get('/', [ReportTandaTerimaController::class, 'index'])->name('pages-report-tenda-terima');
             Route::get('/file-export', [ReportTandaTerimaController::class, 'fileExport']);
+            Route::get('/data-tanda-terima', [ReportTandaTerimaController::class, 'datatable']);
         });
 
         // Report Tagihan
