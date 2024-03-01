@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('tenants', function (Blueprint $table) {
             $table->increments("id");
+            $table->string("paper_id")->nullable();
             $table->string("name");
             $table->string("email");
             $table->string("phone", 15);

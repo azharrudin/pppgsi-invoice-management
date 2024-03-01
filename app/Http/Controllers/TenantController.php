@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\CustomException;
 use App\Models\Tenant;
 use App\Services\CommonService;
+use App\Services\PaperIdService;
 use App\Services\TenantService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -14,11 +15,13 @@ class TenantController extends Controller
 {
     protected $CommonService;
     protected $TenantService;
+    protected $PaperIdService;
 
-    public function __construct(CommonService $CommonService, TenantService $tenantService)
+    public function __construct(CommonService $CommonService, TenantService $tenantService, PaperIdService $paperIdService)
     {
         $this->CommonService = $CommonService;
         $this->TenantService = $tenantService;
+        $this->PaperIdService = $paperIdService;
     }
 
     /**
@@ -82,6 +85,16 @@ class TenantController extends Controller
             if($validateTenant != "") throw new CustomException($validateTenant, 400);
 
             $tenant = Tenant::create($request->all());
+
+            $tenant = Tenant::create($request->all());
+            $partner = $this->PaperIdService->createOrUpdatePartner($tenant->id, $tenant->name, $tenant->phone, "", true);
+
+            if (isset($partner['data']) && isset($partner['data']['id'])){
+              $dataId = $partner["data"]["id"];
+              Tenant::findOrFail($tenant->id)->update(["paper_id" => $dataId]);
+              $tenant->paper_id = $dataId;
+            }
+
             DB::commit();
 
             return response()->json($tenant, 201);
@@ -139,6 +152,8 @@ class TenantController extends Controller
             if($validateTenant != "") throw new CustomException($validateTenant, 400);
 
             $update = Tenant::findOrFail($id)->update($request->all());
+            $partner = $this->PaperIdService->createOrUpdatePartner($id, $request->input("name"), $request->input("phone"), $getTenant["paper_id"], false);
+
             DB::commit();
 
             $tenant = Tenant::where("id", $id)->first();
