@@ -144,10 +144,8 @@ $configData = Helper::appClasses();
             dataType: "json",
             success: function(res) {
                 let data = res.data;
-                // if(data.status != 'Terbuat'){
-                //     $('.form-control').attr('readonly', 'readonly');
-                // }
-                // console.log(data.status);
+               
+                console.log(data.status);
 
                 let details = data.material_request_signatures;
                 $("#requester").val(data.requester);
@@ -184,6 +182,15 @@ $configData = Helper::appClasses();
                 account.level.id == 1 ? dropzoneValue(signatureKepalaBm, '#ttd4'):'';
                 account.level.id != '7' ? ($('.add-row').hide(), $('.button-delete').hide()) : ($('.add-row').show(), $('.button-delete').hide());
                 setDate();
+                if(data.status !='Terbuat' && account.level.id == 10){
+                    $('.form-control').attr('readonly', 'readonly');
+                    $('.btn-remove-mg').remove();
+                    $('.btn-add-row-mg').remove();
+                    $('.data-input, .select-classification, .row-input').attr('disabled', 'disabled');
+                    $('.select2').attr('disabled', 'disabled');
+                    $('.date').removeClass('date');
+                    $("#save").addClass('d-none');
+                }
                 Swal.close();
             },
             error: function(errors) {

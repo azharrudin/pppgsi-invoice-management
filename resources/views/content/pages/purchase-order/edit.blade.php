@@ -203,7 +203,6 @@ $configData = Helper::appClasses();
     }
     $(document).ready(function() {
         getDataPurchaseOrder(id);
-        setDate();
     });
 
     function getVendor(id) {
@@ -310,6 +309,17 @@ $configData = Helper::appClasses();
                 //     $("#signatture").css("background-size", `cover`);
                 //     $("#signatture").css("background-repeat", `no-repeat`);
                 // }
+                setDate();
+                if((data.status !='Terbuat' &&  account.level.id == 10)){
+                    $('.btn-remove-mg').remove();
+                    $('.btn-add-row-mg').remove();
+                    $('.form-control').attr('readonly', 'readonly');
+                    $('.form-check-input').attr('disabled', 'disabled');
+                    $('.date').removeClass('date');
+                    $("#vendor_id").prop("disabled", true);
+                    $("#save").addClass('d-none');
+                    $(".tanda-tangan").prop("disabled", true);
+                }
                 Swal.close();
             },
             error: function(errors) {

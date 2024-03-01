@@ -178,7 +178,7 @@ $configData = Helper::appClasses();
                                 </div>`;
     let ttdFile1, ttdFile2, ttdFile3, ttdFile4;
 
-    function getSignatureTechnician(value) {
+    function getSignatureTechnician(value, status) {
         let disableTechnician = 'disabled';
         let dropzoneTechnician = '';
         let imageTechnician = '';
@@ -191,13 +191,31 @@ $configData = Helper::appClasses();
             dropzoneTechnician = 'dz-clickable';
             nameTechnician = account.name;
             ttdFile1 = value?.signature ? value.signature : '';
-            imageTechnician = `
+            if(status != 'Terbuat'){
+                nameTechnician = value.name;
+                dateTechnicianAttr = 'disabled';
+                dateTechnician = value.date ? moment(value.date, 'Y-MM-DD').format('DD-MM-YYYY') : '';
+                ttdFile1 = value.signature;
+                imageTechnician = `<div id="unit-image" style="padding: 5px;"></div>` +
+                    '<script type="text/javascript">' +
+                    '$("#unit-image").css("background-color", "black");' +
+                    '$("#unit-image").css("background-image", "url(' + value.signature + ')");' +
+                    '$("#unit-image").css("height", "150px");' +
+                    '$("#unit-image").css("width", "150px");' +
+                    '$("#unit-image").css("background-position", "center");' +
+                    '$("#unit-image").css("background-size", "cover");' +
+                    '$("#unit-image").css("background-repeat", "no-repeat");' +
+                    '</' + 'script>';
+            }else{
+                imageTechnician = `
             <div action="/upload" class="dropzone needsclick ${dropzoneTechnician} dd" id="ttd1" style="padding: 5px;">
                 <div class="dz-message needsclick">
                     <span class="note needsclick">Unggah Tanda Tangan</span>
                 </div>
             </div>
             `;
+            }
+           
         } else {
             //sudah ttd
             if (value) {
@@ -497,7 +515,6 @@ $configData = Helper::appClasses();
                 var data = res.data;
                 console.log(data);
                 id = data.id;
-                getDateValues(data);
                 let details = data.work_order_signatures;
                 $("#no-wo").text('Nomor Work Order : ' + data.work_order_number);
                 getLaporanKerusakan(data.damage_report_id);
@@ -505,7 +522,7 @@ $configData = Helper::appClasses();
                 getScope(data.scope);
                 $("#job_description").val(data.job_description);
                 getClassification(data.classification);
-                $('#' + data.klasifikasi).prop('checked', true);
+                $('#' + data.klasifikasi.toLowerCase()).prop('checked', true);
                 let signatureTechnician, signatureChief, signatureKepala, signatureWarehouse;
                 for (let i = 0; i < details.length; i++) {
                     if (details[i].position == 'Technician') {
@@ -518,23 +535,42 @@ $configData = Helper::appClasses();
                         signatureKepala = details[i];
                     }
                 }
-                if(account.level.id != 10){
+                if(account.level.id != 5){
                     $('.btn-remove-mg').remove();
                     $('.btn-add-row-mg').remove();
                     $('.form-control').attr('readonly', 'readonly');
                     $('.form-check-input').attr('disabled', 'disabled');
-                    
+                    $('.date').removeClass('date');
+                    $("#scope").prop("disabled", true);
+                    $("#classification").prop("disabled", true);
+                    $("#select-lk").prop("disabled", true);
+                    $("#save").addClass('d-none');
+                    $(".tanda-tangan").prop("disabled", true);
                 }
 
-                let htmlGetSignatureTechnician = getSignatureTechnician(signatureTechnician);
+                let htmlGetSignatureTechnician = getSignatureTechnician(signatureTechnician, data.status);
                 let htmlGetSignatureChief = getSignatureChief(signatureChief);
                 let htmlGetSignatureWarehouse = getSignatureWarehouse(signatureWarehouse);
                 let htmlGetSignatureKepala = getSignatureKepala(signatureKepala);
                 $('.signatures').html(htmlGetSignatureTechnician + htmlGetSignatureChief + htmlGetSignatureWarehouse + htmlGetSignatureKepala);
-                account.level.id == 5 ? dropzoneValue(signatureTechnician, '#ttd1') : '';
+                account.level.id == 5 && data.status == 'Terbuat' ? dropzoneValue(signatureTechnician, '#ttd1') : '';
                 account.level.id == 6 ? dropzoneValue(signatureChief, '#ttd2') : '';
                 account.level.id == 7 ? dropzoneValue(signatureWarehouse, '#ttd3') : '';
                 account.level.id == 1 ? dropzoneValue(signatureKepala, '#ttd4') : '';
+                
+                if((data.status !='Terbuat' &&  account.level.id == 5)){
+                    $('.btn-remove-mg').remove();
+                    $('.btn-add-row-mg').remove();
+                    $('.form-control').attr('readonly', 'readonly');
+                    $('.form-check-input').attr('disabled', 'disabled');
+                    $('.date').removeClass('date');
+                    $("#scope").prop("disabled", true);
+                    $("#classification").prop("disabled", true);
+                    $("#select-lk").prop("disabled", true);
+                    $("#save").addClass('d-none');
+                    $(".tanda-tangan").prop("disabled", true);
+                }
+                getDateValues(data);
                 date();
                 Swal.close();
             },

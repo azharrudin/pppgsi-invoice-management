@@ -340,6 +340,15 @@
                         if(account.level.id != '1'){
                             $('.data-materai').attr('style','display:none !important');
                         }
+
+                        if(response.status !='Terbuat' && account.level.id == 10){
+                            $('.form-control').attr('readonly', 'readonly');
+                            $('.btn-remove-mg').remove();
+                            $('.btn-add-row-mg').remove();
+                            $('.data-input, .select-classification, .row-input').attr('disabled', 'disabled');
+                            $('.select2').attr('disabled', 'disabled');
+                            $(".btn-update").addClass('d-none');
+                    }
                         Swal.close();
                     },
                     error: function(errors) {

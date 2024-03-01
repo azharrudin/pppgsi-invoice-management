@@ -142,7 +142,7 @@ $configData = Helper::appClasses();
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <img id="signatture" src="" alt="">
+                                <div id="signatture"></div>
                             </div>
                             <div class="mb-3">
                                 <span class="form-label" id="signature_name">
@@ -239,8 +239,8 @@ $configData = Helper::appClasses();
                     allowOutsideClick: false
                 });
                 $.ajax({
-                    url: "{{url('api/purchase-order/update-status')}}/" + id,
-                    // url: "{{env('BASE_URL_API')}}" + '/api/invoice/update-status/' + id,
+                    // url: "{{url('api/purchase-order/update-status')}}/" + id,
+                    url: "{{env('BASE_URL_API')}}" + '/api/purchase-order/update-status/' + id,
                     type: "PATCH",
                     data: JSON.stringify(datas),
                     contentType: "application/json; charset=utf-8",
