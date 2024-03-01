@@ -29,6 +29,7 @@ class InvoicesTableSeeder extends Seeder
             $dataIndex = $i % 6;
 
             Invoice::create([
+                "paper_id" => "0b188529-a7cd-46ec-ba6c-ad490c7601a0",
                 "tenant_id" => $count,
                 "grand_total" => $grandTotal,
                 "invoice_date" => $startDate,

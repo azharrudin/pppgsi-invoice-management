@@ -19,6 +19,7 @@ class Invoice extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        "paper_id",
         "invoice_number",
         "tenant_id",
         "grand_total",
