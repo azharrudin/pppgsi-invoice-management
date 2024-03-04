@@ -9,6 +9,7 @@ use App\Models\Receipt;
 use App\Models\Tenant;
 use App\Services\CommonService;
 use App\Services\InvoiceService;
+use App\Services\PaperIdService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -20,11 +21,13 @@ class InvoiceController extends Controller
 {
     protected $CommonService;
     protected $InvoiceService;
+    protected $PaperIdService;
 
-    public function __construct(CommonService $CommonService, InvoiceService $InvoiceService)
+    public function __construct(CommonService $CommonService, InvoiceService $InvoiceService, PaperIdService $PaperIdService)
     {
         $this->CommonService = $CommonService;
         $this->InvoiceService = $InvoiceService;
+        $this->PaperIdService = $PaperIdService;
     }
 
     /**
@@ -152,6 +155,10 @@ class InvoiceController extends Controller
 
             $sumReceipt = Receipt::where("invoice_id", $id)->where("deleted_at", null)->sum("paid");
             $getInvoice["total_paid"] = $sumReceipt;
+            if(isset($getInvoice["paper_id"])){
+                $getInvoice["sales_invoice"] = $this->PaperIdService->getSalesInvoiceById($getInvoice["paper_id"]);
+            }
+            else $getInvoice["sales_invoice"] = null;
 
             return ["data" => $getInvoice];
         } catch (\Throwable $e) {
@@ -176,7 +183,7 @@ class InvoiceController extends Controller
 
         try {
             $id = (int) $id;
-            $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
+            $getInvoice = Invoice::with("tenant")->with("invoiceDetails")->where("deleted_at", null)->where("id", $id)->first();
             if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
 
             $validateInvoice = $this->InvoiceService->validateInvoice($request);
@@ -196,6 +203,13 @@ class InvoiceController extends Controller
                     'tax_id' => $detail['tax_id'],
                     'total_price' => $detail['total_price'],
                 ]);
+            }
+
+            $status = strtolower($request->input("status"));
+            if($status == "disetujui bm" && !isset($getInvoice["paper_id"])){
+                $getTenant = Tenant::where("deleted_at", null)->where("id", $request->input("tenant_id"))->first();
+                $createSaleInvoice = $this->PaperIdService->createSalesInvoice($getInvoice, $request->input("details"), $getTenant);
+                Invoice::findOrFail($id)->update(["paper_id" => $createSaleInvoice["data"]["id"]]);
             }
 
             DB::commit();
