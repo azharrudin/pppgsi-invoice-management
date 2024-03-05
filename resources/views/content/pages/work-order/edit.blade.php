@@ -535,6 +535,20 @@ $configData = Helper::appClasses();
                         signatureKepala = details[i];
                     }
                 }
+
+                if(account.level.id == 7){
+                    console.log('a');
+                    $('.btn-remove-mg').remove();
+                    $('.btn-add-row-mg').remove();
+                    $('.form-control').attr('readonly', 'readonly');
+                    $('.form-check-input').attr('disabled', 'disabled');
+                    $('.date').removeClass('date');
+                    $("#scope").prop("disabled", true);
+                    $("#classification").prop("disabled", true);
+                    $("#select-lk").prop("disabled", true);
+                    // $("#save").addClass('d-none');
+                    // $(".tanda-tangan").prop("disabled", true);
+                }
                 if(account.level.id != 5){
                     $('.btn-remove-mg').remove();
                     $('.btn-add-row-mg').remove();
@@ -544,8 +558,8 @@ $configData = Helper::appClasses();
                     $("#scope").prop("disabled", true);
                     $("#classification").prop("disabled", true);
                     $("#select-lk").prop("disabled", true);
-                    $("#save").addClass('d-none');
-                    $(".tanda-tangan").prop("disabled", true);
+                    // $("#save").addClass('d-none');
+                    // $(".tanda-tangan").prop("disabled", true);
                 }
 
                 let htmlGetSignatureTechnician = getSignatureTechnician(signatureTechnician, data.status);
@@ -558,7 +572,9 @@ $configData = Helper::appClasses();
                 account.level.id == 7 ? dropzoneValue(signatureWarehouse, '#ttd3') : '';
                 account.level.id == 1 ? dropzoneValue(signatureKepala, '#ttd4') : '';
                 
-                if((data.status !='Terbuat' &&  account.level.id == 5)){
+             
+
+                if(data.status !='Terbuat' &&  account.level.id == 5){
                     $('.btn-remove-mg').remove();
                     $('.btn-add-row-mg').remove();
                     $('.form-control').attr('readonly', 'readonly');
