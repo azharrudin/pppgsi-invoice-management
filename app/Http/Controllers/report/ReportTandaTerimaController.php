@@ -60,7 +60,7 @@ class ReportTandaTerimaController extends Controller
                 if($value->status != 'Terkirim'){
                     $status = 'Belum Terkirim';
                 }else{
-                    $status = 'Terkirim';
+                    $status = 'Yes';
                 }
                 $data[$key] = $value;
                 $data[$key]->tenant_name = $value->tenant->company ?? '';

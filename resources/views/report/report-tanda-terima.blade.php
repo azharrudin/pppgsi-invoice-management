@@ -262,9 +262,8 @@ $configData = Helper::appClasses();
                 name: "status",
                 title: "Status",
                 render: function(data, type, full, meta) {
-                    if (data == "Terkirim") {
-                        return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized>' + data +
-                            '</span>'
+                    if (data == "Yes") {
+                        return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized>Terkirim</span>'
                     }else{
                         return '<span class="badge w-100" style="background-color : #FF4747; " text-capitalized>Belum Terkirim</span>'
                     }
@@ -342,8 +341,14 @@ $configData = Helper::appClasses();
                                     .draw()
                             }));
                     a.data().unique().sort().each((function(a, t) {
+                        let label ='';
+                        if(a == 'Yes'){
+                            label = 'Terkirim'
+                        }else{
+                            label = 'Tidak Terkirim'
+                        }
                         e.append('<option value="' + a +
-                            '" class="text-capitalize">' + a +
+                            '" class="text-capitalize">' + label +
                             "</option>")
                     }))
                 }))
