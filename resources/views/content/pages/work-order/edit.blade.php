@@ -549,6 +549,20 @@ $configData = Helper::appClasses();
                     // $("#save").addClass('d-none');
                     // $(".tanda-tangan").prop("disabled", true);
                 }
+
+                if(account.level.id == 10){
+                    $('.btn-remove-mg').remove();
+                    $('.btn-add-row-mg').remove();
+                    $('.form-control').attr('readonly', 'readonly');
+                    $('.form-check-input').attr('disabled', 'disabled');
+                    $('.date').removeClass('date');
+                    $("#scope").prop("disabled", true);
+                    $("#classification").prop("disabled", true);
+                    $("#select-lk").prop("disabled", true);
+                    $("#save").addClass('d-none');
+                    $(".tanda-tangan").prop("disabled", true);
+                }
+                
                 if(account.level.id != 5){
                     $('.btn-remove-mg').remove();
                     $('.btn-add-row-mg').remove();
