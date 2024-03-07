@@ -110,7 +110,6 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
 
-
                                 <div class="row mb-3">
                                     <div class="col-md-12 mb-2">
                                         <label for="note" class="form-label fw-medium">Terbilang</label>
@@ -211,92 +210,6 @@ $configData = Helper::appClasses();
     $(document).on('click', '#batal', function(event) {
         event.preventDefault();
         window.location.href = "/request/purchase-order";
-    });
-
-
-    $(document).on('input', '.price', function(event) {
-        var nStr = event.currentTarget.value + '';
-        nStr = nStr.replace(/\,/g, "");
-        var x = nStr.split('.');
-        var x1 = x[0];
-        var x2 = x.length > 1 ? '.' + x[1] : '';
-        var rgx = /(\d+)(\d{3})/;
-        while (rgx.test(x1)) {
-            x1 = x1.replace(rgx, '$1' + ',' + '$2');
-        }
-        event.currentTarget.value = x1 + x2;
-        // Hapus baris yang ditekan tombol hapus
-        let index = $('.price').index(this);
-        let total = 0;
-        let price = parseInt($(this).val().replaceAll(',', ''));
-        let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
-        if (id == 0) {
-            $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(price));
-            getTotal();
-        } else {
-            $.ajax({
-                url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
-                type: "get",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(response) {
-                    let data = response.data.rate;
-                    let total = 0;
-                    let tax = parseInt(data);
-                    tax = tax / 100;
-                    let totalPrice = price * tax + price;
-                    $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
-                    getTotal();
-                },
-                error: function(errors) {
-                    console.log(errors);
-                }
-            });
-        }
-
-    });
-
-
-    $(document).on('input', '.price', function(event) {
-        var nStr = event.currentTarget.value + '';
-        nStr = nStr.replace(/\,/g, "");
-        var x = nStr.split('.');
-        var x1 = x[0];
-        var x2 = x.length > 1 ? '.' + x[1] : '';
-        var rgx = /(\d+)(\d{3})/;
-        while (rgx.test(x1)) {
-            x1 = x1.replace(rgx, '$1' + ',' + '$2');
-        }
-        event.currentTarget.value = x1 + x2;
-        // Hapus baris yang ditekan tombol hapus
-        let index = $('.price').index(this);
-        let total = 0;
-        let price = parseInt($(this).val().replaceAll(',', ''));
-        let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
-        if (id == 0) {
-            $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(price));
-            getTotal();
-        } else {
-            $.ajax({
-                url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
-                type: "get",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(response) {
-                    let data = response.data.rate;
-                    let total = 0;
-                    let tax = parseInt(data);
-                    tax = tax / 100;
-                    let totalPrice = price * tax + price;
-                    $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
-                    getTotal();
-                },
-                error: function(errors) {
-                    console.log(errors);
-                }
-            });
-        }
-
     });
 
     var savePurchaseOrder = $('.create-purchase-order');
@@ -431,6 +344,83 @@ $configData = Helper::appClasses();
     });
 
 
+    $(document).on('input', '.price', function(event) {
+        var nStr = event.currentTarget.value + '';
+        nStr = nStr.replace(/\,/g, "");
+        var x = nStr.split('.');
+        var x1 = x[0];
+        var x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        event.currentTarget.value = x1 + x2;
+        // Hapus baris yang ditekan tombol hapus
+        let index = $('.price').index(this);
+        let total = 0;
+        let price = parseInt($(this).val().replaceAll(',', ''));
+        let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
+        let quantity = isNaN(parseInt($(`.quantity:eq(` + index + `)`).val())) ? 0 : parseInt($(`.quantity:eq(` + index + `)`).val());
+        if (id == 0) {
+            $(`.total_price:eq(` + index + `)`).val(isNaN(0) ? 0 : format(0));
+            getTotal();
+        } else {
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    let data = response.data.rate;
+                   
+                    console.log(quantity);
+                    let tax = parseInt(data);
+                    tax = tax / 100;
+                    let totalPrice = ((price * quantity) * tax) + (price * quantity);
+                    console.log(totalPrice);
+                    $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
+                    getTotal();
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
+        };
+    });
+
+    $(document).on('input', '.quantity', function(event) {
+        let index = $('.quantity').index(this);
+        let total = 0;
+        let quantity = parseInt($(this).val());
+        let price = isNaN(parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''))) ? 0 : parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+        console.log(price);
+        let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
+        if (price == 0) {
+            $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(price));
+            getTotal();
+        } else {
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    let data = response.data.rate;
+                    console.log(quantity);
+                    let tax = parseInt(data);
+                    tax = tax / 100;
+                    let totalPrice = ((price * quantity) * tax) + (price * quantity);
+                    console.log(totalPrice);
+                    $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
+                    getTotal();
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
+        };
+    });
+
     $(document).on('input', '.tax', function(event) {
         let id = event.currentTarget.value;
         let index = $('.tax').index(this);
@@ -445,10 +435,11 @@ $configData = Helper::appClasses();
                 console.log($(this));
                 let total = 0;
                 let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+                let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
                 let tax = parseInt(data);
                 tax = tax / 100;
-                let totalPrice = price * tax + price;
-                // console.log(format(totalPrice));
+                let totalPrice = ((price * quantity) * tax) + (price * quantity);
+                console.log(totalPrice);
                 $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
                 getTotal();
             },
@@ -575,6 +566,7 @@ $configData = Helper::appClasses();
     $(document).on('click', '.btn-remove-mg', function() {
         // Hapus baris yang ditekan tombol hapus
         $(this).closest('.row-mg').remove();
+        getTotal();
     });
 
     $(document).on('click', '.btn-add-row-mg', function() {
@@ -599,7 +591,7 @@ $configData = Helper::appClasses();
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <input type="number" class="form-control row-input" placeholder="Quantity" name="quantity[]" required style="width: 200px;" />
+                            <input type="number" class="quantity form-control row-input" placeholder="Quantity" name="quantity[]" required style="width: 200px;" />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
@@ -691,7 +683,7 @@ $configData = Helper::appClasses();
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <input type="number" class="form-control row-input" placeholder="Quantity" name="quantity[]" required style="width: 200px;" />
+                            <input type="number" class="quantity form-control row-input" placeholder="Quantity" name="quantity[]" required style="width: 200px;" />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
