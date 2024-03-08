@@ -30,6 +30,8 @@ class InvoicesTableSeeder extends Seeder
 
             Invoice::create([
                 "paper_id" => "0b188529-a7cd-46ec-ba6c-ad490c7601a0",
+                "is_stamped" => false,
+                "pdf_link" => "",
                 "tenant_id" => $count,
                 "grand_total" => $grandTotal,
                 "invoice_date" => $startDate,

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments("id");
             $table->string("paper_id")->nullable();
+            $table->boolean("is_stamped")->default(false);
+            $table->string("pdf_link")->default("");
             $table->string("invoice_number");
             $table->unsignedInteger("tenant_id");
             $table->foreign('tenant_id')->references('id')->on('tenants');

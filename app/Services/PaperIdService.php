@@ -147,4 +147,44 @@ class PaperIdService{
 
         return $callApiJson;
     }
+
+    /**
+     * Fungsi untuk memanggil API Stamp Sales Invoice
+     *
+     * @param String $invoiceNumber Nomor unik invoice yang akan di stamp
+     * @return Array Associative array yang berisi output dari API
+     */
+    public function stampSalesInvoice($invoiceNumber){
+        $url = $this->baseUrl . "/api/v1/sales-invoice/stamps";
+        $payload = [
+            "invoice_number" => $invoiceNumber,
+            "send" => [
+                "email" => false,
+                "whatsapp" => false,
+                "sms" => false
+            ],
+        ];
+
+        $callApi = Http::withHeaders($this->headers)->post($url, $payload);
+
+        if($callApi->successful()) $callApiJson = $callApi->json();
+        else $callApiJson = [];
+
+        return $callApiJson;
+    }
+
+    /**
+     * Fungsi untuk memanggil API Cehck Remaining Stamp
+     *
+     * @return Array Associative array yang berisi output dari API
+     */
+    public function checkRemainingStamp(){
+        $url = $this->baseUrl . "/api/v1/stamps/check-balance";
+        $callApi = Http::withHeaders($this->headers)->post($url);
+
+        if($callApi->successful()) $callApiJson = $callApi->json();
+        else $callApiJson = [];
+
+        return $callApiJson;
+    }
 }
