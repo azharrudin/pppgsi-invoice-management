@@ -115,7 +115,7 @@ class InvoiceController extends Controller
             }
 
             DB::commit();
-            $getInvoice = Invoice::with("invoiceDetails.tax")
+            $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
                 ->with("bank")
                 ->where("id", $invoice->id)
@@ -144,7 +144,7 @@ class InvoiceController extends Controller
     {
         try{
             $id = (int) $id;
-            $getInvoice = Invoice::with("invoiceDetails.tax")->
+            $getInvoice = Invoice::with("invoiceDetails")->
                 with("tenant")->
                 with("bank")->
                 where("id", $id)->
@@ -239,7 +239,7 @@ class InvoiceController extends Controller
                 }
             }
 
-            $getInvoice = Invoice::with("invoiceDetails.tax")
+            $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
                 ->with("bank")
                 ->where("id", $id)
@@ -413,7 +413,7 @@ class InvoiceController extends Controller
             Invoice::findOrFail($id)->update($dataPayload);
 
             DB::commit();
-            $getInvoice = Invoice::with("invoiceDetails.tax")
+            $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
                 ->with("bank")
                 ->where("id", $id)

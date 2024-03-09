@@ -26,8 +26,8 @@ class Tax extends Model
 
     public $timestamp = true;
 
-    public function invoiceDetails(): HasMany
-    {
-        return $this->hasMany(InvoiceDetail::class, "tax_id");
-    }
+    // public function invoiceDetails(): HasMany
+    // {
+    //     return $this->hasMany(InvoiceDetail::class, "tax_id");
+    // }
 }
