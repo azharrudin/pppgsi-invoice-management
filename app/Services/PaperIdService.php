@@ -187,4 +187,19 @@ class PaperIdService{
 
         return $callApiJson;
     }
+
+    /**
+     * Fungsi untuk memanggil API List All Tax
+     *
+     * @return Array Associative array yang berisi output dari API
+     */
+    public function listAlltax(){
+        $url = $this->baseUrl . "/api/v1/tax/list";
+        $callApi = Http::withHeaders($this->headers)->get($url);
+
+        if($callApi->successful()) $callApiJson = $callApi->json();
+        else $callApiJson = [];
+
+        return $callApiJson;
+    }
 }
