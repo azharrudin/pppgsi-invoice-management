@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Models\InvoiceDetail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Validator;
@@ -86,6 +87,8 @@ class PaperIdService{
     public function createSalesInvoice($invoice, $invoiceDetail, $tenant){
         $invoiceItem = [];
         foreach($invoiceDetail as $invoiceDetailObj){
+            if(isset($invoiceDetailObj["tax_id"])) $taxId = $invoiceDetailObj["tax_id"];
+
             $itemObj = [
                 "name" => $invoiceDetailObj["item"],
                 "description" => $invoiceDetailObj["description"],
@@ -93,6 +96,7 @@ class PaperIdService{
                 "price" => $invoiceDetailObj["price"],
                 "discount" => 0,
             ];
+            if(isset($invoiceDetailObj["tax_id"])) $itemObj["tax_id"] = $invoiceDetailObj["tax_id"];
 
             array_push($invoiceItem, $itemObj);
         }
@@ -113,7 +117,7 @@ class PaperIdService{
             ],
             "items" => $invoiceItem,
             "signature_text_header" => Carbon::now()->format('d F, Y'),
-            "signature_text_footer" => $tenant["name"],
+            "signature_text_footer" => "Yen Ardhiean",
             "terms_condition" => $invoice["term_and_conditions"],
             "notes" => "",
             "send" => [
@@ -140,6 +144,61 @@ class PaperIdService{
      */
     public function getSalesInvoiceById($salesInvoiceId){
         $url = $this->baseUrl . "/api/v1/sales-invoices/" . $salesInvoiceId;
+        $callApi = Http::withHeaders($this->headers)->get($url);
+
+        if($callApi->successful()) $callApiJson = $callApi->json();
+        else $callApiJson = [];
+
+        return $callApiJson;
+    }
+
+    /**
+     * Fungsi untuk memanggil API Stamp Sales Invoice
+     *
+     * @param String $invoiceNumber Nomor unik invoice yang akan di stamp
+     * @return Array Associative array yang berisi output dari API
+     */
+    public function stampSalesInvoice($invoiceNumber){
+        $url = $this->baseUrl . "/api/v1/sales-invoice/stamps";
+        $payload = [
+            "invoice_number" => $invoiceNumber,
+            "send" => [
+                "email" => false,
+                "whatsapp" => false,
+                "sms" => false
+            ],
+        ];
+
+        $callApi = Http::withHeaders($this->headers)->post($url, $payload);
+
+        if($callApi->successful()) $callApiJson = $callApi->json();
+        else $callApiJson = [];
+
+        return $callApiJson;
+    }
+
+    /**
+     * Fungsi untuk memanggil API Cehck Remaining Stamp
+     *
+     * @return Array Associative array yang berisi output dari API
+     */
+    public function checkRemainingStamp(){
+        $url = $this->baseUrl . "/api/v1/stamps/check-balance";
+        $callApi = Http::withHeaders($this->headers)->post($url);
+
+        if($callApi->successful()) $callApiJson = $callApi->json();
+        else $callApiJson = [];
+
+        return $callApiJson;
+    }
+
+    /**
+     * Fungsi untuk memanggil API List All Tax
+     *
+     * @return Array Associative array yang berisi output dari API
+     */
+    public function listAlltax(){
+        $url = $this->baseUrl . "/api/v1/tax/list";
         $callApi = Http::withHeaders($this->headers)->get($url);
 
         if($callApi->successful()) $callApiJson = $callApi->json();

@@ -32,8 +32,8 @@ class InvoiceDetail extends Model
         return $this->belongsTo(Invoice::class, "invoice_id");
     }
 
-    public function tax(): BelongsTo
-    {
-        return $this->belongsTo(Tax::class, "tax_id");
-    }
+    // public function tax(): BelongsTo
+    // {
+    //     return $this->belongsTo(Tax::class, "tax_id");
+    // }
 }

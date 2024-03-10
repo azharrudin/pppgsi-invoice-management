@@ -118,7 +118,7 @@ class InvoiceController extends Controller
             }
 
             DB::commit();
-            $getInvoice = Invoice::with("invoiceDetails.tax")
+            $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
                 ->with("bank")
                 ->where("id", $invoice->id)
@@ -150,7 +150,11 @@ class InvoiceController extends Controller
     {
         try {
             $id = (int) $id;
-            $getInvoice = Invoice::with("invoiceDetails.tax")->with("tenant")->with("bank")->where("id", $id)->where("deleted_at", null)->first();
+            $getInvoice = Invoice::with("invoiceDetails")->
+                with("tenant")->
+                with("bank")->
+                where("id", $id)->
+                where("deleted_at", null)->first();
             if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
 
             $sumReceipt = Receipt::where("invoice_id", $id)->where("deleted_at", null)->sum("paid");
@@ -189,6 +193,16 @@ class InvoiceController extends Controller
             $validateInvoice = $this->InvoiceService->validateInvoice($request);
             if ($validateInvoice != "") throw new CustomException($validateInvoice, 400);
 
+            $status = strtolower($request->input("status"));
+            $remainingQuota = $this->PaperIdService->checkRemainingStamp();
+            if(
+                $status == "disetujui bm" &&
+                (!$remainingQuota ||
+                !isset($remainingQuota["data"]) ||
+                !isset($remainingQuota["data"]["quota"]) ||
+                $remainingQuota["data"]["quota"] <= 0)
+            ) throw new CustomException("Insuficient stamp", 400);
+
             $invoicePayload = $request->all();
             if (isset($invoicePayload["invoice_number"])) unset($invoicePayload["invoice_number"]);
 
@@ -205,15 +219,33 @@ class InvoiceController extends Controller
                 ]);
             }
 
-            $status = strtolower($request->input("status"));
             if($status == "disetujui bm" && !isset($getInvoice["paper_id"])){
                 $getTenant = Tenant::where("deleted_at", null)->where("id", $request->input("tenant_id"))->first();
                 $createSaleInvoice = $this->PaperIdService->createSalesInvoice($getInvoice, $request->input("details"), $getTenant);
-                Invoice::findOrFail($id)->update(["paper_id" => $createSaleInvoice["data"]["id"]]);
+                if(
+                    $createSaleInvoice &&
+                    isset($createSaleInvoice["data"]) &&
+                    isset($createSaleInvoice["data"]["id"])
+                ) Invoice::findOrFail($id)->update(["paper_id" => $createSaleInvoice["data"]["id"]]);
+                else throw new CustomException("Failed to create sales invoice", 400);
             }
 
             DB::commit();
-            $getInvoice = Invoice::with("invoiceDetails.tax")
+
+            if($status == "disetujui bm" && !$getInvoice["is_stamped"]){
+                $stampInvoice = $this->PaperIdService->stampSalesInvoice($getInvoice["invoice_number"]);
+                if(
+                    $stampInvoice &&
+                    isset($stampInvoice["data"]) &&
+                    isset($stampInvoice["data"]["pdf_link"])
+                ){
+                  DB::beginTransaction();
+                  Invoice::findOrFail($id)->update(["is_stamped" => true, "pdf_link" => $stampInvoice["data"]["pdf_link"]]);
+                  DB::commit();
+                }
+            }
+
+            $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
                 ->with("bank")
                 ->where("id", $id)
@@ -382,36 +414,7 @@ class InvoiceController extends Controller
             Invoice::findOrFail($id)->update($dataPayload);
 
             DB::commit();
-
-            if ($request->input("status") == 'Terkirim') {
-                $invoice = Invoice::where('id', $id)->first();
-                $hariIni = \Carbon\Carbon::now()->locale('id');
-                $bulan = $hariIni->monthName;
-                $tahun = $hariIni->format('Y');
-
-                $dataEmail["tenantName"] = $invoice->tenant->name ?? '';
-                $dataEmail["month"] = $bulan;
-                $dataEmail["year"] = $tahun;
-                $dataEmail["total"] = $invoice->grand_total;
-                $dataEmail["terbilang"] = $invoice->grand_total_spelled;
-                $dataEmail["invoice_number"] = $invoice->invoice_number;
-
-                $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice/' . $id);
-                $response = json_decode($apiRequest->getBody());
-                $data = $response->data;
-
-                $pdf = PDF::loadView('invoice.download', ['data' => $data]);
-                $to = $invoice->tenant->email ?? '';
-
-                Mail::send('emails.email-template', ['data' => $dataEmail], function ($message) use ($to, $pdf, $dataEmail) {
-                    $message->to($to)
-                        ->subject('Invoice No Invoice : ' . $dataEmail['invoice_number'])
-                        ->attachData($pdf->output(), "Invoice.pdf");
-                });
-            }
-
-
-            $getInvoice = Invoice::with("invoiceDetails.tax")
+            $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
                 ->with("bank")
                 ->where("id", $id)

@@ -106,6 +106,7 @@ Route::get('user/report', [UserController::class, "report"]);
 Route::resource('user', UserController::class);
 
 Route::get("tax/select", [TaxController::class, "select"]);
+Route::get("tax/select-paper", [TaxController::class, "selectPaperId"]);
 Route::resource('tax', TaxController::class);
 
 Route::post("mail/send-attachment", [MailController::class, "send"]);

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments("id");
             $table->string("paper_id")->nullable();
+            $table->boolean("is_stamped")->default(false);
+            $table->string("pdf_link")->default("");
             $table->string("invoice_number");
             $table->unsignedInteger("tenant_id");
             $table->foreign('tenant_id')->references('id')->on('tenants');
@@ -43,8 +45,8 @@ return new class extends Migration
             $table->string('item');
             $table->text('description');
             $table->integer("price");
-            $table->unsignedInteger("tax_id");
-            $table->foreign('tax_id')->references('id')->on('taxes');
+            $table->string("tax_id")->nullable();
+            // $table->foreign('tax_id')->references('id')->on('taxes');
             $table->integer("total_price");
             $table->timestamps();
             $table->date("deleted_at")->nullable();

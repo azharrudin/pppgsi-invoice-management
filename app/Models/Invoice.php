@@ -21,6 +21,8 @@ class Invoice extends Model
     protected $fillable = [
         "paper_id",
         "invoice_number",
+        "is_stamped",
+        "pdf_link",
         "tenant_id",
         "grand_total",
         "invoice_date",

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\CustomException;
 use App\Models\Tax;
 use App\Services\CommonService;
+use App\Services\PaperIdService;
 use App\Services\TaxService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,11 +14,13 @@ class TaxController extends Controller
 {
     protected $CommonService;
     protected $TaxService;
+    protected $PaperIdService;
 
-    public function __construct(CommonService $CommonService, TaxService $TaxService)
+    public function __construct(CommonService $CommonService, TaxService $TaxService, PaperIdService $PaperIdService)
     {
         $this->CommonService = $CommonService;
         $this->TaxService = $TaxService;
+        $this->PaperIdService = $PaperIdService;
     }
 
     /**
@@ -232,6 +235,37 @@ class TaxController extends Controller
             return [
                 "data" => $dataArr,
                 "pagination" => $pagination,
+            ];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
+
+    public function selectPaperId()
+    {
+        try{
+            $dataArr = [];
+            $listTax = $this->PaperIdService->listAlltax();
+
+            if(
+                $listTax &&
+                isset($listTax["data"])
+            ){
+                if(isset($listTax["data"]["default_tax"])) $dataArr = array_merge($dataArr, $listTax["data"]["default_tax"]);
+                if(isset($listTax["data"]["custom_taz"])) $dataArr = array_merge($dataArr, $listTax["data"]["custom_taz"]);
+            }
+
+            return [
+                "data" => $dataArr,
+                "pagination" => ["more" => false],
             ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";

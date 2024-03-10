@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use App\Models\PurchaseOrder;
 use App\Models\Tenant;
 use App\Services\CommonService;
+use App\Services\PaperIdService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -14,10 +15,12 @@ use Illuminate\Support\Facades\DB;
 class ReportController extends Controller
 {
     protected $CommonService;
+    protected $PaperIdService;
 
-    public function __construct(CommonService $CommonService)
+    public function __construct(CommonService $CommonService, PaperIdService $PaperIdService)
     {
         $this->CommonService = $CommonService;
+        $this->PaperIdService = $PaperIdService;
     }
 
     /**
@@ -77,7 +80,16 @@ class ReportController extends Controller
 
             $countData = DB::select($countDataQueryString)[0];
 
+            $checkStamp = $this->PaperIdService->checkRemainingStamp();
+            $remainingStamp = 0;
+            if(
+                $checkStamp &&
+                isset($checkStamp["data"]) &&
+                isset($checkStamp["data"]["quota"])
+            ) $remainingStamp = $checkStamp["data"]["quota"];
+
             return [
+                "remaining_stamp" => $remainingStamp,
                 "income_report" => $incomeReport,
                 "ticket_complain" => $ticketComplain,
                 "statistic" => $countData,
