@@ -249,20 +249,69 @@ class TaxController extends Controller
     public function selectPaperId()
     {
         try{
-            $dataArr = [];
+            $taxArr = [];
             $listTax = $this->PaperIdService->listAlltax();
 
             if(
                 $listTax &&
                 isset($listTax["data"])
             ){
-                if(isset($listTax["data"]["default_tax"])) $dataArr = array_merge($dataArr, $listTax["data"]["default_tax"]);
-                if(isset($listTax["data"]["custom_taz"])) $dataArr = array_merge($dataArr, $listTax["data"]["custom_taz"]);
+                if(isset($listTax["data"]["default_tax"])) $taxArr = array_merge($taxArr, $listTax["data"]["default_tax"]);
+                if(isset($listTax["data"]["custom_taz"])) $taxArr = array_merge($taxArr, $listTax["data"]["custom_tax"]);
+            }
+
+            $dataArr = [];
+            foreach($taxArr as $taxObj){
+                $dataObj = [
+                    "id" => $taxObj["uuid"],
+                    "text" => $taxObj["name"],
+                ];
+                array_push($dataArr, $dataObj);
             }
 
             return [
                 "data" => $dataArr,
                 "pagination" => ["more" => false],
+            ];
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+
+            if(is_a($e, CustomException::class)){
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
+
+    public function getPaperId($id)
+    {
+        try{
+            $taxArr = [];
+            $listTax = $this->PaperIdService->listAlltax();
+
+            if(
+                $listTax &&
+                isset($listTax["data"])
+            ){
+                if(isset($listTax["data"]["default_tax"])) $taxArr = array_merge($taxArr, $listTax["data"]["default_tax"]);
+                if(isset($listTax["data"]["custom_taz"])) $taxArr = array_merge($taxArr, $listTax["data"]["custom_tax"]);
+            }
+
+            $taxData = null;
+            foreach($taxArr as $taxObj){
+                if($id == $taxObj["uuid"]){
+                    $taxData = $taxObj;
+                    break;
+                }
+            }
+
+            if(!$taxData) throw new CustomException("Tax not found", 404);
+
+            return [
+                "data" => $taxData,
             ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
