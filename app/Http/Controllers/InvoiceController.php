@@ -41,7 +41,7 @@ class InvoiceController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $invoiceQuery = Invoice::with("tenant")->with("bank")->where("deleted_at", null);
+            $invoiceQuery = Invoice::with("tenant")->where("deleted_at", null);
             if($value){
                 $invoiceQuery->where(function ($query) use ($value) {
                     $query->whereHas('tenant', function ($tenantQuery) use ($value) {
@@ -56,7 +56,7 @@ class InvoiceController extends Controller
                 });
             }
             $getInvoices = $invoiceQuery
-            ->select("id", "invoice_number", "tenant_id", "bank_id", "grand_total", "invoice_date", "invoice_due_date", "status")
+            ->select("id", "invoice_number", "tenant_id", "grand_total", "invoice_date", "invoice_due_date", "status")
             ->orderBy($order, $sort)
             ->paginate($perPage);
             $totalCount = $getInvoices->total();
@@ -117,7 +117,6 @@ class InvoiceController extends Controller
             DB::commit();
             $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
-                ->with("bank")
                 ->where("id", $invoice->id)
                 ->where("deleted_at", null)
                 ->first();
@@ -146,7 +145,6 @@ class InvoiceController extends Controller
             $id = (int) $id;
             $getInvoice = Invoice::with("invoiceDetails")->
                 with("tenant")->
-                with("bank")->
                 where("id", $id)->
                 where("deleted_at", null)->first();
             if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
@@ -241,7 +239,6 @@ class InvoiceController extends Controller
 
             $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
-                ->with("bank")
                 ->where("id", $id)
                 ->where("deleted_at", null)
                 ->first();
@@ -415,7 +412,6 @@ class InvoiceController extends Controller
             DB::commit();
             $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
-                ->with("bank")
                 ->where("id", $id)
                 ->where("deleted_at", null)
                 ->first();

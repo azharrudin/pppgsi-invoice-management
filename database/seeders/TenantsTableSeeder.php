@@ -17,7 +17,7 @@ class TenantsTableSeeder extends Seeder
 
         for ($i = 0; $i < 20; $i++) {
             Tenant::create([
-                'paper_id' => "5e55edfd-b6d8-45fd-88e1-20f6bb49cdca",
+                'paper_id' => "756ccba2-4641-4643-9664-73478d4db462",
                 'name' => $faker->name,
                 'email' => $faker->email,
                 'phone' => "080000123{$i}",

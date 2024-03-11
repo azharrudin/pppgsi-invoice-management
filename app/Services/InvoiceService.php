@@ -28,11 +28,6 @@ class InvoiceService{
             "invoice_date" => ["bail", "required", "date"],
             "invoice_due_date" => ["bail", "required", "date", "after_or_equal:invoice_date"],
             "status" => ["bail", "required", "string"],
-            "opening_paragraph" => ["bail", "required", "string"],
-            "contract_number" => ["bail", "required", "string"],
-            "contract_date" => ["bail", "required", "date"],
-            "addendum_number" => ["bail", "required", "string"],
-            "addendum_date" => ["bail", "required", "date"],
 
             "details" => ["bail", "required", "array"],
             "details.*.item" => ["bail", "required", "string"],
@@ -40,13 +35,6 @@ class InvoiceService{
             "details.*.price" => ["bail", "required", "numeric"],
             "details.*.tax_id" => ["bail", "nullable", "string"],
             "details.*.total_price" => ["bail", "required", "numeric"],
-
-            "grand_total_spelled" => ["bail", "required", "string"],
-            "materai_date" => ["bail", "nullable", "date"],
-            "materai_image" => ["bail", "nullable", "string"],
-            "materai_name" => ["bail", "nullable", "string"],
-            "term_and_conditions" => ["bail", "required", "string"],
-            "bank_id" => ["bail", "required", "numeric"],
         ];
         $errorMessages = [
             "required" => "Field :attribute harus diisi",
@@ -71,10 +59,8 @@ class InvoiceService{
 
         if($message == ""){
             $getTenant = $this->CommonService->getDataById("App\Models\Tenant", $request->input("tenant_id"));
-            $getBank = $this->CommonService->getDataById("App\Models\Bank", $request->input("bank_id"));
 
             if (is_null($getTenant)) $message = "Tenant tidak ditemukan";
-            else if(is_null($getBank)) $message = "Bank tidak ditemukan";
         }
 
         return $message;

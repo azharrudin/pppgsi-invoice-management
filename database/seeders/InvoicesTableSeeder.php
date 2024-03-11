@@ -29,7 +29,7 @@ class InvoicesTableSeeder extends Seeder
             $dataIndex = $i % 6;
 
             Invoice::create([
-                "paper_id" => "0b188529-a7cd-46ec-ba6c-ad490c7601a0",
+                "paper_id" => "21a95784-7f12-4bf7-b262-dd6ae0b95f1a",
                 "is_stamped" => false,
                 "pdf_link" => "",
                 "tenant_id" => $count,
@@ -37,17 +37,6 @@ class InvoicesTableSeeder extends Seeder
                 "invoice_date" => $startDate,
                 "invoice_due_date" => $faker->dateTimeBetween('+1 week', '+2 week'),
                 "status" => $status[$dataIndex],
-                "opening_paragraph" => $faker->text,
-                "contract_number" => "Contr/act/{$count}",
-                "contract_date" => $startDate,
-                "addendum_number" => "Add/en/dum/{$count}",
-                "addendum_date" => $startDate,
-                "grand_total_spelled" => $spelled[$dataIndex],
-                "materai_date" => $startDate,
-                "materai_image" => "",
-                "materai_name" => $faker->name,
-                "term_and_conditions" => $faker->text,
-                "bank_id" => $count,
                 'deleted_at' => null,
             ]);
 
