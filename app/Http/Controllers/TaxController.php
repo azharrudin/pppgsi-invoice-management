@@ -263,6 +263,8 @@ class TaxController extends Controller
                 if(isset($listTax["data"]["custom_taz"])) $taxArr = array_merge($taxArr, $listTax["data"]["custom_tax"]);
             }
 
+            dd($taxArr);
+
             $dataArr = [];
             foreach($taxArr as $taxObj){
                 $dataObj = [
