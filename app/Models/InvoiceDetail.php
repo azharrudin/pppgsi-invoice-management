@@ -19,6 +19,7 @@ class InvoiceDetail extends Model
         "invoice_id",
         "item",
         "description",
+        "quantity",
         "price",
         "tax_id",
         "total_price",

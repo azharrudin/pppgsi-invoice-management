@@ -32,6 +32,7 @@ return new class extends Migration
             $table->foreign('invoice_id')->references('id')->on('invoices');
             $table->string('item');
             $table->text('description');
+            $table->integer("quantity");
             $table->integer("price");
             $table->string("tax_id")->nullable();
             $table->integer("total_price");

@@ -32,6 +32,7 @@ class InvoiceService{
             "details" => ["bail", "required", "array"],
             "details.*.item" => ["bail", "required", "string"],
             "details.*.description" => ["bail", "required", "string"],
+            "details.*.quantity" => ["bail", "required", "numeric"],
             "details.*.price" => ["bail", "required", "numeric"],
             "details.*.tax_id" => ["bail", "nullable", "string"],
             "details.*.total_price" => ["bail", "required", "numeric"],

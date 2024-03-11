@@ -90,7 +90,7 @@ class PaperIdService{
             $itemObj = [
                 "name" => $invoiceDetailObj["item"],
                 "description" => $invoiceDetailObj["description"],
-                "quantity" => 1,
+                "quantity" => $invoiceDetailObj["quantity"],
                 "price" => $invoiceDetailObj["price"],
                 "discount" => 0,
             ];
