@@ -44,7 +44,7 @@ class InvoiceController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $invoiceQuery = Invoice::with("invoiceDetails.tax")->with("tenant")->with("bank")->where("deleted_at", null);
+            $invoiceQuery = Invoice::with("tenant")->with("bank")->where("deleted_at", null);
             if ($value) {
                 $invoiceQuery->where(function ($query) use ($value) {
                     $query->whereHas('tenant', function ($tenantQuery) use ($value) {

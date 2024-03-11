@@ -124,6 +124,11 @@ $configData = Helper::appClasses();
                         <div class="row">
                             <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-3">
+                                    <label for="notes" class="form-label fw-medium me-2">Catatan</label>
+                                    <textarea class="form-control" rows="11" id="notes" name="notes" placeholder="Catatan" required></textarea>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                                <div class="mb-3">
                                     <label for="note" class="form-label fw-medium me-2">Syarat & Ketentuan</label>
                                     <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll" required></textarea>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
@@ -324,6 +329,9 @@ $configData = Helper::appClasses();
                 success: function(response) {
                     let data = response.data;
                     $("#tenant").empty().append("<option value="+data.id+">"+data.name+"</option>").val(data.id).trigger("change");
+                    if(account.level == 1){
+                        $('#materai_name').val(data.name);
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.log(error);

@@ -707,6 +707,14 @@ $configData = Helper::appClasses();
         $(this).closest('.row-mg').remove();
     });
 
+    $(document).keypress(
+        function(event){
+            if (event.which == '13') {
+                event.preventDefault();
+            }
+        }
+    );
+
     $(document).on('click', '.btn-add-row-mg', function() {
         // Clone baris terakhir
         var index = lastIndex ? lastIndex + 1 : $('.tax').length;

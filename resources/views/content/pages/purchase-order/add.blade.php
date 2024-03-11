@@ -569,7 +569,16 @@ $configData = Helper::appClasses();
         getTotal();
     });
 
-    $(document).on('click', '.btn-add-row-mg', function() {
+    $(document).keypress(
+        function(event){
+            if (event.which == '13') {
+                event.preventDefault();
+            }
+        }
+    );
+
+    $(document).on('click', '.btn-add-row-mg', function(e) {
+        e.preventDefault();
         // Clone baris terakhir
         var index = lastIndex ? lastIndex + 1 : $('.tax').length;
         lastIndex = index;
