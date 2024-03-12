@@ -87,12 +87,10 @@ class PaperIdService{
     public function createSalesInvoice($invoice, $invoiceDetail, $tenant){
         $invoiceItem = [];
         foreach($invoiceDetail as $invoiceDetailObj){
-            if(isset($invoiceDetailObj["tax_id"])) $taxId = $invoiceDetailObj["tax_id"];
-
             $itemObj = [
                 "name" => $invoiceDetailObj["item"],
                 "description" => $invoiceDetailObj["description"],
-                "quantity" => 1,
+                "quantity" => $invoiceDetailObj["quantity"],
                 "price" => $invoiceDetailObj["price"],
                 "discount" => 0,
             ];

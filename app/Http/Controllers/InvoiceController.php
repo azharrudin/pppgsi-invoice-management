@@ -58,8 +58,7 @@ class InvoiceController extends Controller
                         ->orWhere('status', 'like', '%' . $value . '%');
                 });
             }
-            $getInvoices = $invoiceQuery
-                ->select("invoice_number", "tenant_id", "bank_id", "grand_total", "invoice_date", "invoice_due_date", "status", "id")
+            $getInvoices = $invoiceQuery->select("invoice_number", "tenant_id", "bank_id", "grand_total", "invoice_date", "invoice_due_date", "status", "id")
                 ->orderBy($order, $sort)
                 ->paginate($perPage);
             $totalCount = $getInvoices->total();
@@ -111,6 +110,7 @@ class InvoiceController extends Controller
                     'invoice_id' => $invoice->id,
                     'item' => $detail['item'],
                     'description' => $detail['description'],
+                    'quantity' => $detail['quantity'],
                     'price' => $detail['price'],
                     'tax_id' => $detail['tax_id'],
                     'total_price' => $detail['total_price'],
@@ -120,7 +120,6 @@ class InvoiceController extends Controller
             DB::commit();
             $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
-                ->with("bank")
                 ->where("id", $invoice->id)
                 ->where("deleted_at", null)
                 ->first();
@@ -152,7 +151,6 @@ class InvoiceController extends Controller
             $id = (int) $id;
             $getInvoice = Invoice::with("invoiceDetails")->
                 with("tenant")->
-                with("bank")->
                 where("id", $id)->
                 where("deleted_at", null)->first();
             if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
@@ -213,6 +211,7 @@ class InvoiceController extends Controller
                     'invoice_id' => $id,
                     'item' => $detail['item'],
                     'description' => $detail['description'],
+                    'quantity' => $detail['quantity'],
                     'price' => $detail['price'],
                     'tax_id' => $detail['tax_id'],
                     'total_price' => $detail['total_price'],
@@ -247,7 +246,6 @@ class InvoiceController extends Controller
 
             $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
-                ->with("bank")
                 ->where("id", $id)
                 ->where("deleted_at", null)
                 ->first();
@@ -416,7 +414,6 @@ class InvoiceController extends Controller
             DB::commit();
             $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
-                ->with("bank")
                 ->where("id", $id)
                 ->where("deleted_at", null)
                 ->first();
