@@ -111,6 +111,7 @@ class InvoiceController extends Controller
                     'quantity' => $detail['quantity'],
                     'price' => $detail['price'],
                     'tax_id' => $detail['tax_id'],
+                    'discount' => $detail['discount'],
                     'total_price' => $detail['total_price'],
                 ]);
             }
@@ -209,6 +210,7 @@ class InvoiceController extends Controller
                     'quantity' => $detail['quantity'],
                     'price' => $detail['price'],
                     'tax_id' => $detail['tax_id'],
+                    'discount' => $detail['discount'],
                     'total_price' => $detail['total_price'],
                 ]);
             }

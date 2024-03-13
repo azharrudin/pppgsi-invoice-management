@@ -20,6 +20,8 @@ return new class extends Migration
             $table->unsignedInteger("tenant_id");
             $table->foreign('tenant_id')->references('id')->on('tenants');
             $table->unsignedInteger("grand_total");
+            $table->mediumText("notes")->nullable();
+            $table->mediumText("term_and_condition")->nullable();
             $table->date("invoice_date");
             $table->date("invoice_due_date");
             $table->string("status", 255);
@@ -35,6 +37,7 @@ return new class extends Migration
             $table->integer("quantity");
             $table->integer("price");
             $table->string("tax_id")->nullable();
+            $table->float("discount");
             $table->integer("total_price");
             $table->timestamps();
             $table->date("deleted_at")->nullable();
