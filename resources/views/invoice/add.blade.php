@@ -47,16 +47,24 @@ $configData = Helper::appClasses();
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="contract_number" class="form-label fw-medium">No. Kontrak</label>
-                                        <input type="text" class="form-control" name="contract_number" id="contract_number" placeholder="" required />
+                                        <label for="term" class="form-label fw-medium">Terms</label>
+                                        <select name="term" id="term" class="form-control" required>
+                                            <option value=""></option>
+                                            <option value="Net 7 Days">Net 7 Days</option>
+                                            <option value="Net 14 Days">Net 14 Days</option>
+                                            <option value="Net 30 Days">Net 30 Days</option>
+                                            <option value="Net 45 Days">Net 45 Days</option>
+                                            <option value="Net 60 Days">Net 60 Days</option>
+                                        </select>
+                                        <!-- <input type="text" class="form-control" name="term" id="term" placeholder="" required /> -->
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="contract_date" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control  date" name="contract_date" id="contract_date" placeholder="" required />
+                                        <label for="contract_date" class="form-label fw-medium">Salesperson</label>
+                                        <input type="text" class="form-control" name="contract_date" id="contract_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
+                                    <!-- <div class="col-md-6 mb-3">
                                         <label for="addendum_number" class="form-label fw-medium">No. Addendum</label>
                                         <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
@@ -65,16 +73,32 @@ $configData = Helper::appClasses();
                                         <label for="addendum_date" class="form-label fw-medium">Tanggal</label>
                                         <input type="text" class="form-control date" id="addendum_date" name="addendum_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
 
                         {{-- Repeater --}}
                         <div class="repeater px-3">
-                            <div class="" id="details">
-
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Produk</th>
+                                            <th>Deskripsi</th>
+                                            <th>Kuantitas</th>
+                                            <th>Harga</th>
+                                            <th>Diskon(%)</th>
+                                            <th>Pajak</th>
+                                            <th>Jumlah</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="details">
+                                    </tbody>
+                                </table>
                             </div>
+
 
                             <div class="row pb-4">
                                 <div class="col-md-3 px-3">
@@ -90,7 +114,92 @@ $configData = Helper::appClasses();
                         </div>
 
                         {{-- Total --}}
-                        <div class="row d-flex px-3 mb-5">
+                        <div class="row d-flex px-3 mb-2">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Subtotal</p>
+                                    </div>
+                                    <div>
+                                        <p class="sub_total">0</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <hr class="m-0 mx-n7">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row d-flex px-3 mb-2">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Total Diskon</p>
+                                    </div>
+                                    <div>
+                                        <p class="total_diskon">0</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <hr class="m-0 mx-n7">
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="row d-flex px-3 mb-2">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Diskon Tambahan</p>
+                                    </div>
+                                    <div>
+                                        <p class="grand_total">0</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <hr class="m-0 mx-n7">
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="row d-flex px-3 mb-2">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Biaya Kirim</p>
+                                    </div>
+                                    <div>
+                                        <p class="grand_total">0</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <hr class="m-0 mx-n7">
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="row d-flex px-3 mb-2">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Pajak</p>
+                                    </div>
+                                    <div>
+                                        <p class="grand_total">0.00</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <hr class="m-0 mx-n7">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex px-3 mb-2">
                             <div class="col-md-6"></div>
                             <div class="col-md-6">
                                 <div class="d-flex justify-content-between">
@@ -122,16 +231,21 @@ $configData = Helper::appClasses();
                         <div class="row">
                             <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-3">
+                                    <label for="note" class="form-label fw-medium me-2">Catatan</label>
+                                    <textarea class="form-control" rows="11" id="note" name="note" placeholder="Termin pembayaran, garansi dll" required></textarea>
+                                    <div class="invalid-feedback">Tidak boleh kosong</div>
+                                </div>
+                                <div class="mb-3">
                                     <label for="note" class="form-label fw-medium me-2">Syarat & Ketentuan</label>
                                     <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll" required></textarea>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
-                                <div class="mb-3">
+                                <!-- <div class="mb-3">
                                     <label for="note" class="form-label fw-medium me-2">Bank</label>
                                     <select name="bank" id="bank" name="bank" class="form-select w-px-250 item-details mb-3" required>
                                     </select>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
+                                </div> -->
                             </div>
                             @if (session('data')['level']['id'] == '1')
                             <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
@@ -149,7 +263,7 @@ $configData = Helper::appClasses();
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <a role="button"  id="deleteTtd" class="btn btn-danger btn-sm text-center text-white" disabled>
+                                    <a role="button" id="deleteTtd" class="btn btn-danger btn-sm text-center text-white" disabled>
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </div>
@@ -188,6 +302,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
 <script>
     "use strict";
     let account = {!! json_encode(session('data')) !!}
@@ -217,7 +332,7 @@ $configData = Helper::appClasses();
     let dataLocal = JSON.parse(localStorage.getItem("invoice"));
     $(document).ready(function() {
         let ttdFile = dataLocal ? dataLocal.materai_image : null;
-        if(account.level.id == '1'){
+        if (account.level.id == '1') {
             const myDropzone = new Dropzone('#dropzone-basic', {
                 parallelUploads: 1,
                 thumbnailWidth: null,
@@ -235,10 +350,10 @@ $configData = Helper::appClasses();
                         if (mockFile) {
                             this.options.addedfile.call(this, mockFile);
                             this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
-    
+
                             $('.dz-image').last().find('img').attr('width', '100%');
-    
-    
+
+
                             // Optional: Handle the removal of the file
                             mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
                                 // Handle removal logic here
@@ -253,11 +368,36 @@ $configData = Helper::appClasses();
                 }
             });
 
-                
+
             $(document).on('click', '#deleteTtd', function() {
                 myDropzone.removeAllFiles();
             });
         }
+
+        ClassicEditor.create(document.querySelector('#note'), {
+                minHeight: '300px'
+            })
+            .then(editor => {
+                console.log(editor);
+            }).catch(error => {
+                console.error(error);
+            });
+
+        window.addEventListener("pageshow", function(event) {
+            var historyTraversal = event.persisted || (typeof window.performance !== "undefined" && window.performance.getEntriesByType("navigation")[0].type === "back_forward");
+            if (historyTraversal) {
+                location.reload(); // Reload the page
+            }
+        });
+
+        ClassicEditor.create(document.querySelector('#term_and_conditions'), {
+                minHeight: '300px'
+            })
+            .then(editor => {
+                console.log(editor);
+            }).catch(error => {
+                console.error(error);
+            });
 
         window.addEventListener("pageshow", function(event) {
             var historyTraversal = event.persisted || (typeof window.performance !== "undefined" && window.performance.getEntriesByType("navigation")[0].type === "back_forward");
@@ -283,7 +423,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Tenant',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/tenant/select?field=company',
+                url: "{{ env('BASE_URL_API')}}" + '/api/tenant/select?field=company',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -319,7 +459,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Bank',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/bank/select',
+                url: "{{ env('BASE_URL_API')}}" + '/api/bank/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -371,51 +511,52 @@ $configData = Helper::appClasses();
             lastIndex = index;
             console.log(lastIndex);
             var $details = $('#details');
-            var $newRow = `
-            <div class="row-mg">
-                <div class="row d-flex align-items-end justify-content-between mb-3">
-                    <div class="col-md-5">
-                        <div class="row row d-flex justify-content-between px-1">
-                            <div class="col-md-6 px-1-custom">
-                                <label for="note" class="form-label fw-medium">Uraian</label>
-                                <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required /></textarea>
-                                <div class="invalid-feedback">Tidak boleh kosong</div>
-                            </div>
-                            <div class="col-md-6 px-1-custom">
-                                <label for="note" class="form-label fw-medium">Keterangan</label>
-                                <textarea class="form-control row-input" placeholder="" name="description[]" required></textarea>
-                                <div class="invalid-feedback">Tidak boleh kosong</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 px-1-custom">
-                        <label for="note" class="form-label fw-medium">DPP</label>
-                        <input type="text" class="form-control row-input price" placeholder="" name="price[]" required />
+            var temp = `             
+                <tr class="row-mg">
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input" placeholder="Nama Produk" name="item[]" required style="width: 200px;" />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-md-2 px-1-custom">
-                        <label for="note" class="form-label fw-medium">Pajak</label>
-                        <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-${index}" required></select>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <textarea name="description[]" class="form-control row-input" rows="1" placeholder="Deskripsi Produk" style="width: 200px;"></textarea>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-md-2 px-1-custom">
-                        <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled/>
-                    </div>
-                    <div class="col-md-1 px-1-custom">
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input quantity" placeholder="Kuantitas" name="item[]" required style="width: 200px;" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input price" placeholder="Harga" name="price[]" required style="width: 200px;" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="number" class="form-control row-input discount" placeholder="" name="discount[]" style="width: 150px;"/>
+                        <input type="hidden" class="form-control row-input total_subdiskon" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <select name="tax[]" id="tax-${index}" class="form-select row-input tax"></select>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
                         <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
                             <i class="fas fa-trash"></i>
                         </a>
-                    </div>
-                </div>
-            </div>`;
-            $details.append($newRow);
+                    </td>
+                </tr>`;
+            $details.append(temp);
+            console.log(index);
             $("#tax-" + index).select2({
                 width: '100px',
                 placeholder: 'Pilih',
                 allowClear: true,
                 ajax: {
-                    url: "{{ env('BASE_URL_API')}}" +'/api/tax/select',
+                    // url: "{{ env('BASE_URL_API')}}" + '/api/tax/select',
+                    url: "{{url('api/tax/select-paper')}}",
                     dataType: 'json',
                     cache: true,
                     data: function(params) {
@@ -450,7 +591,8 @@ $configData = Helper::appClasses();
             placeholder: 'Select Tenant',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/tax/select',
+                url: "{{url('api/tax/select-paper')}}",
+                // url: "{{ env('BASE_URL_API')}}" + '/api/tax/select-paper',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -466,6 +608,7 @@ $configData = Helper::appClasses();
                         params.abort = true;
                     }
 
+                    console.log(data.data);
                     return {
                         results: data.data,
                         pagination: {
@@ -480,7 +623,7 @@ $configData = Helper::appClasses();
         $(document).on('click', '.btn-remove-mg', function() {
             // Hapus baris yang ditekan tombol hapus
             $(this).closest('.row-mg').remove();
-            getTotal();
+            getSubtotal();
         });
 
         $(document).on('keydown', '.price', function(event) {
@@ -503,13 +646,18 @@ $configData = Helper::appClasses();
             let index = $('.price').index(this);
             let total = 0;
             let price = parseInt($(this).val().replaceAll(',', ''));
+            let discount = parseInt($(`.discount:eq(` + index + `)`).val());
+            let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
+            console.log(discount);
+            let disVal = discount/100;
             let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
             if (id == 0) {
-                $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(price));
-                getTotal();
+                total = price * quantity ;
+                $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
+                getSubtotal();
             } else {
                 $.ajax({
-                    url: "{{ env('BASE_URL_API')}}" +'/api/tax/'+ id,
+                    url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
                     type: "get",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -520,7 +668,56 @@ $configData = Helper::appClasses();
                         tax = tax / 100;
                         let totalPrice = price * tax + price;
                         $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
-                        getTotal();
+                        getSubtotal();
+                    },
+                    error: function(errors) {
+                        console.log(errors);
+                    }
+                });
+            }
+
+        });
+       
+        $(document).on('input', '.discount', function(event) {
+            var nStr = event.currentTarget.value + '';
+            nStr = nStr.replace(/\,/g, "");
+            var x = nStr.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            event.currentTarget.value = x1 + x2;
+            // Hapus baris yang ditekan tombol hapus
+            let index = $('.price').index(this);
+            let total = 0;
+            let discount = parseInt($(this).val());
+            let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+            let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
+            console.log(price);
+            let disVal = discount/100;
+            let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
+            if (id == 0) {
+                total = (price * quantity) * disVal ;
+                $(`.total_subdiskon:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
+                getSubtotal();
+                getDiskonTotal();
+                getTotal();
+            } else {
+                $.ajax({
+                    url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
+                    type: "get",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(response) {
+                        let data = response.data.rate;
+                        let total = 0;
+                        let tax = parseInt(data);
+                        tax = tax / 100;
+                        let totalPrice = price * tax + price;
+                        $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
+                        getSubtotal();
                     },
                     error: function(errors) {
                         console.log(errors);
@@ -535,7 +732,7 @@ $configData = Helper::appClasses();
             let index = $('.tax').index(this);
             let data = 0;
             $.ajax({
-                url: "{{ env('BASE_URL_API')}}" +'/api/tax/'+ id,
+                url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
                 type: "get",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -549,7 +746,7 @@ $configData = Helper::appClasses();
                     let totalPrice = price * tax + price;
                     // console.log(format(totalPrice));
                     $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
-                    getTotal();
+                    getSubtotal();
                 },
                 error: function(errors) {
                     console.log(errors);
@@ -557,7 +754,7 @@ $configData = Helper::appClasses();
             });
         });
 
-        function getTotal() {
+        function getSubtotal() {
             let totalArr = [];
             let tempTotal = document.getElementsByClassName('total_price');
             for (let i = 0; i < tempTotal.length; i++) {
@@ -569,10 +766,34 @@ $configData = Helper::appClasses();
             for (let i = 0; i < totalArr.length; i++) {
                 sum += totalArr[i];
             }
-            $('.grand_total').text(format(sum));
+            $('.sub_total').text(format(sum));
             $('.terbilang').val(terbilang(sum));
-
         }
+
+        function getDiskonTotal() {
+            let totalArr = [];
+            let tempTotal = document.getElementsByClassName('total_subdiskon');
+            for (let i = 0; i < tempTotal.length; i++) {
+                var slipOdd = parseInt(tempTotal[i].value.replaceAll(',', ''));
+                totalArr.push(Number(slipOdd));
+            }
+
+            let sum = 0;
+            for (let i = 0; i < totalArr.length; i++) {
+                sum += totalArr[i];
+                console.log(sum);
+            }
+            $('.total_diskon').text(format(sum));
+        }
+
+        function getTotal(){
+            let subtotal = parseInt($('.sub_total').text().replaceAll(',', ''));
+            let diskon = parseInt($('.total_diskon').text().replaceAll(',', ''));
+            let total = subtotal - diskon;
+            $('.grand_total').text(format(total));
+        }
+
+
 
         function terbilang(bilangan) {
             bilangan = String(bilangan);
@@ -703,7 +924,7 @@ $configData = Helper::appClasses();
                         // Submit your form
                         event.preventDefault();
                         let fileTtd = '';
-                        if(account.level.id == '1'){
+                        if (account.level.id == '1') {
                             let fileTtd = ttdFile.dataURL;
                         }
                         let tenant = $("#tenant").val();
@@ -763,7 +984,7 @@ $configData = Helper::appClasses();
                         console.log(datas);
 
                         $.ajax({
-                            url: "{{ env('BASE_URL_API')}}" +'/api/invoice',
+                            url: "{{ env('BASE_URL_API')}}" + '/api/invoice',
                             type: "POST",
                             data: JSON.stringify(datas),
                             processData: false,
@@ -924,7 +1145,7 @@ $configData = Helper::appClasses();
     function getTenant() {
         let idTenant = dataLocal.tenant_id;
         $.ajax({
-            url: "{{ env('BASE_URL_API')}}" +"/api/tenant/" + idTenant,
+            url: "{{ env('BASE_URL_API')}}" + "/api/tenant/" + idTenant,
             type: "GET",
             success: function(response) {
                 let data = response.data;
@@ -940,7 +1161,7 @@ $configData = Helper::appClasses();
     function getBank() {
         let idBank = dataLocal.bank_id;
         $.ajax({
-            url: "{{ env('BASE_URL_API')}}" +'/api/bank/' + idBank,
+            url: "{{ env('BASE_URL_API')}}" + '/api/bank/' + idBank,
             type: "GET",
             success: function(response) {
                 console.log(response);
@@ -1018,7 +1239,7 @@ $configData = Helper::appClasses();
                         </div>
                         <div class="col-md-2 px-1-custom">
                             <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                            <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled value="` + details[i].total_price?.toLocaleString()+ `"/>
+                            <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled value="` + details[i].total_price?.toLocaleString() + `"/>
                         </div>
                         <div class="col-md-1 px-1-custom">
                             <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
@@ -1029,7 +1250,7 @@ $configData = Helper::appClasses();
                 </div>`;
                 getDetail = getDetail + temp;
                 $.ajax({
-                    url: "{{ env('BASE_URL_API')}}" +'/api/tax/'+ details[i].tax_id,
+                    url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + details[i].tax_id,
                     type: "GET",
                     success: function(response) {
                         let data = response.data;
@@ -1049,7 +1270,8 @@ $configData = Helper::appClasses();
                     placeholder: 'Pilih',
                     allowClear: true,
                     ajax: {
-                        url: "{{ env('BASE_URL_API')}}" +'/api/tax/select',
+                        url: "{{url('api/tax/select-paper')}}",
+                        // url: "{{ env('BASE_URL_API')}}" + '/api/tax/select',
                         dataType: 'json',
                         cache: true,
                         data: function(params) {
@@ -1077,43 +1299,42 @@ $configData = Helper::appClasses();
             }
         } else {
             temp = `             
-            <div class="row-mg">
-                <div class="row d-flex align-items-end justify-content-between mb-3">
-                    <div class="col-md-5">
-                        <div class="row row d-flex justify-content-between px-1">
-                            <div class="col-md-6 px-1-custom">
-                                <label for="note" class="form-label fw-medium">Uraian</label>
-                                <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required /></textarea>
-                                <div class="invalid-feedback">Tidak boleh kosong</div>
-                            </div>
-                            <div class="col-md-6 px-1-custom">
-                                <label for="note" class="form-label fw-medium">Keterangan</label>
-                                <textarea class="form-control row-input" placeholder="" name="description[]" required></textarea>
-                                <div class="invalid-feedback">Tidak boleh kosong</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 px-1-custom">
-                        <label for="note" class="form-label fw-medium">DPP</label>
-                        <input type="text" class="form-control row-input price" placeholder="" name="price[]" required/>
+            <tr class="row-mg">
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input" placeholder="Nama Produk" name="item[]" required style="width: 200px;" />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-md-2 px-1-custom">
-                        <label for="note" class="form-label fw-medium">Pajak</label>
-                        <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-0" required></select>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <textarea name="description[]" class="form-control row-input" rows="1" placeholder="Deskripsi Produk" style="width: 200px;"></textarea>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-md-2 px-1-custom">
-                        <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled/>
-                    </div>
-                    <div class="col-md-1 px-1-custom">
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input quantity" placeholder="Kuantitas" name="item[]" required style="width: 200px;" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input price" placeholder="Harga" name="price[]" required style="width: 200px;" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="number" class="form-control row-input discount" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <input type="hidden" class="form-control row-input total_subdiskon" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <select name="tax[]" id="tax-0" class="form-select row-input tax"></select>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled style="width : 200px" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
                         <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
                             <i class="fas fa-trash"></i>
                         </a>
-                    </div>
-                </div>
-            </div>`;
+                    </td>
+                </tr>`;
             $('#details').prepend(temp);
         }
     }
