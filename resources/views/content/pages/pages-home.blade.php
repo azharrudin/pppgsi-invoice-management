@@ -160,7 +160,10 @@ $configData = Helper::appClasses();
                         </div>
                     </div>
                 </div>
-
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="d-flex flex-column">
                 <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-center">
                         <div class="card-title mb-0">
@@ -169,6 +172,36 @@ $configData = Helper::appClasses();
                     </div>
                     <div class="card-body d-flex align-items-center justify-content-center" style="position: relative;">
                         <div id="total-tenant" style="min-height: 180px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="d-flex flex-column">
+                <div class="card h-100 mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-center">
+                        <div class="card-title mb-0">
+                            <h5 class="text-center">Tagihan Vendor</h5>
+                        </div>
+                    </div>
+                    <div class="card-body d-flex align-items-center justify-content-center" style="position: relative;">
+                        <div id="tagihan-vendor" style="min-height: 180px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="d-flex flex-column">
+                <div class="card h-100">
+                    <div class="card-header d-flex align-items-center justify-content-center">
+                        <div class="card-title mb-0">
+                            <h5 class="text-center">Tagihan Yang Vendor Harus dibayarkan</h5>
+                        </div>
+                    </div>
+                    <div class="card-body d-flex align-items-center justify-content-center" style="position: relative;">
+                        <div id="tagihan-yang-vendor-harus-dibayarkan" style="min-height: 180px;">
                         </div>
                     </div>
                 </div>
@@ -195,63 +228,7 @@ $configData = Helper::appClasses();
     </div>
 
     <div class="row">
-        <div class="col-md-3">
-            <div class="d-flex flex-column">
-                <div class="card h-100 mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-center">
-                        <div class="card-title mb-0">
-                            <h5 class="text-center">Tagihan Vendor</h5>
-                        </div>
-                    </div>
-                    <div class="card-body d-flex align-items-center justify-content-center" style="position: relative;">
-                        <div id="tagihan-vendor" style="min-height: 180px;">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card h-100">
-                    <div class="card-header d-flex align-items-center justify-content-center">
-                        <div class="card-title mb-0">
-                            <h5 class="text-center">Tagihan Yang Vendor Harus dibayarkan</h5>
-                        </div>
-                    </div>
-                    <div class="card-body d-flex align-items-center justify-content-center" style="position: relative;">
-                        <div id="tagihan-yang-vendor-harus-dibayarkan" style="min-height: 180px;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-9">
-            <div class="card">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <div class="card-title mb-0">
-                        <h5 class="m-0 me-2">Shipment statistics</h5>
-                        <small class="text-muted">Total number of deliveries 23.8k</small>
-                    </div>
-                    <div class="dropdown">
-                        <button type="button" class="btn btn-label-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">January</button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="javascript:void(0);">January</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);">February</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);">March</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);">April</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);">May</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);">June</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);">July</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);">August</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);">September</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);">October</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);">November</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);">December</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div id="shipmentStatisticsChart"></div>
-                </div>
-            </div>
-        </div>
+        
     </div>
 </div>
 
