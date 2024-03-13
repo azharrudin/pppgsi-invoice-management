@@ -36,6 +36,8 @@ class InvoicesTableSeeder extends Seeder
                 "grand_total" => $grandTotal,
                 "invoice_date" => $startDate,
                 "invoice_due_date" => $faker->dateTimeBetween('+1 week', '+2 week'),
+                "notes" => $faker->text,
+                "term_and_condition" => $faker->text,
                 "status" => $status[$dataIndex],
                 'deleted_at' => null,
             ]);
@@ -52,6 +54,7 @@ class InvoicesTableSeeder extends Seeder
                     "quantity" => 1,
                     "price" => $price,
                     "tax_id" => "10",
+                    "discount" => 0,
                     "total_price" => $totalPrice,
                     'deleted_at' => null,
                 ]);

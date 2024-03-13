@@ -92,7 +92,7 @@ class PaperIdService{
                 "description" => $invoiceDetailObj["description"],
                 "quantity" => $invoiceDetailObj["quantity"],
                 "price" => $invoiceDetailObj["price"],
-                "discount" => 0,
+                "discount" => $invoiceDetailObj["discount"],
             ];
             if(isset($invoiceDetailObj["tax_id"])) $itemObj["tax_id"] = $invoiceDetailObj["tax_id"];
 
@@ -116,8 +116,8 @@ class PaperIdService{
             "items" => $invoiceItem,
             "signature_text_header" => Carbon::now()->format('d F, Y'),
             "signature_text_footer" => "Yen Ardhiean",
-            "terms_condition" => $invoice["term_and_conditions"],
-            "notes" => "",
+            "terms_condition" => $invoice["term_and_condition"],
+            "notes" => $invoice["notes"],
             "send" => [
                 "email" => false,
                 "whatsapp" => false,

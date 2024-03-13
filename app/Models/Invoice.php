@@ -27,6 +27,8 @@ class Invoice extends Model
         "grand_total",
         "invoice_date",
         "invoice_due_date",
+        "notes",
+        "term_and_condition",
         "status",
         'deleted_at',
     ];

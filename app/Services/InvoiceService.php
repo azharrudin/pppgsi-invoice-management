@@ -28,6 +28,8 @@ class InvoiceService{
             "invoice_date" => ["bail", "required", "date"],
             "invoice_due_date" => ["bail", "required", "date", "after_or_equal:invoice_date"],
             "status" => ["bail", "required", "string"],
+            "notes" => ["bail", "nullable", "string"],
+            "term_and_condition" => ["bail", "nullable", "string"],
 
             "details" => ["bail", "required", "array"],
             "details.*.item" => ["bail", "required", "string"],
@@ -35,6 +37,7 @@ class InvoiceService{
             "details.*.quantity" => ["bail", "required", "numeric"],
             "details.*.price" => ["bail", "required", "numeric"],
             "details.*.tax_id" => ["bail", "nullable", "string"],
+            "details.*.discount" => ["bail", "required", "numeric"],
             "details.*.total_price" => ["bail", "required", "numeric"],
         ];
         $errorMessages = [

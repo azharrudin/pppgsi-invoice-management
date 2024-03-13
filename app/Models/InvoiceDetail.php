@@ -22,6 +22,7 @@ class InvoiceDetail extends Model
         "quantity",
         "price",
         "tax_id",
+        "discount",
         "total_price",
         'deleted_at',
     ];
