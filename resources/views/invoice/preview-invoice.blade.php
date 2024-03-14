@@ -74,16 +74,18 @@ $configData = Helper::appClasses();
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Uraian</th>
-                                            <th>Keterangan</th>
-                                            <th>Dasar Pengenaan Pajak</th>
+                                            <th>Produk</th>
+                                            <th>Deskripsi</th>
+                                            <th>Kuantitas</th>
+                                            <th>Harga</th>
+                                            <th>Diskon(%)</th>
                                             <th>Pajak</th>
-                                            <th>Total (Rp.).</th>
+                                            <th>Jumlah</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0" id="details">
                                         <tr>
-                                            <td colspan="2"></td>
+                                            <td colspan="3"></td>
                                             <td colspan="1">
                                                 <p class="">Total:</p>
                                             </td>
@@ -92,13 +94,13 @@ $configData = Helper::appClasses();
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5">Terbilang</td>
+                                            <td colspan="7">Terbilang</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5" id="grand_total_spelled"></td>
+                                            <td colspan="7" id="grand_total_spelled"></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5">
+                                            <td colspan="7">
                                                 <span>Jatuh Tempo Tanggal : </span> <span id="invoice_due_date"></span>
                                             </td>
                                         </tr>
@@ -272,8 +274,10 @@ $configData = Helper::appClasses();
             tem = `<tr>
                         <td class="text-nowrap">` + details[i].item + `</td>
                         <td class="text-nowrap">` + details[i].description + `</td>
+                        <td class="text-nowrap">` + details[i].quantity + `</td>
                         <td>` + format(details[i].price) + `</td>
-                        <td>` + format(details[i].tax_id) + `</td>
+                        <td>` + details[i].discount + `</td>
+                        <td>` + details[i].tax_id + `</td>
                         <td style="text-align: right">Rp. ` + format(details[i].total_price) + `</td>
                     </tr>
             `;

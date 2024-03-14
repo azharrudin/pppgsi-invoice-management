@@ -46,7 +46,7 @@ $configData = Helper::appClasses();
                                         <input type="text" class="form-control date" name="invoice_date" id="invoice_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
+                                    <!-- <div class="col-md-6 mb-3">
                                         <label for="term" class="form-label fw-medium">Terms</label>
                                         <select name="term" id="term" class="form-control" required>
                                             <option value=""></option>
@@ -56,14 +56,13 @@ $configData = Helper::appClasses();
                                             <option value="Net 45 Days">Net 45 Days</option>
                                             <option value="Net 60 Days">Net 60 Days</option>
                                         </select>
-                                        <!-- <input type="text" class="form-control" name="term" id="term" placeholder="" required /> -->
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="contract_date" class="form-label fw-medium">Salesperson</label>
                                         <input type="text" class="form-control" name="contract_date" id="contract_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
+                                    </div> -->
                                     <!-- <div class="col-md-6 mb-3">
                                         <label for="addendum_number" class="form-label fw-medium">No. Addendum</label>
                                         <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" required />
@@ -130,7 +129,7 @@ $configData = Helper::appClasses();
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row d-flex px-3 mb-2">
                             <div class="col-md-6"></div>
                             <div class="col-md-6">
@@ -147,7 +146,7 @@ $configData = Helper::appClasses();
                                 </div>
                             </div>
                         </div>
-                       
+
                         <!-- <div class="row d-flex px-3 mb-2">
                             <div class="col-md-6"></div>
                             <div class="col-md-6">
@@ -164,7 +163,7 @@ $configData = Helper::appClasses();
                                 </div>
                             </div>
                         </div> -->
-                       
+
                         <!-- <div class="row d-flex px-3 mb-2">
                             <div class="col-md-6"></div>
                             <div class="col-md-6">
@@ -181,7 +180,7 @@ $configData = Helper::appClasses();
                                 </div>
                             </div>
                         </div> -->
-                       
+
                         <div class="row d-flex px-3 mb-2">
                             <div class="col-md-6"></div>
                             <div class="col-md-6">
@@ -639,31 +638,31 @@ $configData = Helper::appClasses();
             // Hapus baris yang ditekan tombol hapus
             let index = $('.price').index(this);
             let total = 0;
-            let quantity = isNaN( parseInt($(this).val())) ? 0 :  parseInt($(this).val());
+            let quantity = isNaN(parseInt($(this).val())) ? 0 : parseInt($(this).val());
             let discount = parseInt($(`.discount:eq(` + index + `)`).val());
             let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
-            let disVal = discount/100;
+            let disVal = discount / 100;
             let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
             console.log(id);
             if (id == 0) {
-                if(isNaN(discount)){
-                    total = price * quantity ;
+                if (isNaN(discount)) {
+                    total = price * quantity;
                     $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
                     getSubtotal();
                     getTotal();
-                }else{
-                    let disTotal = (price * quantity) * disVal ;
-                    total = price * quantity ;
+                } else {
+                    let disTotal = (price * quantity) * disVal;
+                    total = price * quantity;
                     $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
                     $(`.total_subdiskon:eq(` + index + `)`).val(isNaN(price) ? 0 : format(disTotal));
                     getSubtotal();
                     getDiskonTotal();
                     getTotal();
                 }
-               
+
             } else {
                 $.ajax({
-                    url: "{{url('api/tax/get-paper')}}/"+id,
+                    url: "{{url('api/tax/get-paper')}}/" + id,
                     type: "get",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -672,17 +671,17 @@ $configData = Helper::appClasses();
                         let total = 0;
                         let tax = parseInt(data);
                         tax = tax / 100;
-                        total = (price * quantity) * tax ;
+                        total = (price * quantity) * tax;
                         $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
-                        if(isNaN(discount)){
-                            total = price * quantity ;
+                        if (isNaN(discount)) {
+                            total = price * quantity;
                             $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
                             getSubtotal();
                             getPajakTotal();
                             getTotal();
-                        }else{
-                            let disTotal = (price * quantity) * disVal ;
-                            total = price * quantity ;
+                        } else {
+                            let disTotal = (price * quantity) * disVal;
+                            total = price * quantity;
                             $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
                             $(`.total_subdiskon:eq(` + index + `)`).val(isNaN(price) ? 0 : format(disTotal));
                             getSubtotal();
@@ -690,7 +689,7 @@ $configData = Helper::appClasses();
                             getPajakTotal();
                             getTotal();
                         }
-                        
+
                     },
                     error: function(errors) {
                         console.log(errors);
@@ -717,28 +716,28 @@ $configData = Helper::appClasses();
             let price = isNaN(parseInt($(this).val().replaceAll(',', ''))) ? 0 : parseInt($(this).val().replaceAll(',', ''));
             let discount = parseInt($(`.discount:eq(` + index + `)`).val());
             let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
-            let disVal = discount/100;
+            let disVal = discount / 100;
             let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
             console.log(id);
             if (id == 0) {
-                if(isNaN(discount)){
-                    total = price * quantity ;
+                if (isNaN(discount)) {
+                    total = price * quantity;
                     $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
                     getSubtotal();
                     getTotal();
-                }else{
-                    let disTotal = (price * quantity) * disVal ;
-                    total = price * quantity ;
+                } else {
+                    let disTotal = (price * quantity) * disVal;
+                    total = price * quantity;
                     $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
                     $(`.total_subdiskon:eq(` + index + `)`).val(isNaN(price) ? 0 : format(disTotal));
                     getSubtotal();
                     getDiskonTotal();
                     getTotal();
                 }
-               
+
             } else {
                 $.ajax({
-                    url: "{{url('api/tax/get-paper')}}/"+id,
+                    url: "{{url('api/tax/get-paper')}}/" + id,
                     type: "get",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -747,17 +746,17 @@ $configData = Helper::appClasses();
                         let total = 0;
                         let tax = parseInt(data);
                         tax = tax / 100;
-                        total = (price * quantity) * tax ;
+                        total = (price * quantity) * tax;
                         $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
-                        if(isNaN(discount)){
-                            total = price * quantity ;
+                        if (isNaN(discount)) {
+                            total = price * quantity;
                             $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
                             getSubtotal();
                             getPajakTotal();
                             getTotal();
-                        }else{
-                            let disTotal = (price * quantity) * disVal ;
-                            total = price * quantity ;
+                        } else {
+                            let disTotal = (price * quantity) * disVal;
+                            total = price * quantity;
                             $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
                             $(`.total_subdiskon:eq(` + index + `)`).val(isNaN(price) ? 0 : format(disTotal));
                             getSubtotal();
@@ -765,7 +764,7 @@ $configData = Helper::appClasses();
                             getPajakTotal();
                             getTotal();
                         }
-                        
+
                     },
                     error: function(errors) {
                         console.log(errors);
@@ -774,9 +773,9 @@ $configData = Helper::appClasses();
             }
 
         });
-       
+
         $(document).on('input', '.discount', function(event) {
-         
+
             // Hapus baris yang ditekan tombol hapus
             let index = $('.price').index(this);
             let total = 0;
@@ -784,13 +783,13 @@ $configData = Helper::appClasses();
             let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
             let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
             console.log(price);
-            let disVal = discount/100;
+            let disVal = discount / 100;
             total = isNaN($(this).val()) ? 0 : (price * quantity) * disVal;
             $(`.total_subdiskon:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
             getSubtotal();
             getDiskonTotal();
             getTotal();
-           
+
 
         });
 
@@ -798,25 +797,25 @@ $configData = Helper::appClasses();
             let id = event.currentTarget.value;
             let index = $('.tax').index(this);
             let data = 0;
-            if(id == ''){
+            if (id == '') {
                 let total = 0;
                 let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
                 let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
                 let tax = 0;
                 tax = tax / 100;
                 let totalPrice = price * tax + price;
-                total = (price * quantity) * tax ;
-                 // console.log(format(totalPrice));
+                total = (price * quantity) * tax;
+                // console.log(format(totalPrice));
                 $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
                 getSubtotal();
                 getDiskonTotal();
                 getPajakTotal();
                 getTotal();
-            }else{
-               
+            } else {
+
                 $.ajax({
                     // url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
-                    url: "{{url('api/tax/get-paper')}}/"+id,
+                    url: "{{url('api/tax/get-paper')}}/" + id,
                     type: "get",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -829,7 +828,7 @@ $configData = Helper::appClasses();
                         let tax = parseInt(data);
                         tax = tax / 100;
                         let totalPrice = price * tax + price;
-                        total = (price * quantity) * tax ;
+                        total = (price * quantity) * tax;
                         // console.log(format(totalPrice));
                         $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
                         getSubtotal();
@@ -874,6 +873,7 @@ $configData = Helper::appClasses();
             }
             $('.total_diskon').text(format(sum));
         }
+
         function getPajakTotal() {
             let totalArr = [];
             let tempTotal = document.getElementsByClassName('total_pajak');
@@ -890,12 +890,12 @@ $configData = Helper::appClasses();
             $('.total_tax').text(format(sum));
         }
 
-        function getTotal(){
+        function getTotal() {
             let subtotal = parseInt($('.sub_total').text().replaceAll(',', ''));
             let diskon = parseInt($('.total_diskon').text().replaceAll(',', ''));
             let tax = parseInt($('.total_tax').text().replaceAll(',', ''));
             console.log(tax);
-            let total = subtotal - diskon + tax ;
+            let total = subtotal - diskon + tax;
             console.log(total);
             $('.grand_total').text(format(total));
             $('.terbilang').val(terbilang(total));
@@ -1068,7 +1068,7 @@ $configData = Helper::appClasses();
                             } else if (index % 7 == 4) {
                                 detail[input_index].discount = parseInt(input_value);
                             } else if (index % 7 == 5) {
-                                detail[input_index].tax = input_value;
+                                detail[input_index].tax_id = input_value;
                             } else if (index % 7 == 6) {
                                 detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
                             }
@@ -1082,19 +1082,16 @@ $configData = Helper::appClasses();
                         });
 
                         datas.details = detail;
-                        datas.paper_id = null;
-                        datas.is_stamped = 0;
-                        datas.pdf_link = '';
                         datas.tenant_id = parseInt(tenant);
                         datas.status = "Terbuat";
                         datas.invoice_due_date = tglJatuhTempo;
                         datas.invoice_date = tglInvoice;
                         datas.grand_total = parseInt(grandTotal);
                         delete datas['undefined'];
-                        console.log(datas);
 
                         $.ajax({
                             url: "{{ env('BASE_URL_API')}}" + '/api/invoice',
+                            // url: "{{ url('api/invoice')}}",
                             type: "POST",
                             data: JSON.stringify(datas),
                             processData: false,
@@ -1162,40 +1159,39 @@ $configData = Helper::appClasses();
             $('.row-input').each(function(index) {
                 var input_name = $(this).attr('name');
                 var input_value = $(this).val();
-                var input_index = Math.floor(index / 5); // Membagi setiap 5 input menjadi satu objek pada array
-                if (index % 5 == 0) {
+                var input_index = Math.floor(index / 7); // Membagi setiap 5 input menjadi satu objek pada array
+                if (index % 7 == 0) {
                     detail[input_index] = {
                         item: input_value
                     };
-                } else if (index % 5 == 1) {
+                } else if (index % 7 == 1) {
                     detail[input_index].description = input_value;
-                } else if (index % 5 == 2) {
+                } else if (index % 7 == 2) {
+                    detail[input_index].quantity = parseInt(input_value);
+                } else if (index % 7 == 3) {
                     detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
-                } else if (index % 5 == 3) {
-                    detail[input_index].tax_id = parseInt(input_value);
-                } else if (index % 5 == 4) {
+                } else if (index % 7 == 4) {
+                    detail[input_index].discount = parseInt(input_value);
+                } else if (index % 7 == 5) {
+                    detail[input_index].tax_id = input_value;
+                } else if (index % 7 == 6) {
                     detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
                 }
             });
-
             let datas = {};
-            $('.create-invoice').find('.form-control').each(function() {
-                var inputId = $(this).attr('id');
-                var inputValue = $("#" + inputId).val();
-                datas[$("#" + inputId).attr("name")] = inputValue;
-            });
+            // $('.create-invoice').find('.form-control').each(function() {
+            //     var inputId = $(this).attr('id');
+            //     var inputValue = $("#" + inputId).val();
+            //     datas[$("#" + inputId).attr("name")] = inputValue;
+            // });
 
             datas.details = detail;
             datas.tenant_id = parseInt(tenant);
-            datas.bank_id = parseInt(bank);
-            datas.status = 'terbuat';
-            datas.contract_date = tglKontrak
-            datas.opening_paragraph = "Bapak/Ibu Qwerty";
+            datas.status = "Terbuat";
             datas.invoice_due_date = tglJatuhTempo;
-            datas.addendum_date = tglAddendum;
             datas.invoice_date = tglInvoice;
-            datas.grand_total = grandTotal;
-            datas.materai_image = fileTtd;
+            datas.grand_total = parseInt(grandTotal);
+            datas.grand_total_spelled = terbilang;
             localStorage.setItem("invoice", JSON.stringify(datas));
             window.location.href = "/invoice/preview-invoice"
         });
