@@ -197,6 +197,8 @@ $configData = Helper::appClasses();
                                     <textarea class="form-control" rows="11" id="note" name="note" placeholder="Termin pembayaran, garansi dll" required></textarea>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
+                            </div>
+                            <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium me-2">Syarat & Ketentuan</label>
                                     <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll" required></textarea>
@@ -1171,8 +1173,10 @@ $configData = Helper::appClasses();
             datas.sub_total = parseInt(sub_total);
             datas.total_diskon = parseInt(total_diskon);
             datas.total_tax = parseInt(total_tax);
-            datas.term_and_conditions = term_and_conditions.getData();
-            datas.notes = note.getData();
+            datas.term_and_conditions = term_and_conditions;
+            datas.notes = note;
+            delete datas['undefined'];
+            delete datas['note'];
             console.log(datas);
             localStorage.setItem("invoice", JSON.stringify(datas));
             window.location.href = "/invoice/preview-invoice"
