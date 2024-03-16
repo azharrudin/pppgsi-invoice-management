@@ -42,28 +42,8 @@ $configData = Helper::appClasses();
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="note" class="form-label fw-medium">Tgl. Invoice</label>
+                                        <label for="invoice_date" class="form-label fw-medium">Tgl. Invoice</label>
                                         <input type="text" class="form-control date" name="invoice_date" id="invoice_date" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="note" class="form-label fw-medium">No. Kontrak</label>
-                                        <input type="text" class="form-control" name="contract_number" id="contract_number" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control  date" name="contract_date" id="contract_date" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3 ">
-                                        <label for="note" class="form-label fw-medium">No. Addendum</label>
-                                        <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control date" id="addendum_date" name="addendum_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
@@ -84,8 +64,37 @@ $configData = Helper::appClasses();
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0" id="details">
+
+                                    </tbody>
+                                    <tfoot>
                                         <tr>
-                                            <td colspan="3"></td>
+                                            <td colspan="4"></td>
+                                            <td colspan="1">
+                                                <p class="">Sub Total:</p>
+                                            </td>
+                                            <td colspan="2" style="text-align: right">
+                                                <p id="sub_total"></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td colspan="1">
+                                                <p class="">Total Diskon</p>
+                                            </td>
+                                            <td colspan="2" style="text-align: right">
+                                                <p id="total_diskon"></p>
+                                            </td>
+                                        </tr>
+                                            <td colspan="4"></td>
+                                            <td colspan="1">
+                                                <p class="">Total Pajak</p>
+                                            </td>
+                                            <td colspan="2" style="text-align: right">
+                                                <p id="total_tax"></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
                                             <td colspan="1">
                                                 <p class="">Total:</p>
                                             </td>
@@ -104,9 +113,6 @@ $configData = Helper::appClasses();
                                                 <span>Jatuh Tempo Tanggal : </span> <span id="invoice_due_date"></span>
                                             </td>
                                         </tr>
-                                    </tbody>
-                                    <tfoot>
-
                                     </tfoot>
                                 </table>
                             </div>
@@ -122,6 +128,13 @@ $configData = Helper::appClasses();
 
                                 </div>
                                 <div class="mb-3">
+                                    <label for="note" class="form-label me-2">Note</label>
+                                    <br>
+                                    <div class="form-label" id="note">
+                                    </div>
+
+                                </div>
+                                <!-- <div class="mb-3">
                                     <label for="note" class="form-label me-2">Transfer Bank :</label>
                                     <select name="bank" id="bank" name="bank" class="form-select w-px-250 item-details mb-3" hidden>
                                     </select>
@@ -130,9 +143,7 @@ $configData = Helper::appClasses();
                                         <span class="fw-bold">PPPGSI</span><br>
                                         <span class="fw-bold" id="bank-name"></span><br>
                                     </div>
-
-
-                                </div>
+                                </div> -->
                             </div>
                             <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
                                 <div class="mb-3">
@@ -195,10 +206,14 @@ $configData = Helper::appClasses();
         $("#addendum_number").val(data.addendum_number);
         $("#addendum_date").val(data.addendum_date);
         $("#grand_total_spelled").text(data.grand_total_spelled);
-        $("#grand_total").text('Rp.'+data.grand_total.toLocaleString());
+        $("#grand_total").text('Rp.' + data.grand_total.toLocaleString());
+        $("#sub_total").text('Rp.' + data.sub_total.toLocaleString());
+        $("#total_diskon").text('Rp.' + data.total_diskon.toLocaleString());
+        $("#total_tax").text('Rp.' + data.total_tax.toLocaleString());
         $("#invoice_due_date").text(data.invoice_due_date);
-        $("#term_and_conditions").text(data.term_and_conditions);
-        $("#materai_date").text(data.materai_date ? moment(data.materai_date).format('D MMMM YYYY'):data.materai_date);
+        $("#term_and_conditions").html(data.term_and_conditions);
+        $("#note").html(data.note);
+        $("#materai_date").text(data.materai_date ? moment(data.materai_date).format('D MMMM YYYY') : data.materai_date);
         $("#materai_name").text(data.materai_name);
 
         if (data.tenant_id) {
@@ -266,25 +281,44 @@ $configData = Helper::appClasses();
         });
     }
 
+
+
     function getDetails() {
         let details = data.details;
         let getDetail = '';
         let tem = '';
+        let tax = '';
+        console.log(details.length);
+
         for (let i = 0; i < details.length; i++) {
-            tem = `<tr>
+            console.log(i);
+            $.ajax({
+                // url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
+                url: "{{url('api/tax/get-paper')}}/" + details[i].tax_id,
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    tax = response.data.name;
+                    console.log(tax);
+                    tem = `<tr>
                         <td class="text-nowrap">` + details[i].item + `</td>
                         <td class="text-nowrap">` + details[i].description + `</td>
                         <td class="text-nowrap">` + details[i].quantity + `</td>
                         <td>` + format(details[i].price) + `</td>
                         <td>` + details[i].discount + `</td>
-                        <td>` + details[i].tax_id + `</td>
+                        <td>` + tax + `</td>
                         <td style="text-align: right">Rp. ` + format(details[i].total_price) + `</td>
-                    </tr>
-            `;
-            getDetail = getDetail + tem;
-        }
+                    </tr>`;
+                    getDetail = getDetail + tem;
+                    $('#details').append(tem);
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
 
-        $('#details').prepend(getDetail);
+        }
     }
 
 
@@ -301,7 +335,7 @@ $configData = Helper::appClasses();
             materai_image: data.materai_image.dataURL
         }
         $.ajax({
-            url: "{{ env('BASE_URL_API')}}" +'/api/invoice',
+            url: "{{ env('BASE_URL_API')}}" + '/api/invoice',
             type: "POST",
             data: JSON.stringify(newData),
             contentType: "application/json; charset=utf-8",

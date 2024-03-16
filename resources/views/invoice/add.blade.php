@@ -78,26 +78,23 @@ $configData = Helper::appClasses();
                         </div>
 
                         {{-- Repeater --}}
-                        <div class="repeater px-3">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Produk</th>
-                                            <th>Deskripsi</th>
-                                            <th>Kuantitas</th>
-                                            <th>Harga</th>
-                                            <th>Diskon(%)</th>
-                                            <th>Pajak</th>
-                                            <th>Jumlah</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="details">
-                                    </tbody>
-                                </table>
-                            </div>
-
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Produk</th>
+                                        <th>Deskripsi</th>
+                                        <th>Kuantitas</th>
+                                        <th>Harga</th>
+                                        <th>Diskon(%)</th>
+                                        <th>Pajak</th>
+                                        <th>Jumlah</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="details">
+                                </tbody>
+                            </table>
 
                             <div class="row pb-4">
                                 <div class="col-md-3 px-3">
@@ -147,40 +144,6 @@ $configData = Helper::appClasses();
                             </div>
                         </div>
 
-                        <!-- <div class="row d-flex px-3 mb-2">
-                            <div class="col-md-6"></div>
-                            <div class="col-md-6">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p>Diskon Tambahan</p>
-                                    </div>
-                                    <div>
-                                        <p class="grand_total">0</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <hr class="m-0 mx-n7">
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <!-- <div class="row d-flex px-3 mb-2">
-                            <div class="col-md-6"></div>
-                            <div class="col-md-6">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p>Biaya Kirim</p>
-                                    </div>
-                                    <div>
-                                        <p class="grand_total">0</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <hr class="m-0 mx-n7">
-                                </div>
-                            </div>
-                        </div> -->
-
                         <div class="row d-flex px-3 mb-2">
                             <div class="col-md-6"></div>
                             <div class="col-md-6">
@@ -189,7 +152,7 @@ $configData = Helper::appClasses();
                                         <p>Pajak</p>
                                     </div>
                                     <div>
-                                        <p class="total_tax">0.00</p>
+                                        <p class="total_tax">0</p>
                                     </div>
                                 </div>
                                 <div>
@@ -206,7 +169,7 @@ $configData = Helper::appClasses();
                                         <p>Total</p>
                                     </div>
                                     <div>
-                                        <p class="grand_total">0.00</p>
+                                        <p class="grand_total">0</p>
                                     </div>
                                 </div>
                                 <div>
@@ -316,6 +279,10 @@ $configData = Helper::appClasses();
                                 </div>`;
     var lastIndex = null;
 
+    var note ='';
+    var term_and_conditions ='';
+     
+
     function format(e) {
         var nStr = e + '';
         nStr = nStr.replace(/\,/g, "");
@@ -378,9 +345,12 @@ $configData = Helper::appClasses();
             })
             .then(editor => {
                 console.log(editor);
+                editor.setData(dataLocal.note);
+                note = editor;
             }).catch(error => {
                 console.error(error);
             });
+           
 
         window.addEventListener("pageshow", function(event) {
             var historyTraversal = event.persisted || (typeof window.performance !== "undefined" && window.performance.getEntriesByType("navigation")[0].type === "back_forward");
@@ -394,6 +364,7 @@ $configData = Helper::appClasses();
             })
             .then(editor => {
                 console.log(editor);
+                term_and_conditions = editor;
             }).catch(error => {
                 console.error(error);
             });
@@ -521,7 +492,7 @@ $configData = Helper::appClasses();
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
-                        <input type="text" class="form-control row-input quantity" placeholder="Kuantitas" name="item[]" required style="width: 200px;" />
+                        <input type="number" class="form-control row-input quantity" placeholder="Kuantitas" name="item[]" required style="width: 200px;" />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
@@ -530,16 +501,16 @@ $configData = Helper::appClasses();
                     </td>
                     <td style="vertical-align: bottom">
                         <input type="number" class="form-control row-input discount" placeholder="" name="discount[]" style="width: 100px;"/>
-                        <input type="hidden" class="form-control row-input total_subdiskon" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <input type="hidden" class="form-control total_subdiskon" placeholder="" name="discount[]" style="width: 100px;"/>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
                         <select name="tax[]" id="tax-${index}" class="form-select row-input tax"></select>
-                        <input type="hidden" class="form-control row-input total_pajak" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <input type="hidden" class="form-control total_pajak" placeholder="" name="discount[]" style="width: 100px;"/>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
-                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled />
+                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled style="width : 200px" />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
@@ -1087,7 +1058,10 @@ $configData = Helper::appClasses();
                         datas.invoice_due_date = tglJatuhTempo;
                         datas.invoice_date = tglInvoice;
                         datas.grand_total = parseInt(grandTotal);
+                        datas.notes = note;
                         delete datas['undefined'];
+                        delete datas['grand_total_spelled'];
+                        delete datas['note'];
 
                         $.ajax({
                             url: "{{ env('BASE_URL_API')}}" + '/api/invoice',
@@ -1147,6 +1121,9 @@ $configData = Helper::appClasses();
             let tglAddendum = $("#addendum_date").val();
             let terbilang = $("#grand_total_spelled").val();
             let grandTotal = parseInt($(".grand_total").text().replaceAll(',', ''));
+            let sub_total = parseInt($(".sub_total").text().replaceAll(',', ''));
+            let total_diskon = parseInt($(".total_diskon").text().replaceAll(',', ''));
+            let total_tax = parseInt($(".total_tax").text().replaceAll(',', ''));
             let tglJatuhTempo = $("#invoice_due_date").val();
             let syaratDanKententuan = $("#term_and_conditions").val();
             let bank = $("#bank").val();
@@ -1179,11 +1156,11 @@ $configData = Helper::appClasses();
                 }
             });
             let datas = {};
-            // $('.create-invoice').find('.form-control').each(function() {
-            //     var inputId = $(this).attr('id');
-            //     var inputValue = $("#" + inputId).val();
-            //     datas[$("#" + inputId).attr("name")] = inputValue;
-            // });
+            $('.create-invoice').find('.form-control').each(function() {
+                var inputId = $(this).attr('id');
+                var inputValue = $("#" + inputId).val();
+                datas[$("#" + inputId).attr("name")] = inputValue;
+            });
 
             datas.details = detail;
             datas.tenant_id = parseInt(tenant);
@@ -1191,7 +1168,12 @@ $configData = Helper::appClasses();
             datas.invoice_due_date = tglJatuhTempo;
             datas.invoice_date = tglInvoice;
             datas.grand_total = parseInt(grandTotal);
-            datas.grand_total_spelled = terbilang;
+            datas.sub_total = parseInt(sub_total);
+            datas.total_diskon = parseInt(total_diskon);
+            datas.total_tax = parseInt(total_tax);
+            datas.term_and_conditions = term_and_conditions.getData();
+            datas.notes = note.getData();
+            console.log(datas);
             localStorage.setItem("invoice", JSON.stringify(datas));
             window.location.href = "/invoice/preview-invoice"
         });
@@ -1216,9 +1198,11 @@ $configData = Helper::appClasses();
         $("#addendum_number").val(dataLocal.addendum_number);
         $("#grand_total_spelled").val(dataLocal.grand_total_spelled);
         $(".grand_total").text(format(dataLocal.grand_total));
+        $(".sub_total").text(format(dataLocal.sub_total));
+        $(".total_diskon").text(format(dataLocal.total_diskon));
+        $(".total_tax").text(format(dataLocal.total_tax));
         $("#materai_name").val(dataLocal.materai_name);
-        $("#term_and_conditions").val(dataLocal.term_and_conditions);
-
+       
 
         if (dataLocal.tenant_id) {
             getTenant();
@@ -1317,46 +1301,46 @@ $configData = Helper::appClasses();
             let details = dataLocal.details;
             for (let i = 0; i < details.length; i++) {
                 temp = `             
-                <div class="row-mg">
-                    <div class="row d-flex align-items-end justify-content-between mb-3">
-                        <div class="col-md-5">
-                            <div class="row row d-flex justify-content-between px-1">
-                                <div class="col-md-6 px-1-custom">
-                                    <label for="note" class="form-label fw-medium">Uraian</label>
-                                    <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required />` + details[i].item + `</textarea>
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
-                                <div class="col-md-6 px-1-custom">
-                                    <label for="note" class="form-label fw-medium">Keterangan</label>
-                                    <textarea class="form-control row-input" placeholder="" name="description[]" required>` + details[i].description + `</textarea>
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2 px-1-custom">
-                            <label for="note" class="form-label fw-medium">DPP</label>
-                            <input type="text" class="form-control row-input price" placeholder="" name="price[]" required value="` + details[i].price?.toLocaleString() + `"/>
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                        <div class="col-md-2 px-1-custom">
-                            <label for="note" class="form-label fw-medium">Pajak</label>
-                            <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-${i}" required></select>
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                        <div class="col-md-2 px-1-custom">
-                            <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                            <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled value="` + details[i].total_price?.toLocaleString() + `"/>
-                        </div>
-                        <div class="col-md-1 px-1-custom">
-                            <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>`;
+                <tr class="row-mg">
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input" placeholder="Nama Produk" name="item[]" value="${details[i].item}" required style="width: 200px;" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <textarea name="description[]" class="form-control row-input" rows="1" placeholder="Deskripsi Produk" style="width: 200px;">${details[i].description}</textarea>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="number" class="form-control row-input quantity" placeholder="Kuantitas" name="quantity[]"  value="${details[i].quantity}" required style="width: 200px;" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input price" placeholder="Harga" name="price[]" value="${format(details[i].price)}" required style="width: 200px;" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="number" class="form-control row-input discount" placeholder="" name="discount[]" style="width: 100px;"  value="${details[i].discount}"/>
+                        <input type="hidden" class="form-control total_subdiskon" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <select name="tax[]" id="tax-${i}" class="form-select row-input tax"></select>
+                        <input type="hidden" class="form-control total_pajak" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled style="width : 200px" value="${details[i].total_price}"/>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>`;
                 getDetail = getDetail + temp;
                 $.ajax({
-                    url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + details[i].tax_id,
+                    url: "{{url('api/tax/get-paper')}}/" + details[i].tax_id,
                     type: "GET",
                     success: function(response) {
                         let data = response.data;
@@ -1373,7 +1357,7 @@ $configData = Helper::appClasses();
             for (let i = 0; i < details.length; i++) {
                 $("#tax-" + i).select2({
                     width: '100px',
-                    placeholder: 'Pilih',
+                    placeholder: 'Pilih Pajak',
                     allowClear: true,
                     ajax: {
                         url: "{{url('api/tax/select-paper')}}",
