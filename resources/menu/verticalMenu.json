@@ -138,11 +138,6 @@
           "url": "settings/list-user",
           "name": "List User",
           "slug": "pages-list-user"
-        },
-        {
-          "url": "settings/tax-rates",
-          "name": "Tax Rates",
-          "slug": "pages-tax-rates"
         }
       ]
     }
