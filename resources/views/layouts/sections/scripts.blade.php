@@ -13,8 +13,6 @@
 <script src="{{ asset(mix('assets/vendor/libs/dropzone/dropzone.js')) }}"></script>
 <script>
     let accountMenu = {!!json_encode(session('data')) !!}
-
-    console.log(accountMenu);
     //BM
     if(accountMenu.level.id == 1){
         hideMenu("Client");
@@ -124,7 +122,6 @@
         for (var i = 0; i < aTags.length; i++) {
             if (aTags[i].textContent == searchText) {
                 found = aTags[i];
-                console.log(found.parentElement.parentElement);
                 found.parentElement.parentElement.classList.add('d-none');
                 break;
 
@@ -140,7 +137,6 @@
         for (var i = 0; i < aTags.length; i++) {
             if (aTags[i].textContent == searchText) {
                 found = aTags[i];
-                console.log(found.parentElement.parentElement);
                 found.parentElement.classList.add('d-none');
                 break;
 

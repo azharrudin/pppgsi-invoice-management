@@ -337,13 +337,11 @@ $configData = Helper::appClasses();
         }
 
         var setNote = dataLocal ? dataLocal.notes : '';
-        console.log(setNote);
 
         ClassicEditor.create(document.querySelector('#notes'), {
                 minHeight: '300px'
             })
             .then(editor => {
-                console.log(editor);
                 editor.setData(setNote);
                 note = editor;
             }).catch(error => {
@@ -363,7 +361,6 @@ $configData = Helper::appClasses();
                 minHeight: '300px'
             })
             .then(editor => {
-                console.log(editor);
                 editor.setData(setTerm);
                 term_and_conditions = editor;
             }).catch(error => {
@@ -480,7 +477,6 @@ $configData = Helper::appClasses();
             // Clone baris terakhir
             var index = lastIndex ? lastIndex + 1 : $('.tax').length;
             lastIndex = index;
-            console.log(lastIndex);
             var $details = $('#details');
             var temp = `             
             <tr class="row-mg">
@@ -521,7 +517,6 @@ $configData = Helper::appClasses();
                     </td>
                 </tr>`;
             $details.append(temp);
-            console.log(index);
             $("#tax-" + index).select2({
                 width: '100px',
                 placeholder: 'Pilih Pajak',
@@ -579,8 +574,6 @@ $configData = Helper::appClasses();
                         params.page = 1;
                         params.abort = true;
                     }
-
-                    console.log(data.data);
                     return {
                         results: data.data,
                         pagination: {
@@ -694,7 +687,6 @@ $configData = Helper::appClasses();
             let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
             let disVal = discount / 100;
             let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
-            console.log(id);
             if (id == 0) {
                 if (isNaN(discount)) {
                     total = price * quantity;
@@ -756,14 +748,17 @@ $configData = Helper::appClasses();
         });
 
         $(document).on('input', '.discount', function(event) {
-
+            console.log($(this).val())
             // Hapus baris yang ditekan tombol hapus
             let index = $('.price').index(this);
             let total = 0;
-            let discount = parseInt($(this).val());
+            let discount = $(this).val();
             let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
             let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
-            console.log(price);
+            console.log(discount);
+            if(discount == ''){
+                discount = 0;
+            }
             let disVal = discount / 100;
             total = isNaN($(this).val()) ? 0 : (price * quantity) * disVal;
             $(`.total_subdiskon:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
@@ -786,16 +781,13 @@ $configData = Helper::appClasses();
                 tax = tax / 100;
                 let totalPrice = price * tax + price;
                 total = (price * quantity) * tax;
-                // console.log(format(totalPrice));
                 $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
                 getSubtotal();
                 getDiskonTotal();
                 getPajakTotal();
                 getTotal();
             } else {
-
                 $.ajax({
-                    // url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
                     url: "{{url('api/tax/get-paper')}}/" + id,
                     type: "get",
                     contentType: "application/json; charset=utf-8",
@@ -803,7 +795,6 @@ $configData = Helper::appClasses();
                     success: function(response) {
                         let data = response.data.value;
                         let exlusice = response.data.exclusive;
-                        console.log(response.data);
                         let total = 0;
                         let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
                         let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
@@ -811,7 +802,6 @@ $configData = Helper::appClasses();
                         tax = tax / 100;
                         let totalPrice = price * tax + price;
                         total = (price * quantity) * tax;
-                        // console.log(format(totalPrice));
                         if(exlusice == 0){
                             $(`.total_pajak:eq(` + index + `)`).val(0);
                             getSubtotal();
@@ -846,6 +836,9 @@ $configData = Helper::appClasses();
             for (let i = 0; i < totalArr.length; i++) {
                 sum += totalArr[i];
             }
+            if(isNaN(sum)){
+                sum = 0;
+            }
             $('.sub_total').text(format(sum));
         }
 
@@ -860,6 +853,9 @@ $configData = Helper::appClasses();
             let sum = 0;
             for (let i = 0; i < totalArr.length; i++) {
                 sum += totalArr[i];
+            }
+            if(isNaN(sum)){
+                sum = 0;
             }
             $('.total_diskon').text(format(sum));
         }
@@ -876,6 +872,9 @@ $configData = Helper::appClasses();
             for (let i = 0; i < totalArr.length; i++) {
                 sum += totalArr[i];
             }
+            if(isNaN(sum)){
+                sum = 0;
+            }
             $('.total_tax').text(format(sum));
         }
 
@@ -884,6 +883,9 @@ $configData = Helper::appClasses();
             let diskon = parseInt($('.total_diskon').text().replaceAll(',', ''));
             let tax = parseInt($('.total_tax').text().replaceAll(',', ''));
             let total = subtotal - diskon + tax;
+            if(isNaN(total)){
+                total = 0;
+            }
             $('.grand_total').text(format(total));
             $('.terbilang').val(terbilang(total));
         }
@@ -1191,7 +1193,6 @@ $configData = Helper::appClasses();
             datas.term_and_conditions = term_and_conditions.getData();
             datas.notes = note.getData();
             delete datas['undefined'];
-            console.log(datas);
             localStorage.setItem("invoice", JSON.stringify(datas));
             window.location.href = "/invoice/preview-invoice"
         });
@@ -1272,9 +1273,7 @@ $configData = Helper::appClasses();
             url: "{{ env('BASE_URL_API')}}" + '/api/bank/' + idBank,
             type: "GET",
             success: function(response) {
-                console.log(response);
                 let data = response.data;
-
                 let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
                 $('#bank').prepend(tem);
 

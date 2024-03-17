@@ -452,7 +452,6 @@ $configData = Helper::appClasses();
                 });
 
             var setNotes = dataLocal.notes ? dataLocal.notes : '';
-            console.log(setNotes);
             ClassicEditor.create(document.querySelector('#notes'), {
                     minHeight: '300px'
                 })
@@ -1334,7 +1333,6 @@ $configData = Helper::appClasses();
                     });
 
                 var setNotes = data.notes ? data.notes : '';
-                console.log(setNotes);
                 ClassicEditor.create(document.querySelector('#notes'), {
                         minHeight: '300px'
                     })
