@@ -748,7 +748,6 @@ $configData = Helper::appClasses();
         });
 
         $(document).on('input', '.discount', function(event) {
-            console.log($(this).val())
             // Hapus baris yang ditekan tombol hapus
             let index = $('.price').index(this);
             let total = 0;

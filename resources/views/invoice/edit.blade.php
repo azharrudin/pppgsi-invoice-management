@@ -1249,66 +1249,11 @@ $configData = Helper::appClasses();
             dataType: "json",
             success: function(res) {
                 let data = res.data;
-                // const myDropzone = new Dropzone('#dropzone-basic', {
-                //     parallelUploads: 1,
-                //     maxFilesize: 3,
-                //     addRemoveLinks: true,
-                //     maxFiles: 1,
-                //     acceptedFiles: ".jpeg,.jpg,.png,.gif",
-                //     autoQueue: false,
-                //     url: "../uploads/logo",
-                //     thumbnailWidth: 250,
-                //     thumbnailHeight: 250,
-                //     init: function() {
-                //         if (dataLocal) {
-                //             let mockFile = {
-                //                 dataURL: dataLocal.materai_image
-                //             };
-                //             if (dataLocal.materai_image) {
-                //                 this.options.addedfile.call(this, mockFile);
-                //                 this.options.thumbnail.call(this, mockFile, dataLocal.materai_image);
-                //                 // Optional: Handle the removal of the file
-                //                 $('.dz-image').last().find('img').attr('width', '100%');
-
-                //                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-                //                     // Handle removal logic here
-                //                 });
-                //             }
-                //         } else {
-                //             let mockFile = {
-                //                 dataURL: data.materai_image
-                //             };
-
-                //             ttdFile = mockFile
-                //             if (data.materai_image) {
-                //                 this.options.addedfile.call(this, mockFile);
-                //                 this.options.thumbnail.call(this, mockFile, data.materai_image);
-
-                //                 $('.dz-image').last().find('img').attr('width', '100%');
-
-                //                 // Optional: Handle the removal of the file
-                //                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-                //                     // Handle removal logic here
-                //                 });
-                //             }
-
-                //         }
-                //         this.on('addedfile', function(file) {
-                //             $('.dz-image').last().find('img').attr('width', '100%');
-                //             while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
-                //             ttdFile = file;
-                //         })
-                //     }
-                // });
-
                 if (data.status != 'Terbuat') {
                     $('.form-control').attr('readonly');
                 }
-
                 console.log(data);
                 var setTerm = data.term_and_condition ? data.term_and_condition : '';
-
-
                 $("#tenant").empty().append("<option value=" + data.tenant.id + ">" + data.tenant.name + "</option>").val(data.tenant.id).trigger("change");
                 $("#invoice_number").val(data.invoice_number);
                 $("#invoice_date").val(data.invoice_date);
