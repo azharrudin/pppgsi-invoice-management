@@ -96,7 +96,7 @@ $configData = Helper::appClasses();
                                 </tbody>
                             </table>
 
-                            <div class="row pb-4">
+                            <div class="row p-3">
                                 <div class="col-md-3 px-3">
                                     <button type="button" class="btn btn-primary waves-effect waves-light w-px-150 btn-add-row-mg">Tambah
                                         Baris</button>
@@ -178,13 +178,13 @@ $configData = Helper::appClasses();
                             </div>
                         </div>
 
-                        <div class="row mb-5">
-                            <div class="col-md-12 mb-2">
+                        <div class="row mb-3">
+                            <div class="col-md-12 mb-4">
                                 <label for="note" class="form-label fw-medium">Terbilang</label>
                                 <input type="text" class="form-control terbilang" id="grand_total_spelled" name="grand_total_spelled" placeholder="Terbilang" disabled />
                             </div>
                             <div class="col-md-8 d-flex align-items-center">
-                                <label for="note" class="form-label fw-medium me-2">Jatuh Tempo Tanggal :</label>
+                                <label for="note" class="form-label fw-medium me-2">Tanggal Jatuh Tempo :</label>
                                 <input type="text" class="form-control w-px-250 date" placeholder="Jatuh Tanggal Tempo" id="invoice_due_date" name="invoice_due_date" required />
                                 <div class="invalid-feedback">Tidak boleh kosong</div>
                             </div>
@@ -204,12 +204,6 @@ $configData = Helper::appClasses();
                                     <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions"></textarea>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
-                                <!-- <div class="mb-3">
-                                    <label for="note" class="form-label fw-medium me-2">Bank</label>
-                                    <select name="bank" id="bank" name="bank" class="form-select w-px-250 item-details mb-3" required>
-                                    </select>
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div> -->
                             </div>
                             @if (session('data')['level']['id'] == '1')
                             <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
@@ -621,7 +615,6 @@ $configData = Helper::appClasses();
             let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
             let disVal = discount / 100;
             let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
-            console.log(id);
             if (id == 0) {
                 if (isNaN(discount)) {
                     total = price * quantity;
@@ -867,7 +860,6 @@ $configData = Helper::appClasses();
             let sum = 0;
             for (let i = 0; i < totalArr.length; i++) {
                 sum += totalArr[i];
-                console.log(sum);
             }
             $('.total_diskon').text(format(sum));
         }
@@ -883,7 +875,6 @@ $configData = Helper::appClasses();
             let sum = 0;
             for (let i = 0; i < totalArr.length; i++) {
                 sum += totalArr[i];
-                console.log(sum);
             }
             $('.total_tax').text(format(sum));
         }
@@ -892,9 +883,7 @@ $configData = Helper::appClasses();
             let subtotal = parseInt($('.sub_total').text().replaceAll(',', ''));
             let diskon = parseInt($('.total_diskon').text().replaceAll(',', ''));
             let tax = parseInt($('.total_tax').text().replaceAll(',', ''));
-            console.log(tax);
             let total = subtotal - diskon + tax;
-            console.log(total);
             $('.grand_total').text(format(total));
             $('.terbilang').val(terbilang(total));
         }

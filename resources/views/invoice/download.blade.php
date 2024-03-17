@@ -76,7 +76,7 @@ return $hasil_rupiah;
 </head>
 
 <body>
-    <div class="container" id="printContent" style="padding: 0px">
+    <div class="container" id="printContent" style="padding: 37px">
         <header>
             <div class="row">
                 <table class="table" style="width: 95%">
@@ -93,17 +93,17 @@ return $hasil_rupiah;
                                         <td colspan="3" style="height: 10px;"></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:45%;">Referensi</td>
+                                        <td style="width:45%;"><b>Reference</b></td>
                                         <td style="width:10%;"></td>
                                         <td style="width:45%;">INV/08/12/0029</td>
                                     </tr>
                                     <tr>
-                                        <td style="width:45%;">Tanggal</td>
+                                        <td style="width:45%;"><b>Date</b></td>
                                         <td style="width:10%;"></td>
                                         <td style="width:45%;">07/03/2024</td>
                                     </tr>
                                     <tr>
-                                        <td style="width:45%;">Tgl. Jatuh Tempo</td>
+                                        <td style="width:45%;"><b>Due Date</b></td>
                                         <td style="width:10%;"></td>
                                         <td style="width:45%;">07/03/2024</td>
                                     </tr>
@@ -116,11 +116,11 @@ return $hasil_rupiah;
         </header>
 
         <div class="row">
-            <table style="width: 100%;">
+            <table style="width: 100%;margin-top:10px">
                 <tr>
-                    <td colspan="3" style="width: 40%;">Info Perusahaan</td>
+                    <td colspan="3" style="width: 40%;"><b>Our Information</b></td>
                     <td colspan="1" style="width: 20%;"></td>
-                    <td colspan="3" style="width: 40%;">Tagihan Untuk</td>
+                    <td colspan="3" style="width: 40%;"><b>Billing For</b></td>
                 </tr>
                 <tr>
                     <td colspan="3">
@@ -133,7 +133,7 @@ return $hasil_rupiah;
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <div class="" style="margin-top: 10px;"><b>Dooha</b></div>
+                        <div class="" style="margin-top: 10px;"><b>Graha Surveyor Indonesia</b></div>
                     </td>
                     <td colspan="1"></td>
                     <td colspan="3">
@@ -142,11 +142,11 @@ return $hasil_rupiah;
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <div class="" style="margin-top: 20px;">Telp :</div>
+                        <div class="" style="margin-top: 20px;">Phone :</div>
                     </td>
                     <td colspan="1"></td>
                     <td colspan="3">
-                        <div class="" style="margin-top: 20px;">Telp : {{ $data->tenant->name ?? '' }}</div>
+                        <div class="" style="margin-top: 20px;">Phone : {{ $data->tenant->phone ?? '' }}</div>
                     </td>
                 </tr>
                 <tr>
@@ -166,13 +166,13 @@ return $hasil_rupiah;
             <table class="table mt-5" style="width: 100%;">
                 <thead style="background-color: #2E3E4E; color : white" class="text-white">
                     <tr>
-                        <td style=" padding:10px">Produk</td>
-                        <td style="padding:10px">Deskripsi</td>
-                        <td style="text-align:center; padding:10px">Kuantitas</td>
-                        <td style="text-align:center; padding:10px">Harga(Rp.)</td>
-                        <td style="text-align:center; padding:10px">Diskon</td>
-                        <td style="text-align:center; padding:10px">Pajak</td>
-                        <td style="text-align:right; padding:10px">Jumlah (Rp.)</td>
+                        <td style=" padding:10px">Product</td>
+                        <td style="padding:10px">Description</td>
+                        <td style="text-align:center; padding:10px">Quantity</td>
+                        <td style="text-align:center; padding:10px">Price(Rp.)</td>
+                        <td style="text-align:center; padding:10px">Discount</td>
+                        <td style="text-align:center; padding:10px">Tax</td>
+                        <td style="text-align:right; padding:10px">Amount (Rp.)</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -197,13 +197,13 @@ return $hasil_rupiah;
                     </tr>
                     <tr>
                         <td colspan="4"></td>
-                        <td><b>Subtotal :</b>
+                        <td><b>Sub Total :</b>
                         </td>
                         <td style="padding:10px;text-align:right" colspan="2"><b>{{ rupiah($data->grand_total) }}</b></td>
                     </tr>
                     <tr>
                         <td colspan="4"></td>
-                        <td><b>Pajak :</b>
+                        <td><b>Tax :</b>
                         </td>
                         <td style="padding:10px;text-align:right" colspan="2"><b>{{ rupiah($data->grand_total) }}</b></td>
                     </tr>
@@ -215,7 +215,7 @@ return $hasil_rupiah;
                     </tr>
                     <tr>
                         <td colspan="4"></td>
-                        <td><b>Sisa Tagihan: :</b>
+                        <td><b>Amount Due: :</b>
                         </td>
                         <td style="padding:10px;text-align:right" colspan="2"><b>{{ rupiah($data->grand_total) }}</b></td>
                     </tr>
@@ -224,7 +224,7 @@ return $hasil_rupiah;
         </div>
 
         <div class="row mt-3">
-            <table class="table mt-5" style="width: 100%;">
+            <table class="table mt-5" style="width: 100%;margin-top:20px">
                 <tr>
                     <td style="width: 50%;">&nbsp;</td>
                     <td style="width: 20%;">&nbsp;</td>
@@ -232,8 +232,8 @@ return $hasil_rupiah;
                 </tr>
                 <tr>
                     <td style="width: 50%;">&nbsp;</td>
-                    <td><img src="{{public_path('assets/img/materai-1000.png')}}" alt="Kop" width="150px"></td>
-                    <td><img src="{{public_path('assets/img/materai-1000.png')}}" alt="Kop" width="150px"></td>
+                    {{-- <td><img src="{{public_path('assets/img/materai-1000.png')}}" alt="Kop" width="150px"></td>
+                    <td><img src="{{public_path('assets/img/materai-1000.png')}}" alt="Kop" width="150px"></td> --}}
                 </tr>
             </table>
         </div>
