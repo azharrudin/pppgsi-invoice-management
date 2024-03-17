@@ -278,7 +278,7 @@ $configData = Helper::appClasses();
                 $("#purchase_order_number").text(data.purchase_order_number);
                 $("#purchase_order_date").text(tglIndo(data.purchase_order_date));
                 $("#about").text(data.about);
-                $("#note").text(data.note);
+                $("#note").text(data.notes);
                 $("#grand_total").text('Rp. ' + format(data.grand_total));
                 $("#tax").text('Rp .' + format(data.tax));
                 $("#subtotal").text('Rp.' + format(data.subtotal));

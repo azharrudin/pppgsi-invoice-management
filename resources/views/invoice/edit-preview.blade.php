@@ -39,77 +39,68 @@ $configData = Helper::appClasses();
                                 <div class="row d-flex justify-content-end">
                                     <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">No. Invoice</label>
-                                        <input type="text" class="form-control" id="invoice_number" placeholder="" readonly />
+                                        <input type="text" class="form-control" id="invoice_number" placeholder="" disabled />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="note" class="form-label fw-medium">Tgl. Invoice</label>
+                                        <label for="invoice_date" class="form-label fw-medium">Tgl. Invoice</label>
                                         <input type="text" class="form-control date" name="invoice_date" id="invoice_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="note" class="form-label fw-medium">No. Kontrak</label>
-                                        <input type="text" class="form-control" name="contract_number" id="contract_number" placeholder="" required />
+                                    <!-- <div class="col-md-6 mb-3">
+                                        <label for="term" class="form-label fw-medium">Terms</label>
+                                        <select name="term" id="term" class="form-control" required>
+                                            <option value=""></option>
+                                            <option value="Net 7 Days">Net 7 Days</option>
+                                            <option value="Net 14 Days">Net 14 Days</option>
+                                            <option value="Net 30 Days">Net 30 Days</option>
+                                            <option value="Net 45 Days">Net 45 Days</option>
+                                            <option value="Net 60 Days">Net 60 Days</option>
+                                        </select>
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control  date" name="contract_date" id="contract_date" placeholder="" required />
+                                        <label for="contract_date" class="form-label fw-medium">Salesperson</label>
+                                        <input type="text" class="form-control" name="contract_date" id="contract_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3 ">
-                                        <label for="note" class="form-label fw-medium">No. Addendum</label>
+                                    </div> -->
+                                    <!-- <div class="col-md-6 mb-3">
+                                        <label for="addendum_number" class="form-label fw-medium">No. Addendum</label>
                                         <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="note" class="form-label fw-medium">Tanggal</label>
+                                        <label for="addendum_date" class="form-label fw-medium">Tanggal</label>
                                         <input type="text" class="form-control date" id="addendum_date" name="addendum_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row my-3 form-label">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Uraian</th>
-                                            <th>Keterangan</th>
-                                            <th>Dasar Pengenaan Pajak</th>
-                                            <th>Pajak</th>
-                                            <th>Total (Rp.).</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-border-bottom-0" id="details">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Produk</th>
+                                        <th>Deskripsi</th>
+                                        <th>Kuantitas</th>
+                                        <th>Harga</th>
+                                        <th>Diskon(%)</th>
+                                        <th>Pajak</th>
+                                        <th>Jumlah</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="details">
+                                </tbody>
+                            </table>
 
-                                        <tr>
-                                            <td colspan="2"></td>
-                                            <td colspan="1">
-                                                <p class="" style="font-weight: bold;">Total:</p>
-                                            </td>
-                                            <td colspan="2">
-                                                <p id="grand_total" style="font-weight: bold"></p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="5">Terbilang</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="5" id="grand_total_spelled"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="5">
-                                                <span>Jatuh Tempo Tanggal : </span> <span id="invoice_due_date"></span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-
-                                    </tfoot>
-                                </table>
+                            <div class="row pb-4">
+                                <div class="col-md-3 px-3">
+                                    <button type="button" class="btn btn-primary waves-effect waves-light w-px-150 btn-add-row-mg">Tambah
+                                        Baris</button>
+                                </div>
                             </div>
                         </div>
 
@@ -158,7 +149,7 @@ $configData = Helper::appClasses();
             <div class="col-lg-3 col-12 invoice-actions">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <button  type="button" id="back" class="btn btn-label-secondary d-grid w-100 mb-2">Kembali</button>
+                        <button type="button" id="back" class="btn btn-label-secondary d-grid w-100 mb-2">Kembali</button>
                     </div>
                 </div>
             </div>
@@ -213,7 +204,7 @@ $configData = Helper::appClasses();
         $("#addendum_number").val(data.addendum_number);
         $("#addendum_date").val(data.addendum_date);
         $("#grand_total_spelled").text(data.grand_total_spelled);
-        $("#grand_total").text('Rp. ' +format(data.grand_total));
+        $("#grand_total").text('Rp. ' + format(data.grand_total));
         $("#invoice_due_date").text(data.invoice_due_date);
         $("#term_and_conditions").text(data.term_and_conditions);
         $("#materai_date").text(data.materai_date);
@@ -273,29 +264,137 @@ $configData = Helper::appClasses();
         });
     }
 
-    function getDetails() {
+    function getDetails(detailItems) {
         let details = data.details;
         let getDetail = '';
-        let tem = '';
-        for (let i = 0; i < details.length; i++) {
-            tem = `<tr>
-                        <td class="text-nowrap">` + details[i].item + `</td>
-                        <td class="text-nowrap">` + details[i].description + `</td>
-                        <td>` + format(details[i].price) + `</td>
-                        <td>` + format(details[i].tax_id) + `</td>
-                        <td style="font-weight:bold">Rp. ` + format(details[i].total_price) + `</td>
-                    </tr>
-            `;
-            getDetail = getDetail + tem;
-        }
+        let temp = '';
 
-        $('#details').prepend(getDetail);
+        if (details) {
+            console.log(details);
+            for (let i = 0; i < details.length; i++) {
+                temp = `             
+                <tr class="row-mg">
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input" placeholder="Nama Produk" name="item[]" value="${details[i].item}" required style="width: 200px;" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <textarea name="description[]" class="form-control row-input" rows="1" placeholder="Deskripsi Produk" style="width: 200px;">${details[i].description}</textarea>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="number" class="form-control row-input quantity" placeholder="Kuantitas" name="quantity[]"  value="${details[i].quantity}" required style="width: 200px;" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input price" placeholder="Harga" name="price[]" value="${format(details[i].price)}" required style="width: 200px;" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="number" class="form-control row-input discount" placeholder="" name="discount[]" style="width: 100px;"  value="${details[i].discount}"/>
+                        <input type="hidden" class="form-control total_subdiskon" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <select name="tax[]" id="tax-${i}" class="form-select row-input tax"></select>
+                        <input type="hidden" class="form-control total_pajak" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled style="width : 200px" value="${details[i].total_price}"/>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                `;
+                $.ajax({
+                    url: "{{url('api/tax/get-paper')}}/" + details[i].tax_id,
+                    type: "GET",
+                    success: function(response) {
+                        let data = response.data;
+                        let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
+                        $('#tax-' + i).prepend(tem);
+                        data = response.data.value;
+                        let exlusice = response.data.exclusive;
+                        console.log(response.data);
+                        let totalPajak = 0;
+                        let totalDiskon = 0;
+                        let price = parseInt($(`.price:eq(` + i + `)`).val().replaceAll(',', ''));
+                        let quantity = parseInt($(`.quantity:eq(` + i + `)`).val());
+                        let tax = parseInt(data);
+                        let discount = parseInt($(`.discount:eq(` + i + `)`).val());
+                        tax = tax / 100;
+                        let totalPrice = price * tax + price;
+                        totalPajak = (price * quantity) * tax;
+                        let disVal = discount / 100;
+                        let disTotal = (price * quantity) * disVal;
+                        $(`.total_subdiskon:eq(` + i + `)`).val(isNaN(price) ? 0 : format(disTotal));
+                        // console.log(format(totalPrice));
+                        if (exlusice == 0) {
+                            $(`.total_pajak:eq(` + i + `)`).val(0);
+                            getSubtotal();
+                            getDiskonTotal();
+                            getPajakTotal();
+                            getTotal();
+                        } else {
+                            $(`.total_pajak:eq(` + i + `)`).val(isNaN(totalPajak) ? 0 : format(totalPajak));
+                            getSubtotal();
+                            getDiskonTotal();
+                            getPajakTotal();
+                            getTotal();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+                getDetail = getDetail + temp;
+            }
+            $('#details').prepend(getDetail);
+            for (let i = 0; i < details.length; i++) {
+                $("#tax-" + i).select2({
+                    width: '100px',
+                    placeholder: 'Pilih Pajak',
+                    allowClear: true,
+                    ajax: {
+                        url: "{{url('api/tax/select-paper')}}",
+                        // url: "{{ env('BASE_URL_API')}}" + '/api/tax/select',
+                        dataType: 'json',
+                        cache: true,
+                        data: function(params) {
+                            return {
+                                value: params.term || '',
+                                page: params.page || 1
+                            }
+                        },
+                        processResults: function(data, params) {
+                            var more = data.pagination.more;
+                            if (more === false) {
+                                params.page = 1;
+                                params.abort = true;
+                            }
+                            return {
+                                results: data.data,
+                                pagination: {
+                                    more: more
+                                }
+                            };
+                        }
+                    }
+
+                });
+            }
+        }
     }
 
 
     $(document).on('click', '#back', function(event) {
         event.preventDefault();
-        window.location.href = "/invoice/edit/"+id
+        window.location.href = "/invoice/edit/" + id
     });
 
     $(document).on('click', '#save', function(event) {

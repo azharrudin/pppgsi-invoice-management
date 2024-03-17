@@ -194,14 +194,14 @@ $configData = Helper::appClasses();
                             <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium me-2">Catatan</label>
-                                    <textarea class="form-control" rows="11" id="note" name="note" placeholder="Termin pembayaran, garansi dll" required></textarea>
+                                    <textarea class="form-control" rows="11" id="notes" name="notes"></textarea>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium me-2">Syarat & Ketentuan</label>
-                                    <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll" required></textarea>
+                                    <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions"></textarea>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
                                 <!-- <div class="mb-3">
@@ -342,12 +342,15 @@ $configData = Helper::appClasses();
             });
         }
 
-        ClassicEditor.create(document.querySelector('#note'), {
+        var setNote = dataLocal ? dataLocal.notes : '';
+        console.log(setNote);
+
+        ClassicEditor.create(document.querySelector('#notes'), {
                 minHeight: '300px'
             })
             .then(editor => {
                 console.log(editor);
-                editor.setData(dataLocal.note);
+                editor.setData(setNote);
                 note = editor;
             }).catch(error => {
                 console.error(error);
@@ -361,11 +364,13 @@ $configData = Helper::appClasses();
             }
         });
 
+        var setTerm = dataLocal ? dataLocal.term_and_conditions : '';
         ClassicEditor.create(document.querySelector('#term_and_conditions'), {
                 minHeight: '300px'
             })
             .then(editor => {
                 console.log(editor);
+                editor.setData(setTerm);
                 term_and_conditions = editor;
             }).catch(error => {
                 console.error(error);
@@ -484,7 +489,7 @@ $configData = Helper::appClasses();
             console.log(lastIndex);
             var $details = $('#details');
             var temp = `             
-                <tr class="row-mg">
+            <tr class="row-mg">
                     <td style="vertical-align: bottom">
                         <input type="text" class="form-control row-input" placeholder="Nama Produk" name="item[]" required style="width: 200px;" />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
@@ -645,7 +650,12 @@ $configData = Helper::appClasses();
                         let tax = parseInt(data);
                         tax = tax / 100;
                         total = (price * quantity) * tax;
-                        $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
+                        let exlusice = response.data.exclusive;
+                        if(exlusice == 0){
+                            $(`.total_pajak:eq(` + index + `)`).val(0);
+                        }else{
+                            $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
+                        }
                         if (isNaN(discount)) {
                             total = price * quantity;
                             $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
@@ -716,11 +726,16 @@ $configData = Helper::appClasses();
                     dataType: "json",
                     success: function(response) {
                         let data = response.data.value;
+                        let exlusice = response.data.exclusive;
                         let total = 0;
                         let tax = parseInt(data);
                         tax = tax / 100;
                         total = (price * quantity) * tax;
-                        $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
+                        if(exlusice == 0){
+                            $(`.total_pajak:eq(` + index + `)`).val(0);
+                        }else{
+                            $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
+                        }
                         if (isNaN(discount)) {
                             total = price * quantity;
                             $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
@@ -794,7 +809,8 @@ $configData = Helper::appClasses();
                     dataType: "json",
                     success: function(response) {
                         let data = response.data.value;
-                        console.log(data);
+                        let exlusice = response.data.exclusive;
+                        console.log(response.data);
                         let total = 0;
                         let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
                         let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
@@ -803,11 +819,20 @@ $configData = Helper::appClasses();
                         let totalPrice = price * tax + price;
                         total = (price * quantity) * tax;
                         // console.log(format(totalPrice));
-                        $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
-                        getSubtotal();
-                        getDiskonTotal();
-                        getPajakTotal();
-                        getTotal();
+                        if(exlusice == 0){
+                            $(`.total_pajak:eq(` + index + `)`).val(0);
+                            getSubtotal();
+                            getDiskonTotal();
+                            getPajakTotal();
+                            getTotal();
+                        }else{
+                            $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
+                            getSubtotal();
+                            getDiskonTotal();
+                            getPajakTotal();
+                            getTotal();
+                        }
+                       
                     },
                     error: function(errors) {
                         console.log(errors);
@@ -1060,7 +1085,8 @@ $configData = Helper::appClasses();
                         datas.invoice_due_date = tglJatuhTempo;
                         datas.invoice_date = tglInvoice;
                         datas.grand_total = parseInt(grandTotal);
-                        datas.notes = note;
+                        datas.notes = note.getData();
+                        datas.term_and_conditions = term_and_conditions.getData();
                         delete datas['undefined'];
                         delete datas['grand_total_spelled'];
                         delete datas['note'];
@@ -1173,10 +1199,9 @@ $configData = Helper::appClasses();
             datas.sub_total = parseInt(sub_total);
             datas.total_diskon = parseInt(total_diskon);
             datas.total_tax = parseInt(total_tax);
-            datas.term_and_conditions = term_and_conditions;
-            datas.notes = note;
+            datas.term_and_conditions = term_and_conditions.getData();
+            datas.notes = note.getData();
             delete datas['undefined'];
-            delete datas['note'];
             console.log(datas);
             localStorage.setItem("invoice", JSON.stringify(datas));
             window.location.href = "/invoice/preview-invoice"

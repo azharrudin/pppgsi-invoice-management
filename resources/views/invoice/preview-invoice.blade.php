@@ -199,6 +199,7 @@ $configData = Helper::appClasses();
 
     let data = JSON.parse(localStorage.getItem("invoice"));
     $(document).ready(function() {
+        console.log(data);
         $("#invoice_number").val(data.invoice_number);
         $("#invoice_date").val(data.invoice_date);
         $("#contract_number").val(data.contract_number);
@@ -212,7 +213,7 @@ $configData = Helper::appClasses();
         $("#total_tax").text('Rp.' + data.total_tax.toLocaleString());
         $("#invoice_due_date").text(data.invoice_due_date);
         $("#term_and_conditions").html(data.term_and_conditions);
-        $("#note").html(data.note);
+        $("#note").html(data.notes);
         $("#materai_date").text(data.materai_date ? moment(data.materai_date).format('D MMMM YYYY') : data.materai_date);
         $("#materai_name").text(data.materai_name);
 

@@ -38,7 +38,7 @@ $configData = Helper::appClasses();
                                 <div class="row d-flex justify-content-end">
                                     <div class="col-md-6 mb-3">
                                         <label for="note" class="form-label fw-medium">No. Invoice</label>
-                                        <input type="text" class="form-control" id="invoice_number" name="invoice_number" placeholder="" readonly />
+                                        <input type="text" class="form-control" id="invoice_number" placeholder="" disabled />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="col-md-6 mb-3">
@@ -46,17 +46,24 @@ $configData = Helper::appClasses();
                                         <input type="text" class="form-control date" name="invoice_date" id="invoice_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="contract_number" class="form-label fw-medium">No. Kontrak</label>
-                                        <input type="text" class="form-control" name="contract_number" id="contract_number" placeholder="" required />
+                                    <!-- <div class="col-md-6 mb-3">
+                                        <label for="term" class="form-label fw-medium">Terms</label>
+                                        <select name="term" id="term" class="form-control" required>
+                                            <option value=""></option>
+                                            <option value="Net 7 Days">Net 7 Days</option>
+                                            <option value="Net 14 Days">Net 14 Days</option>
+                                            <option value="Net 30 Days">Net 30 Days</option>
+                                            <option value="Net 45 Days">Net 45 Days</option>
+                                            <option value="Net 60 Days">Net 60 Days</option>
+                                        </select>
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="contract_date" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control  date" name="contract_date" id="contract_date" placeholder="" required />
+                                        <label for="contract_date" class="form-label fw-medium">Salesperson</label>
+                                        <input type="text" class="form-control" name="contract_date" id="contract_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
+                                    </div> -->
+                                    <!-- <div class="col-md-6 mb-3">
                                         <label for="addendum_number" class="form-label fw-medium">No. Addendum</label>
                                         <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
@@ -65,19 +72,32 @@ $configData = Helper::appClasses();
                                         <label for="addendum_date" class="form-label fw-medium">Tanggal</label>
                                         <input type="text" class="form-control date" id="addendum_date" name="addendum_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
 
                         {{-- Repeater --}}
-                        <div class="repeater">
-                            <div class="" id="details">
-
-                            </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Produk</th>
+                                        <th>Deskripsi</th>
+                                        <th>Kuantitas</th>
+                                        <th>Harga</th>
+                                        <th>Diskon(%)</th>
+                                        <th>Pajak</th>
+                                        <th>Jumlah</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="details">
+                                </tbody>
+                            </table>
 
                             <div class="row pb-4">
-                                <div class="col-sm-3 px-3">
+                                <div class="col-md-3 px-3">
                                     <button type="button" class="btn btn-primary waves-effect waves-light w-px-150 btn-add-row-mg">Tambah
                                         Baris</button>
                                 </div>
@@ -90,19 +110,68 @@ $configData = Helper::appClasses();
                         </div>
 
                         {{-- Total --}}
-                        <div class="col-md-12 d-flex float-end px-5 mb-5">
-                            <div class="col-6"></div>
-                            <div class="col-6">
-                                {{-- Total --}}
+                        <div class="row d-flex px-3 mb-2">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Subtotal</p>
+                                    </div>
+                                    <div>
+                                        <p class="sub_total">0</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <hr class="m-0 mx-n7">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex px-3 mb-2">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Total Diskon</p>
+                                    </div>
+                                    <div>
+                                        <p class="total_diskon">0</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <hr class="m-0 mx-n7">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex px-3 mb-2">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Pajak</p>
+                                    </div>
+                                    <div>
+                                        <p class="total_tax">0</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <hr class="m-0 mx-n7">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex px-3 mb-2">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
                                 <div class="d-flex justify-content-between">
                                     <div>
                                         <p>Total</p>
                                     </div>
                                     <div>
-                                        <p class="grand_total">0.00</p>
+                                        <p class="grand_total">0</p>
                                     </div>
                                 </div>
-                                {{-- Divider --}}
                                 <div>
                                     <hr class="m-0 mx-n7">
                                 </div>
@@ -124,23 +193,25 @@ $configData = Helper::appClasses();
                         <div class="row">
                             <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-3">
-                                    <label for="notes" class="form-label fw-medium me-2">Catatan</label>
-                                    <textarea class="form-control" rows="11" id="notes" name="notes" placeholder="Catatan" required></textarea>
+                                    <label for="note" class="form-label fw-medium me-2">Catatan</label>
+                                    <textarea class="form-control" rows="11" id="notes" name="notes"></textarea>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
+                            </div>
+                            <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium me-2">Syarat & Ketentuan</label>
-                                    <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions" placeholder="Termin pembayaran, garansi dll" required></textarea>
+                                    <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions"></textarea>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
-                                <div class="mb-3">
+                                <!-- <div class="mb-3">
                                     <label for="note" class="form-label fw-medium me-2">Bank</label>
                                     <select name="bank" id="bank" name="bank" class="form-select w-px-250 item-details mb-3" required>
                                     </select>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
+                                </div> -->
                             </div>
-                            <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center data-materai">
+                            <!-- <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center data-materai">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Tanda Tangan & Meterai</label>
                                     <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" name="materai_date" />
@@ -157,7 +228,7 @@ $configData = Helper::appClasses();
                                     <input type="text" class="form-control tanda-tangan w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -189,6 +260,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
 <script>
     "use strict";
 
@@ -206,6 +278,9 @@ $configData = Helper::appClasses();
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
     var lastIndex = null;
+
+    var note = '';
+    var term_and_conditions = '';
 
     function format(e) {
         var nStr = e + '';
@@ -264,7 +339,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Tenant',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/tenant/select?field=company',
+                url: "{{ env('BASE_URL_API')}}" + '/api/tenant/select?field=company',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -295,7 +370,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Bank',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/bank/select',
+                url: "{{ env('BASE_URL_API')}}" + '/api/bank/select',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -328,8 +403,8 @@ $configData = Helper::appClasses();
                 type: "GET",
                 success: function(response) {
                     let data = response.data;
-                    $("#tenant").empty().append("<option value="+data.id+">"+data.name+"</option>").val(data.id).trigger("change");
-                    if(account.level == 1){
+                    $("#tenant").empty().append("<option value=" + data.id + ">" + data.name + "</option>").val(data.id).trigger("change");
+                    if (account.level == 1) {
                         $('#materai_name').val(data.name);
                     }
                 },
@@ -345,7 +420,7 @@ $configData = Helper::appClasses();
                 type: "GET",
                 success: function(response) {
                     let data = response.data;
-                    $("#bank").empty().append("<option value="+data.id+">"+data.name+"</option>").val(data.id).trigger("change");
+                    $("#bank").empty().append("<option value=" + data.id + ">" + data.name + "</option>").val(data.id).trigger("change");
                 },
                 error: function(xhr, status, error) {
                     console.log(error);
@@ -363,9 +438,31 @@ $configData = Helper::appClasses();
             $("#grand_total_spelled").val(dataLocal.grand_total_spelled);
             $(".grand_total").text(format(dataLocal.grand_total));
             $("#invoice_due_date").val(dataLocal.invoice_due_date);
-            $("#term_and_conditions").val(dataLocal.term_and_conditions);
             $("#materai_date").val(dataLocal.materai_date);
             $("#materai_name").val(dataLocal.materai_name);
+            var setTerm = dataLocal.term_and_condition ? dataLocal.term_and_condition : '';
+            ClassicEditor.create(document.querySelector('#term_and_conditions'), {
+                    minHeight: '300px'
+                })
+                .then(editor => {
+                    editor.setData(setTerm);
+                    term_and_conditions = editor;
+                }).catch(error => {
+                    console.error(error);
+                });
+
+            var setNotes = dataLocal.notes ? dataLocal.notes : '';
+            console.log(setNotes);
+            ClassicEditor.create(document.querySelector('#notes'), {
+                    minHeight: '300px'
+                })
+                .then(editor => {
+                    editor.setData(setNotes);
+                    note = editor;
+                }).catch(error => {
+                    console.error(error);
+                });
+
 
 
             if (dataLocal.tenant_id) {
@@ -375,52 +472,52 @@ $configData = Helper::appClasses();
                 getBank(dataLocal.bank_id);
             }
 
-            const myDropzone = new Dropzone('#dropzone-basic', {
-                parallelUploads: 1,
-                maxFilesize: 3,
-                addRemoveLinks: true,
-                maxFiles: 1,
-                acceptedFiles: ".jpeg,.jpg,.png,.gif",
-                autoQueue: false,
-                url: "../uploads/logo",
-                thumbnailWidth: 250,
-                thumbnailHeight: null,
-                init: function() {
-                    if (dataLocal) {
-                        let mockFile = {
-                            dataURL: dataLocal.materai_image
-                        };
-                        if (dataLocal.materai_image) {
-                            this.options.addedfile.call(this, mockFile);
-                            this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
-                            $('.dz-image').last().find('img').attr('width', '100%');
-                            // Optional: Handle the removal of the file
-                            mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-                                // Handle removal logic here
-                            });
-                        }
-                    } else {
-                        let mockFile = {
-                            dataURL: data.materai_image
-                        };
-                        if (data.materai_image) {
-                            this.options.addedfile.call(this, mockFile);
-                            this.options.thumbnail.call(this, mockFile, data.materai_image);
-                            $('.dz-image').last().find('img').attr('width', '100%');
-                            // Optional: Handle the removal of the file
-                            mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-                                // Handle removal logic here
-                            });
-                        }
+            // const myDropzone = new Dropzone('#dropzone-basic', {
+            //     parallelUploads: 1,
+            //     maxFilesize: 3,
+            //     addRemoveLinks: true,
+            //     maxFiles: 1,
+            //     acceptedFiles: ".jpeg,.jpg,.png,.gif",
+            //     autoQueue: false,
+            //     url: "../uploads/logo",
+            //     thumbnailWidth: 250,
+            //     thumbnailHeight: null,
+            //     init: function() {
+            //         if (dataLocal) {
+            //             let mockFile = {
+            //                 dataURL: dataLocal.materai_image
+            //             };
+            //             if (dataLocal.materai_image) {
+            //                 this.options.addedfile.call(this, mockFile);
+            //                 this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
+            //                 $('.dz-image').last().find('img').attr('width', '100%');
+            //                 // Optional: Handle the removal of the file
+            //                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+            //                     // Handle removal logic here
+            //                 });
+            //             }
+            //         } else {
+            //             let mockFile = {
+            //                 dataURL: data.materai_image
+            //             };
+            //             if (data.materai_image) {
+            //                 this.options.addedfile.call(this, mockFile);
+            //                 this.options.thumbnail.call(this, mockFile, data.materai_image);
+            //                 $('.dz-image').last().find('img').attr('width', '100%');
+            //                 // Optional: Handle the removal of the file
+            //                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+            //                     // Handle removal logic here
+            //                 });
+            //             }
 
-                    }
-                    this.on('addedfile', function(file) {
-                        $('.dz-image').last().find('img').attr('width', '100%');
-                        while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
-                        ttdFile = file;
-                    })
-                }
-            });
+            //         }
+            //         this.on('addedfile', function(file) {
+            //             $('.dz-image').last().find('img').attr('width', '100%');
+            //             while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
+            //             ttdFile = file;
+            //         })
+            //     }
+            // });
 
             getDetails(dataLocal.details);
 
@@ -450,50 +547,51 @@ $configData = Helper::appClasses();
             console.log(lastIndex);
             var $details = $('#details');
             var $newRow = `
-            <div class="row-mg">
-                <div class="row d-flex align-items-end justify-content-between mb-3">
-                    <div class="col-md-5">
-                        <div class="row row d-flex justify-content-between px-1">
-                            <div class="col-md-6 px-1-custom">
-                                <label for="note" class="form-label fw-medium">Uraian</label>
-                                <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required /></textarea>
-                                <div class="invalid-feedback">Tidak boleh kosong</div>
-                            </div>
-                            <div class="col-md-6 px-1-custom">
-                                <label for="note" class="form-label fw-medium">Keterangan</label>
-                                <textarea class="form-control row-input" placeholder="" name="description[]" required></textarea>
-                                <div class="invalid-feedback">Tidak boleh kosong</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 px-1-custom">
-                        <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                        <input type="text" class="form-control row-input price" placeholder="" name="price[]" required />
+            <tr class="row-mg">
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input" placeholder="Nama Produk" name="item[]" required style="width: 200px;" />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-md-2 px-1-custom">
-                        <label for="note" class="form-label fw-medium">Pajak</label>
-                        <select class="form-control row-input tax" placeholder="" id="tax-${index}" required></select>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <textarea name="description[]" class="form-control row-input" rows="1" placeholder="Deskripsi Produk" style="width: 200px;"></textarea>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="col-md-2 px-1-custom">
-                        <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled/>
-                    </div>
-                    <div class="col-md-1 px-1-custom">
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="number" class="form-control row-input quantity" placeholder="Kuantitas" name="item[]" required style="width: 200px;" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input price" placeholder="Harga" name="price[]" required style="width: 200px;" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="number" class="form-control row-input discount" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <input type="hidden" class="form-control total_subdiskon" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <select name="tax[]" id="tax-${index}" class="form-select row-input tax"></select>
+                        <input type="hidden" class="form-control total_pajak" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled style="width : 200px" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
                         <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
                             <i class="fas fa-trash"></i>
                         </a>
-                    </div>
-                </div>
-            </div>`;
+                    </td>
+                </tr>`;
             $details.append($newRow);
             $("#tax-" + index).select2({
                 width: '100px',
-                placeholder: 'Select Pajak',
+                placeholder: 'Pilih Pajak',
                 allowClear: true,
                 ajax: {
-                    url: "{{ env('BASE_URL_API')}}" +'/api/tax/select',
+                    // url: "{{ env('BASE_URL_API')}}" + '/api/tax/select',
+                    url: "{{url('api/tax/select-paper')}}",
                     dataType: 'json',
                     cache: true,
                     data: function(params) {
@@ -529,11 +627,85 @@ $configData = Helper::appClasses();
             // Hapus baris yang ditekan tombol hapus
             $(this).closest('.row-mg').remove();
             getTotal();
+            getSubtotal();
+            getDiskonTotal();
+            getPajakTotal();
+            getTotal();
         });
 
         $(document).on('keydown', '.price', function(event) {
             var key = event.which;
             if ((key < 48 || key > 57) && key != 8) event.preventDefault();
+        });
+
+        $(document).on('input', '.quantity', function(event) {
+            // Hapus baris yang ditekan tombol hapus
+            let index = $('.price').index(this);
+            let total = 0;
+            let quantity = isNaN(parseInt($(this).val())) ? 0 : parseInt($(this).val());
+            let discount = parseInt($(`.discount:eq(` + index + `)`).val());
+            let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+            let disVal = discount / 100;
+            let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
+            console.log(id);
+            if (id == 0) {
+                if (isNaN(discount)) {
+                    total = price * quantity;
+                    $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
+                    getSubtotal();
+                    getTotal();
+                } else {
+                    let disTotal = (price * quantity) * disVal;
+                    total = price * quantity;
+                    $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
+                    $(`.total_subdiskon:eq(` + index + `)`).val(isNaN(price) ? 0 : format(disTotal));
+                    getSubtotal();
+                    getDiskonTotal();
+                    getTotal();
+                }
+
+            } else {
+                $.ajax({
+                    url: "{{url('api/tax/get-paper')}}/" + id,
+                    type: "get",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(response) {
+                        let data = response.data.value;
+                        let total = 0;
+                        let tax = parseInt(data);
+                        tax = tax / 100;
+                        total = (price * quantity) * tax;
+                        let exlusice = response.data.exclusive;
+                        if (exlusice == 0) {
+                            $(`.total_pajak:eq(` + index + `)`).val(0);
+                        } else {
+                            $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
+                        }
+                        if (isNaN(discount)) {
+                            total = price * quantity;
+                            $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
+                            getSubtotal();
+                            getPajakTotal();
+                            getTotal();
+                        } else {
+                            let disTotal = (price * quantity) * disVal;
+                            total = price * quantity;
+                            $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
+                            $(`.total_subdiskon:eq(` + index + `)`).val(isNaN(price) ? 0 : format(disTotal));
+                            getSubtotal();
+                            getDiskonTotal();
+                            getPajakTotal();
+                            getTotal();
+                        }
+
+                    },
+                    error: function(errors) {
+                        console.log(errors);
+                    }
+                });
+            }
+
         });
 
         $(document).on('input', '.price', function(event) {
@@ -550,27 +722,63 @@ $configData = Helper::appClasses();
             // Hapus baris yang ditekan tombol hapus
             let index = $('.price').index(this);
             let total = 0;
-            let price = parseInt($(this).val().replaceAll(',', ''));
-            let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
+            let price = isNaN(parseInt($(this).val().replaceAll(',', ''))) ? 0 : parseInt($(this).val().replaceAll(',', ''));
+            let discount = parseInt($(`.discount:eq(` + index + `)`).val());
+            let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
+            let disVal = discount / 100;
+            let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
             console.log(id);
             if (id == 0) {
-                $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(price));
-                getTotal();
+                if (isNaN(discount)) {
+                    total = price * quantity;
+                    $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
+                    getSubtotal();
+                    getTotal();
+                } else {
+                    let disTotal = (price * quantity) * disVal;
+                    total = price * quantity;
+                    $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
+                    $(`.total_subdiskon:eq(` + index + `)`).val(isNaN(price) ? 0 : format(disTotal));
+                    getSubtotal();
+                    getDiskonTotal();
+                    getTotal();
+                }
+
             } else {
                 $.ajax({
-                    url: "{{ env('BASE_URL_API')}}" +'/api/tax/'+ id,
+                    url: "{{url('api/tax/get-paper')}}/" + id,
                     type: "get",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function(response) {
-                        console.log(response);
-                        let data = response.data.rate;
+                        let data = response.data.value;
+                        let exlusice = response.data.exclusive;
                         let total = 0;
                         let tax = parseInt(data);
                         tax = tax / 100;
-                        let totalPrice = price * tax + price;
-                        $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
-                        getTotal();
+                        total = (price * quantity) * tax;
+                        if (exlusice == 0) {
+                            $(`.total_pajak:eq(` + index + `)`).val(0);
+                        } else {
+                            $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
+                        }
+                        if (isNaN(discount)) {
+                            total = price * quantity;
+                            $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
+                            getSubtotal();
+                            getPajakTotal();
+                            getTotal();
+                        } else {
+                            let disTotal = (price * quantity) * disVal;
+                            total = price * quantity;
+                            $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
+                            $(`.total_subdiskon:eq(` + index + `)`).val(isNaN(price) ? 0 : format(disTotal));
+                            getSubtotal();
+                            getDiskonTotal();
+                            getPajakTotal();
+                            getTotal();
+                        }
+
                     },
                     error: function(errors) {
                         console.log(errors);
@@ -580,138 +788,84 @@ $configData = Helper::appClasses();
 
         });
 
+        $(document).on('input', '.discount', function(event) {
+
+            // Hapus baris yang ditekan tombol hapus
+            let index = $('.price').index(this);
+            let total = 0;
+            let discount = parseInt($(this).val());
+            let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+            let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
+            console.log(price);
+            let disVal = discount / 100;
+            total = isNaN($(this).val()) ? 0 : (price * quantity) * disVal;
+            $(`.total_subdiskon:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
+            getSubtotal();
+            getDiskonTotal();
+            getTotal();
+
+
+        });
+
         $(document).on('input', '.tax', function(event) {
             let id = event.currentTarget.value;
             let index = $('.tax').index(this);
             let data = 0;
-            $.ajax({
-                url: "{{ env('BASE_URL_API')}}" +'/api/tax/'+ id,
-                type: "get",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(response) {
-                    let data = response.data.rate;
-                    let total = 0;
-                    let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
-                    let tax = parseInt(data);
-                    tax = tax / 100;
-                    let totalPrice = price * tax + price;
-                    $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
-                    getTotal();
-                },
-                error: function(errors) {
-                    console.log(errors);
-                }
-            });
-        });
+            if (id == '') {
+                let total = 0;
+                let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+                let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
+                let tax = 0;
+                tax = tax / 100;
+                let totalPrice = price * tax + price;
+                total = (price * quantity) * tax;
+                // console.log(format(totalPrice));
+                $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
+                getSubtotal();
+                getDiskonTotal();
+                getPajakTotal();
+                getTotal();
+            } else {
 
-        function getTotal() {
-            let totalArr = [];
-            let tempTotal = document.getElementsByClassName('total_price');
-            for (let i = 0; i < tempTotal.length; i++) {
-                var slipOdd = parseInt(tempTotal[i].value.replaceAll(',', ''));
-                totalArr.push(Number(slipOdd));
-            }
-
-            let sum = 0;
-            for (let i = 0; i < totalArr.length; i++) {
-                sum += totalArr[i];
-            }
-            $('.grand_total').text(format(sum));
-            $('.terbilang').val(terbilang(sum));
-
-        }
-
-        function terbilang(bilangan) {
-            bilangan = String(bilangan);
-            let angka = new Array('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
-            let kata = new Array('', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan');
-            let tingkat = new Array('', 'Ribu', 'Juta', 'Milyar', 'Triliun');
-
-            let panjang_bilangan = bilangan.length;
-            let kalimat, subkalimat , kata1 , kata2 , kata3 = "";
-            let i , j = 0;
-
-            /* pengujian panjang bilangan */
-            if (panjang_bilangan > 15) {
-                kalimat = "Diluar Batas";
-                return kalimat;
-            }
-
-            /* mengambil angka-angka yang ada dalam bilangan, dimasukkan ke dalam array */
-            for (i = 1; i <= panjang_bilangan; i++) {
-                angka[i] = bilangan.substr(-(i), 1);
-            }
-
-            i = 1;
-            j = 0;
-            kalimat = "";
-
-            /* mulai proses iterasi terhadap array angka */
-            while (i <= panjang_bilangan) {
-
-                subkalimat = "";
-                kata1 = "";
-                kata2 = "";
-                kata3 = "";
-
-                /* untuk Ratusan */
-                if (angka[i + 2] != "0") {
-                    if (angka[i + 2] == "1") {
-                        kata1 = "Seratus";
-                    } else {
-                        kata1 = kata[angka[i + 2]] + " Ratus";
-                    }
-                }
-
-                /* untuk Puluhan atau Belasan */
-                if (angka[i + 1] != "0") {
-                    if (angka[i + 1] == "1") {
-                        if (angka[i] == "0") {
-                            kata2 = "Sepuluh";
-                        } else if (angka[i] == "1") {
-                            kata2 = "Sebelas";
+                $.ajax({
+                    // url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
+                    url: "{{url('api/tax/get-paper')}}/" + id,
+                    type: "get",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(response) {
+                        let data = response.data.value;
+                        let exlusice = response.data.exclusive;
+                        console.log(response.data);
+                        let total = 0;
+                        let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+                        let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
+                        let tax = parseInt(data);
+                        tax = tax / 100;
+                        let totalPrice = price * tax + price;
+                        total = (price * quantity) * tax;
+                        // console.log(format(totalPrice));
+                        if (exlusice == 0) {
+                            $(`.total_pajak:eq(` + index + `)`).val(0);
+                            getSubtotal();
+                            getDiskonTotal();
+                            getPajakTotal();
+                            getTotal();
                         } else {
-                            kata2 = kata[angka[i]] + " Belas";
+                            $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
+                            getSubtotal();
+                            getDiskonTotal();
+                            getPajakTotal();
+                            getTotal();
                         }
-                    } else {
-                        kata2 = kata[angka[i + 1]] + " Puluh";
+
+                    },
+                    error: function(errors) {
+                        console.log(errors);
                     }
-                }
-
-                /* untuk Satuan */
-                if (angka[i] != "0") {
-                    if (angka[i + 1] != "1") {
-                        kata3 = kata[angka[i]];
-                    }
-                }
-
-                /* pengujian angka apakah tidak nol semua, lalu ditambahkan tingkat */
-                if ((angka[i] != "0") || (angka[i + 1] != "0") || (angka[i + 2] != "0")) {
-                    subkalimat = kata1 + " " + kata2 + " " + kata3 + " " + tingkat[j] + " ";
-                }
-
-                /* gabungkan variabe sub kalimat (untuk Satu blok 3 angka) ke variabel kalimat */
-                kalimat = subkalimat + kalimat;
-                i = i + 3;
-                j = j + 1;
-
+                });
             }
-
-            /* mengganti Satu Ribu jadi Seribu jika diperlukan */
-            if ((angka[5] == "0") && (angka[6] == "0")) {
-                kalimat = kalimat.replace("Satu Ribu", "Seribu");
-            }
-
-            return (kalimat.trim().replace(/\s{2,}/g, ' ')) + " Rupiah";
-        }
-
-        const rupiah = (number) => {
-            return new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR"
-            }).format(number);
-        }
+        });
 
         var saveInvoice = $('.create-invoice');
 
@@ -738,7 +892,6 @@ $configData = Helper::appClasses();
                     } else {
                         // Submit your form
                         event.preventDefault();
-                        let fileTtd = ttdFile.dataURL;
                         let tenant = $("#tenant").val();
                         let noInvoice = $("#invoice_number").val();
                         let tglInvoice = $("#invoice_date").val();
@@ -758,18 +911,22 @@ $configData = Helper::appClasses();
                         $('.row-input').each(function(index) {
                             var input_name = $(this).attr('name');
                             var input_value = $(this).val();
-                            var input_index = Math.floor(index / 5); // Membagi setiap 5 input menjadi satu objek pada array
-                            if (index % 5 == 0) {
+                            var input_index = Math.floor(index / 7); // Membagi setiap 5 input menjadi satu objek pada array
+                            if (index % 7 == 0) {
                                 detail[input_index] = {
                                     item: input_value
                                 };
-                            } else if (index % 5 == 1) {
+                            } else if (index % 7 == 1) {
                                 detail[input_index].description = input_value;
-                            } else if (index % 5 == 2) {
+                            } else if (index % 7 == 2) {
+                                detail[input_index].quantity = parseInt(input_value);
+                            } else if (index % 7 == 3) {
                                 detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
-                            } else if (index % 5 == 3) {
-                                detail[input_index].tax_id = parseInt(input_value);
-                            } else if (index % 5 == 4) {
+                            } else if (index % 7 == 4) {
+                                detail[input_index].discount = parseInt(input_value);
+                            } else if (index % 7 == 5) {
+                                detail[input_index].tax_id = input_value;
+                            } else if (index % 7 == 6) {
                                 detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
                             }
                         });
@@ -784,10 +941,16 @@ $configData = Helper::appClasses();
 
                         datas.details = detail;
                         datas.tenant_id = parseInt(tenant);
-                        datas.bank_id = parseInt(bank);
-                        if(account.level.id == '1'){
+                        datas.status = "Terbuat";
+                        datas.invoice_due_date = tglJatuhTempo;
+                        datas.invoice_date = tglInvoice;
+                        datas.grand_total = parseInt(grandTotal);
+                        datas.notes = note.getData();
+                        datas.term_and_condition = term_and_conditions.getData();
+
+                        if (account.level.id == '1') {
                             datas.status = "Disetujui BM";
-                        }else{
+                        } else {
                             datas.status = "Terbuat";
                         }
                         datas.contract_date = tglKontrak
@@ -796,11 +959,11 @@ $configData = Helper::appClasses();
                         datas.addendum_date = tglAddendum;
                         datas.invoice_date = tglInvoice;
                         datas.grand_total = parseInt(grandTotal);
-                        datas.materai_image = fileTtd;
                         delete datas['undefined'];
-                        
+                        console.log(datas);
+
                         $.ajax({
-                            url: "{{ env('BASE_URL_API')}}" +'/api/invoice/'+ id,
+                            url: "{{ env('BASE_URL_API')}}" + '/api/invoice/' + id,
                             type: "PATCH",
                             data: JSON.stringify(datas),
                             contentType: "application/json; charset=utf-8",
@@ -861,35 +1024,40 @@ $configData = Helper::appClasses();
             let noAddendum = $("#addendum_number").val();
             let tglAddendum = $("#addendum_date").val();
             let terbilang = $("#grand_total_spelled").val();
-            let grandTotal = parseInt($(".grand_total").text().replaceAll(',', ''));
             let tglJatuhTempo = $("#invoice_due_date").val();
             let syaratDanKententuan = $("#term_and_conditions").val();
             let bank = $("#bank").val();
             let tglTtd = $("#materai_date").val();
             let nameTtd = $("#materai_name").val();
-            let fileTtd = ttdFile;
+            let grandTotal = parseInt($(".grand_total").text().replaceAll(',', ''));
+            let sub_total = parseInt($(".sub_total").text().replaceAll(',', ''));
+            let total_diskon = parseInt($(".total_diskon").text().replaceAll(',', ''));
+            let total_tax = parseInt($(".total_tax").text().replaceAll(',', ''));
 
 
             var detail = [];
             $('.row-input').each(function(index) {
                 var input_name = $(this).attr('name');
                 var input_value = $(this).val();
-                var input_index = Math.floor(index / 5); // Membagi setiap 5 input menjadi satu objek pada array
-                if (index % 5 == 0) {
+                var input_index = Math.floor(index / 7); // Membagi setiap 5 input menjadi satu objek pada array
+                if (index % 7 == 0) {
                     detail[input_index] = {
                         item: input_value
                     };
-                } else if (index % 5 == 1) {
+                } else if (index % 7 == 1) {
                     detail[input_index].description = input_value;
-                } else if (index % 5 == 2) {
+                } else if (index % 7 == 2) {
+                    detail[input_index].quantity = parseInt(input_value);
+                } else if (index % 7 == 3) {
                     detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
-                } else if (index % 5 == 3) {
-                    detail[input_index].tax_id = parseInt(input_value);
-                } else if (index % 5 == 4) {
+                } else if (index % 7 == 4) {
+                    detail[input_index].discount = parseInt(input_value);
+                } else if (index % 7 == 5) {
+                    detail[input_index].tax_id = input_value;
+                } else if (index % 7 == 6) {
                     detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
                 }
             });
-
             let datas = {};
             $('.create-invoice').find('.form-control').each(function() {
                 var inputId = $(this).attr('id');
@@ -899,15 +1067,15 @@ $configData = Helper::appClasses();
 
             datas.details = detail;
             datas.tenant_id = parseInt(tenant);
-            datas.bank_id = parseInt(bank);
-            datas.status = 'Terbuat';
-            datas.contract_date = tglKontrak
-            datas.opening_paragraph = "Bapak/Ibu Qwerty";
+            datas.status = "Terbuat";
             datas.invoice_due_date = tglJatuhTempo;
-            datas.addendum_date = tglAddendum;
             datas.invoice_date = tglInvoice;
-            datas.grand_total = grandTotal;
-            datas.materai_image = fileTtd;
+            datas.grand_total = parseInt(grandTotal);
+            datas.sub_total = parseInt(sub_total);
+            datas.total_diskon = parseInt(total_diskon);
+            datas.total_tax = parseInt(total_tax);
+            datas.term_and_condition = term_and_conditions.getData();
+            datas.notes = note.getData();
             localStorage.setItem("edit-invoice", JSON.stringify(datas));
             window.location.href = `/invoice/preview-invoice-edit/${id}`
         });
@@ -919,6 +1087,155 @@ $configData = Helper::appClasses();
         });
     });
 
+    function getSubtotal() {
+        let totalArr = [];
+        let tempTotal = document.getElementsByClassName('total_price');
+        for (let i = 0; i < tempTotal.length; i++) {
+            var slipOdd = parseInt(tempTotal[i].value.replaceAll(',', ''));
+            totalArr.push(Number(slipOdd));
+        }
+
+        let sum = 0;
+        for (let i = 0; i < totalArr.length; i++) {
+            sum += totalArr[i];
+        }
+        $('.sub_total').text(format(sum));
+    }
+
+    function getDiskonTotal() {
+        let totalArr = [];
+        let tempTotal = document.getElementsByClassName('total_subdiskon');
+        for (let i = 0; i < tempTotal.length; i++) {
+            var slipOdd = parseInt(tempTotal[i].value.replaceAll(',', ''));
+            totalArr.push(Number(slipOdd));
+        }
+
+        let sum = 0;
+        for (let i = 0; i < totalArr.length; i++) {
+            sum += totalArr[i];
+            console.log(sum);
+        }
+        $('.total_diskon').text(format(sum));
+    }
+
+    function getPajakTotal() {
+        let totalArr = [];
+        let tempTotal = document.getElementsByClassName('total_pajak');
+        for (let i = 0; i < tempTotal.length; i++) {
+            var slipOdd = parseInt(tempTotal[i].value.replaceAll(',', ''));
+            totalArr.push(Number(slipOdd));
+        }
+
+        let sum = 0;
+        for (let i = 0; i < totalArr.length; i++) {
+            sum += totalArr[i];
+            console.log(sum);
+        }
+        $('.total_tax').text(format(sum));
+    }
+
+    function getTotal() {
+        let subtotal = parseInt($('.sub_total').text().replaceAll(',', ''));
+        let diskon = parseInt($('.total_diskon').text().replaceAll(',', ''));
+        let tax = parseInt($('.total_tax').text().replaceAll(',', ''));
+        console.log(tax);
+        let total = subtotal - diskon + tax;
+        console.log(diskon);
+        $('.grand_total').text(format(total));
+        $('.terbilang').val(terbilang(total));
+    }
+
+    function terbilang(bilangan) {
+        bilangan = String(bilangan);
+        let angka = new Array('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+        let kata = new Array('', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan');
+        let tingkat = new Array('', 'Ribu', 'Juta', 'Milyar', 'Triliun');
+
+        let panjang_bilangan = bilangan.length;
+        let kalimat, subkalimat, kata1, kata2, kata3 = "";
+        let i, j = 0;
+
+        /* pengujian panjang bilangan */
+        if (panjang_bilangan > 15) {
+            kalimat = "Diluar Batas";
+            return kalimat;
+        }
+
+        /* mengambil angka-angka yang ada dalam bilangan, dimasukkan ke dalam array */
+        for (i = 1; i <= panjang_bilangan; i++) {
+            angka[i] = bilangan.substr(-(i), 1);
+        }
+
+        i = 1;
+        j = 0;
+        kalimat = "";
+
+        /* mulai proses iterasi terhadap array angka */
+        while (i <= panjang_bilangan) {
+
+            subkalimat = "";
+            kata1 = "";
+            kata2 = "";
+            kata3 = "";
+
+            /* untuk Ratusan */
+            if (angka[i + 2] != "0") {
+                if (angka[i + 2] == "1") {
+                    kata1 = "Seratus";
+                } else {
+                    kata1 = kata[angka[i + 2]] + " Ratus";
+                }
+            }
+
+            /* untuk Puluhan atau Belasan */
+            if (angka[i + 1] != "0") {
+                if (angka[i + 1] == "1") {
+                    if (angka[i] == "0") {
+                        kata2 = "Sepuluh";
+                    } else if (angka[i] == "1") {
+                        kata2 = "Sebelas";
+                    } else {
+                        kata2 = kata[angka[i]] + " Belas";
+                    }
+                } else {
+                    kata2 = kata[angka[i + 1]] + " Puluh";
+                }
+            }
+
+            /* untuk Satuan */
+            if (angka[i] != "0") {
+                if (angka[i + 1] != "1") {
+                    kata3 = kata[angka[i]];
+                }
+            }
+
+            /* pengujian angka apakah tidak nol semua, lalu ditambahkan tingkat */
+            if ((angka[i] != "0") || (angka[i + 1] != "0") || (angka[i + 2] != "0")) {
+                subkalimat = kata1 + " " + kata2 + " " + kata3 + " " + tingkat[j] + " ";
+            }
+
+            /* gabungkan variabe sub kalimat (untuk Satu blok 3 angka) ke variabel kalimat */
+            kalimat = subkalimat + kalimat;
+            i = i + 3;
+            j = j + 1;
+
+        }
+
+        /* mengganti Satu Ribu jadi Seribu jika diperlukan */
+        if ((angka[5] == "0") && (angka[6] == "0")) {
+            kalimat = kalimat.replace("Satu Ribu", "Seribu");
+        }
+
+        return (kalimat.trim().replace(/\s{2,}/g, ' ')) + " Rupiah";
+    }
+
+    const rupiah = (number) => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR"
+        }).format(number);
+    }
+
     function getDataInvoice(id) {
         Swal.fire({
             title: '<h2>Loading...</h2>',
@@ -928,69 +1245,72 @@ $configData = Helper::appClasses();
             allowEscapeKey: false
         });
         $.ajax({
-            url: "{{ env('BASE_URL_API')}}" +'/api/invoice/'+ id,
+            url: "{{ env('BASE_URL_API')}}" + '/api/invoice/' + id,
             type: "GET",
             dataType: "json",
             success: function(res) {
                 let data = res.data;
-                const myDropzone = new Dropzone('#dropzone-basic', {
-                    parallelUploads: 1,
-                    maxFilesize: 3,
-                    addRemoveLinks: true,
-                    maxFiles: 1,
-                    acceptedFiles: ".jpeg,.jpg,.png,.gif",
-                    autoQueue: false,
-                    url: "../uploads/logo",
-                    thumbnailWidth: 250,
-                    thumbnailHeight: 250,
-                    init: function() {
-                        if (dataLocal) {
-                            let mockFile = {
-                                dataURL: dataLocal.materai_image
-                            };
-                            if (dataLocal.materai_image) {
-                                this.options.addedfile.call(this, mockFile);
-                                this.options.thumbnail.call(this, mockFile, dataLocal.materai_image);
-                                // Optional: Handle the removal of the file
-                                $('.dz-image').last().find('img').attr('width', '100%');
+                // const myDropzone = new Dropzone('#dropzone-basic', {
+                //     parallelUploads: 1,
+                //     maxFilesize: 3,
+                //     addRemoveLinks: true,
+                //     maxFiles: 1,
+                //     acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                //     autoQueue: false,
+                //     url: "../uploads/logo",
+                //     thumbnailWidth: 250,
+                //     thumbnailHeight: 250,
+                //     init: function() {
+                //         if (dataLocal) {
+                //             let mockFile = {
+                //                 dataURL: dataLocal.materai_image
+                //             };
+                //             if (dataLocal.materai_image) {
+                //                 this.options.addedfile.call(this, mockFile);
+                //                 this.options.thumbnail.call(this, mockFile, dataLocal.materai_image);
+                //                 // Optional: Handle the removal of the file
+                //                 $('.dz-image').last().find('img').attr('width', '100%');
 
-                                mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-                                    // Handle removal logic here
-                                });
-                            }
-                        } else {
-                            let mockFile = {
-                                dataURL: data.materai_image
-                            };
+                //                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+                //                     // Handle removal logic here
+                //                 });
+                //             }
+                //         } else {
+                //             let mockFile = {
+                //                 dataURL: data.materai_image
+                //             };
 
-                            ttdFile = mockFile
-                            if (data.materai_image) {
-                                this.options.addedfile.call(this, mockFile);
-                                this.options.thumbnail.call(this, mockFile, data.materai_image);
+                //             ttdFile = mockFile
+                //             if (data.materai_image) {
+                //                 this.options.addedfile.call(this, mockFile);
+                //                 this.options.thumbnail.call(this, mockFile, data.materai_image);
 
-                                $('.dz-image').last().find('img').attr('width', '100%');
+                //                 $('.dz-image').last().find('img').attr('width', '100%');
 
-                                // Optional: Handle the removal of the file
-                                mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-                                    // Handle removal logic here
-                                });
-                            }
+                //                 // Optional: Handle the removal of the file
+                //                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
+                //                     // Handle removal logic here
+                //                 });
+                //             }
 
-                        }
-                        this.on('addedfile', function(file) {
-                            $('.dz-image').last().find('img').attr('width', '100%');
-                            while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
-                            ttdFile = file;
-                        })
-                    }
-                });
+                //         }
+                //         this.on('addedfile', function(file) {
+                //             $('.dz-image').last().find('img').attr('width', '100%');
+                //             while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
+                //             ttdFile = file;
+                //         })
+                //     }
+                // });
 
-                if(data.status !='Terbuat'){
+                if (data.status != 'Terbuat') {
                     $('.form-control').attr('readonly');
                 }
 
-                $("#tenant").empty().append("<option value="+data.tenant.id+">"+data.tenant.name+"</option>").val(data.tenant.id).trigger("change");
-                $("#bank").empty().append("<option value="+data.bank.id+">"+data.bank.name+"</option>").val(data.bank.id).trigger("change");
+                console.log(data);
+                var setTerm = data.term_and_condition ? data.term_and_condition : '';
+
+
+                $("#tenant").empty().append("<option value=" + data.tenant.id + ">" + data.tenant.name + "</option>").val(data.tenant.id).trigger("change");
                 $("#invoice_number").val(data.invoice_number);
                 $("#invoice_date").val(data.invoice_date);
                 $("#contract_number").val(data.contract_number);
@@ -1003,15 +1323,37 @@ $configData = Helper::appClasses();
                 $("#term_and_conditions").val(data.term_and_conditions);
                 $("#materai_date").val(data.materai_date);
                 $("#materai_name").val(data.materai_name);
+                ClassicEditor.create(document.querySelector('#term_and_conditions'), {
+                        minHeight: '300px'
+                    })
+                    .then(editor => {
+                        editor.setData(setTerm);
+                        term_and_conditions = editor;
+                    }).catch(error => {
+                        console.error(error);
+                    });
+
+                var setNotes = data.notes ? data.notes : '';
+                console.log(setNotes);
+                ClassicEditor.create(document.querySelector('#notes'), {
+                        minHeight: '300px'
+                    })
+                    .then(editor => {
+                        editor.setData(setNotes);
+                        note = editor;
+                    }).catch(error => {
+                        console.error(error);
+                    });
+
                 getDetails(data.invoice_details);
-                if(data.status != 'Disetujui BM'){
-                    $('.kirim-invoice').attr('style','display:none !important');
-                    $('.add-payment').attr('style','display:none !important');
+                if (data.status != 'Disetujui BM') {
+                    $('.kirim-invoice').attr('style', 'display:none !important');
+                    $('.add-payment').attr('style', 'display:none !important');
                 }
-                if(account.level.id != '1'){
-                    $('.data-materai').attr('style','display:none !important');
+                if (account.level.id != '1') {
+                    $('.data-materai').attr('style', 'display:none !important');
                 }
-                if(account.level.id == '1'){
+                if (account.level.id == '1') {
                     $('.btn-remove-mg').addClass('d-none');
                     $('.btn-add-row-mg').addClass('d-none');
                     $(".btn-update span").html('<i class="ti ti-check ti-xs me-2"></i>Disetujui Kepala BM');
@@ -1032,69 +1374,99 @@ $configData = Helper::appClasses();
         let temp = '';
 
         if (details) {
+            console.log(details);
             for (let i = 0; i < details.length; i++) {
                 temp = `             
-                <div class="row-mg">
-                    <div class="row d-flex align-items-end justify-content-between mb-3">
-                        <div class="col-md-5">
-                            <div class="row row d-flex justify-content-between px-1">
-                                <div class="col-md-6 px-1-custom">
-                                    <label for="note" class="form-label fw-medium">Uraian</label>
-                                    <textarea name="uraian" class="form-control row-input" placeholder="" name="item[]" required />` + details[i].item + `</textarea>
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
-                                <div class="col-md-6 px-1-custom">
-                                    <label for="note" class="form-label fw-medium">Keterangan</label>
-                                    <textarea class="form-control row-input" placeholder="" name="description[]" required>` + details[i].description + `</textarea>
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2 px-1-custom">
-                            <label for="note" class="form-label fw-medium">Dasar Pengenaan Pajak</label>
-                            <input type="text" class="form-control row-input price" placeholder="" name="price[]" required value="` + format(details[i].price) + `"/>
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                        <div class="col-md-2 px-1-custom">
-                            <label for="note" class="form-label fw-medium">Pajak</label>
-                            <select class="form-control row-input tax" placeholder="" id="tax-${i}" required></select>
-                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                        </div>
-                        <div class="col-md-2 px-1-custom">
-                            <label for="note" class="form-label fw-medium">Total (Rp.)</label>
-                            <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled value="` + format(details[i].total_price) + `"/>
-                        </div>
-                        <div class="col-md-1 px-1-custom">
-                            <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>`;
-                getDetail = getDetail + temp;
+                <tr class="row-mg">
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input" placeholder="Nama Produk" name="item[]" value="${details[i].item}" required style="width: 200px;" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <textarea name="description[]" class="form-control row-input" rows="1" placeholder="Deskripsi Produk" style="width: 200px;">${details[i].description}</textarea>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="number" class="form-control row-input quantity" placeholder="Kuantitas" name="quantity[]"  value="${details[i].quantity}" required style="width: 200px;" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input price" placeholder="Harga" name="price[]" value="${format(details[i].price)}" required style="width: 200px;" />
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="number" class="form-control row-input discount" placeholder="" name="discount[]" style="width: 100px;"  value="${details[i].discount}"/>
+                        <input type="hidden" class="form-control total_subdiskon" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <select name="tax[]" id="tax-${i}" class="form-select row-input tax"></select>
+                        <input type="hidden" class="form-control total_pajak" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled style="width : 200px" value="${details[i].total_price}"/>
+                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                `;
                 $.ajax({
-                    url: "{{ env('BASE_URL_API')}}" +'/api/tax/'+ details[i].tax_id,
+                    url: "{{url('api/tax/get-paper')}}/" + details[i].tax_id,
                     type: "GET",
                     success: function(response) {
-
                         let data = response.data;
                         let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
                         $('#tax-' + i).prepend(tem);
-                        console.log();
+                        data = response.data.value;
+                        let exlusice = response.data.exclusive;
+                        console.log(response.data);
+                        let totalPajak = 0;
+                        let totalDiskon = 0;
+                        let price = parseInt($(`.price:eq(` + i + `)`).val().replaceAll(',', ''));
+                        let quantity = parseInt($(`.quantity:eq(` + i + `)`).val());
+                        let tax = parseInt(data);
+                        let discount = parseInt($(`.discount:eq(` + i + `)`).val());
+                        tax = tax / 100;
+                        let totalPrice = price * tax + price;
+                        totalPajak = (price * quantity) * tax;
+                        let disVal = discount / 100;
+                        let disTotal = (price * quantity) * disVal;
+                        $(`.total_subdiskon:eq(` + i + `)`).val(isNaN(price) ? 0 : format(disTotal));
+                        // console.log(format(totalPrice));
+                        if (exlusice == 0) {
+                            $(`.total_pajak:eq(` + i + `)`).val(0);
+                            getSubtotal();
+                            getDiskonTotal();
+                            getPajakTotal();
+                            getTotal();
+                        } else {
+                            $(`.total_pajak:eq(` + i + `)`).val(isNaN(totalPajak) ? 0 : format(totalPajak));
+                            getSubtotal();
+                            getDiskonTotal();
+                            getPajakTotal();
+                            getTotal();
+                        }
                     },
                     error: function(xhr, status, error) {
                         console.log(error);
                     }
                 });
+                getDetail = getDetail + temp;
             }
             $('#details').prepend(getDetail);
             for (let i = 0; i < details.length; i++) {
                 $("#tax-" + i).select2({
                     width: '100px',
-                    placeholder: 'Select Pajak',
+                    placeholder: 'Pilih Pajak',
                     allowClear: true,
                     ajax: {
-                        url: "{{ env('BASE_URL_API')}}" +'/api/tax/select',
+                        url: "{{url('api/tax/select-paper')}}",
+                        // url: "{{ env('BASE_URL_API')}}" + '/api/tax/select',
                         dataType: 'json',
                         cache: true,
                         data: function(params) {
