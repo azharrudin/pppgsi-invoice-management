@@ -64,10 +64,10 @@ return $hasil_rupiah;
 </head>
 
 <body>
-    <div class="container" id="printContent">
+    <div class="container" id="printContent" style="padding: 0px">
         <header>
             <div class="row">
-                <table class="table" style="width: 120%">
+                <table class="table" style="width: 112%">
                     <tbody>
                         <tr>
                             <td colspan="3" style="width: 45%; height:100px"><img src="{{public_path('assets/img/header-img.jpg')}}" alt="Kop" width="50%"></td>
