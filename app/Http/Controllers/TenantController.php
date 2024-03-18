@@ -85,8 +85,6 @@ class TenantController extends Controller
             if($validateTenant != "") throw new CustomException($validateTenant, 400);
 
             $tenant = Tenant::create($request->all());
-
-            $tenant = Tenant::create($request->all());
             $partner = $this->PaperIdService->createOrUpdatePartner($tenant->id, $tenant->name, $tenant->phone, "", true);
 
             if (isset($partner['data']) && isset($partner['data']['id'])){
