@@ -305,17 +305,6 @@
                         return data;
                     }
                 }, {
-                    class: "text-center",
-                    data: "status",
-                    name: "status",
-                    title: "Status",
-                    render: function(data, type, full, meta) {
-                        if (data == "Active") {
-                            return '<span class="badge  bg-label-success">' + data +
-                                '</span>'
-                        }
-                    }
-                }, {
                     data: null,
                     title: "Tanggapan",
                     render: function(data, type, row) {
@@ -504,8 +493,8 @@
                             type: "PATCH",
                             data: data,
                             success: function(response) {
-                                $('.indicator-progress').show();
-                                $('.indicator-label').hide();
+                                $('.indicator-progress').hide();
+                                $('.indicator-label').show();
 
                                 Swal.fire({
                                     title: 'Berhasil',
