@@ -661,7 +661,7 @@
                 icon: "warning",
                 showCancelButton: true,
                 buttonsStyling: false,
-                confirmButtonText: "Yes, send!",
+                confirmButtonText: "Yes, send",
                 cancelButtonText: "No, cancel",
                 customClass: {
                     confirmButton: "btn fw-bold btn-primary",
