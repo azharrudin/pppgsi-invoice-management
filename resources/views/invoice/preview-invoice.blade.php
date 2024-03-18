@@ -289,10 +289,8 @@ $configData = Helper::appClasses();
         let getDetail = '';
         let tem = '';
         let tax = '';
-        console.log(details.length);
 
         for (let i = 0; i < details.length; i++) {
-            console.log(i);
             $.ajax({
                 // url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
                 url: "{{url('api/tax/get-paper')}}/" + details[i].tax_id,
@@ -301,7 +299,6 @@ $configData = Helper::appClasses();
                 dataType: "json",
                 success: function(response) {
                     tax = response.data.name;
-                    console.log(tax);
                     tem = `<tr>
                         <td class="text-nowrap">` + details[i].item + `</td>
                         <td class="text-nowrap">` + details[i].description + `</td>

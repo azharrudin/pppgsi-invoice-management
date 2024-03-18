@@ -105,7 +105,9 @@ $configData = Helper::appClasses();
             }];
         }
 
+        
         setHeader();
+        localStorage.removeItem('invoice');
 
         function setHeader() {
             Swal.fire({

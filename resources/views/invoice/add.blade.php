@@ -149,7 +149,7 @@ $configData = Helper::appClasses();
                             <div class="col-md-6">
                                 <div class="d-flex justify-content-between">
                                     <div>
-                                        <p>Pajak</p>
+                                        <p>Total Pajak</p>
                                     </div>
                                     <div>
                                         <p class="total_tax">0</p>
@@ -243,7 +243,7 @@ $configData = Helper::appClasses();
                 <div class="card mb-4">
                     <div class="card-body">
                         <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="fa fa-save fa-xs me-2"></i>Simpan</span></button>
-                        <button type="button" id="preview" class="btn btn-success d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-eye ti-xs me-2"></i>Preview</span></button>
+                        {{-- <button type="button" id="preview" class="btn btn-success d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-eye ti-xs me-2"></i>Preview</span></button> --}}
                         <button type="button" id="batal" class="btn btn-secondary d-grid w-100">Kembali</button>
                     </div>
                 </div>
@@ -481,7 +481,7 @@ $configData = Helper::appClasses();
             var temp = `             
             <tr class="row-mg">
                     <td style="vertical-align: bottom">
-                        <input type="text" class="form-control row-input" placeholder="Nama Produk" name="item[]" required style="width: 200px;" />
+                        <input type="text" class="form-control row-input"  placeholder="Nama Produk" name="item[]" required style="width: 200px;" />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
@@ -752,9 +752,8 @@ $configData = Helper::appClasses();
             let index = $('.price').index(this);
             let total = 0;
             let discount = $(this).val();
-            let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
-            let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
-            console.log(discount);
+            let price = $(`.price:eq(` + index + `)`).val().replaceAll(',', '');
+            let quantity = $(`.quantity:eq(` + index + `)`).val();
             if(discount == ''){
                 discount = 0;
             }
@@ -845,12 +844,17 @@ $configData = Helper::appClasses();
             let totalArr = [];
             let tempTotal = document.getElementsByClassName('total_subdiskon');
             for (let i = 0; i < tempTotal.length; i++) {
-                var slipOdd = parseInt(tempTotal[i].value.replaceAll(',', ''));
+                var slipOdd = tempTotal[i].value.replaceAll(',', '');
+                console.log(slipOdd);
+                if(isNaN(slipOdd)) {
+                    slipOdd = 0;
+                }
                 totalArr.push(Number(slipOdd));
             }
 
             let sum = 0;
             for (let i = 0; i < totalArr.length; i++) {
+                console.log(totalArr[i]);
                 sum += totalArr[i];
             }
             if(isNaN(sum)){
@@ -1407,33 +1411,33 @@ $configData = Helper::appClasses();
             temp = `             
             <tr class="row-mg">
                     <td style="vertical-align: bottom">
-                        <input type="text" class="form-control row-input" placeholder="Nama Produk" name="item[]" required style="width: 200px;" />
+                        <input type="text" class="form-control row-input" data-item="0" id="item-0" placeholder="Nama Produk" name="item[]" required style="width: 200px;" />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
-                        <textarea name="description[]" class="form-control row-input" rows="1" placeholder="Deskripsi Produk" style="width: 200px;"></textarea>
+                        <textarea name="description[]" class="form-control row-input" rows="1" data-description="0" id="description-0" placeholder="Deskripsi Produk" style="width: 200px;"></textarea>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
-                        <input type="number" class="form-control row-input quantity" placeholder="Kuantitas" name="item[]" required style="width: 200px;" />
+                        <input type="number" class="form-control row-input quantity" data-quantity="0" id="quantity-0"  placeholder="Kuantitas" name="item[]" required style="width: 200px;" />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
-                        <input type="text" class="form-control row-input price" placeholder="Harga" name="price[]" required style="width: 200px;" />
+                        <input type="text" class="form-control row-input price" data-price="0" id="price-0" placeholder="Harga" name="price[]" required style="width: 200px;" />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
-                        <input type="number" class="form-control row-input discount" placeholder="" name="discount[]" style="width: 100px;"/>
-                        <input type="hidden" class="form-control total_subdiskon" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <input type="number" class="form-control row-input discount" data-discount="0" id="discount-0" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <input type="hidden" class="form-control total_subdiskon" data-total_subdiskon="0" id="total_subdiskon-0" placeholder="" name="discount[]" style="width: 100px;"/>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
-                        <select name="tax[]" id="tax-0" class="form-select row-input tax"></select>
-                        <input type="hidden" class="form-control total_pajak" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <select name="tax[]" id="tax-0" class="form-select row-input tax" data-tax="0" id="tax-0"></select>
+                        <input type="hidden" class="form-control total_pajak" placeholder="" data-total_pajak="0" id="total_pajak-0" name="discount[]" style="width: 100px;"/>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
-                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled style="width : 200px" />
+                        <input type="text" class="form-control row-input total_price" placeholder="" data-total_price="0" id="total_price-0" name="total_price[]" disabled style="width : 200px" />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">

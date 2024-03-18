@@ -243,7 +243,7 @@ $configData = Helper::appClasses();
                             <span class="d-flex align-items-center justify-content-center text-nowrap d-none"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
                         </button>
                         <button type="submit" id="save" class="btn btn-primary btn-update d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="fa fa-save fa-xs me-2"></i>Simpan</span></button>
-                        <button type="button" id="preview" class="btn btn-success d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-eye ti-xs me-2"></i>Preview</span></button>
+                        {{-- <button type="button" id="preview" class="btn btn-success d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-eye ti-xs me-2"></i>Preview</span></button> --}}
                         <button type="button" id="batal" class="btn btn-secondary d-grid w-100">Kembali</button>
                     </div>
                 </div>
@@ -1098,6 +1098,9 @@ $configData = Helper::appClasses();
         for (let i = 0; i < totalArr.length; i++) {
             sum += totalArr[i];
         }
+        if(isNaN(sum)){
+            sum = 0;
+        }
         $('.sub_total').text(format(sum));
     }
 
@@ -1112,7 +1115,9 @@ $configData = Helper::appClasses();
         let sum = 0;
         for (let i = 0; i < totalArr.length; i++) {
             sum += totalArr[i];
-            console.log(sum);
+        }
+        if(isNaN(sum)){
+            sum = 0;
         }
         $('.total_diskon').text(format(sum));
     }
@@ -1128,7 +1133,9 @@ $configData = Helper::appClasses();
         let sum = 0;
         for (let i = 0; i < totalArr.length; i++) {
             sum += totalArr[i];
-            console.log(sum);
+        }
+        if(isNaN(sum)){
+            sum = 0;
         }
         $('.total_tax').text(format(sum));
     }
@@ -1137,9 +1144,10 @@ $configData = Helper::appClasses();
         let subtotal = parseInt($('.sub_total').text().replaceAll(',', ''));
         let diskon = parseInt($('.total_diskon').text().replaceAll(',', ''));
         let tax = parseInt($('.total_tax').text().replaceAll(',', ''));
-        console.log(tax);
         let total = subtotal - diskon + tax;
-        console.log(diskon);
+        if(isNaN(total)){
+            total = 0;
+        }
         $('.grand_total').text(format(total));
         $('.terbilang').val(terbilang(total));
     }
@@ -1317,7 +1325,6 @@ $configData = Helper::appClasses();
         let temp = '';
 
         if (details) {
-            console.log(details);
             for (let i = 0; i < details.length; i++) {
                 temp = `             
                 <tr class="row-mg">
@@ -1348,7 +1355,7 @@ $configData = Helper::appClasses();
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
-                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled style="width : 200px" value="${details[i].total_price}"/>
+                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled style="width : 200px" value="${details[i].total_price.toLocaleString('en-EN')}"/>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">

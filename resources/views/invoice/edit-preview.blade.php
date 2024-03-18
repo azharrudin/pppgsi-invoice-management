@@ -95,48 +95,23 @@ $configData = Helper::appClasses();
                                 <tbody id="details">
                                 </tbody>
                             </table>
-
-                            <div class="row pb-4">
-                                <div class="col-md-3 px-3">
-                                    <button type="button" class="btn btn-primary waves-effect waves-light w-px-150 btn-add-row-mg">Tambah
-                                        Baris</button>
-                                </div>
-                            </div>
                         </div>
 
-                        <div class="row m-sm-2 m-0 ">
+                        <div class="row mt-5">
                             <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-3">
-                                    <label for="note" class="form-label me-2">Syarat & Ketentuan</label>
+                                    <label for="note" class="form-label me-2">Catatan</label>
                                     <br>
-                                    <div class="form-label" id="term_and_conditions">
+                                    <div class="form-label" id="note">
                                     </div>
-
-                                </div>
-                                <div class="mb-3">
-                                    <label for="note" class="form-label me-2">Transfer Bank :</label>
-                                    <select name="bank" id="bank" name="bank" class="form-select w-px-250 item-details mb-3" hidden>
-                                    </select>
-                                    <br>
-                                    <div class="form-label">
-                                        <span class="fw-bold">PPPGSI</span><br>
-                                        <span class="fw-bold" id="bank-name"></span><br>
-                                    </div>
-
-
                                 </div>
                             </div>
                             <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
                                 <div class="mb-3">
-                                    <label for="note" class="form-label">Tanda Tangan & Meterai
-                                        (Opsional)</label>
-                                    <p class="form-label" id="materai_date"></p>
-                                </div>
-                                <div class="mb-3">
-                                    <div id="materai-image"></div>
-                                </div>
-                                <div class="mb-3">
-                                    <p class="form-label" id="materai_name"></p>
+                                    <label for="note" class="form-label">Syarat dan ketentuan</label>
+                                    <br>
+                                    <div class="form-label" id="term_and_conditions">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -206,7 +181,8 @@ $configData = Helper::appClasses();
         $("#grand_total_spelled").text(data.grand_total_spelled);
         $("#grand_total").text('Rp. ' + format(data.grand_total));
         $("#invoice_due_date").text(data.invoice_due_date);
-        $("#term_and_conditions").text(data.term_and_conditions);
+        $("#term_and_conditions").html(data.term_and_condition);
+        $("#note").html(data.notes);
         $("#materai_date").text(data.materai_date);
         $("#materai_name").text(data.materai_name);
 

@@ -47,26 +47,6 @@ $configData = Helper::appClasses();
                                         <input type="text" class="form-control date" name="invoice_date" id="invoice_date" placeholder="" readonly />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="note" class="form-label fw-medium">No. Kontrak</label>
-                                        <input type="text" class="form-control" name="contract_number" id="contract_number" placeholder="" readonly />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control  date" name="contract_date" id="contract_date" placeholder="" readonly />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3 ">
-                                        <label for="note" class="form-label fw-medium">No. Addendum</label>
-                                        <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" readonly />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="note" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control date" id="addendum_date" name="addendum_date" placeholder="" readonly />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -76,17 +56,45 @@ $configData = Helper::appClasses();
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Uraian</th>
-                                            <th width="40%">Keterangan</th>
-                                            <th>Dasar Pengenaan Pajak</th>
+                                            <th>Produk</th>
+                                            <th>Deskripsi</th>
+                                            <th>Kuantitas</th>
+                                            <th>Harga</th>
+                                            <th>Diskon(%)</th>
                                             <th>Pajak</th>
-                                            <th>Total (Rp.).</th>
+                                            <th>Jumlah</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0" id="details">
-
                                         <tr>
-                                            <td colspan="2"></td>
+                                            <td colspan="4"></td>
+                                            <td colspan="1">
+                                                <p class="fw-bold">Subtotal:</p>
+                                            </td>
+                                            <td colspan="2" style="text-align: right;">
+                                                <p id="sub_total" class="fw-bold"></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td colspan="1">
+                                                <p class="fw-bold">Total Diskon:</p>
+                                            </td>
+                                            <td colspan="2" style="text-align: right;">
+                                                <p id="discount" class="fw-bold"></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td colspan="1">
+                                                <p class="fw-bold">Total Pajak:</p>
+                                            </td>
+                                            <td colspan="2" style="text-align: right;">
+                                                <p id="tax" class="fw-bold"></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
                                             <td colspan="1">
                                                 <p class="fw-bold">Total:</p>
                                             </td>
@@ -95,15 +103,15 @@ $configData = Helper::appClasses();
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5">Terbilang</td>
+                                            <td colspan="7">Terbilang</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5" id="grand_total_spelled" style="font-weight:bold; font-size:14px"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="5">
+                                            <td colspan="7">
                                                 <span>Jatuh Tempo Tanggal : </span> <span id="invoice_due_date" class="fw-bold"></span>
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" id="grand_total_spelled" style="font-weight:bold; font-size:14px"></td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
@@ -116,24 +124,19 @@ $configData = Helper::appClasses();
                         <div class="row m-sm-2 m-0 ">
                             <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-3">
-                                    <label for="note" class="form-label me-2">Syarat & Ketentuan</label>
+                                    <label for="note" class="form-label me-2">Catatan</label>
                                     <br>
-                                    <div class="form-label fw-bold" id="term_and_conditions">
+                                    <div class="form-label fw-bold" id="notes">
                                     </div>
 
                                 </div>
+                            </div>
+                            <div class="col-md-6 mb-md-0 mb-3">
                                 <div class="mb-3">
-                                    <label for="note" class="form-label me-2">Transfer Bank :</label>
-                                    <select name="bank" id="bank" name="bank" class="form-select w-px-250 item-details mb-3" hidden>
-                                    </select>
+                                    <label for="note" class="form-label me-2">Syarat dan Ketentuan</label>
                                     <br>
-                                    <div class="form-label">
-                                        <span class="fw-bold" id="account-name"></span><br>
-                                        <span class="fw-bold" id="bank-name"></span><br>
-                                        <span class="fw-bold" id="branch-name"></span><br>
-                                        <span class="fw-bold" id="account-number"></span><br>
+                                    <div class="form-label fw-bold" id="term_and_conditions">
                                     </div>
-
 
                                 </div>
                             </div>
@@ -353,6 +356,7 @@ $configData = Helper::appClasses();
             },
             success: function(res) {
                 let data = res.data;
+                console.log(data);
                 id = data.id;
                 getTenant(data.tenant_id)
                 getBank(data.bank_id)
@@ -365,8 +369,9 @@ $configData = Helper::appClasses();
                 $("#addendum_date").val(data.addendum_date);
                 $("#grand_total_spelled").text(data.grand_total_spelled);
                 $("#grand_total").text('Rp. '+format(data.grand_total));
-                $("#invoice_due_date").text(data.invoice_due_date);
-                $("#term_and_conditions").text(data.term_and_conditions);
+                $("#invoice_due_date").text(moment(data.invoice_due_date).format('D MMMM YYYY'));
+                $("#term_and_conditions").html(data.term_and_conditions);
+                $("#notes").html(data.notes);
                 if (data.materai_name != null || account.level.id == 1) {
                     $('.data-material').removeClass('d-none');
                 }
@@ -391,7 +396,6 @@ $configData = Helper::appClasses();
                 if (account.level.id == '2' && data.status == 'Terbuat') {
                     $('.disetujui').removeClass('d-none');
                 }
-                console.log(data.status);
                 if ((account.level.id == '10' && data.status == 'Terbuat') || (data.status == 'Disetujui KA' && account.level.id == '1')) {
                     console.log('aa');
                     $('.edit').removeClass('d-none');
@@ -456,22 +460,53 @@ $configData = Helper::appClasses();
         });
     }
 
+    function getTax(id) {
+        let dataTax;
+        $.ajax({
+            url: "{{url('api/tax/get-paper')}}/" + id,
+            type: "get",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async:false,
+            success: function(response) {
+                dataTax = response.data;
+            },
+            error: function(errors) {
+                console.log(errors);
+            }
+        });
+        return dataTax;
+    }
+
     function getDetails(detailItems) {
         let details = detailItems;
         let getDetail = '';
         let tem = '';
+        let subtotal = 0;
+        let totalTax = 0;
+        let totalDiskon = 0;
         for (let i = 0; i < details.length; i++) {
+            let tax = getTax(details[i].tax_id);
             tem = `<tr>
                         <td>` + details[i].item + `</td>
                         <td>` + details[i].description + `</td>
+                        <td>` + details[i].quantity + `</td>
                         <td>` + format(details[i].price) + `</td>
-                        <td>` + format(details[i].tax.name) + `</td>
+                        <td>` + details[i].discount + `</td>
+                        <td>` +  tax.name + `</td>
                         <td style="text-align:right;">Rp. ` + format(details[i].total_price) + `</td>
                     </tr>
             `;
+            let countTax = tax.value / 100;
+            let discount = details[i].discount / 100;
+            totalTax += (details[i].quantity * details[i].price) * countTax;
+            totalDiskon += (details[i].quantity * details[i].price) * discount;
+            subtotal += details[i].total_price;
             getDetail = getDetail + tem;
         }
-
+        $('#tax').text('Rp. '+format(totalTax));
+        $('#discount').text('Rp. '+format(totalDiskon));
+        $('#sub_total').text('Rp. '+format(subtotal));
         $('#details').prepend(getDetail);
     }
 </script>
