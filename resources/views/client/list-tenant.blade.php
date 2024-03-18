@@ -409,8 +409,8 @@
                             type: "PATCH",
                             data: data,
                             success: function(response) {
-                                $('.indicator-progress').show();
-                                $('.indicator-label').hide();
+                                $('.indicator-progress').hide();
+                                $('.indicator-label').show();
 
                                 Swal.fire({
                                     title: 'Berhasil',
@@ -422,7 +422,7 @@
                                     buttonsStyling: false
                                 })
 
-                                $('#modal_tenant_cancel').click();
+                                $('#edit-tenant-data').modal('close');
                                 $('#edit-tenant')[0].reset();
                                 $(".list-tenant-table").DataTable().ajax.reload();
                             },
