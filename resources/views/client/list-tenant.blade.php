@@ -160,7 +160,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal"
-                            id="modal_tenant_cancel">Close</button>
+                            id="modal_tenant_close">Close</button>
                         <button type="submit" class="btn btn-primary save-tenant">
                             <span class="indicator-label">Simpan</span>
                             <span class="indicator-progress">
@@ -422,7 +422,7 @@
                                     buttonsStyling: false
                                 })
 
-                                $('#edit-tenant-data').hide();
+                                $('#modal_tenant_close').click();
                                 $('#edit-tenant')[0].reset();
                                 $(".list-tenant-table").DataTable().ajax.reload();
                             },
