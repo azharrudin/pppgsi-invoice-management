@@ -49,7 +49,7 @@
     </div>
 
     {{-- Card Add --}}
-    <div class="modal fade" id="create-tenant-data" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal fade" id="create-tenant-data" tabindex="-1">
         <div class="modal-dialog">
             <form class="modal-content create-tenant" id="create-tenant" novalidate>
                 <div class="modal-header">
@@ -111,7 +111,7 @@
     </div>
 
     {{-- Card Edit --}}
-    <div class="modal fade" id="edit-tenant-data" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal fade" id="edit-tenant-data" tabindex="-1">
         <div class="modal-dialog">
             <form class="modal-content edit-tenant" id="edit-tenant" novalidate>
                 <input type="hidden" id="edit_id">
@@ -156,12 +156,6 @@
                                     placeholder="Masukan Lantai" required>
                                 <div class="invalid-feedback"> Please enter your floor. </div>
                             </div>
-                            <div class="col mb-3">
-                                <label for="nameBackdrop" class="form-label">Status</label>
-                                <select id="edit_status" class="form-select select2 item-details mb-3">
-                                </select>
-                                <div class="invalid-feedback"> Please enter your status. </div>
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -174,69 +168,6 @@
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                             </span>
                         </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    {{-- Card Preview --}}
-    <div class="modal fade" id="preview-tenant-data" data-bs-backdrop="static" tabindex="-1">
-        <div class="modal-dialog">
-            <form class="modal-content edit-tenant" id="edit-tenant" novalidate>
-                <input type="hidden" id="preview_id">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="backDropModalTitle">Preview Tenant</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="modal-body previewTenant">
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label for="nameBackdrop" class="form-label">Nama PIC</label>
-                                <input type="text" id="preview_name" name="name" class="form-control"
-                                    placeholder="Masukan Nama Tenant" required readonly>
-                                <div class="invalid-feedback"> Please enter your name. </div>
-                            </div>
-                            <div class="col mb-3">
-                                <label for="nameBackdrop" class="form-label">Email</label>
-                                <input type="email" id="preview_email" name="email" class="form-control"
-                                    placeholder="Masukan Email" required readonly>
-                                <div class="invalid-feedback"> Please enter your Email. </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label for="nameBackdrop" class="form-label">Telepon</label>
-                                <input type="text" id="preview_phone" name="phone" class="form-control"
-                                    placeholder="Masukan Telepon" required readonly>
-                                <div class="invalid-feedback"> Please enter your phone. </div>
-                            </div>
-                            <div class="col mb-3">
-                                <label for="nameBackdrop" class="form-label">Company</label>
-                                <input type="text" id="preview_company" name="company" class="form-control"
-                                    placeholder="Masukan Company" required readonly>
-                                <div class="invalid-feedback"> Please enter your Company. </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label for="nameBackdrop" class="form-label">Floor</label>
-                                <input type="text" id="preview_floor" name="floor" class="form-control"
-                                    placeholder="Masukan Lantai" required readonly>
-                                <div class="invalid-feedback"> Please enter your floor. </div>
-                            </div>
-                            <div class="col mb-3">
-                                <label for="nameBackdrop" class="form-label">Status</label>
-                                <select id="preview_status" class="form-select select2 item-details mb-3" readonly>
-                                </select>
-                                <div class="invalid-feedback"> Please enter your status. </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal"
-                            id="modal_tenant_cancel">Close</button>
                     </div>
                 </div>
             </form>
@@ -296,18 +227,8 @@
                     data: "floor",
                     name: "floor",
                     title: "Floor"
-                }, {
-                    class: "text-center",
-                    data: "status",
-                    name: "status",
-                    title: "Status",
-                    render: function(data, type, full, meta) {
-                        if (data == "Active") {
-                            return '<span class="badge  bg-label-success">' + data +
-                                '</span>'
-                        }
-                    }
-                }, {
+                },
+                {
                     data: null,
                     title: "Tanggapan",
                     render: function(data, type, row) {
@@ -481,6 +402,7 @@
                         event.preventDefault();
                         let id = $("#edit_id").val();
                         let formData = new FormData();
+                        formData.append('status', 'Active');
 
                         var data = $('#edit-tenant').serialize();
                         $.ajax({
