@@ -402,9 +402,8 @@
                         event.preventDefault();
                         let id = $("#edit_id").val();
                         let formData = new FormData();
-                        formData.append('status', 'Active');
-
-                        var data = $('#edit-tenant').serialize();
+                        
+                        var data = $('#edit-tenant').serialize()+ '&status=Active';
                         $.ajax({
                             url: "{{ env('BASE_URL_API')}}" +'/api/tenant/' + id,
                             type: "PATCH",
