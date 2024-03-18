@@ -345,7 +345,7 @@ $configData = Helper::appClasses();
                         if(a == 'Yes'){
                             label = 'Terkirim'
                         }else{
-                            label = 'Tidak Terkirim'
+                            label = 'Belum Terkirim'
                         }
                         e.append('<option value="' + a +
                             '" class="text-capitalize">' + label +
