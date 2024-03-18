@@ -422,7 +422,7 @@
                                     buttonsStyling: false
                                 })
 
-                                $('#edit-tenant-data').modal('close');
+                                $('#edit-tenant-data').hide();
                                 $('#edit-tenant')[0].reset();
                                 $(".list-tenant-table").DataTable().ajax.reload();
                             },
