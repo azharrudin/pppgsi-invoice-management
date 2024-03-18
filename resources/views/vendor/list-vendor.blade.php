@@ -426,8 +426,8 @@
                             processData: false,
                             contentType: false,
                             success: function(response) {
-                                $('.indicator-progress').show();
-                                $('.indicator-label').hide();
+                                $('.indicator-progress').hide();
+                                $('.indicator-label').show();
 
                                 Swal.fire({
                                     title: 'Berhasil',
