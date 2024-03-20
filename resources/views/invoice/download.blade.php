@@ -241,7 +241,7 @@ return $hasil_rupiah;
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td style="width: 50%;"><b> <span style="color:#2E3E4E; font-size : 16px;">Keterangan</span></td>
+                    <td style="width: 50%;"><b> <span style="color:#2E3E4E; font-size : 16px;">Syarat & Ketentuan</span></td>
                     <td style="width: 20%;">&nbsp;</td>
                     <td><b> </b></td>
                 </tr>
