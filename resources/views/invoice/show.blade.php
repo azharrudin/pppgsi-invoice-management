@@ -361,7 +361,7 @@ $configData = Helper::appClasses();
                 $("#grand_total_spelled").text(data.grand_total_spelled);
                 $("#grand_total").text('Rp. '+format(data.grand_total));
                 $("#invoice_due_date").text(moment(data.invoice_due_date).format('D MMMM YYYY'));
-                $("#term_and_conditions").html(data.term_and_conditions);
+                $("#term_and_conditions").html(data.term_and_condition);
                 $("#notes").html(data.notes);
                 if (data.materai_name != null || account.level.id == 1) {
                     $('.data-material').removeClass('d-none');
