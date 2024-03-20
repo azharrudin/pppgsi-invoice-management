@@ -354,7 +354,6 @@ $configData = Helper::appClasses();
                 name: "tanggapan",
                 title: "Tanggapan",
                 render: function(data, type, row) {
-                    console.log(row);
                     let sendMailRow = '';
                     let editButton = '';
                     let deleteButton = '';
@@ -368,8 +367,9 @@ $configData = Helper::appClasses();
                         deleteButton = `<div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a>`;
                     }
                     let downloadButton = '';
-                    if(row.pdf_link == null){
-                        downloadButton = '<a target="_blank" href="{{url("invoice/print")}}/' + data + '" class="dropdown-item">Download</a>';
+                    if(row.pdf_link == null || row.pdf_link == ''){
+                        console.log(row.grand_total);
+                        downloadButton = `<a target="_blank" href="{{url('invoice/print')}}/${data}" class="dropdown-item">Download</a>`;
                     }else{
                         downloadButton = '<a target="_blank" href="'+row.pdf_link+'" class="dropdown-item">Download</a>';
                     }
