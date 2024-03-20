@@ -140,18 +140,6 @@ $configData = Helper::appClasses();
 
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-md-0 mb-3 data-material d-flex flex-column align-items-center text-center d-none">
-                                <div class="mb-3">
-                                    <label for="note" class="form-label"></label>
-                                    <p class="form-label" id="materai_date"></p>
-                                </div>
-                                <div class="mb-3">
-                                    <div id="materai-image"></div>
-                                </div>
-                                <div class="mb-3">
-                                    <p class="form-label" id="materai_name"></p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -292,7 +280,11 @@ $configData = Helper::appClasses();
             }).then((result) => {
                 if (result.value) {
                     let datas = {}
-                    datas.status = 'Disetujui KA';
+                    if(account.level.id == 1){
+                        datas.status = 'Disetujui BM';
+                    }else if(account.level.id == 2){
+                        datas.status = 'Disetujui KA';
+                    }
                     Swal.fire({
                         title: 'Memeriksa...',
                         text: "Harap menunggu",
@@ -356,7 +348,6 @@ $configData = Helper::appClasses();
             },
             success: function(res) {
                 let data = res.data;
-                console.log(data);
                 id = data.id;
                 getTenant(data.tenant_id)
                 getBank(data.bank_id)
@@ -393,11 +384,10 @@ $configData = Helper::appClasses();
                 if (data.status == 'Disetujui BM' && account.level.id == 10) {
                     $('.kirim-invoice').removeClass('d-none');
                 }
-                if (account.level.id == '2' && data.status == 'Terbuat') {
+                if ((account.level.id == '2' && data.status == 'Terbuat') || (data.status == 'Disetujui KA' && account.level.id == '1')) {
                     $('.disetujui').removeClass('d-none');
                 }
-                if ((account.level.id == '10' && data.status == 'Terbuat') || (data.status == 'Disetujui KA' && account.level.id == '1')) {
-                    console.log('aa');
+                if (account.level.id == '10' && data.status == 'Terbuat') {
                     $('.edit').removeClass('d-none');
                 }
                 Swal.close();
