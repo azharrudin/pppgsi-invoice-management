@@ -452,19 +452,21 @@ $configData = Helper::appClasses();
 
     function getTax(id) {
         let dataTax;
-        $.ajax({
-            url: "{{url('api/tax/get-paper')}}/" + id,
-            type: "get",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async:false,
-            success: function(response) {
-                dataTax = response.data;
-            },
-            error: function(errors) {
-                console.log(errors);
-            }
-        });
+        if(id != null){
+            $.ajax({
+                url: "{{url('api/tax/get-paper')}}/" + id,
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async:false,
+                success: function(response) {
+                    dataTax = response.data;
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
+        }
         return dataTax;
     }
 
@@ -477,17 +479,23 @@ $configData = Helper::appClasses();
         let totalDiskon = 0;
         for (let i = 0; i < details.length; i++) {
             let tax = getTax(details[i].tax_id);
+            let tax_name = '';
+            let countTax = 0;
+            if(tax != undefined){
+                tax_name = tax.name;
+                countTax = tax.value / 100;
+            }
+            
             tem = `<tr>
                         <td>` + details[i].item + `</td>
                         <td>` + details[i].description + `</td>
                         <td>` + details[i].quantity + `</td>
                         <td>` + format(details[i].price) + `</td>
                         <td>` + details[i].discount + `</td>
-                        <td>` +  tax.name + `</td>
+                        <td>` +  tax_name + `</td>
                         <td style="text-align:right;">Rp. ` + format(details[i].total_price) + `</td>
                     </tr>
             `;
-            let countTax = tax.value / 100;
             let discount = details[i].discount / 100;
             totalTax += (details[i].quantity * details[i].price) * countTax;
             totalDiskon += (details[i].quantity * details[i].price) * discount;
