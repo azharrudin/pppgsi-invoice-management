@@ -1080,7 +1080,7 @@ $configData = Helper::appClasses();
                         datas.invoice_date = tglInvoice;
                         datas.grand_total = parseInt(grandTotal);
                         datas.notes = note.getData();
-                        datas.term_and_conditions = term_and_conditions.getData();
+                        datas.term_and_condition = term_and_conditions.getData();
                         delete datas['undefined'];
                         delete datas['grand_total_spelled'];
                         delete datas['note'];
