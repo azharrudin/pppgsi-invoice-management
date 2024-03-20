@@ -403,17 +403,58 @@ class InvoiceController extends Controller
 
         try{
             $id = (int) $id;
-            $getInvoice = $this->CommonService->getDataById("App\Models\Invoice", $id);
+            $getInvoice = Invoice::with("tenant")->with("invoiceDetails")->where("deleted_at", null)->where("id", $id)->first();
             if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
 
             $validateInvoice = $this->InvoiceService->validateStatus($request);
             if($validateInvoice != "") throw new CustomException($validateInvoice, 400);
 
+            $status = strtolower($request->input("status"));
+            $remainingQuota = $this->PaperIdService->checkRemainingStamp();
+            if(
+                $status == "disetujui bm" &&
+                (!$remainingQuota ||
+                !isset($remainingQuota["data"]) ||
+                !isset($remainingQuota["data"]["quota"]) ||
+                $remainingQuota["data"]["quota"] <= 0)
+            ) throw new CustomException("Insuficient stamp", 400);
+
+            $invoicePayload = $request->all();
+            if(isset($invoicePayload["invoice_number"])) unset($invoicePayload["invoice_number"]);
+
             $dataPayload = [ "status" => $request->input("status") ];
 
             Invoice::findOrFail($id)->update($dataPayload);
 
+            if($status == "disetujui bm" && !isset($getInvoice["paper_id"])){
+                $getTenant = Tenant::where("deleted_at", null)->where("id", $getInvoice["tenant_id"])->first();
+                $getInvoiceDetail = InvoiceDetail::where("deleted_at", null)->where("invoice_id", $getInvoice["id"])->get();
+                $invoiceDetailArr = $this->CommonService->toArray($getInvoiceDetail);
+
+                $createSaleInvoice = $this->PaperIdService->createSalesInvoice($getInvoice, $invoiceDetailArr, $getTenant);
+                if(
+                    $createSaleInvoice &&
+                    isset($createSaleInvoice["data"]) &&
+                    isset($createSaleInvoice["data"]["id"])
+                ) Invoice::findOrFail($id)->update(["paper_id" => $createSaleInvoice["data"]["id"]]);
+                else throw new CustomException("Failed to create sales invoice", 400);
+            }
+
             DB::commit();
+
+            if($status == "disetujui bm" && !$getInvoice["is_stamped"]){
+                $stampInvoice = $this->PaperIdService->stampSalesInvoice($getInvoice["invoice_number"]);
+                if(
+                    $stampInvoice &&
+                    isset($stampInvoice["data"]) &&
+                    isset($stampInvoice["data"]["pdf_link"])
+                ){
+                  DB::beginTransaction();
+                  Invoice::findOrFail($id)->update(["is_stamped" => true, "pdf_link" => $stampInvoice["data"]["pdf_link"]]);
+                  DB::commit();
+                }
+            }
+
             $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
                 ->where("id", $id)

@@ -108,7 +108,7 @@ class PaperIdService{
             "due_date" => $invoiceDueDate,
             "number" => $invoice["invoice_number"],
             "customer" => [
-                "id" => $tenant["paper_id"],
+                "id" => (string) $tenant["id"],
                 "name" => $tenant["name"],
                 "email" => $tenant["email"],
                 "phone" => $tenant["phone"]
