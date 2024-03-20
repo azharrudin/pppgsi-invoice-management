@@ -93,14 +93,35 @@ class InvoiceController extends Controller
     public function print($id){
         $apiRequest = Http::get(env('BASE_URL_API') .'/api/invoice/'.$id);
         $response = json_decode($apiRequest->getBody());
+        $subtotal = 0;
+        $diskon = 0;
+        $total = 0;
+        $pajak = 0;
+        $pajakEklusif = 0;
+        $pajakInklusif = 0;
         $data = $response->data;
         for($i = 0 ; $i <  sizeof($data->invoice_details) ; $i++){
             $tax = $data->invoice_details[$i]->tax_id;
             $apiRequest = Http::get(env('BASE_URL_API') . '/api/tax/get-paper/'.$tax);
             $response = json_decode($apiRequest->getBody());
-            $value = $response->data->value; 
+            $value = $response->data->name; 
             $data->invoice_details[$i]->tax_id = $value;
+            $subtotal = $subtotal +($data->invoice_details[$i]->price * $data->invoice_details[$i]->quantity);
+            $diskon = $diskon + (($data->invoice_details[$i]->price * $data->invoice_details[$i]->quantity) * $data->invoice_details[$i]->discount / 100);
+            $exlusive =  $response->data->exclusive;
+            if($exlusive == 0){
+                $pajak = $pajak + 0;
+            }else{
+                $pajak = $subtotal * ($response->data->value /100);
+            }
         }
+       
+        $total = $subtotal - $diskon + $pajak;
+        $data->subtotal = $subtotal;
+        $data->discount = $diskon;
+        $data->tax = $pajak;
+        $data->total = $total;
+        // dd($data);
     	$pdf = PDF::loadView('invoice.download',['data'=>$data])->setPaper('a4', 'portait');
     	return $pdf->stream('invoice.pdf');
     }
