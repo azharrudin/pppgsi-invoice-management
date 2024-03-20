@@ -111,7 +111,7 @@ class InvoiceController extends Controller
                     'quantity' => $detail['quantity'],
                     'price' => $detail['price'],
                     'tax_id' => $detail['tax_id'],
-                    'discount' => $detail['discount'],
+                    'discount' => $detail['discount'] == '' ? 0 : $detail['discount'],
                     'total_price' => $detail['total_price'],
                 ]);
             }
