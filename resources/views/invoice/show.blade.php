@@ -103,7 +103,7 @@ $configData = Helper::appClasses();
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="7">Terbilang</td>
+                                            <td colspan="7"><span>Terbilang : </span> <span id="invoice_terbilang" class="fw-bold"></span></td>
                                         </tr>
                                         <tr>
                                             <td colspan="7">
@@ -359,6 +359,7 @@ $configData = Helper::appClasses();
                 $("#addendum_number").val(data.addendum_number);
                 $("#addendum_date").val(data.addendum_date);
                 $("#grand_total_spelled").text(data.grand_total_spelled);
+                $("#invoice_terbilang").text(terbilang(data.grand_total));
                 $("#grand_total").text('Rp. '+format(data.grand_total));
                 $("#invoice_due_date").text(moment(data.invoice_due_date).format('D MMMM YYYY'));
                 $("#term_and_conditions").html(data.term_and_condition);
@@ -417,6 +418,95 @@ $configData = Helper::appClasses();
                 console.log(error);
             }
         });
+    }
+
+    function terbilang(bilangan) {
+        bilangan = String(bilangan);
+        let angka = new Array('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+        let kata = new Array('', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan');
+        let tingkat = new Array('', 'Ribu', 'Juta', 'Milyar', 'Triliun');
+
+        let panjang_bilangan = bilangan.length;
+        let kalimat = "";
+        let subkalimat = "";
+        let kata1 = "";
+        let kata2 = "";
+        let kata3 = "";
+        let i = 0;
+        let j = 0;
+
+        /* pengujian panjang bilangan */
+        if (panjang_bilangan > 15) {
+            kalimat = "Diluar Batas";
+            return kalimat;
+        }
+
+        /* mengambil angka-angka yang ada dalam bilangan, dimasukkan ke dalam array */
+        for (i = 1; i <= panjang_bilangan; i++) {
+            angka[i] = bilangan.substr(-(i), 1);
+        }
+
+        i = 1;
+        j = 0;
+        kalimat = "";
+
+        /* mulai proses iterasi terhadap array angka */
+        while (i <= panjang_bilangan) {
+
+            subkalimat = "";
+            kata1 = "";
+            kata2 = "";
+            kata3 = "";
+
+            /* untuk Ratusan */
+            if (angka[i + 2] != "0") {
+                if (angka[i + 2] == "1") {
+                    kata1 = "Seratus";
+                } else {
+                    kata1 = kata[angka[i + 2]] + " Ratus";
+                }
+            }
+
+            /* untuk Puluhan atau Belasan */
+            if (angka[i + 1] != "0") {
+                if (angka[i + 1] == "1") {
+                    if (angka[i] == "0") {
+                        kata2 = "Sepuluh";
+                    } else if (angka[i] == "1") {
+                        kata2 = "Sebelas";
+                    } else {
+                        kata2 = kata[angka[i]] + " Belas";
+                    }
+                } else {
+                    kata2 = kata[angka[i + 1]] + " Puluh";
+                }
+            }
+
+            /* untuk Satuan */
+            if (angka[i] != "0") {
+                if (angka[i + 1] != "1") {
+                    kata3 = kata[angka[i]];
+                }
+            }
+
+            /* pengujian angka apakah tidak nol semua, lalu ditambahkan tingkat */
+            if ((angka[i] != "0") || (angka[i + 1] != "0") || (angka[i + 2] != "0")) {
+                subkalimat = kata1 + " " + kata2 + " " + kata3 + " " + tingkat[j] + " ";
+            }
+
+            /* gabungkan variabe sub kalimat (untuk Satu blok 3 angka) ke variabel kalimat */
+            kalimat = subkalimat + kalimat;
+            i = i + 3;
+            j = j + 1;
+
+        }
+
+        /* mengganti Satu Ribu jadi Seribu jika diperlukan */
+        if ((angka[5] == "0") && (angka[6] == "0")) {
+            kalimat = kalimat.replace("Satu Ribu", "Seribu");
+        }
+
+        return (kalimat.trim().replace(/\s{2,}/g, ' ')) + " Rupiah";
     }
 
     function format(e) {
