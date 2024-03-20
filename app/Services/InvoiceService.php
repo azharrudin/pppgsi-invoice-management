@@ -37,7 +37,7 @@ class InvoiceService{
             "details.*.quantity" => ["bail", "required", "numeric"],
             "details.*.price" => ["bail", "required", "numeric"],
             "details.*.tax_id" => ["bail", "nullable", "string"],
-            "details.*.discount" => ["bail", "required", "numeric"],
+            "details.*.discount" => ["bail", "nullable", "numeric"],
             "details.*.total_price" => ["bail", "required", "numeric"],
         ];
         $errorMessages = [

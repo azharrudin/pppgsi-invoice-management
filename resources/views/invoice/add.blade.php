@@ -1193,7 +1193,7 @@ $configData = Helper::appClasses();
             datas.sub_total = parseInt(sub_total);
             datas.total_diskon = parseInt(total_diskon);
             datas.total_tax = parseInt(total_tax);
-            datas.term_and_conditions = term_and_conditions.getData();
+            datas.term_and_condition = term_and_conditions.getData();
             datas.notes = note.getData();
             delete datas['undefined'];
             localStorage.setItem("invoice", JSON.stringify(datas));
