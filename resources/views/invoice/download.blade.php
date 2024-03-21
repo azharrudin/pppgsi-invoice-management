@@ -199,22 +199,30 @@ return $hasil_rupiah;
                         <td colspan="4"></td>
                         <td><b> <span style="color:#2E3E4E">Sub Total :</span></b>
                         </td>
-                        <td style="padding:10px;text-align:right" colspan="2"><span style="color:#2E3E4E"> {{ rupiah($data->grand_total) }}</span></td>
+                        <td style="padding:10px;text-align:right" colspan="2"><span style="color:#2E3E4E"> {{ rupiah($data->subtotal) }}</span></td>
                     </tr>
                     <tr>
-                    <td colspan="4"></td>
+                        <td colspan="4"></td>
                         <td><b> <span style="color:#2E3E4E">Diskon :</span></b>
                         </td>
                         <td style="padding:10px;text-align:right" colspan="2"><span style="color:#2E3E4E"> {{ rupiah($data->discount) }}</span></td>
                     </tr>
                     <tr>
-                    <td colspan="4"></td>
+                        <td colspan="4"></td>
                         <td><b> <span style="color:#2E3E4E">Pajak :</span></b>
                         </td>
-                        <td style="padding:10px;text-align:right" colspan="2"><span style="color:#2E3E4E"> {{ rupiah($data->tax) }}</span></td>
+                        <td style="padding:10px;text-align:right" colspan="2"><span style="color:#2E3E4E"></span></td>
                     </tr>
+                    @foreach ($data->pajakEklusif as $key => $value)
                     <tr>
-                    <td colspan="4"></td>
+                        <td colspan="4"></td>
+                        <td style="width: 100px;" colspan="2"><span style="color:#2E3E4E; margin-left : 15px;"> {{ $key }}</span>
+                        </td>
+                        <td style="padding:10px;text-align:right" colspan="2"><span style="color:#2E3E4E"> {{ rupiah($value) }}</span></td>
+                    </tr>
+                    @endforeach
+                    <tr>
+                        <td colspan="4"></td>
                         <td><b> <span style="color:#2E3E4E; font-size : 14px;">Total :</span></b>
                         </td>
                         <td style="padding:10px;text-align:right" colspan="2"><span style="color:#2E3E4E; font-size : 14px;"> {{ rupiah($data->grand_total) }}</span></td>
@@ -231,7 +239,9 @@ return $hasil_rupiah;
                     <td><b> 7 Mar, 2024</b></td>
                 </tr>
                 <tr>
-                    <td style="width: 50%;"> <br><div class="horizontal_line"></div></td>
+                    <td style="width: 50%;"> <br>
+                        <div class="horizontal_line"></div>
+                    </td>
                     <td style="width: 20%;">&nbsp;</td>
                     <td>&nbsp;</td>
                 </tr>
@@ -246,7 +256,9 @@ return $hasil_rupiah;
                     <td><b> </b></td>
                 </tr>
                 <tr>
-                    <td style="width: 50%;"> <br><div class="horizontal_line"></div></td>
+                    <td style="width: 50%;"> <br>
+                        <div class="horizontal_line"></div>
+                    </td>
                     <td style="width: 20%;"></td>
                     <td><br><b>Yen Ardhiean</b></td>
                 </tr>

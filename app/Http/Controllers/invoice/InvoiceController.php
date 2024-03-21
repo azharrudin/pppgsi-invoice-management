@@ -14,7 +14,7 @@ class InvoiceController extends Controller
     {
         return view('invoice.list-invoice');
     }
-    
+
     public function add()
     {
         return view('invoice.add');
@@ -55,10 +55,10 @@ class InvoiceController extends Controller
             // $orderBy = $request->columns[$request->order[0]['column']]['data']; harusnya kodenya ini, tapi di harcode dulu sampai diperbaiki apinya.
             $orderBy = 'id';
         }
-        if($request->page == null){
+        if ($request->page == null) {
             $request->page = 1;
         }
-        $apiRequest = Http::get(env('BASE_URL_API') .'/api/invoice', [
+        $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice', [
             'per_page' => $request->length,
             'page' => $request->page,
             'order' => 'id',
@@ -67,7 +67,7 @@ class InvoiceController extends Controller
         ]);
         $response = json_decode($apiRequest->getBody());
         $data = [];
-        if($response->data){
+        if ($response->data) {
             foreach ($response->data as $key => $value) {
                 $data[$key] = $value;
                 $data[$key]->tenant_name = $value->tenant->company ?? '';
@@ -77,7 +77,6 @@ class InvoiceController extends Controller
             ->setFilteredRecords($response->size)
             ->setTotalRecords($response->size)
             ->make(true);
-        
     }
 
     public function edit(string $id)
@@ -89,40 +88,54 @@ class InvoiceController extends Controller
     {
         return view('invoice.show', compact('id'));
     }
-    
-    public function print($id){
-        $apiRequest = Http::get(env('BASE_URL_API') .'/api/invoice/'.$id);
+
+    public function print($id)
+    {
+        $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice/' . $id);
         $response = json_decode($apiRequest->getBody());
         $subtotal = 0;
         $diskon = 0;
         $total = 0;
         $pajak = 0;
-        $pajakEklusif = 0;
+        $pajakEklusif = [];
         $pajakInklusif = 0;
         $data = $response->data;
-        for($i = 0 ; $i <  sizeof($data->invoice_details) ; $i++){
+        for ($i = 0; $i <  sizeof($data->invoice_details); $i++) {
             $tax = $data->invoice_details[$i]->tax_id;
-            $apiRequest = Http::get(env('BASE_URL_API') . '/api/tax/get-paper/'.$tax);
+            $apiRequest = Http::get(env('BASE_URL_API') . '/api/tax/get-paper/' . $tax);
             $response = json_decode($apiRequest->getBody());
-            $value = $response->data->name; 
+            $value = $response->data->name;
             $data->invoice_details[$i]->tax_id = $value;
-            $subtotal = $subtotal +($data->invoice_details[$i]->price * $data->invoice_details[$i]->quantity);
+            $subtotal = $subtotal + ($data->invoice_details[$i]->price * $data->invoice_details[$i]->quantity);
             $diskon = $diskon + (($data->invoice_details[$i]->price * $data->invoice_details[$i]->quantity) * $data->invoice_details[$i]->discount / 100);
             $exlusive =  $response->data->exclusive;
-            if($exlusive == 0){
+
+            if ($exlusive == 0) {
                 $pajak = $pajak + 0;
-            }else{
-                $pajak = $subtotal * ($response->data->value /100);
+            } else {
+                $pajak = $subtotal * ($response->data->value / 100);
+                if (sizeof($pajakEklusif) > 0) {
+                    foreach ($pajakEklusif as $key => $value) {
+                        if ($key  == $response->data->name) {
+                            $pajakEklusif[$response->data->name] = $subtotal * ($response->data->value / 100);
+                        } else {
+                        }
+                    }
+                } else {
+                    $pajakEklusif[$response->data->name] =$subtotal * ($response->data->value / 100);
+                }
             }
         }
-       
+
+
         $total = $subtotal - $diskon + $pajak;
         $data->subtotal = $subtotal;
         $data->discount = $diskon;
         $data->tax = $pajak;
         $data->total = $total;
+        $data->pajakEklusif = $pajakEklusif;
         // dd($data);
-    	$pdf = PDF::loadView('invoice.download',['data'=>$data])->setPaper('a4', 'portait');
-    	return $pdf->stream('invoice.pdf');
+        $pdf = PDF::loadView('invoice.download', ['data' => $data])->setPaper('a4', 'portait');
+        return $pdf->stream('invoice.pdf');
     }
 }
