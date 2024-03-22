@@ -28,12 +28,6 @@
         hideMenu("Report");
         hideMenu("Settings");
     }
-
-    //Admin
-    if(accountMenu.level.id == 10){
-        hideSubMenu("List Work Order");
-        hideSubMenu("List Material Request");
-    }
    
     //Koordinator
     if(accountMenu.level.id == 3){
