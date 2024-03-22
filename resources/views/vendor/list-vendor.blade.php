@@ -334,11 +334,13 @@
                 }],
                 responsive: {
                     details: {
+                       /*
                         display: $.fn.dataTable.Responsive.display.modal({
                             header: function(a) {
                                 return "Details of " + a.data().full_name
                             }
                         }),
+                        */
                         type: "column",
                         renderer: function(a, e, t) {
                             var s = $.map(t, (function(a, e) {
@@ -656,6 +658,7 @@
             e.stopPropagation();
             let id = $(this).data('id');
             event.stopPropagation();
+
             Swal.fire({
                 text: "Apakah Ingin menghapus Vendor ini  ?",
                 icon: "warning",

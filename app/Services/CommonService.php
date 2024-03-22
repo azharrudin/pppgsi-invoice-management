@@ -63,6 +63,7 @@ class CommonService{
     public function getDataById(string $modelPath, $id){
         $model = new $modelPath;
         $getData = $model::where("id", $id)->where("deleted_at", null)->first();
+        $output = new \Symfony\Component\Console\Output\ConsoleOutput();
         return $getData;
     }
 
