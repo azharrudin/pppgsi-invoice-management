@@ -425,12 +425,7 @@ $configData = Helper::appClasses();
 
                 responsive: {
                     details: {
-                        display: $.fn.dataTable.Responsive.display.modal({
-                            header: function(row) {
-                                var data = row.data();
-                                return 'Details of "' + data['project_name'] + '" Project';
-                            }
-                        }),
+                       
                         type: 'column',
                         renderer: function(api, rowIdx, columns) {
                             var data = $.map(columns, function(col, i) {

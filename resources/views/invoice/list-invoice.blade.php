@@ -391,12 +391,13 @@ $configData = Helper::appClasses();
             buttons: buttonAdd,
             responsive: {
                 details: {
-                    display: $.fn.dataTable.Responsive.display.modal({
+                    /* display: $.fn.dataTable.Responsive.display.modal({
                         header: function(a) {
                             console.log(a);
                             return "Detail"
                         }
                     }),
+                    */
                     type: "column",
                     renderer: function(a, e, t) {
                         var s = $.map(t, (function(a, e) {

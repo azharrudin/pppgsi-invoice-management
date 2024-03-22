@@ -31,7 +31,7 @@ class CallApiHelpers
                 ],
                 'form_params' => $params
             ]);
-
+          
             return json_decode($response->getBody(), true);
         } catch (\Exception $e) {
             Log::error($e->getMessage());

@@ -62,6 +62,7 @@ class LoginController extends Controller
 
     protected function setUserSession($auth)
     {
+        
         session([
             'ACCESS_TOKEN' => $auth['token'],
             'data' => $auth['data'],
