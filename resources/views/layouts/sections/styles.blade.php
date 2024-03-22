@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="{{ asset(mix('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css')) }}" />
 <link rel="stylesheet" href="{{ asset(mix('assets/vendor/libs/sweetalert2/sweetalert2.css')) }}" />
 <link rel="stylesheet" href="{{ asset(mix('assets/vendor/libs/dropzone/dropzone.css')) }}" />
+
 <!-- Vendor Styles -->
 @yield('vendor-style')
 

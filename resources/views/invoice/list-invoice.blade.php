@@ -83,7 +83,7 @@ $configData = Helper::appClasses();
 @endsection
 
 @section('page-script')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script> 
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script> -->
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
     "use strict";
@@ -219,6 +219,7 @@ $configData = Helper::appClasses();
                         showConfirmButton: false,
                         allowOutsideClick: false
                     });
+
                     $.ajax({
                         url: "{{ env('BASE_URL_API')}}" + '/api/invoice/'+id,
                         type: "DELETE",
@@ -364,7 +365,7 @@ $configData = Helper::appClasses();
                         editButton = `<a href="{{ url("invoice/edit")}}/${data}" class="dropdown-item">Edit</a>`;
                     }
                     if (account.level.id == 10) {
-                        deleteButton = `<div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a>`;
+                        deleteButton = `<div class="dropdown-divider"></div><a href="javascript:;"  data-id="${data}" class="dropdown-item delete-record text-danger">Delete</a>`;
                     }
                     let downloadButton = '';
                     if(row.pdf_link == null || row.pdf_link == ''){
@@ -376,7 +377,7 @@ $configData = Helper::appClasses();
                     let previewRow = '<a href="{{ url("invoice/show")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
                     return `<div class="d-flex align-items-center">
                             ` + sendMailRow + previewRow + `
-                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end">${downloadButton}${editButton}${deleteButton}</div></div></div>`
+                            <div class="dropdown"><a href="javascript:;"  data-id="${data}" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end">${downloadButton}${editButton}${deleteButton}</div></div></div>`
                 }
             }],
             order: [
@@ -391,12 +392,13 @@ $configData = Helper::appClasses();
             buttons: buttonAdd,
             responsive: {
                 details: {
-                 display: $.fn.dataTable.Responsive.display.modal({
+                /*  display: $.fn.dataTable.Responsive.display.modal({
                         header: function(a) {
                             console.log(a);
                             return "Detail"
                         }
                     }),
+                    */
                     type: "column",
                     renderer: function(a, e, t) {
                         var s = $.map(t, (function(a, e) {
