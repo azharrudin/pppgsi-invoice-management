@@ -83,7 +83,7 @@ $configData = Helper::appClasses();
     let buttonAdd = [];
 
     buttonAdd = [{
-            text: '<span class="d-md-inline-block d-none">Buat Tanda Terima</span>',
+            text: '<span class="d-md-inline-block d-none">Tarik Report .XLSX</span>',
             className: "btn btn-primary",
             action: function(a, e, t, s) {
                 window.location = "{{url('report/report-tanda-terima/file-export')}}"
@@ -166,7 +166,7 @@ $configData = Helper::appClasses();
                     error: function(xhr, status, error) {
                         Swal.fire({
                             title: 'Error!',
-                            text: ' You clicked the button!',
+                            text: ' xhr.responseText!',
                             icon: 'error',
                             customClass: {
                                 confirmButton: 'btn btn-primary'
