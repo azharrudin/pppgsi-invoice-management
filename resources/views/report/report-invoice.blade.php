@@ -339,7 +339,6 @@ $configData = Helper::appClasses();
                     var hari = bagianTanggal[2];
 
                     var tanggalHasil = hari + '/' + bulan + '/' + tahun;
-
                     return tanggalHasil;
                 }
             }, {
@@ -347,6 +346,7 @@ $configData = Helper::appClasses();
                 data: "invoice_date",
                 className: 'text-center',
                 render: function(data, type, row) {
+
                     let creted = new Date(data);
                     let today = new Date();
                     let diffTime = Math.abs(today - creted);
@@ -372,10 +372,12 @@ $configData = Helper::appClasses();
                 title: "Total Invoice",
                 className: 'text-center',
                 render: function(data, type, row) {
+
                     return new Intl.NumberFormat("id-ID", {
                         style: "currency",
                         currency: "IDR"
                     }).format(data)
+
                 }
             }, {
                 title: "Sisa Tagihan",
@@ -383,6 +385,7 @@ $configData = Helper::appClasses();
                 data: "remaining",
                 className: 'text-center',
                 render: function(data, type, row) {
+
                     return new Intl.NumberFormat("id-ID", {
                         style: "currency",
                         currency: "IDR"
@@ -393,7 +396,7 @@ $configData = Helper::appClasses();
             order: [
                 [3, "desc"]
             ],
-            dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status d-flex mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><" col-sm-12 col-md-6"p>>',
             language: {
                 sLengthMenu: "Show _MENU_",
                 search: "",
@@ -404,12 +407,13 @@ $configData = Helper::appClasses();
                 details: {
                     display: $.fn.dataTable.Responsive.display.modal({
                         header: function(a) {
-                            console.log(a);
+
                             return "Detail"
                         }
                     }),
                     type: "column",
                     renderer: function(a, e, t) {
+
                         var s = $.map(t, (function(a, e) {
                             return "" !== a.title ? '<tr data-dt-row="' + a
                                 .rowIndex + '" data-dt-column="' + a
@@ -432,7 +436,19 @@ $configData = Helper::appClasses();
                                 console.log(e);
                                 a.search(e)
                                     .draw()
+                            })),
+                        f =  $(
+                            '<input class="form-select ms-2" type="date" value="Select Date"></input>'
+                        ).appendTo(".invoice_status").on("change", (
+                            function() {
+                              
+                                var convertDate =  moment($(this).val()).format('YYYY-MM-DD');   
+                                var e = $.fn.dataTable.util.escapeRegex(convertDate);
+                                console.log(e);
+                                a.columns(2).search(convertDate)
+                                    .draw()
                             }));
+                        
                     a.data().unique().sort().each((function(a, t) {
                         e.append('<option value="' + a +
                             '" class="text-capitalize">' + a +
