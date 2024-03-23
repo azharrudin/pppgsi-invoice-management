@@ -436,7 +436,18 @@ $configData = Helper::appClasses();
         }else if(account.level_id == 9){
             urlMaterialRequest =  "{{ url('to-do-list') }}"+"/material-request"+"/disetujui chief departement";   
             tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest)
-        //chieEnginer
+        //teknisi
+        }else if(account.level_id == 5){
+            urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Terbuat";   
+            tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
+        //leader cleaning
+        }else if(account.level_id == 4){
+            urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/Disetujui LC";
+            tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
+        //Koordinator
+        }else if(account.level_id == 3){
+            urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/terbuat";
+            tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
         }else{
             tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
             tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
