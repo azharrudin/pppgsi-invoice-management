@@ -11,6 +11,7 @@ $configData = Helper::appClasses();
 <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 @endsection
 
 @section('content')
@@ -85,6 +86,7 @@ $configData = Helper::appClasses();
 @section('page-script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
     "use strict";
     $.ajaxSetup({
@@ -103,7 +105,7 @@ $configData = Helper::appClasses();
         if (account.level.id == '10') {
             buttonAdd = [{
                 text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Invoice</span>',
-                className: "btn btn-primary",
+                className: "btn btn-primary ",
                 action: function(a, e, t, s) {
                     $.ajax({
                         url: "{{ env('BASE_URL_API')}}" + '/api/invoice/' + id,
@@ -120,9 +122,9 @@ $configData = Helper::appClasses();
                 }
             }];
         }
-        buttonAdd = [{
-            text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Tarik Report .XLSX</span>',
-            className: "btn btn-primary",
+        /* buttonAdd = [{
+           text: '<i class="ti ti-download me-md-1"></i><span class="d-md-inline-block d-none">Tarik Report .XLSX</span>',
+         className: "btn btn-primary",
             action: function(a, e, t, s) {
                 // $.ajax({
                 //     url: "{{url('api/invoice/invoice-report-export')}}",
@@ -156,9 +158,9 @@ $configData = Helper::appClasses();
                 window.location = "{{url('report/report-invoice/file-export')}}"
             }
         }];
-
+*/
         setHeader();
-
+       
         function setHeader() {
             Swal.fire({
                 title: '<h2>Loading...</h2>',
@@ -353,7 +355,30 @@ $configData = Helper::appClasses();
                     let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                     return diffDays;
                 }
-            }, {
+            }, 
+            {
+                class: "text-center",
+                data: "status",
+                name: "status",
+                title: "Status",
+                className: 'text-center',
+                render: function(data, type, row) {
+                    if (data == 'Terbuat') {
+                        return '<span class="badge w-100" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
+                    } else if (data == 'Disetujui KA') {
+                        return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized> Disetujui KA </span>';
+                    } else if (data == 'Lunas') {
+                        return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
+                    } else if (data == 'Terkirim') {
+                        return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
+                    } else if (data == 'Disetujui BM') {
+                        return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
+                    } else if (data == 'Kurang Bayar') {
+                        return '<span class="badge w-100" style="background-color : #ff9f43; " text-capitalized> Kurang Bayar </span>';
+                    }
+                }
+            },
+            {
                 name: "tenant_name",
                 data: "tenant_name",
                 title: "Perusahaan",
@@ -396,7 +421,7 @@ $configData = Helper::appClasses();
             order: [
                 [3, "desc"]
             ],
-            dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status d-flex mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><" col-sm-12 col-md-6"p>>',
+            dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end  flex-md-row pe-3 gap-md-3"f<"invoice_status d-flex mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><" col-sm-12 col-md-6"p>>',
             language: {
                 sLengthMenu: "Show _MENU_",
                 search: "",
@@ -427,28 +452,45 @@ $configData = Helper::appClasses();
             initComplete: function() {
                 this.api().columns(5).every((function() {
                     var a = this,
-                        e = $(
-                            '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
+                        lsp = $(
+                            '<select id="UserRole" class="form-select"><option value=""> Select Status </option><option value="disetujui bm"> Disetujui BM </option><option value="dibuat"> Dibuat </option><option value="terkirim"> Terkirim </option><option value="lunas"> Lunas </option></select>'
                         ).appendTo(".invoice_status").on("change", (
                             function() {
                                 var e = $.fn.dataTable.util.escapeRegex($(
                                     this).val());
                                 console.log(e);
-                                a.search(e)
+                                a.columns(3).search(e)
                                     .draw()
                             })),
                         f =  $(
-                            '<input class="form-select ms-2" type="date" value="Select Date"></input>'
-                        ).appendTo(".invoice_status").on("change", (
-                            function() {
-                              
-                                var convertDate =  moment($(this).val()).format('YYYY-MM-DD');   
-                                var e = $.fn.dataTable.util.escapeRegex(convertDate);
-                                console.log(e);
-                                a.columns(2).search(convertDate)
-                                    .draw()
-                            }));
-                        
+                            '<input class="form-select  ms-2" type="text" id="date_select" value="Select Date"></input>'
+                        ).appendTo(".invoice_status")
+                      
+                        $('#date_select').daterangepicker({
+                            opens: 'left'
+                        }, (start, end, label) => {
+                           
+                         
+                            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                        });
+
+                        $('#date_select').on('apply.daterangepicker', function(ev, picker) {
+                                console.log(0)
+                                a.draw()
+                             });
+                             
+                        f =  $(
+                           `<button class="btn btn-sm btn-success ms-2 w-100"><i class="ti ti-download me-md-1"></i><span class="d-md-inline-block d-none">Download .XLSX</span></button>`
+                        ).appendTo(".invoice_status")
+                      
+                        $('#date_select').daterangepicker({
+                            opens: 'left'
+                        }, (start, end, label) => {
+                           
+                         
+                            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                        });
+
                     a.data().unique().sort().each((function(a, t) {
                         e.append('<option value="' + a +
                             '" class="text-capitalize">' + a +
@@ -457,6 +499,23 @@ $configData = Helper::appClasses();
                 }))
             }
         });
+        $.fn.dataTable.ext.search.push(
+            ( settings, data, dataIndex ) => {
+                var min  = start.format('08-09-2020')
+                var max  = end.format('09-09-2021')
+                var createdAt = data[2] || 0; // Our date column in the table
+                console.log(createdAt)
+                if  ( 
+                        ( min == "" || max == "" )
+                        || 
+                        ( moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max) ) 
+                    )
+                {
+                    return true;
+                }
+                return false;
+            }
+        )
         a.on("draw.dt", (function() {
             [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((
                 function(a) {
