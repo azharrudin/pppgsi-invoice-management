@@ -8,8 +8,6 @@ $configData = Helper::appClasses();
 
 @section('page-style')
 {{-- Page Css files --}}
-<link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}">
 @endsection
 
@@ -83,7 +81,7 @@ $configData = Helper::appClasses();
 @endsection
 
 @section('page-script')
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script> -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script> 
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
     "use strict";
@@ -392,13 +390,12 @@ $configData = Helper::appClasses();
             buttons: buttonAdd,
             responsive: {
                 details: {
-                /*  display: $.fn.dataTable.Responsive.display.modal({
+                display: $.fn.dataTable.Responsive.display.modal({
                         header: function(a) {
                             console.log(a);
                             return "Detail"
                         }
                     }),
-                    */
                     type: "column",
                     renderer: function(a, e, t) {
                         var s = $.map(t, (function(a, e) {
