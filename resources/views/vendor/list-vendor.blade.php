@@ -49,14 +49,14 @@
     </div>
 
     {{-- Card Add --}}
-    <div class="modal fade" id="create-vendor-data" data-bs-backdrop="static" tabindex="-1">
-        <div class="modal-dialog">
-            <form class="modal-content create-vendor" id="create-vendor" novalidate>
+    <div class="modal fade " id="create-vendor-data" data-bs-backdrop="static" tabindex="-1">
+        <div class="modal-dialog modal-lg justify-content-center" style="width: 80vw;">
+            <form class="modal-content create-vendor " id="create-vendor" novalidate>
                 <div class="modal-header">
                     <h5 class="modal-title" id="backDropModalTitle">Tambah Vendor</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body addVendor">
+                <div class="modal-body addVendor" >
                     <div class="row">
                         <div class="col mb-3">
                             <label for="nameBackdrop" class="form-label">Nama Perusahaan</label>
@@ -72,25 +72,26 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-3">
+                        <div class="col col-md-6 mb-3">
                             <label for="nameBackdrop" class="form-label">Telepon</label>
                             <input type="text" id="phone" name="phone" class="form-control"
                                 placeholder="Masukan Nomor Telepon" required>
                             <div class="invalid-feedback"> Masukan Nomor Telepon. </div>
                         </div>
-                        <div class="col mb-3">
-                            <label for="nameBackdrop" class="form-label">Lantai</label>
-                            <input type="text" id="floor" name="floor" class="form-control"
-                                placeholder="Masukan Lantai" required>
-                            <div class="invalid-feedback"> Masukan Lantai. </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-3">
+                        <div class="col col-md-6 mb-3">
                             <label for="nameBackdrop" class="form-label">Alamat</label>
                             <textarea name="address" id="address" class="form-control" cols="30" rows="3" required></textarea>
                             <div class="invalid-feedback"> Masukan Alamat. </div>
                         </div>
+                        <div class="col mb-3" hidden>
+                            <label for="nameBackdrop" class="form-label">Lantai</label>
+                            <input type="text" id="floor" name="floor" class="form-control"
+                                placeholder="Masukan Lantai" value="0">
+                            <div class="invalid-feedback"> Masukan Lantai. </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                       
                     </div>
                 </div>
                 <div class="modal-footer">
