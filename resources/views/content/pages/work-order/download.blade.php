@@ -44,13 +44,13 @@
         <table style="width: 100%;  border-left: 1px solid black; border-right: 1px solid black;">
             <tr>
                 <td style="padding-left: 5px;" class="py-2">DATE :</td>
-                <td>2 February 2024</td>
+                <td> {{ $data->work_order_date }}</td>
                 <td></td>
                 <td>ACTION DATE :</td>
-                <td>2 February 2024</td>
+                <td> {{ $data->action_plan_date }}</td>
                 <td></td>
                 <td>FINISH DATE :</td>
-                <td>2 February 2024</td>
+                <td>{{ $data->finish_plan }}</td>
 
             </tr>
         </table>
@@ -63,76 +63,136 @@
                         <tr>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->scope , 1))
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
                                     <label for="vehicle1">TELEKOMUNIKASI</label><br>
+                                    @else
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                                    <label for="vehicle1">TELEKOMUNIKASI</label><br>
+                                    @endif
                                 </div>
                             </td>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->scope , 2))
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                    <label for="vehicle1">ELECTRIC</label><br>
+                                    @else
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                     <label for="vehicle1">ELECTRIC</label><br>
+                                    @endif
                                 </div>
                             </td>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->scope , 3))
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                    <label for="vehicle1">PLUMBING</label><br>
+                                    @else
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                     <label for="vehicle1">PLUMBING</label><br>
+                                    @endif
                                 </div>
                             </td>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->scope , 4))
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                    <label for="vehicle1">CIVIL</label><br>
+                                    @else
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                     <label for="vehicle1">CIVIL</label><br>
+                                    @endif
                                 </div>
                             </td>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->scope , 5))
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                    <label for="vehicle1">BAS</label><br>
+                                    @else
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                     <label for="vehicle1">BAS</label><br>
+                                    @endif
                                 </div>
                             </td>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->scope , 6))
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                    <label for="vehicle1">MDP</label><br>
+                                    @else
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                     <label for="vehicle1">MDP</label><br>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->scope , 7))
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
                                     <label for="vehicle1">LIGHTING</label><br>
+                                    @else
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                                    <label for="vehicle1">LIGHTING</label><br>
+                                    @endif
                                 </div>
                             </td>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->scope , 8))
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                    <label for="vehicle1">HVAC</label><br>
+                                    @else
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                     <label for="vehicle1">HVAC</label><br>
+                                    @endif
                                 </div>
                             </td>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->scope , 9))
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                    <label for="vehicle1">LIFT</label><br>
+                                    @else
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                     <label for="vehicle1">LIFT</label><br>
+                                    @endif
                                 </div>
                             </td>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->scope , 10))
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                    <label for="vehicle1">FIRE SYSTEM</label><br>
+                                    @else
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                     <label for="vehicle1">FIRE SYSTEM</label><br>
+                                    @endif
                                 </div>
                             </td>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->scope , 11))
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                    <label for="vehicle1">GENSET</label><br>
+                                    @else
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                     <label for="vehicle1">GENSET</label><br>
+                                    @endif
                                 </div>
                             </td>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->scope , 12))
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                    <label for="vehicle1">OTHER</label><br>
+                                    @else
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                     <label for="vehicle1">OTHER</label><br>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
@@ -153,32 +213,57 @@
                         <tr>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->classification , 1))
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                    <label for="vehicle1" style="text-transform: uppercase;">Prev Maint. Routine</label><br>
+                                    @else
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                     <label for="vehicle1" style="text-transform: uppercase;">Prev Maint. Routine</label><br>
+                                    @endif
                                 </div>
                             </td>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->classification , 2))
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                    <label for="vehicle1" style="text-transform: uppercase;">Prev Maint. Non Routine</label><br>
+                                    @else
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                     <label for="vehicle1" style="text-transform: uppercase;">Prev Maint. Non Routine</label><br>
+                                    @endif
                                 </div>
                             </td>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->classification , 3))
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                    <label for="vehicle1" style="text-transform: uppercase;">Repair</label><br>
+                                    @else
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                     <label for="vehicle1" style="text-transform: uppercase;">Repair</label><br>
+                                    @endif
                                 </div>
                             </td>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->classification , 4))
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                    <label for="vehicle1" style="text-transform: uppercase;">Replacement</label><br>
+                                    @else
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                     <label for="vehicle1" style="text-transform: uppercase;">Replacement</label><br>
+                                    @endif
                                 </div>
                             </td>
                             <td style=" border: 1px solid black;" class="py-1">
                                 <div class="">
+                                    @if (str_contains($data->classification , 5))
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                    <label for="vehicle1" style="text-transform: uppercase;">Vendor</label><br>
+                                    @else
                                     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                     <label for="vehicle1" style="text-transform: uppercase;">Vendor</label><br>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
@@ -194,7 +279,7 @@
             <tr style="vertical-align: top;">
                 <td style="width: 15px; font-size: 14px; padding-left:7px">3</td>
                 <td class="text-left" style="font-size: 14px; width: 130px">JOB DESCRIPTION</td>
-                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</td>
+                <td>{{$data->job_description}}</td>
                 <td></td>
             </tr>
         </table>
@@ -215,12 +300,14 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($data->work_order_details as $p)
                             <tr>
-                                <td style=" border: 1px solid black;" class="py-1">&nbsp;</td>
-                                <td style=" border: 1px solid black;" class="py-1">&nbsp;</td>
-                                <td style=" border: 1px solid black;" class="py-1">&nbsp;</td>
-                                <td style=" border: 1px solid black;" class="py-1">&nbsp;</td>
+                                <td style=" border: 1px solid black;" class="py-1">{{ $p->location }}</td>
+                                <td style=" border: 1px solid black;" class="py-1">{{ $p->material_request }}</td>
+                                <td style=" border: 1px solid black;" class="py-1">{{ $p->type }}</td>
+                                <td style=" border: 1px solid black;" class="py-1">{{ $p->quantity }}</td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </td>
@@ -242,26 +329,46 @@
                                 </td>
                                 <td style=" border: 1px solid black;" class="py-1">
                                     <div class="">
+                                        @if($data->klasifikasi == "closed")
+                                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                        <label for="vehicle1" style="text-transform: uppercase;">ClOSED</label><br>
+                                        @else
                                         <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                         <label for="vehicle1" style="text-transform: uppercase;">ClOSED</label><br>
+                                        @endif
                                     </div>
                                 </td>
                                 <td style=" border: 1px solid black;" class="py-1">
                                     <div class="">
+                                        @if($data->klasifikasi == "cancelled")
+                                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                        <label for="vehicle1" style="text-transform: uppercase;">CANCELED</label><br>
+                                        @else
                                         <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                         <label for="vehicle1" style="text-transform: uppercase;">CANCELED</label><br>
+                                        @endif
                                     </div>
                                 </td>
                                 <td style=" border: 1px solid black;" class="py-1">
                                     <div class="">
+                                        @if($data->klasifikasi == "explanation")
+                                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                        <label for="vehicle1" style="text-transform: uppercase;">EXPLANATION</label><br>
+                                        @else
                                         <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                         <label for="vehicle1" style="text-transform: uppercase;">EXPLANATION</label><br>
+                                        @endif
                                     </div>
                                 </td>
                                 <td style=" border: 1px solid black;" class="py-1">
                                     <div class="">
+                                        @if($data->klasifikasi == "others")
+                                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" checked>
+                                        <label for="vehicle1" style="text-transform: uppercase;">OTHERS</label><br>
+                                        @else
                                         <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                                         <label for="vehicle1" style="text-transform: uppercase;">OTHERS</label><br>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -306,10 +413,78 @@
                             <td style=" border: 1px solid black;" class="py-1">BUILDING MANAGER</td>
                         </tr>
                         <tr>
-                            <td style=" border: 1px solid black;" class="py-5">&nbsp;</td>
-                            <td style=" border: 1px solid black;" class="py-5">&nbsp;</td>
-                            <td style=" border: 1px solid black;" class="py-5">&nbsp;</td>
-                            <td style=" border: 1px solid black;" class="py-5">&nbsp;</td>
+                            <td style=" border: 1px solid black;" class="">
+                                <div style="margin : auto;
+                                            background-image : url({{$data->work_order_signatures[0]->signature}});
+                                            height: 150px;
+                                            width: 150px;
+                                            background-position: center center;
+                                            background-size: cover;
+                                            background-repeat: no-repeat;">
+                                </div>
+                            </td>
+                            <td style=" border: 1px solid black;">
+                                @if(isset($data->work_order_signatures[1]->signature))
+                                <div style="margin : auto;
+                                            background-image : url({{$data->work_order_signatures[0]->signature}});
+                                            height: 150px;
+                                            width: 150px;
+                                            background-position: center center;
+                                            background-size: cover;
+                                            background-repeat: no-repeat;">
+                                </div>
+                                @else
+                                <div style="margin : auto;
+                                            background-image : url();
+                                            height: 150px;
+                                            width: 150px;
+                                            background-position: center center;
+                                            background-size: cover;
+                                            background-repeat: no-repeat;">
+                                </div>
+                                @endif
+                            </td>
+                            <td style=" border: 1px solid black;">
+                                @if(isset($data->work_order_signatures[2]->signature))
+                                <div style="margin : auto;
+                                            background-image : url({{$data->work_order_signatures[2]->signature}});
+                                            height: 150px;
+                                            width: 150px;
+                                            background-position: center center;
+                                            background-size: cover;
+                                            background-repeat: no-repeat;">
+                                </div>
+                                @else
+                                <div style="margin : auto;
+                                            background-image : url();
+                                            height: 150px;
+                                            width: 150px;
+                                            background-position: center center;
+                                            background-size: cover;
+                                            background-repeat: no-repeat;">
+                                </div>
+                                @endif
+                            </td>
+                            <td style=" border: 1px solid black;">
+                                @if(isset($data->work_order_signatures[3]->signature))
+                                <div style="margin : auto;
+                                            background-image : url({{$data->work_order_signatures[3]->signature}});
+                                            height: 150px;
+                                            width: 150px;
+                                            background-position: center center;
+                                            background-size: cover;
+                                            background-repeat: no-repeat;">
+                                    @else
+                                    <div style="margin : auto;
+                                            background-image : url();
+                                            height: 150px;
+                                            width: 150px;
+                                            background-position: center center;
+                                            background-size: cover;
+                                            background-repeat: no-repeat;">
+                                    </div>
+                                    @endif
+                            </td>
                         </tr>
                     </table>
                 </td>
