@@ -481,7 +481,9 @@ $configData = Helper::appClasses();
                              
                         f =  $(
                            `<button class="btn btn-sm btn-success ms-2 w-100"><i class="ti ti-download me-md-1"></i><span class="d-md-inline-block d-none">Download .XLSX</span></button>`
-                        ).appendTo(".invoice_status")
+                        ).appendTo(".invoice_status").on("click", () => {
+                            window.location = "{{url('report/report-invoice/file-export')}}"
+                        })
                       
                         $('#date_select').daterangepicker({
                             opens: 'left'
