@@ -43,8 +43,8 @@ $configData = Helper::appClasses();
             <div class="card h-100">
                 <div class="card-header pb-0 d-flex justify-content-between mb-lg-n4">
                     <div class="card-title mb-0">
-                        <h5 class="mb-0">Earning Reports</h5>
-                        <small class="text-muted">Weekly Earnings Overview</small>
+                        <h5 class="mb-0">Laporan Pendapatan</h5>
+                        <small class="text-muted">Ringkasan Bulanan</small>
                     </div>
                     <div class="dropdown">
                         <button class="btn p-0" type="button" id="earningReportsId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,7 +64,7 @@ $configData = Helper::appClasses();
                                 <h1 class="mb-0">$468</h1>
                                 <div class="badge rounded bg-label-success">+4.2%</div>
                             </div>
-                            <small>You informed of this week compared to last week</small>
+                            <small>Pendapatan bulan ini</small>
                         </div>
                         <div class="col-12 col-md-8">
                             <div id="weeklyEarningReports"></div>
@@ -75,7 +75,7 @@ $configData = Helper::appClasses();
                             <div class="col-12 col-sm-4">
                                 <div class="d-flex gap-2 align-items-center">
                                     <div class="badge rounded bg-label-primary p-1"><i class="ti ti-currency-dollar ti-sm"></i></div>
-                                    <h6 class="mb-0">Earnings</h6>
+                                    <h6 class="mb-0">Total Tagihan Invoice</h6>
                                 </div>
                                 <h4 class="my-2 pt-1">$545.69</h4>
                                 <div class="progress w-75" style="height:4px">
@@ -85,7 +85,7 @@ $configData = Helper::appClasses();
                             <div class="col-12 col-sm-4">
                                 <div class="d-flex gap-2 align-items-center">
                                     <div class="badge rounded bg-label-info p-1"><i class="ti ti-chart-pie-2 ti-sm"></i></div>
-                                    <h6 class="mb-0">Profit</h6>
+                                    <h6 class="mb-0">Total Invoice Dibayarkan</h6>
                                 </div>
                                 <h4 class="my-2 pt-1">$256.34</h4>
                                 <div class="progress w-75" style="height:4px">
@@ -95,7 +95,7 @@ $configData = Helper::appClasses();
                             <div class="col-12 col-sm-4">
                                 <div class="d-flex gap-2 align-items-center">
                                     <div class="badge rounded bg-label-danger p-1"><i class="ti ti-brand-paypal ti-sm"></i></div>
-                                    <h6 class="mb-0">Expense</h6>
+                                    <h6 class="mb-0">Total Invoice Belum Dibayarkan</h6>
                                 </div>
                                 <h4 class="my-2 pt-1">$74.19</h4>
                                 <div class="progress w-75" style="height:4px">
@@ -114,8 +114,8 @@ $configData = Helper::appClasses();
             <div class="card h-100">
                 <div class="card-header d-flex justify-content-between pb-0">
                     <div class="card-title mb-0">
-                        <h5 class="mb-0">Support Tracker</h5>
-                        <small class="text-muted">Last 7 Days</small>
+                        <h5 class="mb-0">Ticket Complain</h5>
+                        <small class="text-muted">30 Hari Terakhir</small>
                     </div>
                     <div class="dropdown">
                         <button class="btn p-0" type="button" id="supportTrackerMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -132,28 +132,28 @@ $configData = Helper::appClasses();
                         <div class="col-12 col-sm-4 col-md-12 col-lg-4">
                             <div class="mt-lg-4 mt-lg-2 mb-lg-4 mb-2 pt-1">
                                 <h1 class="mb-0">164</h1>
-                                <p class="mb-0">Total Tickets</p>
+                                <p class="mb-0">Total Ticket</p>
                             </div>
                             <ul class="p-0 m-0">
                                 <li class="d-flex gap-3 align-items-center mb-lg-3 pt-2 pb-1">
                                     <div class="badge rounded bg-label-primary p-1"><i class="ti ti-ticket ti-sm"></i></div>
                                     <div>
-                                        <h6 class="mb-0 text-nowrap">New Tickets</h6>
+                                        <h6 class="mb-0 text-nowrap">Ticket Baru</h6>
                                         <small class="text-muted">142</small>
                                     </div>
                                 </li>
                                 <li class="d-flex gap-3 align-items-center mb-lg-3 pb-1">
                                     <div class="badge rounded bg-label-info p-1"><i class="ti ti-circle-check ti-sm"></i></div>
                                     <div>
-                                        <h6 class="mb-0 text-nowrap">Open Tickets</h6>
+                                        <h6 class="mb-0 text-nowrap">Ticket Selesai</h6>
                                         <small class="text-muted">28</small>
                                     </div>
                                 </li>
                                 <li class="d-flex gap-3 align-items-center pb-1">
                                     <div class="badge rounded bg-label-warning p-1"><i class="ti ti-clock ti-sm"></i></div>
                                     <div>
-                                        <h6 class="mb-0 text-nowrap">Response Time</h6>
-                                        <small class="text-muted">1 Day</small>
+                                        <h6 class="mb-0 text-nowrap">Ticket Menunggu</h6>
+                                        <small class="text-muted">1</small>
                                     </div>
                                 </li>
                             </ul>
@@ -172,44 +172,52 @@ $configData = Helper::appClasses();
                 <div class="card-header">
                     <div class="d-flex justify-content-between mb-3">
                         <h5 class="card-title mb-0">Statistics</h5>
-                        <small class="text-muted">Updated 1 month ago</small>
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row gy-3">
-                        <div class="col-md-3 col-6">
+                    <div class="d-flex justify-content-between">
+                        <div class="">
                             <div class="d-flex align-items-center">
                                 <div class="badge rounded-pill bg-label-primary me-3 p-2"><i class="ti ti-chart-pie-2 ti-sm"></i></div>
                                 <div class="card-info">
                                     <h5 class="mb-0">230k</h5>
-                                    <small>Sales</small>
+                                    <small>Work Order</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-6">
+                        <div class="">
                             <div class="d-flex align-items-center">
                                 <div class="badge rounded-pill bg-label-info me-3 p-2"><i class="ti ti-users ti-sm"></i></div>
                                 <div class="card-info">
                                     <h5 class="mb-0">8.549k</h5>
-                                    <small>Customers</small>
+                                    <small>Mat Request</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-6">
+                        <div class="">
                             <div class="d-flex align-items-center">
                                 <div class="badge rounded-pill bg-label-danger me-3 p-2"><i class="ti ti-shopping-cart ti-sm"></i></div>
                                 <div class="card-info">
                                     <h5 class="mb-0">1.423k</h5>
-                                    <small>Products</small>
+                                    <small>Purc Request</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-6">
+                        <div class="">
                             <div class="d-flex align-items-center">
                                 <div class="badge rounded-pill bg-label-success me-3 p-2"><i class="ti ti-currency-dollar ti-sm"></i></div>
                                 <div class="card-info">
                                     <h5 class="mb-0">$9745</h5>
-                                    <small>Revenue</small>
+                                    <small>Purchase Order</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="d-flex align-items-center">
+                                <div class="badge rounded-pill bg-label-secondary me-3 p-2"><i class="ti ti-credit-card ti-sm"></i></div>
+                                <div class="card-info">
+                                    <h5 class="mb-0">$9745</h5>
+                                    <small>Tag Vendor</small>
                                 </div>
                             </div>
                         </div>
