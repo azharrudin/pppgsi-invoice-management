@@ -50,11 +50,11 @@ $configData = Helper::appClasses();
                                     <input type="text" class="form-control w-px-250 " id="check_number" name="check_number" placeholder="Nomor" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
-                                <div class="mb-3 w-px-250">
+                                <!-- <div class="mb-3 w-px-250">
                                     <label for="note" class="form-label fw-medium">Bank</label>
                                     <select id="bank" class="form-select select2 w-px-250 select-bank item-details mb-3" required>
                                     </select>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="col-md-6 d-flex justify-content-end">
                                 <div class="mb-3">
@@ -460,7 +460,7 @@ $configData = Helper::appClasses();
                         // datas.signature_image = ttdFile;
                         datas.invoice_id = parseInt(invoice);
                         datas.tenant_id = parseInt(tenant);
-                        datas.bank_id = parseInt(bank);
+                        // datas.bank_id = parseInt(bank);
                         datas.status = 'Terbuat';
                         datas.receipt_date = moment().format('YYYY-MM-DD');
                         datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
@@ -534,7 +534,7 @@ $configData = Helper::appClasses();
             datas.signature_image = ttdFile;
             datas.invoice_id = parseInt(invoice);
             datas.tenant_id = parseInt(tenant);
-            datas.bank_id = parseInt(bank);
+            // datas.bank_id = parseInt(bank);
             datas.status = 'Terbuat';
             datas.receipt_date = moment().format('YYYY-MM-DD');
             datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
@@ -781,11 +781,11 @@ $configData = Helper::appClasses();
                 let total_paid = parseFloat(res.data.total_paid);
                 let grand_total = parseFloat(res.data.grand_total);
                 let tenant = res.data.tenant;
-                let bank = res.data.bank;
+                // let bank = res.data.bank;
                 $("#total_paid").val(total_paid.toLocaleString('en-US'));
                 $("#grand_total").val(grand_total.toLocaleString('en-US'));
-                $(".select-bank").empty().append('<option value="' + bank.id + '">' +
-                    bank.name + '</option>').val(bank.id);
+                // $(".select-bank").empty().append('<option value="' + bank.id + '">' +
+                //     bank.name + '</option>').val(bank.id);
                 $(".select-tenant").empty().append('<option value="' + tenant.id +
                     '">' + tenant.name + '</option>').val(tenant.id);
                 $(".select-invoice").empty().append('<option value="' + res.data.id +

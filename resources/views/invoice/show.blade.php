@@ -294,6 +294,7 @@ $configData = Helper::appClasses();
                     });
                     $.ajax({
                         url: "{{env('BASE_URL_API')}}" +'/api/invoice/update-status/' + id,
+                        // url: 'http://127.0.0.1:8000/api/invoice/update-status/' + id,
                         type: "PATCH",
                         data: JSON.stringify(datas),
                         contentType: "application/json; charset=utf-8",
@@ -317,7 +318,7 @@ $configData = Helper::appClasses();
                         error: function(xhr, status, error) {
                             Swal.fire({
                                 title: 'Error!',
-                                text: ' xhr.responseText!',
+                                text: xhr.responseText,
                                 icon: 'error',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
@@ -334,6 +335,8 @@ $configData = Helper::appClasses();
 
     function getDataInvoice(id) {
         $.ajax({
+
+            // url: "http://127.0.0.1:8000/api/invoice/" + id,
             url: "{{env('BASE_URL_API')}}" +'/api/invoice/' + id,
             type: "GET",
             dataType: "json",

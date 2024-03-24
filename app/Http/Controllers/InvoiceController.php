@@ -13,6 +13,7 @@ use App\Services\PaperIdService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -178,6 +179,7 @@ class InvoiceController extends Controller
         try {
             $id = (int) $id;
             $getInvoice = Invoice::with("tenant")->with("invoiceDetails")->where("deleted_at", null)->where("id", $id)->first();
+            
             if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
 
             $validateInvoice = $this->InvoiceService->validateInvoice($request);
@@ -242,7 +244,9 @@ class InvoiceController extends Controller
                 ->where("id", $id)
                 ->where("deleted_at", null)
                 ->first();
-
+                $path = $getInvoice->pdf_link;
+                Storage::disk('public')->put('invoice.pdf', file_get_contents($path));
+                $path = Storage::path('invoice.pdf');
             return ["data" => $getInvoice];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
