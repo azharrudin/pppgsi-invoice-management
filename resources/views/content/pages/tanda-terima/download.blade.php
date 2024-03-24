@@ -91,9 +91,6 @@ return $hasil_rupiah;
                         <td class="width: 25%;">{{$data->tenant->name ?? ''}}</td>
                     </tr>
                     <tr>
-                        <td>Bank</td>
-                        <td>:</td>
-                        <td>{{$data->bank->name}}</td>
                         <td>Alamat</td>
                         <td>:</td>
                         <td> {{ $data->tenant->company ?? '' }} {{ $data->tenant->floor ?? '' }} {{ $data->tenant->name ?? '' }}</td>
