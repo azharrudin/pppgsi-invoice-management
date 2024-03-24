@@ -134,9 +134,6 @@ return $hasil_rupiah;
                     <td>
                         <div style="border: 1px solid black; height : 155px; padding:10px; width:350px">
                             <p class="line-height: 2;">
-                                {{ $data->bank->account_name }} <br />
-                                {{ $data->bank->name }} <br />
-                                CABANG {{ $data->bank->branch_name }} <br />
                                 Inv. No. : {{ $data->invoice->invoice_number }}
                             </p>
 
