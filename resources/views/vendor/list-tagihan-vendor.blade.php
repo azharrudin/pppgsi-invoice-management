@@ -188,7 +188,7 @@ $configData = Helper::appClasses();
             order: [
                 [0, "desc"]
             ],
-            dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"tagihan_status d-flex mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
             language: {
                 sLengthMenu: "Show _MENU_",
                 search: "",
@@ -197,13 +197,13 @@ $configData = Helper::appClasses();
             buttons: [],
             responsive: {
                 details: {
-                    /*
+                    
                     display: $.fn.dataTable.Responsive.display.modal({
                         header: function(a) {
                             return "Details of " + a.data().full_name
                         }
                     }),
-                    */
+                    
                     type: "column",
                     renderer: function(a, e, t) {
                         var s = $.map(t, (function(a, e) {
@@ -221,13 +221,14 @@ $configData = Helper::appClasses();
                     var a = this,
                         e = $(
                             '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
-                        ).appendTo(".purchase_status").on("change", (
+                        ).appendTo(".tagihan_status").on("change", (
                             function() {
                                 var e = $.fn.dataTable.util.escapeRegex($(
                                     this).val());
                                 a.search(e ? "^" + e + "$" : "", !0, !1)
                                     .draw()
                             }));
+                            
                     a.data().unique().sort().each((function(a, t) {
                         e.append('<option value="' + a +
                             '" class="text-capitalize">' + a +
