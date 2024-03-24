@@ -7,6 +7,7 @@ use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use DataTables;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -87,6 +88,17 @@ class InvoiceController extends Controller
     public function show(string $id)
     {
         return view('invoice.show', compact('id'));
+    }
+
+    public function pdfStorage($file)
+    {
+        dd($file);
+        $path = "https://www.itsolutionstuff.com/assets/images/logo-it.png";
+        Storage::disk('public')->put('itsolutionstuff.png', file_get_contents($path));
+  
+        $path = Storage::path('itsolutionstuff.png');
+  
+        return response()->download($path);
     }
 
     public function print($id)

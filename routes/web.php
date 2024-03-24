@@ -65,6 +65,7 @@ Route::group(['middleware' => 'cekauth'], function () {
             Route::get('/preview-invoice-edit/{id}', [InvoiceController::class, 'editPreview'])->name('pages-list-invoice');
             Route::get('/show/{id}', [InvoiceController::class, 'show'])->name('pages-list-invoice');
             Route::get('/print/{id}', [InvoiceController::class, 'print']);
+            Route::get('/pdf-storage/{file}', [InvoiceController::class, 'pdfStorage']);
         });
 
         Route::prefix('tanda-terima')->group(function () {
