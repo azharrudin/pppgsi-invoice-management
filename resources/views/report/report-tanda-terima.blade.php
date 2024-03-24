@@ -75,7 +75,6 @@ $configData = Helper::appClasses();
 @endsection
 
 @section('page-script')
-<script src="{{ asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script>
     "use strict";
@@ -302,7 +301,7 @@ $configData = Helper::appClasses();
             order: [
                 [0, "desc"]
             ],
-            dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status d-flex mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
             language: {
                 sLengthMenu: "Show _MENU_",
                 search: "",
@@ -339,7 +338,19 @@ $configData = Helper::appClasses();
                                     this).val());
                                 a.search(e)
                                     .draw()
+                            })),
+                            f =  $(
+                            '<input class="form-select ms-2" type="date" value="Select Date"></input>'
+                        ).appendTo(".invoice_status").on("change", (
+                            function() {
+                              
+                                var convertDate =  moment($(this).val()).format('YYYY-MM-DD');   
+                                var e = $.fn.dataTable.util.escapeRegex(convertDate);
+                                console.log(e);
+                                a.columns(5).search(convertDate)
+                                    .draw()
                             }));
+                        
                     a.data().unique().sort().each((function(a, t) {
                         let label ='';
                         if(a == 'Yes'){

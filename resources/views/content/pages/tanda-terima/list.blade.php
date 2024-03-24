@@ -75,7 +75,6 @@ $configData = Helper::appClasses();
 @endsection
 
 @section('page-script')
-<script src="{{ asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script>
     "use strict";
