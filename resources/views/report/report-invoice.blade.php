@@ -95,11 +95,9 @@ $configData = Helper::appClasses();
         }
     });
     $((function() {
-
         var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>`;
-
         let account = {!! json_encode(session('data')) !!}
         let buttonAdd = [];
         if (account.level.id == '10') {
@@ -118,47 +116,48 @@ $configData = Helper::appClasses();
                             console.log(errors);
                         }
                     });
-                    // window.location = "{{url('invoice/add-invoice')}}"
+                    window.location = "{{url('invoice/add-invoice')}}"
                 }
             }];
         }
-        /* buttonAdd = [{
-           text: '<i class="ti ti-download me-md-1"></i><span class="d-md-inline-block d-none">Tarik Report .XLSX</span>',
-         className: "btn btn-primary",
+        /* 
+        buttonAdd = [{
+            text: '<i class="ti ti-download me-md-1"></i><span class="d-md-inline-block d-none">Tarik Report .XLSX</span>',
+            className: "btn btn-primary",
             action: function(a, e, t, s) {
-                // $.ajax({
-                //     url: "{{url('api/invoice/invoice-report-export')}}",
-                //     type: "GET",
-                //     dataType: "json",
-                //     success: function(res) {
-                //         console.log(res.data);
-                //         let data = res.data;
-                //         console.log(typeof(data));
-                //         let datas = {};
-                //         datas.data = data;
-                //         $.ajax({
-                //             url: "{{url('report/report-invoice/file-export')}}",
-                //             type: "POST",
-                //             data: JSON.stringify(datas),
-                //             contentType: "application/json; charset=utf-8",
-                //             dataType: "json",
-                //             success : function (res){
-                //                 console.log(res);
-                //             },
-                //             error: function(errors) {
-                //                 console.log(errors);
-                //             }
-                //         });
-                //     },
-                //     error: function(errors) {
-                //         console.log(errors);
-                //     }
-                // });
+                 $.ajax({
+                     url: "{{url('api/invoice/invoice-report-export')}}",
+                     type: "GET",
+                     dataType: "json",
+                     success: function(res) {
+                        console.log(res.data);
+                        let data = res.data;
+                        console.log(typeof(data));
+                        let datas = {};
+                        datas.data = data;
+                        $.ajax({
+                            url: "{{url('report/report-invoice/file-export')}}",
+                            type: "POST",
+                            data: JSON.stringify(datas),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success : function (res){
+                                console.log(res);
+                            },
+                             error: function(errors) {
+                                 console.log(errors);
+                             }
+                         });
+                     },
+                     error: function(errors) {
+                         console.log(errors);
+                     }
+                });
                 console.log('s');
                 window.location = "{{url('report/report-invoice/file-export')}}"
             }
         }];
-*/
+        */
         setHeader();
        
         function setHeader() {
