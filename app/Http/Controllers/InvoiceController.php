@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
+use Mail;
 
 class InvoiceController extends Controller
 {
@@ -244,9 +246,6 @@ class InvoiceController extends Controller
                 ->where("id", $id)
                 ->where("deleted_at", null)
                 ->first();
-            $path = $getInvoice->pdf_link;
-            Storage::disk('public')->put("invoice/" . str_replace('/', '-', $getInvoice->invoice_number . ".pdf"), file_get_contents($path));
-            $path = Storage::path("invoice/" . str_replace('/', '-', $getInvoice->invoice_number . ".pdf"));
             return ["data" => $getInvoice];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
@@ -449,14 +448,38 @@ class InvoiceController extends Controller
                 }
             }
 
+            if($status == 'terkirim'){
+                $invoice = Invoice::where('id', $id)->first();
+                $hariIni = \Carbon\Carbon::now()->locale('id');
+                $bulan = $hariIni->monthName;
+                $tahun = $hariIni->format('Y');
+    
+                $dataEmail["tenantName"] = $invoice->tenant->name;
+                $dataEmail["month"] = $bulan;
+                $dataEmail["year"] = $tahun;
+                $dataEmail["total"] = $invoice->grand_total;
+                $dataEmail["terbilang"] = $invoice->grand_total_spelled;
+                $dataEmail["invoice_number"] = $invoice->invoice_number;
+
+                $path = $invoice->pdf_link;
+                Storage::disk('public')->put("invoice/" . str_replace('/', '-', $invoice->invoice_number . ".pdf"), file_get_contents($path));
+                $path = Storage::path("invoice/" . str_replace('/', '-', $invoice->invoice_number . ".pdf"));
+    
+                $pdf = PDF::loadView('invoice.download', ['data' => $invoice]);
+                $to = $invoice->tenant->email;
+    
+                Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $pdf, $dataEmail) {
+                    $message->to($to)
+                        ->subject('Invoice No Invoice : '.$dataEmail['invoice_number'])
+                        ->attachData($pdf->output(), "Invoice.pdf");
+                });
+            }
+
             $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
                 ->where("id", $id)
                 ->where("deleted_at", null)
                 ->first();
-            $path = $getInvoice->pdf_link;
-            Storage::disk('public')->put("invoice/" . str_replace('/', '-', $getInvoice->invoice_number . ".pdf"), file_get_contents($path));
-            $path = Storage::path("invoice/" . str_replace('/', '-', $getInvoice->invoice_number . ".pdf"));
 
             return ["data" => $getInvoice];
         } catch (\Throwable $e) {

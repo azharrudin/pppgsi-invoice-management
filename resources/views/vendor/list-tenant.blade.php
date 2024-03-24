@@ -467,7 +467,7 @@
                                 error: function(xhr, status, error) {
                                     Swal.fire({
                                         title: 'Error!',
-                                        text: ' xhr.responseText!',
+                                        text: xhr?.responseJSON?.message,
                                         icon: 'error',
                                         customClass: {
                                             confirmButton: 'btn btn-primary'
@@ -526,7 +526,7 @@
                                 error: function(xhr, status, error) {
                                     Swal.fire({
                                         title: 'Error!',
-                                        text: ' xhr.responseText!',
+                                        text: xhr?.responseJSON?.message,
                                         icon: 'error',
                                         customClass: {
                                             confirmButton: 'btn btn-primary'
