@@ -265,6 +265,8 @@ class TaxController extends Controller
 
             $dataArr = [];
             foreach($taxArr as $taxObj){
+                if(!$taxObj["exclusive"]) continue;
+
                 $dataObj = [
                     "id" => $taxObj["uuid"],
                     "text" => $taxObj["name"],

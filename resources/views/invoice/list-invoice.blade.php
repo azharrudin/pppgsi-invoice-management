@@ -179,7 +179,7 @@ $configData = Helper::appClasses();
                         error: function(xhr, status, error) {
                             Swal.fire({
                                 title: 'Error!',
-                                text: ' xhr.responseText!',
+                                text: xhr?.responseJSON?.message,
                                 icon: 'error',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
@@ -240,7 +240,7 @@ $configData = Helper::appClasses();
                         error: function(xhr, status, error) {
                             Swal.fire({
                                 title: 'Error!',
-                                text: ' xhr.responseText!',
+                                text: xhr?.responseJSON?.message,
                                 icon: 'error',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
@@ -367,7 +367,6 @@ $configData = Helper::appClasses();
                     }
                     let downloadButton = '';
                     if(row.pdf_link == null || row.pdf_link == ''){
-                        console.log(row.grand_total);
                         downloadButton = `<a target="_blank" href="{{url('invoice/print')}}/${data}" class="dropdown-item">Download</a>`;
                     }else{
                         downloadButton = '<a target="_blank" href="'+row.pdf_link+'" class="dropdown-item">Download</a>';

@@ -14,6 +14,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
+use Mail;
+use PDF;
 
 class InvoiceController extends Controller
 {
@@ -244,9 +247,6 @@ class InvoiceController extends Controller
                 ->where("id", $id)
                 ->where("deleted_at", null)
                 ->first();
-            $path = $getInvoice->pdf_link;
-            Storage::disk('public')->put("invoice/" . str_replace('/', '-', $getInvoice->invoice_number . ".pdf"), file_get_contents($path));
-            $path = Storage::path("invoice/" . str_replace('/', '-', $getInvoice->invoice_number . ".pdf"));
             return ["data" => $getInvoice];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
@@ -449,14 +449,85 @@ class InvoiceController extends Controller
                 }
             }
 
+            if($status == 'terkirim'){
+                $invoice = Invoice::where('id', $id)->first();
+                $hariIni = \Carbon\Carbon::now()->locale('id');
+                $bulan = $hariIni->monthName;
+                $tahun = $hariIni->format('Y');
+    
+                $dataEmail["tenantName"] = $invoice->tenant->name;
+                $dataEmail["month"] = $bulan;
+                $dataEmail["year"] = $tahun;
+                $dataEmail["total"] = $invoice->grand_total;
+                $dataEmail["terbilang"] = $invoice->grand_total_spelled;
+                $dataEmail["invoice_number"] = $invoice->invoice_number;
+
+                $path = $invoice->pdf_link;
+                Storage::disk('public')->put("invoice/" . str_replace('/', '-', $invoice->invoice_number . ".pdf"), file_get_contents($path));
+                $path = Storage::path("invoice/" . str_replace('/', '-', $invoice->invoice_number . ".pdf"));
+                $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice/' . $id);
+                $response = json_decode($apiRequest->getBody());
+                $data = $response->data;
+                $subtotal = 0;
+                $diskon = 0;
+                $total = 0;
+                $pajak = 0;
+                $pajakEklusif = [];
+                $pajakInklusif = 0;
+                for ($i = 0; $i <  sizeof($data->invoice_details); $i++) {
+                    $tax = $data->invoice_details[$i]->tax_id;
+                    $apiRequest = Http::get(env('BASE_URL_API') . '/api/tax/get-paper/' . $tax);
+                    $response = json_decode($apiRequest->getBody());
+                    $value = $response->data->name;
+                    $data->invoice_details[$i]->tax_id = $value;
+                    $subtotal = $subtotal + ($data->invoice_details[$i]->price * $data->invoice_details[$i]->quantity);
+                    $diskon = $diskon + (($data->invoice_details[$i]->price * $data->invoice_details[$i]->quantity) * $data->invoice_details[$i]->discount / 100);
+                    $exlusive =  $response->data->exclusive;
+        
+                    if ($exlusive == 0) {
+                        $pajak = $pajak + 0;
+                    } else {
+                        $pajak = $subtotal * ($response->data->value / 100);
+                        if (sizeof($pajakEklusif) > 0) {
+                            foreach ($pajakEklusif as $key => $value) {
+                                if ($key  == $response->data->name) {
+                                    $pajakEklusif[$response->data->name] = $subtotal * ($response->data->value / 100);
+                                } else {
+                                }
+                            }
+                        } else {
+                            $pajakEklusif[$response->data->name] =$subtotal * ($response->data->value / 100);
+                        }
+                    }
+                }
+        
+        
+                $total = $subtotal - $diskon + $pajak;
+                $data->subtotal = $subtotal;
+                $data->discount = $diskon;
+                $data->tax = $pajak;
+                $data->total = $total;
+                $data->pajakEklusif = $pajakEklusif;
+                $pdf = PDF::loadView('invoice.download', ['data' => $data]);
+                $to = $invoice->tenant->email;
+
+
+    
+                Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $path, $dataEmail) {
+                    $message->to($to)
+                        ->subject('Invoice No Invoice : '.$dataEmail['invoice_number'])
+                        ->attach(storage_path('app/public/invoice/'.$dataEmail['invoice_number']), [
+                            'as' => $dataEmail['invoice_number'],
+                            'mime' => 'application/pdf',
+                        ]);
+                });
+            }
+
             $getInvoice = Invoice::with("invoiceDetails")
                 ->with("tenant")
                 ->where("id", $id)
                 ->where("deleted_at", null)
                 ->first();
-            $path = $getInvoice->pdf_link;
-            Storage::disk('public')->put("invoice/" . str_replace('/', '-', $getInvoice->invoice_number . ".pdf"), file_get_contents($path));
-            $path = Storage::path("invoice/" . str_replace('/', '-', $getInvoice->invoice_number . ".pdf"));
 
             return ["data" => $getInvoice];
         } catch (\Throwable $e) {

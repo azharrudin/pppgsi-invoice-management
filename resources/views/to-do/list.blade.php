@@ -368,7 +368,7 @@ $configData = Helper::appClasses();
                                 },
                                 buttonsStyling: false
                             }).then((result) => {
-                                $('.invoice-table').reload();
+                                $(".invoice-table").DataTable().ajax.reload();
                             });
                         },
                         error: function(xhr, status, error) {
