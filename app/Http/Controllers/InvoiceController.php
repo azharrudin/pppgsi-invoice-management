@@ -508,7 +508,6 @@ class InvoiceController extends Controller
                 $data->tax = $pajak;
                 $data->total = $total;
                 $data->pajakEklusif = $pajakEklusif;
-                $pdf = PDF::loadView('invoice.download', ['data' => $data]);
                 $to = $invoice->tenant->email;
 
 
