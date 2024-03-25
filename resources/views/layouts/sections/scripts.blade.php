@@ -14,14 +14,14 @@
 <script>
     let accountMenu = {!!json_encode(session('data')) !!}
     //BM
-    if(accountMenu.level.id == 1){
+    if(accountMenu?.level.id == 1){
         hideMenu("Client");
         hideMenu("Vendor");
         hideMenu("Report");
         hideMenu("Settings");
     }
     //KA
-    if(accountMenu.level.id == 2){
+    if(accountMenu?.level.id == 2){
         hideSubMenu("List Work Order");
         hideMenu("Client");
         hideMenu("Vendor");
@@ -30,7 +30,7 @@
     }
    
     //Koordinator
-    if(accountMenu.level.id == 3){
+    if(accountMenu?.level.id == 3){
         hideMenu("Invoice");
         hideMenu("Request");
         hideSubMenu("List Work Order");
@@ -41,7 +41,7 @@
         hideMenu("Settings");
     }
     //Leader Cleaning
-    if(accountMenu.level.id == 4){
+    if(accountMenu?.level.id == 4){
         hideMenu("Invoice");
         hideMenu("Request");
         hideSubMenu("List Work Order");
@@ -52,7 +52,7 @@
         hideMenu("Settings");
     }
     //Teknisi
-    if(accountMenu.level.id == 5){
+    if(accountMenu?.level.id == 5){
         hideMenu("Invoice");
         hideMenu("Request");
         hideSubMenu("List Laporan Kerusakan");
@@ -64,7 +64,7 @@
     }
     
     //Chief Engineering
-    if(accountMenu.level.id == 6){
+    if(accountMenu?.level.id == 6){
         hideMenu("Invoice");
         hideMenu("Request");
         hideSubMenu("List Laporan Kerusakan");
@@ -75,7 +75,7 @@
         hideMenu("Settings");
     }
     //WareHouse
-    if(accountMenu.level.id == 7){
+    if(accountMenu?.level.id == 7){
         hideMenu("Invoice");
         hideSubMenu("List Laporan Kerusakan");
         hideSubMenu("List Ticket");
@@ -86,7 +86,7 @@
         hideMenu("Report");
         hideMenu("Settings");
     }
-    if(accountMenu.level.id == 8){
+    if(accountMenu?.level.id == 8){
         hideMenu("Invoice");
         hideMenu("Complain");
         hideSubMenu("List Purchase Request");
@@ -97,10 +97,10 @@
         hideMenu("Settings");
     }
    
-    if(accountMenu.level.id == 9){
-        hideMenu("Invoice");
+    if(accountMenu?.level.id == 9){
         hideMenu("Complain");
         hideSubMenu("List Purchase Request");
+        hideSubMenu("List Tanda Terima");
         hideSubMenu("List Purchase Order");
         hideMenu("Client");
         hideMenu("Vendor");

@@ -91,9 +91,6 @@ return $hasil_rupiah;
                         <td class="width: 25%;">{{$data->tenant->name ?? ''}}</td>
                     </tr>
                     <tr>
-                        <td>Bank</td>
-                        <td>:</td>
-                        <td>{{$data->bank->name}}</td>
                         <td>Alamat</td>
                         <td>:</td>
                         <td> {{ $data->tenant->company ?? '' }} {{ $data->tenant->floor ?? '' }} {{ $data->tenant->name ?? '' }}</td>
@@ -137,9 +134,6 @@ return $hasil_rupiah;
                     <td>
                         <div style="border: 1px solid black; height : 155px; padding:10px; width:350px">
                             <p class="line-height: 2;">
-                                {{ $data->bank->account_name }} <br />
-                                {{ $data->bank->name }} <br />
-                                CABANG {{ $data->bank->branch_name }} <br />
                                 Inv. No. : {{ $data->invoice->invoice_number }}
                             </p>
 

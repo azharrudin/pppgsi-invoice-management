@@ -251,7 +251,7 @@ $configData = Helper::appClasses();
                         error: function(xhr, status, error) {
                             Swal.fire({
                                 title: 'Error!',
-                                text: ' You clicked the button!',
+                                text: xhr?.responseJSON?.message,
                                 icon: 'error',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
@@ -282,7 +282,7 @@ $configData = Helper::appClasses();
                     let datas = {}
                     if(account.level.id == 1){
                         datas.status = 'Disetujui BM';
-                    }else if(account.level.id == 2){
+                    }else if(account.level.id == 9){
                         datas.status = 'Disetujui KA';
                     }
                     Swal.fire({
@@ -294,6 +294,7 @@ $configData = Helper::appClasses();
                     });
                     $.ajax({
                         url: "{{env('BASE_URL_API')}}" +'/api/invoice/update-status/' + id,
+                        // url: 'http://127.0.0.1:8000/api/invoice/update-status/' + id,
                         type: "PATCH",
                         data: JSON.stringify(datas),
                         contentType: "application/json; charset=utf-8",
@@ -317,7 +318,7 @@ $configData = Helper::appClasses();
                         error: function(xhr, status, error) {
                             Swal.fire({
                                 title: 'Error!',
-                                text: ' You clicked the button!',
+                                text: 'Materai Habis',
                                 icon: 'error',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
@@ -334,6 +335,8 @@ $configData = Helper::appClasses();
 
     function getDataInvoice(id) {
         $.ajax({
+
+            // url: "http://127.0.0.1:8000/api/invoice/" + id,
             url: "{{env('BASE_URL_API')}}" +'/api/invoice/' + id,
             type: "GET",
             dataType: "json",
@@ -385,7 +388,7 @@ $configData = Helper::appClasses();
                 if (data.status == 'Disetujui BM' && account.level.id == 10) {
                     $('.kirim-invoice').removeClass('d-none');
                 }
-                if ((account.level.id == '2' && data.status == 'Terbuat') || (data.status == 'Disetujui KA' && account.level.id == '1')) {
+                if ((account.level.id == '9' && data.status == 'Terbuat') || (data.status == 'Disetujui KA' && account.level.id == '1')) {
                     $('.disetujui').removeClass('d-none');
                 }
                 if (account.level.id == '10' && data.status == 'Terbuat') {

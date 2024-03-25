@@ -179,7 +179,7 @@ $configData = Helper::appClasses();
                         error: function(xhr, status, error) {
                             Swal.fire({
                                 title: 'Error!',
-                                text: ' You clicked the button!',
+                                text: xhr?.responseJSON?.message,
                                 icon: 'error',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
@@ -240,7 +240,7 @@ $configData = Helper::appClasses();
                         error: function(xhr, status, error) {
                             Swal.fire({
                                 title: 'Error!',
-                                text: ' You clicked the button!',
+                                text: xhr?.responseJSON?.message,
                                 icon: 'error',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
@@ -336,8 +336,8 @@ $configData = Helper::appClasses();
                 render: function(data, type, row) {
                     if (data == 'Terbuat') {
                         return '<span class="badge w-100" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
-                    } else if (data == 'Disetujui KA') {
-                        return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized> Disetujui KA </span>';
+                    } else if (data == 'Disetujui CA') {
+                        return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized> Disetujui CA </span>';
                     } else if (data == 'Lunas') {
                         return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
                     } else if (data == 'Terkirim') {
@@ -367,7 +367,6 @@ $configData = Helper::appClasses();
                     }
                     let downloadButton = '';
                     if(row.pdf_link == null || row.pdf_link == ''){
-                        console.log(row.grand_total);
                         downloadButton = `<a target="_blank" href="{{url('invoice/print')}}/${data}" class="dropdown-item">Download</a>`;
                     }else{
                         downloadButton = '<a target="_blank" href="'+row.pdf_link+'" class="dropdown-item">Download</a>';

@@ -265,7 +265,7 @@
     iconSuccess.onclick = function () {
       Swal.fire({
         title: 'Good job!',
-        text: 'You clicked the button!',
+        text: 'xhr.responseText!',
         icon: 'success',
         customClass: {
           confirmButton: 'btn btn-primary'
@@ -280,7 +280,7 @@
     iconInfo.onclick = function () {
       Swal.fire({
         title: 'Info!',
-        text: 'You clicked the button!',
+        text: 'xhr.responseText!',
         icon: 'info',
         customClass: {
           confirmButton: 'btn btn-primary'
@@ -295,7 +295,7 @@
     iconWarning.onclick = function () {
       Swal.fire({
         title: 'Warning!',
-        text: ' You clicked the button!',
+        text: xhr?.responseJSON?.message,
         icon: 'warning',
         customClass: {
           confirmButton: 'btn btn-primary'
@@ -310,7 +310,7 @@
     iconError.onclick = function () {
       Swal.fire({
         title: 'Error!',
-        text: ' You clicked the button!',
+        text: xhr?.responseJSON?.message,
         icon: 'error',
         customClass: {
           confirmButton: 'btn btn-primary'
@@ -325,7 +325,7 @@
     iconQuestion.onclick = function () {
       Swal.fire({
         title: 'Question!',
-        text: ' You clicked the button!',
+        text: xhr?.responseJSON?.message,
         icon: 'question',
         customClass: {
           confirmButton: 'btn btn-primary'

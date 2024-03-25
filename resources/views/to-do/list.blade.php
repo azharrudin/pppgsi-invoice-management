@@ -368,13 +368,13 @@ $configData = Helper::appClasses();
                                 },
                                 buttonsStyling: false
                             }).then((result) => {
-                                $('.invoice-table').reload();
+                                $(".invoice-table").DataTable().ajax.reload();
                             });
                         },
                         error: function(xhr, status, error) {
                             Swal.fire({
                                 title: 'Error!',
-                                text: ' You clicked the button!',
+                                text:  xhr?.responseJSON?.message,
                                 icon: 'error',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
@@ -407,7 +407,6 @@ $configData = Helper::appClasses();
             tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
         //KA
         }else if(account.level_id == 2){
-            urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Terbuat";
             urlTandaTerima = "{{ url('to-do-list') }}"+"/receipt"+"/terbuat";
             urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/terbuat";
             urlTicket = "{{ url('to-do-list') }}"+"/ticket"+"/on progress";
@@ -434,9 +433,22 @@ $configData = Helper::appClasses();
             tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest)
         //chieEnginer
         }else if(account.level_id == 9){
+            urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Terbuat";
             urlMaterialRequest =  "{{ url('to-do-list') }}"+"/material-request"+"/disetujui chief departement";   
             tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest)
-        //chieEnginer
+            tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
+        //teknisi
+        }else if(account.level_id == 5){
+            urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Terbuat";   
+            tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
+        //leader cleaning
+        }else if(account.level_id == 4){
+            urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/Disetujui LC";
+            tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
+        //Koordinator
+        }else if(account.level_id == 3){
+            urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/terbuat";
+            tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
         }else{
             tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
             tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);

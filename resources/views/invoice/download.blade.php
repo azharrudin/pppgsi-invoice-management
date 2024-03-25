@@ -79,13 +79,13 @@ return $hasil_rupiah;
     <div class="container" id="printContent" style="padding: 37px">
         <header>
             <div class="row">
-                <table class="table" style="width: 95%">
+                <table class="table" style="width: 100%">
                     <tbody>
                         <tr>
-                            <td colspan="3" style="width: 45%;"><img src="{{public_path('assets/img/header-img.jpg')}}" alt="Kop" width="60%"></td>
+                            <td colspan="3" style="width: 45%;"><img src="{{public_path('assets/img/header-img.jpg')}}" alt="Kop" width="40%" style="margin-left: 20px;"></td>
                             <td colspan="1" style="width: 10%;"></td>
                             <td colspan="3" style="width: 45%; vertical-align:middle">
-                                <table style="text-align:right; width : 100%">
+                                <table style="text-align:right; width : 85%">
                                     <tr>
                                         <td colspan="3" style="font-size: 24px; color : #336699;">Invoice</td>
                                     </tr>
@@ -93,19 +93,19 @@ return $hasil_rupiah;
                                         <td colspan="3" style="height: 10px;"></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:45%;"><b>Reference</b></td>
+                                        <td style="width:45%;"><b>Referensi</b></td>
                                         <td style="width:10%;"></td>
-                                        <td style="width:45%;">INV/08/12/0029</td>
+                                        <td style="width:45%;">{{$data->invoice_number}}</td>
                                     </tr>
                                     <tr>
                                         <td style="width:45%;"><b>Date</b></td>
                                         <td style="width:10%;"></td>
-                                        <td style="width:45%;">07/03/2024</td>
+                                        <td style="width:45%;">{{ str_replace('-', '/', date("d-m-Y", strtotime($data->invoice_date))) }}</td>
                                     </tr>
                                     <tr>
                                         <td style="width:45%;"><b>Due Date</b></td>
                                         <td style="width:10%;"></td>
-                                        <td style="width:45%;">07/03/2024</td>
+                                        <td style="width:45%;">{{ str_replace('-', '/', date("d-m-Y", strtotime($data->invoice_due_date))) }}</td>
                                     </tr>
                                 </table>
                             </td>
@@ -118,9 +118,9 @@ return $hasil_rupiah;
         <div class="row">
             <table style="width: 100%;margin-top:10px">
                 <tr>
-                    <td colspan="3" style="width: 40%;"><b>Our Information</b></td>
-                    <td colspan="1" style="width: 20%;"></td>
-                    <td colspan="3" style="width: 40%;"><b>Billing For</b></td>
+                    <td colspan="3" style="width: 40%;"><b><span style="color:#2E3E4E"> Info Perusahaan</span></b></td>
+                    <td colspan="1" style="width: 10%;"></td>
+                    <td colspan="3" style="width: 40%;"><b><span style="color:#2E3E4E">Tagihan Untuk</span></b></td>
                 </tr>
                 <tr>
                     <td colspan="3">
@@ -146,7 +146,7 @@ return $hasil_rupiah;
                     </td>
                     <td colspan="1"></td>
                     <td colspan="3">
-                        <div class="" style="margin-top: 20px;">Phone : {{ $data->tenant->phone ?? '' }}</div>
+                        <div class="" style="margin-top: 20px;">Telp : {{ $data->tenant->phone ?? '' }}</div>
                     </td>
                 </tr>
                 <tr>
@@ -171,7 +171,7 @@ return $hasil_rupiah;
                         <td style="text-align:center; padding:10px">Quantity</td>
                         <td style="text-align:center; padding:10px">Price(Rp.)</td>
                         <td style="text-align:center; padding:10px">Discount</td>
-                        <td style="text-align:center; padding:10px">Tax</td>
+                        <td style="padding:10px">Tax</td>
                         <td style="text-align:right; padding:10px">Amount (Rp.)</td>
                     </tr>
                 </thead>
@@ -182,8 +182,8 @@ return $hasil_rupiah;
                         <td style="padding:10px">{{ $p->description }}</td>
                         <td style="padding:10px; text-align:center;">{{ $p->quantity }}</td>
                         <td style="padding:10px; text-align:center;">{{ rupiah($p->price) }}</td>
-                        <td style="padding:10px; text-align:center;">{{ $p->discount }}</td>
-                        <td style="padding:10px; text-align:center;">{{ $p->tax_id }}</td>
+                        <td style="padding:10px; text-align:center;">{{ $p->discount }}%</td>
+                        <td style="padding:10px; ">{{ $p->tax_id }}</td>
                         <td style="padding:10px;text-align:right;">{{ rupiah($p->total_price) }}</td>
                     </tr>
                     @endforeach
@@ -197,27 +197,35 @@ return $hasil_rupiah;
                     </tr>
                     <tr>
                         <td colspan="4"></td>
-                        <td><b>Sub Total :</b>
+                        <td><b> <span style="color:#2E3E4E">Sub Total :</span></b>
                         </td>
-                        <td style="padding:10px;text-align:right" colspan="2"><b>{{ rupiah($data->grand_total) }}</b></td>
+                        <td style="padding:10px;text-align:right" colspan="2"><span style="color:#2E3E4E"> {{ rupiah($data->subtotal) }}</span></td>
                     </tr>
                     <tr>
                         <td colspan="4"></td>
-                        <td><b>Tax :</b>
+                        <td><b> <span style="color:#2E3E4E">Diskon :</span></b>
                         </td>
-                        <td style="padding:10px;text-align:right" colspan="2"><b>{{ rupiah($data->grand_total) }}</b></td>
+                        <td style="padding:10px;text-align:right" colspan="2"><span style="color:#2E3E4E"> {{ rupiah($data->discount) }}</span></td>
                     </tr>
                     <tr>
                         <td colspan="4"></td>
-                        <td><b>Total :</b>
+                        <td><b> <span style="color:#2E3E4E">Pajak :</span></b>
                         </td>
-                        <td style="padding:10px;text-align:right" colspan="2"><b>{{ rupiah($data->grand_total) }}</b></td>
+                        <td style="padding:10px;text-align:right" colspan="2"><span style="color:#2E3E4E"></span></td>
                     </tr>
+                    @foreach ($data->pajakEklusif as $key => $value)
                     <tr>
                         <td colspan="4"></td>
-                        <td><b>Amount Due: :</b>
+                        <td style="width: 100px;" colspan="2"><span style="color:#2E3E4E; margin-left : 15px;"> {{ $key }}</span>
                         </td>
-                        <td style="padding:10px;text-align:right" colspan="2"><b>{{ rupiah($data->grand_total) }}</b></td>
+                        <td style="padding:10px;text-align:right" colspan="2"><span style="color:#2E3E4E"> {{ rupiah($value) }}</span></td>
+                    </tr>
+                    @endforeach
+                    <tr>
+                        <td colspan="4"></td>
+                        <td><b> <span style="color:#2E3E4E; font-size : 14px;">Total :</span></b>
+                        </td>
+                        <td style="padding:10px;text-align:right" colspan="2"><span style="color:#2E3E4E; font-size : 14px;"> {{ rupiah($data->grand_total) }}</span></td>
                     </tr>
                 </tfoot>
             </table>
@@ -226,9 +234,38 @@ return $hasil_rupiah;
         <div class="row mt-3">
             <table class="table mt-5" style="width: 100%;margin-top:20px">
                 <tr>
-                    <td style="width: 50%;">&nbsp;</td>
+                    <td style="width: 50%;"><b> <span style="color:#2E3E4E; font-size : 16px;">Keterangan</span></td>
                     <td style="width: 20%;">&nbsp;</td>
                     <td><b> 7 Mar, 2024</b></td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;"> <br>
+                        <div class="horizontal_line"></div>
+                    </td>
+                    <td style="width: 20%;">&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;">{!! $data->notes !!} <br></td>
+                    <td style="width: 20%;">&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;"><b> <span style="color:#2E3E4E; font-size : 16px;">Syarat & Ketentuan</span></td>
+                    <td style="width: 20%;">&nbsp;</td>
+                    <td><b> </b></td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;"> <br>
+                        <div class="horizontal_line"></div>
+                    </td>
+                    <td style="width: 20%;"></td>
+                    <td><br><b>Yen Ardhiean</b></td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;">{!! $data->term_and_condition !!} <br></td>
+                    <td style="width: 20%;">&nbsp;</td>
+                    <td>&nbsp;</td>
                 </tr>
                 <tr>
                     <td style="width: 50%;">&nbsp;</td>
