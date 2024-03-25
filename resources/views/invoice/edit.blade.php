@@ -366,37 +366,6 @@ $configData = Helper::appClasses();
 
         });
 
-        $("#bank").select2({
-            placeholder: 'Select Bank',
-            allowClear: true,
-            ajax: {
-                url: "{{ env('BASE_URL_API')}}" + '/api/bank/select',
-                dataType: 'json',
-                cache: true,
-                data: function(params) {
-                    return {
-                        value: params.term || '',
-                        page: params.page || 1
-                    }
-                },
-                processResults: function(data, params) {
-                    var more = data.pagination.more;
-                    if (more === false) {
-                        params.page = 1;
-                        params.abort = true;
-                    }
-
-                    return {
-                        results: data.data,
-                        pagination: {
-                            more: more
-                        }
-                    };
-                }
-            }
-
-        });
-
         function getTenant(id) {
             $.ajax({
                 url: "{{url('api/tenant')}}/" + id,
@@ -414,20 +383,7 @@ $configData = Helper::appClasses();
             });
         }
 
-        function getBank(id) {
-            $.ajax({
-                url: "{{url('api/bank')}}/" + id,
-                type: "GET",
-                success: function(response) {
-                    let data = response.data;
-                    $("#bank").empty().append("<option value=" + data.id + ">" + data.name + "</option>").val(data.id).trigger("change");
-                },
-                error: function(xhr, status, error) {
-                    console.log(error);
-                }
-            });
-        }
-
+       
         if (dataLocal) {
             $("#invoice_number").val(dataLocal.invoice_number);
             $("#invoice_date").val(dataLocal.invoice_date);
@@ -467,9 +423,7 @@ $configData = Helper::appClasses();
             if (dataLocal.tenant_id) {
                 getTenant(dataLocal.tenant_id);
             }
-            if (dataLocal.bank_id) {
-                getBank(dataLocal.bank_id);
-            }
+           
 
             // const myDropzone = new Dropzone('#dropzone-basic', {
             //     parallelUploads: 1,
@@ -531,13 +485,7 @@ $configData = Helper::appClasses();
             $('#tenant').val(data);
         }));
 
-        $('#bank').on("change", (async function(e) {
-            $(this).addClass("valid");
-            var rekomendasi = $("#bank").select2('data');
-            var data = rekomendasi[0].id;
-            $('#bank').val(data);
-
-        }));
+     
 
         $(document).on('click', '.btn-add-row-mg', function() {
             // Clone baris terakhir
@@ -879,15 +827,12 @@ $configData = Helper::appClasses();
                         event.stopPropagation();
 
                         let tenant = $("#tenant").val();
-                        let bank = $("#bank").val();
                         let tglKontrak = $("#contract_date").val();
 
                         if (!tenant) {
                             $("#tenant").addClass("invalid");
                         }
-                        if (!bank) {
-                            $("#bank").addClass("invalid");
-                        }
+                      
                     } else {
                         // Submit your form
                         event.preventDefault();
@@ -902,7 +847,6 @@ $configData = Helper::appClasses();
                         let grandTotal = $(".grand_total").text().replaceAll(',', '');
                         let tglJatuhTempo = $("#invoice_due_date").val();
                         let syaratDanKententuan = $("#term_and_conditions").val();
-                        let bank = $("#bank").val();
                         let tglTtd = $("#materai_date").val();
                         let nameTtd = $("#materai_name").val();
 
@@ -922,7 +866,7 @@ $configData = Helper::appClasses();
                             } else if (index % 7 == 3) {
                                 detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
                             } else if (index % 7 == 4) {
-                                detail[input_index].discount = parseInt(input_value);
+                                detail[input_index].discount = (input_value == '') ?  parseInt(0) : parseInt(input_value);
                             } else if (index % 7 == 5) {
                                 detail[input_index].tax_id = input_value;
                             } else if (index % 7 == 6) {
@@ -952,12 +896,7 @@ $configData = Helper::appClasses();
                         } else {
                             datas.status = "Terbuat";
                         }
-                        datas.contract_date = tglKontrak
-                        datas.opening_paragraph = "Bapak/Ibu Qwerty";
-                        datas.invoice_due_date = tglJatuhTempo;
-                        datas.addendum_date = tglAddendum;
-                        datas.invoice_date = tglInvoice;
-                        datas.grand_total = parseInt(grandTotal);
+
                         delete datas['undefined'];
                         console.log(datas);
 
@@ -1025,7 +964,6 @@ $configData = Helper::appClasses();
             let terbilang = $("#grand_total_spelled").val();
             let tglJatuhTempo = $("#invoice_due_date").val();
             let syaratDanKententuan = $("#term_and_conditions").val();
-            let bank = $("#bank").val();
             let tglTtd = $("#materai_date").val();
             let nameTtd = $("#materai_name").val();
             let grandTotal = parseInt($(".grand_total").text().replaceAll(',', ''));

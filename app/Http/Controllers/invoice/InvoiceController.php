@@ -72,6 +72,9 @@ class InvoiceController extends Controller
             foreach ($response->data as $key => $value) {
                 $data[$key] = $value;
                 $data[$key]->tenant_name = $value->tenant->company ?? '';
+                if ($data[$key]->status == 'Disetujui KA') {
+                    $data[$key]->status = 'Disetujui CA';
+                }
             }
         }
         return DataTables::of($data)
@@ -95,9 +98,9 @@ class InvoiceController extends Controller
         dd($file);
         $path = "https://www.itsolutionstuff.com/assets/images/logo-it.png";
         Storage::disk('public')->put('itsolutionstuff.png', file_get_contents($path));
-  
+
         $path = Storage::path('itsolutionstuff.png');
-  
+
         return response()->download($path);
     }
 
@@ -134,7 +137,7 @@ class InvoiceController extends Controller
                         }
                     }
                 } else {
-                    $pajakEklusif[$response->data->name] =$subtotal * ($response->data->value / 100);
+                    $pajakEklusif[$response->data->name] = $subtotal * ($response->data->value / 100);
                 }
             }
         }
@@ -148,6 +151,6 @@ class InvoiceController extends Controller
         $data->pajakEklusif = $pajakEklusif;
         // dd($data);
         $pdf = PDF::loadView('invoice.download', ['data' => $data])->setPaper('a4', 'portait');
-        return $pdf->stream('invoice.pdf');
+        return $pdf->stream('invoice-' .$data->invoice_number. '.pdf');
     }
 }

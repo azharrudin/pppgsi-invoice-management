@@ -282,7 +282,7 @@ $configData = Helper::appClasses();
                     let datas = {}
                     if(account.level.id == 1){
                         datas.status = 'Disetujui BM';
-                    }else if(account.level.id == 2){
+                    }else if(account.level.id == 9){
                         datas.status = 'Disetujui KA';
                     }
                     Swal.fire({
@@ -388,7 +388,7 @@ $configData = Helper::appClasses();
                 if (data.status == 'Disetujui BM' && account.level.id == 10) {
                     $('.kirim-invoice').removeClass('d-none');
                 }
-                if ((account.level.id == '2' && data.status == 'Terbuat') || (data.status == 'Disetujui KA' && account.level.id == '1')) {
+                if ((account.level.id == '9' && data.status == 'Terbuat') || (data.status == 'Disetujui KA' && account.level.id == '1')) {
                     $('.disetujui').removeClass('d-none');
                 }
                 if (account.level.id == '10' && data.status == 'Terbuat') {

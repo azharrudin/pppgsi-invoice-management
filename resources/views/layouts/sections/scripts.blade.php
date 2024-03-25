@@ -98,9 +98,9 @@
     }
    
     if(accountMenu?.level.id == 9){
-        hideMenu("Invoice");
         hideMenu("Complain");
         hideSubMenu("List Purchase Request");
+        hideSubMenu("List Tanda Terima");
         hideSubMenu("List Purchase Order");
         hideMenu("Client");
         hideMenu("Vendor");

@@ -374,7 +374,7 @@ $configData = Helper::appClasses();
                         error: function(xhr, status, error) {
                             Swal.fire({
                                 title: 'Error!',
-                                text: xhr.statusText,
+                                text:  xhr?.responseJSON?.message,
                                 icon: 'error',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
@@ -407,7 +407,6 @@ $configData = Helper::appClasses();
             tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
         //KA
         }else if(account.level_id == 2){
-            urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Terbuat";
             urlTandaTerima = "{{ url('to-do-list') }}"+"/receipt"+"/terbuat";
             urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/terbuat";
             urlTicket = "{{ url('to-do-list') }}"+"/ticket"+"/on progress";
@@ -434,8 +433,10 @@ $configData = Helper::appClasses();
             tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest)
         //chieEnginer
         }else if(account.level_id == 9){
+            urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Terbuat";
             urlMaterialRequest =  "{{ url('to-do-list') }}"+"/material-request"+"/disetujui chief departement";   
             tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest)
+            tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
         //teknisi
         }else if(account.level_id == 5){
             urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Terbuat";   
