@@ -462,11 +462,11 @@ class InvoiceController extends Controller
                 $dataEmail["terbilang"] = $invoice->grand_total_spelled;
                 $dataEmail["invoice_number"] = $invoice->invoice_number;
 
-                $path = $invoice->pdf_link;
-                Storage::disk('public')->put("invoice/" . str_replace('/', '-', $invoice->invoice_number . ".pdf"), file_get_contents($path));
-                $path = Storage::path("invoice/" . str_replace('/', '-', $invoice->invoice_number . ".pdf"));
                 $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice/' . $id);
                 $response = json_decode($apiRequest->getBody());
+                $path = $response->data->pdf_link;
+                Storage::disk('public')->put("invoice/" . str_replace('/', '-', $response->data->invoice_number . ".pdf"), file_get_contents($path));
+                $path = Storage::path("invoice/" . str_replace('/', '-', $response->data->invoice_number . ".pdf"));
                 $data = $response->data;
                 $subtotal = 0;
                 $diskon = 0;
@@ -508,15 +508,14 @@ class InvoiceController extends Controller
                 $data->tax = $pajak;
                 $data->total = $total;
                 $data->pajakEklusif = $pajakEklusif;
+                $pdf = PDF::loadView('invoice.download', ['data' => $data]);
                 $to = $invoice->tenant->email;
-
-
     
-                Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $path, $dataEmail) {
+                Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $data, $dataEmail) {
                     $message->to($to)
-                        ->subject('Invoice No Invoice : '.$dataEmail['invoice_number'])
-                        ->attach(storage_path('app/public/invoice/'.$dataEmail['invoice_number']), [
-                            'as' => $dataEmail['invoice_number'],
+                        ->subject('Invoice No Invoice : '.$data->invoice_number)
+                        ->attach(storage_path('app/public/invoice/'.str_replace('/', '-', $data->invoice_number . ".pdf")), [
+                            'as' => 'name.pdf',
                             'mime' => 'application/pdf',
                         ]);
                 });
