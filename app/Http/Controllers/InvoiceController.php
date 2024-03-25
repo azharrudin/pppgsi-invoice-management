@@ -511,11 +511,13 @@ class InvoiceController extends Controller
                 $pdf = PDF::loadView('invoice.download', ['data' => $data]);
                 $to = $invoice->tenant->email;
     
-                Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $pdf, $dataEmail) {
-                    $path = Storage::path("invoice/" . str_replace('/', '-', $dataEmail['invoice_number'] . ".pdf"));
+                Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $path, $dataEmail) {
                     $message->to($to)
                         ->subject('Invoice No Invoice : '.$dataEmail['invoice_number'])
-                        ->attach($path);
+                        ->attach('storage/app/public/invoice/GSI-FIN-III-24-0001.pdf', [
+                            'as' => 'name.pdf',
+                            'mime' => 'application/pdf',
+                        ]);;
                 });
             }
 
