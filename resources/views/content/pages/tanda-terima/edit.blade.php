@@ -227,40 +227,6 @@
             var levelId = account.level_id;
             var department = account.department.name;
             var nameUser = account.name;
-          console.log(levelId);
-
-            if (levelId == 1) { // BM
-                let ttdFile = null;
-                const myDropzone = new Dropzone('#dropzone-basic', {
-                    parallelUploads: 1,
-                    maxFilesize: 10,
-                    addRemoveLinks: true,
-                    maxFiles: 1,
-                    acceptedFiles: ".jpeg,.jpg,.png,.gif",
-                    autoQueue: false,
-                    init: function() {
-                        this.on('addedfile', function(file) {
-                            while (this.files.length > this.options.maxFiles) this.removeFile(this
-                                .files[0]);
-                            ttdFile = file;
-                        });
-                    }
-                });
-                var inputValue = $("#signature_name").val();
-                if (levelId != 1) {
-                    $("#signature_name").val(nameUser);
-                    $("#signature_name").prop('readonly', true);
-                    $(".btn-update span").html('<i class="ti ti-check ti-xs me-2"></i>Disetujui Kepala BM');
-                }
-                $('#signature_date').prop('disabled', false);
-                $('#jabatan').prop('readonly', false);
-                $("#jabatan").val("Kepala BM");
-              
-            } else { // other
-                $('#signature_date').prop('disabled', true);
-                $('#signature_name').prop('readonly', true);
-                $('#jabatan').prop('readonly', true);
-            }
 
             // Date
             $('.date').flatpickr({
@@ -309,8 +275,6 @@
 
                         });
 
-                        console.log(response);
-
                         if(response.status !='Terbuat'){
                             $('.form-control').attr('readonly', 'readonly');
                         }
@@ -335,6 +299,37 @@
                             $('.data-materai').attr('style','display:none !important');
                         }
 
+                        if (account.level.id == 1) { // BM
+                            let ttdFile = null;
+                            const myDropzone = new Dropzone('#dropzone-basic', {
+                                parallelUploads: 1,
+                                maxFilesize: 10,
+                                addRemoveLinks: true,
+                                maxFiles: 1,
+                                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                                autoQueue: false,
+                                init: function() {
+                                    this.on('addedfile', function(file) {
+                                        while (this.files.length > this.options.maxFiles) this.removeFile(this
+                                            .files[0]);
+                                        ttdFile = file;
+                                    });
+                                }
+                            });
+                            var inputValue = $("#signature_name").val();
+                            $("#signature_name").val(nameUser);
+                            $("#signature_name").prop('readonly', true);
+                            $(".btn-update span").html('<i class="ti ti-check ti-xs me-2"></i>Disetujui Kepala BM');
+                            $('#signature_date').prop('disabled', false);
+                            $('#jabatan').prop('readonly', false);
+                            $("#jabatan").val("Kepala BM");
+                        
+                        } else { // other
+                            $('#signature_date').prop('disabled', true);
+                            $('#signature_name').prop('readonly', true);
+                            $('#jabatan').prop('readonly', true);
+                        }
+
                         if(response.status !='Terbuat' && account.level.id == 10){
                             $('.form-control').attr('readonly', 'readonly');
                             $('.btn-remove-mg').remove();
@@ -342,15 +337,14 @@
                             $('.data-input, .select-classification, .row-input').attr('disabled', 'disabled');
                             $('.select2').attr('disabled', 'disabled');
                             $(".btn-update").addClass('d-none');
-                    }
+                        }
                         Swal.close();
                     },
                     error: function(errors) {
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: errors.responseJSON
-                                .message,
+                            text: errors.responseJSON.message,
                             customClass: {
                                 confirmButton: 'btn btn-primary'
                             },
@@ -462,7 +456,6 @@
             function getTotal() {
                 let totalArr = [];
                 let tempTotal = $("#paid").val().replace(/,/g, '');
-
                 $('#grand_total_spelled').val(terbilang(tempTotal));
 
             }
