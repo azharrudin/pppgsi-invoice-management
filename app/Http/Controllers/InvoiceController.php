@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
 use Mail;
+use PDF;
 
 class InvoiceController extends Controller
 {
@@ -464,14 +465,57 @@ class InvoiceController extends Controller
                 $path = $invoice->pdf_link;
                 Storage::disk('public')->put("invoice/" . str_replace('/', '-', $invoice->invoice_number . ".pdf"), file_get_contents($path));
                 $path = Storage::path("invoice/" . str_replace('/', '-', $invoice->invoice_number . ".pdf"));
-    
-                $pdf = PDF::loadView('invoice.download', ['data' => $invoice]);
+                $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice/' . $id);
+                $response = json_decode($apiRequest->getBody());
+                $data = $response->data;
+                $subtotal = 0;
+                $diskon = 0;
+                $total = 0;
+                $pajak = 0;
+                $pajakEklusif = [];
+                $pajakInklusif = 0;
+                for ($i = 0; $i <  sizeof($data->invoice_details); $i++) {
+                    $tax = $data->invoice_details[$i]->tax_id;
+                    $apiRequest = Http::get(env('BASE_URL_API') . '/api/tax/get-paper/' . $tax);
+                    $response = json_decode($apiRequest->getBody());
+                    $value = $response->data->name;
+                    $data->invoice_details[$i]->tax_id = $value;
+                    $subtotal = $subtotal + ($data->invoice_details[$i]->price * $data->invoice_details[$i]->quantity);
+                    $diskon = $diskon + (($data->invoice_details[$i]->price * $data->invoice_details[$i]->quantity) * $data->invoice_details[$i]->discount / 100);
+                    $exlusive =  $response->data->exclusive;
+        
+                    if ($exlusive == 0) {
+                        $pajak = $pajak + 0;
+                    } else {
+                        $pajak = $subtotal * ($response->data->value / 100);
+                        if (sizeof($pajakEklusif) > 0) {
+                            foreach ($pajakEklusif as $key => $value) {
+                                if ($key  == $response->data->name) {
+                                    $pajakEklusif[$response->data->name] = $subtotal * ($response->data->value / 100);
+                                } else {
+                                }
+                            }
+                        } else {
+                            $pajakEklusif[$response->data->name] =$subtotal * ($response->data->value / 100);
+                        }
+                    }
+                }
+        
+        
+                $total = $subtotal - $diskon + $pajak;
+                $data->subtotal = $subtotal;
+                $data->discount = $diskon;
+                $data->tax = $pajak;
+                $data->total = $total;
+                $data->pajakEklusif = $pajakEklusif;
+                $pdf = PDF::loadView('invoice.download', ['data' => $data]);
                 $to = $invoice->tenant->email;
     
                 Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $pdf, $dataEmail) {
+                    $path = Storage::path("invoice/" . str_replace('/', '-', $dataEmail['invoice_number'] . ".pdf"));
                     $message->to($to)
                         ->subject('Invoice No Invoice : '.$dataEmail['invoice_number'])
-                        ->attachData($pdf->output(), "Invoice.pdf");
+                        ->attach($path);
                 });
             }
 
