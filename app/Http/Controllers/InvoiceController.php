@@ -509,13 +509,13 @@ class InvoiceController extends Controller
                 $data->total = $total;
                 $data->pajakEklusif = $pajakEklusif;
                 $pdf = PDF::loadView('invoice.download', ['data' => $data]);
-                $to = $invoice->tenant->email;
+                $to = $data->tenant->email;
     
                 Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $data, $dataEmail) {
                     $message->to($to)
                         ->subject('Invoice No Invoice : '.$data->invoice_number)
                         ->attach(storage_path('app/public/invoice/'.str_replace('/', '-', $data->invoice_number . ".pdf")), [
-                            'as' => 'name.pdf',
+                            'as' => $data->invoice_number,
                             'mime' => 'application/pdf',
                         ]);
                 });
