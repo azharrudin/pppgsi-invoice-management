@@ -297,7 +297,7 @@ $configData = Helper::appClasses();
                                 console.log(error);
                                 Swal.fire({
                                     title: 'Error!',
-                                    text: ' xhr.responseText!',
+                                    text: xhr.responseText,
                                     icon: 'error',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'

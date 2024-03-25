@@ -318,7 +318,7 @@ $configData = Helper::appClasses();
                         error: function(xhr, status, error) {
                             Swal.fire({
                                 title: 'Error!',
-                                text: xhr.responseText,
+                                text: 'Materai Habis',
                                 icon: 'error',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
