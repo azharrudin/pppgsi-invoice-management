@@ -50,11 +50,7 @@ $configData = Helper::appClasses();
                                     <input type="text" class="form-control w-px-250 " id="check_number" name="check_number" placeholder="Nomor" required />
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
-                                <!-- <div class="mb-3 w-px-250">
-                                    <label for="note" class="form-label fw-medium">Bank</label>
-                                    <select id="bank" class="form-select select2 w-px-250 select-bank item-details mb-3" required>
-                                    </select>
-                                </div> -->
+                               
                             </div>
                             <div class="col-md-6 d-flex justify-content-end">
                                 <div class="mb-3">
@@ -300,31 +296,11 @@ $configData = Helper::appClasses();
             if (dataLocal.tenant_id) {
                 getTenant();
             }
-            if (dataLocal.bank_id) {
-                getBank();
-            }
+           
             if (dataLocal.invoice_id) {
                 getInvoiceNumber();
             }
             Swal.close();
-        }
-
-        function getBank() {
-            let idBank = dataLocal.bank_id;
-            $.ajax({
-                url: "{{ env('BASE_URL_API')}}" +'/api/bank/' + idBank,
-                type: "GET",
-                success: function(response) {
-                    let data = response.data;
-
-                    let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
-                    $('#bank').prepend(tem);
-
-                },
-                error: function(xhr, status, error) {
-                    console.log(error);
-                }
-            });
         }
 
         function getInvoiceNumber() {
@@ -373,9 +349,7 @@ $configData = Helper::appClasses();
         $(".select-invoice").on('change', function() {
             validateSelect(this);
         })
-        $(".select-bank").on('change', function() {
-            validateSelect(this);
-        })
+    
         $(".select-tenant").on('change', function() {
             validateSelect(this);
         })
@@ -408,16 +382,12 @@ $configData = Helper::appClasses();
 
                         let tenant = $('.select-tenant').val();
                         let invoice = $('.select-invoice').val();
-                        let bank = $(".select-bank").val();
 
                         if (!invoice) {
                             $(".select-invoice").addClass("invalid");
                         }
                         if (!tenant) {
                             $(".select-tenant").addClass("invalid");
-                        }
-                        if (!bank) {
-                            $(".select-bank").addClass("invalid");
                         }
 
                     } else {
@@ -433,7 +403,6 @@ $configData = Helper::appClasses();
                         });
                         let invoice = $('.select-invoice').val();
                         let tenant = $('.select-tenant').val();
-                        let bank = $('.select-bank').val();
                         let date = $('.date').val();
 
                         let datas = {}
@@ -445,10 +414,10 @@ $configData = Helper::appClasses();
                             if (inputId === 'grand_total' || inputId === 'paid' ||
                                 inputId ===
                                 'remaining') {
-                                var inputValueWithoutComma = inputValue.replace(',', '');
+                                var inputValueWithoutComma = inputValue.replaceAll(',', '');
 
                                 datas[$("#" + inputId).attr("name")] = parseInt(
-                                    inputValueWithoutComma, 10);
+                                    inputValueWithoutComma);
                             } else if (inputId === 'receipt_date') {
                                 datas[$("#" + inputId).attr("name")] = moment(inputValue,
                                         'D-M-YYYY')
@@ -460,12 +429,10 @@ $configData = Helper::appClasses();
                         // datas.signature_image = ttdFile;
                         datas.invoice_id = parseInt(invoice);
                         datas.tenant_id = parseInt(tenant);
-                        // datas.bank_id = parseInt(bank);
                         datas.status = 'Terbuat';
                         datas.receipt_date = moment().format('YYYY-MM-DD');
                         datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
                         datas.signature_date = date ? moment(date, 'D-M-YYYY').format('YYYY-MM-DD') : null;
-
                         $.ajax({
                             url: "{{ env('BASE_URL_API')}}" +'/api/receipt',
                             type: "POST",
@@ -513,7 +480,6 @@ $configData = Helper::appClasses();
 
             let invoice = $('.select-invoice').val();
             let tenant = $('.select-tenant').val();
-            let bank = $('.select-bank').val();
             let date = $('.date').val();
 
             $('#addTandaTerima').find('.form-control').each(function() {
@@ -522,8 +488,8 @@ $configData = Helper::appClasses();
 
                 if (inputId === 'grand_total' || inputId === 'paid' || inputId ===
                     'remaining') {
-                    var inputValueWithoutComma = inputValue.replace(',', '');
-                    datas[$("#" + inputId).attr("name")] = parseInt(inputValueWithoutComma, 10);
+                    var inputValueWithoutComma = inputValue.replaceAll(',', '');
+                    datas[$("#" + inputId).attr("name")] = parseInt(inputValueWithoutComma);
                 } else if (inputId === 'receipt_date') {
                     datas[$("#" + inputId).attr("name")] = moment(inputValue, 'D-M-YYYY')
                         .format('YYYY-MM-DD');
@@ -534,7 +500,6 @@ $configData = Helper::appClasses();
             datas.signature_image = ttdFile;
             datas.invoice_id = parseInt(invoice);
             datas.tenant_id = parseInt(tenant);
-            // datas.bank_id = parseInt(bank);
             datas.status = 'Terbuat';
             datas.receipt_date = moment().format('YYYY-MM-DD');
             datas.signature_image = $('img[data-dz-thumbnail]').attr('src');
@@ -739,36 +704,6 @@ $configData = Helper::appClasses();
                 }
             }
         });
-
-        $(".select-bank").select2({
-            placeholder: 'Select Bank',
-            allowClear: true,
-            ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/bank',
-                dataType: 'json',
-                cache: true,
-                data: function(params) {
-                    return {
-                        value: params.term || '',
-                        page: params.page || 1
-                    }
-                },
-                processResults: function(data) {
-                    var banks = data.data || [];
-
-                    var formattedData = banks.map(function(bank) {
-                        return {
-                            id: bank.id,
-                            text: bank.name
-                        };
-                    });
-
-                    return {
-                        results: formattedData
-                    };
-                }
-            }
-        });
     })
 
     function getDataInvoice(id) {
@@ -781,11 +716,8 @@ $configData = Helper::appClasses();
                 let total_paid = parseFloat(res.data.total_paid);
                 let grand_total = parseFloat(res.data.grand_total);
                 let tenant = res.data.tenant;
-                // let bank = res.data.bank;
                 $("#total_paid").val(total_paid.toLocaleString('en-US'));
                 $("#grand_total").val(grand_total.toLocaleString('en-US'));
-                // $(".select-bank").empty().append('<option value="' + bank.id + '">' +
-                //     bank.name + '</option>').val(bank.id);
                 $(".select-tenant").empty().append('<option value="' + tenant.id +
                     '">' + tenant.name + '</option>').val(tenant.id);
                 $(".select-invoice").empty().append('<option value="' + res.data.id +
@@ -1022,36 +954,6 @@ $configData = Helper::appClasses();
                     pagination: {
                         more: more
                     }
-                };
-            }
-        }
-    });
-
-    $(".select-bank").select2({
-        placeholder: 'Select Bank',
-        allowClear: true,
-        ajax: {
-            url: "{{ env('BASE_URL_API')}}" +'/api/bank',
-            dataType: 'json',
-            cache: true,
-            data: function(params) {
-                return {
-                    value: params.term || '',
-                    page: params.page || 1
-                }
-            },
-            processResults: function(data) {
-                var banks = data.data || [];
-
-                var formattedData = banks.map(function(bank) {
-                    return {
-                        id: bank.id,
-                        text: bank.name
-                    };
-                });
-
-                return {
-                    results: formattedData
                 };
             }
         }

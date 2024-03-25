@@ -54,12 +54,6 @@ $configData = Helper::appClasses();
                                 <label for="note" class="form-label fw-medium">No. Cek/Giro</label>
                                 <div class="form-label" id="check_number" name="check_number"></div>
                             </div>
-                            <div class="mb-3">
-                                <label for="note" class="form-label fw-medium">Bank</label>
-                                <div class="form-label" id="bank" name="bank">
-                                    <br>
-                                </div>
-                            </div>
                         </div>
                         <div class="col-md-6 justify-content-end text-end">
                             <div class="mb-3">
@@ -213,7 +207,6 @@ $configData = Helper::appClasses();
                     $("#receipt_number").val(result.receipt_number);
                     $('#invoice').text(result.invoice.invoice_number);
                     $('#check_number').text(result.check_number);
-                    $('#bank').text(result.bank?.name);
                     $('#tenant').text(result.tenant.company);
                     $('#grand_total').text(result.invoice?.grand_total.toLocaleString('en-EN'));
                     $('#paid').text(result.paid.toLocaleString('en-EN'));

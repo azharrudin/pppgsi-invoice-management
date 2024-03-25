@@ -59,11 +59,6 @@
                                     <input type="text" class="form-control w-px-250 " id="check_number"
                                         name="check_number" placeholder="Nomor" />
                                 </div>
-                                <div class="mb-3 w-px-250">
-                                    <label for="note" class="form-label fw-medium">Bank</label>
-                                    <select class="form-select select2 w-px-250 select-bank item-details mb-3">
-                                    </select>
-                                </div>
                             </div>
                             <div class="col-md-6 d-flex justify-content-end">
                                 <div class="mb-3">
@@ -323,7 +318,6 @@
                         $('#signature_date').val(response.signature_date ? moment(response.signature_date, 'YYYY-MM-DD').format('DD-MM-YYYY') : '');
                         $(".select-tenant").empty().append('<option value="' + response.tenant_id +'">' + response.tenant.name + '</option>').val(response.tenant_id).trigger("change");
                         $(".select-invoice").empty().append('<option value="' + response.invoice_id +'">' + response.invoice.invoice_number + '</option>').val(response.invoice_id).trigger("change");
-                        $(".select-bank").empty().append('<option value="' + response.bank_id +'">' + response.bank?.name + '</option>').val(response.bank_id).trigger("change");
                         if (response.signature_image != '') {
                             $('.prev-img').attr('src', response.signature_image);
                         } else {
@@ -370,7 +364,6 @@
             $(".btn-update").on('click', function() {
                 let invoice = $('.select-invoice').val();
                 let tenant = $('.select-tenant').val();
-                let bank = $('.select-bank').val();
                 let date = $('.date').val();
 
                 if (!$('.dz-thumbnail img[data-dz-thumbnail]').hasClass('prev-img')) {
@@ -385,7 +378,7 @@
 
                     if (inputId === 'grand_total' || inputId === 'paid' || inputId ===
                         'remaining') {
-                        var inputValueWithoutComma = inputValue.replace(',', '');
+                        var inputValueWithoutComma = inputValue.replaceAll(',', '');
 
                         datas[$("#" + inputId).attr("name")] = parseInt(
                             inputValueWithoutComma, 10);
@@ -399,7 +392,6 @@
 
                 datas.invoice_id = parseInt(invoice);
                 datas.tenant_id = parseInt(tenant);
-                datas.bank_id = parseInt(bank);
                 if(account.level.id == '1'){
                     datas.status = "Disetujui BM";
                 }else{
@@ -658,37 +650,6 @@
                             pagination: {
                                 more: more
                             }
-                        };
-                    }
-                }
-            });
-
-            $(".select-bank").select2({
-                placeholder: 'Select Bank',
-                allowClear: true,
-                ajax: {
-                    url: "{{ env('BASE_URL_API')}}" +'/api/bank',
-                    dataType: 'json',
-                    cache: true,
-                    data: function(params) {
-                        return {
-                            term: params.term || '',
-                            search: params.term,
-                            page: params.page || 1
-                        }
-                    },
-                    processResults: function(data) {
-                        var banks = data.data || [];
-
-                        var formattedData = banks.map(function(bank) {
-                            return {
-                                id: bank.id,
-                                text: bank.name
-                            };
-                        });
-
-                        return {
-                            results: formattedData
                         };
                     }
                 }
