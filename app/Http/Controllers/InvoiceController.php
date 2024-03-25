@@ -510,14 +510,16 @@ class InvoiceController extends Controller
                 $data->pajakEklusif = $pajakEklusif;
                 $pdf = PDF::loadView('invoice.download', ['data' => $data]);
                 $to = $invoice->tenant->email;
+
+
     
                 Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $path, $dataEmail) {
                     $message->to($to)
                         ->subject('Invoice No Invoice : '.$dataEmail['invoice_number'])
-                        ->attach('storage/app/public/invoice/GSI-FIN-III-24-0001.pdf', [
-                            'as' => 'name.pdf',
+                        ->attach(storage_path('app/public/invoice/'.$dataEmail['invoice_number']), [
+                            'as' => $dataEmail['invoice_number'],
                             'mime' => 'application/pdf',
-                        ]);;
+                        ]);
                 });
             }
 
