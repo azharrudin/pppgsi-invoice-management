@@ -393,9 +393,9 @@ class InvoiceController extends Controller
 
     public function update_status(Request $request, $id)
     {
-        DB::beginTransaction();
+        // DB::beginTransaction();
 
-        try {
+        // try {
             $id = (int) $id;
             $getInvoice = Invoice::with("tenant")->with("invoiceDetails")->where("deleted_at", null)->where("id", $id)->first();
             if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
@@ -528,18 +528,18 @@ class InvoiceController extends Controller
                 ->first();
 
             return ["data" => $getInvoice];
-        } catch (\Throwable $e) {
-            $errorMessage = "Internal server error";
-            $errorStatusCode = 500;
-            DB::rollBack();
+        // } catch (\Throwable $e) {
+        //     $errorMessage = "Internal server error";
+        //     $errorStatusCode = 500;
+        //     DB::rollBack();
 
-            if (is_a($e, CustomException::class)) {
-                $errorMessage = $e->getMessage();
-                $errorStatusCode = $e->getStatusCode();
-            }
+        //     if (is_a($e, CustomException::class)) {
+        //         $errorMessage = $e->getMessage();
+        //         $errorStatusCode = $e->getStatusCode();
+        //     }
 
-            return response()->json(['message' => $errorMessage], $errorStatusCode);
-        }
+        //     return response()->json(['message' => $errorMessage], $errorStatusCode);
+        // }
     }
 
 
