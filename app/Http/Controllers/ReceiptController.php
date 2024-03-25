@@ -349,7 +349,7 @@ class ReceiptController extends Controller
                 $to = $receipt->tenant->email ?? '';
 
                 Mail::send('emails.email-template-tandaterima', ['data' => $dataEmail], function ($message) use ($to, $pdf, $dataEmail) {
-                    $name = "Tanda Terima ".$dataEmail['invoice'];
+                    $name = "Tanda Terima ".$dataEmail['invoice']."PDF";
                     $message->to($to)
                         ->subject('Tanda Terima Pembayaran No Invoice : ' . $dataEmail['invoice'])
                         ->attachData($pdf->output(), $name);
