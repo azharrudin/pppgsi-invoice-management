@@ -58,8 +58,8 @@ background: linear-gradient(3deg, rgba(97,73,206,1) 0%, rgba(156,98,244,1) 100%)
 
     {{-- main menu --}}
     <li class="menu-item {{$activeClass}}">
-      @if($menu->slug == 'pages-to-do')
-       <a href="{{ isset($menu->url) ? url($menu->url) : 'javascript:void(0);' }}" class="{{ isset($menu->submenu) ? 'menu-link menu-toggle' : 'menu-link' }} text-white"><span style="margin-left: 30px;">{{$menu->name}}</span></a>
+      @if($menu->slug == 'pages-to-do' || $menu->slug == "pages-home")
+      <a href="{{ isset($menu->url) ? url($menu->url) : 'javascript:void(0);' }}" class="{{ isset($menu->submenu) ? 'menu-link menu-toggle' : 'menu-link' }} text-white"><div class="d-flex"> <i class="{{ $menu->icon }}"></i>{{ isset($menu->name) ? __($menu->name) : '' }}</div></a>
       @else  
       <a href="{{ isset($menu->url) ? url($menu->url) : 'javascript:void(0);' }}" class="{{ isset($menu->submenu) ? 'menu-link menu-toggle' : 'menu-link' }} text-white" @if (isset($menu->target) and !empty($menu->target)) target="_blank" @endif>
         @isset($menu->icon)

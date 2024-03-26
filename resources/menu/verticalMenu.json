@@ -7,9 +7,9 @@
       "slug": "pages-home"
     },
     {
-      "icon": "",
+      "icon": "icon-client",
       "url": "/to-do-list",
-      "name": "To Do List",
+      "name": "ToDo List",
       "slug": "pages-to-do"
     },
     {
@@ -29,6 +29,7 @@
         }
       ]
     },
+    
     {
       "name": "Complain",
       "icon": "icon-complain",
