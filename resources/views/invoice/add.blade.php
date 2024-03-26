@@ -1253,7 +1253,34 @@ $configData = Helper::appClasses();
         Swal.close();
     }
 
-
+    function validasi_minus_qty(x){
+        if((Number.parseInt(x.value) < 1)){
+             Swal.fire({
+                icon: "error",
+                title: "Kesalahan",
+                showDenyButton: false,
+                showCancelButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                text: "Nilai dalam field tidak boleh berjumlah minus atau kosong",
+            });
+            x.value = 1
+        }
+    }
+    function validasi_minus_diskon(x){
+        if((Number.parseInt(x.value) < 0)){
+             Swal.fire({
+                icon: "error",
+                title: "Kesalahan",
+                showDenyButton: false,
+                showCancelButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                text: "Nilai dalam field tidak boleh berjumlah minus",
+            });
+            x.value = 1
+        }
+    }
     function getTenant() {
         let idTenant = dataLocal.tenant_id;
         $.ajax({
@@ -1419,7 +1446,7 @@ $configData = Helper::appClasses();
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
-                        <input type="number" class="form-control row-input quantity" data-quantity="0" id="quantity-0"  placeholder="Kuantitas" name="item[]" required style="width: 200px;" />
+                        <input type="number" class="form-control row-input quantity" data-quantity="0" id="quantity-0"  placeholder="Kuantitas" onchange="validasi_minus_qty(this)" name="item[]" required style="width: 200px;" />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
@@ -1427,8 +1454,8 @@ $configData = Helper::appClasses();
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
-                        <input type="number" class="form-control row-input discount" data-discount="0" id="discount-0" placeholder="" name="discount[]" style="width: 100px;"/>
-                        <input type="hidden" class="form-control total_subdiskon" data-total_subdiskon="0" id="total_subdiskon-0" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <input type="number" class="form-control row-input discount" data-discount="0"  onchange="validasi_minus_diskon(this)" id="discount-0" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <input type="hidden" class="form-control total_subdiskon" data-total_subdiskon="0"  id="total_subdiskon-0" placeholder="" name="discount[]" style="width: 100px;"/>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
@@ -1447,7 +1474,9 @@ $configData = Helper::appClasses();
                     </td>
                 </tr>`;
             $('#details').prepend(temp);
+           
         }
+       
     }
 </script>
 @endsection

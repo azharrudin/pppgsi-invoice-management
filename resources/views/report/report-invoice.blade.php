@@ -388,6 +388,7 @@ $configData = Helper::appClasses();
                 title: "Status",
                 className: 'text-center',
                 render: function(data, type, row) {
+                    console.log(data)
                     if (data == 'Terbuat') {
                         return '<span class="badge w-100" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
                     } else if (data == 'Disetujui KA') {
@@ -400,6 +401,10 @@ $configData = Helper::appClasses();
                         return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
                     } else if (data == 'Kurang Bayar') {
                         return '<span class="badge w-100" style="background-color : #ff9f43; " text-capitalized> Kurang Bayar </span>';
+                    }
+                    else {
+                        return '<span class="badge w-100" style="background-color : #ff9f43; " text-capitalized> Kurang Bayar </span>';
+                        
                     }
                 }
             },
@@ -534,7 +539,7 @@ $configData = Helper::appClasses();
             }
         });
        
-        a.on("draw.dt", (function() {
+        el.on("draw.dt", (function() {
             [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((
                 function(a) {
                     return new bootstrap.Tooltip(a, {
