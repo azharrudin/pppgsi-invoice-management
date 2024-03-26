@@ -94,6 +94,30 @@ $configData = Helper::appClasses();
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    var start_date;
+ var end_date;
+ var DateFilterFunction = (function (oSettings, aData, iDataIndex) {
+    var dateStart = parseDateValue(start_date);
+    var dateEnd = parseDateValue(end_date);
+    //Kolom tanggal yang akan kita gunakan berada dalam urutan 2, karena dihitung mulai dari 0
+    //nama depan = 0
+    //nama belakang = 1
+    //tanggal terdaftar =2
+    var evalDate= parseDateValue(aData[2]);
+      if ( ( isNaN( dateStart ) && isNaN( dateEnd ) ) ||
+           ( isNaN( dateStart ) && evalDate <= dateEnd ) ||
+           ( dateStart <= evalDate && isNaN( dateEnd ) ) ||
+           ( dateStart <= evalDate && evalDate <= dateEnd ) )
+      {
+          return true;
+      }
+      return false;
+    });
+    function parseDateValue(rawDate) {
+        var dateArray= rawDate.split("/");
+        var parsedDate= new Date(dateArray[2], parseInt(dateArray[1])-1, dateArray[0]);  // -1 because months are from 0 to 11   
+        return parsedDate;
+    }   
     $((function() {
         var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                 <span class="sr-only">Loading...</span>
@@ -101,9 +125,10 @@ $configData = Helper::appClasses();
         let account = {!! json_encode(session('data')) !!}
         let buttonAdd = [];
         if (account.level.id == '10') {
+            /*
             buttonAdd = [{
                 text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Invoice</span>',
-                className: "btn btn-primary ",
+                className: "btn btn-primary h ",
                 action: function(a, e, t, s) {
                     $.ajax({
                         url: "{{ env('BASE_URL_API')}}" + '/api/invoice/' + id,
@@ -119,6 +144,7 @@ $configData = Helper::appClasses();
                     window.location = "{{url('invoice/add-invoice')}}"
                 }
             }];
+            */
         }
         /* 
         buttonAdd = [{
@@ -305,8 +331,8 @@ $configData = Helper::appClasses();
             });
         });
 
-        var a = $(".invoice-list-table");
-        if (a.length) var e = a.DataTable({
+        var el = $(".invoice-list-table");
+        if (el.length) var e = el.DataTable({
             responsive: true,
             processing: true,
             serverSide: true,
@@ -478,19 +504,26 @@ $configData = Helper::appClasses();
                                 a.draw()
                              });
                              
-                        f =  $(
+                        gcr =  $(
                            `<button class="btn btn-sm btn-success ms-2 w-100"><i class="ti ti-download me-md-1"></i><span class="d-md-inline-block d-none">Download .XLSX</span></button>`
                         ).appendTo(".invoice_status").on("click", () => {
                             window.location = "{{url('report/report-invoice/file-export')}}"
                         })
                       
                         $('#date_select').daterangepicker({
+                             startDate: moment().format("MM/01/YYYY") ,
+                            endDate: moment().format("MM/30/YYYY") ,
                             opens: 'left'
-                        }, (start, end, label) => {
-                           
-                         
-                            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
                         });
+                        $('#date_select').on('apply.daterangepicker', function(ev, picker) {
+     $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+     start_date=picker.startDate.format('DD/MM/YYYY');
+     end_date=picker.endDate.format('DD/MM/YYYY');
+     $.fn.dataTableExt.afnFiltering.push(DateFilterFunction);
+     el.draw();
+  });
+  el.draw();
+
 
                     a.data().unique().sort().each((function(a, t) {
                         e.append('<option value="' + a +
@@ -500,23 +533,7 @@ $configData = Helper::appClasses();
                 }))
             }
         });
-        $.fn.dataTable.ext.search.push(
-            ( settings, data, dataIndex ) => {
-                var min  = start.format('08-09-2020')
-                var max  = end.format('09-09-2021')
-                var createdAt = data[2] || 0; // Our date column in the table
-                console.log(createdAt)
-                if  ( 
-                        ( min == "" || max == "" )
-                        || 
-                        ( moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max) ) 
-                    )
-                {
-                    return true;
-                }
-                return false;
-            }
-        )
+       
         a.on("draw.dt", (function() {
             [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((
                 function(a) {

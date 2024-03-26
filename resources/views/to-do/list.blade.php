@@ -327,66 +327,7 @@ $configData = Helper::appClasses();
         var urlPurchaseOrder = "{{ url('request/purchase-order/data-purchase-order') }}";
         var urlVendorInvoice = "{{ url('vendor/data-tagihan-vendor') }}";
         
-        $(document).on('click', '.send-email', function(event) {
-            event.preventDefault();
-            Swal.fire({
-                title: 'Apakah anda yakin?',
-                icon: 'warning',
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Ya, Kirim!",
-                cancelButtonText: "Batal",
-                customClass: {
-                    confirmButton: "btn fw-bold btn-primary",
-                    cancelButton: "btn fw-bold btn-active-light-primary"
-                }
-            }).then((result) => {
-                if (result.value) {
-                    let id = $(this).data('id');
-                    let datas = {}
-                    datas.status = 'Terkirim';
-                    Swal.fire({
-                        title: 'Memeriksa...',
-                        text: "Harap menunggu",
-                        imageUrl: "{{ asset('waiting.gif') }}",
-                        showConfirmButton: false,
-                        allowOutsideClick: false
-                    });
-                    $.ajax({
-                        url: "{{ env('BASE_URL_API')}}" + '/api/invoice/update-status/'+id,
-                        type: "PATCH",
-                        data: JSON.stringify(datas),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function(response) {
-                            Swal.fire({
-                                title: 'Berhasil',
-                                text: 'Berhasil Mengirim Invoice',
-                                icon: 'success',
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                                buttonsStyling: false
-                            }).then((result) => {
-                                $(".invoice-table").DataTable().ajax.reload();
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            Swal.fire({
-                                title: 'Error!',
-                                text:  xhr?.responseJSON?.message,
-                                icon: 'error',
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                                buttonsStyling: false
-                            })
-                        }
-                    });
-                }
-            });
-        });
-
+        
         //BM
         if(account.level_id == 1){
             urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Disetujui KA";
@@ -531,6 +472,67 @@ $configData = Helper::appClasses();
             $('.dataTables_length .form-select').removeClass('form-select-sm');
         }, 300);
     }
+    $(document).on('click', '.send-email', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                icon: 'warning',
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Ya, Kirim!",
+                cancelButtonText: "Batal",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                    cancelButton: "btn fw-bold btn-active-light-primary"
+                }
+            }).then((result) => {
+                if (result.value) {
+                    let id = $(this).data('id');
+                    let datas = {}
+                    datas.status = 'Terkirim';
+                    Swal.fire({
+                        title: 'Memeriksa...',
+                        text: "Harap menunggu",
+                        imageUrl: "{{ asset('waiting.gif') }}",
+                        showConfirmButton: false,
+                        allowOutsideClick: false
+                    });
+                    $.ajax({
+                        url: "{{ env('BASE_URL_API')}}" + '/api/invoice/update-status/'+id,
+                        type: "PATCH",
+                        data: JSON.stringify(datas),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response) {
+                            Swal.fire({
+                                title: 'Berhasil',
+                                text: 'Berhasil Mengirim Invoice',
+                                icon: 'success',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            }).then((result) => {
+                                $(".invoice-table").DataTable().ajax.reload();
+                                dt_project.ajax.reload()
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text:  xhr?.responseJSON?.message,
+                                icon: 'error',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            })
+                        }
+                    });
+                }
+            });
+        });
+
 </script>
 
 @endsection

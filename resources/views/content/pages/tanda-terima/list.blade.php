@@ -273,6 +273,7 @@ $configData = Helper::appClasses();
                         return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized>' + data +
                             '</span>'
                     }
+                   
                 }
             }, {
                 data: 'id',
