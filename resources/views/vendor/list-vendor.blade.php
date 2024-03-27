@@ -112,7 +112,7 @@
 
     {{-- Card Edit --}}
     <div class="modal fade" id="edit-vendor-data" data-bs-backdrop="static" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg ">
             <form class="modal-content edit-vendor" id="edit-vendor" novalidate>
                 <input type="hidden" id="edit_id">
                 <div class="modal-header">
@@ -142,19 +142,20 @@
                                     placeholder="Masukan Telepon" required>
                                 <div class="invalid-feedback"> Please enter your phone. </div>
                             </div>
-                            <div class="col mb-3">
-                                <label for="nameBackdrop" class="form-label">Lantai</label>
-                                <input type="text" id="edit_floor" name="floor" class="form-control"
-                                    placeholder="Masukan Lantai" required>
-                                <div class="invalid-feedback"> Please enter your floor. </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-3">
+                            <div class="col mb-3 col-md-6">
                                 <label for="nameBackdrop" class="form-label">Alamat</label>
                                 <textarea name="address" id="edit_address" cols="30" rows="3" class="form-control" required></textarea>
                                 <div class="invalid-feedback"> Please enter your Address. </div>
                             </div>
+                            <div class="col mb-3" hidden>
+                                <label for="nameBackdrop" class="form-label">Lantai</label>
+                                <input type="text" id="edit_floor" name="floor" class="form-control"
+                                    placeholder="Masukan Lantai" required value="0">
+                                <div class="invalid-feedback"> Please enter your floor. </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                           
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -294,6 +295,7 @@
                     data: "address",
                     title: "Alamat",
                     className: 'text-center',
+
                     render: function(data, type, row) {
                         return data;
                     }
@@ -301,6 +303,7 @@
                     name: "Lantai",
                     data: "floor",
                     title: "Lantai",
+                    visible: false,
                     className: 'text-center',
                     render: function(data, type, full, meta) {
                         return data;

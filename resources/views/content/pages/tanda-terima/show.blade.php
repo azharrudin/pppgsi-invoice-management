@@ -183,39 +183,39 @@
                 allowEscapeKey: false
             })
 
-            // let data = JSON.parse(localStorage.getItem("receipt"));
+            let data = JSON.parse(localStorage.getItem("receipt"));
+console.log(data)
+            if (data) {
+                 $("#receipt_number").val(data.receipt_number);
+                 $('#check_number').text(data.check_number);
+                 if (data.grand_total) {
+                     $('#grand_total').text(data.grand_total.toLocaleString('en-EN'));
+                 }
+                 if (data.paid) {
+                     $('#paid').text(data.paid.toLocaleString('en-EN'));
+                 }
+                 if (data.remaining) {
+                     $('#remaining').text(data.remaining.toLocaleString('en-EN'));
+                 }
+                 $('#grand_total_spelled').text(data.grand_total_spelled);
+                 $('#note').text(data.note);
+                 $("#note").prop("disabled", true)
+                 $('#note').text(data.note);
+                 $('#receipt_date').text(moment(data.receipt_date).format('DD MMMM YYYY'));
+                 $('.prev-img').attr('src', data.signature_image);
+                 $('#signature_name').text(data.signature_name);
+               if (data.tenant_id) {
+                     getTenant();
+                 }
+                 if (data.bank_id) {
+                     getBank();
+                 }
+                 if (data.invoice_id) {
+                     getInvoice();
+                 }
 
-            // if (data) {
-            //     $("#receipt_number").val(data.receipt_number);
-            //     $('#check_number').text(data.check_number);
-            //     if (data.grand_total) {
-            //         $('#grand_total').text(data.grand_total.toLocaleString('en-EN'));
-            //     }
-            //     if (data.paid) {
-            //         $('#paid').text(data.paid.toLocaleString('en-EN'));
-            //     }
-            //     if (data.remaining) {
-            //         $('#remaining').text(data.remaining.toLocaleString('en-EN'));
-            //     }
-            //     $('#grand_total_spelled').text(data.grand_total_spelled);
-            //     $('#note').text(data.note);
-            //     $('#note').text(data.note);
-            //     $('#receipt_date').text(moment(data.receipt_date).format('DD MMMM YYYY'));
-            //     $('.prev-img').attr('src', data.signature_image);
-            //     $('#signature_name').text(data.signature_name);
-
-            //     if (data.tenant_id) {
-            //         getTenant();
-            //     }
-            //     if (data.bank_id) {
-            //         getBank();
-            //     }
-            //     if (data.invoice_id) {
-            //         getInvoice();
-            //     }
-
-            //     Swal.close();
-            // }
+                 Swal.close();
+             }
 
             function getInvoice() {
                 let idInvoice = data.invoice_id;
