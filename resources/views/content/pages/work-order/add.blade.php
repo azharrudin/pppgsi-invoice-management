@@ -483,6 +483,9 @@ $configData = Helper::appClasses();
             form.addEventListener(
                 "submit",
                 function(event) {
+                    console.log("[iimo]")
+                    console.log(event.preventDefault)
+
                     if (!form.checkValidity()) {
                         event.preventDefault();
                         event.stopPropagation();
@@ -950,7 +953,7 @@ $configData = Helper::appClasses();
                     <div class="col-md-2 mb-1-custom"">
                         <label for="note" class="form-label fw-medium">Quantity</label>
                         <input type="number" class="form-control row-input" id="qty" name="qty[]" placeholder="Quantity" required />
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
+                        <div class="invalid-feedback"><small style='white-space: nowrap;'>Tidak boleh kosong</small></div>
                     </div>
                     <div class="col-md-1 px-1-custom mb-1-custom">
                         <a role="button" class="btn btn-danger text-center btn-remove-mg text-white"  disabled>
