@@ -15,7 +15,7 @@ $configData = Helper::appClasses();
         <div class="col-lg-9 col-12 mb-lg-0 mb-3">
             <div class="card ticket-preview-card">
                 <div class="card-body">
-                    <h2 class="mx-auto"><b>Form Aduan dan Complain</b></h2>
+                    <h2 class="mx-auto"><b>Form Aduan dan Complafin</b></h2>
                     {{-- Divider --}}
                     <hr class="my-3 mx-n4">
                     <div class="table-responsive">
@@ -90,7 +90,7 @@ $configData = Helper::appClasses();
                     <div class="row d-flex  align-items-center fw-bold fs-5 mb-3 gallery">
                     </div>
                     <div class="px-3">
-                        <button type="button" class="btn btn-primary waves-effect waves-light">Download Semua Lampiran</button>
+                        <button type="button" class="btn btn-primary waves-effect waves-light"><i class="ti ti-download"></i> &nbsp;Download Lampiran</button>
                     </div>
                 </div>
             </div>
