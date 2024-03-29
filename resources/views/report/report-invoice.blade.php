@@ -430,7 +430,10 @@ $configData = Helper::appClasses();
 
                     return new Intl.NumberFormat("id-ID", {
                         style: "currency",
-                        currency: "IDR"
+                        currency: "IDR",
+                        maximumFractionDigits: 0
+                        
+
                     }).format(data)
 
                 }
@@ -443,7 +446,9 @@ $configData = Helper::appClasses();
 
                     return new Intl.NumberFormat("id-ID", {
                         style: "currency",
-                        currency: "IDR"
+                        currency: "IDR",
+                        maximumFractionDigits: 0
+
                     }).format(data)
                 }
 
@@ -483,7 +488,7 @@ $configData = Helper::appClasses();
                 this.api().columns(5).every((function() {
                     var a = this,
                         lsp = $(
-                            '<select id="UserRole" class="form-select"><option value=""> Select Status </option><option value="disetujui bm"> Disetujui BM </option><option value="dibuat"> Dibuat </option><option value="terkirim"> Terkirim </option><option value="lunas"> Lunas </option></select>'
+                            '<select id="UserRole" class="form-select" style="width: 150px"><option value=""> Select Status </option><option value="disetujui bm"> Disetujui BM </option><option value="dibuat"> Dibuat </option><option value="terkirim"> Terkirim </option><option value="lunas"> Lunas </option></select>'
                         ).appendTo(".invoice_status").on("change", (
                             function() {
                                 var e = $.fn.dataTable.util.escapeRegex($(
@@ -493,7 +498,7 @@ $configData = Helper::appClasses();
                                     .draw()
                             })),
                         f =  $(
-                            '<input class="form-select  ms-2" type="text" id="date_select" value="Select Date"></input>'
+                            '<input class="form-select ms-2" type="text" id="date_select" value="Select Date" style="width: 200px"></input>'
                         ).appendTo(".invoice_status")
                       
                         $('#date_select').daterangepicker({
@@ -510,7 +515,7 @@ $configData = Helper::appClasses();
                              });
                              
                         gcr =  $(
-                           `<button class="btn btn-sm btn-success ms-2 w-100"><i class="ti ti-download me-md-1"></i><span class="d-md-inline-block d-none">Download .XLSX</span></button>`
+                           `<button class="btn btn-sm btn-primary ms-2 w-100"><span class="d-md-inline-block d-none">Download .XLSX</span></button>`
                         ).appendTo(".invoice_status").on("click", () => {
                             window.location = "{{url('report/report-invoice/file-export')}}"
                         })
