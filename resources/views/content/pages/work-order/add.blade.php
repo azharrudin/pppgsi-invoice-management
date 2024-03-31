@@ -138,7 +138,7 @@ $configData = Helper::appClasses();
                                 <div class="row  text-center ttd">
                                     <div class="col-md-3 signatures">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Technician" id="technician1" name="name" style="text-align:center;" required/>
+                                            <input type="text" class="form-control" placeholder="Technician" id="technician1" name="name" style="text-align:center;" required disabled/>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
@@ -250,6 +250,8 @@ $configData = Helper::appClasses();
         let ttdFile = dataLocal ? dataLocal.signatures[0].signature : null;
         let account = {!!json_encode(session('data')) !!};
         var levelId = account.level_id;
+        $("#technician1").val(account["name"])
+        
         if (levelId == 10) {
             $('.ttd').hide();
         } else {

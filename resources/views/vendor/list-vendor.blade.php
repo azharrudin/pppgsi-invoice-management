@@ -433,7 +433,6 @@
                             success: function(response) {
                                 $('.indicator-progress').hide();
                                 $('.indicator-label').show();
-
                                 Swal.fire({
                                     title: 'Berhasil',
                                     text: 'Berhasil Menambahkan Vendor',

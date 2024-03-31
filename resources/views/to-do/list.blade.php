@@ -44,7 +44,8 @@ $configData = Helper::appClasses();
             render: function(data, type, row) {
                 return data;
             }
-        }, {
+        }, 
+        {
             name: "tenant",
             data: "tenant",
             title: "Tenant",
@@ -152,7 +153,7 @@ $configData = Helper::appClasses();
                             <div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
             }
         }]
-
+ 
         let columnLaporanKerusakan = [{
             data: "damage_report_number",
             name: "damage_report_number",
@@ -349,7 +350,7 @@ $configData = Helper::appClasses();
         //KA
         }else if(account.level_id == 2){
             urlTandaTerima = "{{ url('to-do-list') }}"+"/receipt"+"/terbuat";
-            urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/terbuat";
+            urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/Disetujui KT";
             urlTicket = "{{ url('to-do-list') }}"+"/ticket"+"/on progress";
             urlPurchaseRequest = "{{ url('to-do-list') }}"+"/purchase-request"+"/terbuat";
             urlPurchaseOrder = "{{ url('to-do-list') }}"+"/purchase-order"+"/terbuat";
@@ -384,13 +385,15 @@ $configData = Helper::appClasses();
             tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
         //leader cleaning
         }else if(account.level_id == 4){
-            urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/Disetujui LC";
+            urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/Terbuat";
             tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
         //Koordinator
         }else if(account.level_id == 3){
-            urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/terbuat";
+            urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/Disetujui LC";
             tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
         }else{
+            urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Terkirim"; 
+           
             tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
             tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
             // tableSetting('Task Ticket', 'ticket-table', columnTicket, urlTicket);
