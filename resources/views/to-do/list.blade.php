@@ -44,7 +44,8 @@ $configData = Helper::appClasses();
             render: function(data, type, row) {
                 return data;
             }
-        }, {
+        }, 
+        {
             name: "tenant",
             data: "tenant",
             title: "Tenant",
@@ -391,6 +392,8 @@ $configData = Helper::appClasses();
             urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/Disetujui LC";
             tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
         }else{
+            urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Terkirim"; 
+           
             tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
             tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
             // tableSetting('Task Ticket', 'ticket-table', columnTicket, urlTicket);

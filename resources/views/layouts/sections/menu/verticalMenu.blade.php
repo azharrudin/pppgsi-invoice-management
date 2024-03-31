@@ -11,11 +11,12 @@ background: linear-gradient(3deg, rgba(97,73,206,1) 0%, rgba(156,98,244,1) 100%)
     <a href="{{url('/')}}" class="app-brand-link ps-0">
       <img alt="Logo" src="{{ asset('assets/img/Logo B-MApps.png') }}" width="70%" class="ms-0" />
     </a>
-
+<!--
     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
       <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
       <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
     </a>
+-->
   </div>
   @endif
 
