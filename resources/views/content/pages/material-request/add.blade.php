@@ -215,7 +215,7 @@ $configData = Helper::appClasses();
         
 
         $('.date').flatpickr({
-            dateFormat: 'Y-m-d'
+            dateFormat: 'd-m-Y'
         });
 
         const flatPickrEL = $(".date");
@@ -223,7 +223,7 @@ $configData = Helper::appClasses();
             flatPickrEL.flatpickr({
                 allowInput: true,
                 monthSelectorType: "static",
-                dateFormat: 'Y-m-d'
+                dateFormat: 'd-m-Y'
             });
         }
 
@@ -516,6 +516,11 @@ $configData = Helper::appClasses();
             }
         }
 
+        function reverseDateFormat(dateString) {
+            var parts = dateString.split('-');
+            return parts[2] + '-' + parts[1] + '-' + parts[0];
+        }
+
         var saveMaterial = $('.create-material-request');
 
         Array.prototype.slice.call(saveMaterial).forEach(function(form) {
@@ -539,7 +544,7 @@ $configData = Helper::appClasses();
                         });
                         let requester = $("#requester").val();
                         let department = $("#department").val();
-                        let request_date = $("#request_date").val();
+                        let request_date = reverseDateFormat($("#request_date").val());
                         let stock = $("#stock").val();
                         let purchase = $("#purchase").val();
                         let note = $("#note").val();
@@ -547,8 +552,20 @@ $configData = Helper::appClasses();
                         let signatures1 = {}
                         signatures1.type = "Prepared By";
                         signatures1.name = $('#warehouse_name').val();
-                        signatures1.date = $('#warehouse_date').val();
-                        signatures1.signature = ttdFile1.dataURL;
+                        signatures1.date = reverseDateFormat($('#warehouse_date').val());
+                        if(ttdFile1 != undefined){
+                            signatures1.signature = ttdFile1.dataURL;
+                        }else{
+                            return Swal.fire({
+                                title: 'Error!',
+                                text: 'Periksa Tanda Tangan',
+                                icon: 'error',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            })
+                        }
 
                         var details = [];
                         $('.row-input').each(function(index) {

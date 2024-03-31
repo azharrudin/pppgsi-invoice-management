@@ -99,7 +99,6 @@ $configData = Helper::appClasses();
                 type: "GET",
                 dataType: "json",
                 success: function(res) {
-                    console.log(res);
                     $('.count_tenant').html(res.count_tenant);
                     $('.count_ticket').html(res.count_ticket);
                     Swal.close();
@@ -141,7 +140,7 @@ $configData = Helper::appClasses();
             }, {
                 name: "tenant",
                 data: "tenant",
-                title: "Perusahan",
+                title: "Perusahaan",
                 className: 'text-center',
                 render: function(data, type, row) {
                     if(data != null){
@@ -181,12 +180,15 @@ $configData = Helper::appClasses();
                 name: "tanggapan",
                 title: "Tanggapan",
                 render: function(data, type, row) {
-                    let editRow = '';
+                    let editAndDelete = '';
                     let previewRow = '<a href="{{ url("complain/show-ticket")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
+                    if(account.level.id == 10){
+                        editAndDelete = `<a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="{{ url("complain/edit-ticket")}}/` + data + `" class="dropdown-item">Edit</a>
+                        <div class="dropdown-divider"></div><a href="#" data-id="`+data+`" class="dropdown-item delete-record text-danger">Delete</a></div></div>`;
+                    }
                     return `<div class="d-flex align-items-center">
                             ` + previewRow + `
-                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="{{ url("complain/edit-ticket")}}/` + data + `" class="dropdown-item">Edit</a>
-                            <div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
+                            <div class="dropdown">` + editAndDelete +`</div>`;
                 }
             }],
             order: [
@@ -252,6 +254,65 @@ $configData = Helper::appClasses();
             $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(
                 ".dataTables_length .form-select").removeClass("form-select-sm")
         }), 300)
+
+        $(document).on("click", ".delete-record", function(e) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                icon: 'warning',
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonText: "Batal",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                    cancelButton: "btn fw-bold btn-active-light-primary"
+                }
+            }).then((result) => {
+                if (result.value) {
+                    let id = $(this).data('id');
+                    let datas = {}
+                    Swal.fire({
+                        title: 'Memeriksa...',
+                        text: "Harap menunggu",
+                        imageUrl: "{{ asset('waiting.gif') }}",
+                        showConfirmButton: false,
+                        allowOutsideClick: false
+                    });
+                    $.ajax({
+                        url: "{{ env('BASE_URL_API')}}" + '/api/ticket/'+id,
+                        type: "DELETE",
+                        data: JSON.stringify(datas),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response) {
+                            Swal.fire({
+                                title: 'Berhasil',
+                                text: 'Berhasil Menghapus Invoice',
+                                icon: 'success',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            }).then((result) => {
+                                $('.ticket-list-table').DataTable().ajax.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: xhr?.responseJSON?.message,
+                                icon: 'error',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            })
+                        }
+                    });
+                }
+            });
+        });
     }));
 </script>
 

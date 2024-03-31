@@ -11,11 +11,6 @@ background: linear-gradient(3deg, rgba(97,73,206,1) 0%, rgba(156,98,244,1) 100%)
     <a href="{{url('/')}}" class="app-brand-link ps-0">
       <img alt="Logo" src="{{ asset('assets/img/Logo B-MApps.png') }}" width="70%" class="ms-0" />
     </a>
-
-    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-      <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
-      <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
-    </a>
   </div>
   @endif
 
@@ -39,8 +34,10 @@ background: linear-gradient(3deg, rgba(97,73,206,1) 0%, rgba(156,98,244,1) 100%)
     @php
     $activeClass = null;
     $currentRouteName = Route::currentRouteName();
+    $backgroundColor = '';
     if ($currentRouteName === $menu->slug) {
         $activeClass = 'active';
+        $backgroundColor = '#6049CD';
     }elseif (isset($menu->submenu)) {
       if (gettype($menu->submenu) === 'array') {
         $stringRepresentation= json_encode($menu->submenu);
@@ -57,7 +54,7 @@ background: linear-gradient(3deg, rgba(97,73,206,1) 0%, rgba(156,98,244,1) 100%)
     @endphp
 
     {{-- main menu --}}
-    <li class="menu-item {{$activeClass}}">
+    <li class="menu-item {{$activeClass}}" style="background-color: {{$backgroundColor}}">
       @if($menu->slug == 'pages-to-do' || $menu->slug == "pages-home")
       <a href="{{ isset($menu->url) ? url($menu->url) : 'javascript:void(0);' }}" class="{{ isset($menu->submenu) ? 'menu-link menu-toggle' : 'menu-link' }} text-white"><div class="d-flex"> <i class="{{ $menu->icon }}"></i>{{ isset($menu->name) ? __($menu->name) : '' }}</div></a>
       @else  
@@ -68,7 +65,6 @@ background: linear-gradient(3deg, rgba(97,73,206,1) 0%, rgba(156,98,244,1) 100%)
         <div>{{ isset($menu->name) ? __($menu->name) : '' }}</div>
         @isset($menu->badge)
         <div class="badge bg-{{ $menu->badge[0] }} rounded-pill ms-auto">{{ $menu->badge[1] }}</div>
-
         @endisset
       </a>
       @endif
