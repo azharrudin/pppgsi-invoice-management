@@ -396,138 +396,138 @@ class InvoiceController extends Controller
         // DB::beginTransaction();
 
         // try {
-            $id = (int) $id;
-            $getInvoice = Invoice::with("tenant")->with("invoiceDetails")->where("deleted_at", null)->where("id", $id)->first();
-            if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
+        $id = (int) $id;
+        $getInvoice = Invoice::with("tenant")->with("invoiceDetails")->where("deleted_at", null)->where("id", $id)->first();
+        if (is_null($getInvoice)) throw new CustomException("Invoice tidak ditemukan", 404);
 
-            $validateInvoice = $this->InvoiceService->validateStatus($request);
-            if ($validateInvoice != "") throw new CustomException($validateInvoice, 400);
+        $validateInvoice = $this->InvoiceService->validateStatus($request);
+        if ($validateInvoice != "") throw new CustomException($validateInvoice, 400);
 
-            $status = strtolower($request->input("status"));
-            $remainingQuota = $this->PaperIdService->checkRemainingStamp();
+        $status = strtolower($request->input("status"));
+        $remainingQuota = $this->PaperIdService->checkRemainingStamp();
+        if (
+            $status == "disetujui bm" &&
+            (!$remainingQuota ||
+                !isset($remainingQuota["data"]) ||
+                !isset($remainingQuota["data"]["quota"]) ||
+                $remainingQuota["data"]["quota"] <= 0)
+        ) throw new CustomException("Insuficient stamp", 400);
+
+        $invoicePayload = $request->all();
+        if (isset($invoicePayload["invoice_number"])) unset($invoicePayload["invoice_number"]);
+
+        $dataPayload = ["status" => $request->input("status")];
+
+        Invoice::findOrFail($id)->update($dataPayload);
+
+        if ($status == "disetujui bm" && !isset($getInvoice["paper_id"])) {
+            $getTenant = Tenant::where("deleted_at", null)->where("id", $getInvoice["tenant_id"])->first();
+            $getInvoiceDetail = InvoiceDetail::where("deleted_at", null)->where("invoice_id", $getInvoice["id"])->get();
+            $invoiceDetailArr = $this->CommonService->toArray($getInvoiceDetail);
+
+            $createSaleInvoice = $this->PaperIdService->createSalesInvoice($getInvoice, $invoiceDetailArr, $getTenant);
             if (
-                $status == "disetujui bm" &&
-                (!$remainingQuota ||
-                    !isset($remainingQuota["data"]) ||
-                    !isset($remainingQuota["data"]["quota"]) ||
-                    $remainingQuota["data"]["quota"] <= 0)
-            ) throw new CustomException("Insuficient stamp", 400);
+                $createSaleInvoice &&
+                isset($createSaleInvoice["data"]) &&
+                isset($createSaleInvoice["data"]["id"])
+            ) Invoice::findOrFail($id)->update(["paper_id" => $createSaleInvoice["data"]["id"]]);
+            else throw new CustomException("Failed to create sales invoice", 400);
+        }
 
-            $invoicePayload = $request->all();
-            if (isset($invoicePayload["invoice_number"])) unset($invoicePayload["invoice_number"]);
+        DB::commit();
 
-            $dataPayload = ["status" => $request->input("status")];
-
-            Invoice::findOrFail($id)->update($dataPayload);
-
-            if ($status == "disetujui bm" && !isset($getInvoice["paper_id"])) {
-                $getTenant = Tenant::where("deleted_at", null)->where("id", $getInvoice["tenant_id"])->first();
-                $getInvoiceDetail = InvoiceDetail::where("deleted_at", null)->where("invoice_id", $getInvoice["id"])->get();
-                $invoiceDetailArr = $this->CommonService->toArray($getInvoiceDetail);
-
-                $createSaleInvoice = $this->PaperIdService->createSalesInvoice($getInvoice, $invoiceDetailArr, $getTenant);
-                if (
-                    $createSaleInvoice &&
-                    isset($createSaleInvoice["data"]) &&
-                    isset($createSaleInvoice["data"]["id"])
-                ) Invoice::findOrFail($id)->update(["paper_id" => $createSaleInvoice["data"]["id"]]);
-                else throw new CustomException("Failed to create sales invoice", 400);
+        if ($status == "disetujui bm" && !$getInvoice["is_stamped"]) {
+            $stampInvoice = $this->PaperIdService->stampSalesInvoice($getInvoice["invoice_number"]);
+            if (
+                $stampInvoice &&
+                isset($stampInvoice["data"]) &&
+                isset($stampInvoice["data"]["pdf_link"])
+            ) {
+                DB::beginTransaction();
+                Invoice::findOrFail($id)->update(["is_stamped" => true, "pdf_link" => $stampInvoice["data"]["pdf_link"]]);
+                DB::commit();
             }
+        }
 
-            DB::commit();
+        if ($status == 'terkirim') {
+            $invoice = Invoice::where('id', $id)->first();
+            $hariIni = \Carbon\Carbon::now()->locale('id');
+            $bulan = $hariIni->monthName;
+            $tahun = $hariIni->format('Y');
 
-            if ($status == "disetujui bm" && !$getInvoice["is_stamped"]) {
-                $stampInvoice = $this->PaperIdService->stampSalesInvoice($getInvoice["invoice_number"]);
-                if (
-                    $stampInvoice &&
-                    isset($stampInvoice["data"]) &&
-                    isset($stampInvoice["data"]["pdf_link"])
-                ) {
-                    DB::beginTransaction();
-                    Invoice::findOrFail($id)->update(["is_stamped" => true, "pdf_link" => $stampInvoice["data"]["pdf_link"]]);
-                    DB::commit();
-                }
-            }
+            $dataEmail["tenantName"] = $invoice->tenant->name;
+            $dataEmail["month"] = $bulan;
+            $dataEmail["year"] = $tahun;
+            $dataEmail["total"] = $invoice->grand_total;
+            $dataEmail["terbilang"] = $invoice->grand_total_spelled;
+            $dataEmail["invoice_number"] = $invoice->invoice_number;
 
-            if($status == 'terkirim'){
-                $invoice = Invoice::where('id', $id)->first();
-                $hariIni = \Carbon\Carbon::now()->locale('id');
-                $bulan = $hariIni->monthName;
-                $tahun = $hariIni->format('Y');
-    
-                $dataEmail["tenantName"] = $invoice->tenant->name;
-                $dataEmail["month"] = $bulan;
-                $dataEmail["year"] = $tahun;
-                $dataEmail["total"] = $invoice->grand_total;
-                $dataEmail["terbilang"] = $invoice->grand_total_spelled;
-                $dataEmail["invoice_number"] = $invoice->invoice_number;
-
-                $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice/' . $id);
+            $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice/' . $id);
+            $response = json_decode($apiRequest->getBody());
+            $path = $response->data->pdf_link;
+            Storage::disk('public')->put("invoice/" . str_replace('/', '-', $response->data->invoice_number . ".pdf"), file_get_contents($path));
+            $path = Storage::path("invoice/" . str_replace('/', '-', $response->data->invoice_number . ".pdf"));
+            $data = $response->data;
+            $subtotal = 0;
+            $diskon = 0;
+            $total = 0;
+            $pajak = 0;
+            $pajakEklusif = [];
+            $pajakInklusif = 0;
+            for ($i = 0; $i <  sizeof($data->invoice_details); $i++) {
+                $tax = $data->invoice_details[$i]->tax_id;
+                $apiRequest = Http::get(env('BASE_URL_API') . '/api/tax/get-paper/' . $tax);
                 $response = json_decode($apiRequest->getBody());
-                $path = $response->data->pdf_link;
-                Storage::disk('public')->put("invoice/" . str_replace('/', '-', $response->data->invoice_number . ".pdf"), file_get_contents($path));
-                $path = Storage::path("invoice/" . str_replace('/', '-', $response->data->invoice_number . ".pdf"));
-                $data = $response->data;
-                $subtotal = 0;
-                $diskon = 0;
-                $total = 0;
-                $pajak = 0;
-                $pajakEklusif = [];
-                $pajakInklusif = 0;
-                for ($i = 0; $i <  sizeof($data->invoice_details); $i++) {
-                    $tax = $data->invoice_details[$i]->tax_id;
-                    $apiRequest = Http::get(env('BASE_URL_API') . '/api/tax/get-paper/' . $tax);
-                    $response = json_decode($apiRequest->getBody());
-                    $value = $response->data->name;
-                    $data->invoice_details[$i]->tax_id = $value;
-                    $subtotal = $subtotal + ($data->invoice_details[$i]->price * $data->invoice_details[$i]->quantity);
-                    $diskon = $diskon + (($data->invoice_details[$i]->price * $data->invoice_details[$i]->quantity) * $data->invoice_details[$i]->discount / 100);
-                    $exlusive =  $response->data->exclusive;
-        
-                    if ($exlusive == 0) {
-                        $pajak = $pajak + 0;
-                    } else {
-                        $pajak = $subtotal * ($response->data->value / 100);
-                        if (sizeof($pajakEklusif) > 0) {
-                            foreach ($pajakEklusif as $key => $value) {
-                                if ($key  == $response->data->name) {
-                                    $pajakEklusif[$response->data->name] = $subtotal * ($response->data->value / 100);
-                                } else {
-                                }
+                $value = $response->data->name;
+                $data->invoice_details[$i]->tax_id = $value;
+                $subtotal = $subtotal + ($data->invoice_details[$i]->price * $data->invoice_details[$i]->quantity);
+                $diskon = $diskon + (($data->invoice_details[$i]->price * $data->invoice_details[$i]->quantity) * $data->invoice_details[$i]->discount / 100);
+                $exlusive =  $response->data->exclusive;
+
+                if ($exlusive == 0) {
+                    $pajak = $pajak + 0;
+                } else {
+                    $pajak = $subtotal * ($response->data->value / 100);
+                    if (sizeof($pajakEklusif) > 0) {
+                        foreach ($pajakEklusif as $key => $value) {
+                            if ($key  == $response->data->name) {
+                                $pajakEklusif[$response->data->name] = $subtotal * ($response->data->value / 100);
+                            } else {
                             }
-                        } else {
-                            $pajakEklusif[$response->data->name] =$subtotal * ($response->data->value / 100);
                         }
+                    } else {
+                        $pajakEklusif[$response->data->name] = $subtotal * ($response->data->value / 100);
                     }
                 }
-        
-        
-                $total = $subtotal - $diskon + $pajak;
-                $data->subtotal = $subtotal;
-                $data->discount = $diskon;
-                $data->tax = $pajak;
-                $data->total = $total;
-                $data->pajakEklusif = $pajakEklusif;
-                $pdf = PDF::loadView('invoice.download', ['data' => $data]);
-                $to = $data->tenant->email;
-    
-                Mail::send('emails.email-template',['data' =>$dataEmail], function ($message) use ($to, $data, $dataEmail) {
-                    $message->to($to)
-                        ->subject('Invoice No Invoice : '.$data->invoice_number)
-                        ->attach(storage_path('app/public/invoice/'.str_replace('/', '-', $data->invoice_number . ".pdf")), [
-                            'as' => $data->invoice_number,
-                            'mime' => 'application/pdf',
-                        ]);
-                });
             }
 
-            $getInvoice = Invoice::with("invoiceDetails")
-                ->with("tenant")
-                ->where("id", $id)
-                ->where("deleted_at", null)
-                ->first();
 
-            return ["data" => $getInvoice];
+            $total = $subtotal - $diskon + $pajak;
+            $data->subtotal = $subtotal;
+            $data->discount = $diskon;
+            $data->tax = $pajak;
+            $data->total = $total;
+            $data->pajakEklusif = $pajakEklusif;
+            $pdf = PDF::loadView('invoice.download', ['data' => $data]);
+            $to = $data->tenant->email;
+
+            Mail::send('emails.email-template', ['data' => $dataEmail], function ($message) use ($to, $data, $dataEmail) {
+                $message->to($to)
+                    ->subject('Invoice No Invoice : ' . $data->invoice_number)
+                    ->attach(storage_path('app/public/invoice/' . str_replace('/', '-', $data->invoice_number . ".pdf")), [
+                        'as' => $data->invoice_number,
+                        'mime' => 'application/pdf',
+                    ]);
+            });
+        }
+
+        $getInvoice = Invoice::with("invoiceDetails")
+            ->with("tenant")
+            ->where("id", $id)
+            ->where("deleted_at", null)
+            ->first();
+
+        return ["data" => $getInvoice];
         // } catch (\Throwable $e) {
         //     $errorMessage = "Internal server error";
         //     $errorStatusCode = 500;
@@ -551,8 +551,16 @@ class InvoiceController extends Controller
                 // "page" => $page,
                 // "order" => $order,
                 // "sort" => $sort,
+                "start" => $start,
+                "end" => $end,
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
+
+            if (is_null($start)) $start = Carbon::now()->firstOfMonth();
+            if (is_null($end)) {
+                $end = Carbon::now()->lastOfMonth();
+                $end->setTime(23, 59, 59);
+            }
 
             $invoiceQuery = Invoice::with("tenant")->where("deleted_at", null);
             if ($value) {
