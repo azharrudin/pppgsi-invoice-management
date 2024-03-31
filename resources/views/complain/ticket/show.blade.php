@@ -15,69 +15,69 @@ $configData = Helper::appClasses();
         <div class="col-lg-9 col-12 mb-lg-0 mb-3">
             <div class="card ticket-preview-card">
                 <div class="card-body">
-                    <h2 class="mx-auto"><b>Form Aduan dan Complafin</b></h2>
+                    <h2 class="mx-auto"><b>Detail Aduan dan Complain</b></h2>
                     {{-- Divider --}}
                     <hr class="my-3 mx-n4">
                     <div class="table-responsive">
                         <table style="width: 100%;">
                             <tr style="vertical-align: top;">
                                 <td style="width: 20%;">
-                                    <label for="salesperson" class="form-label fw-bold fs-5">Nama Pelapor</label>
+                                    <label for="salesperson" class="form-label fs-5">Nama Pelapor</label>
                                 </td>
                                 <td style="width: 5%;" class="mx-auto">
                                     <div class="">:</div>
                                 </td>
                                 <td style="width: 75%;">
-                                    <span id="reporter_name" class="fw-bold fs-5"></span>
+                                    <span id="reporter_name" class="fs-5"></span>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td style="width: 20%;">
-                                    <label for="salesperson" class="form-label fw-bold fs-5">Nomor Telepon</label>
+                                    <label for="salesperson" class="form-label fs-5">Nomor Telepon</label>
                                 </td>
                                 <td style="width: 5%;" class="mx-auto">
                                     <div class="">:</div>
                                 </td>
                                 <td style="width: 75%;">
-                                    <div id="reporter_phone" class="fw-bold fs-5"></div>
+                                    <div id="reporter_phone" class="fs-5"></div>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td style="width: 20%;">
-                                    <label for="salesperson" class="form-label fw-bold fs-5">Nama Perusahaan</label>
+                                    <label for="salesperson" class="form-label fs-5">Nama Perusahaan</label>
                                 </td>
                                 <td style="width: 5%;" class="mx-auto">
                                     <div class="">:</div>
                                 </td>
                                 <td style="width: 75%;">
-                                    <div id="tenant_id" class="fw-bold fs-5"></div>
+                                    <div id="tenant_id" class="fs-5"></div>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td style="width: 20%;">
-                                    <label for="salesperson" class="form-label fw-bold fs-5">Judul Laporan</label>
+                                    <label for="salesperson" class="form-label fs-5">Judul Laporan</label>
                                 </td>
                                 <td style="width: 5%;" class="mx-auto">
                                     <div class="">:</div>
                                 </td>
                                 <td style="width: 75%;">
-                                    <div id="ticket_title" class="fw-bold fs-5"></div>
+                                    <div id="ticket_title" class="fs-5"></div>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td style="width: 20%;">
-                                    <label for="salesperson" class="form-label fw-bold fs-5">Isi laporan</label>
+                                    <label for="salesperson" class="form-label fs-5">Isi laporan</label>
                                 </td>
                                 <td style="width: 5%;" class="mx-auto">
                                     <div class="">:</div>
                                 </td>
                                 <td style="width: 75%;">
-                                    <div id="ticket_body" class="fw-bold fs-5"></div>
+                                    <div id="ticket_body" class="fs-5"></div>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td style="width: 20%;">
-                                    <label for="salesperson" class="form-label fw-bold fs-5">Laporan</label>
+                                    <label for="salesperson" class="form-label fs-5">Laporan</label>
                                 </td>
                                 <td style="width: 5%;" class="mx-auto">
                                     <div class="">:</div>
@@ -87,10 +87,10 @@ $configData = Helper::appClasses();
                             </tr>
                         </table>
                     </div>
-                    <div class="row d-flex  align-items-center fw-bold fs-5 mb-3 gallery">
+                    <div class="row d-flex  align-items-center fs-5 mb-3 gallery">
                     </div>
                     <div class="px-3">
-                        <button type="button" class="btn btn-primary waves-effect waves-light"><i class="ti ti-download"></i> &nbsp;Download Lampiran</button>
+                        <a href="" class="btn btn-primary waves-effect waves-light btn-download" download="Lampiran Ticket.jpg"><i class="ti ti-download"></i> &nbsp;Download Lampiran</a>
                     </div>
                 </div>
             </div>
@@ -165,7 +165,7 @@ $configData = Helper::appClasses();
                 $("#reporter_phone").text(data.reporter_phone);
                 $("#ticket_title").text(data.ticket_title);
                 $("#ticket_body").text(data.ticket_body);
-                $("#tenant_id").text(data.tenant.name);
+                $("#tenant_id").text(data.tenant.company);
                 getImage(data.ticket_attachments);
                 Swal.close();
             },
@@ -186,6 +186,7 @@ $configData = Helper::appClasses();
             </div>
             `
         }
+        $('.btn-download').attr('href', images[0].attachment);
         $('.gallery').append(temp);
     }
 </script>
