@@ -430,18 +430,6 @@ if (typeof $ !== 'undefined') {
           cb(matches);
         };
       };
-
-      // Search JSON
-      var searchJson = 'search-vertical.json'; // For vertical layout
-      if ($('#layout-menu').hasClass('menu-horizontal')) {
-        var searchJson = 'search-horizontal.json'; // For vertical layout
-      }
-      // Search API AJAX call
-      var searchData = $.ajax({
-        url: assetsPath + 'json/' + searchJson, //? Use your own search api instead
-        dataType: 'json',
-        async: false
-      }).responseJSON;
       // Init typeahead on searchInput
       searchInput.each(function () {
         var $this = $(this);
