@@ -115,6 +115,7 @@ class InvoiceController extends Controller
         $pajakEklusif = [];
         $pajakInklusif = 0;
         $data = $response->data;
+
         for ($i = 0; $i <  sizeof($data->invoice_details); $i++) {
             $tax = $data->invoice_details[$i]->tax_id;
             $apiRequest = Http::get(env('BASE_URL_API') . '/api/tax/get-paper/' . $tax);
@@ -141,8 +142,7 @@ class InvoiceController extends Controller
                 }
             }
         }
-
-
+ 
         $total = $subtotal - $diskon + $pajak;
         $data->subtotal = $subtotal;
         $data->discount = $diskon;

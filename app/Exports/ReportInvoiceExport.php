@@ -35,14 +35,20 @@ class ReportInvoiceExport implements FromCollection, WithMapping, ShouldAutoSize
 
     public function map($data): array
     {
+       
+       $remaining = "Rp. 0";
+       if(property_exists($data, "remaining")){
+        $remaining = (float) number_format($data->remaining, 0, ',', '.');
+       }
         return [
             $this->i++,
             $data->invoice_number,
             $data->invoice_date,
             (strtotime(date('Ymd')) -  strtotime($data->invoice_date)) / 86400 +1 .' Hari',
-            $data->tenant->name,
-            "Rp " . number_format($data->grand_total, 2, ',', '.'),
-            "Rp " . number_format($data->remaining, 2, ',', '.'),
+            $data->tenant == null ? "" :  $data->tenant->name,
+            "Rp " . (float) number_format($data->grand_total, 2, ',', '.'),
+            // "Rp " . number_format($data->remaining, 2, ',', '.'),
+           $remaining
         ];
     }
 
