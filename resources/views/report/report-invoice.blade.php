@@ -529,34 +529,8 @@ console.log(opt)
                         gcr =  $(
                            `<button class="btn btn-sm btn-primary ms-2 w-100"><span class="d-md-inline-block d-none">Download .XLSX</span></button>`
                         ).appendTo(".invoice_status").on("click", () => {
-                            $.ajax({
-                                url: "{{url('invoice/invoice-report-export')}}",
-                                type: "GET",
-                                dataType: "json",
-                                success: function(res) {
-                                    console.log(res.data);
-                                    let data = res.data;
-                                    console.log(typeof(data));
-                                    let datas = {};
-                                    datas.data = data;
-                                    $.ajax({
-                                        url: "{{url('report/report-invoice/file-export')}}",
-                                        type: "POST",
-                                        data: JSON.stringify(datas),
-                                        contentType: "application/json; charset=utf-8",
-                                        dataType: "json",
-                                        success : function (res){
-                                            console.log(res);
-                                        },
-                                        error: function(errors) {
-                                            console.log(errors);
-                                        }
-                                    });
-                                },
-                                error: function(errors) {
-                                    console.log(errors);
-                                }
-                            });
+                           window.location.href ="{{url('report/report-invoice/file-export')}}";
+                           
                         })
                         $('#date_select').daterangepicker({
                              startDate: moment().format("MM/01/YYYY") ,
