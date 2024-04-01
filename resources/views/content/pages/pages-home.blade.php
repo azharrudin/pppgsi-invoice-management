@@ -346,7 +346,7 @@ $configData = Helper::appClasses();
                 } else {
                     $("#start_date").removeClass("is-invalid");
                 }
-
+                
                 if (end === '') {
                     $("#end_date").addClass("is-invalid");
                 } else {
