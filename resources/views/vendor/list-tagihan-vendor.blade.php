@@ -28,7 +28,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1">300</h3>
-                            <p class="mb-0">Tenant</p>
+                            <p class="mb-0" id="tenant">Tenant</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none me-4">
@@ -37,7 +37,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1">50</h3>
-                            <p class="mb-0">Tanda Terima</p>
+                            <p class="mb-0" id="tt">Tanda Terima</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
@@ -77,7 +77,7 @@ $configData = Helper::appClasses();
 
     let account = {!! json_encode(session('data')) !!}
     let table = '';
-    var buttonAdd = null
+    var buttonAdd = []
     console.log(account);
     if(account.level_id == '11'){
         table = "{{ route('data-vendor') }}";
@@ -102,6 +102,9 @@ $configData = Helper::appClasses();
     }
     else if(account.level_id == '10'){
         table = "{{ route('data-vendor') }}";
+        $("#tenant").html("Total Vendor")
+        $("#tt").html("Total Tagihan")
+
     }
     else {
         table = "{{ route('data-tagihan-vendor') }}";
