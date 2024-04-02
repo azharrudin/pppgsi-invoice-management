@@ -77,10 +77,33 @@ $configData = Helper::appClasses();
 
     let account = {!! json_encode(session('data')) !!}
     let table = '';
+    var buttonAdd = null
     console.log(account);
     if(account.level_id == '11'){
         table = "{{ route('data-vendor') }}";
-    }else{
+        buttonAdd = [{
+                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Vendor</span>',
+                className: "btn btn-primary ",
+                action: function(a, e, t, s) {
+                    $.ajax({
+                        url: "{{ env('BASE_URL_API')}}" + '/api/invoice/' + id,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(res) {
+
+                        },
+                        error: function(errors) {
+                            console.log(errors);
+                        }
+                    });
+                    window.location = "{{url('invoice/add-invoice')}}"
+                }
+            }];
+    }
+    else if(account.level_id == '10'){
+        table = "{{ route('data-vendor') }}";
+    }
+    else {
         table = "{{ route('data-tagihan-vendor') }}";
     }
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
@@ -194,7 +217,7 @@ $configData = Helper::appClasses();
                 search: "",
                 searchPlaceholder: "Search Tanda Terima"
             },
-            buttons: [],
+            buttons: buttonAdd,
             responsive: {
                 details: {
                     
@@ -237,6 +260,31 @@ $configData = Helper::appClasses();
                 }))
             }
         });
+
+        function setHeader() {
+            Swal.fire({
+                title: '<h2>Loading...</h2>',
+                html: sweet_loader + '<h5>Please Wait</h5>',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            });
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" +'/api/invoice/report',
+                type: "GET",
+                dataType: "json",
+                success: function(res) {
+                    $('.count_tenant').html(res.count_tenant);
+                    $('.count_invoice').html(res.count_invoice);
+                    $('.invoice_paid').html('Rp. '+parseInt(res.invoice_paid).toLocaleString('en-US'));
+                    $('.invoice_not_paid').html('Rp. '+parseInt(res.invoice_not_paid).toLocaleString('en-US'));
+                    Swal.close();
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
+        }
         a.on("draw.dt", (function() {
             [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((
                 function(a) {
