@@ -62,7 +62,7 @@ class ReportController extends Controller
             $ticketComplainQuery = "
                 SELECT
                     (SELECT COUNT(*) FROM tickets WHERE deleted_at IS NULL AND created_at BETWEEN '$start' AND '$end') AS count_tickets,
-                    (SELECT COUNT(*) FROM tickets WHERE deleted_at IS NULL AND created_at BETWEEN '$start' AND '$end' AND status LIKE '%wait a response%') AS count_tickets_waiting_for_response,
+                    (SELECT COUNT(*) FROM tickets WHERE deleted_at IS NULL AND created_at BETWEEN '$start' AND '$end' AND status LIKE '%On progress%') AS count_tickets_waiting_for_response,
                     (SELECT COUNT(*) FROM tickets WHERE deleted_at IS NULL AND created_at BETWEEN '$start' AND '$end' AND status LIKE '%selesai%') AS count_completed_tickets
             ";
             $ticketComplain = DB::select($ticketComplainQuery)[0];

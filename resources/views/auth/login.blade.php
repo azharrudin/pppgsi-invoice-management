@@ -118,10 +118,10 @@ $configData = Helper::appClasses();
 @section('page-script')
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
-   let account = {!! json_encode(session('data')) !!}
-   if(account){
-    location.href = "/dashboard";
-   }
+  let account = {!!json_encode(session('data')) !!}
+  // if (account) {
+  //   location.href = "/dashboard";
+  // }
   $(function() {
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                             <span class="sr-only">Loading...</span>
@@ -156,9 +156,19 @@ $configData = Helper::appClasses();
               },
               buttonsStyling: false
             })
-            setTimeout(
-              location.href = "/dashboard",
-              2000);
+
+
+            account = response.credentials.level.id;
+            if (account == 10) {
+              setTimeout(
+                location.href = "/dashboard",
+                2000);
+            } else {
+              setTimeout(
+                location.href = "/to-do-list",
+                2000);
+            }
+
           } else {
             Swal.fire("Opps..!", "Gagal masuk resp: " + response.message);
             $("input").attr("disabled", false);

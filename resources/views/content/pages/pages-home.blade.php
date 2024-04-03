@@ -61,7 +61,6 @@ $configData = Helper::appClasses();
                         <div class="col-12 col-md-4 d-flex flex-column align-self-end">
                             <div class="d-flex gap-2 align-items-center mb-2 pb-1 flex-wrap">
                                 <span class="mb-0 fs-5" id="sum_invoice_per_month">0</span>
-                                <div class="badge rounded bg-label-success">+4.2%</div>
                             </div>
                             <small>Pendapatan bulan ini</small>
                         </div>
@@ -134,13 +133,6 @@ $configData = Helper::appClasses();
                                 <p class="mb-0">Total Ticket</p>
                             </div>
                             <ul class="p-0 m-0">
-                                <li class="d-flex gap-3 align-items-center mb-lg-3 pt-2 pb-1">
-                                    <div class="badge rounded bg-label-primary p-1"><i class="ti ti-ticket ti-sm"></i></div>
-                                    <div>
-                                        <h6 class="mb-0 text-nowrap">Ticket Baru</h6>
-                                        <small class="text-muted">0</small>
-                                    </div>
-                                </li>
                                 <li class="d-flex gap-3 align-items-center mb-lg-3 pb-1">
                                     <div class="badge rounded bg-label-info p-1"><i class="ti ti-circle-check ti-sm"></i></div>
                                     <div>
@@ -151,7 +143,7 @@ $configData = Helper::appClasses();
                                 <li class="d-flex gap-3 align-items-center pb-1">
                                     <div class="badge rounded bg-label-warning p-1"><i class="ti ti-clock ti-sm"></i></div>
                                     <div>
-                                        <h6 class="mb-0 text-nowrap">Ticket Menunggu</h6>
+                                        <h6 class="mb-0 text-nowrap">Ticket On Proses</h6>
                                         <small class="text-muted" id="count_tickets_waiting_for_response">0</small>
                                     </div>
                                 </li>
@@ -277,7 +269,6 @@ $configData = Helper::appClasses();
     <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/swiper/swiper.js"></script>
     <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
     <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
-    <script src="https://demos.pixinvent.com/vuexy-html-admin-template/assets/js/dashboards-analytics.js"></script>
     <!-- END: Page Vendor JS-->
     <!-- BEGIN: Theme JS-->
     <script>
@@ -287,7 +278,9 @@ $configData = Helper::appClasses();
         let start_date = $('#start_date').val();
         let end_date = $('#end_date').val();
         let params_date = `?start=${start_date}&end=${end_date}`;
+        let completeTicket = 0;
         load(params_date);
+
 
         function load(params_date) {
             Swal.fire({
@@ -313,7 +306,7 @@ $configData = Helper::appClasses();
                     $('#count_invoices').text(income_report.count_invoices);
                     $('#count_invoices_not_paid').text(income_report.count_invoices_not_paid);
                     $('#count_invoices_paid').text(income_report.count_invoices_paid);
-                    $('#sum_invoice_per_month').text(format(sum_invoice_per_month));
+                    $('#sum_invoice_per_month').text(formatRupiah(sum_invoice_per_month, 'Rp. '));
 
                     $('#count_material_requests').text(statistic.count_material_requests);
                     $('#count_purchase_orders').text(statistic.count_purchase_orders);
@@ -326,12 +319,34 @@ $configData = Helper::appClasses();
                     $('#count_tickets').text(ticket_complain.count_tickets);
                     $('#count_tickets_waiting_for_response').text(ticket_complain.count_tickets_waiting_for_response);
 
+                    console.log();
+                    completeTicket = isNaN(parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100) ? 0 : parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100;
+                    weeklyEarningReports();
+                    supportTracker(completeTicket);
+
                     Swal.close();
                 }
             });
 
 
         };
+
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
 
         $(document).on('click', '.apply', function(e) {
             e.preventDefault();
@@ -345,7 +360,7 @@ $configData = Helper::appClasses();
                 } else {
                     $("#start_date").removeClass("is-invalid");
                 }
-                
+
                 if (end === '') {
                     $("#end_date").addClass("is-invalid");
                 } else {
@@ -377,7 +392,7 @@ $configData = Helper::appClasses();
                         $('#count_invoices').text(income_report.count_invoices);
                         $('#count_invoices_not_paid').text(income_report.count_invoices_not_paid);
                         $('#count_invoices_paid').text(income_report.count_invoices_paid);
-                        $('#sum_invoice_per_month').text(format(sum_invoice_per_month));
+                        $('#sum_invoice_per_month').text(formatRupiah(sum_invoice_per_month, 'Rp. '));
 
                         $('#count_material_requests').text(statistic.count_material_requests);
                         $('#count_purchase_orders').text(statistic.count_purchase_orders);
@@ -390,6 +405,11 @@ $configData = Helper::appClasses();
                         $('#count_tickets').text(ticket_complain.count_tickets);
                         $('#count_tickets_waiting_for_response').text(ticket_complain.count_tickets_waiting_for_response);
 
+                        completeTicket = isNaN(parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100) ? 0 : parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100;
+                        weeklyEarningReports();
+                        console.log(completeTicket.toFixed(2));
+                        supportTracker(completeTicket.toFixed(2));
+
                         $("#filter-form").modal('hide');
                         Swal.close();
                     }
@@ -398,1154 +418,667 @@ $configData = Helper::appClasses();
 
         });
 
-        function format(data) {
-            return Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR"
-            }).format(data)
+        function weeklyEarningReports() {
+            let a = config.colors.textMuted;
+            var options = {
+                chart: {
+                    height: 202,
+                    parentHeightOffset: 0,
+                    type: "bar",
+                    toolbar: {
+                        show: !1
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        barHeight: "60%",
+                        columnWidth: "38%",
+                        startingShape: "rounded",
+                        endingShape: "rounded",
+                        borderRadius: 4,
+                        distributed: !0
+                    }
+                },
+                grid: {
+                    show: !1,
+                    padding: {
+                        top: -30,
+                        bottom: 0,
+                        left: -10,
+                        right: -10
+                    }
+                },
+                colors: [config.colors_label.primary, config.colors_label.primary, config.colors_label.primary, config.colors_label.primary, config.colors.primary, config.colors_label.primary, config.colors_label.primary],
+                dataLabels: {
+                    enabled: !1
+                },
+                series: [{
+                    data: [40, 65, 50, 45, 90, 55, 70]
+                }],
+                legend: {
+                    show: !1
+                },
+                xaxis: {
+                    categories: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+                    axisBorder: {
+                        show: !1
+                    },
+                    axisTicks: {
+                        show: !1
+                    },
+                    labels: {
+                        style: {
+                            colors: a,
+                            fontSize: "13px",
+                            fontFamily: "Public Sans"
+                        }
+                    }
+                },
+                yaxis: {
+                    labels: {
+                        show: !1
+                    }
+                },
+                tooltip: {
+                    enabled: !1
+                },
+                responsive: [{
+                    breakpoint: 1025,
+                    options: {
+                        chart: {
+                            height: 199
+                        }
+                    }
+                }]
+            }
+
+            var chart = new ApexCharts(document.querySelector("#weeklyEarningReports"), options);
+            chart.render();
         }
 
-        ! function() {
-            let e, t, o, a, i;
-            a = (isDarkStyle ? (e = config.colors_dark.cardColor, t = config.colors_dark.textMuted, i = config.colors_dark.bodyColor, o = config.colors_dark.headingColor, config.colors_dark) : (e = config.colors.cardColor, t = config.colors.textMuted, i = config.colors.bodyColor, o = config.colors.headingColor, config.colors)).borderColor;
-            var s =
-                r = document.querySelector("#total-tagihan-invoice"),
-                n = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor"],
-                    series: [45, 58, 30],
-                    colors: ['#2A44C6', '#6192FF', '#CAD5FF'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#2A44C6",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
+        function supportTracker(val) {
+            $('#supportTracker').html('');
+            let e = config.colors.cardColor;
+            let a = config.colors.textMuted;
+            let t = config.colors.headingColor;
+            var options = {
+                series: [val],
+                labels: ["Completed Task"],
+                chart: {
+                    height: 360,
+                    type: "radialBar"
                 },
-
-                s = (null !== r && new ApexCharts(r, n).render(), document.querySelector("#invoice-terbayarkan")),
-                r = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor"],
-                    series: [45, 58, 30],
-                    colors: ['#28C76F', '#68D89A', '#DCF6E8'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
+                plotOptions: {
+                    radialBar: {
+                        offsetY: 10,
+                        startAngle: -140,
+                        endAngle: 130,
+                        hollow: {
+                            size: "65%"
+                        },
+                        track: {
+                            background: e,
+                            strokeWidth: "100%"
+                        },
+                        dataLabels: {
+                            name: {
+                                offsetY: -20,
+                                color: a,
+                                fontSize: "13px",
+                                fontWeight: "400",
+                                fontFamily: "Public Sans"
+                            },
+                            value: {
+                                offsetY: 10,
+                                color: t,
+                                fontSize: "38px",
+                                fontWeight: "500",
+                                fontFamily: "Public Sans"
                             }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#28C76F",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
-                },
-                n = (null !== s && new ApexCharts(s, r).render(), document.querySelector("#invoice-pending")),
-                s = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor"],
-                    series: [45, 58, 30],
-                    colors: ['#F9ED32', '#F9EB8C', '#F9F0BB'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#F9ED32",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
-                },
-
-                r = (null !== n && new ApexCharts(n, s).render(), document.querySelector("#invoice-dibayarkan")),
-                n = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor"],
-                    series: [45, 58, 30],
-                    colors: ['#1FEAE0', '#96E0D7', '#C3DDDA'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#1FEAE0",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
-                },
-
-                s = (null !== r && new ApexCharts(r, n).render(), document.querySelector("#invoice-belum-dibayarkan")),
-                r = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor", "Food"],
-                    series: [45, 58, 30, 33],
-                    colors: ['#ED1C24', '#E54559', '#E0738B', '#F297B3'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#ED1C24",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
-                },
-
-                n = (null !== s && new ApexCharts(s, r).render(), document.querySelector("#total-tenant")),
-                s = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor", "Food"],
-                    series: [45, 58, 30, 33],
-                    colors: ['#AFCC36', '#CFE842', '#EBFC49', '#F6FC7A'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#AFCC36",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
-                },
-
-                r = (null !== n && new ApexCharts(n, s).render(), document.querySelector("#invoice-telat")),
-                n = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor", "Food"],
-                    series: [45, 58, 30],
-                    colors: ['#EF6100', '#EA8744', '#E5A070', '#E2BBA1'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#EF6100",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
-                },
-
-                s = (null !== r && new ApexCharts(r, n).render(), document.querySelector("#invoice-cancel")),
-                r = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor"],
-                    series: [45, 58, 30],
-                    colors: ['#AE3DEA', '#C68AED', '#D5B9EA'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#AE3DEA",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
-                },
-
-                n = (null !== s && new ApexCharts(s, r).render(), document.querySelector("#tagihan-vendor")),
-                s = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor", "Food"],
-                    series: [45, 58, 30, 33],
-                    colors: ['#995F5B', '#BA706E', '#D38484', '#EA9494'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#995F5B",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
-                },
-
-                r = (null !== n && new ApexCharts(n, s).render(), document.querySelector("#tagihan-yang-vendor-harus-dibayarkan")),
-                n = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor", "Food"],
-                    series: [45, 58, 30, 33],
-                    colors: ['#58585A', '#818182', '#B7B7B7', '#E8E8E8'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#58585A",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
-                },
-                s = (null !== r && new ApexCharts(r, n).render(), $(".datatable-invoice"));
-            a = $(".invoice-list-table");
-            if (a.length) e = a.DataTable({
-                ajax: assetsPath + "json/invoice-list.json",
-                columns: [{
-                    data: "no_lk"
-                }, {
-                    data: "scope"
-                }, {
-                    data: "classification"
-                }, {
-                    data: "date"
-                }, {
-                    data: "action_plan"
-                }, {
-                    data: "status"
-                }, {
-                    data: "tanggapan"
-                }],
-                columnDefs: [{
-
-                    targets: 0,
-                    render: function(a, e, t, s) {
-                        return ""
-                    }
-                }, {
-                    targets: 1,
-                    render: function(a, e, t, s) {
-                        var n = t.no_lap_kerusakan;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {
-                    targets: 2,
-                    render: function(a, e, t, s) {
-                        var n = t.scope;
-                        return '<a href="' + baseUrl + 'app/invoice/preview">#' + n + "</a>"
-                    }
-                }, {
-                    targets: 3,
-                    render: function(a, e, t, s) {
-                        var n = t.classification;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {}, {
-                    targets: 4,
-                    render: function(a, e, t, s) {
-                        var n = new Date(t.date);
-                        return '<span class="d-none">' + moment(n).format("YYYYMMDD") + "</span>" + moment(n).format("DD MMM YYYY")
-                    }
-                }, {
-                    targets: 5,
-                    render: function(a, e, t, s) {
-                        var n = new Date(t.action_plan);
-                        return '<span class="d-none">' + moment(n).format("YYYYMMDD") + "</span>" + moment(n).format("DD MMM YYYY")
-                    }
-                }, {
-                    targets: 6,
-                    orderable: !1,
-                    render: function(a, e, t, s) {
-                        var n = t.status;
-                        if (0 === n) {
-                            return '<span class="badge bg-label-success" text-capitalized> Paid </span>'
-                        }
-                        return '<span class="d-none">' + n + "</span>" + n
-                    }
-                }, {
-                    targets: 7,
-                    visible: !1
-                }, {
-                    targets: -1,
-                    title: "Tanggapan",
-                    searchable: !1,
-                    orderable: !1,
-                    render: function(a, e, t, s) {
-                        return '<div class="d-flex align-items-center"><a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a><a href="' + baseUrl + 'app/invoice/preview" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="' + baseUrl + 'app/invoice/edit" class="dropdown-item">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>'
-                    }
-                }],
-                order: [
-                    [1, "desc"]
-                ],
-                dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-                language: {
-                    sLengthMenu: "Show _MENU_",
-                    search: "",
-                    searchPlaceholder: "Search Invoice"
-                },
-                buttons: [{
-                    text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Invoice</span>',
-                    className: "btn btn-primary",
-                    action: function(a, e, t, s) {
-                        window.location = baseUrl + "complain/work-order/add"
-                    }
-                }],
-                responsive: {
-                    details: {
-                        display: $.fn.dataTable.Responsive.display.modal({
-                            header: function(a) {
-                                return "Details of " + a.data().full_name
-                            }
-                        }),
-                        type: "column",
-                        renderer: function(a, e, t) {
-                            var s = $.map(t, (function(a, e) {
-                                return "" !== a.title ? '<tr data-dt-row="' + a.rowIndex + '" data-dt-column="' + a.columnIndex + '"><td>' + a.title + ":</td> <td>" + a.data + "</td></tr>" : ""
-                            })).join("");
-                            return !!s && $('<table class="table"/><tbody />').append(s)
                         }
                     }
                 },
-                initComplete: function() {
-                    this.api().columns(7).every((function() {
-                        var a = this,
-                            e = $('<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>').appendTo(".invoice_status").on("change", (function() {
-                                var e = $.fn.dataTable.util.escapeRegex($(this).val());
-                                a.search(e ? "^" + e + "$" : "", !0, !1).draw()
-                            }));
-                        a.data().unique().sort().each((function(a, t) {
-                            e.append('<option value="' + a + '" class="text-capitalize">' + a + "</option>")
-                        }))
-                    }))
-                }
-            });
-            a.on("draw.dt", (function() {
-                [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((function(a) {
-                    return new bootstrap.Tooltip(a, {
-                        boundary: document.body
-                    })
-                }))
-            })), $(".invoice-list-table tbody").on("click", ".delete-record", (function() {
-                e.row($(this).parents("tr")).remove().draw()
-            })), setTimeout((() => {
-                $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(".dataTables_length .form-select").removeClass("form-select-sm")
-            }), 300)
-        }();
+                colors: [config.colors.primary],
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        shade: "dark",
+                        shadeIntensity: .5,
+                        gradientToColors: [config.colors.primary],
+                        inverseColors: !0,
+                        opacityFrom: 1,
+                        opacityTo: .6,
+                        stops: [30, 70, 100]
+                    }
+                },
+                stroke: {
+                    dashArray: 10
+                },
+                grid: {
+                    padding: {
+                        top: -20,
+                        bottom: 5
+                    }
+                },
+                states: {
+                    hover: {
+                        filter: {
+                            type: "none"
+                        }
+                    },
+                    active: {
+                        filter: {
+                            type: "none"
+                        }
+                    }
+                },
+                responsive: [{
+                    breakpoint: 1025,
+                    options: {
+                        chart: {
+                            height: 330
+                        }
+                    }
+                }, {
+                    breakpoint: 769,
+                    options: {
+                        chart: {
+                            height: 280
+                        }
+                    }
+                }]
+            }
+            var chart = new ApexCharts(document.querySelector("#supportTracker"), options);
+            chart.render();
+        }
 
 
-        $((function() {
-
-        }));
+        // "use strict";
+        // ! function() {
+        //     let e, t, a, r, o;
+        //     o = isDarkStyle ? (e = config.colors_dark.cardColor, a = config.colors_dark.textMuted, t = config.colors_dark.headingColor, r = "dark", "#5E6692") : (e = config.colors.cardColor, a = config.colors.textMuted, t = config.colors.headingColor, r = "", "#817D8D");
+        //     var s = document.querySelector("#swiper-with-pagination-cards"),
+        //         s = (s && new Swiper(s, {
+        //             loop: !0,
+        //             autoplay: {
+        //                 delay: 2500,
+        //                 disableOnInteraction: !1
+        //             },
+        //             pagination: {
+        //                 clickable: !0,
+        //                 el: ".swiper-pagination"
+        //             }
+        //         }), document.querySelector("#revenueGenerated")),
+        //         i = {
+        //             chart: {
+        //                 height: 130,
+        //                 type: "area",
+        //                 parentHeightOffset: 0,
+        //                 toolbar: {
+        //                     show: !1
+        //                 },
+        //                 sparkline: {
+        //                     enabled: !0
+        //                 }
+        //             },
+        //             markers: {
+        //                 colors: "transparent",
+        //                 strokeColors: "transparent"
+        //             },
+        //             grid: {
+        //                 show: !1
+        //             },
+        //             colors: [config.colors.success],
+        //             fill: {
+        //                 type: "gradient",
+        //                 gradient: {
+        //                     shade: r,
+        //                     shadeIntensity: .8,
+        //                     opacityFrom: .6,
+        //                     opacityTo: .1
+        //                 }
+        //             },
+        //             dataLabels: {
+        //                 enabled: !1
+        //             },
+        //             stroke: {
+        //                 width: 2,
+        //                 curve: "smooth"
+        //             },
+        //             series: [{
+        //                 data: [300, 350, 330, 380, 340, 400, 380]
+        //             }],
+        //             xaxis: {
+        //                 show: !0,
+        //                 lines: {
+        //                     show: !1
+        //                 },
+        //                 labels: {
+        //                     show: !1
+        //                 },
+        //                 stroke: {
+        //                     width: 0
+        //                 },
+        //                 axisBorder: {
+        //                     show: !1
+        //                 }
+        //             },
+        //             yaxis: {
+        //                 stroke: {
+        //                     width: 0
+        //                 },
+        //                 show: !1
+        //             },
+        //             tooltip: {
+        //                 enabled: !1
+        //             }
+        //         },
+        //         s = (null !== s && new ApexCharts(s, i).render(), document.querySelector("#weeklyEarningReports")),
+        //         i = {
+        //             chart: {
+        //                 height: 202,
+        //                 parentHeightOffset: 0,
+        //                 type: "bar",
+        //                 toolbar: {
+        //                     show: !1
+        //                 }
+        //             },
+        //             plotOptions: {
+        //                 bar: {
+        //                     barHeight: "60%",
+        //                     columnWidth: "38%",
+        //                     startingShape: "rounded",
+        //                     endingShape: "rounded",
+        //                     borderRadius: 4,
+        //                     distributed: !0
+        //                 }
+        //             },
+        //             grid: {
+        //                 show: !1,
+        //                 padding: {
+        //                     top: -30,
+        //                     bottom: 0,
+        //                     left: -10,
+        //                     right: -10
+        //                 }
+        //             },
+        //             colors: [config.colors_label.primary, config.colors_label.primary, config.colors_label.primary, config.colors_label.primary, config.colors.primary, config.colors_label.primary, config.colors_label.primary],
+        //             dataLabels: {
+        //                 enabled: !1
+        //             },
+        //             series: [{
+        //                 data: [40, 65, 50, 45, 90, 55, 70]
+        //             }],
+        //             legend: {
+        //                 show: !1
+        //             },
+        //             xaxis: {
+        //                 categories: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+        //                 axisBorder: {
+        //                     show: !1
+        //                 },
+        //                 axisTicks: {
+        //                     show: !1
+        //                 },
+        //                 labels: {
+        //                     style: {
+        //                         colors: a,
+        //                         fontSize: "13px",
+        //                         fontFamily: "Public Sans"
+        //                     }
+        //                 }
+        //             },
+        //             yaxis: {
+        //                 labels: {
+        //                     show: !1
+        //                 }
+        //             },
+        //             tooltip: {
+        //                 enabled: !1
+        //             },
+        //             responsive: [{
+        //                 breakpoint: 1025,
+        //                 options: {
+        //                     chart: {
+        //                         height: 199
+        //                     }
+        //                 }
+        //             }]
+        //         },
+        //         s = (null !== s && new ApexCharts(s, i).render(), document.querySelector("#supportTracker")),
+        //         i = {
+        //             series: [85],
+        //             labels: ["Completed Task"],
+        //             chart: {
+        //                 height: 360,
+        //                 type: "radialBar"
+        //             },
+        //             plotOptions: {
+        //                 radialBar: {
+        //                     offsetY: 10,
+        //                     startAngle: -140,
+        //                     endAngle: 130,
+        //                     hollow: {
+        //                         size: "65%"
+        //                     },
+        //                     track: {
+        //                         background: e,
+        //                         strokeWidth: "100%"
+        //                     },
+        //                     dataLabels: {
+        //                         name: {
+        //                             offsetY: -20,
+        //                             color: a,
+        //                             fontSize: "13px",
+        //                             fontWeight: "400",
+        //                             fontFamily: "Public Sans"
+        //                         },
+        //                         value: {
+        //                             offsetY: 10,
+        //                             color: t,
+        //                             fontSize: "38px",
+        //                             fontWeight: "500",
+        //                             fontFamily: "Public Sans"
+        //                         }
+        //                     }
+        //                 }
+        //             },
+        //             colors: [config.colors.primary],
+        //             fill: {
+        //                 type: "gradient",
+        //                 gradient: {
+        //                     shade: "dark",
+        //                     shadeIntensity: .5,
+        //                     gradientToColors: [config.colors.primary],
+        //                     inverseColors: !0,
+        //                     opacityFrom: 1,
+        //                     opacityTo: .6,
+        //                     stops: [30, 70, 100]
+        //                 }
+        //             },
+        //             stroke: {
+        //                 dashArray: 10
+        //             },
+        //             grid: {
+        //                 padding: {
+        //                     top: -20,
+        //                     bottom: 5
+        //                 }
+        //             },
+        //             states: {
+        //                 hover: {
+        //                     filter: {
+        //                         type: "none"
+        //                     }
+        //                 },
+        //                 active: {
+        //                     filter: {
+        //                         type: "none"
+        //                     }
+        //                 }
+        //             },
+        //             responsive: [{
+        //                 breakpoint: 1025,
+        //                 options: {
+        //                     chart: {
+        //                         height: 330
+        //                     }
+        //                 }
+        //             }, {
+        //                 breakpoint: 769,
+        //                 options: {
+        //                     chart: {
+        //                         height: 280
+        //                     }
+        //                 }
+        //             }]
+        //         },
+        //         s = (null !== s && new ApexCharts(s, i).render(), document.querySelector("#totalEarningChart")),
+        //         i = {
+        //             series: [{
+        //                 name: "Earning",
+        //                 data: [15, 10, 20, 8, 12, 18, 12, 5]
+        //             }, {
+        //                 name: "Expense",
+        //                 data: [-7, -10, -7, -12, -6, -9, -5, -8]
+        //             }],
+        //             chart: {
+        //                 height: 230,
+        //                 parentHeightOffset: 0,
+        //                 stacked: !0,
+        //                 type: "bar",
+        //                 toolbar: {
+        //                     show: !1
+        //                 }
+        //             },
+        //             tooltip: {
+        //                 enabled: !1
+        //             },
+        //             legend: {
+        //                 show: !1
+        //             },
+        //             plotOptions: {
+        //                 bar: {
+        //                     horizontal: !1,
+        //                     columnWidth: "18%",
+        //                     borderRadius: 5,
+        //                     startingShape: "rounded",
+        //                     endingShape: "rounded"
+        //                 }
+        //             },
+        //             colors: [config.colors.primary, o],
+        //             dataLabels: {
+        //                 enabled: !1
+        //             },
+        //             grid: {
+        //                 show: !1,
+        //                 padding: {
+        //                     top: -40,
+        //                     bottom: -20,
+        //                     left: -10,
+        //                     right: -2
+        //                 }
+        //             },
+        //             xaxis: {
+        //                 labels: {
+        //                     show: !1
+        //                 },
+        //                 axisTicks: {
+        //                     show: !1
+        //                 },
+        //                 axisBorder: {
+        //                     show: !1
+        //                 }
+        //             },
+        //             yaxis: {
+        //                 labels: {
+        //                     show: !1
+        //                 }
+        //             },
+        //             responsive: [{
+        //                 breakpoint: 1468,
+        //                 options: {
+        //                     plotOptions: {
+        //                         bar: {
+        //                             columnWidth: "22%"
+        //                         }
+        //                     }
+        //                 }
+        //             }, {
+        //                 breakpoint: 1197,
+        //                 options: {
+        //                     chart: {
+        //                         height: 228
+        //                     },
+        //                     plotOptions: {
+        //                         bar: {
+        //                             borderRadius: 8,
+        //                             columnWidth: "26%"
+        //                         }
+        //                     }
+        //                 }
+        //             }, {
+        //                 breakpoint: 783,
+        //                 options: {
+        //                     chart: {
+        //                         height: 232
+        //                     },
+        //                     plotOptions: {
+        //                         bar: {
+        //                             borderRadius: 6,
+        //                             columnWidth: "28%"
+        //                         }
+        //                     }
+        //                 }
+        //             }, {
+        //                 breakpoint: 589,
+        //                 options: {
+        //                     plotOptions: {
+        //                         bar: {
+        //                             columnWidth: "16%"
+        //                         }
+        //                     }
+        //                 }
+        //             }, {
+        //                 breakpoint: 520,
+        //                 options: {
+        //                     plotOptions: {
+        //                         bar: {
+        //                             borderRadius: 6,
+        //                             columnWidth: "18%"
+        //                         }
+        //                     }
+        //                 }
+        //             }, {
+        //                 breakpoint: 426,
+        //                 options: {
+        //                     plotOptions: {
+        //                         bar: {
+        //                             borderRadius: 5,
+        //                             columnWidth: "20%"
+        //                         }
+        //                     }
+        //                 }
+        //             }, {
+        //                 breakpoint: 381,
+        //                 options: {
+        //                     plotOptions: {
+        //                         bar: {
+        //                             columnWidth: "24%"
+        //                         }
+        //                     }
+        //                 }
+        //             }],
+        //             states: {
+        //                 hover: {
+        //                     filter: {
+        //                         type: "none"
+        //                     }
+        //                 },
+        //                 active: {
+        //                     filter: {
+        //                         type: "none"
+        //                     }
+        //                 }
+        //             }
+        //         },
+        //         s = (null !== s && new ApexCharts(s, i).render(), $(".datatables-projects"));
+        //     s.length && (s.DataTable({
+        //         ajax: assetsPath + "json/user-profile.json",
+        //         columns: [{
+        //             data: ""
+        //         }, {
+        //             data: "id"
+        //         }, {
+        //             data: "project_name"
+        //         }, {
+        //             data: "project_leader"
+        //         }, {
+        //             data: ""
+        //         }, {
+        //             data: "status"
+        //         }, {
+        //             data: ""
+        //         }],
+        //         columnDefs: [{
+        //             className: "control",
+        //             searchable: !1,
+        //             orderable: !1,
+        //             responsivePriority: 2,
+        //             targets: 0,
+        //             render: function(e, t, a, r) {
+        //                 return ""
+        //             }
+        //         }, {
+        //             targets: 1,
+        //             orderable: !1,
+        //             searchable: !1,
+        //             responsivePriority: 3,
+        //             checkboxes: !0,
+        //             checkboxes: {
+        //                 selectAllRender: '<input type="checkbox" class="form-check-input">'
+        //             },
+        //             render: function() {
+        //                 return '<input type="checkbox" class="dt-checkboxes form-check-input">'
+        //             }
+        //         }, {
+        //             targets: 2,
+        //             responsivePriority: 4,
+        //             render: function(e, t, a, r) {
+        //                 var o = a.project_img,
+        //                     s = a.project_name,
+        //                     i = a.date;
+        //                 return '<div class="d-flex justify-content-left align-items-center"><div class="avatar-wrapper"><div class="avatar me-2">' + (o ? '<img src="' + assetsPath + "img/icons/brands/" + o + '" alt="Avatar" class="rounded-circle">' : '<span class="avatar-initial rounded-circle bg-label-' + ["success", "danger", "warning", "info", "primary", "secondary"][Math.floor(6 * Math.random())] + '">' + (o = (((o = (s = a.project_name).match(/\b\w/g) || []).shift() || "") + (o.pop() || "")).toUpperCase()) + "</span>") + '</div></div><div class="d-flex flex-column"><span class="text-truncate fw-medium">' + s + '</span><small class="text-truncate text-muted">' + i + "</small></div></div>"
+        //             }
+        //         }, {
+        //             targets: 4,
+        //             orderable: !1,
+        //             searchable: !1,
+        //             render: function(e, t, a, r) {
+        //                 for (var o = a.team, s = '<div class="d-flex align-items-center avatar-group">', i = 0; i < o.length; i++) s += '<div class="avatar avatar-sm"><img src="' + assetsPath + "img/avatars/" + o[i] + '" alt="Avatar" class="rounded-circle pull-up"></div>';
+        //                 return s += "</div>"
+        //             }
+        //         }, {
+        //             targets: -2,
+        //             render: function(e, t, a, r) {
+        //                 a = a.status;
+        //                 return '<div class="d-flex align-items-center"><div class="progress w-100 me-3" style="height: 6px;"><div class="progress-bar" style="width: ' + a + '" aria-valuenow="' + a + '" aria-valuemin="0" aria-valuemax="100"></div></div><span>' + a + "</span></div>"
+        //             }
+        //         }, {
+        //             targets: -1,
+        //             searchable: !1,
+        //             title: "Actions",
+        //             orderable: !1,
+        //             render: function(e, t, a, r) {
+        //                 return '<div class="d-inline-block"><a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></a><div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;" class="dropdown-item">Details</a><a href="javascript:;" class="dropdown-item">Archive</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item text-danger delete-record">Delete</a></div></div>'
+        //             }
+        //         }],
+        //         order: [
+        //             [2, "desc"]
+        //         ],
+        //         dom: '<"card-header pb-0 pt-sm-0"<"head-label text-center"><"d-flex justify-content-center justify-content-md-end"f>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+        //         displayLength: 5,
+        //         lengthMenu: [5, 10, 25, 50, 75, 100],
+        //         responsive: {
+        //             details: {
+        //                 display: $.fn.dataTable.Responsive.display.modal({
+        //                     header: function(e) {
+        //                         return 'Details of "' + e.data().project_name + '" Project'
+        //                     }
+        //                 }),
+        //                 type: "column",
+        //                 renderer: function(e, t, a) {
+        //                     a = $.map(a, function(e, t) {
+        //                         return "" !== e.title ? '<tr data-dt-row="' + e.rowIndex + '" data-dt-column="' + e.columnIndex + '"><td>' + e.title + ":</td> <td>" + e.data + "</td></tr>" : ""
+        //                     }).join("");
+        //                     return !!a && $('<table class="table"/><tbody />').append(a)
+        //                 }
+        //             }
+        //         }
+        //     }), $("div.head-label").html('<h5 class="card-title mb-0">Projects</h5>')), setTimeout(() => {
+        //         $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(".dataTables_length .form-select").removeClass("form-select-sm")
+        //     }, 300)
+        // }();
     </script>
 
 
