@@ -34,7 +34,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1 count_material_request">0</h3>
-                            <p class="mb-0">Material Request</p>
+                            <p class="mb-0">Material Request <small> (bulan ini)</small></p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none me-4">
@@ -43,7 +43,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1 count_material_request_ongoing">0</h3>
-                            <p class="mb-0">Sedang Berjalan</p>
+                            <p class="mb-0">Sedang Berjalan <small> (bulan ini)</small></p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
@@ -52,7 +52,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
                         <div>
                             <h3 class="mb-1 count_material_request_done">0</h3>
-                            <p class="mb-0">Selesai</p>
+                            <p class="mb-0">Selesai <small>(bulan ini)</small></p>
                         </div>
                     </div>
                 </div>
