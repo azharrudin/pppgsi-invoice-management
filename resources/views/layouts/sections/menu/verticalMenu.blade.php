@@ -62,6 +62,7 @@ background: linear-gradient(3deg, rgba(97,73,206,1) 0%, rgba(156,98,244,1) 100%)
         @isset($menu->icon)
         <i class="{{ $menu->icon }}"></i>
         @endisset
+
         <div>{{ isset($menu->name) ? __($menu->name) : '' }}</div>
         @isset($menu->badge)
         <div class="badge bg-{{ $menu->badge[0] }} rounded-pill ms-auto">{{ $menu->badge[1] }}</div>

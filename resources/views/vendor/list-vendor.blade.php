@@ -51,7 +51,7 @@
     {{-- Card Add --}}
     <div class="modal fade " id="create-vendor-data" data-bs-backdrop="static" tabindex="-1">
         <div class="modal-dialog modal-lg justify-content-center" style="width: 80vw;">
-            <form class="modal-content create-vendor " id="create-vendor" novalidate>
+            <form class="modal-content create-vendor " id="create-vendor">
                 <div class="modal-header">
                     <h5 class="modal-title" id="backDropModalTitle">Tambah Vendor</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -433,6 +433,7 @@
                             success: function(response) {
                                 $('.indicator-progress').hide();
                                 $('.indicator-label').show();
+                                document.getElementById("create-vendor").reset();
                                 Swal.fire({
                                     title: 'Berhasil',
                                     text: 'Berhasil Menambahkan Vendor',

@@ -121,6 +121,17 @@
         var aTags = document.getElementsByClassName("icon-home");
         aTags[0].parentElement.parentElement.classList.add('d-none');
     }
+    if(accountMenu?.level.id == 11){
+        hideMenu("Invoice");
+        hideMenu("Request");
+        hideMenu("Complain");
+        hideSubMenu("List Purchase Request");
+        hideSubMenu("List Tanda Terima");
+        hideSubMenu("List Purchase Order");
+        hideMenu("Client");
+        hideMenu("Report");
+        hideMenu("Settings");
+    }
 
     function hideSubMenu(menu) {
         var aTags = document.getElementsByTagName("div");
