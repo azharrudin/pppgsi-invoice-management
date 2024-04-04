@@ -162,6 +162,7 @@ $configData = Helper::appClasses();
                         signatureWarehouse = details[i];
                     }else if(details[i].type == 'Reviewed By'){
                         signatureChiefDepartment = details[i];
+
                     }else if(details[i].type == 'Aknowledge By'){
                         signatureChiefFinance = details[i];
                     }else if(details[i].type == 'Approved By'){
@@ -334,7 +335,7 @@ $configData = Helper::appClasses();
                     '$("#warehouse-image").css("background-size", "cover");'+
                     '$("#warehouse-image").css("background-repeat", "no-repeat");'+
                 '</'+'script>';
-            }else{//belum ttd
+            } else {
                 datePreparedAttr = 'disabled';
                 imagePrepared = `
                 <div action="/upload" class="dropzone needsclick ${dropzonePrepared} dd" id="ttd1">
@@ -371,13 +372,15 @@ $configData = Helper::appClasses();
         let imageReviewed = '';
         let dateReviewedAttr = '';
         let nameReviewed = '';
+        console.log(value)
+
         let dateReviewed = '';
         if(account.level.id == '8'){
             nameReviewed = value?.name ? value.name : '';
             dateReviewed = value?.date ? value.date : '';
             dropzoneReviewed = 'dz-clickable';
             nameReviewed = account.name;
-            ttdFile2 = value.signature;
+            ttdFile2 = value != undefined ? value.signature : "";
             imageReviewed = `
             <div action="/upload" class="dropzone needsclick ${dropzoneReviewed} dd" id="ttd2">
                 <div class="dz-message needsclick">

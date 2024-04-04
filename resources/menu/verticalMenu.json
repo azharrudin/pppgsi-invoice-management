@@ -139,6 +139,11 @@
           "url": "settings/list-user",
           "name": "List User",
           "slug": "pages-list-user"
+        },
+        {
+          "url": "settings/list-department",
+          "name": "List Department",
+          "slug": "pages-list-department"
         }
       ]
     }
