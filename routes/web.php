@@ -10,6 +10,8 @@ use App\Http\Controllers\report\ReportTandaTerimaController;
 use App\Http\Controllers\request\PurchaseRequestController;
 use App\Http\Controllers\settings\ListBankController;
 use App\Http\Controllers\settings\ListUserController;
+use App\Http\Controllers\settings\ListDepartmentController;
+
 use App\Http\Controllers\settings\TaxRatesController;
 use App\Http\Controllers\vendor\VendorController;
 use Illuminate\Support\Facades\Route;
@@ -208,6 +210,11 @@ Route::group(['middleware' => 'cekauth'], function () {
         Route::prefix('/list-user')->group(function () {
             Route::get('/', [ListUserController::class, 'index'])->name('pages-list-user');
             Route::get('/data-user', [ListUserController::class, 'datatable'])->name('data-user');
+        });
+        // list deparment
+        Route::prefix('/list-department')->group(function () {
+            Route::get('/', [ListDepartmentController::class, 'index'])->name('pages-list-department');
+            Route::get('/data-department', [ListDepartmentController::class, 'datatable'])->name('data-department');
         });
 
         // Tax Rates
