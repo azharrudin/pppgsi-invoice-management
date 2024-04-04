@@ -141,7 +141,7 @@
           "slug": "pages-list-user"
         },
         {
-          "url": "settings/department",
+          "url": "settings/list-department",
           "name": "List Department",
           "slug": "pages-list-department"
         }
