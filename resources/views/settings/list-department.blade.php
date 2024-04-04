@@ -35,7 +35,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1 count-user">0</h3>
-                            <p class="mb-0">User</p>
+                            <p class="mb-0">Departments</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none me-4">
@@ -247,11 +247,11 @@ $configData = Helper::appClasses();
                 allowEscapeKey: false
             });
             $.ajax({
-                url: "{{ env('BASE_URL_API')}}" +'/api/user/report',
+                url: "{{ env('BASE_URL_API')}}" +'/api/department',
                 type: "GET",
                 dataType: "json",
                 success: function(res) {
-                    $('.count-user').html(res.count_user);
+                    $('.count-user').html(res.data.length);
                     Swal.close();
                 },
                 error: function(errors) {
@@ -402,7 +402,7 @@ $configData = Helper::appClasses();
                 searchPlaceholder: "Cari User"
             },
             buttons: [{
-                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat User</span>',
+                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Department</span>',
                 className: "btn btn-primary",
                 attr: {
                     'data-bs-toggle': 'modal',
