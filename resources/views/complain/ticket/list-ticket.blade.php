@@ -42,7 +42,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-center align-items-start card-widget-2 pb-3 pb-sm-0">
                         <div class="text-center">
                             <h3 class="mb-1 count_ticket">0</h3>
-                            <p class="mb-0">Total Ticket</p>
+                            <p class="mb-0">Total Ticket Bulan Ini</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
