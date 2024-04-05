@@ -108,6 +108,7 @@ class ReportController extends Controller
             $daterange = new DatePeriod($end_day, new DateInterval('P1D'), $start_day);
             iterator_count($daterange);
             $arr = '';
+            $i = 0;
             foreach ($daterange as $date) {
                 $newformat = $date->format('Y-m-d');
                 $timestamp = strtotime($newformat);
@@ -116,20 +117,20 @@ class ReportController extends Controller
                     $sumInvoicePerDay = "SELECT sum(grand_total)  AS total FROM invoices WHERE deleted_at IS NULL AND created_at  LIKE '%" . $newformat . "%'";
                     $countTotal = DB::select($sumInvoicePerDay)[0];
                     $total = $countTotal->total;
-                    $data = [
+                    $diagramInvoice[$i] = [
                         "day" => date('D', $timestamp),
                         "data" => (isset($total)) ? $total : "0",
                     ];
-                    array_push($diagramInvoice, $data);
+                    $i++;
                 } else {
                     $sumInvoicePerDay = "SELECT sum(grand_total) AS total FROM invoices WHERE deleted_at IS NULL AND created_at  LIKE '%" . $newformat . "%'";
                     $countTotal = DB::select($sumInvoicePerDay)[0];
                     $total = $countTotal->total;
-                    $data = [
+                    $diagramInvoice[$i] = [
                         "day" => date('D', $timestamp),
                         "data" => (isset($total)) ? $total : "0",
                     ];
-                    array_push($diagramInvoice, $data);
+                    $i++;
                 }
             }
 
@@ -140,7 +141,8 @@ class ReportController extends Controller
                 "statistic" => $countData,
                 "diagramInvoice" => $diagramInvoice
             ];
-        } catch (\Throwable $e) {
+        } catch (\Exception $e) {
+            dd($e);
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 

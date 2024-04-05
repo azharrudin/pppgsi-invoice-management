@@ -294,11 +294,12 @@ $configData = Helper::appClasses();
             });
             $.ajax({
                 url: "{{ env('BASE_URL_API')}}" + '/api/report/dashboard' + params_date,
+                url: "http://127.0.0.1:8000" + '/api/report/dashboard' + params_date,
                 type: "get",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(response) {
-                    console.log(response);
+                    console.log(response.diagramInvoice[0]);
                     let income_report = response.income_report;
                     let remaining_stamp = response.remaining_stamp;
                     let statistic = response.statistic;
@@ -325,9 +326,8 @@ $configData = Helper::appClasses();
                     let end_date_label = new Date(end_date);
                     $('#start_date_label').text(start_date_label.toLocaleDateString('id-ID'));
                     $('#end_date_label').text(end_date_label.toLocaleDateString('id-ID'));
-                    console.log();
                     completeTicket = isNaN(parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100) ? 0 : parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100;
-                    weeklyEarningReports();
+                    weeklyEarningReports(response.diagramInvoice);
                     supportTracker(completeTicket);
 
                     Swal.close();
@@ -417,7 +417,7 @@ $configData = Helper::appClasses();
                         $('#end_date_label').text(end_date_label.toLocaleDateString('id-ID'));
 
                         completeTicket = isNaN(parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100) ? 0 : parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100;
-                        weeklyEarningReports();
+                        // weeklyEarningReports();
                         // supportTracker(completeTicket.toFixed(2));
                         supportTrackerApply(completeTicket.toFixed(2));
 
@@ -429,7 +429,7 @@ $configData = Helper::appClasses();
 
         });
 
-        function weeklyEarningReports() {
+        function weeklyEarningReports(data) {
             let a = config.colors.textMuted;
             var options = {
                 chart: {
@@ -464,13 +464,13 @@ $configData = Helper::appClasses();
                     enabled: !1
                 },
                 series: [{
-                    data: [40, 65, 50, 45, 90, 55, 70]
+                    data: [data[0].data, data[1].data, data[2].data, data[3].data, data[4].data, data[5].data, data[6].data]
                 }],
                 legend: {
                     show: !1
                 },
                 xaxis: {
-                    categories: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+                    categories: [data[0].day, data[1].day, data[2].day, data[3].day, data[4].day, data[5].day, data[6].day],
                     axisBorder: {
                         show: !1
                     },
@@ -600,7 +600,6 @@ $configData = Helper::appClasses();
                 }]
             }
             chart = new ApexCharts(document.querySelector("#supportTracker"), options);
-            console.log(chart);
             chart.render();
         }
 
