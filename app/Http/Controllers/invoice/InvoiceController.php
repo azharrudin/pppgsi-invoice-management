@@ -95,7 +95,6 @@ class InvoiceController extends Controller
 
     public function pdfStorage($file)
     {
-        dd($file);
         $path = "https://www.itsolutionstuff.com/assets/images/logo-it.png";
         Storage::disk('public')->put('itsolutionstuff.png', file_get_contents($path));
 
