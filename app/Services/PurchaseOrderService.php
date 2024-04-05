@@ -38,7 +38,7 @@ class PurchaseOrderService{
             "details.*.quantity" => ["bail", "required", "numeric"],
             "details.*.units" => ["bail", "required", "string"],
             "details.*.price" => ["bail", "required", "numeric"],
-            "details.*.tax" => ["bail", "nullable", "numeric"],
+            "details.*.tax" => ["bail", "nullable", "string"],
             "details.*.total_price" => ["bail", "required", "numeric"],
         ];
         $errorMessages = [

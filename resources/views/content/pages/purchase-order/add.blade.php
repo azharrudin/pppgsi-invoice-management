@@ -262,7 +262,7 @@ $configData = Helper::appClasses();
                         } else if (index % 8 == 5) {
                             detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
                         } else if (index % 8 == 6) {
-                            detail[input_index].tax = parseInt(input_value);
+                            detail[input_index].tax = input_value;
                         } else if (index % 8 == 7) {
                             detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
                         }
