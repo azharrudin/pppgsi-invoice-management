@@ -8,6 +8,8 @@ use App\Models\PurchaseOrder;
 use App\Models\Tenant;
 use App\Services\CommonService;
 use App\Services\PaperIdService;
+use DateInterval;
+use DatePeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -28,14 +30,14 @@ class ReportController extends Controller
      */
     public function dashboard(Request $request)
     {
-        try{
+        try {
             [
                 "start" => $start,
                 "end" => $end,
             ] = $this->CommonService->getQuery($request);
 
-            if(is_null($start)) $start = Carbon::now()->firstOfMonth();
-            if(is_null($end)){
+            if (is_null($start)) $start = Carbon::now()->firstOfMonth();
+            if (is_null($end)) {
                 $end = Carbon::now()->lastOfMonth();
                 $end->setTime(23, 59, 59);
             }
@@ -45,19 +47,16 @@ class ReportController extends Controller
                 DB::raw('YEAR(created_at) AS year'),
                 DB::raw('SUM(grand_total) AS total_amount')
             )
-            ->groupBy(DB::raw('YEAR(created_at)'), DB::raw('MONTH(created_at)'))
-            ->where(DB::raw('YEAR(created_at)'), "like", Carbon::now()->year)
-            ->get();
+                ->groupBy(DB::raw('YEAR(created_at)'), DB::raw('MONTH(created_at)'))
+                ->where(DB::raw('YEAR(created_at)'), "like", Carbon::now()->year)
+                ->get();
 
-            $sumInvoicePerMonth = Invoice::select(
+            $sumInvoicePerDay = Invoice::select(
                 DB::raw('DAY(created_at) AS day'),
             )
-            ->groupBy(DB::raw('DAY(created_at)'))
-            ->where(DB::raw('YEAR(created_at)'), "like", Carbon::now()->year)
-            ->get();
-
-
-
+                ->groupBy(DB::raw('DAY(created_at)'))
+                ->whereBetween('created_at', [$start, $end])
+                ->get();
 
             $incomeReportQuery = "
                 SELECT
@@ -80,7 +79,7 @@ class ReportController extends Controller
             $tableArr = ["work_orders", "material_requests", "purchase_requests", "purchase_orders"];
             $countDataQueryString = "SELECT ";
 
-            foreach($tableArr as $tableName){
+            foreach ($tableArr as $tableName) {
                 $countQuery = "(SELECT COUNT(*) FROM $tableName WHERE deleted_at IS NULL AND created_at BETWEEN '$start' AND '$end') AS count_$tableName, ";
 
                 $countDataQueryString = $countDataQueryString . $countQuery;
@@ -92,23 +91,60 @@ class ReportController extends Controller
 
             $checkStamp = $this->PaperIdService->checkRemainingStamp();
             $remainingStamp = 0;
-            if(
+            if (
                 $checkStamp &&
                 isset($checkStamp["data"]) &&
                 isset($checkStamp["data"]["quota"])
             ) $remainingStamp = $checkStamp["data"]["quota"];
+
+            $diagramInvoice = [];
+            $start_day = Carbon::now();
+            $start_day->adddays(2);
+            $stop_date = date('Y-m-d', strtotime($start_day . ' -1 day'));
+            $end_day = clone $start_day;
+            $end_day->subdays(7);
+
+
+            $daterange = new DatePeriod($end_day, new DateInterval('P1D'), $start_day);
+            iterator_count($daterange);
+            $arr = '';
+            foreach ($daterange as $date) {
+                $newformat = $date->format('Y-m-d');
+                $timestamp = strtotime($newformat);
+                $arr = $arr . $newformat;
+                if ($newformat == $stop_date) {
+                    $sumInvoicePerDay = "SELECT sum(grand_total)  AS total FROM invoices WHERE deleted_at IS NULL AND created_at  LIKE '%" . $newformat . "%'";
+                    $countTotal = DB::select($sumInvoicePerDay)[0];
+                    $total = $countTotal->total;
+                    $data = [
+                        "day" => date('D', $timestamp),
+                        "data" => (isset($total)) ? $total : "0",
+                    ];
+                    array_push($diagramInvoice, $data);
+                } else {
+                    $sumInvoicePerDay = "SELECT sum(grand_total) AS total FROM invoices WHERE deleted_at IS NULL AND created_at  LIKE '%" . $newformat . "%'";
+                    $countTotal = DB::select($sumInvoicePerDay)[0];
+                    $total = $countTotal->total;
+                    $data = [
+                        "day" => date('D', $timestamp),
+                        "data" => (isset($total)) ? $total : "0",
+                    ];
+                    array_push($diagramInvoice, $data);
+                }
+            }
 
             return [
                 "remaining_stamp" => $remainingStamp,
                 "income_report" => $incomeReport,
                 "ticket_complain" => $ticketComplain,
                 "statistic" => $countData,
+                "diagramInvoice" => $diagramInvoice
             ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
-            if(is_a($e, CustomException::class)){
+            if (is_a($e, CustomException::class)) {
                 $errorMessage = $e->getMessage();
                 $errorStatusCode = $e->getStatusCode();
             }
@@ -116,5 +152,4 @@ class ReportController extends Controller
             return response()->json(['message' => $errorMessage], $errorStatusCode);
         }
     }
-
 }
