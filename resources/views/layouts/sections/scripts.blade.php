@@ -30,6 +30,7 @@
         hideMenu("Report");
         hideMenu("Settings");
     }
+    
    
     //Koordinator
     if(accountMenu?.level.id == 3){
@@ -106,15 +107,12 @@
     }
    
     if(accountMenu?.level.id == 9){
-        hideMenu("Complain");
-        hideSubMenu("List Purchase Request");
-        hideSubMenu("List Tanda Terima");
-        hideSubMenu("List Purchase Order");
+        hideSubMenu("List Work Order");
+        hideDashboard();
         hideMenu("Client");
         hideMenu("Vendor");
         hideMenu("Report");
         hideMenu("Settings");
-        hideDashboard();
     }
 
     function hideDashboard(){

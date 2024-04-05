@@ -136,7 +136,7 @@ $configData = Helper::appClasses();
                 <div class="card mb-4">
                     <div class="card-body">
                         <button type="submit" class="btn btn-primary btn-save d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="fa fa-save fa-xs me-2"></i>Simpan</span></button>
-                        <button class="btn btn-success d-grid w-100 mb-2 btn-preview"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-eye ti-xs me-2"></i>Preview</span></button>
+                        {{-- <button class="btn btn-success d-grid w-100 mb-2 btn-preview"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-eye ti-xs me-2"></i>Preview</span></button> --}}
                         <button type="button" class="btn btn-secondary d-grid w-100 btn-cancel">Kembali</button>
                     </div>
                 </div>

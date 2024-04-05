@@ -162,6 +162,7 @@ $configData = Helper::appClasses();
                         signatureWarehouse = details[i];
                     }else if(details[i].type == 'Reviewed By'){
                         signatureChiefDepartment = details[i];
+
                     }else if(details[i].type == 'Aknowledge By'){
                         signatureChiefFinance = details[i];
                     }else if(details[i].type == 'Approved By'){
@@ -334,7 +335,7 @@ $configData = Helper::appClasses();
                     '$("#warehouse-image").css("background-size", "cover");'+
                     '$("#warehouse-image").css("background-repeat", "no-repeat");'+
                 '</'+'script>';
-            }else{//belum ttd
+            } else {
                 datePreparedAttr = 'disabled';
                 imagePrepared = `
                 <div action="/upload" class="dropzone needsclick ${dropzonePrepared} dd" id="ttd1">
@@ -371,13 +372,15 @@ $configData = Helper::appClasses();
         let imageReviewed = '';
         let dateReviewedAttr = '';
         let nameReviewed = '';
+        console.log(value)
+
         let dateReviewed = '';
         if(account.level.id == '8'){
             nameReviewed = value?.name ? value.name : '';
             dateReviewed = value?.date ? value.date : '';
             dropzoneReviewed = 'dz-clickable';
             nameReviewed = account.name;
-            ttdFile2 = value.signature;
+            ttdFile2 = value != undefined ? value.signature : "";
             imageReviewed = `
             <div action="/upload" class="dropzone needsclick ${dropzoneReviewed} dd" id="ttd2">
                 <div class="dz-message needsclick">
@@ -446,7 +449,9 @@ $configData = Helper::appClasses();
             dateAknowledge = value?.date ? value.date : '';
             dropzoneAknowledge = 'dz-clickable';
             nameAknowledge = account.name;
-            ttdFile3 = value.signature;
+            if(value){
+                ttdFile3 = value.signature;
+            }
             imageAknowledge = `
             <div action="/upload" class="dropzone needsclick ${dropzoneAknowledge} dd" id="ttd3">
                 <div class="dz-message needsclick">
@@ -516,7 +521,9 @@ $configData = Helper::appClasses();
             dateApproved = value?.date ? value.date : '';
             dropzoneApproved = 'dz-clickable';
             nameApproved = account.name;
-            ttdFile4= value.signature;
+            if(value){
+                ttdFile4= value.signature;
+            }
             imageApproved = `
             <div action="/upload" class="dropzone needsclick ${dropzoneApproved} dd" id="ttd4">
                 <div class="dz-message needsclick">
@@ -663,7 +670,7 @@ $configData = Helper::appClasses();
                     }else if(account.level.id == '9'){
                         datas.status = 'disetujui chief finance';
                     }else if(account.level.id == '1'){
-                        datas.status = 'selesai';
+                        datas.status = 'disetujui kepala bm';
                     }
 
                     if($.type(ttdFile1) == 'object'){

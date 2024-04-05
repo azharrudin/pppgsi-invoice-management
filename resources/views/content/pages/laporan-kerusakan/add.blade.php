@@ -457,7 +457,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Ticket',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" +'/api/ticket/select',
+                url: "{{ env('BASE_URL_API')}}" +'/api/ticket/select?status=On progress',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {

@@ -156,8 +156,8 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>`;
+                            <span class="sr-only">Loading...</span>
+                        </div>`;
     var lastIndex = null;
 
     function format(e) {
@@ -179,7 +179,7 @@ $configData = Helper::appClasses();
             placeholder: 'Pajak ',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" + '/api/tax/select',
+                url: "{{url('api/tax/select-paper')}}",
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -203,7 +203,6 @@ $configData = Helper::appClasses();
                     };
                 }
             }
-
         });
     });
 
@@ -223,16 +222,6 @@ $configData = Helper::appClasses();
                 if (!form.checkValidity()) {
                     event.preventDefault();
                     event.stopPropagation();
-                    // let tenant = $("#tenant").val();
-                    // let bank = $("#bank").val();
-                    // let tglKontrak = $("#contract_date").val();
-
-                    // if (!tenant) {
-                    //     $("#tenant").addClass("invalid");
-                    // }
-                    // if (!bank) {
-                    //     $("#bank").addClass("invalid");
-                    // }
 
                 } else {
                     Swal.fire({
@@ -273,7 +262,7 @@ $configData = Helper::appClasses();
                         } else if (index % 8 == 5) {
                             detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
                         } else if (index % 8 == 6) {
-                            detail[input_index].tax = parseInt(input_value);
+                            detail[input_index].tax = input_value;
                         } else if (index % 8 == 7) {
                             detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
                         }
@@ -359,25 +348,23 @@ $configData = Helper::appClasses();
         let index = $('.price').index(this);
         let total = 0;
         let price = parseInt($(this).val().replaceAll(',', ''));
-        let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
+        let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
         let quantity = isNaN(parseInt($(`.quantity:eq(` + index + `)`).val())) ? 0 : parseInt($(`.quantity:eq(` + index + `)`).val());
+        let totalPrice = price * quantity;
         if (id == 0) {
-            $(`.total_price:eq(` + index + `)`).val(isNaN(0) ? 0 : format(0));
+            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
             getTotal();
         } else {
             $.ajax({
-                url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
+                url: "{{url('api/tax/get-paper')}}/" + id,
                 type: "get",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(response) {
-                    let data = response.data.rate;
-                   
-                    console.log(quantity);
+                    let data = response.data.value;
                     let tax = parseInt(data);
                     tax = tax / 100;
                     let totalPrice = ((price * quantity) * tax) + (price * quantity);
-                    console.log(totalPrice);
                     $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
                     getTotal();
                 },
@@ -393,20 +380,20 @@ $configData = Helper::appClasses();
         let total = 0;
         let quantity = parseInt($(this).val());
         let price = isNaN(parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''))) ? 0 : parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
-        console.log(price);
-        let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
-        if (price == 0) {
-            $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(price));
+        let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
+        let dataTotal = price * quantity;
+        if (id == 0) {
+            $(`.total_price:eq(` + index + `)`).val(isNaN(dataTotal) ? 0 : format(dataTotal));
             getTotal();
         } else {
+            let idtax = 
             $.ajax({
-                url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
+                url: "{{url('api/tax/get-paper')}}/" + id,
                 type: "get",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(response) {
-                    let data = response.data.rate;
-                    console.log(quantity);
+                    let data = response.data.value;
                     let tax = parseInt(data);
                     tax = tax / 100;
                     let totalPrice = ((price * quantity) * tax) + (price * quantity);
@@ -426,20 +413,18 @@ $configData = Helper::appClasses();
         let index = $('.tax').index(this);
         let data = 0;
         $.ajax({
-            url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
+            url: "{{url('api/tax/get-paper')}}/" + id,
             type: "get",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(response) {
-                let data = response.data.rate;
-                console.log($(this));
+                let data = response.data.value;
                 let total = 0;
                 let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
                 let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
                 let tax = parseInt(data);
                 tax = tax / 100;
                 let totalPrice = ((price * quantity) * tax) + (price * quantity);
-                console.log(totalPrice);
                 $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
                 getTotal();
             },
@@ -612,7 +597,7 @@ $configData = Helper::appClasses();
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-${index}" required></select>
+                            <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-${index}" style="width:200px !important"></select>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
@@ -632,7 +617,7 @@ $configData = Helper::appClasses();
             placeholder: 'Pilih',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" + '/api/tax/select',
+                url: "{{url('api/tax/select-paper')}}",
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -704,7 +689,7 @@ $configData = Helper::appClasses();
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <select class="form-control row-input tax" placeholder="Pajak" name="tax[]" id="tax-0" required></select>
+                            <select class="form-control row-input tax" placeholder="Pajak" name="tax[]" id="tax-0" style="width:200px !important"></select>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
