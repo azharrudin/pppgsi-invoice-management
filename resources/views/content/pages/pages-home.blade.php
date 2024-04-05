@@ -294,7 +294,7 @@ $configData = Helper::appClasses();
             });
             $.ajax({
                 url: "{{ env('BASE_URL_API')}}" + '/api/report/dashboard' + params_date,
-                url: "http://127.0.0.1:8000" + '/api/report/dashboard' + params_date,
+                // url: "http://127.0.0.1:8000" + '/api/report/dashboard' + params_date,
                 type: "get",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
