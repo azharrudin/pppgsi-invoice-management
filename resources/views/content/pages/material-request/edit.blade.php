@@ -391,6 +391,8 @@ $configData = Helper::appClasses();
             //tanda tangannya ada maka tampoilkan seperti edit kepala bm invoice
         }else{
             //sudah ttd
+            console.log(value)
+
             if(value){
                 nameReviewed = value.name;
                 dateReviewedAttr = 'disabled';
