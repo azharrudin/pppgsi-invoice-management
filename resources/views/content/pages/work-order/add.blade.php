@@ -426,14 +426,12 @@ $configData = Helper::appClasses();
         if (dataLocal) {
             if (dataLocal.scope) {
                 var data = dataLocal.scope.split(',');
-                console.log(data);
                 var scopeSelect = $('#scope');
                 for (var i = 0; i < data.length; i++) {
                     $.ajax({
                         type: 'GET',
                         url: "{{ env('BASE_URL_API')}}" + '/api/scope/' + data[i],
                     }).then(function(data) {
-                        console.log(data);
                         // create the option and append to Select2
                         var option = new Option(data.data.name, data.data.id, true, true);
                         scopeSelect.append(option).trigger('change');
@@ -450,14 +448,12 @@ $configData = Helper::appClasses();
             }
             if (dataLocal.classification) {
                 var data = dataLocal.classification.split(',');
-                console.log(data);
                 var classificationSelect = $('#classification');
                 for (var i = 0; i < data.length; i++) {
                     $.ajax({
                         type: 'GET',
                         url: "{{ env('BASE_URL_API')}}" + '/api/classification/' + data[i],
                     }).then(function(data) {
-                        console.log(data);
                         // create the option and append to Select2
                         var option = new Option(data.data.name, data.data.id, true, true);
                         classificationSelect.append(option).trigger('change');
@@ -891,8 +887,6 @@ $configData = Helper::appClasses();
         let data = dataLocal;
         let getDetail = '';
         let temp = '';
-
-        console.log(data);
 
         if (data) {
             let details = dataLocal.details;
