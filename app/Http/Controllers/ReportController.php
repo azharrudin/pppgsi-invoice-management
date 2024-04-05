@@ -49,6 +49,16 @@ class ReportController extends Controller
             ->where(DB::raw('YEAR(created_at)'), "like", Carbon::now()->year)
             ->get();
 
+            $sumInvoicePerMonth = Invoice::select(
+                DB::raw('DAY(created_at) AS day'),
+            )
+            ->groupBy(DB::raw('DAY(created_at)'))
+            ->where(DB::raw('YEAR(created_at)'), "like", Carbon::now()->year)
+            ->get();
+
+
+
+
             $incomeReportQuery = "
                 SELECT
                     (SELECT sum(grand_total) FROM invoices WHERE deleted_at IS NULL AND created_at BETWEEN '$start' AND '$end' AND status LIKE '%Lunas%') AS sum_invoices,
