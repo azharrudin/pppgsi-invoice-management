@@ -88,7 +88,7 @@ $configData = Helper::appClasses();
         <form class="modal-content edit-bank" id="edit-bank" novalidate>
             <input type="hidden" id="edit_id">
             <div class="modal-header">
-                <h5 class="modal-title" id="backDropModalTitle">Edit User</h5>
+                <h5 class="modal-title" id="backDropModalTitle">Edit Department</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -98,34 +98,7 @@ $configData = Helper::appClasses();
                         <input type="text" id="edit_name" name="name" class="form-control" placeholder="Masukan Nama" required>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </div>
-                    <div class="mb-3">
-                        <label for="nameBackdrop" class="form-label">Username</label>
-                        <input type="text" id="edit_username" name="username" class="form-control" placeholder="Masukan Username" required>
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="nameBackdrop" class="form-label">Password</label>
-                        <input type="password" id="edit_password" name="password" class="form-control" placeholder="Masukan Username" required>
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="nameBackdrop" class="form-label">Email</label>
-                        <input type="email" id="edit_email" name="edit_email" class="form-control" placeholder="Email" required>
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit_department_id" class="form-label">Department</label>
-                        <select id="edit_department_id" name="edit_department_id" class="form-control" required>
-                        </select>
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="nameBackdrop" class="form-label">Level</label>
-                        <select id="edit_level_id" name="edit_level_id" class="form-control" required>
-                        </select>
-                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                    </div>
-                </div>
+                    
 
             </div>
             <div class="modal-footer">
@@ -569,33 +542,22 @@ $configData = Helper::appClasses();
                     event.preventDefault();
                     let id = $('#edit_id').val();
                     let name = $('#edit_name').val();
-                    let email = $('#edit_email').val();
-                    let password = $('#edit_password').val();
-                    let department = $('#edit_department_id').val();
-                    let level = $('#edit_level_id').val();
                     let data = {};
                     data.name = name;
-                    data.email = email;
-                    data.password = password;
-                    data.level_id = parseInt(level);
-                    data.department_id = parseInt(department);
-                    data.status = 'Active';
                     $.ajax({
-                        url: "{{ env('BASE_URL_API')}}"+'/api/user/'+ id,
+                        url: "{{ env('BASE_URL_API')}}"+'/api/department/'+ id,
                         type: "PATCH",
                         data: data,
                         success: function(response) {
                             Swal.fire({
                                 title: 'Berhasil',
-                                text: 'Berhasil Memperbarui User',
+                                text: 'Berhasil Memperbarui Department',
                                 icon: 'success',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
                                 },
                                 buttonsStyling: false
                             }).then((result) => {
-                                $('#modal_bank_cancel').click();
-                                $('#edit-bank')[0].reset();
                                 $('#edit-bank-data').modal('hide');
     
                                 $(".list-user-table").DataTable().ajax.reload();
@@ -627,7 +589,7 @@ $configData = Helper::appClasses();
         let id = $(this).data('id');
 
         $.ajax({
-            url: "{{url('api/user')}}/"+ id,
+            url: "{{ env('BASE_URL_API')}}"+'/api/department/'+ id,
             type: "get",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -635,10 +597,6 @@ $configData = Helper::appClasses();
                 console.log(response);
                 $('#edit_id').val(response.data.id);
                 $('#edit_name').val(response.data.name)
-                $('#edit_username').val(response.data.username)
-                $('#edit_email').val(response.data.email)
-                getDepartement('edit_department_id', response.data.department.id)
-                getLevel('edit_level_id', response.data.level.id)
                 $('#edit-bank-data').modal('show')
             },
             error: function(errors) {

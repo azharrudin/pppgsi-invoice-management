@@ -29,15 +29,7 @@ $configData = Helper::appClasses();
     <div class="card-widget-separator-wrapper">
         <div class="card-body card-widget-separator">
             <div class="row gy-4 gy-sm-1">
-                <div class="col-sm-6 col-lg-6">
-                    <div class="d-flex justify-content-center align-items-start card-widget-1 border-end pb-3 pb-sm-0">
-                        <div class="text-center">
-                            <h3 class="mb-1 count_tenant">0</h3>
-                            <p class="mb-0">Tenant</p>
-                        </div>
-                    </div>
-                    <hr class="d-none d-sm-block d-lg-none me-4">
-                </div>
+                
                 <div class="col-sm-6 col-lg-6">
                     <div class="d-flex justify-content-center align-items-start card-widget-2 pb-3 pb-sm-0">
                         <div class="text-center">
