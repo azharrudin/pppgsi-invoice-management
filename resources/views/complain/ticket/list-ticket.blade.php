@@ -121,7 +121,27 @@ $configData = Helper::appClasses();
                 render: function(data, type, row) {
                     return data;
                 }
-            }, {
+            },
+            {
+                name: "status",
+                data: "status",
+                title: "Status",
+                className: 'text-center',
+                render: function(data, type, row) {
+                    if (data == 'Wait a response') {
+                        return '<span class="w-100 badge" style="background-color : #BFBFBF; " text-capitalized> Wait a response </span>';
+                    } else if (data == 'On progress') {
+                        return '<span class="w-100 badge" style="background-color : #4EC0D9; " text-capitalized> On progress </span>';
+                    } else if (data == 'Selesai') {
+                        return '<span class="w-100 badge" style="background-color : #74D94E; " text-capitalized> Selesai </span>';
+                    } else if (data == 'Terkirim') {
+                        return '<span class="w-100 badge" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
+                    } else if (data == 'Disetujui BM') {
+                        return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
+                    }
+                }
+            }, 
+            {
                 name: "reporter_name",
                 data: "reporter_name",
                 title: "Nama Pelapor",
@@ -148,24 +168,6 @@ $configData = Helper::appClasses();
                 className: 'text-center',
                 render: function(data, type, row) {
                     return data;
-                }
-            }, {
-                name: "status",
-                data: "status",
-                title: "Status",
-                className: 'text-center',
-                render: function(data, type, row) {
-                    if (data == 'Wait a response') {
-                        return '<span class="w-100 badge" style="background-color : #BFBFBF; " text-capitalized> Wait a response </span>';
-                    } else if (data == 'On progress') {
-                        return '<span class="w-100 badge" style="background-color : #4EC0D9; " text-capitalized> On progress </span>';
-                    } else if (data == 'Selesai') {
-                        return '<span class="w-100 badge" style="background-color : #74D94E; " text-capitalized> Selesai </span>';
-                    } else if (data == 'Terkirim') {
-                        return '<span class="w-100 badge" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
-                    } else if (data == 'Disetujui BM') {
-                        return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
-                    }
                 }
             }, {
                 data: "id",
@@ -213,7 +215,7 @@ $configData = Helper::appClasses();
                 }
             },
             initComplete: function() {
-                this.api().columns(4).every((function() {
+                this.api().columns(1).every((function() {
                     var a = this,
                         e = $(
                             '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'

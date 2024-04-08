@@ -262,7 +262,7 @@ $configData = Helper::appClasses();
                             
                             var dates_ = getDaysBetweenDates(start_, end_)
                             console.log(RegExp($.fn.dataTable.util.escapeRegex(dates_.join(":")).split(":").join("|"), "g"))
-                                a.columns("tgl_po").search($.fn.dataTable.util.escapeRegex(dates_.join(":")).split(":").join("|"), true, false)
+                                a.columns(2).search($.fn.dataTable.util.escapeRegex(dates_.join(":")).split(":").join("|"), true, false)
                                     .draw()
 
                             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
