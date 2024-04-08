@@ -299,7 +299,6 @@ $configData = Helper::appClasses();
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(response) {
-                    console.log(response.diagramInvoice[0]);
                     let income_report = response.income_report;
                     let remaining_stamp = response.remaining_stamp;
                     let statistic = response.statistic;
@@ -327,9 +326,10 @@ $configData = Helper::appClasses();
                     $('#start_date_label').text(start_date_label.toLocaleDateString('id-ID'));
                     $('#end_date_label').text(end_date_label.toLocaleDateString('id-ID'));
                     completeTicket = isNaN(parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100) ? 0 : parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100;
+                    console.log(completeTicket);
                     weeklyEarningReports(response.diagramInvoice);
                     supportTracker(completeTicket);
-
+                    $("#filter-form").modal('hide');
                     Swal.close();
                 }
             });
@@ -375,56 +375,7 @@ $configData = Helper::appClasses();
             } else {
                 $("#start_date").removeClass("is-invalid");
                 $("#end_date").removeClass("is-invalid");
-                Swal.fire({
-                    title: '<h2>Loading...</h2>',
-                    html: sweet_loader + '<h5>Please Wait</h5>',
-                    showConfirmButton: false,
-                    allowOutsideClick: false,
-                    allowEscapeKey: false
-                });
-                $.ajax({
-                    url: "{{ env('BASE_URL_API')}}" + '/api/report/dashboard' + params,
-                    type: "get",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(response) {
-                        console.log(response);
-                        let income_report = response.income_report;
-                        let remaining_stamp = response.remaining_stamp;
-                        let statistic = response.statistic;
-                        let ticket_complain = response.ticket_complain;
-                        let sum_invoice_per_month = response.income_report.sum_invoice_per_month[0].total_amount;
-
-                        $('#count_invoices').text(income_report.count_invoices);
-                        $('#count_invoices_not_paid').text(income_report.count_invoices_not_paid);
-                        $('#count_invoices_paid').text(income_report.count_invoices_paid);
-                        $('#sum_invoice_per_month').text(formatRupiah(sum_invoice_per_month, 'Rp. '));
-
-                        $('#count_material_requests').text(statistic.count_material_requests);
-                        $('#count_purchase_orders').text(statistic.count_purchase_orders);
-                        $('#count_purchase_requests').text(statistic.count_purchase_requests);
-                        $('#count_vendor_invoice').text(statistic.count_vendor_invoice);
-                        $('#count_work_orders').text(statistic.count_work_orders);
-                        $('#remaining_stamp').text(remaining_stamp);
-
-                        $('#count_completed_tickets').text(ticket_complain.count_completed_tickets);
-                        $('#count_tickets').text(ticket_complain.count_tickets);
-                        $('#count_tickets_waiting_for_response').text(ticket_complain.count_tickets_waiting_for_response);
-
-                        let start_date_label = new Date(start);
-                        let end_date_label = new Date(end);
-                        $('#start_date_label').text(start_date_label.toLocaleDateString('id-ID'));
-                        $('#end_date_label').text(end_date_label.toLocaleDateString('id-ID'));
-
-                        completeTicket = isNaN(parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100) ? 0 : parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100;
-                        // weeklyEarningReports();
-                        // supportTracker(completeTicket.toFixed(2));
-                        supportTrackerApply(completeTicket.toFixed(2));
-
-                        $("#filter-form").modal('hide');
-                        Swal.close();
-                    }
-                });
+                load(params)
             }
 
         });
@@ -604,7 +555,6 @@ $configData = Helper::appClasses();
         }
 
         function supportTrackerApply(val) {
-            console.log(val);
             chart.updateSeries([val]);
         }
     

@@ -184,7 +184,6 @@
             })
 
             let data = JSON.parse(localStorage.getItem("receipt"));
-console.log(data)
             if (data) {
                  $("#receipt_number").val(data.receipt_number);
                  $('#check_number').text(data.check_number);
