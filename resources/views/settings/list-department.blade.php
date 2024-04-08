@@ -38,7 +38,6 @@ $configData = Helper::appClasses();
                             <p class="mb-0">Departments</p>
                         </div>
                     </div>
-                    <hr class="d-none d-sm-block d-lg-none me-4">
                 </div>
             </div>
         </div>

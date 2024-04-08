@@ -145,7 +145,7 @@ $configData = Helper::appClasses();
             success: function(res) {
                 let data = res.data;
                
-                console.log(data.status);
+                console.log(data);
 
                 let details = data.material_request_signatures;
                 $("#requester").val(data.requester);
@@ -398,7 +398,7 @@ $configData = Helper::appClasses();
                 dateReviewedAttr = 'disabled';
                 ttdFile2 = value.signature;
                 dateReviewed = value?.date ? value.date : '';
-                imageReviewed = `<div id="chiefdept-image"></div>`+
+                imageReviewed = `<div id="chiefdept-image2"></div>`+
                 '<script type="text/javascript">'+
                     '$("#chiefdept-image").css("background-color", "black");'+
                     '$("#chiefdept-image").css("background-image", "url('+value.signature+')");'+
