@@ -522,7 +522,6 @@ $configData = Helper::appClasses();
                 placeholder: 'Pilih Pajak',
                 allowClear: true,
                 ajax: {
-                    // url: "{{ env('BASE_URL_API')}}" + '/api/tax/select',
                     url: "{{url('api/tax/select-paper')}}",
                     dataType: 'json',
                     cache: true,
@@ -559,7 +558,6 @@ $configData = Helper::appClasses();
             allowClear: true,
             ajax: {
                 url: "{{url('api/tax/select-paper')}}",
-                // url: "{{ env('BASE_URL_API')}}" + '/api/tax/select-paper',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -1408,7 +1406,6 @@ $configData = Helper::appClasses();
                     allowClear: true,
                     ajax: {
                         url: "{{url('api/tax/select-paper')}}",
-                        // url: "{{ env('BASE_URL_API')}}" + '/api/tax/select',
                         dataType: 'json',
                         cache: true,
                         data: function(params) {

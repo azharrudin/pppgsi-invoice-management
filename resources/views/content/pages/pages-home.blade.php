@@ -15,7 +15,6 @@ $configData = Helper::appClasses();
 <link rel="stylesheet" href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
 <link rel="stylesheet" href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/pages/cards-advance.css">
 <link rel="stylesheet" href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/pages/app-logistics-dashboard.css" />
-<link rel="stylesheet" href="{{asset('/assets/vendor/libs/custom/custom.css')}}">
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}">
 @endsection
 
@@ -38,6 +37,7 @@ $configData = Helper::appClasses();
     </div>
 
     <div class="row mb-4">
+        <span class="fs-3 mb-3"><span id="start_date_label"></span> - <span id="end_date_label"></span></span>
         <!-- Earning Reports -->
         <div class="col-lg-6 mb-4">
             <div class="card h-100">
@@ -61,8 +61,7 @@ $configData = Helper::appClasses();
                     <div class="row">
                         <div class="col-12 col-md-4 d-flex flex-column align-self-end">
                             <div class="d-flex gap-2 align-items-center mb-2 pb-1 flex-wrap">
-                                <h1 class="mb-0">$468</h1>
-                                <div class="badge rounded bg-label-success">+4.2%</div>
+                                <span class="mb-0 fs-5" id="sum_invoice_per_month">0</span>
                             </div>
                             <small>Pendapatan bulan ini</small>
                         </div>
@@ -77,7 +76,7 @@ $configData = Helper::appClasses();
                                     <div class="badge rounded bg-label-primary p-1"><i class="ti ti-currency-dollar ti-sm"></i></div>
                                     <h6 class="mb-0">Total Tagihan Invoice</h6>
                                 </div>
-                                <h4 class="my-2 pt-1">$545.69</h4>
+                                <h4 class="my-2 pt-1" id="count_invoices">0</h4>
                                 <div class="progress w-75" style="height:4px">
                                     <div class="progress-bar" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
@@ -85,9 +84,9 @@ $configData = Helper::appClasses();
                             <div class="col-12 col-sm-4">
                                 <div class="d-flex gap-2 align-items-center">
                                     <div class="badge rounded bg-label-info p-1"><i class="ti ti-chart-pie-2 ti-sm"></i></div>
-                                    <h6 class="mb-0">Total Invoice Dibayarkan</h6>
+                                    <h6 class="mb-4">Total Invoice Dibayarkan <br></h6>
                                 </div>
-                                <h4 class="my-2 pt-1">$256.34</h4>
+                                <h4 class="my-2 pt-1" id="count_invoices_not_paid">0</h4>
                                 <div class="progress w-75" style="height:4px">
                                     <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
@@ -97,7 +96,7 @@ $configData = Helper::appClasses();
                                     <div class="badge rounded bg-label-danger p-1"><i class="ti ti-brand-paypal ti-sm"></i></div>
                                     <h6 class="mb-0">Total Invoice Belum Dibayarkan</h6>
                                 </div>
-                                <h4 class="my-2 pt-1">$74.19</h4>
+                                <h4 class="my-2 pt-1" id="count_invoices_not_paid">0</h4>
                                 <div class="progress w-75" style="height:4px">
                                     <div class="progress-bar bg-danger" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
@@ -117,7 +116,7 @@ $configData = Helper::appClasses();
                         <h5 class="mb-0">Ticket Complain</h5>
                         <small class="text-muted">30 Hari Terakhir</small>
                     </div>
-                    <div class="dropdown">
+                    <!-- <div class="dropdown">
                         <button class="btn p-0" type="button" id="supportTrackerMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="ti ti-dots-vertical ti-sm text-muted"></i>
                         </button>
@@ -125,35 +124,28 @@ $configData = Helper::appClasses();
                             <a class="dropdown-item" href="javascript:void(0);">View More</a>
                             <a class="dropdown-item" href="javascript:void(0);">Delete</a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12 col-sm-4 col-md-12 col-lg-4">
                             <div class="mt-lg-4 mt-lg-2 mb-lg-4 mb-2 pt-1">
-                                <h1 class="mb-0">164</h1>
+                                <h1 class="mb-0" id="count_tickets"></h1>
                                 <p class="mb-0">Total Ticket</p>
                             </div>
                             <ul class="p-0 m-0">
-                                <li class="d-flex gap-3 align-items-center mb-lg-3 pt-2 pb-1">
-                                    <div class="badge rounded bg-label-primary p-1"><i class="ti ti-ticket ti-sm"></i></div>
-                                    <div>
-                                        <h6 class="mb-0 text-nowrap">Ticket Baru</h6>
-                                        <small class="text-muted">142</small>
-                                    </div>
-                                </li>
                                 <li class="d-flex gap-3 align-items-center mb-lg-3 pb-1">
                                     <div class="badge rounded bg-label-info p-1"><i class="ti ti-circle-check ti-sm"></i></div>
                                     <div>
                                         <h6 class="mb-0 text-nowrap">Ticket Selesai</h6>
-                                        <small class="text-muted">28</small>
+                                        <small class="text-muted" id="count_completed_tickets">0</small>
                                     </div>
                                 </li>
                                 <li class="d-flex gap-3 align-items-center pb-1">
                                     <div class="badge rounded bg-label-warning p-1"><i class="ti ti-clock ti-sm"></i></div>
                                     <div>
-                                        <h6 class="mb-0 text-nowrap">Ticket Menunggu</h6>
-                                        <small class="text-muted">1</small>
+                                        <h6 class="mb-0 text-nowrap">Ticket On Proses</h6>
+                                        <small class="text-muted" id="count_tickets_waiting_for_response">0</small>
                                     </div>
                                 </li>
                             </ul>
@@ -180,7 +172,7 @@ $configData = Helper::appClasses();
                             <div class="d-flex align-items-center">
                                 <div class="badge rounded-pill bg-label-primary me-3 p-2"><i class="ti ti-chart-pie-2 ti-sm"></i></div>
                                 <div class="card-info">
-                                    <h5 class="mb-0">230k</h5>
+                                    <h5 class="mb-0" id="count_work_orders">0</h5>
                                     <small>Work Order</small>
                                 </div>
                             </div>
@@ -189,8 +181,8 @@ $configData = Helper::appClasses();
                             <div class="d-flex align-items-center">
                                 <div class="badge rounded-pill bg-label-info me-3 p-2"><i class="ti ti-users ti-sm"></i></div>
                                 <div class="card-info">
-                                    <h5 class="mb-0">8.549k</h5>
-                                    <small>Mat Request</small>
+                                    <h5 class="mb-0" id="count_material_requests">0</h5>
+                                    <small>Material Request</small>
                                 </div>
                             </div>
                         </div>
@@ -198,8 +190,8 @@ $configData = Helper::appClasses();
                             <div class="d-flex align-items-center">
                                 <div class="badge rounded-pill bg-label-danger me-3 p-2"><i class="ti ti-shopping-cart ti-sm"></i></div>
                                 <div class="card-info">
-                                    <h5 class="mb-0">1.423k</h5>
-                                    <small>Purc Request</small>
+                                    <h5 class="mb-0" id="count_purchase_requests">0</h5>
+                                    <small>Purchase Request</small>
                                 </div>
                             </div>
                         </div>
@@ -207,7 +199,7 @@ $configData = Helper::appClasses();
                             <div class="d-flex align-items-center">
                                 <div class="badge rounded-pill bg-label-success me-3 p-2"><i class="ti ti-currency-dollar ti-sm"></i></div>
                                 <div class="card-info">
-                                    <h5 class="mb-0">$9745</h5>
+                                    <h5 class="mb-0" id="count_purchase_orders">0</h5>
                                     <small>Purchase Order</small>
                                 </div>
                             </div>
@@ -216,8 +208,17 @@ $configData = Helper::appClasses();
                             <div class="d-flex align-items-center">
                                 <div class="badge rounded-pill bg-label-secondary me-3 p-2"><i class="ti ti-credit-card ti-sm"></i></div>
                                 <div class="card-info">
-                                    <h5 class="mb-0">$9745</h5>
+                                    <h5 class="mb-0" id="count_vendor_invoice">0</h5>
                                     <small>Tag Vendor</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="d-flex align-items-center">
+                                <div class="badge rounded-pill bg-label-warning me-3 p-2"><i class="ti ti-browser-check ti-sm"></i></div>
+                                <div class="card-info">
+                                    <h5 class="mb-0" id="remaining_stamp">0</h5>
+                                    <small>Materai</small>
                                 </div>
                             </div>
                         </div>
@@ -242,12 +243,12 @@ $configData = Helper::appClasses();
                     <div class="row">
                         <div class="mb-3">
                             <label for="nameBackdrop" class="form-label">Tanggal Awal</label>
-                            <input type="date" id="start_date" name="start_date" class="form-control">
+                            <input type="date" id="start_date" name="start_date" class="form-control" value="{{ date('Y-m-01')}}">
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                         <div class="mb-3">
                             <label for="nameBackdrop" class="form-label">Tanggal Akhir</label>
-                            <input type="date" id="end_date" name="end_date" class="form-control">
+                            <input type="date" id="end_date" name="end_date" class="form-control" value="{{ date('Y-m-t') }}">
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </div>
                     </div>
@@ -269,7 +270,6 @@ $configData = Helper::appClasses();
     <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/swiper/swiper.js"></script>
     <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
     <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
-    <script src="https://demos.pixinvent.com/vuexy-html-admin-template/assets/js/dashboards-analytics.js"></script>
     <!-- END: Page Vendor JS-->
     <!-- BEGIN: Theme JS-->
     <script>
@@ -279,7 +279,10 @@ $configData = Helper::appClasses();
         let start_date = $('#start_date').val();
         let end_date = $('#end_date').val();
         let params_date = `?start=${start_date}&end=${end_date}`;
+        let completeTicket = 0;
+        let chart = null;
         load(params_date);
+
 
         function load(params_date) {
             Swal.fire({
@@ -291,1173 +294,320 @@ $configData = Helper::appClasses();
             });
             $.ajax({
                 url: "{{ env('BASE_URL_API')}}" + '/api/report/dashboard' + params_date,
+                // url: "http://127.0.0.1:8000" + '/api/report/dashboard' + params_date,
                 type: "get",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(response) {
+                    console.log(response.diagramInvoice[0]);
+                    let income_report = response.income_report;
+                    let remaining_stamp = response.remaining_stamp;
+                    let statistic = response.statistic;
+                    let ticket_complain = response.ticket_complain;
+                    let sum_invoice_per_month = response.income_report.sum_invoice_per_month[0].total_amount;
 
+                    $('#count_invoices').text(income_report.count_invoices);
+                    $('#count_invoices_not_paid').text(income_report.count_invoices_not_paid);
+                    $('#count_invoices_paid').text(income_report.count_invoices_paid);
+                    $('#sum_invoice_per_month').text(formatRupiah(sum_invoice_per_month, 'Rp. '));
+
+                    $('#count_material_requests').text(statistic.count_material_requests);
+                    $('#count_purchase_orders').text(statistic.count_purchase_orders);
+                    $('#count_purchase_requests').text(statistic.count_purchase_requests);
+                    $('#count_vendor_invoice').text(statistic.count_vendor_invoice);
+                    $('#count_work_orders').text(statistic.count_work_orders);
+                    $('#remaining_stamp').text(remaining_stamp);
+
+                    $('#count_completed_tickets').text(ticket_complain.count_completed_tickets);
+                    $('#count_tickets').text(ticket_complain.count_tickets);
+                    $('#count_tickets_waiting_for_response').text(ticket_complain.count_tickets_waiting_for_response);
+
+                    let start_date_label = new Date(start_date);
+                    let end_date_label = new Date(end_date);
+                    $('#start_date_label').text(start_date_label.toLocaleDateString('id-ID'));
+                    $('#end_date_label').text(end_date_label.toLocaleDateString('id-ID'));
+                    completeTicket = isNaN(parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100) ? 0 : parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100;
+                    weeklyEarningReports(response.diagramInvoice);
+                    supportTracker(completeTicket);
+
+                    Swal.close();
                 }
             });
-            Swal.close();
+
 
         };
+
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
 
         $(document).on('click', '.apply', function(e) {
             e.preventDefault();
             let start = $('#start_date').val();
             let end = $('#end_date').val();
             let params = `?start=${start}&end=${end}`;
-            $.ajax({
-                url: "{{ env('BASE_URL_API')}}" + '/api/report/dashboard' + params,
-                type: "get",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(response) {
-                    console.log(response);
+            if (start === '' || end === '') {
+                // Tampilkan pesan validasi Bootstrap jika tanggal kosong
+                if (start === '') {
+                    $("#start_date").addClass("is-invalid");
+                } else {
+                    $("#start_date").removeClass("is-invalid");
                 }
-            });
+
+                if (end === '') {
+                    $("#end_date").addClass("is-invalid");
+                } else {
+                    $("#end_date").removeClass("is-invalid");
+                }
+            } else {
+                $("#start_date").removeClass("is-invalid");
+                $("#end_date").removeClass("is-invalid");
+                Swal.fire({
+                    title: '<h2>Loading...</h2>',
+                    html: sweet_loader + '<h5>Please Wait</h5>',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                });
+                $.ajax({
+                    url: "{{ env('BASE_URL_API')}}" + '/api/report/dashboard' + params,
+                    type: "get",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(response) {
+                        console.log(response);
+                        let income_report = response.income_report;
+                        let remaining_stamp = response.remaining_stamp;
+                        let statistic = response.statistic;
+                        let ticket_complain = response.ticket_complain;
+                        let sum_invoice_per_month = response.income_report.sum_invoice_per_month[0].total_amount;
+
+                        $('#count_invoices').text(income_report.count_invoices);
+                        $('#count_invoices_not_paid').text(income_report.count_invoices_not_paid);
+                        $('#count_invoices_paid').text(income_report.count_invoices_paid);
+                        $('#sum_invoice_per_month').text(formatRupiah(sum_invoice_per_month, 'Rp. '));
+
+                        $('#count_material_requests').text(statistic.count_material_requests);
+                        $('#count_purchase_orders').text(statistic.count_purchase_orders);
+                        $('#count_purchase_requests').text(statistic.count_purchase_requests);
+                        $('#count_vendor_invoice').text(statistic.count_vendor_invoice);
+                        $('#count_work_orders').text(statistic.count_work_orders);
+                        $('#remaining_stamp').text(remaining_stamp);
+
+                        $('#count_completed_tickets').text(ticket_complain.count_completed_tickets);
+                        $('#count_tickets').text(ticket_complain.count_tickets);
+                        $('#count_tickets_waiting_for_response').text(ticket_complain.count_tickets_waiting_for_response);
+
+                        let start_date_label = new Date(start);
+                        let end_date_label = new Date(end);
+                        $('#start_date_label').text(start_date_label.toLocaleDateString('id-ID'));
+                        $('#end_date_label').text(end_date_label.toLocaleDateString('id-ID'));
+
+                        completeTicket = isNaN(parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100) ? 0 : parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100;
+                        // weeklyEarningReports();
+                        // supportTracker(completeTicket.toFixed(2));
+                        supportTrackerApply(completeTicket.toFixed(2));
+
+                        $("#filter-form").modal('hide');
+                        Swal.close();
+                    }
+                });
+            }
+
         });
-        ! function() {
-            let e, t, o, a, i;
-            a = (isDarkStyle ? (e = config.colors_dark.cardColor, t = config.colors_dark.textMuted, i = config.colors_dark.bodyColor, o = config.colors_dark.headingColor, config.colors_dark) : (e = config.colors.cardColor, t = config.colors.textMuted, i = config.colors.bodyColor, o = config.colors.headingColor, config.colors)).borderColor;
-            var s =
-                r = document.querySelector("#total-tagihan-invoice"),
-                n = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor"],
-                    series: [45, 58, 30],
-                    colors: ['#2A44C6', '#6192FF', '#CAD5FF'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#2A44C6",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
-                },
 
-                s = (null !== r && new ApexCharts(r, n).render(), document.querySelector("#invoice-terbayarkan")),
-                r = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor"],
-                    series: [45, 58, 30],
-                    colors: ['#28C76F', '#68D89A', '#DCF6E8'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
+        function weeklyEarningReports(data) {
+            let a = config.colors.textMuted;
+            var options = {
+                chart: {
+                    height: 202,
+                    parentHeightOffset: 0,
+                    type: "bar",
+                    toolbar: {
                         show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#28C76F",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
+                    }
                 },
-                n = (null !== s && new ApexCharts(s, r).render(), document.querySelector("#invoice-pending")),
-                s = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor"],
-                    series: [45, 58, 30],
-                    colors: ['#F9ED32', '#F9EB8C', '#F9F0BB'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#F9ED32",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
+                plotOptions: {
+                    bar: {
+                        barHeight: "60%",
+                        columnWidth: "38%",
+                        startingShape: "rounded",
+                        endingShape: "rounded",
+                        borderRadius: 4,
+                        distributed: !0
+                    }
                 },
-
-                r = (null !== n && new ApexCharts(n, s).render(), document.querySelector("#invoice-dibayarkan")),
-                n = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor"],
-                    series: [45, 58, 30],
-                    colors: ['#1FEAE0', '#96E0D7', '#C3DDDA'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#1FEAE0",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
+                grid: {
+                    show: !1,
+                    padding: {
+                        top: -30,
+                        bottom: 0,
+                        left: -10,
+                        right: -10
+                    }
                 },
-
-                s = (null !== r && new ApexCharts(r, n).render(), document.querySelector("#invoice-belum-dibayarkan")),
-                r = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor", "Food"],
-                    series: [45, 58, 30, 33],
-                    colors: ['#ED1C24', '#E54559', '#E0738B', '#F297B3'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#ED1C24",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
+                colors: [config.colors_label.primary, config.colors_label.primary, config.colors_label.primary, config.colors_label.primary, config.colors.primary, config.colors_label.primary, config.colors_label.primary],
+                dataLabels: {
+                    enabled: !1
                 },
-
-                n = (null !== s && new ApexCharts(s, r).render(), document.querySelector("#total-tenant")),
-                s = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor", "Food"],
-                    series: [45, 58, 30, 33],
-                    colors: ['#AFCC36', '#CFE842', '#EBFC49', '#F6FC7A'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#AFCC36",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
-                },
-
-                r = (null !== n && new ApexCharts(n, s).render(), document.querySelector("#invoice-telat")),
-                n = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor", "Food"],
-                    series: [45, 58, 30],
-                    colors: ['#EF6100', '#EA8744', '#E5A070', '#E2BBA1'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#EF6100",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
-                },
-
-                s = (null !== r && new ApexCharts(r, n).render(), document.querySelector("#invoice-cancel")),
-                r = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor"],
-                    series: [45, 58, 30],
-                    colors: ['#AE3DEA', '#C68AED', '#D5B9EA'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#AE3DEA",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
-                },
-
-                n = (null !== s && new ApexCharts(s, r).render(), document.querySelector("#tagihan-vendor")),
-                s = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor", "Food"],
-                    series: [45, 58, 30, 33],
-                    colors: ['#995F5B', '#BA706E', '#D38484', '#EA9494'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#995F5B",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
-                },
-
-                r = (null !== n && new ApexCharts(n, s).render(), document.querySelector("#tagihan-yang-vendor-harus-dibayarkan")),
-                n = {
-                    chart: {
-                        height: 200,
-                        width: 200,
-                        parentHeightOffset: 0,
-                        type: "donut"
-                    },
-                    labels: ["Electronic", "Sports", "Decor", "Food"],
-                    series: [45, 58, 30, 33],
-                    colors: ['#58585A', '#818182', '#B7B7B7', '#E8E8E8'],
-                    stroke: {
-                        width: 0
-                    },
-                    dataLabels: {
-                        enabled: !1,
-                        formatter: function(e, t) {
-                            return parseInt(e) + "%"
-                        }
-                    },
-                    legend: {
-                        show: !1
-                    },
-                    tooltip: {
-                        theme: !1
-                    },
-                    grid: {
-                        padding: {
-                            top: 0,
-                            right: -20,
-                            left: -20
-                        }
-                    },
-                    states: {
-                        hover: {
-                            filter: {
-                                type: "none"
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: "70%",
-                                labels: {
-                                    show: !0,
-                                    value: {
-                                        fontSize: "1.375rem",
-                                        fontFamily: "Public Sans",
-                                        color: o,
-                                        fontWeight: 500,
-                                        offsetY: -15,
-                                        formatter: function(e) {
-                                            return parseInt(e) + "%"
-                                        }
-                                    },
-                                    name: {
-                                        offsetY: 20,
-                                        fontFamily: "Public Sans"
-                                    },
-                                    total: {
-                                        show: !0,
-                                        showAlways: !0,
-                                        color: "#58585A",
-                                        fontSize: ".8125rem",
-                                        label: "Total",
-                                        fontFamily: "Public Sans",
-                                        formatter: function(e) {
-                                            return "184"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 1025,
-                        options: {
-                            chart: {
-                                height: 172,
-                                width: 160
-                            }
-                        }
-                    }, {
-                        breakpoint: 769,
-                        options: {
-                            chart: {
-                                height: 300
-                            }
-                        }
-                    }, {
-                        breakpoint: 426,
-                        options: {
-                            chart: {
-                                height: 147
-                            }
-                        }
-                    }]
-                },
-                s = (null !== r && new ApexCharts(r, n).render(), $(".datatable-invoice"));
-            a = $(".invoice-list-table");
-            if (a.length) e = a.DataTable({
-                ajax: assetsPath + "json/invoice-list.json",
-                columns: [{
-                    data: "no_lk"
-                }, {
-                    data: "scope"
-                }, {
-                    data: "classification"
-                }, {
-                    data: "date"
-                }, {
-                    data: "action_plan"
-                }, {
-                    data: "status"
-                }, {
-                    data: "tanggapan"
+                series: [{
+                    data: [data[0].data, data[1].data, data[2].data, data[3].data, data[4].data, data[5].data, data[6].data]
                 }],
-                columnDefs: [{
-
-                    targets: 0,
-                    render: function(a, e, t, s) {
-                        return ""
-                    }
-                }, {
-                    targets: 1,
-                    render: function(a, e, t, s) {
-                        var n = t.no_lap_kerusakan;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {
-                    targets: 2,
-                    render: function(a, e, t, s) {
-                        var n = t.scope;
-                        return '<a href="' + baseUrl + 'app/invoice/preview">#' + n + "</a>"
-                    }
-                }, {
-                    targets: 3,
-                    render: function(a, e, t, s) {
-                        var n = t.classification;
-                        return '<span class="d-none">' + n + "</span>$" + n
-                    }
-                }, {}, {
-                    targets: 4,
-                    render: function(a, e, t, s) {
-                        var n = new Date(t.date);
-                        return '<span class="d-none">' + moment(n).format("YYYYMMDD") + "</span>" + moment(n).format("DD MMM YYYY")
-                    }
-                }, {
-                    targets: 5,
-                    render: function(a, e, t, s) {
-                        var n = new Date(t.action_plan);
-                        return '<span class="d-none">' + moment(n).format("YYYYMMDD") + "</span>" + moment(n).format("DD MMM YYYY")
-                    }
-                }, {
-                    targets: 6,
-                    orderable: !1,
-                    render: function(a, e, t, s) {
-                        var n = t.status;
-                        if (0 === n) {
-                            return '<span class="badge bg-label-success" text-capitalized> Paid </span>'
-                        }
-                        return '<span class="d-none">' + n + "</span>" + n
-                    }
-                }, {
-                    targets: 7,
-                    visible: !1
-                }, {
-                    targets: -1,
-                    title: "Tanggapan",
-                    searchable: !1,
-                    orderable: !1,
-                    render: function(a, e, t, s) {
-                        return '<div class="d-flex align-items-center"><a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a><a href="' + baseUrl + 'app/invoice/preview" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="' + baseUrl + 'app/invoice/edit" class="dropdown-item">Edit</a><a href="javascript:;" class="dropdown-item">Duplicate</a><div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>'
-                    }
-                }],
-                order: [
-                    [1, "desc"]
-                ],
-                dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-                language: {
-                    sLengthMenu: "Show _MENU_",
-                    search: "",
-                    searchPlaceholder: "Search Invoice"
+                legend: {
+                    show: !1
                 },
-                buttons: [{
-                    text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Invoice</span>',
-                    className: "btn btn-primary",
-                    action: function(a, e, t, s) {
-                        window.location = baseUrl + "complain/work-order/add"
+                xaxis: {
+                    categories: [data[0].day, data[1].day, data[2].day, data[3].day, data[4].day, data[5].day, data[6].day],
+                    axisBorder: {
+                        show: !1
+                    },
+                    axisTicks: {
+                        show: !1
+                    },
+                    labels: {
+                        style: {
+                            colors: a,
+                            fontSize: "13px",
+                            fontFamily: "Public Sans"
+                        }
                     }
-                }],
-                responsive: {
-                    details: {
-                        display: $.fn.dataTable.Responsive.display.modal({
-                            header: function(a) {
-                                return "Details of " + a.data().full_name
+                },
+                yaxis: {
+                    labels: {
+                        show: !1
+                    }
+                },
+                tooltip: {
+                    enabled: !1
+                },
+                responsive: [{
+                    breakpoint: 1025,
+                    options: {
+                        chart: {
+                            height: 199
+                        }
+                    }
+                }]
+            }
+
+            var chart = new ApexCharts(document.querySelector("#weeklyEarningReports"), options);
+            chart.render();
+        }
+
+        function supportTracker(val) {
+            $('#supportTracker').html('');
+            let e = config.colors.cardColor;
+            let a = config.colors.textMuted;
+            let t = config.colors.headingColor;
+            var options = {
+                series: [val],
+                labels: ["Completed Task"],
+                chart: {
+                    height: 360,
+                    type: "radialBar"
+                },
+                plotOptions: {
+                    radialBar: {
+                        offsetY: 10,
+                        startAngle: -140,
+                        endAngle: 130,
+                        hollow: {
+                            size: "65%"
+                        },
+                        track: {
+                            background: e,
+                            strokeWidth: "100%"
+                        },
+                        dataLabels: {
+                            name: {
+                                offsetY: -20,
+                                color: a,
+                                fontSize: "13px",
+                                fontWeight: "400",
+                                fontFamily: "Public Sans"
+                            },
+                            value: {
+                                offsetY: 10,
+                                color: t,
+                                fontSize: "38px",
+                                fontWeight: "500",
+                                fontFamily: "Public Sans"
                             }
-                        }),
-                        type: "column",
-                        renderer: function(a, e, t) {
-                            var s = $.map(t, (function(a, e) {
-                                return "" !== a.title ? '<tr data-dt-row="' + a.rowIndex + '" data-dt-column="' + a.columnIndex + '"><td>' + a.title + ":</td> <td>" + a.data + "</td></tr>" : ""
-                            })).join("");
-                            return !!s && $('<table class="table"/><tbody />').append(s)
                         }
                     }
                 },
-                initComplete: function() {
-                    this.api().columns(7).every((function() {
-                        var a = this,
-                            e = $('<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>').appendTo(".invoice_status").on("change", (function() {
-                                var e = $.fn.dataTable.util.escapeRegex($(this).val());
-                                a.search(e ? "^" + e + "$" : "", !0, !1).draw()
-                            }));
-                        a.data().unique().sort().each((function(a, t) {
-                            e.append('<option value="' + a + '" class="text-capitalize">' + a + "</option>")
-                        }))
-                    }))
-                }
-            });
-            a.on("draw.dt", (function() {
-                [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((function(a) {
-                    return new bootstrap.Tooltip(a, {
-                        boundary: document.body
-                    })
-                }))
-            })), $(".invoice-list-table tbody").on("click", ".delete-record", (function() {
-                e.row($(this).parents("tr")).remove().draw()
-            })), setTimeout((() => {
-                $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(".dataTables_length .form-select").removeClass("form-select-sm")
-            }), 300)
-        }();
+                colors: [config.colors.primary],
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        shade: "dark",
+                        shadeIntensity: .5,
+                        gradientToColors: [config.colors.primary],
+                        inverseColors: !0,
+                        opacityFrom: 1,
+                        opacityTo: .6,
+                        stops: [30, 70, 100]
+                    }
+                },
+                stroke: {
+                    dashArray: 10
+                },
+                grid: {
+                    padding: {
+                        top: -20,
+                        bottom: 5
+                    }
+                },
+                states: {
+                    hover: {
+                        filter: {
+                            type: "none"
+                        }
+                    },
+                    active: {
+                        filter: {
+                            type: "none"
+                        }
+                    }
+                },
+                responsive: [{
+                    breakpoint: 1025,
+                    options: {
+                        chart: {
+                            height: 330
+                        }
+                    }
+                }, {
+                    breakpoint: 769,
+                    options: {
+                        chart: {
+                            height: 280
+                        }
+                    }
+                }]
+            }
+            chart = new ApexCharts(document.querySelector("#supportTracker"), options);
+            chart.render();
+        }
 
-
-        $((function() {
-
-        }));
+        function supportTrackerApply(val) {
+            console.log(val);
+            chart.updateSeries([val]);
+        }
+    
     </script>
 
 

@@ -451,7 +451,9 @@ $configData = Helper::appClasses();
             dateAknowledge = value?.date ? value.date : '';
             dropzoneAknowledge = 'dz-clickable';
             nameAknowledge = account.name;
-            ttdFile3 = value.signature;
+            if(value){
+                ttdFile3 = value.signature;
+            }
             imageAknowledge = `
             <div action="/upload" class="dropzone needsclick ${dropzoneAknowledge} dd" id="ttd3">
                 <div class="dz-message needsclick">
@@ -521,7 +523,9 @@ $configData = Helper::appClasses();
             dateApproved = value?.date ? value.date : '';
             dropzoneApproved = 'dz-clickable';
             nameApproved = account.name;
-            ttdFile4= value.signature;
+            if(value){
+                ttdFile4= value.signature;
+            }
             imageApproved = `
             <div action="/upload" class="dropzone needsclick ${dropzoneApproved} dd" id="ttd4">
                 <div class="dz-message needsclick">
@@ -668,7 +672,7 @@ $configData = Helper::appClasses();
                     }else if(account.level.id == '9'){
                         datas.status = 'disetujui chief finance';
                     }else if(account.level.id == '1'){
-                        datas.status = 'selesai';
+                        datas.status = 'disetujui kepala bm';
                     }
 
                     if($.type(ttdFile1) == 'object'){

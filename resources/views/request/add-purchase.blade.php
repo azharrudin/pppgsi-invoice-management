@@ -331,7 +331,7 @@ $configData = Helper::appClasses();
             placeholder: 'Select Material Request',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" + '/api/material-request/select',
+                url: "{{ env('BASE_URL_API')}}" + '/api/material-request/select?status=Disetujui Kepala BM',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -648,7 +648,6 @@ $configData = Helper::appClasses();
                         datas.additional_note = additional_note;
                         datas.status = 'Terbuat';
                         datas.signatures = [signatures1];
-                        console.log(datas)
                         $.ajax({
                             url: "{{ env('BASE_URL_API')}}" + "/api/purchase-request",
                             type: "POST",

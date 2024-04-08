@@ -329,12 +329,21 @@ $configData = Helper::appClasses();
         var urlVendorInvoice = "{{ url('vendor/data-tagihan-vendor') }}";
         
         
+
         //BM
+        Swal.fire({
+            title: '<h2>Loading...</h2>',
+            html: sweet_loader + '<h5>Please Wait</h5>',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        });
         if(account.level_id == 1){
+            let n = 0;
             urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Disetujui KA";
             urlTandaTerima = "{{ url('to-do-list') }}"+"/receipt"+"/Disetujui KA";
             urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Disetujui Warehouse";   
-            urlMaterialRequest =  "{{ url('to-do-list') }}"+"/material-request"+"/Disetujui KA";   
+            urlMaterialRequest =  "{{ url('to-do-list') }}"+"/material-request"+"/Disetujui Chief Finance";   
             urlPurchaseRequest =  "{{ url('to-do-list') }}"+"/purchase-request"+"/Disetujui KA";   
             urlPurchaseOrder =  "{{ url('to-do-list') }}"+"/purchase-order"+"/Disetujui KA";   
             urlTicket = "{{ url('to-do-list') }}"+"/ticket"+"/Disetujui KA";   
@@ -347,8 +356,15 @@ $configData = Helper::appClasses();
             tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest);
             tableSetting('Task Purchase Request', 'purchase-request-table', columnPurchaseRequest, urlPurchaseRequest)
             tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
+            $(document).ajaxSuccess(function(){
+                n = n + 1;
+                if(n == 8 ){
+                    Swal.close();
+                }
+            });
         //KA
         }else if(account.level_id == 2){
+            let n = 0;
             urlTandaTerima = "{{ url('to-do-list') }}"+"/receipt"+"/terbuat";
             urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/Disetujui KT";
             urlTicket = "{{ url('to-do-list') }}"+"/ticket"+"/on progress";
@@ -361,50 +377,126 @@ $configData = Helper::appClasses();
             tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
             tableSetting('Task Purchase Request', 'purchase-request-table', columnPurchaseRequest, urlPurchaseRequest)
             tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
-        //Chief Engineering
+            $(document).ajaxSuccess(function(){
+                n = n + 1;
+                if(n == 6 ){
+                    Swal.close();
+                }
+            });
+            //Chief Engineering
         } else if(account.level_id == 6){
+            let n = 0;
             urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Terbuat";   
             tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
+            $(document).ajaxSuccess(function(){
+                n = n + 1;
+                if(n == 1 ){
+                    Swal.close();
+                }
+            });
         //Warehouse
         }else if(account.level_id == 7){
+            let n = 0;  
             urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Disetujui Chief Engineering";   
             tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
+            $(document).ajaxSuccess(function(){
+                n = n + 1;
+                if(n == 1 ){
+                    Swal.close();
+                }
+            });
         //Chief Department
         }else if(account.level_id == 8){
+            let n = 0;  
             urlMaterialRequest =  "{{ url('to-do-list') }}"+"/material-request"+"/Terbuat";   
             tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest)
-        //chieEnginer
+            $(document).ajaxSuccess(function(){
+                n = n + 1;
+                if(n == 1 ){
+                    Swal.close();
+                }
+            });
+            //chieEnginer
         }else if(account.level_id == 9){
+            let n = 0; 
             urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Terbuat";
-            urlMaterialRequest =  "{{ url('to-do-list') }}"+"/material-request"+"/disetujui chief departement";   
+            urlMaterialRequest =  "{{ url('to-do-list') }}"+"/material-request"+"/disetujui chief departement";
+            urlTandaTerima = "{{ url('to-do-list') }}"+"/receipt"+"/terbuat";
+            urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/Disetujui KT";
+            urlTicket = "{{ url('to-do-list') }}"+"/ticket"+"/on progress";
+            urlPurchaseRequest = "{{ url('to-do-list') }}"+"/purchase-request"+"/terbuat";
+            urlPurchaseOrder = "{{ url('to-do-list') }}"+"/purchase-order"+"/terbuat";
             tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest)
             tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
+            tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
+            tableSetting('Task Ticket', 'ticket-table', columnTicket, urlTicket);
+            tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
+            tableSetting('Task Purchase Request', 'purchase-request-table', columnPurchaseRequest, urlPurchaseRequest)
+            tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
+            $(document).ajaxSuccess(function(){
+                n = n + 1;
+                if(n == 2 ){
+                    Swal.close();
+                }
+            });
+            $(document).ajaxSuccess(function(){
+                n = n + 1;
+                if(n == 6 ){
+                    Swal.close();
+                }
+            });
         //teknisi
         }else if(account.level_id == 5){
+            let n = 0; 
             urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Terbuat";   
             tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
+            $(document).ajaxSuccess(function(){
+                n = n + 1;
+                if(n == 1 ){
+                    Swal.close();
+                }
+            });
         //leader cleaning
         }else if(account.level_id == 4){
+            let n = 0; 
             urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/Terbuat";
             tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
-        //Koordinator
+            $(document).ajaxSuccess(function(){
+                n = n + 1;
+                if(n == 1 ){
+                    Swal.close();
+                }
+            });
+            //Koordinator
         }else if(account.level_id == 3){
+            let n = 0; 
             urlLaporanKerusakan = "{{ url('to-do-list') }}"+"/damage-report"+"/Disetujui LC";
             tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
+            $(document).ajaxSuccess(function(){
+                n = n + 1;
+                if(n == 1 ){
+                    Swal.close();
+                }
+            });
         }else{
             urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Terkirim"; 
-           
+            let n = 0; 
             tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
             tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
-            // tableSetting('Task Ticket', 'ticket-table', columnTicket, urlTicket);
-            // tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
-            // tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
-            // tableSetting('Task Material Request', 'material-request-table', columnMaterialRequest, urlMaterialRequest)
-            // tableSetting('Task Purchase Request', 'purchase-request-table', columnPurchaseRequest, urlPurchaseRequest)
-            // tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
-            // tableSetting('Task Tagihan Vendor', 'tagihan-table', columnTagihanVendor, urlVendorInvoice)
+            $(document).ajaxSuccess(function(){
+                n = n + 1;
+                if(n == 2 ){
+                    Swal.close();
+                }
+            });
         }
+        
+
     }));
+
+    function closeSwall(){
+        Swal.close();
+    }
 
     function tableSetting(title, table, column, url) {
         let temp = `    
@@ -424,6 +516,7 @@ $configData = Helper::appClasses();
                 processing: true,
                 serverSide: true,
                 deferRender: true,
+                async : false,
                 ajax: {
                     url: url,
                     "data": function(d) {

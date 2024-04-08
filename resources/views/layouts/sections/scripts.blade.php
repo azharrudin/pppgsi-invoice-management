@@ -19,19 +19,23 @@
         hideMenu("Vendor");
         hideMenu("Report");
         hideMenu("Settings");
+        hideDashboard();
     }
     //KA
     if(accountMenu?.level.id == 2){
         hideSubMenu("List Work Order");
+        hideDashboard();
         hideMenu("Client");
         hideMenu("Vendor");
         hideMenu("Report");
         hideMenu("Settings");
     }
+    
    
     //Koordinator
     if(accountMenu?.level.id == 3){
         hideMenu("Invoice");
+        hideDashboard();
         hideMenu("Request");
         hideSubMenu("List Work Order");
         hideSubMenu("List Ticket");
@@ -43,6 +47,7 @@
     //Leader Cleaning
     if(accountMenu?.level.id == 4){
         hideMenu("Invoice");
+        hideDashboard();
         hideMenu("Request");
         hideSubMenu("List Work Order");
         hideSubMenu("List Ticket");
@@ -53,6 +58,7 @@
     }
     //Teknisi
     if(accountMenu?.level.id == 5){
+        hideDashboard();
         hideMenu("Invoice");
         hideMenu("Request");
         hideSubMenu("List Laporan Kerusakan");
@@ -66,6 +72,7 @@
     //Chief Engineering
     if(accountMenu?.level.id == 6){
         hideMenu("Invoice");
+        hideDashboard();
         hideMenu("Request");
         hideSubMenu("List Laporan Kerusakan");
         hideSubMenu("List Ticket");
@@ -77,6 +84,7 @@
     //WareHouse
     if(accountMenu?.level.id == 7){
         hideMenu("Invoice");
+        hideDashboard();
         hideSubMenu("List Laporan Kerusakan");
         hideSubMenu("List Ticket");
         hideSubMenu("List Purchase Request");
@@ -95,17 +103,21 @@
         hideMenu("Vendor");
         hideMenu("Report");
         hideMenu("Settings");
+        hideDashboard();
     }
    
     if(accountMenu?.level.id == 9){
-        hideMenu("Complain");
-        hideSubMenu("List Purchase Request");
-        hideSubMenu("List Tanda Terima");
-        hideSubMenu("List Purchase Order");
+        hideSubMenu("List Work Order");
+        hideDashboard();
         hideMenu("Client");
         hideMenu("Vendor");
         hideMenu("Report");
         hideMenu("Settings");
+    }
+
+    function hideDashboard(){
+        var aTags = document.getElementsByClassName("icon-home");
+        aTags[0].parentElement.parentElement.classList.add('d-none');
     }
     if(accountMenu?.level.id == 11){
         hideMenu("Invoice");
