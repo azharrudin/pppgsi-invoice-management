@@ -52,7 +52,7 @@ class WorkOrderController extends Controller
                     ->orWhere('status', 'like', '%' . $value . '%');
                 });
             }
-            if($value){
+            if($status){
                 $workOrderQuery->where('status', 'like', '%' . $status . '%');
             }
             $getTickets = $workOrderQuery->orderBy($order, $sort)->paginate($perPage);
