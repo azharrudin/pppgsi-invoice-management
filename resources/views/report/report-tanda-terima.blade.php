@@ -280,7 +280,7 @@ $configData = Helper::appClasses();
             }, {
                 data: 'id',
                 name : 'tanggapan',
-                title: "Tanggapan",
+                title: "Action",
                 render: function(data, type, row) {
                     let sendMailRow = '';
                     let editButton = '';

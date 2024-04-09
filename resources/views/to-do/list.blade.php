@@ -55,7 +55,7 @@ $configData = Helper::appClasses();
         }, {
             data: "id",
             name: "tanggapan",
-            title: "Tanggapan",
+            title: "Action",
             render: function(data, type, row) {
                 let sendMailRow = '';
                 let editButton = '';
@@ -94,7 +94,7 @@ $configData = Helper::appClasses();
         }, {
             data: 'id',
             name: 'tanggapan',
-            title: "Tanggapan",
+            title: "Action",
             render: function(data, type, row) {
                 let sendMailRow = '';
                 let editButton = '';
@@ -143,7 +143,7 @@ $configData = Helper::appClasses();
         }, {
             data: "id",
             name: "tanggapan",
-            title: "Tanggapan",
+            title: "Action",
             render: function(data, type, row) {
                 let editRow = '';
                 let previewRow = '<a href="{{ url("complain/show-ticket")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
@@ -167,7 +167,7 @@ $configData = Helper::appClasses();
         }, {
             data: 'id',
             name: 'tanggapan',
-            title: "Tanggapan",
+            title: "Action",
             render: function(data, type, row) {
                 return '<div class="d-flex align-items-center"><a href="/complain/laporan-kerusakan/show/' +
                     data +
@@ -190,7 +190,7 @@ $configData = Helper::appClasses();
         }, {
             data: "id",
             name: "tanggapan",
-            title: "Tanggapan",
+            title: "Action",
             render: function(data, type, row) {
                 return '<div class="d-flex align-items-center"><a href="/complain/work-order/show/' +
                     data +
@@ -215,7 +215,7 @@ $configData = Helper::appClasses();
         }, {
             data: "id",
             name: "tanggapan",
-            title: "Tanggapan",
+            title: "Action",
             render: function(data, type, row) {
                 let editRow = '';
                 let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
@@ -243,7 +243,7 @@ $configData = Helper::appClasses();
         }, {
             data: "id",
             name: "id",
-            title: "Tanggapan",
+            title: "Action",
             render: function(data, type, row) {
                 return '<div class="d-flex align-items-center"><a href="/request/show/' +
                     data +
@@ -274,8 +274,8 @@ $configData = Helper::appClasses();
             }
         }, {
             data: "id",
-            name: "Tanggapan",
-            title: "Tanggapan",
+            name: "Action",
+            title: "Action",
             render: function(data, type, row) {
                 let editRow = '';
                 let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
@@ -306,7 +306,7 @@ $configData = Helper::appClasses();
             }, {
                 data: "vendor_id",
                 name: "vendor_id",
-                title: "Tanggapan",
+                title: "Action",
                 render: function(data, type, row) {
                     let editRow = '';
                     let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';

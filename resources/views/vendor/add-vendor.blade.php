@@ -149,7 +149,7 @@ $configData = Helper::appClasses();
             }, {
                 data: "vendor_id",
                 name: "vendor_id",
-                title: "Tanggapan",
+                title: "Action",
                 render: function(data, type, row) {
                     console.log(data);
                     let editRow = '';

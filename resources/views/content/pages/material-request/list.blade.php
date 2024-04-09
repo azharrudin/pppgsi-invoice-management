@@ -195,7 +195,7 @@ $configData = Helper::appClasses();
                 }, {
                     data: "id",
                     name: "tanggapan",
-                    title: "Tanggapan",
+                    title: "Action",
                     render: function(data, type, row) {
                         let editRow = '';
                         let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';

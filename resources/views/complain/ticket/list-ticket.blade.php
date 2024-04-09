@@ -174,7 +174,7 @@ $configData = Helper::appClasses();
             {
                 data: "id",
                 name: "tanggapan",
-                title: "Tanggapan",
+                title: "Action",
                 render: function(data, type, row) {
                     let editAndDelete = '';
                     let previewRow = '<a href="{{ url("complain/show-ticket")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Ticket"><i class="ti ti-eye mx-2 ti-sm"></i></a>';

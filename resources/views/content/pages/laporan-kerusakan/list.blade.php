@@ -201,7 +201,7 @@ $(document).ready(function() {
             }
         }, {
             data: null,
-            title: "Tanggapan",
+            title: "Action",
             render: function(data, type, row) {
                 return '<div class="d-flex align-items-center"><a href="laporan-kerusakan/show/' +
                     data.id +

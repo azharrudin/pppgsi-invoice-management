@@ -240,12 +240,11 @@ $configData = Helper::appClasses();
                 {
                     data: "id",
                     name: "tanggapan",
-                    title: "Tanggapan",
+                    title: "Action",
                     render: function(data, type, row) {
                         return `
                         <div class="d-flex align-items-center">
                         <a href="javascript:void(0)"  id="button-edit" data-bs-toggle="modal" data-id="` + data + `" class="text-body"><i class="ti ti-pencil mx-2 ti-sm"></i></a>
-                        <a href="javascript:void(0)"  id="button-preview" data-bs-toggle="modal" data-id="` + data + `" class="text-body"><i class="ti ti-eye mx-2 ti-sm"></i></a>
                         <a href="javascript:void(0)"  id="button-delete"  data-id="` + data + `" class="text-body"><i class="ti ti-trash mx-2 ti-sm"></i></a>
                         </div>`;
                     }

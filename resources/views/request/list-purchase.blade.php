@@ -209,7 +209,7 @@ $configData = Helper::appClasses();
             }, {
                 data: "id",
                 name: "id",
-                title: "Tanggapan",
+                title: "Action",
                 render: function(data, type, row) {
                     return '<div class="d-flex align-items-center"><a href="show/' +
                         data +

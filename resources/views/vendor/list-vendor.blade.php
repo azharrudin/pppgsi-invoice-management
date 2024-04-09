@@ -28,7 +28,7 @@
                         <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                             <div>
                                 <h3 class="mb-1 count-vendor">0</h3>
-                                <p class="mb-0">Vendor</p>
+                                <p class="mb-0">Total Vendor</p>
                             </div>
                         </div>
                         <hr class="d-none d-sm-block d-lg-none me-4">
@@ -310,7 +310,7 @@
                     }
                 }, {
                     data: null,
-                    title: "Tanggapan",
+                    title: "Action",
                     render: function(data, type, row) {
                         return `
                     <div class="d-flex align-items-center">

@@ -208,6 +208,10 @@
                     name: "id",
                     className: "d-none",
                 },{
+                    data: "company",
+                    name: "company",
+                    title: "Company"
+                },{
                     data: "name",
                     name: "name",
                     title: "Nama PIC"
@@ -220,17 +224,13 @@
                     name: "phone",
                     title: "Phone"
                 }, {
-                    data: "company",
-                    name: "company",
-                    title: "Company"
-                }, {
                     data: "floor",
                     name: "floor",
                     title: "Floor"
                 },
                 {
                     data: null,
-                    title: "Tanggapan",
+                    title: "Action",
                     render: function(data, type, row) {
                         return `
                     <div class="d-flex align-items-center">

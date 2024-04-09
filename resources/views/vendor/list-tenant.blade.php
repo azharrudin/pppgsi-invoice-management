@@ -325,7 +325,7 @@
                         }
                     }, {
                         data: null,
-                        title: "Tanggapan",
+                        title: "Action",
                         render: function(data, type, row) {
                             return `
                         <div class="d-flex align-items-center">
