@@ -129,7 +129,7 @@ $configData = Helper::appClasses();
             serverSide: true,
             deferRender: true,
             ajax: {
-                url: "{{ url('material-request/data-material-request') }}",
+                url: "{{ url('request/material-request/data-material-request') }}",
                 "data": function(d) {
                     d.start = 0;
                     d.page = $(".invoice-list-table").DataTable().page.info().page + 1;
@@ -267,7 +267,7 @@ $configData = Helper::appClasses();
 
         $(document).on('change', '#status', function(x) {
             x.stopPropagation();
-            e.ajax.url("{{ url('material-request/data-material-request') }}"+"?status="+$(this).val()).load(); // Memuat ulang data DataTable
+            e.ajax.url("{{ url('request/material-request/data-material-request') }}"+"?status="+$(this).val()).load(); // Memuat ulang data DataTable
         });
 
         $(document).on('click', '.delete-record', function(event) {

@@ -49,7 +49,7 @@ class MaterialRequestController extends Controller
                 });
             }
             if($status){
-                $materialRequestQuery->where('status', 'like', '%' . $value . '%');
+                $materialRequestQuery->where('status', 'like', '%' . $status . '%');
             }
             $getMaterialRequest = $materialRequestQuery->orderBy($order, $sort)->paginate($perPage);
             $totalCount = $getMaterialRequest->total();
