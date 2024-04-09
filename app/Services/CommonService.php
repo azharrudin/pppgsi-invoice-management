@@ -18,6 +18,7 @@ class CommonService{
         $order = $request->input("order", "created_at");
         $sort = $request->input("sort", "desc");
         $value = $request->input("value");
+        $status = $request->input("status");
         $start = $request->input("start", null);
         $end = $request->input("end", null);
 
@@ -33,6 +34,7 @@ class CommonService{
             "order" => $order,
             "sort" => $sort,
             "value" => $value,
+            "status" => $status,
             "start" => $start,
             "end" => $end,
         ];

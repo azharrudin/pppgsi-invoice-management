@@ -283,7 +283,7 @@ $configData = Helper::appClasses();
                     if(account.level.id == 1){
                         datas.status = 'Disetujui BM';
                     }else if(account.level.id == 9){
-                        datas.status = 'Disetujui KA';
+                        datas.status = 'Disetujui CA';
                     }
                     Swal.fire({
                         title: 'Memeriksa...',
@@ -294,7 +294,6 @@ $configData = Helper::appClasses();
                     });
                     $.ajax({
                         url: "{{env('BASE_URL_API')}}" +'/api/invoice/update-status/' + id,
-                        // url: 'http://127.0.0.1:8000/api/invoice/update-status/' + id,
                         type: "PATCH",
                         data: JSON.stringify(datas),
                         contentType: "application/json; charset=utf-8",

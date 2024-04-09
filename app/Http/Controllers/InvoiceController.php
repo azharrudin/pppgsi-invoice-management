@@ -44,6 +44,7 @@ class InvoiceController extends Controller
                 "sort" => $sort,
                 "value" => $value,
                 "start" => $start,
+                "status" => $status,
                 "end" => $end,
             ] = $this->CommonService->getQuery($request);
 
@@ -60,6 +61,9 @@ class InvoiceController extends Controller
                         ->orWhere('invoice_due_date', 'like', '%' . $value . '%')
                         ->orWhere('status', 'like', '%' . $value . '%');
                 });
+            }
+            if ($status) {
+                $invoiceQuery->where('status', 'like', '%' . $status . '%');
             }
             if(!is_null($start) && !is_null($end)) $invoiceQuery = $invoiceQuery->whereBetween("created_at", [$start, $end]);
             $getInvoices = $invoiceQuery

@@ -326,7 +326,6 @@ $configData = Helper::appClasses();
                     $('#start_date_label').text(start_date_label.toLocaleDateString('id-ID'));
                     $('#end_date_label').text(end_date_label.toLocaleDateString('id-ID'));
                     completeTicket = isNaN(parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100) ? 0 : parseInt(ticket_complain.count_completed_tickets) / parseInt(ticket_complain.count_tickets) * 100;
-                    console.log(completeTicket);
                     weeklyEarningReports(response.diagramInvoice);
                     supportTracker(completeTicket);
                     $("#filter-form").modal('hide');

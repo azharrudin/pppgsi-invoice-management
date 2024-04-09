@@ -29,16 +29,7 @@ $configData = Helper::appClasses();
     <div class="card-widget-separator-wrapper">
         <div class="card-body card-widget-separator">
             <div class="row gy-4 gy-sm-1">
-                <div class="col-sm-6 col-lg-3">
-                    <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
-                        <div>
-                            <h3 class="mb-1 count_tenant">0</h3>
-                            <p class="mb-0">Tenant</p>
-                        </div>
-                    </div>
-                    <hr class="d-none d-sm-block d-lg-none me-4">
-                </div>
-                <div class="col-sm-6 col-lg-3">
+                <div class="col-sm-6 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1 count_invoice">0</h3>
@@ -47,7 +38,7 @@ $configData = Helper::appClasses();
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
                 </div>
-                <div class="col-sm-6 col-lg-3">
+                <div class="col-sm-6 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
                         <div>
                             <h3 class="mb-1 invoice_paid">0</h3>
@@ -55,7 +46,7 @@ $configData = Helper::appClasses();
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-3">
+                <div class="col-sm-6 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
                         <div>
                             <h3 class="mb-1 invoice_not_paid">0</h3>
@@ -85,7 +76,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script>
     "use strict";
-    $((function() {
+    $(document).ready(function() {
 
         var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                 <span class="sr-only">Loading...</span>
@@ -93,6 +84,7 @@ $configData = Helper::appClasses();
 
         let account = {!! json_encode(session('data')) !!}
         let buttonAdd = [];
+
         if (account.level.id == '10') {
             buttonAdd = [{
                 text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Invoice</span>',
@@ -103,8 +95,8 @@ $configData = Helper::appClasses();
             }];
         }
 
-        
         setHeader();
+        
         localStorage.removeItem('invoice');
 
         function setHeader() {
@@ -254,7 +246,7 @@ $configData = Helper::appClasses();
         });
 
         var a = $(".invoice-list-table");
-        if (a.length) var e = a.DataTable({
+        var e = a.DataTable({
             responsive: true,
             processing: true,
             serverSide: true,
@@ -391,7 +383,6 @@ $configData = Helper::appClasses();
                 details: {
                 display: $.fn.dataTable.Responsive.display.modal({
                         header: function(a) {
-                            console.log(a);
                             return "Detail"
                         }
                     }),
@@ -411,23 +402,24 @@ $configData = Helper::appClasses();
                 this.api().columns(5).every((function() {
                     var a = this,
                         e = $(
-                            '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
-                        ).appendTo(".invoice_status").on("change", (
-                            function() {
-                                var e = $.fn.dataTable.util.escapeRegex($(
-                                    this).val());
-                                console.log(e);
-                                a.search(e)
-                                    .draw()
-                            }));
-                    a.data().unique().sort().each((function(a, t) {
-                        e.append('<option value="' + a +
-                            '" class="text-capitalize">' + a +
-                            "</option>")
-                    }))
+                            '<select id="status" class="form-select"><option value=""> Select Status </option></select>'
+                        ).appendTo(".invoice_status").on("change");
+                            var optionsHtml =   '<option value="terbuat">Terbuat</option>' +
+                                                '<option value="disetujui ca">Disetujui CA</option>' +
+                                                '<option value="disetujui bm">Disetujui BM</option>' +
+                                                '<option value="terkirim">Terkirim</option>' +
+                                                '<option value="lunas">Lunas</option>' +
+                                                '<option value="kurang bayar">Kurang Bayar</option>';
+                            e.append(optionsHtml);
                 }))
             }
         });
+
+        $(document).on('change', '#status', function(x) {
+            x.stopPropagation();
+            e.ajax.url("{{ url('invoice/data-invoice') }}"+"?status="+$(this).val()).load(); // Memuat ulang data DataTable
+        });
+
         a.on("draw.dt", (function() {
             [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((
                 function(a) {
@@ -441,7 +433,9 @@ $configData = Helper::appClasses();
             $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(
                 ".dataTables_length .form-select").removeClass("form-select-sm")
         }), 300)
-    }));
+
+
+    });
 </script>
 
 
