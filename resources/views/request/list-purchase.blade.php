@@ -34,7 +34,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1 count_receipt">0</h3>
-                            <p class="mb-0">Tanda Terima</p>
+                            <p class="mb-0">Tanda Terima (Bulan ini)</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
@@ -43,7 +43,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
                         <div>
                             <h3 class="mb-1 count_receipt_paid">0</h3>
-                            <p class="mb-0">Terbayarkan</p>
+                            <p class="mb-0">Terbayarkan (Bulan ini)</p>
                         </div>
                     </div>
                 </div>

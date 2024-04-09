@@ -29,7 +29,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1 count_purchase_order">0</h3>
-                            <p class="mb-0">Purchasing Order</p>
+                            <p class="mb-0">Purchasing Order (Bulan ini)</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
