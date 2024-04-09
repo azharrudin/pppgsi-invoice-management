@@ -117,7 +117,7 @@ $configData = Helper::appClasses();
         }
 
         var a = $(".purchase-request-list-table");
-        if (a.length) var e = a.DataTable({
+        var e = a.DataTable({
             processing: true,
             serverSide: true,
             deferRender: true,
@@ -254,19 +254,13 @@ $configData = Helper::appClasses();
                 this.api().columns(5).every((function() {
                     var a = this,
                         e = $(
-                            '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
-                        ).appendTo(".purchase_status").on("change", (
-                            function() {
-                                var e = $.fn.dataTable.util.escapeRegex($(
-                                    this).val());
-                                a.search(e ? "^" + e + "$" : "", !0, !1)
-                                    .draw()
-                            }));
-                    a.data().unique().sort().each((function(a, t) {
-                        e.append('<option value="' + a +
-                            '" class="text-capitalize">' + a +
-                            "</option>")
-                    }))
+                            '<select id="status" class="form-select"><option value=""> Select Status </option></select>'
+                        ).appendTo(".invoice_status").on("change");
+                            var optionsHtml =   '<option value="terbuat">Terbuat</option>' +
+                                                '<option value="disetujui ca">Disetujui KA</option>' +
+                                                '<option value="disetujui bm">Disetujui BM</option>' +
+                                                '<option value="terkirim">Terkirim</option>';
+                            e.append(optionsHtml);
                 }))
             }
         });
@@ -283,6 +277,10 @@ $configData = Helper::appClasses();
             $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(
                 ".dataTables_length .form-select").removeClass("form-select-sm")
         }), 300)
+        $(document).on('change', '#status', function(x) {
+            x.stopPropagation();
+            e.ajax.url("{{ url('request/data-purchase-request') }}"+"?status="+$(this).val()).load(); // Memuat ulang data DataTable
+        });
     }));
 
     $(document).on('click', '.btn-delete', function(event) {

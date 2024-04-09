@@ -36,6 +36,7 @@ class PurchaseOrderController extends Controller
                 "page" => $page,
                 "order" => $order,
                 "sort" => $sort,
+                "status" => $status,
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
@@ -51,6 +52,9 @@ class PurchaseOrderController extends Controller
                         ->orWhere('purchase_order_date', 'like', '%' . $value . '%')
                         ->orWhere('status', 'like', '%' . $value . '%');
                 });
+            }
+            if ($status) {
+                $purchaseOrderQuery->where('status', 'like', '%' . $status . '%');
             }
             $getPurchaseOrder = $purchaseOrderQuery
                 ->select("id", "purchase_order_number", "vendor_id", "about", "grand_total", "purchase_order_date", "status")
