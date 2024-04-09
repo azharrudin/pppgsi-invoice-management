@@ -344,13 +344,7 @@ $configData = Helper::appClasses();
                     data: "name",
                     title: "Nama",
                     name: "name"
-                },
-                {
-                    data: "created_at",
-                    title: "Created At",
-                    name: "created_at"
-                },
-               
+                },               
                 {
                     data: "id",
                     name: "tanggapan",
