@@ -118,6 +118,7 @@ $configData = Helper::appClasses();
 
         var a = $(".purchase-request-list-table");
         var e = a.DataTable({
+            responsive: true,
             processing: true,
             serverSide: true,
             deferRender: true,
@@ -125,9 +126,7 @@ $configData = Helper::appClasses();
                 url: "{{ url('request/data-purchase-request') }}",
                 "data": function(d) {
                     d.start = 0;
-                    d.page = $(".purchase-request-list-table").DataTable().page.info()
-                        .page +
-                        1;
+                    d.page = $(".purchase-request-list-table").DataTable().page.info().page +1;
                 }
             },
             columns: [{
@@ -255,7 +254,7 @@ $configData = Helper::appClasses();
                     var a = this,
                         e = $(
                             '<select id="status" class="form-select"><option value=""> Select Status </option></select>'
-                        ).appendTo(".invoice_status").on("change");
+                        ).appendTo(".purchase_status").on("change");
                             var optionsHtml =   '<option value="terbuat">Terbuat</option>' +
                                                 '<option value="disetujui ca">Disetujui KA</option>' +
                                                 '<option value="disetujui bm">Disetujui BM</option>' +
@@ -277,6 +276,7 @@ $configData = Helper::appClasses();
             $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(
                 ".dataTables_length .form-select").removeClass("form-select-sm")
         }), 300)
+
         $(document).on('change', '#status', function(x) {
             x.stopPropagation();
             e.ajax.url("{{ url('request/data-purchase-request') }}"+"?status="+$(this).val()).load(); // Memuat ulang data DataTable
