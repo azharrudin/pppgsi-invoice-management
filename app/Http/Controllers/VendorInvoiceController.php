@@ -33,6 +33,7 @@ class VendorInvoiceController extends Controller
                 "page" => $page,
                 "order" => $order,
                 "sort" => $sort,
+                "status" => $status,
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
@@ -47,8 +48,12 @@ class VendorInvoiceController extends Controller
                         ->orWhere('purchase_order_number', 'like', '%' . $value . '%')
                         ->orWhere('about', 'like', '%' . $value . '%')
                         ->orWhere('grand_total', 'like', '%' . $value . '%')
-                        ->orWhere('purchase_order_date', 'like', '%' . $value . '%');
+                        ->orWhere('purchase_order_date', 'like', '%' . $value . '%')
+                        ->orWhere('status', 'like', '%' . $value . '%');
                 });
+            }
+            if ($status) {
+                $purchaseOrderQuery->where('status', 'like', '%' . $status . '%');
             }
             if (!is_null($vendorId)) {
                 $purchaseOrderQuery = $purchaseOrderQuery->where("vendor_id", $vendorId);

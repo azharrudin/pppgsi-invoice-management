@@ -78,7 +78,6 @@ $configData = Helper::appClasses();
     let account = {!! json_encode(session('data')) !!}
     let table = '';
     var buttonAdd = []
-    console.log(account);
     if(account.level_id == '11'){
         table = "{{ route('data-vendor') }}";
         buttonAdd = [{
@@ -114,7 +113,7 @@ $configData = Helper::appClasses();
                                 </div>`;
     $((function() {
         var a = $(".list-vendor-table");
-        if (a.length) var e = a.DataTable({
+        var e = a.DataTable({
             processing: true,
             serverSide: true,
             deferRender: true,
@@ -246,20 +245,14 @@ $configData = Helper::appClasses();
                 this.api().columns(0).every((function() {
                     var a = this,
                         e = $(
-                            '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
-                        ).appendTo(".tagihan_status").on("change", (
-                            function() {
-                                var e = $.fn.dataTable.util.escapeRegex($(
-                                    this).val());
-                                a.search(e ? "^" + e + "$" : "", !0, !1)
-                                    .draw()
-                            }));
-                            
-                    a.data().unique().sort().each((function(a, t) {
-                        e.append('<option value="' + a +
-                            '" class="text-capitalize">' + a +
-                            "</option>")
-                    }))
+                            '<select id="status" class="form-select"><option value=""> Select Status </option></select>'
+                        ).appendTo(".tagihan_status").on("change");
+                            var optionsHtml =   '<option value="terbuat">Terbuat</option>' +
+                                                '<option value="disetujui ca">Disetujui KA</option>' +
+                                                '<option value="disetujui bm">Disetujui BM</option>' +
+                                                '<option value="terkirim">Terkirim</option>'+
+                                                '<option value="lunas">Lunas</option>';
+                            e.append(optionsHtml);
                 }))
             }
         });
