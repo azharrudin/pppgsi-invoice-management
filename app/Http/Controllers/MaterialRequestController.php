@@ -34,6 +34,7 @@ class MaterialRequestController extends Controller
                 "page" => $page,
                 "order" => $order,
                 "sort" => $sort,
+                "status" => $status,
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
@@ -46,6 +47,9 @@ class MaterialRequestController extends Controller
                     ->orWhere('request_date', 'like', '%' . $value . '%')
                     ->orWhere('status', 'like', '%' . $value . '%');
                 });
+            }
+            if($status){
+                $materialRequestQuery->where('status', 'like', '%' . $value . '%');
             }
             $getMaterialRequest = $materialRequestQuery->orderBy($order, $sort)->paginate($perPage);
             $totalCount = $getMaterialRequest->total();
