@@ -38,11 +38,11 @@ class ReportTandaTerimaExport implements FromCollection, WithMapping, ShouldAuto
         }else{
             $status = 'Belum Terkirim';
         }
-         
+       
          return [
              $this->i++,
              $data->receipt_number,
-             $data->tenant->name,
+             $data->tenant != null ? $data->tenant->name : "",
              $data->invoice->grand_total,
              $data->receipt_date,
              $data->receipt_send_date,
