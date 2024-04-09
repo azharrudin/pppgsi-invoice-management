@@ -177,7 +177,7 @@ $configData = Helper::appClasses();
                 title: "Tanggapan",
                 render: function(data, type, row) {
                     let editAndDelete = '';
-                    let previewRow = '<a href="{{ url("complain/show-ticket")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
+                    let previewRow = '<a href="{{ url("complain/show-ticket")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Ticket"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
                     if(account.level.id == 10){
                         editAndDelete = `<a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="{{ url("complain/edit-ticket")}}/` + data + `" class="dropdown-item">Edit</a>
                         <div class="dropdown-divider"></div><a href="#" data-id="`+data+`" class="dropdown-item delete-record text-danger">Delete</a></div></div>`;
@@ -244,7 +244,7 @@ $configData = Helper::appClasses();
 
         $(document).on('change', '#status', function(x) {
             x.stopPropagation();
-            e.ajax.url("{{ url('invoice/data-invoice') }}"+"?status="+$(this).val()).load(); // Memuat ulang data DataTable
+            e.ajax.url("{{ url('complain/data-ticket') }}"+"?status="+$(this).val()).load(); // Memuat ulang data DataTable
         });
 
         $(document).on("click", ".delete-record", function(e) {
