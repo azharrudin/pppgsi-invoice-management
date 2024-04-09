@@ -114,7 +114,7 @@ $configData = Helper::appClasses();
 
     $((function() {
         var a = $(".damage-report-list-table");
-        if (a.length) var e = a.DataTable({
+        var e = a.DataTable({
             processing: true,
             serverSide: true,
             deferRender: true,
@@ -153,9 +153,7 @@ $configData = Helper::appClasses();
                     var tahun = bagianTanggal[0];
                     var bulan = bagianTanggal[1];
                     var hari = bagianTanggal[2];
-
                     var tanggalHasil = hari + '/' + bulan + '/' + tahun;
-
                     return tanggalHasil;
                 }
             }, {
@@ -165,14 +163,11 @@ $configData = Helper::appClasses();
                 className: 'text-center',
                 render: function(data, type, full, meta) {
                     var tanggalAwal = data;
-
                     var bagianTanggal = tanggalAwal.split('-');
                     var tahun = bagianTanggal[0];
                     var bulan = bagianTanggal[1];
                     var hari = bagianTanggal[2];
-
                     var tanggalHasil = hari + '/' + bulan + '/' + tahun;
-
                     return tanggalHasil;
                 }
             }, {
@@ -181,7 +176,6 @@ $configData = Helper::appClasses();
                 title: "Status",
                 className: 'text-center',
                 render: function(data, type, full, meta) {
-                    console.log(data);
                     if (data == "Disetujui KA") {
                         return '<span class="badge w-100" style="background-color : #4EC0D9; " >' + data +
                             '</span>'
@@ -251,19 +245,15 @@ $configData = Helper::appClasses();
                 this.api().columns(5).every((function() {
                     var a = this,
                         e = $(
-                            '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
-                        ).appendTo(".invoice_status").on("change", (
-                            function() {
-                                var e = $.fn.dataTable.util.escapeRegex($(
-                                    this).val());
-                                a.search(e ? "^" + e + "$" : "", !0, !1)
-                                    .draw()
-                            }));
-                    a.data().unique().sort().each((function(a, t) {
-                        e.append('<option value="' + a +
-                            '" class="text-capitalize">' + a +
-                            "</option>")
-                    }))
+                            '<select id="status" class="form-select"><option value=""> Select Status </option></select>'
+                        ).appendTo(".invoice_status").on("change");
+                            var optionsHtml =   '<option value="terbuat">Terbuat</option>' +
+                                                '<option value="disetujui lc">Disetujui LC</option>' +
+                                                '<option value="disetujui kt">Disetujui KT</option>' +
+                                                '<option value="disetujui bm">Disetujui BM</option>' +
+                                                '<option value="terkirim">Terkirim</option>' +
+                                                '<option value="selesai">Selesai</option>';
+                            e.append(optionsHtml);
                 }))
             }
         });
@@ -281,6 +271,11 @@ $configData = Helper::appClasses();
                 ".dataTables_length .form-select").removeClass("form-select-sm")
         }), 300)
     }));
+
+    $(document).on('change', '#status', function(x) {
+        x.stopPropagation();
+        e.ajax.url("{{ url('complain/laporan-kerusakan/data-damage') }}"+"?status="+$(this).val()).load(); // Memuat ulang data DataTable
+    });
 
     $(document).on('click', '.btn-delete', function(event) {
         let id = $(this).data('id');

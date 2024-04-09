@@ -36,7 +36,8 @@ class DamageReportController extends Controller
                 "page" => $page,
                 "order" => $order,
                 "sort" => $sort,
-                "value" => $value
+                "value" => $value,
+                "status" => $status
             ] = $this->CommonService->getQuery($request);
 
             $damageReportQuery = DamageReport::with("ticket")->where("deleted_at", null);
@@ -49,6 +50,9 @@ class DamageReportController extends Controller
                         ->orWhere('action_plan_date', 'like', '%' . $value . '%')
                         ->orWhere('status', 'like', '%' . $value . '%');
                 });
+            }
+            if($status){
+                $damageReportQuery->where('status', 'like', '%' . $value . '%');
             }
             $getTickets = $damageReportQuery->orderBy($order, $sort)->paginate($perPage);
             $totalCount = $getTickets->total();
