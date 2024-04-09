@@ -359,7 +359,6 @@ $configData = Helper::appClasses();
         e.ajax.url("{{ url('invoice/tanda-terima/data-tanda-terima') }}"+"?status="+$(this).val()).load(); // Memuat ulang data DataTable
     });
 
-
     $(document).on('click', '.btn-delete', function(event) {
         let id = $(this).data('id');
         event.stopPropagation();
