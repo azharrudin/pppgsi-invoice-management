@@ -33,7 +33,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1 count_invoice">0</h3>
-                            <p class="mb-0">Invoice</p>
+                            <p class="mb-0">Invoice (Bulan ini)</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
@@ -42,7 +42,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
                         <div>
                             <h3 class="mb-1 invoice_paid">0</h3>
-                            <p class="mb-0">Terbayarkan</p>
+                            <p class="mb-0">Terbayarkan (Bulan ini)</p>
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@ $configData = Helper::appClasses();
                     <div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
                         <div>
                             <h3 class="mb-1 invoice_not_paid">0</h3>
-                            <p class="mb-0">Belum Dibayarkan</p>
+                            <p class="mb-0">Belum Dibayarkan (Bulan ini)</p>
                         </div>
                     </div>
                 </div>
