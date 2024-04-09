@@ -26,20 +26,20 @@ $configData = Helper::appClasses();
         <div class="card-body card-widget-separator">
             <div class="row gy-4 gy-sm-1">
                 
-                <div class="col-sm-4 col-lg-4">
+                <div class="col-sm-4 col-lg-6">
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1 count_damage_report">0</h3>
-                            <p class="mb-0">Laporan Kerusakan</p>
+                            <p class="mb-0">Laporan Kerusakan (Bulan Ini)</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
                 </div>
-                <div class="col-sm-4 col-lg-4">
+                <div class="col-sm-4 col-lg-6">
                     <div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
                         <div>
                             <h3 class="mb-1 count_damage_report_done">0</h3>
-                            <p class="mb-0">Laporan Selesai</p>
+                            <p class="mb-0">Laporan Selesai (Bulan Ini)</p>
                         </div>
                     </div>
                 </div>

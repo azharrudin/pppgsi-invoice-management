@@ -54,13 +54,13 @@ class TicketListController extends Controller
             $request->page = 1;
         }
 
-        // dd($request->search['value']);
         $apiRequest = Http::get(env('BASE_URL_API') . '/api/ticket', [
             'per_page' => $request->length,
             'page' => $request->page,
             'order' => 'id',
             'sort' => 'desc',
             'value' => $request->search['value'],
+            'status' => $request->status,
         ]);
         $response = json_decode($apiRequest->getBody());
         $data = [];

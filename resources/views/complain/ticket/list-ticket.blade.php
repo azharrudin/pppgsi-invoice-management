@@ -30,11 +30,11 @@ $configData = Helper::appClasses();
         <div class="card-body card-widget-separator">
             <div class="row gy-4 gy-sm-1">
                 
-                <div class="col-sm-6 col-lg-6">
-                    <div class="d-flex justify-content-center align-items-start card-widget-2 pb-3 pb-sm-0">
+                <div class="col-sm-6 col-lg-12">
+                    <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div class="text-center">
                             <h3 class="mb-1 count_ticket">0</h3>
-                            <p class="mb-0">Total Ticket Bulan Ini</p>
+                            <p class="mb-0">Total Ticket (Bulan Ini)</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
@@ -102,7 +102,7 @@ $configData = Helper::appClasses();
         }
         var a = $(".ticket-list-table");
         
-        if (a.length) var e = a.DataTable({
+        var e = a.DataTable({
             processing: true,
             serverSide: true,
             deferRender: true,
@@ -123,6 +123,36 @@ $configData = Helper::appClasses();
                 }
             },
             {
+                name: "tenant",
+                data: "tenant",
+                title: "Perusahaan",
+                className: 'text-center',
+                render: function(data, type, row) {
+                    if(data != null){
+                        return data?.company;
+                    }else{
+                        return '';
+                    }
+                }
+            },
+            {
+                name: "reporter_name",
+                data: "reporter_name",
+                title: "Nama Pelapor",
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return data;
+                }
+            }, {
+                name: "ticket_title",
+                data: "ticket_title",
+                title: "Judul Laporan",
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return data;
+                }
+            }, 
+            {
                 name: "status",
                 data: "status",
                 title: "Status",
@@ -140,36 +170,8 @@ $configData = Helper::appClasses();
                         return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
                     }
                 }
-            }, 
+            },
             {
-                name: "reporter_name",
-                data: "reporter_name",
-                title: "Nama Pelapor",
-                className: 'text-center',
-                render: function(data, type, row) {
-                    return data;
-                }
-            }, {
-                name: "tenant",
-                data: "tenant",
-                title: "Perusahaan",
-                className: 'text-center',
-                render: function(data, type, row) {
-                    if(data != null){
-                        return data?.company;
-                    }else{
-                        return '';
-                    }
-                }
-            }, {
-                name: "ticket_title",
-                data: "ticket_title",
-                title: "Judul Laporan",
-                className: 'text-center',
-                render: function(data, type, row) {
-                    return data;
-                }
-            }, {
                 data: "id",
                 name: "tanggapan",
                 title: "Tanggapan",
@@ -218,20 +220,11 @@ $configData = Helper::appClasses();
                 this.api().columns(1).every((function() {
                     var a = this,
                         e = $(
-                            '<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
-                        ).appendTo(".invoice_status").on("change", (
-                            function() {
-                                var e = $.fn.dataTable.util.escapeRegex($(
-                                    this).val());
-                                console.log(e);
-                                a.search(e)
-                                    .draw()
-                            }));
-                    a.data().unique().sort().each((function(a, t) {
-                        e.append('<option value="' + a +
-                            '" class="text-capitalize">' + a +
-                            "</option>")
-                    }))
+                            '<select id="status" class="form-select"><option value=""> Select Status </option></select>'
+                        ).appendTo(".invoice_status").on("change");
+                            var optionsHtml =   '<option value="on progress">On Progress</option>' +
+                                                '<option value="selesai">Selesai</option>';
+                            e.append(optionsHtml);
                 }))
             }
         });
@@ -248,6 +241,11 @@ $configData = Helper::appClasses();
             $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(
                 ".dataTables_length .form-select").removeClass("form-select-sm")
         }), 300)
+
+        $(document).on('change', '#status', function(x) {
+            x.stopPropagation();
+            e.ajax.url("{{ url('invoice/data-invoice') }}"+"?status="+$(this).val()).load(); // Memuat ulang data DataTable
+        });
 
         $(document).on("click", ".delete-record", function(e) {
             event.preventDefault();

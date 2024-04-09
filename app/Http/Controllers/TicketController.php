@@ -35,6 +35,7 @@ class TicketController extends Controller
                 "page" => $page,
                 "order" => $order,
                 "sort" => $sort,
+                "status" => $status,
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
@@ -47,6 +48,9 @@ class TicketController extends Controller
                     ->orWhere('ticket_title', 'like', '%' . $value . '%')
                     ->orWhere('status', 'like', '%' . $value . '%');
                 });
+            }
+            if($status){
+                $ticketQuery->where('status', 'like', '%' . $status . '%');
             }
             $getTickets = $ticketQuery
             ->select("id","ticket_number", "reporter_name", "tenant_id", "ticket_title", "status")
