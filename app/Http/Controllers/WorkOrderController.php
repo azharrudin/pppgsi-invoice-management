@@ -37,6 +37,7 @@ class WorkOrderController extends Controller
                 "page" => $page,
                 "order" => $order,
                 "sort" => $sort,
+                "status" => $status,
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
@@ -50,6 +51,9 @@ class WorkOrderController extends Controller
                     ->orWhere('action_plan_date', 'like', '%' . $value . '%')
                     ->orWhere('status', 'like', '%' . $value . '%');
                 });
+            }
+            if($value){
+                $workOrderQuery->where('status', 'like', '%' . $status . '%');
             }
             $getTickets = $workOrderQuery->orderBy($order, $sort)->paginate($perPage);
             $totalCount = $getTickets->total();
