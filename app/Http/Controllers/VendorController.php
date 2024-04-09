@@ -236,18 +236,8 @@ class VendorController extends Controller
     public function report(Request $request)
     {
         try{
-            [
-                "start" => $start,
-                "end" => $end,
-            ] = $this->CommonService->getQuery($request);
 
-            if(is_null($start)) $start = Carbon::now()->firstOfMonth();
-            if(is_null($end)){
-                $end = Carbon::now()->lastOfMonth();
-                $end->setTime(23, 59, 59);
-            }
-
-            $countVendor = Vendor::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
+            $countVendor = Vendor::where("deleted_at", null)->count();
 
             return [
                 "count_vendor" => $countVendor,
