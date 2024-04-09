@@ -52,7 +52,7 @@ class DamageReportController extends Controller
                 });
             }
             if($status){
-                $damageReportQuery->where('status', 'like', '%' . $value . '%');
+                $damageReportQuery->where('status', 'like', '%' . $status . '%');
             }
             $getTickets = $damageReportQuery->orderBy($order, $sort)->paginate($perPage);
             $totalCount = $getTickets->total();
