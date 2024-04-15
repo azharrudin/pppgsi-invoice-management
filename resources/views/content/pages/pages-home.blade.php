@@ -299,11 +299,15 @@ $configData = Helper::appClasses();
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(response) {
+                    console.log(response.income_report);
                     let income_report = response.income_report;
                     let remaining_stamp = response.remaining_stamp;
                     let statistic = response.statistic;
                     let ticket_complain = response.ticket_complain;
-                    let sum_invoice_per_month = response.income_report.sum_invoice_per_month[0].total_amount;
+                    let sum_invoice_per_month = 0;
+                    if(response.income_report.sum_invoice_per_month.length > 0){
+                        sum_invoice_per_month = response.income_report.sum_invoice_per_month[0].total_amount;
+                    }
 
                     $('#count_invoices').text(income_report.count_invoices);
                     $('#count_invoices_not_paid').text(income_report.count_invoices_not_paid);
@@ -337,6 +341,9 @@ $configData = Helper::appClasses();
         };
 
         function formatRupiah(angka, prefix) {
+            if(angka === 0){
+                return 'Rp. 0';
+            }
             var number_string = angka.replace(/[^,\d]/g, '').toString(),
                 split = number_string.split(','),
                 sisa = split[0].length % 3,
