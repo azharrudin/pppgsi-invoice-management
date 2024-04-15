@@ -670,7 +670,7 @@ $configData = Helper::appClasses();
                             },
                             buttonsStyling: false
                         }).then((result) => {
-                            $(".invoice-table").DataTable().ajax.reload();
+                            $(".tanda-terima-table").DataTable().ajax.reload();
                         });
                     },
                     error: function(xhr, status, error) {
