@@ -411,6 +411,15 @@ class InvoiceController extends Controller
         if ($validateInvoice != "") throw new CustomException($validateInvoice, 400);
 
         $status = strtolower($request->input("status"));
+        $remainingQuota = $this->PaperIdService->checkRemainingStamp();
+        if (
+            $status == "disetujui bm" &&
+            (!$remainingQuota ||
+                !isset($remainingQuota["data"]) ||
+                !isset($remainingQuota["data"]["quota"]) ||
+                $remainingQuota["data"]["quota"] <= 0)
+        ) throw new CustomException("Insuficient stamp", 400);
+
         $invoicePayload = $request->all();
         if (isset($invoicePayload["invoice_number"])) unset($invoicePayload["invoice_number"]);
 
@@ -419,14 +428,6 @@ class InvoiceController extends Controller
         Invoice::findOrFail($id)->update($dataPayload);
 
         if ($status == "disetujui bm" && !isset($getInvoice["paper_id"])) {
-            $remainingQuota = $this->PaperIdService->checkRemainingStamp();
-            if (
-                $status == "disetujui bm" &&
-                (!$remainingQuota ||
-                    !isset($remainingQuota["data"]) ||
-                    !isset($remainingQuota["data"]["quota"]) ||
-                    $remainingQuota["data"]["quota"] <= 0)
-            ) throw new CustomException("Insuficient stamp", 400);
             $getTenant = Tenant::where("deleted_at", null)->where("id", $getInvoice["tenant_id"])->first();
             $getInvoiceDetail = InvoiceDetail::where("deleted_at", null)->where("invoice_id", $getInvoice["id"])->get();
             $invoiceDetailArr = $this->CommonService->toArray($getInvoiceDetail);
