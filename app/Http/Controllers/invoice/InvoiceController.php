@@ -73,9 +73,6 @@ class InvoiceController extends Controller
             foreach ($response->data as $key => $value) {
                 $data[$key] = $value;
                 $data[$key]->tenant_name = $value->tenant->company ?? '';
-                if ($data[$key]->status == 'Disetujui KA') {
-                    $data[$key]->status = 'Disetujui CA';
-                }
             }
         }
         return DataTables::of($data)
