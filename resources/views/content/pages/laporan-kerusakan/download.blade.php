@@ -62,7 +62,7 @@
 <body>
     <div class="container" id="printContent">
         <div class="row" style="float: right;">
-            <div class="p-2" style="width: 200px; border: 1px solid black;">No . /Dept-Service /200</div>
+            <div class="p-2" style="width: 200px; border: 1px solid black;">No:{{ $data->id }}/Dept-Service/{{ date('Y', strtotime($data->created_at)) . '/' . date('m', strtotime($data->created_at)) . '/' . date('d', strtotime($data->created_at)) }}</div>
         </div>
         <div style="clear: both;"></div>
 
@@ -71,7 +71,18 @@
                 <center><b>FORM LAPORAN KERUSAKAN</b></center>
             </h1><br>
         </div>
-
+        @php
+            $hariInggris = date('D', strtotime($data->created_at));
+            $hariIndonesia = [
+                'Sun' => 'Minggu',
+                'Mon' => 'Senin',
+                'Tue' => 'Selasa',
+                'Wed' => 'Rabu',
+                'Thu' => 'Kamis',
+                'Fri' => 'Jumat',
+                'Sat' => 'Sabtu'
+            ];
+        @endphp
         <div class="row mt-1">
             <table class="table" style="width:100%;">
                 <tbody>
@@ -81,12 +92,12 @@
                         <td style="width:3%; padding: 5px; border-top: 0.5px solid black;border-bottom: 0.5px solid black;">
                             <center>:</center>
                         </td>
-                        <td style="padding: 5px;width: 50%; border-top: 0.5px solid black;border-bottom: 0.5px solid black;;border-right: 0.5px solid black;">kkkkk</td>
+                        <td style="padding: 5px;width: 40%; border-top: 0.5px solid black;border-bottom: 0.5px solid black;;border-right: 0.5px solid black;">{{ $hariIndonesia[$hariInggris] }}</td>
                         </td>
                         <td></td>
-                        <td style="width:25%;" rowspan="3">
+                        <td style="width:40%;" rowspan="3">
                             <b>Kepada Yth: <br></b>
-                            <b>Deprt. Service BM <br></b>
+                            <b>Departement. Service BM <br></b>
                             <b>PPKP GRAHA SURVEYOR INDONESIA<br></b>
                             <b>JAKARTA<br></b>
                         </td>
@@ -97,7 +108,7 @@
                         <td style="width:3%; padding: 5px; border-top: 0.5px solid black;border-bottom: 0.5px solid black;">
                             <center>:</center>
                         </td>
-                        <td style="padding: 5px;width: 50%; border-top: 0.5px solid black;border-bottom: 0.5px solid black;;border-right: 0.5px solid black;">kkkkk</td>
+                        <td style="padding: 5px;width: 40%; border-top: 0.5px solid black;border-bottom: 0.5px solid black;;border-right: 0.5px solid black;">{{ date('d F Y', strtotime($data->created_at))}}</td>
                         </td>
                         <td></td>
                     </tr>
@@ -116,12 +127,14 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($data->damage_report_details as $key => $item)
                     <tr>
-                        <td style="border: 0.5px solid black; padding:10px;" class="text-center">a</td>
-                        <td style="border: 0.5px solid black;"></td>
-                        <td style="border: 0.5px solid black;"></td>
-                        <td style="border: 0.5px solid black;"></td>
+                        <td style="border: 0.5px solid black; padding-left:10px;" class="text-center">{{ $key+1 }}</td>
+                        <td style="border: 0.5px solid black; padding-left:10px;" class="text-center">{{ $item->category }}</td>
+                        <td style="border: 0.5px solid black;padding-left:10px;" class="text-center">{{ $item->location }}</td>
+                        <td style="border: 0.5px solid black;padding-left:10px;" class="text-center">{{ $item->total }}</td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -131,43 +144,94 @@
                 <tr>
                     <td>
                         <center>
-                            <p>Mengetahui</p>
-
-                            {{-- $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' --}}<br>
-                            <img src="{{-- $data->signature_image --}}" alt="">
+                            <p>Dilaporkan</p>
+                            @if(isset($data->damage_report_signatures[0]->signature))
+                            <div style="margin : auto;
+                                        background-image : url({{$data->damage_report_signatures[0]->signature}});
+                                        height: 150px;
+                                        width: 150px;
+                                        background-position: center center;
+                                        background-size: cover;
+                                        background-repeat: no-repeat;">
+                            </div>
+                            @else
+                            <div style="margin : auto;
+                                        background-image : url();
+                                        height: 150px;
+                                        width: 150px;
+                                        background-position: center center;
+                                        background-size: cover;
+                                        background-repeat: no-repeat;">
+                            </div>
+                            <br>
+                            @endif
                             <p class="text-center">
-                                <span>(){{-- $data->signature_name --}}</span>
-                            </p>
-                            <p class="text-center">
-                                <span>Ka. Unit Pelayanan</span>
-                            </p>
-                        </center>
-                    </td>
-                    <td>
-                        <center>
-                            <p>Mengetahui</p>
-
-                            {{-- $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' --}}<br>
-                            <img src="{{-- $data->signature_image --}}" alt="">
-                            <p class="text-center">
-                                <span>(){{-- $data->signature_name --}}</span>
-                            </p>
-                            <p class="text-center">
-                                <span>Kord. Teknik</span>
-                            </p>
-                        </center>
-                    </td>
-                    <td>
-                        <center>
-                            <p>Mengetahui</p>
-
-                            {{-- $data->receipt_date ? date('d F Y', strtotime($data->receipt_date)) : '' --}}<br>
-                            <img src="{{-- $data->signature_image --}}" alt="">
-                            <p class="text-center">
-                                <span>(){{-- $data->signature_name --}}</span>
+                                <span>{{ $data->damage_report_signatures[0]->name ?? '' }}</span>
                             </p>
                             <p class="text-center">
                                 <span>Leader Cleaning</span>
+                            </p>
+                        </center>
+                    </td>
+                    <td>
+                        <center>
+                            <p>Diterima</p>
+                            @if(isset($data->damage_report_signatures[1]->signature))
+                            <div style="margin : auto;
+                                        background-image : url({{$data->damage_report_signatures[1]->signature}});
+                                        height: 150px;
+                                        width: 150px;
+                                        background-position: center center;
+                                        background-size: cover;
+                                        background-repeat: no-repeat;">
+                            </div>
+                            @else
+                            <div style="margin : auto;
+                                        background-image : url();
+                                        height: 150px;
+                                        width: 150px;
+                                        background-position: center center;
+                                        background-size: cover;
+                                        background-repeat: no-repeat;">
+                            </div>
+                            <br>
+                            @endif
+                            <p class="text-center">
+                                <span>{{ $data->damage_report_signatures[1]->name ?? '' }}</span>
+                            </p>
+                            <p class="text-center">
+                                <span>Koordinator Teknik</span>
+                            </p>
+                        </center>
+                    </td>
+                    <td>
+                        <center>
+                            <p>Mengetahui</p>
+                            @if(isset($data->damage_report_signatures[2]->signature))
+                            <div style="margin : auto;
+                                        background-image : url({{$data->damage_report_signatures[2]->signature}});
+                                        height: 150px;
+                                        width: 150px;
+                                        background-position: center center;
+                                        background-size: cover;
+                                        background-repeat: no-repeat;">
+                            </div>
+                            @else
+                            <div style="margin : auto;
+                                        background-image : url();
+                                        height: 150px;
+                                        width: 150px;
+                                        background-position: center center;
+                                        background-size: cover;
+                                        background-repeat: no-repeat;">
+                            </div>
+                            <br>
+                            @endif
+                            <p class="text-center">
+                                <span>{{ $data->damage_report_signatures[2]->name ?? '' }}</span>
+                            </p>
+                            <p class="text-center">
+                                <span>Kepala Unit Pelayanan</span>
                             </p>
                         </center>
                     </td>
