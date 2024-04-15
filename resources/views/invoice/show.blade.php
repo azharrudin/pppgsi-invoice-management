@@ -387,7 +387,7 @@ $configData = Helper::appClasses();
                 if (data.status == 'Disetujui BM' && account.level.id == 10) {
                     $('.kirim-invoice').removeClass('d-none');
                 }
-                if ((account.level.id == '9' && data.status == 'Terbuat') || (data.status == 'Disetujui KA' && account.level.id == '1')) {
+                if ((account.level.id == '9' && data.status == 'Terbuat') || (data.status == 'Disetujui KA' && account.level.id == '1') || (data.status == 'Disetujui CA' && account.level.id == '10')) {
                     $('.disetujui').removeClass('d-none');
                 }
                 if (account.level.id == '10' && data.status == 'Terbuat') {
