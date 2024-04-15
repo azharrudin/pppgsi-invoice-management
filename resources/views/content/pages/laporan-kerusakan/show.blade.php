@@ -396,7 +396,6 @@ $configData = Helper::appClasses();
                     for (let i = 0; i < response.damage_report_signatures.length; i++) {
                         console.log(response.damage_report_signatures[i]);
                         if (response.damage_report_signatures[i].type.toLowerCase() == "dilaporkan") {
-                            console.log('a');
                             $("#edit_name-3").val(response.damage_report_signatures[i].name);
                             if (response.damage_report_signatures[i].signature != '') {
                                 $('.prev-img-3').attr('src', response.damage_report_signatures[i]
@@ -409,7 +408,6 @@ $configData = Helper::appClasses();
                         }
                        
                         if (response.damage_report_signatures[i].type.toLowerCase() == "diterima") {
-                            console.log('a');
                             $("#edit_name-2").val(response.damage_report_signatures[i].name);
                             if (response.damage_report_signatures[i].signature != '') {
                                 $('.prev-img-2').attr('src', response.damage_report_signatures[i]
@@ -422,7 +420,6 @@ $configData = Helper::appClasses();
                         }
                         
                         if (response.damage_report_signatures[i].type.toLowerCase() == "mengetahui") {
-                            console.log('a');
                             $("#edit_name-1").val(response.damage_report_signatures[i].name);
                             if (response.damage_report_signatures[i].signature != '') {
                                 $('.prev-img-1').attr('src', response.damage_report_signatures[i]

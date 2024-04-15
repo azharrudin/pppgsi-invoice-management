@@ -29,16 +29,16 @@
     <div class="container" id="printContent">
         <table style="width: 100%; background-color: #C9C9CB; border: 1px solid black;">
             <tr class="text-center">
-                <td style="width:25%;  border-right: 0.5px solid black;"><span style="font-family: sans-serif; font-size : 24px;"><b>PPPGSI</b></span></th>
-                <td rowspan="2" colspan="2" style="letter-spacing: 10px;  width:50%">
+                <td style="text-align:center; width:25%; border-right: 0.5px solid black;"><span style="font-family: sans-serif; font-size : 24px;"><b>PPPGSI</b></span></th>
+                <td rowspan="2" colspan="2" style="letter-spacing: 10px;  width:50%; text-align:center">
                     <h1>WORK ORDER
                         <br>(WO)
                     </h1>
                 </td>
-                <td rowspan="2" style="border: 0.5px solid black; width:25%"><b>No: </b></th>
+                <td rowspan="2" style="text-align:center; border: 0.5px solid black; width:25%"><b>No: {{ $data->work_order_number}} </b></th>
             </tr>
             <tr class="text-center">
-                <td style=" margin: auto;border-right: 0.5px solid black; border-top: 0.5px solid black;"><b>Building Management</b></th>
+                <td style="text-align:center; margin: auto;border-right: 0.5px solid black; border-top: 0.5px solid black;"><b>Building Management</b></th>
             </tr>
         </table>
         <table style="width: 100%;  border-left: 1px solid black; border-right: 1px solid black;">
@@ -46,10 +46,10 @@
                 <td style="padding-left: 5px;" class="py-2">DATE :</td>
                 <td> {{ $data->work_order_date }}</td>
                 <td></td>
-                <td>ACTION DATE :</td>
+                <td>ACTION PLAN :</td>
                 <td> {{ $data->action_plan_date }}</td>
                 <td></td>
-                <td>FINISH DATE :</td>
+                <td>FINISH PLAN :</td>
                 <td>{{ $data->finish_plan }}</td>
 
             </tr>
@@ -379,26 +379,6 @@
             </tr>
         </table>
 
-        <table class="text-center" style="width: 100%;  border-left: 1px solid black; border-right: 1px solid black;">
-            <tr>
-                <td class="py-1" colspan="4"> </td>
-            </tr>
-            <tr>
-                <td style="width: 20px; font-size: 14px;">7</td>
-                <td class="text-left" style="font-size: 14px; width:125px">TECHNICHIAN : </td>
-                <td>
-                    <table style="width: 100%;  border: 1px solid black;" class="text-center">
-                        <tr>
-                            <td style=" border: 1px solid black;" class="py-1">&nbsp;</td>
-                            <td style=" border: 1px solid black;" class="py-1">&nbsp;</td>
-                            <td style=" border: 1px solid black;" class="py-1">&nbsp;</td>
-                            <td style=" border: 1px solid black;" class="py-1">&nbsp;</td>
-                        </tr>
-                    </table>
-                </td>
-                <td style="width: 0px;"></td>
-            </tr>
-        </table>
         <table class="text-center" style="width: 100%; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black;">
             <tr>
                 <td class="py-1"> </td>
@@ -407,10 +387,10 @@
                 <td>
                     <table style="width: 100%;  border: 1px solid black;" class="text-center">
                         <tr>
-                            <td style=" border: 1px solid black;" class="py-1">TECHINICIAN</td>
-                            <td style=" border: 1px solid black;" class="py-1">CHHIEF ENGINEERING</td>
-                            <td style=" border: 1px solid black;" class="py-1">WARE HOUSE</td>
-                            <td style=" border: 1px solid black;" class="py-1">BUILDING MANAGER</td>
+                            <td style=" border: 1px solid black; text-align:center" class="py-1">TECHINICIAN</td>
+                            <td style=" border: 1px solid black; text-align:center" class="py-1">CHHIEF ENGINEERING</td>
+                            <td style=" border: 1px solid black; text-align:center" class="py-1">WARE HOUSE</td>
+                            <td style=" border: 1px solid black; text-align:center" class="py-1">BUILDING MANAGER</td>
                         </tr>
                         <tr>
                             <td style=" border: 1px solid black;" class="">
@@ -484,6 +464,28 @@
                                             background-repeat: no-repeat;">
                                     </div>
                                     @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" border: 1px solid black; text-align:center" class="py-1">
+                            @if(isset($data->work_order_signatures[0]->name))
+                            {{$data->work_order_signatures[0]->name}}
+                            @endif
+                            </td>
+                            <td style=" border: 1px solid black; text-align:center" class="py-1">
+                                @if(isset($data->work_order_signatures[1]->name))
+                                {{$data->work_order_signatures[1]->name}}
+                                @endif
+                            </td>
+                            <td style=" border: 1px solid black; text-align:center" class="py-1">
+                                @if(isset($data->work_order_signatures[2]->name))
+                                {{$data->work_order_signatures[2]->name}}
+                                @endif
+                            </td>
+                            <td style=" border: 1px solid black; text-align:center" class="py-1">
+                                @if(isset($data->work_order_signatures[3]->name))
+                                {{$data->work_order_signatures[3]->name}}
+                                @endif
                             </td>
                         </tr>
                     </table>
