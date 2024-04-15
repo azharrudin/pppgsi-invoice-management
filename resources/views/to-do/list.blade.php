@@ -610,7 +610,6 @@ $configData = Helper::appClasses();
                                 buttonsStyling: false
                             }).then((result) => {
                                 $(".invoice-table").DataTable().ajax.reload();
-                                dt_project.ajax.reload()
                             });
                         },
                         error: function(xhr, status, error) {

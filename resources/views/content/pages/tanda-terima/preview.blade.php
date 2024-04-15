@@ -221,12 +221,10 @@ $configData = Helper::appClasses();
                     }
                     $('#signature_name').text(result.signature_name);
                     $('#signature_date').text(result.signature_date ? moment(result.signature_date).format('DD MMMM YYYY'): '');
-
-                    if(account.level.id == '2' && result.status == 'Terbuat'){
+                    if((account.level.id == '2' && result.status == 'Terbuat') || account.level.id == '9' && result.status == 'Terbuat'){
                         $('.disetujui').removeClass('d-none');
                     }
                     if((account.level.id == '1' && result.status == 'Disetujui KA') || account.level.id == '10'){
-
                         $('.edit').removeClass('d-none');
                     }
 
