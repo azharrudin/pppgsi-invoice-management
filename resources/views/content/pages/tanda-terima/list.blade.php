@@ -252,8 +252,7 @@ $configData = Helper::appClasses();
             title: "Status",
             render: function(data, type, full, meta) {
                 if (data == "Disetujui KA") {
-                    return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized>' + data +
-                        '</span>'
+                    return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized>Disetujui CA</span>'
                 } else if (data == "Disetujui BM") {
                     return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized>' + data +
                         '</span>'
