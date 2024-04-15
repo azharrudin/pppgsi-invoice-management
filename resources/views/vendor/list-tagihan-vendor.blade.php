@@ -248,7 +248,7 @@ $configData = Helper::appClasses();
                             '<select id="status" class="form-select"><option value=""> Select Status </option></select>'
                         ).appendTo(".tagihan_status").on("change");
                             var optionsHtml =   '<option value="terbuat">Terbuat</option>' +
-                                                '<option value="disetujui ca">Disetujui KA</option>' +
+                                                '<option value="disetujui ka">Disetujui CA</option>' +
                                                 '<option value="disetujui bm">Disetujui BM</option>' +
                                                 '<option value="terkirim">Terkirim</option>'+
                                                 '<option value="lunas">Lunas</option>';

@@ -328,7 +328,7 @@ $configData = Helper::appClasses();
                 render: function(data, type, row) {
                     if (data == 'Terbuat') {
                         return '<span class="badge w-100" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
-                    } else if (data == 'Disetujui CA') {
+                    } else if (data == 'Disetujui KA') {
                         return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized> Disetujui CA </span>';
                     } else if (data == 'Lunas') {
                         return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
@@ -405,7 +405,7 @@ $configData = Helper::appClasses();
                             '<select id="status" class="form-select"><option value=""> Select Status </option></select>'
                         ).appendTo(".invoice_status").on("change");
                             var optionsHtml =   '<option value="terbuat">Terbuat</option>' +
-                                                '<option value="disetujui ca">Disetujui CA</option>' +
+                                                '<option value="disetujui ka">Disetujui CA</option>' +
                                                 '<option value="disetujui bm">Disetujui BM</option>' +
                                                 '<option value="terkirim">Terkirim</option>' +
                                                 '<option value="lunas">Lunas</option>' +

@@ -251,7 +251,7 @@ $configData = Helper::appClasses();
             name: "status",
             title: "Status",
             render: function(data, type, full, meta) {
-                if (data == "Disetujui CA") {
+                if (data == "Disetujui KA") {
                     return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized>' + data +
                         '</span>'
                 } else if (data == "Disetujui BM") {
@@ -333,7 +333,7 @@ $configData = Helper::appClasses();
                         '<select id="status" class="form-select"><option value=""> Select Status </option></select>'
                     ).appendTo(".invoice_status").on("change");
                         var optionsHtml =   '<option value="terbuat">Terbuat</option>' +
-                                            '<option value="disetujui ca">Disetujui CA</option>' +
+                                            '<option value="disetujui ka">Disetujui CA</option>' +
                                             '<option value="disetujui bm">Disetujui BM</option>' +
                                             '<option value="terkirim">Terkirim</option>';
                         e.append(optionsHtml);
