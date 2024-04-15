@@ -489,16 +489,16 @@ $configData = Helper::appClasses();
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
-                        <input type="number" class="form-control row-input quantity" placeholder="Kuantitas" name="item[]" required style="width: 200px;" />
+                        <input type="number" class="form-control row-input quantity" placeholder="Kuantitas" name="item[]" required style="width: 200px;" data-quantity="${index}" id="quantity-${index}" />
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
-                        <input type="text" class="form-control row-input price" placeholder="Harga" name="price[]" required style="width: 200px;" />
+                        <input type="text" class="form-control row-input price" placeholder="Harga" name="price[]" required style="width: 200px;" data-price="${index}" id="price-${index}"/>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
-                        <input type="number" class="form-control row-input discount" placeholder="" name="discount[]" style="width: 100px;"/>
-                        <input type="hidden" class="form-control total_subdiskon" placeholder="" name="discount[]" style="width: 100px;"/>
+                        <input type="number" class="form-control row-input discount" placeholder="" name="discount[]" data-discount="${index}" style="width: 100px;"/>
+                        <input type="hidden" class="form-control total_subdiskon" placeholder="" name="discount[]" id="total_subdiskon-${index}" style="width: 100px;"/>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
@@ -507,7 +507,7 @@ $configData = Helper::appClasses();
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
-                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled style="width : 200px" />
+                        <input type="text" class="form-control row-input total_price" placeholder="" name="total_price[]" disabled style="width : 200px" data-total_price="${index}" id="total_price-${index}"/>
                         <div class="invalid-feedback">Tidak boleh kosong</div>
                     </td>
                     <td style="vertical-align: bottom">
@@ -554,7 +554,7 @@ $configData = Helper::appClasses();
         }
 
         $("#tax-0").select2({
-            placeholder: 'Select Pilih Pajak',
+            placeholder: 'Pilih Pajak',
             allowClear: true,
             ajax: {
                 url: "{{url('api/tax/select-paper')}}",
@@ -599,13 +599,13 @@ $configData = Helper::appClasses();
 
         $(document).on('input', '.quantity', function(event) {
             // Hapus baris yang ditekan tombol hapus
-            let index = $('.price').index(this);
+            let index = $(this).data('quantity');
             let total = 0;
-            let quantity = isNaN(parseInt($(this).val())) ? 0 : parseInt($(this).val());
-            let discount = parseInt($(`.discount:eq(` + index + `)`).val());
-            let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+            let quantity = isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
+            let discount =  parseFloat($(`#discount-`+index).val());
+            let price = parseFloat($(`#price-`+index).val().replaceAll(',', '') || '0');;
             let disVal = discount / 100;
-            let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
+            let id = isNaN(parseFloat($(`#tax-`+index).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
             if (id == 0) {
                 if (isNaN(discount)) {
                     total = price * quantity;
@@ -631,7 +631,7 @@ $configData = Helper::appClasses();
                     success: function(response) {
                         let data = response.data.value;
                         let total = 0;
-                        let tax = parseInt(data);
+                        let tax = parseFloat(data);
                         tax = tax / 100;
                         total = (price * quantity) * tax;
                         let exlusice = response.data.exclusive;
@@ -680,11 +680,11 @@ $configData = Helper::appClasses();
             // Hapus baris yang ditekan tombol hapus
             let index = $('.price').index(this);
             let total = 0;
-            let price = isNaN(parseInt($(this).val().replaceAll(',', ''))) ? 0 : parseInt($(this).val().replaceAll(',', ''));
-            let discount = parseInt($(`.discount:eq(` + index + `)`).val());
-            let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
+            let price = isNaN(parseFloat($(this).val().replaceAll(',', ''))) ? 0 : parseFloat($(this).val().replaceAll(',', ''));
+            let discount = parseFloat($(`.discount:eq(` + index + `)`).val());
+            let quantity = parseFloat($(`.quantity:eq(` + index + `)`).val());
             let disVal = discount / 100;
-            let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
+            let id = isNaN(parseFloat($(`.tax:eq(` + index + `)`).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
             if (id == 0) {
                 if (isNaN(discount)) {
                     total = price * quantity;
@@ -711,7 +711,7 @@ $configData = Helper::appClasses();
                         let data = response.data.value;
                         let exlusice = response.data.exclusive;
                         let total = 0;
-                        let tax = parseInt(data);
+                        let tax = parseFloat(data);
                         tax = tax / 100;
                         total = (price * quantity) * tax;
                         if(exlusice == 0){
@@ -748,31 +748,31 @@ $configData = Helper::appClasses();
         $(document).on('input', '.discount', function(event) {
             // Hapus baris yang ditekan tombol hapus
             let index = $('.price').index(this);
+            let id = $(this).data('discount');
             let total = 0;
             let discount = $(this).val();
-            let price = $(`.price:eq(` + index + `)`).val().replaceAll(',', '');
-            let quantity = $(`.quantity:eq(` + index + `)`).val();
+            let price = $(`#price-`+id).val().replaceAll(',', '');
+            let quantity = $(`#quantity-`+id).val();
             if(discount == ''){
                 discount = 0;
             }
             let disVal = discount / 100;
             total = isNaN($(this).val()) ? 0 : (price * quantity) * disVal;
-            $(`.total_subdiskon:eq(` + index + `)`).val(isNaN(price) ? 0 : format(total));
+            $('#total_subdiskon-'+id).val(isNaN(price) ? 0 : format(total));
             getSubtotal();
             getDiskonTotal();
             getTotal();
-
-
         });
 
-        $(document).on('input', '.tax', function(event) {
+        $(document).on('change', '.tax', function(event) {
             let id = event.currentTarget.value;
+            console.log(id);
             let index = $('.tax').index(this);
             let data = 0;
             if (id == '') {
                 let total = 0;
-                let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
-                let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
+                let price = parseFloat($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+                let quantity = parseFloat($(`.quantity:eq(` + index + `)`).val());
                 let tax = 0;
                 tax = tax / 100;
                 let totalPrice = price * tax + price;
@@ -792,9 +792,9 @@ $configData = Helper::appClasses();
                         let data = response.data.value;
                         let exlusice = response.data.exclusive;
                         let total = 0;
-                        let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
-                        let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
-                        let tax = parseInt(data);
+                        let price = parseFloat($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+                        let quantity = parseFloat($(`.quantity:eq(` + index + `)`).val());
+                        let tax = parseFloat(data);
                         tax = tax / 100;
                         let totalPrice = price * tax + price;
                         total = (price * quantity) * tax;
@@ -824,7 +824,7 @@ $configData = Helper::appClasses();
             let totalArr = [];
             let tempTotal = document.getElementsByClassName('total_price');
             for (let i = 0; i < tempTotal.length; i++) {
-                var slipOdd = parseInt(tempTotal[i].value.replaceAll(',', ''));
+                var slipOdd = parseFloat(tempTotal[i].value.replaceAll(',', ''));
                 totalArr.push(Number(slipOdd));
             }
 
@@ -865,7 +865,10 @@ $configData = Helper::appClasses();
             let totalArr = [];
             let tempTotal = document.getElementsByClassName('total_pajak');
             for (let i = 0; i < tempTotal.length; i++) {
-                var slipOdd = parseInt(tempTotal[i].value.replaceAll(',', ''));
+                var slipOdd = 0;
+                if(tempTotal[i].value != ''){
+                    slipOdd = parseFloat(tempTotal[i].value.replaceAll(',', ''));
+                }
                 totalArr.push(Number(slipOdd));
             }
 
@@ -880,9 +883,9 @@ $configData = Helper::appClasses();
         }
 
         function getTotal() {
-            let subtotal = parseInt($('.sub_total').text().replaceAll(',', ''));
-            let diskon = parseInt($('.total_diskon').text().replaceAll(',', ''));
-            let tax = parseInt($('.total_tax').text().replaceAll(',', ''));
+            let subtotal = parseFloat($('.sub_total').text().replaceAll(',', ''));
+            let diskon = parseFloat($('.total_diskon').text().replaceAll(',', ''));
+            let tax = parseFloat($('.total_tax').text().replaceAll(',', ''));
             let total = subtotal - diskon + tax;
             if(isNaN(total)){
                 total = 0;
@@ -1033,7 +1036,7 @@ $configData = Helper::appClasses();
                         let noAddendum = $("#addendum_number").val();
                         let tglAddendum = $("#addendum_date").val();
                         let terbilang = $("#grand_total_spelled").val();
-                        let grandTotal = parseInt($(".grand_total").text().replaceAll(',', ''));
+                        let grandTotal = parseFloat($(".grand_total").text().replaceAll(',', ''));
                         let tglJatuhTempo = $("#invoice_due_date").val();
                         let syaratDanKententuan = $("#term_and_conditions").val();
                         let bank = $("#bank").val();
@@ -1052,15 +1055,15 @@ $configData = Helper::appClasses();
                             } else if (index % 7 == 1) {
                                 detail[input_index].description = input_value;
                             } else if (index % 7 == 2) {
-                                detail[input_index].quantity = parseInt(input_value);
+                                detail[input_index].quantity = parseFloat(input_value);
                             } else if (index % 7 == 3) {
-                                detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
+                                detail[input_index].price = parseFloat(input_value.replaceAll(',', ''));
                             } else if (index % 7 == 4) {
-                                detail[input_index].discount = parseInt(input_value);
+                                detail[input_index].discount = parseFloat(input_value);
                             } else if (index % 7 == 5) {
                                 detail[input_index].tax_id = input_value;
                             } else if (index % 7 == 6) {
-                                detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
+                                detail[input_index].total_price = parseFloat(input_value.replaceAll(',', ''));
                             }
                         });
 
@@ -1072,11 +1075,11 @@ $configData = Helper::appClasses();
                         });
 
                         datas.details = detail;
-                        datas.tenant_id = parseInt(tenant);
+                        datas.tenant_id = parseFloat(tenant);
                         datas.status = "Terbuat";
                         datas.invoice_due_date = tglJatuhTempo;
                         datas.invoice_date = tglInvoice;
-                        datas.grand_total = parseInt(grandTotal);
+                        datas.grand_total = parseFloat(grandTotal);
                         datas.notes = note.getData();
                         datas.term_and_condition = term_and_conditions.getData();
                         delete datas['undefined'];
@@ -1140,10 +1143,10 @@ $configData = Helper::appClasses();
             let noAddendum = $("#addendum_number").val();
             let tglAddendum = $("#addendum_date").val();
             let terbilang = $("#grand_total_spelled").val();
-            let grandTotal = parseInt($(".grand_total").text().replaceAll(',', ''));
-            let sub_total = parseInt($(".sub_total").text().replaceAll(',', ''));
-            let total_diskon = parseInt($(".total_diskon").text().replaceAll(',', ''));
-            let total_tax = parseInt($(".total_tax").text().replaceAll(',', ''));
+            let grandTotal = parseFloat($(".grand_total").text().replaceAll(',', ''));
+            let sub_total = parseFloat($(".sub_total").text().replaceAll(',', ''));
+            let total_diskon = parseFloat($(".total_diskon").text().replaceAll(',', ''));
+            let total_tax = parseFloat($(".total_tax").text().replaceAll(',', ''));
             let tglJatuhTempo = $("#invoice_due_date").val();
             let syaratDanKententuan = $("#term_and_conditions").val();
             let bank = $("#bank").val();
@@ -1164,15 +1167,15 @@ $configData = Helper::appClasses();
                 } else if (index % 7 == 1) {
                     detail[input_index].description = input_value;
                 } else if (index % 7 == 2) {
-                    detail[input_index].quantity = parseInt(input_value);
+                    detail[input_index].quantity = parseFloat(input_value);
                 } else if (index % 7 == 3) {
-                    detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
+                    detail[input_index].price = parseFloat(input_value.replaceAll(',', ''));
                 } else if (index % 7 == 4) {
-                    detail[input_index].discount = parseInt(input_value);
+                    detail[input_index].discount = parseFloat(input_value);
                 } else if (index % 7 == 5) {
                     detail[input_index].tax_id = input_value;
                 } else if (index % 7 == 6) {
-                    detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
+                    detail[input_index].total_price = parseFloat(input_value.replaceAll(',', ''));
                 }
             });
             let datas = {};
@@ -1183,14 +1186,14 @@ $configData = Helper::appClasses();
             });
 
             datas.details = detail;
-            datas.tenant_id = parseInt(tenant);
+            datas.tenant_id = parseFloat(tenant);
             datas.status = "Terbuat";
             datas.invoice_due_date = tglJatuhTempo;
             datas.invoice_date = tglInvoice;
-            datas.grand_total = parseInt(grandTotal);
-            datas.sub_total = parseInt(sub_total);
-            datas.total_diskon = parseInt(total_diskon);
-            datas.total_tax = parseInt(total_tax);
+            datas.grand_total = parseFloat(grandTotal);
+            datas.sub_total = parseFloat(sub_total);
+            datas.total_diskon = parseFloat(total_diskon);
+            datas.total_tax = parseFloat(total_tax);
             datas.term_and_condition = term_and_conditions.getData();
             datas.notes = note.getData();
             delete datas['undefined'];
@@ -1252,7 +1255,7 @@ $configData = Helper::appClasses();
     }
 
     function validasi_minus_qty(x){
-        if((Number.parseInt(x.value) < 1)){
+        if((Number.parseFloat(x.value) < 1)){
              Swal.fire({
                 icon: "error",
                 title: "Kesalahan",
@@ -1266,7 +1269,7 @@ $configData = Helper::appClasses();
         }
     }
     function validasi_minus_diskon(x){
-        if((Number.parseInt(x.value) < 0)){
+        if((Number.parseFloat(x.value) < 0)){
              Swal.fire({
                 icon: "error",
                 title: "Kesalahan",

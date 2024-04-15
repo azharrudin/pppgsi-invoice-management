@@ -479,7 +479,7 @@ $configData = Helper::appClasses();
                 }
             });
         }else{
-            urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Terkirim"; 
+            urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Disetujui BM"; 
             let n = 0; 
             tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
             tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
