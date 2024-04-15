@@ -8,7 +8,7 @@ use Validator;
 
 class InvoiceService{
     protected $CommonService;
-    protected $validStatus = ["terbuat", "disetujui ka", "disetujui bm", "terkirim", "kurang bayar", "lunas"];
+    protected $validStatus = ["terbuat", "disetujui ca", "disetujui ka", "disetujui bm", "terkirim", "kurang bayar", "lunas"];
 
     public function __construct(CommonService $CommonService)
     {
