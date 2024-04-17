@@ -113,7 +113,7 @@ $configData = Helper::appClasses();
                                         <div class="mb-3 prev-3">
                                             <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
                                                 <div class="dz-details">
-                                                    <div class="dz-thumbnail"> <img class="prev-img-3" alt="" src="">
+                                                    <div class="dz-thumbnail" style="max-width: 10rem"> <img class="prev-img-3" alt="" src="">
                                                         <span class="dz-nopreview">No preview</span>
                                                     </div>
                                                 </div>
@@ -144,7 +144,7 @@ $configData = Helper::appClasses();
                                         <div class="mb-3 prev-2">
                                             <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
                                                 <div class="dz-details">
-                                                    <div class="dz-thumbnail"> <img class="prev-img-2" alt="" src="">
+                                                    <div class="dz-thumbnail" style="max-width: 10rem"> <img class="prev-img-2" alt="" src="">
                                                         <span class="dz-nopreview">No preview</span>
                                                     </div>
                                                 </div>
@@ -175,7 +175,7 @@ $configData = Helper::appClasses();
                                         <div class="mb-3 prev-1">
                                             <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
                                                 <div class="dz-details">
-                                                    <div class="dz-thumbnail"> <img class="prev-img-1" alt="" src="">
+                                                    <div class="dz-thumbnail" style="max-width: 10rem"> <img class="prev-img-1" alt="" src="">
                                                         <span class="dz-nopreview">No preview</span>
                                                     </div>
                                                 </div>

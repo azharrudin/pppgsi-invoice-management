@@ -125,7 +125,7 @@ $configData = Helper::appClasses();
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <img class="prev-img" src="" alt="">
+                                <img class="prev-img" src="" alt="" style="width: 100%; height: 100%; object-fit: contain;">
                             </div>
                             <div class="mb-3">
                                 <div class="form-label" id="signature_name" name="signature_name">

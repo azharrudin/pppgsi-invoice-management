@@ -121,7 +121,7 @@
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Tanda Tangan & Materai</label>
                                     <input type="text" class="form-control w-px-250 date" id="signature_date"
-                                        name="signature_date" placeholder="Tanggal" />
+                                        name="signature_date" placeholder="Tanggal" style="text-align: center" />
                                 </div>
                                 <div class="mb-3">
                                     <div action="/upload" class="dropzone needsclick dz-clickable w-px-250"
@@ -132,8 +132,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control w-px-250 " id="signature_name"
-                                        name="signature_name" placeholder="Nama" />
+                                    <input type="text" class="form-control w-px-250 " id="signature_name" name="signature_name" placeholder="Nama" style="text-align: center" />
                                 </div>
                             </div>
                         </div>
@@ -303,13 +302,17 @@
                             let ttdFile = null;
                             const myDropzone = new Dropzone('#dropzone-basic', {
                                 parallelUploads: 1,
-                                maxFilesize: 10,
+                                maxFilesize: 3,
                                 addRemoveLinks: true,
                                 maxFiles: 1,
                                 acceptedFiles: ".jpeg,.jpg,.png,.gif",
                                 autoQueue: false,
+                                url: "../uploads/logo",
+                                thumbnailWidth: 250,
+                                thumbnailHeight: null,
                                 init: function() {
                                     this.on('addedfile', function(file) {
+                                        $('.dz-image').last().find('img').attr('width', '100%');
                                         while (this.files.length > this.options.maxFiles) this.removeFile(this
                                             .files[0]);
                                         ttdFile = file;

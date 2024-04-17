@@ -85,7 +85,7 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="warehouse_jabatan" name="jabatan[]" readonly/>
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd1" style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="ttd1">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -104,7 +104,7 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control ttd-row" placeholder="Jabatan" style="text-align:center;" id="jabatan" name="jabatan[]" value="Chief Department" disabled />
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dd" id="ttd2" style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick dd" id="ttd2">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -123,7 +123,7 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control ttd-row" placeholder="Jabatan" style="text-align:center;" id="jabatan" name="jabatan[]" value="Chief Finance & Akunting" disabled />
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dd" id="ttd3" style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick dd" id="ttd3">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -142,7 +142,7 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control ttd-row" placeholder="Jabatan" style="text-align:center;" id="jabatan" name="jabatan[]" value="Kepala BM" disabled/>
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dd" id="ttd4" style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick dd" id="ttd4">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -165,7 +165,6 @@ $configData = Helper::appClasses();
                 <div class="card mb-4">
                     <div class="card-body">
                         <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
-                        {{-- <button type="button" id="preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</button> --}}
                         <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Kembali</button>
                     </div>
                 </div>
@@ -260,92 +259,6 @@ $configData = Helper::appClasses();
                 })
             }
         });
-
-        // const myDropzone2 = new Dropzone('#ttd2', {
-        //     parallelUploads: 1,
-        //     maxFilesize: 3,
-        //     addRemoveLinks: true,
-        //     maxFiles: 1,
-        //     acceptedFiles: ".jpeg,.jpg,.png,.gif",
-        //     autoQueue: false,
-        //     url: "../uploads/logo2",
-        //     init: function() {
-        //         if (dataLocal) {
-        //             // Add a preloaded file to the dropzone with a preview
-        //             var mockFile = dataLocal.materai_image;
-        //             if (mockFile) {
-        //                 this.options.addedfile.call(this, mockFile);
-        //                 this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
-
-        //                 // Optional: Handle the removal of the file
-        //                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-        //                     // Handle removal logic here
-        //                 });
-        //             }
-        //         }
-        //         this.on('addedfile', function(file) {
-        //             while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
-        //             ttdFile2 = file;
-        //         })
-        //     }
-        // });
-
-        // const myDropzone3 = new Dropzone('#ttd3', {
-        //     parallelUploads: 1,
-        //     maxFilesize: 3,
-        //     addRemoveLinks: true,
-        //     maxFiles: 1,
-        //     acceptedFiles: ".jpeg,.jpg,.png,.gif",
-        //     autoQueue: false,
-        //     url: "../uploads/logo4",
-        //     init: function() {
-        //         if (dataLocal) {
-        //             // Add a preloaded file to the dropzone with a preview
-        //             var mockFile = dataLocal.materai_image;
-        //             if (mockFile) {
-        //                 this.options.addedfile.call(this, mockFile);
-        //                 this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
-
-        //                 // Optional: Handle the removal of the file
-        //                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-        //                     // Handle removal logic here
-        //                 });
-        //             }
-        //         }
-        //         this.on('addedfile', function(file) {
-        //             while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
-        //             ttdFile3 = file;
-        //         })
-        //     }
-        // });
-        // const myDropzone4 = new Dropzone('#ttd4', {
-        //     parallelUploads: 1,
-        //     maxFilesize: 3,
-        //     addRemoveLinks: true,
-        //     maxFiles: 1,
-        //     acceptedFiles: ".jpeg,.jpg,.png,.gif",
-        //     autoQueue: false,
-        //     url: "../uploads/logo4",
-        //     init: function() {
-        //         if (dataLocal) {
-        //             // Add a preloaded file to the dropzone with a preview
-        //             var mockFile = dataLocal.materai_image;
-        //             if (mockFile) {
-        //                 this.options.addedfile.call(this, mockFile);
-        //                 this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
-
-        //                 // Optional: Handle the removal of the file
-        //                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-        //                     // Handle removal logic here
-        //                 });
-        //             }
-        //         }
-        //         this.on('addedfile', function(file) {
-        //             while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
-        //             ttdFile4 = file;
-        //         })
-        //     }
-        // });
 
         if (dataLocal) {
             $("#requester").val(dataLocal.requester);

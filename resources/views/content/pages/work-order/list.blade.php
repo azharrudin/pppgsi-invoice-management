@@ -212,7 +212,7 @@ $configData = Helper::appClasses();
                 render: function(data, type, row) {
                     return '<div class="d-flex align-items-center"><a href="work-order/show/' +
                         data +
-                        '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="/complain/work-order/print/' +
+                        '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a><div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a target="_blank" href="/complain/work-order/print/' +
                         data + '" class="dropdown-item">Download</a><a href="work-order/edit/' +
                         data + '" class="dropdown-item btn-edit" data-id="' +
                         data +

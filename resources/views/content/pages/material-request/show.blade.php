@@ -116,16 +116,6 @@ $configData = Helper::appClasses();
                                 </div>`;
 
     let data = JSON.parse(localStorage.getItem("material-request"));
-    // $(document).ready(function() {
-    //     $("#requester").val(data.requester);
-    //     $("#department").val(data.department);
-    //     $("#request_date").val(data.request_date);
-    //     $("#stock").val(data.stock);
-    //     $("#purchase").val(data.purchase);
-    //     $("#note").val(data.note);
-    //     getDetails();
-
-    // });
     var urlSegments = window.location.pathname.split('/');
     var idIndex = urlSegments.indexOf('show') + 1;
     id = urlSegments[idIndex];
@@ -230,22 +220,19 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="warehouse_jabatan" name="jabatan[]" readonly value="Warehouse">
                         </div>
-                        <div class="mb-3">
-                            <div id="warehouse-image"></div>
+                        <div class="mb-3 prev-3 d-flex align-items-center justify-content">
+                            <div>
+                                <div class="dz-details">
+                                    <div class="dz-thumbnail" style="max-width:10rem"> <img id="warehouse-image" alt="" src="${details[i].signature}">
+                                        <span class="dz-nopreview">No preview</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="warehouse_date" name="date[]" value="${details[i].date}" readonly>
                         </div>
-                    </div>`+
-                    '<script type="text/javascript">'+
-                        '$("#warehouse-image").css("background-color", "black");'+
-                        '$("#warehouse-image").css("background-image", "url('+details[i].signature+')");'+
-                        '$("#warehouse-image").css("height", "200px");'+
-                        '$("#warehouse-image").css("width", "200px");'+
-                        '$("#warehouse-image").css("background-position", "center");'+
-                        '$("#warehouse-image").css("background-size", "cover");'+
-                        '$("#warehouse-image").css("background-repeat", "no-repeat");'+
-                    '</'+'script>';
+                    </div>`;
             }else if(details[i].type == 'Reviewed By'){
                 appendReviewed = `
                     <div class="col-md-3">
@@ -256,22 +243,19 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="departement_jabatan" name="jabatan[]" readonly value="Chief Department">
                         </div>
-                        <div class="mb-3">
-                            <div id="departement-image"></div>
+                        <div class="mb-3 prev-3">
+                            <div>
+                                <div class="dz-details">
+                                    <div class="dz-thumbnail" style="max-width:10rem"> <img id="chief-departement-image" alt="" src="${details[i].signature}">
+                                        <span class="dz-nopreview">No preview</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="departement_date" name="date[]" value="${details[i].date}" readonly>
                         </div>
-                    </div>`+
-                    '<script type="text/javascript">'+
-                        '$("#departement-image").css("background-color", "black");'+
-                        '$("#departement-image").css("background-image", "url('+details[i].signature+')");'+
-                        '$("#departement-image").css("height", "200px");'+
-                        '$("#departement-image").css("width", "200px");'+
-                        '$("#departement-image").css("background-position", "center");'+
-                        '$("#departement-image").css("background-size", "cover");'+
-                        '$("#departement-image").css("background-repeat", "no-repeat");'+
-                    '</'+'script>';
+                    </div>`;
             }else if(details[i].type == 'Aknowledge By'){
                 appendAknowledge = `
                     <div class="col-md-3">
@@ -282,22 +266,19 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="finance_jabatan" name="jabatan[]" readonly value="Chief Finance & Akunting">
                         </div>
-                        <div class="mb-3">
-                            <div id="finance-image"></div>
+                        <div class="mb-3 prev-3">
+                            <div>
+                                <div class="dz-details">
+                                    <div class="dz-thumbnail" style="max-width:10rem"> <img id="finance-image" alt="" src="${details[i].signature}">
+                                        <span class="dz-nopreview">No preview</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="finance_date" name="date[]" value="${details[i].date}" readonly>
                         </div>
-                    </div>`+
-                    '<script type="text/javascript">'+
-                        '$("#finance-image").css("background-color", "black");'+
-                        '$("#finance-image").css("background-image", "url('+details[i].signature+')");'+
-                        '$("#finance-image").css("height", "200px");'+
-                        '$("#finance-image").css("width", "200px");'+
-                        '$("#finance-image").css("background-position", "center");'+
-                        '$("#finance-image").css("background-size", "cover");'+
-                        '$("#finance-image").css("background-repeat", "no-repeat");'+
-                    '</'+'script>';
+                    </div>`;
             }else if(details[i].type == 'Approved By'){
                 appendApproved = `
                     <div class="col-md-3">
@@ -308,22 +289,19 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="approved_jabatan" name="jabatan[]" readonly value="Kepala BM">
                         </div>
-                        <div class="mb-3">
-                            <div id="approved-image"></div>
+                        <div class="mb-3 prev-3">
+                            <div>
+                                <div class="dz-details">
+                                    <div class="dz-thumbnail" style="max-width:10rem"> <img id="kepala-bm-image" alt="" src="${details[i].signature}">
+                                        <span class="dz-nopreview">No preview</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="approved_date" name="date[]" value="${details[i].date}" readonly>
                         </div>
-                    </div>`+
-                    '<script type="text/javascript">'+
-                        '$("#approved-image").css("background-color", "black");'+
-                        '$("#approved-image").css("background-image", "url('+details[i].signature+')");'+
-                        '$("#approved-image").css("height", "200px");'+
-                        '$("#approved-image").css("width", "200px");'+
-                        '$("#approved-image").css("background-position", "center");'+
-                        '$("#approved-image").css("background-size", "cover");'+
-                        '$("#approved-image").css("background-repeat", "no-repeat");'+
-                    '</'+'script>';
+                    </div>`;
             }
             $('.signatures').html(appendPrepared+appendReviewed+appendAknowledge+appendApproved);
         }

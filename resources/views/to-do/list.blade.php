@@ -103,7 +103,7 @@ $configData = Helper::appClasses();
                     sendMailRow = `<a href="#" data-bs-toggle="tooltip" class="text-body send-email-receipt" data-id="${data}" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>`;
                 }
                 if ((account.level.id == 10 && row.status == 'Terbuat') || (account.level.id == 1 && row.status == 'Disetujui KA')) {
-                    editButton = `<a href="tanda-terima/edit/${data}" class="dropdown-item btn-edit" data-id="${data}">Edit</a>`;
+                    editButton = `<a href="/invoice/tanda-terima/edit/${data}" class="dropdown-item btn-edit" data-id="${data}">Edit</a>`;
                 }
                 if ((account.level.id == 10)) {
                     deleteButton = `<a href="javascript:;" class="dropdown-item delete-record text-danger btn-delete" data-id="${data}">Delete</a>`;

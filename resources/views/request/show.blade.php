@@ -142,91 +142,8 @@ $configData = Helper::appClasses();
                                     <div class="" id="details">
                                     </div>
                                 </div>
-
-                                {{-- Divider --}}
-                                <div class="row py-3 px-3">
-                                    <hr class="my-3 mx-auto">
+                                <div class="row mb-3 mt-5    text-center signatures">
                                 </div>
-
-                                {{-- Tanda tangan --}}
-
-                                <div class="row mb-3 mt-3 text-center signatures">
-
-                                </div>
-                                <!-- <div class="row  text-center mb-5 ttd">
-                                    <div class="col-4 signatures">
-                                        <label for="note" class="form-label fw-medium">Diproses Oleh :</label>
-                                        <input type="text" value="Checked By" id="type1" name="type" class="form-control d-none">
-                                        <div class="mb-3">
-                                            <input type="text" id="warehouse_name" class="form-control" placeholder="Nama" style="text-align:center;" id="name1" name="name" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control  " placeholder="Jabatan" style="text-align:center;" id="jabatan1" name="jabatan1" value="Admin" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-1" style="padding: 5px;">
-                                                <div class="dz-message needsclick">
-                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" id="warehouse_date" class="form-control date" placeholder="Tanggal" style="text-align:center;" id="date1" name="date" />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-4 signatures">
-                                        <label for="note" class="form-label fw-medium">Diperiksa Oleh :</label>
-                                        <input type="text" value="Checked By" id="type2" name="type" class="form-control d-none" disabled>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control  " placeholder="Nama" style="text-align:center;" id="name2" name="name" disabled />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control  " placeholder="Jabatan" style="text-align:center;" id="jabatan2" name="name" value="Kepala Unit" disabled />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-2" style="padding: 5px;">
-                                                <div class="dz-message needsclick">
-                                                    <span class="note needsclick">Unggah Tanda Tangan</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control  date" placeholder="Tanggal" style="text-align:center;" id="date2" name="date" disabled />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-4 signatures">
-                                        <label for="note" class="form-label fw-medium">Diketahui Oleh :</label>
-                                        <input type="text" value="Known By" id="type3" name="type" class="form-control d-none">
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control  " placeholder="Nama" style="text-align:center;" id="name3" name="name" disabled />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control  " placeholder="Jabatan" style="text-align:center;" id="jabatan3" name="name" value="Kepala BM" disabled />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="mb-3">
-                                                <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-3" style="padding: 5px;">
-                                                    <div class="dz-message needsclick">
-                                                        <span class="note needsclick">Unggah Tanda Tangan</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control  date" placeholder="Tanggal" style="text-align:center;" id="date3" name="date" disabled />
-                                            <div class="invalid-feedback">Tidak boleh kosong</div>
-                                        </div>
-                                    </div>
-                                </div> -->
-
                                 <div class="row ttd">
                                     <div class="col-2">
                                         <p>
@@ -443,7 +360,6 @@ $configData = Helper::appClasses();
             type: "GET",
             dataType: "json",
             success: function(res) {
-                console.log(res);
                 var data = res.data;
                 $("#additional_note").val(data.additional_note);
                 $("#budget_status").val(data.budget_status);
@@ -513,6 +429,7 @@ $configData = Helper::appClasses();
         }
 
         function getSignatures(details) {
+            console.log(details);
             let append = '';
             let appendPrepared = '';
             let appendChecked = '';
@@ -529,22 +446,19 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="warehouse_jabatan" name="jabatan[]" readonly value="Admin">
                         </div>
-                        <div class="mb-3">
-                            <div id="admin-image"></div>
+                        <div class="mb-3 d-flex justify-content-center align-items-center">
+                            <div>
+                                <div class="dz-details">
+                                    <div class="dz-thumbnail" style="max-width:10rem"> <img id="warehouse-image" alt="" src="${details[i].signature}">
+                                        <span class="dz-nopreview">No preview</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="warehouse_date" name="date[]" value="${moment(details[i].date, "YYYY-MM-DD").format("D MMMM YYYY")}" readonly>
                         </div>
-                    </div>` +
-                        '<script type="text/javascript">' +
-                        '$("#admin-image").css("background-color", "black");' +
-                        '$("#admin-image").css("background-image", "url(' + details[i].signature + ')");' +
-                        '$("#admin-image").css("height", "200px");' +
-                        '$("#admin-image").css("width", "200px");' +
-                        '$("#admin-image").css("background-position", "center");' +
-                        '$("#admin-image").css("background-size", "cover");' +
-                        '$("#admin-image").css("background-repeat", "no-repeat");' +
-                        '</' + 'script>';
+                    </div>`;
                 } else if (details[i].type == 'Checked By') {
                     appendChecked = `
                     <div class="col-md-4">
@@ -555,22 +469,19 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="departement_jabatan" name="jabatan[]" readonly value="Kepala Unit">
                         </div>
-                        <div class="mb-3">
-                            <div id="unit-image"></div>
+                        <div class="mb-3 d-flex justify-content-center align-items-center">
+                            <div>
+                                <div class="dz-details">
+                                    <div class="dz-thumbnail" style="max-width:10rem"> <img id="unit-image" alt="" src="${details[i].signature}">
+                                        <span class="dz-nopreview">No preview</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="departement_date" name="date[]" value="${details[i].date}" readonly>
                         </div>
-                    </div>` +
-                        '<script type="text/javascript">' +
-                        '$("#unit-image").css("background-color", "black");' +
-                        '$("#unit-image").css("background-image", "url(' + details[i].signature + ')");' +
-                        '$("#unit-image").css("height", "200px");' +
-                        '$("#unit-image").css("width", "200px");' +
-                        '$("#unit-image").css("background-position", "center");' +
-                        '$("#unit-image").css("background-size", "cover");' +
-                        '$("#unit-image").css("background-repeat", "no-repeat");' +
-                        '</' + 'script>';
+                    </div>`;
                 } else if (details[i].type == 'Known By') {
                     appendKnown = `
                     <div class="col-md-4">
@@ -581,22 +492,19 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="departement_jabatan" name="jabatan[]" readonly value="Kepala BM">
                         </div>
-                        <div class="mb-3">
-                            <div id="departement-image"></div>
+                        <div class="mb-3 d-flex justify-content-center align-items-center">
+                            <div>
+                                <div class="dz-details">
+                                    <div class="dz-thumbnail" style="max-width:10rem"> <img id="departement-image" alt="" src="${details[i].signature}">
+                                        <span class="dz-nopreview">No preview</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="departement_date" name="date[]" value="${details[i].date}" readonly>
                         </div>
-                    </div>` +
-                        '<script type="text/javascript">' +
-                        '$("#departement-image").css("background-color", "black");' +
-                        '$("#departement-image").css("background-image", "url(' + details[i].signature + ')");' +
-                        '$("#departement-image").css("height", "200px");' +
-                        '$("#departement-image").css("width", "200px");' +
-                        '$("#departement-image").css("background-position", "center");' +
-                        '$("#departement-image").css("background-size", "cover");' +
-                        '$("#departement-image").css("background-repeat", "no-repeat");' +
-                        '</' + 'script>';
+                    </div>`;
                 } else if (details[i].type == 'Approved By') {
                     appendApproved = `
                     <div class="col-md-3">
@@ -607,22 +515,19 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row department" placeholder="Jabatan" style="text-align:center;" id="approved_jabatan" name="jabatan[]" readonly value="Kepala BM">
                         </div>
-                        <div class="mb-3">
-                            <div id="approved-image"></div>
+                        <div class="mb-3 d-flex justify-content-center align-items-center">
+                            <div>
+                                <div class="dz-details">
+                                    <div class="dz-thumbnail" style="max-width:20rem"> <img id="approved-image" alt="" src="${details[i].signature}">
+                                        <span class="dz-nopreview">No preview</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="approved_date" name="date[]" value="${details[i].date}" readonly>
                         </div>
-                    </div>` +
-                        '<script type="text/javascript">' +
-                        '$("#approved-image").css("background-color", "black");' +
-                        '$("#approved-image").css("background-image", "url(' + details[i].signature + ')");' +
-                        '$("#approved-image").css("height", "200px");' +
-                        '$("#approved-image").css("width", "200px");' +
-                        '$("#approved-image").css("background-position", "center");' +
-                        '$("#approved-image").css("background-size", "cover");' +
-                        '$("#approved-image").css("background-repeat", "no-repeat");' +
-                        '</' + 'script>';
+                    </div>`;
                 }
                 $('.signatures').html(appendPrepared + appendChecked + appendKnown + appendApproved);
             }

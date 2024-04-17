@@ -292,29 +292,26 @@ $configData = Helper::appClasses();
         for (let i = 0; i < details.length; i++) {
             if (details[i].position == "Technician") {
                 appendTechnician = `
-                    <div class="col-md-3">
+                    <div class="col-3">
                         <div class="mb-3 text-center">
                             <span class="">Technician</span>
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="technician_name" name="name[]" readonly value="${details[i].name}">
                         </div>
-                        <div class="mb-3">
-                            <div id="technician-image"></div>
+                        <div class="mb-3 prev-3">
+                            <div>
+                                <div class="dz-details">
+                                    <div class="dz-thumbnail"> <img id="technician-image" alt="" src="${details[i].signature}">
+                                        <span class="dz-nopreview">No preview</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="technician_date" name="date[]" value="${details[i].date}" readonly>
+                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="technician_date" name="date[]" value="${moment(details[i].date).format('DD-MM-YYYY')}" readonly>
                         </div>
-                    </div>` +
-                    '<script type="text/javascript">' +
-                    '$("#technician-image").css("background-color", "black");' +
-                    '$("#technician-image").css("background-image", "url(' + details[i].signature + ')");' +
-                    '$("#technician-image").css("height", "150px");' +
-                    '$("#technician-image").css("width", "150px");' +
-                    '$("#technician-image").css("background-position", "center");' +
-                    '$("#technician-image").css("background-size", "cover");' +
-                    '$("#technician-image").css("background-repeat", "no-repeat");' +
-                    '</' + 'script>';
+                    </div>`;
             } else if (details[i].position == "Chief Engineering") {
                 appendChief = `
                     <div class="col-md-3">
@@ -324,22 +321,19 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="chief_name" name="name[]" readonly value="${details[i].name}">
                         </div>
-                        <div class="mb-3">
-                            <div id="chief-image"></div>
+                        <div class="mb-3 prev-3">
+                            <div>
+                                <div class="dz-details">
+                                    <div class="dz-thumbnail"> <img id="engineering-image" alt="" src="${details[i].signature}">
+                                        <span class="dz-nopreview">No preview</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="chief_date" name="date[]" value="${details[i].date}" readonly>
+                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="chief_date" name="date[]" value="${moment(details[i].date).format('DD-MM-YYYY')}" readonly>
                         </div>
-                    </div>` +
-                    '<script type="text/javascript">' +
-                    '$("#chief-image").css("background-color", "black");' +
-                    '$("#chief-image").css("background-image", "url(' + details[i].signature + ')");' +
-                    '$("#chief-image").css("height", "150px");' +
-                    '$("#chief-image").css("width", "150px");' +
-                    '$("#chief-image").css("background-position", "center");' +
-                    '$("#chief-image").css("background-size", "cover");' +
-                    '$("#chief-image").css("background-repeat", "no-repeat");' +
-                    '</' + 'script>';
+                    </div>`;
             } else if (details[i].position == "Warehouse") {
                 appendWarehouse = `
                     <div class="col-md-3">
@@ -349,22 +343,19 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="warehouse_name" name="name[]" readonly value="${details[i].name}">
                         </div>
-                        <div class="mb-3">
-                            <div id="warehouse-image"></div>
+                        <div class="mb-3 prev-3">
+                            <div>
+                                <div class="dz-details">
+                                    <div class="dz-thumbnail"> <img id="warehouse-image" alt="" src="${details[i].signature}">
+                                        <span class="dz-nopreview">No preview</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="warehouse_date" name="date[]" value="${details[i].date}" readonly>
+                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="warehouse_date" name="date[]" value="${moment(details[i].date).format('DD-MM-YYYY')}" readonly>
                         </div>
-                    </div>` +
-                    '<script type="text/javascript">' +
-                    '$("#warehouse-image").css("background-color", "black");' +
-                    '$("#warehouse-image").css("background-image", "url(' + details[i].signature + ')");' +
-                    '$("#warehouse-image").css("height", "150px");' +
-                    '$("#warehouse-image").css("width", "150px");' +
-                    '$("#warehouse-image").css("background-position", "center");' +
-                    '$("#warehouse-image").css("background-size", "cover");' +
-                    '$("#warehouse-image").css("background-repeat", "no-repeat");' +
-                    '</' + 'script>';
+                    </div>`;
             } else if (details[i].position == "Kepala BM") {
                 appendKepala = `
                     <div class="col-md-3">
@@ -374,22 +365,19 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row userName" placeholder="Nama" style="text-align:center;" id="kepala_name" name="name[]" readonly value="${details[i].name}">
                         </div>
-                        <div class="mb-3">
-                            <div id="kepala-image"></div>
+                        <div class="mb-3 prev-3">
+                            <div>
+                                <div class="dz-details">
+                                    <div class="dz-thumbnail"> <img id="kepala-bm-image" alt="" src="${details[i].signature}">
+                                        <span class="dz-nopreview">No preview</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="kepala_date" name="date[]" value="${details[i].date}" readonly>
+                            <input type="text" class="form-control date ttd-row" placeholder="Tanggal" style="text-align:center;" id="kepala_date" name="date[]" value="${moment(details[i].date).format('DD-MM-YYYY')}" readonly>
                         </div>
-                    </div>` +
-                    '<script type="text/javascript">' +
-                    '$("#kepala-image").css("background-color", "black");' +
-                    '$("#kepala-image").css("background-image", "url(' + details[i].signature + ')");' +
-                    '$("#kepala-image").css("height", "150px");' +
-                    '$("#kepala-image").css("width", "150px");' +
-                    '$("#kepala-image").css("background-position", "center");' +
-                    '$("#kepala-image").css("background-size", "cover");' +
-                    '$("#kepala-image").css("background-repeat", "no-repeat");' +
-                    '</' + 'script>';
+                    </div>`;
             }
             $('.signatures').html(appendTechnician + appendChief + appendWarehouse + appendKepala);
         }

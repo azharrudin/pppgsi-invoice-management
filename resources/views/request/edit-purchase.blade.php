@@ -236,7 +236,6 @@ $configData = Helper::appClasses();
 
 
     function getSignaturePrepared(value) {
-        console.log(value);
         let disablePrepared = 'disabled';
         let dropzonePrepared = '';
         let imagePrepared = '';
@@ -267,7 +266,6 @@ $configData = Helper::appClasses();
                     '$("#admin-image").css("background-color", "black");' +
                     '$("#admin-image").css("background-image", "url(' + value.signature + ')");' +
                     '$("#admin-image").css("height", "200px");' +
-                    '$("#admin-image").css("width", "200px");' +
                     '$("#admin-image").css("background-position", "center");' +
                     '$("#admin-image").css("background-size", "cover");' +
                     '$("#admin-image").css("background-repeat", "no-repeat");' +
@@ -275,7 +273,7 @@ $configData = Helper::appClasses();
             } else { //belum ttd
                 datePreparedAttr = 'disabled';
                 imagePrepared = `
-                    <div action="/upload" class="dropzone needsclick ${datePreparedAttr} dd" id="ttd1" style="padding: 5px;">
+                    <div action="/upload" class="dropzone needsclick ${datePreparedAttr} dd" id="ttd1">
                         <div class="dz-message needsclick">
                             <span class="note needsclick">Unggah Tanda Tangan</span>
                         </div>
@@ -317,7 +315,7 @@ $configData = Helper::appClasses();
             nameChecked = account.name;
             ttdFile2 = value?.signature ? value.signature : '';
             imageChecked = `
-            <div action="/upload" class="dropzone needsclick ${dropzoneChecked} dd" id="ttd2" style="padding: 5px;">
+            <div action="/upload" class="dropzone needsclick ${dropzoneChecked} dd" id="ttd2">
                 <div class="dz-message needsclick">
                     <span class="note needsclick">Unggah Tanda Tangan</span>
                 </div>
@@ -330,12 +328,11 @@ $configData = Helper::appClasses();
                 dateCheckedAttr = 'disabled';
                 dateChecked = value.date ? value.date : '';
                 ttdFile2 = value.signature;
-                imageChecked = `<div id="unit-image" style="padding: 5px;"></div>` +
+                imageChecked = `<div id="unit-image"></div>` +
                     '<script type="text/javascript">' +
                     '$("#unit-image").css("background-color", "black");' +
                     '$("#unit-image").css("background-image", "url(' + value.signature + ')");' +
                     '$("#unit-image").css("height", "200px");' +
-                    '$("#unit-image").css("width", "200px");' +
                     '$("#unit-image").css("background-position", "center");' +
                     '$("#unit-image").css("background-size", "cover");' +
                     '$("#unit-image").css("background-repeat", "no-repeat");' +
@@ -343,7 +340,7 @@ $configData = Helper::appClasses();
             } else { //belum ttd
                 dateCheckedAttr = 'disabled';
                 imageChecked = `
-                    <div action="/upload" class="dropzone needsclick ${dropzoneChecked} dd" id="ttd2" style="padding: 5px;">
+                    <div action="/upload" class="dropzone needsclick ${dropzoneChecked} dd" id="ttd2">
                         <div class="dz-message needsclick">
                             <span class="note needsclick">Unggah Tanda Tangan</span>
                         </div>
@@ -386,7 +383,7 @@ $configData = Helper::appClasses();
             nameKnown = account.name;
             ttdFile3 = value?.signature ? value.signature : '';;
             imageKnown = `
-            <div action="/upload" class="dropzone needsclick ${dropzoneKnown} dd" id="ttd3" style="padding: 5px;">
+            <div action="/upload" class="dropzone needsclick ${dropzoneKnown} dd" id="ttd3">
                 <div class="dz-message needsclick">
                     <span class="note needsclick">Unggah Tanda Tangan</span>
                 </div>
@@ -404,7 +401,6 @@ $configData = Helper::appClasses();
                     '$("#bm-image").css("background-color", "black");' +
                     '$("#bm-image").css("background-image", "url(' + value.signature + ')");' +
                     '$("#bm-image").css("height", "200px");' +
-                    '$("#bm-image").css("width", "200px");' +
                     '$("#bm-image").css("background-position", "center");' +
                     '$("#bm-image").css("background-size", "cover");' +
                     '$("#bm-image").css("background-repeat", "no-repeat");' +
@@ -412,7 +408,7 @@ $configData = Helper::appClasses();
             } else { //belum ttd
                 dateKnownAttr = 'disabled';
                 imageKnown = `
-                    <div action="/upload" class="dropzone needsclick ${dropzoneKnown} dd" id="ttd3" style="padding: 5px;">
+                    <div action="/upload" class="dropzone needsclick ${dropzoneKnown} dd" id="ttd3">
                         <div class="dz-message needsclick">
                             <span class="note needsclick">Unggah Tanda Tangan</span>
                         </div>
@@ -458,7 +454,6 @@ $configData = Helper::appClasses();
             url: "{{ env('BASE_URL_API')}}" + '/api/material-request/' + id,
             type: "GET",
             success: function(response) {
-                console.log(response);
                 let data = response.data;
                 $("#material_request_id").empty().append("<option value=" + data.id + ">" + data.material_request_number + "</option>").val(data.id).trigger("change");
             },
@@ -481,7 +476,6 @@ $configData = Helper::appClasses();
             type: "GET",
             dataType: "json",
             success: function(res) {
-                console.log(res);
                 var data = res.data;
                 if((data.status !='Terbuat' &&  account.level.id == 10)){
                     $('.btn-remove-mg').remove();
@@ -517,8 +511,6 @@ $configData = Helper::appClasses();
                         signatureKepalaBm = details[i];
                     }
                 }
-
-                console.log(signatureAdmin);
 
                 let htmlGetSignatureAdmin = getSignaturePrepared(signatureAdmin);
                 let htmlGetSignatureKepalaUnit = getSignatureCheked(signatureKepalaUnit);
@@ -648,65 +640,6 @@ $configData = Helper::appClasses();
     $(document).ready(function() {
 
         getDataPurchaseRequest(id);
-        // let account = {
-        //     !!json_encode(session('data')) !!
-        // }
-        // var levelId = account.level_id;
-        // var department = account.department.name;
-        // var nameUser = account.name;
-        // console.log(levelId);
-
-
-        // if (levelId == 10) { // BM
-        //     var inputValue = $("#name1").val();
-        //     if (inputValue.trim() === '') {
-        //         $("#name1").val(nameUser);
-        //     }
-        // }
-
-        // Date
-
-
-        // $("#material_request_id").select2({
-        //     placeholder: 'Select Material Request',
-        //     allowClear: true,
-        //     ajax: {
-        //         url: "{{ env('BASE_URL_API')}}" + '/api/material-request/select',
-        //         dataType: 'json',
-        //         cache: true,
-        //         data: function(params) {
-        //             return {
-        //                 value: params.term || '',
-        //                 page: params.page || 1
-        //             }
-        //         },
-        //         processResults: function(data, params) {
-        //             var more = data.pagination.more;
-        //             if (more === false) {
-        //                 params.page = 1;
-        //                 params.abort = true;
-        //             }
-        //             return {
-        //                 results: data.data,
-        //                 pagination: {
-        //                     more: more
-        //                 }
-        //             };
-        //         }
-        //     }
-
-        // });
-
-        // $('#material_request_id').on("change", (async function(e) {
-        //     var rekomendasi = $("#material_request_id").select2('data');
-        //     var data = rekomendasi[0].id;
-        //     console.log(data);
-        //     $('#material_request_id').val(data);
-
-        // }));
-
-
-
 
         $(document).on('keydown', '#total_budget', function(event) {
             var key = event.which;
@@ -950,7 +883,6 @@ $configData = Helper::appClasses();
                         datas.material_request_id = material_request_id;
                         datas.additional_note = additional_note;
                         datas.signatures = signature;
-                        console.log(datas)
                         $.ajax({
                             url: "{{ env('BASE_URL_API')}}" + "/api/purchase-request/" + id,
                             type: "PATCH",
@@ -993,75 +925,6 @@ $configData = Helper::appClasses();
                 false
             );
         });
-
-        // Mengambil value tanda tangan
-
-
-        // let ttdFile2 = null;
-        // const myDropzone2 = new Dropzone('#dropzone-2', {
-        //     parallelUploads: 1,
-        //     maxFilesize: 2,
-        //     addRemoveLinks: true,
-        //     maxFiles: 1,
-        //     acceptedFiles: ".jpeg,.jpg,.png",
-        //     autoQueue: false,
-        //     init: function() {
-        //         this.on('addedfile', function(file) {
-        //             while (this.files.length > this.options.maxFiles) this.removeFile(this
-        //                 .files[0]);
-        //             ttdFile2 = file;
-        //         });
-        //     }
-        // });
-
-        // let ttdFile3 = null;
-        // const myDropzone3 = new Dropzone('#dropzone-3', {
-        //     parallelUploads: 1,
-        //     maxFilesize: 2,
-        //     addRemoveLinks: true,
-        //     maxFiles: 1,
-        //     acceptedFiles: ".jpeg,.jpg,.png",
-        //     autoQueue: false,
-        //     init: function() {
-        //         this.on('addedfile', function(file) {
-        //             while (this.files.length > this.options.maxFiles) this.removeFile(this
-        //                 .files[0]);
-        //             ttdFile3 = file;
-        //         });
-        //     }
-        // });
-
-        // Select2
-        // $(".select-department").select2({
-        //     placeholder: 'Select Department',
-        //     allowClear: true,
-        //     ajax: {
-        //         url: "{{ env('BASE_URL_API')}}" + '/api/department/select',
-        //         dataType: 'json',
-        //         cache: true,
-        //         data: function(params) {
-        //             return {
-        //                 term: params.term || '',
-        //                 page: params.page || 1,
-        //                 field: params.name || 'name'
-        //             }
-        //         },
-        //         processResults: function(data, params) {
-        //             var more = data.pagination.more;
-        //             if (more === false) {
-        //                 params.page = 1;
-        //                 params.abort = true;
-        //             }
-
-        //             return {
-        //                 results: data.data,
-        //                 pagination: {
-        //                     more: more
-        //                 }
-        //             };
-        //         }
-        //     }
-        // });
 
         $("#material_request_id").select2({
             placeholder: 'Select Material Request',

@@ -93,13 +93,6 @@ $configData = Helper::appClasses();
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-5 mb-0">
-                                    <div class="mb-1">
-                                        <label for="note" class="form-label fw-medium">Tanggal MR</label>
-                                        <input type="text" class="form-control" id="tanggal_mr" name="tanggal_mr" placeholder="Tanggal MR" disabled />
-                                        <div class="invalid-feedback" style="display: none">Tidak boleh kosong</div>
-                                    </div>
-                                </div> -->
                                 <div class="col-md-12 mt-2">
                                     <div class="mb-1">
                                         <textarea class="form-control add" rows="7" style="padding: 15px" id="additional_note" name="additional_note" placeholder="Termin pembayaran, garansi dll" required></textarea>
@@ -169,8 +162,8 @@ $configData = Helper::appClasses();
                                             <input type="text" class="form-control  " placeholder="Jabatan" style="text-align:center;" id="jabatan1" name="jabatan1" value="Admin" disabled/>
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
-                                        <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-1" style="padding: 5px;">
+                                        <div class="mb-3 d-flex justify-content-center align-items-center">
+                                            <div action="/upload" class="dropzone needsclick dz-clickable dd" id="dropzone-1">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -193,7 +186,7 @@ $configData = Helper::appClasses();
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick disabled dd" id="dropzone-4" style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick disabled dd" id="dropzone-4">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -216,7 +209,7 @@ $configData = Helper::appClasses();
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                         <div class="mb-3">
-                                            <div action="/upload" class="dropzone needsclick disabled dd" id="dropzone-4" style="padding: 5px;">
+                                            <div action="/upload" class="dropzone needsclick disabled dd" id="dropzone-4">
                                                 <div class="dz-message needsclick">
                                                     <span class="note needsclick">Unggah Tanda Tangan</span>
                                                 </div>
@@ -303,28 +296,11 @@ $configData = Helper::appClasses();
     }
 
     $(document).ready(function() {
-
-        // let account = {
-        //     !!json_encode(session('data')) !!
-        // }
-        // var levelId = account.level_id;
-        // var department = account.department.name;
-        // var nameUser = account.name;
-        // console.log(levelId);
-
-
-        // if (levelId == 10) { // BM
-        //     var inputValue = $("#name1").val();
-        //     if (inputValue.trim() === '') {
-        //         $("#name1").val(nameUser);
-        //     }
-        // }
-
         // Date
         $('#warehouse_name').val(account.name);
         getDetails();
         $('.date').flatpickr({
-            dateFormat: 'Y-m-d'
+            dateFormat: 'd-m-Y'
         });
 
         $("#material_request_id").select2({
@@ -567,10 +543,6 @@ $configData = Helper::appClasses();
             }
         };
 
-
-
-
-
         // Save, Insert and Create
         var savepr = $('#create-pr');
 
@@ -696,85 +668,22 @@ $configData = Helper::appClasses();
         let ttdFile1 = null;
         const myDropzone1 = new Dropzone('#dropzone-1', {
             parallelUploads: 1,
-            maxFilesize: 2,
+            maxFilesize: 3,
             addRemoveLinks: true,
             maxFiles: 1,
-            acceptedFiles: ".jpeg,.jpg,.png",
+            acceptedFiles: ".jpeg,.jpg,.png,.gif",
             autoQueue: false,
+            url: "../uploads/logo",
+            thumbnailWidth: 250,
+            thumbnailHeight: null,
             init: function() {
                 this.on('addedfile', function(file) {
-                    while (this.files.length > this.options.maxFiles) this.removeFile(this
-                        .files[0]);
+                    $('.dz-image').last().find('img').attr('width', '100%');
+                    while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
                     ttdFile1 = file;
                 });
             }
         });
-
-        // let ttdFile2 = null;
-        // const myDropzone2 = new Dropzone('#dropzone-2', {
-        //     parallelUploads: 1,
-        //     maxFilesize: 2,
-        //     addRemoveLinks: true,
-        //     maxFiles: 1,
-        //     acceptedFiles: ".jpeg,.jpg,.png",
-        //     autoQueue: false,
-        //     init: function() {
-        //         this.on('addedfile', function(file) {
-        //             while (this.files.length > this.options.maxFiles) this.removeFile(this
-        //                 .files[0]);
-        //             ttdFile2 = file;
-        //         });
-        //     }
-        // });
-
-        // let ttdFile3 = null;
-        // const myDropzone3 = new Dropzone('#dropzone-3', {
-        //     parallelUploads: 1,
-        //     maxFilesize: 2,
-        //     addRemoveLinks: true,
-        //     maxFiles: 1,
-        //     acceptedFiles: ".jpeg,.jpg,.png",
-        //     autoQueue: false,
-        //     init: function() {
-        //         this.on('addedfile', function(file) {
-        //             while (this.files.length > this.options.maxFiles) this.removeFile(this
-        //                 .files[0]);
-        //             ttdFile3 = file;
-        //         });
-        //     }
-        // });
-
-        // Select2
-        // $(".select-department").select2({
-        //     placeholder: 'Select Department',
-        //     allowClear: true,
-        //     ajax: {
-        //         url: "{{ env('BASE_URL_API')}}" + '/api/department/select',
-        //         dataType: 'json',
-        //         cache: true,
-        //         data: function(params) {
-        //             return {
-        //                 term: params.term || '',
-        //                 page: params.page || 1,
-        //                 field: params.name || 'name'
-        //             }
-        //         },
-        //         processResults: function(data, params) {
-        //             var more = data.pagination.more;
-        //             if (more === false) {
-        //                 params.page = 1;
-        //                 params.abort = true;
-        //             }
-
-        //             return {
-        //                 results: data.data,
-        //                 pagination: {
-        //                     more: more
-        //                 }
-        //             };
-        //         }
-        //     }
-        // });
 
         $("#department_id").select2({
             placeholder: 'Select Department',

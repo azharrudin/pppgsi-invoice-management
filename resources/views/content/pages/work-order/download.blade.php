@@ -399,7 +399,7 @@
                                             height: 150px;
                                             width: 150px;
                                             background-position: center center;
-                                            background-size: cover;
+                                            background-size: contain;
                                             background-repeat: no-repeat;">
                                 </div>
                             </td>
@@ -410,7 +410,7 @@
                                             height: 150px;
                                             width: 150px;
                                             background-position: center center;
-                                            background-size: cover;
+                                            background-size: contain;
                                             background-repeat: no-repeat;">
                                 </div>
                                 @else
@@ -419,7 +419,7 @@
                                             height: 150px;
                                             width: 150px;
                                             background-position: center center;
-                                            background-size: cover;
+                                            background-size: contain;
                                             background-repeat: no-repeat;">
                                 </div>
                                 @endif
@@ -431,7 +431,7 @@
                                             height: 150px;
                                             width: 150px;
                                             background-position: center center;
-                                            background-size: cover;
+                                            background-size: contain;
                                             background-repeat: no-repeat;">
                                 </div>
                                 @else
@@ -440,7 +440,7 @@
                                             height: 150px;
                                             width: 150px;
                                             background-position: center center;
-                                            background-size: cover;
+                                            background-size: contain;
                                             background-repeat: no-repeat;">
                                 </div>
                                 @endif
@@ -452,7 +452,7 @@
                                             height: 150px;
                                             width: 150px;
                                             background-position: center center;
-                                            background-size: cover;
+                                            background-size: contain;
                                             background-repeat: no-repeat;">
                                     @else
                                     <div style="margin : auto;
@@ -460,7 +460,7 @@
                                             height: 150px;
                                             width: 150px;
                                             background-position: center center;
-                                            background-size: cover;
+                                            background-size: contain;
                                             background-repeat: no-repeat;">
                                     </div>
                                     @endif

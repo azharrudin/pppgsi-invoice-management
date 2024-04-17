@@ -505,7 +505,7 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Jabatan" style="text-align:center;" id="lc-jabatan" name="jabatan[]" value="Leader Cleaning" disabled />
                         </div>
-                        <div class="mb-3 container d-flex justify-content-center align-items-center">
+                        <div class="mb-3 d-flex justify-content-center align-items-center">
                             ${imagePrepared}
                         </div>
                         <div class="mb-3">
@@ -574,7 +574,7 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Jabatan" style="text-align:center;" id="kt-jabatan" name="jabatan[]" value="Koordinator Teknik" disabled />
                         </div>
-                        <div class="mb-3 container d-flex justify-content-center align-items-center">
+                        <div class="mb-3 d-flex justify-content-center align-items-center">
                             ${imageReviewed}
                         </div>
                         <div class="mb-3">
@@ -644,7 +644,7 @@ $configData = Helper::appClasses();
                         <div class="mb-3">
                             <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Jabatan" style="text-align:center;" id="ka-jabatan" name="jabatan[]" value="Kepala Unit Pelayanan" disabled />
                         </div>
-                        <div class="mb-3 container d-flex justify-content-center align-items-center">
+                        <div class="mb-3 d-flex justify-content-center align-items-center">
                             ${imageAknowledge}
                         </div>
                         <div class="mb-3">

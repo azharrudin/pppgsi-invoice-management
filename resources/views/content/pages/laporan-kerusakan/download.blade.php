@@ -151,7 +151,7 @@
                                         height: 150px;
                                         width: 150px;
                                         background-position: center center;
-                                        background-size: cover;
+                                        background-size: contain;
                                         background-repeat: no-repeat;">
                             </div>
                             @else
@@ -160,7 +160,7 @@
                                         height: 150px;
                                         width: 150px;
                                         background-position: center center;
-                                        background-size: cover;
+                                        background-size: contain;
                                         background-repeat: no-repeat;">
                             </div>
                             <br>
@@ -182,7 +182,7 @@
                                         height: 150px;
                                         width: 150px;
                                         background-position: center center;
-                                        background-size: cover;
+                                        background-size: contain;
                                         background-repeat: no-repeat;">
                             </div>
                             @else
@@ -191,7 +191,7 @@
                                         height: 150px;
                                         width: 150px;
                                         background-position: center center;
-                                        background-size: cover;
+                                        background-size: contain;
                                         background-repeat: no-repeat;">
                             </div>
                             <br>
@@ -213,7 +213,7 @@
                                         height: 150px;
                                         width: 150px;
                                         background-position: center center;
-                                        background-size: cover;
+                                        background-size: contain;
                                         background-repeat: no-repeat;">
                             </div>
                             @else
@@ -222,7 +222,7 @@
                                         height: 150px;
                                         width: 150px;
                                         background-position: center center;
-                                        background-size: cover;
+                                        background-size: contain;
                                         background-repeat: no-repeat;">
                             </div>
                             <br>
