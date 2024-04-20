@@ -36,8 +36,4 @@ class PurchaseOrderDetail extends Model
         return $this->BelongsTo(PurchaseOrder::class, "purchase_order_id");
     }
 
-    public function tax(): BelongsTo
-    {
-        return $this->belongsTo(Tax::class, "tax_id");
-    }
 }
