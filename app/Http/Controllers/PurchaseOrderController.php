@@ -117,7 +117,6 @@ class PurchaseOrderController extends Controller
 
             return ["data" => $getPurchaseOrder];
         } catch (\Throwable $e) {
-            dd($e->getMessage());
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
             DB::rollBack();

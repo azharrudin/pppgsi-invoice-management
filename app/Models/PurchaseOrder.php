@@ -21,6 +21,7 @@ class PurchaseOrder extends Model
         "purchase_order_number",
         "vendor_id",
         "about",
+        "total_tax",
         "grand_total",
         "purchase_order_date",
         "status",
