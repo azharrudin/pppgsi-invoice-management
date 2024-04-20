@@ -272,7 +272,6 @@ $configData = Helper::appClasses();
             },
             success: function(res) {
                 let data = res.data;
-                console.log(data);
                 id = data.id;
                 nomorInvoice = data.invoice_number;
                 $("#purchase_order_number").text(data.purchase_order_number);

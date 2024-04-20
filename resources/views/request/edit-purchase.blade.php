@@ -209,7 +209,9 @@ $configData = Helper::appClasses();
 <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script src="{{ asset('assets/js/forms-file-upload.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/flatpickr/flatpickr.js">
+<script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}">
+</script>
+<script src="{{ asset('assets/vendor/libs/moment/moment.js') }}">
 </script>
 <script>
     let account = {!! json_encode(session('data')) !!}
@@ -244,7 +246,7 @@ $configData = Helper::appClasses();
         let datePrepared = '';
         if (account.level.id == '10') {
             namePrepared = value?.name ? value.name : '';
-            datePrepared = value?.date ? value.date : '';
+            datePrepared = value.date ? moment(value.date).format('DD-MM-YYYY') : '';
             dropzonePrepared = 'dz-clickable';
             namePrepared = account.name;
             ttdFile1 = value.signature;
@@ -258,18 +260,17 @@ $configData = Helper::appClasses();
         } else {
             //sudah ttd
             if (value) {
+                namePrepared = value.name;
                 datePreparedAttr = 'disabled';
-                datePrepared = value.date ? value.date : '';
+                datePrepared = value.date ? moment(value.date).format('DD-MM-YYYY') : '';
                 ttdFile1 = value.signature;
-                imagePrepared = `<div id="admin-image"></div>` +
-                    '<script type="text/javascript">' +
-                    '$("#admin-image").css("background-color", "black");' +
-                    '$("#admin-image").css("background-image", "url(' + value.signature + ')");' +
-                    '$("#admin-image").css("height", "200px");' +
-                    '$("#admin-image").css("background-position", "center");' +
-                    '$("#admin-image").css("background-size", "cover");' +
-                    '$("#admin-image").css("background-repeat", "no-repeat");' +
-                    '</' + 'script>';
+                imagePrepared = `<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width:96%">
+                        <div class="dz-details">
+                            <div class="dz-thumbnail" style="width:88%"> <img class="prev-img-3" alt="" src="${value?.signature}">
+                                <span class="dz-nopreview">No preview</span>
+                            </div>
+                        </div>
+                    </div>`;
             } else { //belum ttd
                 datePreparedAttr = 'disabled';
                 imagePrepared = `
@@ -310,7 +311,7 @@ $configData = Helper::appClasses();
         let dateChecked = '';
         if (account.level.id == '2') {
             nameChecked = value?.name ? value.name : '';
-            dateChecked = value?.date ? value.date : '';
+            dateChecked = value.date ? moment(value.date).format('DD-MM-YYYY') : '';
             dropzoneChecked = 'dz-clickable';
             nameChecked = account.name;
             ttdFile2 = value?.signature ? value.signature : '';
@@ -326,17 +327,15 @@ $configData = Helper::appClasses();
             if (value) {
                 nameChecked = value.name;
                 dateCheckedAttr = 'disabled';
-                dateChecked = value.date ? value.date : '';
+                dateChecked = value.date ? moment(value.date).format('DD-MM-YYYY') : '';
                 ttdFile2 = value.signature;
-                imageChecked = `<div id="unit-image"></div>` +
-                    '<script type="text/javascript">' +
-                    '$("#unit-image").css("background-color", "black");' +
-                    '$("#unit-image").css("background-image", "url(' + value.signature + ')");' +
-                    '$("#unit-image").css("height", "200px");' +
-                    '$("#unit-image").css("background-position", "center");' +
-                    '$("#unit-image").css("background-size", "cover");' +
-                    '$("#unit-image").css("background-repeat", "no-repeat");' +
-                    '</' + 'script>';
+                imageChecked = `<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width:96%">
+                        <div class="dz-details">
+                            <div class="dz-thumbnail" style="width:88%"> <img class="prev-img-3" alt="" src="${value?.signature}">
+                                <span class="dz-nopreview">No preview</span>
+                            </div>
+                        </div>
+                    </div>`;
             } else { //belum ttd
                 dateCheckedAttr = 'disabled';
                 imageChecked = `
@@ -378,7 +377,7 @@ $configData = Helper::appClasses();
         let dateKnown = '';
         if (account.level.id == '1') {
             nameKnown = value?.name ? value.name : '';
-            dateKnown = value?.date ? value.date : '';
+            dateKnown = value.date ? moment(value.date).format('DD-MM-YYYY') : '';
             dropzoneKnown = 'dz-clickable';
             nameKnown = account.name;
             ttdFile3 = value?.signature ? value.signature : '';;
@@ -394,17 +393,15 @@ $configData = Helper::appClasses();
             if (value) {
                 nameKnown = value.name;
                 dateKnown = 'disabled';
-                dateKnown = value.date ? value.date : '';
+                dateKnown = value.date ? moment(value.date).format('DD-MM-YYYY') : '';
                 ttdFile3 = value.signature;
-                imageKnown = `<div id="bm-image"></div>` +
-                    '<script type="text/javascript">' +
-                    '$("#bm-image").css("background-color", "black");' +
-                    '$("#bm-image").css("background-image", "url(' + value.signature + ')");' +
-                    '$("#bm-image").css("height", "200px");' +
-                    '$("#bm-image").css("background-position", "center");' +
-                    '$("#bm-image").css("background-size", "cover");' +
-                    '$("#bm-image").css("background-repeat", "no-repeat");' +
-                    '</' + 'script>';
+                imageKnown = `<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width:96%">
+                        <div class="dz-details">
+                            <div class="dz-thumbnail" style="width:88%"> <img class="prev-img-3" alt="" src="${value?.signature}">
+                                <span class="dz-nopreview">No preview</span>
+                            </div>
+                        </div>
+                    </div>`;
             } else { //belum ttd
                 dateKnownAttr = 'disabled';
                 imageKnown = `
@@ -620,7 +617,7 @@ $configData = Helper::appClasses();
 
     function setDate() {
         $('.date').flatpickr({
-            dateFormat: 'Y-m-d'
+            dateFormat: 'd-m-Y'
         });
 
         const flatPickrEL = $(".date");
@@ -628,7 +625,7 @@ $configData = Helper::appClasses();
             flatPickrEL.flatpickr({
                 allowInput: true,
                 monthSelectorType: "static",
-                dateFormat: 'Y-m-d'
+                dateFormat: 'd-m-Y'
             });
         }
     }
@@ -658,9 +655,9 @@ $configData = Helper::appClasses();
             }
             event.currentTarget.value = x1 + x2;
             // Hapus baris yang ditekan tombol hapus
-            let total = parseInt($(this).val().replaceAll(',', ''));
+            let total = parseFloat($(this).val().replaceAll(',', ''));
 
-            let proposed_purchase_price = isNaN(parseInt($(`#proposed_purchase_price`).val().replaceAll(',', ''))) ? 0 : parseInt($(`#proposed_purchase_price`).val().replaceAll(',', ''));
+            let proposed_purchase_price = isNaN(parseFloat($(`#proposed_purchase_price`).val().replaceAll(',', ''))) ? 0 : parseFloat($(`#proposed_purchase_price`).val().replaceAll(',', ''));
 
             let remaining_budget = total - proposed_purchase_price;
 
@@ -680,8 +677,8 @@ $configData = Helper::appClasses();
             }
             event.currentTarget.value = x1 + x2;
             // Hapus baris yang ditekan tombol hapus
-            let proposed_purchase_price = parseInt($(this).val().replaceAll(',', ''));
-            let total = isNaN(parseInt($(`#total_budget`).val().replaceAll(',', ''))) ? 0 : parseInt($(`#total_budget`).val().replaceAll(',', ''));
+            let proposed_purchase_price = parseFloat($(this).val().replaceAll(',', ''));
+            let total = isNaN(parseFloat($(`#total_budget`).val().replaceAll(',', ''))) ? 0 : parseFloat($(`#total_budget`).val().replaceAll(',', ''));
 
             let remaining_budget = total - proposed_purchase_price;
 
@@ -741,7 +738,7 @@ $configData = Helper::appClasses();
             `;
             $details.append($newRow);
             $('.date').flatpickr({
-                dateFormat: 'Y-m-d'
+                dateFormat: 'd-m-Y'
             });
         });
 
@@ -774,13 +771,13 @@ $configData = Helper::appClasses();
                         });
 
                         let department_id = $("#department_id").val();
-                        let proposed_purchase_price = parseInt($("#proposed_purchase_price").val().replaceAll(',', ''));
+                        let proposed_purchase_price = parseFloat($("#proposed_purchase_price").val().replaceAll(',', ''));
                         let budget_status = $('.checkbox-check:checked').attr('id');;
-                        let request_date = $("#request_date").val();
+                        let request_date = moment($("#request_date").val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                         let requester = $("#requester").val();
                         let total_budget = $("#total_budget").val().replaceAll(',', '');
-                        let remaining_budget = parseInt($("#remaining_budget").val().replaceAll(',', ''));
-                        let material_request_id = parseInt($("#material_request_id").val());
+                        let remaining_budget = parseFloat($("#remaining_budget").val().replaceAll(',', ''));
+                        let material_request_id = parseFloat($("#material_request_id").val());
                         let additional_note = $("#additional_note").val();
                         let datas = {};
 
@@ -796,15 +793,15 @@ $configData = Helper::appClasses();
                             } else if (index % 7 == 1) {
                                 detail[input_index].part_number = input_value;
                             } else if (index % 7 == 2) {
-                                detail[input_index].last_buy_date = input_value;
+                                detail[input_index].last_buy_date = moment(input_value, 'DD-MM-YYYY').format('YYYY-MM-DD');
                             } else if (index % 7 == 3) {
-                                detail[input_index].last_buy_quantity = parseInt(input_value);
+                                detail[input_index].last_buy_quantity = parseFloat(input_value);
                             } else if (index % 7 == 4) {
-                                detail[input_index].last_buy_stock = parseInt(input_value);
+                                detail[input_index].last_buy_stock = parseFloat(input_value);
                             } else if (index % 7 == 5) {
                                 detail[input_index].description = input_value;
                             } else if (index % 7 == 6) {
-                                detail[input_index].quantity = parseInt(input_value);
+                                detail[input_index].quantity = parseFloat(input_value);
                             }
                         });
 
@@ -812,7 +809,7 @@ $configData = Helper::appClasses();
                         let signature = [];
                         if (account.level.id == '1') {
                             datas.status = 'Disetujui BM';
-                        } else if (account.level.id == '2') {
+                        } else if (account.level.id == '2' || account.level.id == '9') {
                             datas.status = 'Disetujui KA';
                         } else if (account.level.id == '10') {
                             datas.status = 'Terbuat';
@@ -835,7 +832,7 @@ $configData = Helper::appClasses();
                         if (ttdFile1 != undefined) {
                             signature1.type = 'Prepared By';
                             signature1.name = $('#admin-name').val();
-                            signature1.date = $('#admin-date').val();
+                            signature1.date = moment($('#admin-date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                             signature1.signature = ttdFile1;
                         }
 
@@ -843,7 +840,7 @@ $configData = Helper::appClasses();
                         if (ttdFile2 != undefined) {
                             signature2.type = 'Checked By';
                             signature2.name = $('#unit-name').val();
-                            signature2.date = $('#unit-date').val();
+                            signature2.date = moment($('#unit-date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                             signature2.signature = ttdFile2;
                         }
 
@@ -851,7 +848,7 @@ $configData = Helper::appClasses();
                         if (ttdFile3 != undefined) {
                             signature3.type = 'Known By';
                             signature3.name = $('#bm-name').val();
-                            signature3.date = $('#bm-date').val();
+                            signature3.date = moment($('#bm-date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                             signature3.signature = ttdFile3;
                         }
 
@@ -896,7 +893,7 @@ $configData = Helper::appClasses();
 
                                 Swal.fire({
                                     title: 'Berhasil',
-                                    text: 'Berhasil Memperbarui Purchase Request',
+                                    text: 'Berhasil Memperbaharui Purchase Request',
                                     icon: 'success',
                                     customClass: {
                                         confirmButton: 'btn btn-primary'
@@ -1048,7 +1045,7 @@ $configData = Helper::appClasses();
         // Keyup input price
         $(document).on('input', '.price', function() {
             var sanitizedValue = $(this).val().replace(/[^0-9]/g, '');
-            var numericValue = parseInt(sanitizedValue, 10);
+            var numericValue = parseFloat(sanitizedValue, 10);
 
             if (!isNaN(numericValue)) {
                 var formattedValue = numericValue.toLocaleString('en-US');

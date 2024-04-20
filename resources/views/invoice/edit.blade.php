@@ -11,6 +11,11 @@ $configData = Helper::appClasses();
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}">
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}">
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}">
+<style type="text/css">
+    .select2-container {
+        width: 200px !important;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -22,7 +27,7 @@ $configData = Helper::appClasses();
             <div class="col-lg-9 col-12 mb-lg-0 mb-3">
                 <div class="card invoice-preview-card">
                     <div class="card-body">
-                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); height : 150px; background-size: contain; background-repeat: no-repeat;" class="set-back">
+                        <div style="background-image: url('{{ asset('assets/img/header.png') }}'); height : 150px; background-ze: contain; background-repeat: no-repeat;" class="set-back">
                         </div>
 
                         <div class="row  px-3">
@@ -46,33 +51,6 @@ $configData = Helper::appClasses();
                                         <input type="text" class="form-control date" name="invoice_date" id="invoice_date" placeholder="" required />
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
-                                    <!-- <div class="col-md-6 mb-3">
-                                        <label for="term" class="form-label fw-medium">Terms</label>
-                                        <select name="term" id="term" class="form-control" required>
-                                            <option value=""></option>
-                                            <option value="Net 7 Days">Net 7 Days</option>
-                                            <option value="Net 14 Days">Net 14 Days</option>
-                                            <option value="Net 30 Days">Net 30 Days</option>
-                                            <option value="Net 45 Days">Net 45 Days</option>
-                                            <option value="Net 60 Days">Net 60 Days</option>
-                                        </select>
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="contract_date" class="form-label fw-medium">Salesperson</label>
-                                        <input type="text" class="form-control" name="contract_date" id="contract_date" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div> -->
-                                    <!-- <div class="col-md-6 mb-3">
-                                        <label for="addendum_number" class="form-label fw-medium">No. Addendum</label>
-                                        <input type="text" class="form-control" name="addendum_number" id="addendum_number" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="addendum_date" class="form-label fw-medium">Tanggal</label>
-                                        <input type="text" class="form-control date" id="addendum_date" name="addendum_date" placeholder="" required />
-                                        <div class="invalid-feedback">Tidak boleh kosong</div>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -204,31 +182,7 @@ $configData = Helper::appClasses();
                                     <textarea class="form-control" rows="11" id="term_and_conditions" name="term_and_conditions"></textarea>
                                     <div class="invalid-feedback">Tidak boleh kosong</div>
                                 </div>
-                                <!-- <div class="mb-3">
-                                    <label for="note" class="form-label fw-medium me-2">Bank</label>
-                                    <select name="bank" id="bank" name="bank" class="form-select w-px-250 item-details mb-3" required>
-                                    </select>
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div> -->
                             </div>
-                            <!-- <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center data-materai">
-                                <div class="mb-3">
-                                    <label for="note" class="form-label fw-medium">Tanda Tangan & Meterai</label>
-                                    <input type="text" class="form-control w-px-250 date" placeholder="Tanggal" id="materai_date" name="materai_date" />
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
-                                <div class="mb-3">
-                                    <div action="/upload" class="dropzone needsclick dz-clickable w-px-250" id="dropzone-basic">
-                                        <div class="dz-message needsclick">
-                                            <span class="note needsclick">Unggah Tanda Tangan</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control tanda-tangan w-px-250 " id="materai_name" placeholder="Nama & Jabatan" name="materai_name" />
-                                    <div class="invalid-feedback">Tidak boleh kosong</div>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -243,7 +197,6 @@ $configData = Helper::appClasses();
                             <span class="d-flex align-items-center justify-content-center text-nowrap d-none"><i class="ti ti-send ti-xs me-2"></i>Kirim Invoice</span>
                         </button>
                         <button type="submit" id="save" class="btn btn-primary btn-update d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="fa fa-save fa-xs me-2"></i>Simpan</span></button>
-                        {{-- <button type="button" id="preview" class="btn btn-success d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-eye ti-xs me-2"></i>Preview</span></button> --}}
                         <button type="button" id="batal" class="btn btn-secondary d-grid w-100">Kembali</button>
                     </div>
                 </div>
@@ -323,7 +276,7 @@ $configData = Helper::appClasses();
         });
 
         $('.date').flatpickr({
-            dateFormat: 'Y-m-d'
+            dateFormat: 'd-m-Y'
         });
 
         const flatPickrEL = $(".date");
@@ -331,7 +284,7 @@ $configData = Helper::appClasses();
             flatPickrEL.flatpickr({
                 allowInput: true,
                 monthSelectorType: "static",
-                dateFormat: 'Y-m-d'
+                dateFormat: 'd-m-Y'
             });
         }
 
@@ -423,54 +376,6 @@ $configData = Helper::appClasses();
             if (dataLocal.tenant_id) {
                 getTenant(dataLocal.tenant_id);
             }
-           
-
-            // const myDropzone = new Dropzone('#dropzone-basic', {
-            //     parallelUploads: 1,
-            //     maxFilesize: 3,
-            //     addRemoveLinks: true,
-            //     maxFiles: 1,
-            //     acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            //     autoQueue: false,
-            //     url: "../uploads/logo",
-            //     thumbnailWidth: 250,
-            //     thumbnailHeight: null,
-            //     init: function() {
-            //         if (dataLocal) {
-            //             let mockFile = {
-            //                 dataURL: dataLocal.materai_image
-            //             };
-            //             if (dataLocal.materai_image) {
-            //                 this.options.addedfile.call(this, mockFile);
-            //                 this.options.thumbnail.call(this, mockFile, dataLocal.materai_image.dataURL);
-            //                 $('.dz-image').last().find('img').attr('width', '100%');
-            //                 // Optional: Handle the removal of the file
-            //                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-            //                     // Handle removal logic here
-            //                 });
-            //             }
-            //         } else {
-            //             let mockFile = {
-            //                 dataURL: data.materai_image
-            //             };
-            //             if (data.materai_image) {
-            //                 this.options.addedfile.call(this, mockFile);
-            //                 this.options.thumbnail.call(this, mockFile, data.materai_image);
-            //                 $('.dz-image').last().find('img').attr('width', '100%');
-            //                 // Optional: Handle the removal of the file
-            //                 mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-            //                     // Handle removal logic here
-            //                 });
-            //             }
-
-            //         }
-            //         this.on('addedfile', function(file) {
-            //             $('.dz-image').last().find('img').attr('width', '100%');
-            //             while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
-            //             ttdFile = file;
-            //         })
-            //     }
-            // });
 
             getDetails(dataLocal.details);
 
@@ -838,16 +743,16 @@ $configData = Helper::appClasses();
                         event.preventDefault();
                         let tenant = $("#tenant").val();
                         let noInvoice = $("#invoice_number").val();
-                        let tglInvoice = $("#invoice_date").val();
+                        let tglInvoice = moment($("#invoice_date").val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                         let noKontrak = $("#contract_number").val();
-                        let tglKontrak = $("#contract_date").val();
+                        let tglKontrak = moment($("#contract_date").val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                         let noAddendum = $("#addendum_number").val();
-                        let tglAddendum = $("#addendum_date").val();
+                        let tglAddendum = moment($("#addendum_date").val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                         let terbilang = $("#grand_total_spelled").val();
                         let grandTotal = $(".grand_total").text().replaceAll(',', '');
-                        let tglJatuhTempo = $("#invoice_due_date").val();
+                        let tglJatuhTempo = moment($("#invoice_due_date").val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                         let syaratDanKententuan = $("#term_and_conditions").val();
-                        let tglTtd = $("#materai_date").val();
+                        let tglTtd = moment($("#materai_date").val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                         let nameTtd = $("#materai_name").val();
 
                         var detail = [];
@@ -896,10 +801,7 @@ $configData = Helper::appClasses();
                         } else {
                             datas.status = "Terbuat";
                         }
-
                         delete datas['undefined'];
-                        console.log(datas);
-
                         $.ajax({
                             url: "{{ env('BASE_URL_API')}}" + '/api/invoice/' + id,
                             type: "PATCH",

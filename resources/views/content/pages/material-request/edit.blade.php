@@ -109,6 +109,10 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
+<script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}">
+</script>
+<script src="{{ asset('assets/vendor/libs/moment/moment.js') }}">
+</script>
 <script>
     $.ajaxSetup({
         headers: {
@@ -145,7 +149,6 @@ $configData = Helper::appClasses();
             success: function(res) {
                 let data = res.data;
                
-                console.log(data);
 
                 let details = data.material_request_signatures;
                 $("#requester").val(data.requester);
@@ -195,7 +198,6 @@ $configData = Helper::appClasses();
                 Swal.close();
             },
             error: function(errors) {
-                console.log(errors);
             }
         });
     }
@@ -307,7 +309,7 @@ $configData = Helper::appClasses();
         let datePrepared = '';
         if(account.level.id == '7'){
             namePrepared = value?.name ? value.name : '';
-            datePrepared = value?.date ? value.date : '';
+            datePrepared = value?.date ? moment(value.date).format('DD-MM-YYYY') : '';
             dropzonePrepared = 'dz-clickable';
             namePrepared = account.name;
             ttdFile1 = value.signature;
@@ -323,18 +325,15 @@ $configData = Helper::appClasses();
             if(value){
                 namePrepared = value.name;
                 datePreparedAttr = 'disabled';
-                datePrepared = value.date ? value.date : '';
+                datePrepared = value.date ? moment(value.date).format('DD-MM-YYYY') : '';
                 ttdFile1 = value.signature;
-                imagePrepared = `<div id="warehouse-image"></div>`+
-                '<script type="text/javascript">'+
-                    '$("#warehouse-image").css("background-color", "black");'+
-                    '$("#warehouse-image").css("background-image", "url('+value.signature+')");'+
-                    '$("#warehouse-image").css("height", "200px");'+
-                    '$("#warehouse-image").css("width", "200px");'+
-                    '$("#warehouse-image").css("background-position", "center");'+
-                    '$("#warehouse-image").css("background-size", "cover");'+
-                    '$("#warehouse-image").css("background-repeat", "no-repeat");'+
-                '</'+'script>';
+                imagePrepared = `<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width:96%">
+                        <div class="dz-details">
+                            <div class="dz-thumbnail" style="width:88%"> <img class="prev-img-3" alt="" src="${value?.signature}">
+                                <span class="dz-nopreview">No preview</span>
+                            </div>
+                        </div>
+                    </div>`;
             } else {
                 datePreparedAttr = 'disabled';
                 imagePrepared = `
@@ -372,12 +371,11 @@ $configData = Helper::appClasses();
         let imageReviewed = '';
         let dateReviewedAttr = '';
         let nameReviewed = '';
-        console.log(value)
 
         let dateReviewed = '';
         if(account.level.id == '8'){
             nameReviewed = value?.name ? value.name : '';
-            dateReviewed = value?.date ? value.date : '';
+            dateReviewed = value?.date ? moment(value.date).format('DD-MM-YYYY') : '';
             dropzoneReviewed = 'dz-clickable';
             nameReviewed = account.name;
             ttdFile2 = value != undefined ? value.signature : "";
@@ -391,23 +389,18 @@ $configData = Helper::appClasses();
             //tanda tangannya ada maka tampoilkan seperti edit kepala bm invoice
         }else{
             //sudah ttd
-            console.log(value)
-
             if(value){
                 nameReviewed = value.name;
                 dateReviewedAttr = 'disabled';
                 ttdFile2 = value.signature;
-                dateReviewed = value?.date ? value.date : '';
-                imageReviewed = `<div id="chiefdept-image2"></div>`+
-                '<script type="text/javascript">'+
-                    '$("#chiefdept-image").css("background-color", "black");'+
-                    '$("#chiefdept-image").css("background-image", "url('+value.signature+')");'+
-                    '$("#chiefdept-image").css("height", "200px");'+
-                    '$("#chiefdept-image").css("width", "200px");'+
-                    '$("#chiefdept-image").css("background-position", "center");'+
-                    '$("#chiefdept-image").css("background-size", "cover");'+
-                    '$("#chiefdept-image").css("background-repeat", "no-repeat");'+
-                '</'+'script>';
+                dateReviewed = value?.date ? moment(value.date).format('DD-MM-YYYY') : '';
+                imageReviewed = `<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width:96%">
+                        <div class="dz-details">
+                            <div class="dz-thumbnail" style="width:88%"> <img class="prev-img-3" alt="" src="${value?.signature}">
+                                <span class="dz-nopreview">No preview</span>
+                            </div>
+                        </div>
+                    </div>`;
             }else{//belum ttd
                 dateReviewedAttr = 'disabled';
                 imageReviewed = `
@@ -448,7 +441,7 @@ $configData = Helper::appClasses();
         let dateAknowledge = '';
         if(account.level.id == '9'){
             nameAknowledge = value?.name ? value.name : '';
-            dateAknowledge = value?.date ? value.date : '';
+            dateAknowledge = value?.date ? moment(value.date).format('DD-MM-YYYY') : '';
             dropzoneAknowledge = 'dz-clickable';
             nameAknowledge = account.name;
             if(value){
@@ -466,19 +459,16 @@ $configData = Helper::appClasses();
             if(value){
                 nameAknowledge = value.name;
                 dateAknowledgeAttr = 'disabled';
-                dateAknowledge = value.date ? value.date : '';
+                dateAknowledge = value.date ? moment(value.date).format('DD-MM-YYYY') : '';
                 ttdFile3 = value.signature;
                 nameAknowledge = account.name;
-                imageAknowledge = `<div id="finance-image"></div>`+
-                '<script type="text/javascript">'+
-                    '$("#finance-image").css("background-color", "black");'+
-                    '$("#finance-image").css("background-image", "url('+value.signature+')");'+
-                    '$("#finance-image").css("height", "200px");'+
-                    '$("#finance-image").css("width", "200px");'+
-                    '$("#finance-image").css("background-position", "center");'+
-                    '$("#finance-image").css("background-size", "cover");'+
-                    '$("#finance-image").css("background-repeat", "no-repeat");'+
-                '</'+'script>';
+                imageAknowledge = `<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width:96%">
+                        <div class="dz-details">
+                            <div class="dz-thumbnail" style="width:88%"> <img class="prev-img-3" alt="" src="${value?.signature}">
+                                <span class="dz-nopreview">No preview</span>
+                            </div>
+                        </div>
+                    </div>`;
             }else{//belum ttd
                 dateAknowledgeAttr = 'disabled';
                 imageAknowledge = `
@@ -520,7 +510,7 @@ $configData = Helper::appClasses();
         let dateApproved = '';
         if(account.level.id == '1'){
             nameApproved = value?.name ? value.name : '';
-            dateApproved = value?.date ? value.date : '';
+            dateApproved = value?.date ? moment(value.date).format('DD-MM-YYYY') : '';
             dropzoneApproved = 'dz-clickable';
             nameApproved = account.name;
             if(value){
@@ -538,18 +528,15 @@ $configData = Helper::appClasses();
             if(value){
                 nameApproved = value.name;
                 dateApprovedAttr = 'disabled';
-                dateApproved = value.date ? value.date : '';
+                dateApproved = value.date ? moment(value.date).format('DD-MM-YYYY') : '';
                 ttdFile4= value.signature;
-                imageApproved = `<div id="bm-image"></div>`+
-                '<script type="text/javascript">'+
-                    '$("#bm-image").css("background-color", "black");'+
-                    '$("#bm-image").css("background-image", "url('+value.signature+')");'+
-                    '$("#bm-image").css("height", "200px");'+
-                    '$("#bm-image").css("width", "200px");'+
-                    '$("#bm-image").css("background-position", "center");'+
-                    '$("#bm-image").css("background-size", "cover");'+
-                    '$("#bm-image").css("background-repeat", "no-repeat");'+
-                '</'+'script>';
+                imageApproved = `<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width:96%">
+                        <div class="dz-details">
+                            <div class="dz-thumbnail" style="width:88%"> <img class="prev-img-3" alt="" src="${value?.signature}">
+                                <span class="dz-nopreview">No preview</span>
+                            </div>
+                        </div>
+                    </div>`;
             }else{//belum ttd
                 dateApprovedAttr = 'disabled';
                 imageApproved = `
@@ -583,7 +570,7 @@ $configData = Helper::appClasses();
 
     function setDate() {
         $('.date').flatpickr({
-            dateFormat: 'Y-m-d'
+            dateFormat: 'd-m-Y'
         });
 
         const flatPickrEL = $(".date");
@@ -591,7 +578,7 @@ $configData = Helper::appClasses();
             flatPickrEL.flatpickr({
                 allowInput: true,
                 monthSelectorType: "static",
-                dateFormat: 'Y-m-d'
+                dateFormat: 'd-m-Y'
             });
         }
     }
@@ -627,7 +614,7 @@ $configData = Helper::appClasses();
                     // let fileTtd = ttdFile.dataURL;
                     let requester = $("#requester").val();
                     let department = $("#department").val();
-                    let request_date = $("#request_date").val();
+                    let request_date = moment($("#request_date").val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                     let stock = $("#stock").val();
                     let purchase = $("#purchase").val();
                     let note = $("#note").val();
@@ -695,7 +682,7 @@ $configData = Helper::appClasses();
                     if(ttdFile1 != undefined){
                         signature1.type = 'Prepared By';
                         signature1.name = $('#warehouse-name').val();
-                        signature1.date = $('#warehouse-date').val();
+                        signature1.date = moment($('#warehouse-date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                         signature1.signature = ttdFile1;
                     }
 
@@ -703,7 +690,7 @@ $configData = Helper::appClasses();
                     if(ttdFile2 != undefined){
                         signature2.type = 'Reviewed By';
                         signature2.name = $('#departement-name').val();
-                        signature2.date = $('#departement-date').val();
+                        signature2.date = moment($('#departement-date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                         signature2.signature = ttdFile2;
                     }
 
@@ -711,7 +698,7 @@ $configData = Helper::appClasses();
                     if(ttdFile3 != undefined){
                         signature3.type = 'Aknowledge By';
                         signature3.name = $('#finance-name').val();
-                        signature3.date = $('#finance-date').val();
+                        signature3.date = moment($('#finance-date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                         signature3.signature = ttdFile3;
                     }
 
@@ -719,7 +706,7 @@ $configData = Helper::appClasses();
                     if(ttdFile4 != undefined){
                         signature4.type = 'Approved By';
                         signature4.name = $('#bm-name').val();
-                        signature4.date = $('#bm-date').val();
+                        signature4.date = moment($('#bm-date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                         signature4.signature = ttdFile4;
                     }
 
@@ -756,7 +743,7 @@ $configData = Helper::appClasses();
 
                             Swal.fire({
                                 title: 'Berhasil',
-                                text: 'Berhasil Update Material Request',
+                                text: 'Berhasil Memperbaharui Material Request',
                                 icon: 'success',
                                 customClass: {
                                     confirmButton: 'btn btn-primary'

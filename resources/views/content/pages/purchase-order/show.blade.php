@@ -62,9 +62,6 @@ $configData = Helper::appClasses();
 
                         </div>
                     </div>
-                    <div class="row px-3 mb-3">
-                        <span class="form-label" id="note"></span>
-                    </div>
 
                     <div class="row px-3 mb-3 ">
                         <div class="table-responsive border-top">
@@ -82,27 +79,6 @@ $configData = Helper::appClasses();
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0" id="details">
-                                    <!-- <tr>
-                                        <td colspan="4"></td>
-                                        <td colspan="2">
-                                            <p class="">Sub Total</p>
-                                        </td>
-                                        <td colspan="2" style="text-align: right;">
-                                            <p id="subtotal" class=""></p>
-                                        </td>
-                                    </tr> -->
-                                    <!-- <tr>
-                                        <td colspan="4"></td>
-                                        <td colspan="1">
-                                            <p class="">Pajak</p>
-                                        </td>
-                                        <td colspan="1">
-                                            <p class="" id=""></p>
-                                        </td>
-                                        <td colspan="2" style="text-align: right;">
-                                            <p id="tax" class=""></p>
-                                        </td>
-                                    </tr> -->
                                     <tr>
                                         <td colspan="4"></td>
                                         <td colspan="2">
@@ -125,16 +101,14 @@ $configData = Helper::appClasses();
                             <hr>
                         </div>
                     </div>
-                    <div class="row px-3 mb-3">
-                        <div class="col-12">
+
+                    <div class="row py-3 px-3">
+                        <div class="col-6">
                             <label for="note" class="form-label fw-medium">Syarat & Ketentuan</label>
                             <br>
                             <span class="form-label" id="term_and_conditions"></span>
                         </div>
-                    </div>
-
-                    <div class="row py-3 px-3">
-                        <div class="col-md-4 mb-md-0 mb-3 d-flex flex-column align-items-center text-center data-material">
+                        <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center data-material">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">Tanda Tangan</label>
                                 <div class="form-label">
@@ -164,11 +138,7 @@ $configData = Helper::appClasses();
                         <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>Kirim purchase Order</span>
                     </button>
                     <a type="button" class="btn btn-primary d-grid w-100 mb-2 disetujui d-none" style="color : #fff;"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-check ti-xs me-2"></i>Disetujui</span></a>
-                    <!-- <a target="_blank" href="{{url('invoice/print/')}}/{{$id}}" id="preview" class="btn btn-info d-grid w-100 mb-2"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-download ti-xs me-2"></i>Download</span></a> -->
                     <a target="_blank" href="{{url('request/purchase-order/edit/')}}/{{$id}}" id="edit" class="btn btn-primary d-grid w-100 mb-2 edit d-none"><span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-pencil ti-xs me-2"></i>Edit</span></a>
-                    <!-- <button class="btn btn-primary d-grid w-100 mb-2 add-pay add-payment d-none">
-                            <span class="d-flex align-items-center justify-content-center text-nowrap">Add Payment</span>
-                        </button> -->
                     <a href="{{ url('request/purchase-order')}}" id="back" class="btn btn-secondary d-grid w-100 mb-2">Kembali</a>
                 </div>
             </div>
@@ -360,7 +330,7 @@ $configData = Helper::appClasses();
                     $("#signatture").css("height", `200px`);
                     $("#signatture").css("width", `200px`);
                     $("#signatture").css("background-position", `center`);
-                    $("#signatture").css("background-size", `cover`);
+                    $("#signatture").css("background-size", `contain`);
                     $("#signatture").css("background-repeat", `no-repeat`);
                 }
                 if ((data.status == 'Terkirim' || data.status == 'Kurang Bayar') && account.level.id == 10) {
@@ -443,7 +413,7 @@ $configData = Helper::appClasses();
                         <td>` + details[i].quantity + `</td>
                         <td>` + details[i].units + `</td>
                         <td>` + 'Rp. ' + format(details[i].price) + `</td>
-                        <td>` + details[i].tax_id + `</td>
+                        <td>` + (details[i].tax_id ? details[i].tax_id : '') + `</td>
                         <td>` + 'Rp. ' + format(details[i].total_price) + `</td>
                     </tr>
             `;

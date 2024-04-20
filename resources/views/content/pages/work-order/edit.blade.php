@@ -167,9 +167,9 @@ $configData = Helper::appClasses();
 <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script src="{{ asset('assets/js/forms-file-upload.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/flatpickr/flatpickr.js">
+<script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}">
 </script>
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
+<script src="{{ asset('assets/vendor/libs/moment/moment.js') }}">
 </script>
 <script>
     let account = {!! json_encode(session('data')) !!}
@@ -196,16 +196,13 @@ $configData = Helper::appClasses();
                 dateTechnicianAttr = 'disabled';
                 dateTechnician = value.date ? moment(value.date, 'Y-MM-DD').format('DD-MM-YYYY') : '';
                 ttdFile1 = value.signature;
-                imageTechnician = `<div id="unit-image" style="padding: 5px;"></div>` +
-                    '<script type="text/javascript">' +
-                    '$("#unit-image").css("background-color", "black");' +
-                    '$("#unit-image").css("background-image", "url(' + value.signature + ')");' +
-                    '$("#unit-image").css("height", "150px");' +
-                    '$("#unit-image").css("width", "150px");' +
-                    '$("#unit-image").css("background-position", "center");' +
-                    '$("#unit-image").css("background-size", "cover");' +
-                    '$("#unit-image").css("background-repeat", "no-repeat");' +
-                    '</' + 'script>';
+                imageTechnician = `<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width:96%">
+                        <div class="dz-details">
+                            <div class="dz-thumbnail" style="width:88%"> <img class="prev-img-3" alt="" src="${value?.signature}">
+                                <span class="dz-nopreview">No preview</span>
+                            </div>
+                        </div>
+                    </div>`;
             }else{
                 imageTechnician = `
             <div action="/upload" class="dropzone needsclick ${dropzoneTechnician} dd" id="ttd1" style="padding: 5px;">
@@ -223,16 +220,13 @@ $configData = Helper::appClasses();
                 dateTechnicianAttr = 'disabled';
                 dateTechnician = value.date ? moment(value.date, 'Y-MM-DD').format('DD-MM-YYYY') : '';
                 ttdFile1 = value.signature;
-                imageTechnician = `<div id="unit-image" style="padding: 5px;"></div>` +
-                    '<script type="text/javascript">' +
-                    '$("#unit-image").css("background-color", "black");' +
-                    '$("#unit-image").css("background-image", "url(' + value.signature + ')");' +
-                    '$("#unit-image").css("height", "150px");' +
-                    '$("#unit-image").css("width", "150px");' +
-                    '$("#unit-image").css("background-position", "center");' +
-                    '$("#unit-image").css("background-size", "cover");' +
-                    '$("#unit-image").css("background-repeat", "no-repeat");' +
-                    '</' + 'script>';
+                imageTechnician = `<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width:96%">
+                        <div class="dz-details">
+                            <div class="dz-thumbnail" style="width:88%"> <img class="prev-img-3" alt="" src="${value?.signature}">
+                                <span class="dz-nopreview">No preview</span>
+                            </div>
+                        </div>
+                    </div>`;
             } else { //belum ttd
                 dateTechnicianAttr = 'disabled';
                 nameTechnician = account.name;
@@ -292,16 +286,13 @@ $configData = Helper::appClasses();
                 dateChiefAttr = 'disabled';
                 dateChief = value.date ? moment(value.date, 'Y-MM-DD').format('DD-MM-YYYY') : '';
                 ttdFile2 = value.signature;
-                imageChief = `<div id="chief-image" style="padding: 5px;"></div>` +
-                    '<script type="text/javascript">' +
-                    '$("#chief-image").css("background-color", "black");' +
-                    '$("#chief-image").css("background-image", "url(' + value.signature + ')");' +
-                    '$("#chief-image").css("height", "150px");' +
-                    '$("#chief-image").css("width", "150px");' +
-                    '$("#chief-image").css("background-position", "center");' +
-                    '$("#chief-image").css("background-size", "cover");' +
-                    '$("#chief-image").css("background-repeat", "no-repeat");' +
-                    '</' + 'script>';
+                imageChief = `<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width:96%">
+                        <div class="dz-details">
+                            <div class="dz-thumbnail" style="width:88%"> <img class="prev-img-3" alt="" src="${value?.signature}">
+                                <span class="dz-nopreview">No preview</span>
+                            </div>
+                        </div>
+                    </div>`;
             } else { //belum ttd
                 dateChiefAttr = 'disabled';
                 nameChief = account.name;
@@ -361,16 +352,13 @@ $configData = Helper::appClasses();
                 dateWarehouseAttr = 'disabled';
                 dateWarehouse = value.date ? moment(value.date, 'Y-MM-DD').format('DD-MM-YYYY') : '';
                 ttdFile3 = value.signature;
-                imageWarehouse = `<div id="warehouse-image" style="padding: 5px;"></div>` +
-                    '<script type="text/javascript">' +
-                    '$("#warehouse-image").css("background-color", "black");' +
-                    '$("#warehouse-image").css("background-image", "url(' + value.signature + ')");' +
-                    '$("#warehouse-image").css("height", "150px");' +
-                    '$("#warehouse-image").css("width", "150px");' +
-                    '$("#warehouse-image").css("background-position", "center");' +
-                    '$("#warehouse-image").css("background-size", "cover");' +
-                    '$("#warehouse-image").css("background-repeat", "no-repeat");' +
-                    '</' + 'script>';
+                imageWarehouse = `<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width:96%">
+                        <div class="dz-details">
+                            <div class="dz-thumbnail" style="width:88%"> <img class="prev-img-3" alt="" src="${value?.signature}">
+                                <span class="dz-nopreview">No preview</span>
+                            </div>
+                        </div>
+                    </div>`;
             } else { //belum ttd
                 dateWarehouseAttr = 'disabled';
                 nameWarehouse = account.name;
@@ -430,16 +418,13 @@ $configData = Helper::appClasses();
                 dateKepalaAttr = 'disabled';
                 dateKepala = value.date ? moment(value.date, 'Y-MM-DD').format('DD-MM-YYYY') : '';
                 ttdFile4 = value.signature;
-                imageKepala = `<div id="kepala-image" style="padding: 5px;"></div>` +
-                    '<script type="text/javascript">' +
-                    '$("#kepala-image").css("background-color", "black");' +
-                    '$("#kepala-image").css("background-image", "url(' + value.signature + ')");' +
-                    '$("#kepala-image").css("height", "150px");' +
-                    '$("#kepala-image").css("width", "150px");' +
-                    '$("#kepala-image").css("background-position", "center");' +
-                    '$("#kepala-image").css("background-size", "cover");' +
-                    '$("#kepala-image").css("background-repeat", "no-repeat");' +
-                    '</' + 'script>';
+                imageKepala = `<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width:96%">
+                        <div class="dz-details">
+                            <div class="dz-thumbnail" style="width:88%"> <img class="prev-img-3" alt="" src="${value?.signature}">
+                                <span class="dz-nopreview">No preview</span>
+                            </div>
+                        </div>
+                    </div>`;
             } else { //belum ttd
                 dateKepalaAttr = 'disabled';
                 nameKepala = account.name;
@@ -493,7 +478,7 @@ $configData = Helper::appClasses();
 
     function date() {
         $('.date').flatpickr({
-            dateFormat: 'Y-m-d'
+            dateFormat: 'd-m-Y'
         });
     }
 
@@ -841,8 +826,8 @@ $configData = Helper::appClasses();
                         let signatures = [];
                         let scope = $('#scope').val();
                         let classification = $('#classification').val();
-                        let date = $('#work_order_date').val();
-                        let action_plan_date = $('#action_plan_date').val();
+                        let date = moment($('#work_order_date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
+                        let action_plan_date = moment($('#action_plan_date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                         let finish_plan = $('#finish_plan').val();
                         let job_description = $('#job_description').val();
 
@@ -906,7 +891,7 @@ $configData = Helper::appClasses();
                         if (ttdFile1 != undefined) {
                             signature1.position = 'Technician';
                             signature1.name = $('#technician-name').val();
-                            signature1.date = $('#technician-date').val();
+                            signature1.date = moment($('#technician-date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                             signature1.signature = ttdFile1;
                         }
 
@@ -914,7 +899,7 @@ $configData = Helper::appClasses();
                         if (ttdFile2 != undefined) {
                             signature2.position = 'Chief Engineering';
                             signature2.name = $('#chief-name').val();
-                            signature2.date = $('#chief-date').val();
+                            signature2.date = moment($('#chief-date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                             signature2.signature = ttdFile2;
                         }
 
@@ -922,7 +907,7 @@ $configData = Helper::appClasses();
                         if (ttdFile3 != undefined) {
                             signature3.position = 'Warehouse';
                             signature3.name = $('#warehouse-name').val();
-                            signature3.date = $('#warehouse-date').val();
+                            signature3.date = moment($('#warehouse-date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                             signature3.signature = ttdFile3;
                         }
 
@@ -930,7 +915,7 @@ $configData = Helper::appClasses();
                         if (ttdFile4 != undefined) {
                             signature4.position = 'Kepala BM';
                             signature4.name = $('#kepala-name').val();
-                            signature4.date = $('#kepala-date').val();
+                            signature4.date = moment($('#kepala-date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                             signature4.signature = ttdFile4;
                         }
 

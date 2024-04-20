@@ -124,9 +124,9 @@ $configData = Helper::appClasses();
 <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script src="{{ asset('assets/js/forms-file-upload.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/flatpickr/flatpickr.js">
+<script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}">
 </script>
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
+<script src="{{ asset('assets/vendor/libs/moment/moment.js') }}">
 </script>
 
 <script>
@@ -475,16 +475,13 @@ $configData = Helper::appClasses();
                     datePreparedAttr = 'disabled';
                     datePrepared = value.date ? moment(value.date, 'YYYY-MM-DD').format('DD-MM-YYYY') : '';
                     ttdFile1 = value?.signature;
-                    imagePrepared = `<div id="leaderCleaning-image"></div>` +
-                        '<script type="text/javascript">' +
-                        '$("#leaderCleaning-image").css("background-color", "black");' +
-                        '$("#leaderCleaning-image").css("background-image", "url(' + value?.signature + ')");' +
-                        '$("#leaderCleaning-image").css("height", "200px");' +
-                        '$("#leaderCleaning-image").css("width", "200px");' +
-                        '$("#leaderCleaning-image").css("background-position", "center");' +
-                        '$("#leaderCleaning-image").css("background-size", "cover");' +
-                        '$("#leaderCleaning-image").css("background-repeat", "no-repeat");' +
-                        '</' + 'script>';
+                    imagePrepared = `<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width:96%">
+                        <div class="dz-details">
+                            <div class="dz-thumbnail" style="width:88%"> <img class="prev-img-3" alt="" src="${value?.signature}">
+                                <span class="dz-nopreview">No preview</span>
+                            </div>
+                        </div>
+                    </div>`;
                 } else { //belum ttd
                     datePreparedAttr = 'disabled';
                     imagePrepared = `
@@ -544,16 +541,13 @@ $configData = Helper::appClasses();
                     dateReviewedAttr = 'disabled';
                     ttdFile2 = value?.signature;
                     dateReviewed = value?.date ? moment(value.date, 'YYYY-MM-DD').format('DD-MM-YYYY') : '';
-                    imageReviewed = `<div id="koordinatorTeknik-image"></div>` +
-                        '<script type="text/javascript">' +
-                        '$("#koordinatorTeknik-image").css("background-color", "black");' +
-                        '$("#koordinatorTeknik-image").css("background-image", "url(' + value?.signature + ')");' +
-                        '$("#koordinatorTeknik-image").css("height", "200px");' +
-                        '$("#koordinatorTeknik-image").css("width", "200px");' +
-                        '$("#koordinatorTeknik-image").css("background-position", "center");' +
-                        '$("#koordinatorTeknik-image").css("background-size", "cover");' +
-                        '$("#koordinatorTeknik-image").css("background-repeat", "no-repeat");' +
-                        '</' + 'script>';
+                    imageReviewed = `<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width:96%">
+                        <div class="dz-details">
+                            <div class="dz-thumbnail" style="width:88%"> <img class="prev-img-3" alt="" src="${value?.signature}">
+                                <span class="dz-nopreview">No preview</span>
+                            </div>
+                        </div>
+                    </div>`;
                 } else { //belum ttd
                     dateReviewedAttr = 'disabled';
                     imageReviewed = `
@@ -613,16 +607,13 @@ $configData = Helper::appClasses();
                     dateAknowledge = value.date ? moment(value.date, 'YYYY-MM-DD').format('DD-MM-YYYY') : '';
                     ttdFile3 = value?.signature;
                     nameAknowledge = account.name;
-                    imageAknowledge = `<div id="kepalaUnitPelayanan-image"></div>` +
-                        '<script type="text/javascript">' +
-                        '$("#kepalaUnitPelayanan-image").css("background-color", "black");' +
-                        '$("#kepalaUnitPelayanan-image").css("background-image", "url(' + value?.signature + ')");' +
-                        '$("#kepalaUnitPelayanan-image").css("height", "200px");' +
-                        '$("#kepalaUnitPelayanan-image").css("width", "200px");' +
-                        '$("#kepalaUnitPelayanan-image").css("background-position", "center");' +
-                        '$("#kepalaUnitPelayanan-image").css("background-size", "cover");' +
-                        '$("#kepalaUnitPelayanan-image").css("background-repeat", "no-repeat");' +
-                        '</' + 'script>';
+                    imageAknowledge = `<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" style="width:96%">
+                        <div class="dz-details">
+                            <div class="dz-thumbnail" style="width:88%"> <img class="prev-img-3" alt="" src="${value?.signature}">
+                                <span class="dz-nopreview">No preview</span>
+                            </div>
+                        </div>
+                    </div>`;
                 } else { //belum ttd
                     dateAknowledgeAttr = 'disabled';
                     imageAknowledge = `
@@ -743,7 +734,7 @@ $configData = Helper::appClasses();
                                 datas.status = 'Disetujui LC';
                             } else if (account.level.id == '3') {
                                 datas.status = 'Disetujui KT';
-                            } else if (account.level.id == '2') {
+                            } else if (account.level.id == '2' || account.level.id == '9') {
                                 datas.status = 'Disetujui KA';
                             } else if (account.level.id == '10') {
                                 datas.status = 'Terbuat';

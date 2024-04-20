@@ -11,11 +11,16 @@ $configData = Helper::appClasses();
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}">
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}">
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}">
+<style type="text/css">
+    .select2-container {
+        width: 200px !important;
+    }
+</style>
 @endsection
 
 @section('content')
 <!-- Content -->
-<div class="container-xxl flex-grow-1 container-p-y">
+<div class="container-xxl flex-grow-1 container-p-y" style="overflow-x: hidden;">
     <form id="create-purchase-order" class="create-purchase-order" novalidate>
         <div class="row invoice-add">
             <!-- Invoice Add-->
@@ -125,9 +130,6 @@ $configData = Helper::appClasses();
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="row">
                                     <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center data-materai">
                                         <div class="mb-3">
                                             <label for="note" class="form-label fw-medium">Tanda Tangan</label>
@@ -140,13 +142,11 @@ $configData = Helper::appClasses();
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control w-px-250 " id="signature_name" placeholder="Nama & Jabatan" name="signature_name" />
+                                            <input type="text" class="form-control w-px-250 " id="signature_name" placeholder="Nama & Jabatan" name="signature_name" style="text-align: center" />
                                             <div class="invalid-feedback">Tidak boleh kosong</div>
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
@@ -176,6 +176,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/moment/moment.js')}}"></script>
 <script>
     let account = {!! json_encode(session('data')) !!}
     let ttdFile = null;
@@ -222,7 +223,6 @@ $configData = Helper::appClasses();
     function getDataPurchaseOrder(id) {
         $.ajax({
             url: "{{env('BASE_URL_API')}}" + '/api/purchase-order/' + id,
-            // url: "{{url('api/purchase-order')}}/" + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
@@ -236,7 +236,6 @@ $configData = Helper::appClasses();
             },
             success: function(res) {
                 let data = res.data;
-                console.log(data);
                 id = data.id;
                 nomorInvoice = data.invoice_number;
                 const myDropzone = new Dropzone('#dropzone-basic', {
@@ -248,24 +247,8 @@ $configData = Helper::appClasses();
                     autoQueue: false,
                     url: "../uploads/logo",
                     thumbnailWidth: 250,
-                    thumbnailHeight: 250,
+                    thumbnailHeight: null,
                     init: function() {
-                        let mockFile = {
-                            dataURL: data.signature
-                        };
-
-                        ttdFile = mockFile
-                        if (data.signature) {
-                            this.options.addedfile.call(this, mockFile);
-                            this.options.thumbnail.call(this, mockFile, data.signature);
-
-                            $('.dz-image').last().find('img').attr('width', '100%');
-
-                            // Optional: Handle the removal of the file
-                            mockFile.previewElement.querySelector(".dz-remove").addEventListener("click", function() {
-                                // Handle removal logic here
-                            });
-                        }
                         this.on('addedfile', function(file) {
                             $('.dz-image').last().find('img').attr('width', '100%');
                             while (this.files.length > this.options.maxFiles) this.removeFile(this.files[0]);
@@ -287,7 +270,11 @@ $configData = Helper::appClasses();
                 $(".grand_total").text(format(data.grand_total));
                 $("#grand_total_spelled").val(data.grand_total_spelled);
                 $("#term_and_conditions").val(data.term_and_conditions);
-                $("#signature_name").val(data.signature_name);
+                if(account.level.id == 1){
+                    $("#signature_name").val(account.name);
+                }else{
+                    $("#signature_name").val(data.signature_name);
+                }
                 getVendor(data.vendor_id);
                 getDetails(data.purchase_order_details);
                 if (account.level.id != '1') {
@@ -299,16 +286,6 @@ $configData = Helper::appClasses();
                     $(".btn-update span").html('<i class="ti ti-check ti-xs me-2"></i>Disetujui Kepala BM');
                     $('#materai_name').attr('readonly', true);
                 }
-                // getAttachments(data.vendor_attachment);
-                // if (data.signature) {
-                //     $("#signatture").css('background-img', 'black');
-                //     $("#signatture").css("background-image", `url('` + data.signature + `')`);
-                //     $("#signatture").css("height", `200px`);
-                //     $("#signatture").css("width", `200px`);
-                //     $("#signatture").css("background-position", `center`);
-                //     $("#signatture").css("background-size", `cover`);
-                //     $("#signatture").css("background-repeat", `no-repeat`);
-                // }
                 setDate();
                 if((data.status !='Terbuat' &&  account.level.id == 10)){
                     $('.btn-remove-mg').remove();
@@ -431,17 +408,6 @@ $configData = Helper::appClasses();
                 if (!form.checkValidity()) {
                     event.preventDefault();
                     event.stopPropagation();
-                    // let tenant = $("#tenant").val();
-                    // let bank = $("#bank").val();
-                    // let tglKontrak = $("#contract_date").val();
-
-                    // if (!tenant) {
-                    //     $("#tenant").addClass("invalid");
-                    // }
-                    // if (!bank) {
-                    //     $("#bank").addClass("invalid");
-                    // }
-
                 } else {
                     Swal.fire({
                         title: '<h2>Loading...</h2>',
@@ -453,7 +419,7 @@ $configData = Helper::appClasses();
                     // Submit your form
                     event.preventDefault();
                     let tenant = $("#tenant").val();
-                    let purchaseOrderDate = $("#purchase_order_date").val();
+                    let purchaseOrderDate = moment($("#purchase_order_date").val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                     let about = $("#about").val();
                     let vendorId = $("#vendor_id").val();
                     let note = $("#note").val();
@@ -489,16 +455,10 @@ $configData = Helper::appClasses();
                     });
 
                     let datas = {};
-                    // $('.create-invoice').find('.form-control').each(function() {
-                    //     var inputId = $(this).attr('id');
-                    //     var inputValue = $("#" + inputId).val();
-                    //     datas[$("#" + inputId).attr("name")] = inputValue;
-                    // });
-
                     datas.details = detail;
                     datas.vendor_id = parseInt(vendorId);
                     if (account.level.id == '1') {
-                        datas.status = "Terkirim";
+                        datas.status = "Disetujui BM";
                     } else {
                         datas.status = "Terbuat";
                     }
@@ -510,13 +470,8 @@ $configData = Helper::appClasses();
                     datas.note = note;
                     datas.signature = signature;
                     datas.signature_name = signatureName;
-
-                    // delete datas['undefined'];
-                    console.log(datas);
-
                     $.ajax({
                         url: "{{env('BASE_URL_API')}}" + '/api/purchase-order/' + id,
-                        // url: "{{url('api/purchase-order')}}/" + id,
                         type: "PATCH",
                         data: JSON.stringify(datas),
                         processData: false,
@@ -829,7 +784,7 @@ $configData = Helper::appClasses();
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <select class="form-control row-input tax" placeholder="Pajak" name="tax[]" value="` + details[i].tax_id + `" id="tax-${i}" required></select>
+                            <select class="form-control row-input tax" placeholder="Pajak" name="tax[]" value="` + details[i].tax_id + `" id="tax-${i}"></select>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
@@ -914,7 +869,7 @@ $configData = Helper::appClasses();
 
     function setDate() {
         $('.date').flatpickr({
-            dateFormat: 'Y-m-d'
+            dateFormat: 'd-m-Y'
         });
 
         const flatPickrEL = $(".date");
@@ -922,7 +877,7 @@ $configData = Helper::appClasses();
             flatPickrEL.flatpickr({
                 allowInput: true,
                 monthSelectorType: "static",
-                dateFormat: 'Y-m-d'
+                dateFormat: 'd-m-Y'
             });
         }
     }

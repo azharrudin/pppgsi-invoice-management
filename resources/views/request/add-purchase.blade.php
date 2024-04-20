@@ -95,7 +95,7 @@ $configData = Helper::appClasses();
                                 </div>
                                 <div class="col-md-12 mt-2">
                                     <div class="mb-1">
-                                        <textarea class="form-control add" rows="7" style="padding: 15px" id="additional_note" name="additional_note" placeholder="Termin pembayaran, garansi dll" required></textarea>
+                                        <textarea class="form-control add" rows="7" style="padding: 15px" id="additional_note" name="additional_note" placeholder="Catatan Tambahan" required></textarea>
                                         <div class="invalid-feedback">Tidak boleh kosong</div>
                                     </div>
                                 </div>
@@ -436,7 +436,7 @@ $configData = Helper::appClasses();
             `;
             $details.append($newRow);
             $('.date').flatpickr({
-                dateFormat: 'Y-m-d'
+                dateFormat: 'd-m-Y'
             });
         });
 
@@ -495,49 +495,49 @@ $configData = Helper::appClasses();
                 }
                 $('#details').prepend(getDetail);
             } else {
-                temp = `            
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nomor</th>
-                                                    <th>Part Number</th>
-                                                    <th colspan="3" class="text-center">Pembelian Terakhir</th>
-                                                    <th>Keterangan</th>
-                                                    <th>Kuantitas</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" class="form-control row-input" placeholder="Nomor" name="number[]" required style="width: 200px;" />
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" required style="width: 200px;" />
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="date form-control row-input" placeholder="Tanggal" name="last_buy_date[]" required style="width: 200px;" />
-                                                    </td>
-                                                    <td>
-                                                        <input type="number" class="form-control row-input" placeholder="Kuantitas" name="last_buy_quantity[]" required style="width: 200px;" />
-                                                    </td>
-                                                    <td>
-                                                        <input type="number" class="form-control row-input" placeholder="Persediaan" name="last_buy_stock[]" required style="width: 200px;" />
-                                                    </td>
-                                                    <td>
-                                                        <textarea class="form-control row-input" placeholder="Deskripsi" name="description[]" style="width: 200px;"></textarea>
-                                                    </td>
-                                                    <td>
-                                                        <input type="number" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required style="width: 200px;" />
-                                                    </td>
-                                                    <td>
-                                                        <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
-                                                            <i class="fas fa-trash"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                temp = `
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nomor</th>
+                                    <th>Part Number</th>
+                                    <th colspan="3" class="text-center">Pembelian Terakhir</th>
+                                    <th>Keterangan</th>
+                                    <th>Kuantitas</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control row-input" placeholder="Nomor" name="number[]" required style="width: 200px;" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control row-input" placeholder="No. Suku Cadang" name="part_number[]" required style="width: 200px;" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="date form-control row-input" placeholder="Tanggal" name="last_buy_date[]" required style="width: 200px;" />
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control row-input" placeholder="Kuantitas" name="last_buy_quantity[]" required style="width: 200px;" />
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control row-input" placeholder="Persediaan" name="last_buy_stock[]" required style="width: 200px;" />
+                                    </td>
+                                    <td>
+                                        <textarea class="form-control row-input" placeholder="Deskripsi" name="description[]" style="width: 200px;"></textarea>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required style="width: 200px;" />
+                                    </td>
+                                    <td>
+                                        <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                 `;
                 $('#details').prepend(temp);
             }
@@ -569,7 +569,7 @@ $configData = Helper::appClasses();
                         let department_id = $("#department_id").val();
                         let proposed_purchase_price = parseInt($("#proposed_purchase_price").val().replaceAll(',', ''));
                         let budget_status = $('.checkbox-check:checked').attr('id');;
-                        let request_date = $("#request_date").val();
+                        let request_date = moment($("#request_date").val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                         let requester = $("#requester").val();
                         let total_budget = $("#total_budget").val().replaceAll(',', '');
                         let remaining_budget = parseInt($("#remaining_budget").val().replaceAll(',', ''));
@@ -580,7 +580,7 @@ $configData = Helper::appClasses();
                         let signatures1 = {}
                         signatures1.type = "Prepared By";
                         signatures1.name = $('#warehouse_name').val();
-                        signatures1.date = $('#warehouse_date').val();
+                        signatures1.date = moment($('#warehouse_date').val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                         signatures1.signature = ttdFile1.dataURL;
 
                         var detail = [];

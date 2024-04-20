@@ -180,6 +180,7 @@
         <div class="row mt-1">
             <table style="width: 100%;">
                 <tr>
+                    <td style="border: 0.5px solid black; padding-left:10px">{{ $data->material_request_signatures[0]->type ?? ''}} : <br> {{ $data->material_request_signatures[0]->name ?? ''}} </td>
                     @foreach ($data->material_request_signatures as $item)
                         <td style="border: 0.5px solid black; padding-left:10px">{{ $item->type }} : <br> {{ $item->name}} </td>
                     @endforeach

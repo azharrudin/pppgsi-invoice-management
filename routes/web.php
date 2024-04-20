@@ -136,7 +136,7 @@ Route::group(['middleware' => 'cekauth'], function () {
             Route::get('/add', [MaterialRequestController::class, 'create'])->name('pages-list-material-request');
             Route::get('/data-material-request', [MaterialRequestController::class, 'datatable'])->name('data-material-reques');
             Route::get('/preview', [MaterialRequestController::class, 'preview'])->name('pages-list-material-request');
-            Route::get('/show/{id}', [MaterialRequestController::class, 'show'])->name('pages-show-material-request');
+            Route::get('/show/{id}', [MaterialRequestController::class, 'show'])->name('pages-list-material-request');
             Route::get('/edit/{id}', [MaterialRequestController::class, 'edit'])->name('pages-list-material-request');
             Route::get('/print/{id}', [MaterialRequestController::class, 'print']);
         });
