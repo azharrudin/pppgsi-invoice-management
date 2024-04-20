@@ -11,11 +11,16 @@ $configData = Helper::appClasses();
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}">
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}">
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}">
+<style type="text/css">
+    .select2-container {
+        width: 200px !important;
+    }
+</style>
 @endsection
 
 @section('content')
 <!-- Content -->
-<div class="container-xxl flex-grow-1 container-p-y">
+<div class="container-xxl flex-grow-1 container-p-y" style="overflow-x: hidden;">
     <form id="create-purchase-order" class="create-purchase-order" novalidate>
         <div class="row invoice-add">
             <!-- Invoice Add-->
@@ -34,7 +39,7 @@ $configData = Helper::appClasses();
                                     </dt>
                                     <dd class="col-sm-8 ">
                                         <div class="input-group input-group-merge">
-                                            <input type="text" class="form-control date" placeholder="Nomor" disabled>
+                                            <input type="text" class="form-control" placeholder="Nomor" id="purchase_order_number">
                                         </div>
                                     </dd>
                                 </dl>
@@ -154,7 +159,10 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
-<script>
+<script src="{{ asset('assets/vendor/libs/moment/moment.js') }}">
+</script>
+<script type="text/javascript">
+
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>`;
@@ -176,7 +184,7 @@ $configData = Helper::appClasses();
         getDetails();
         setDate();
         $("#tax-0").select2({
-            placeholder: 'Pajak ',
+            placeholder: 'Pilih Pajak',
             allowClear: true,
             ajax: {
                 url: "{{url('api/tax/select-paper')}}",
@@ -233,13 +241,14 @@ $configData = Helper::appClasses();
                     });
                     // Submit your form
                     event.preventDefault();
+                    let purchase_order_number = $("#purchase_order_number").val();
                     let tenant = $("#tenant").val();
-                    let purchaseOrderDate = $("#purchase_order_date").val();
+                    let purchaseOrderDate = moment($("#purchase_order_date").val(), 'DD-MM-YYYY').format('YYYY-MM-DD');
                     let about = $("#about").val();
                     let vendorId = $("#vendor_id").val();
                     let note = $("#note").val();
                     let grandTotalSpelled = $("#grand_total_spelled").val();
-                    let grandTotal = parseInt($(".grand_total").text().replaceAll(',', ''));
+                    let grandTotal = parseFloat($(".grand_total").text().replaceAll(',', ''));
                     let termAndConditions = $("#term_and_conditions").val();
 
                     var detail = [];
@@ -249,46 +258,39 @@ $configData = Helper::appClasses();
                         var input_index = Math.floor(index / 8); // Membagi setiap 5 input menjadi satu objek pada array
                         if (index % 8 == 0) {
                             detail[input_index] = {
-                                number: parseInt(input_value)
+                                number: parseFloat(input_value)
                             };
                         } else if (index % 8 == 1) {
                             detail[input_index].name = input_value;
                         } else if (index % 8 == 2) {
                             detail[input_index].specification = input_value;
                         } else if (index % 8 == 3) {
-                            detail[input_index].quantity = parseInt(input_value);
+                            detail[input_index].quantity = parseFloat(input_value);
                         } else if (index % 8 == 4) {
                             detail[input_index].units = input_value;
                         } else if (index % 8 == 5) {
-                            detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
+                            detail[input_index].price = parseFloat(input_value.replaceAll(',', ''));
                         } else if (index % 8 == 6) {
                             detail[input_index].tax = input_value;
                         } else if (index % 8 == 7) {
-                            detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
+                            detail[input_index].total_price = parseFloat(input_value.replaceAll(',', ''));
                         }
                     });
 
                     let datas = {};
-                    // $('.create-invoice').find('.form-control').each(function() {
-                    //     var inputId = $(this).attr('id');
-                    //     var inputValue = $("#" + inputId).val();
-                    //     datas[$("#" + inputId).attr("name")] = inputValue;
-                    // });
-
                     datas.details = detail;
-                    datas.vendor_id = parseInt(vendorId);
+                    datas.vendor_id = parseFloat(vendorId);
                     datas.status = "Terbuat";
                     datas.about = about;
-                    datas.grand_total = parseInt(grandTotal);
+                    datas.grand_total = parseFloat(grandTotal);
                     datas.purchase_order_date = purchaseOrderDate;
+                    datas.purchase_order_number = purchase_order_number;
                     datas.grand_total_spelled = grandTotalSpelled;
                     datas.term_and_conditions = termAndConditions;
                     datas.note = note;
-                    // delete datas['undefined'];
-                    console.log(datas);
 
                     $.ajax({
-                        url: "{{url('api/purchase-order')}}",
+                        url: "{{ env('BASE_URL_API')}}" + '/api/purchase-order',
                         type: "POST",
                         data: JSON.stringify(datas),
                         processData: false,
@@ -347,9 +349,9 @@ $configData = Helper::appClasses();
         // Hapus baris yang ditekan tombol hapus
         let index = $('.price').index(this);
         let total = 0;
-        let price = parseInt($(this).val().replaceAll(',', ''));
-        let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
-        let quantity = isNaN(parseInt($(`.quantity:eq(` + index + `)`).val())) ? 0 : parseInt($(`.quantity:eq(` + index + `)`).val());
+        let price = parseFloat($(this).val().replaceAll(',', ''));
+        let id = isNaN(parseFloat($(`.tax:eq(` + index + `)`).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
+        let quantity = isNaN(parseFloat($(`.quantity:eq(` + index + `)`).val())) ? 0 : parseFloat($(`.quantity:eq(` + index + `)`).val());
         let totalPrice = price * quantity;
         if (id == 0) {
             $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
@@ -362,7 +364,7 @@ $configData = Helper::appClasses();
                 dataType: "json",
                 success: function(response) {
                     let data = response.data.value;
-                    let tax = parseInt(data);
+                    let tax = parseFloat(data);
                     tax = tax / 100;
                     let totalPrice = ((price * quantity) * tax) + (price * quantity);
                     $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
@@ -378,9 +380,9 @@ $configData = Helper::appClasses();
     $(document).on('input', '.quantity', function(event) {
         let index = $('.quantity').index(this);
         let total = 0;
-        let quantity = parseInt($(this).val());
-        let price = isNaN(parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''))) ? 0 : parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
-        let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
+        let quantity = parseFloat($(this).val());
+        let price = isNaN(parseFloat($(`.price:eq(` + index + `)`).val().replaceAll(',', ''))) ? 0 : parseFloat($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+        let id = isNaN(parseFloat($(`.tax:eq(` + index + `)`).val())) ? 0 : $(`.tax:eq(` + index + `)`).val();
         let dataTotal = price * quantity;
         if (id == 0) {
             $(`.total_price:eq(` + index + `)`).val(isNaN(dataTotal) ? 0 : format(dataTotal));
@@ -394,7 +396,7 @@ $configData = Helper::appClasses();
                 dataType: "json",
                 success: function(response) {
                     let data = response.data.value;
-                    let tax = parseInt(data);
+                    let tax = parseFloat(data);
                     tax = tax / 100;
                     let totalPrice = ((price * quantity) * tax) + (price * quantity);
                     console.log(totalPrice);
@@ -408,37 +410,45 @@ $configData = Helper::appClasses();
         };
     });
 
-    $(document).on('input', '.tax', function(event) {
+    $(document).on('change', '.tax', function(event) {
         let id = event.currentTarget.value;
         let index = $('.tax').index(this);
         let data = 0;
-        $.ajax({
-            url: "{{url('api/tax/get-paper')}}/" + id,
-            type: "get",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(response) {
-                let data = response.data.value;
-                let total = 0;
-                let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
-                let quantity = parseInt($(`.quantity:eq(` + index + `)`).val());
-                let tax = parseInt(data);
-                tax = tax / 100;
-                let totalPrice = ((price * quantity) * tax) + (price * quantity);
-                $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
-                getTotal();
-            },
-            error: function(errors) {
-                console.log(errors);
-            }
-        });
+        if(id != ''){
+            $.ajax({
+                url: "{{url('api/tax/get-paper')}}/" + id,
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    let data = response.data.value;
+                    let total = 0;
+                    let price = parseFloat($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+                    let quantity = parseFloat($(`.quantity:eq(` + index + `)`).val());
+                    let tax = parseFloat(data);
+                    tax = tax / 100;
+                    let totalPrice = ((price * quantity) * tax) + (price * quantity);
+                    $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
+                    getTotal();
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
+        }else{
+            let price = parseFloat($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+            let quantity = parseFloat($(`.quantity:eq(` + index + `)`).val());
+            let totalPrice = (price * quantity);
+            $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
+            getTotal();
+        }
     });
 
     function getTotal() {
         let totalArr = [];
         let tempTotal = document.getElementsByClassName('total_price');
         for (let i = 0; i < tempTotal.length; i++) {
-            var slipOdd = parseInt(tempTotal[i].value.replaceAll(',', ''));
+            var slipOdd = parseFloat(tempTotal[i].value.replaceAll(',', ''));
             totalArr.push(Number(slipOdd));
         }
 
@@ -597,7 +607,7 @@ $configData = Helper::appClasses();
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-${index}" style="width:200px !important"></select>
+                            <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-${index}"></select>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
@@ -614,7 +624,7 @@ $configData = Helper::appClasses();
             </table>`;
         $details.append($newRow);
         $("#tax-" + index).select2({
-            placeholder: 'Pilih',
+            placeholder: 'Pilih Pajak',
             allowClear: true,
             ajax: {
                 url: "{{url('api/tax/select-paper')}}",
@@ -713,7 +723,7 @@ $configData = Helper::appClasses();
 
     function setDate() {
         $('.date').flatpickr({
-            dateFormat: 'Y-m-d'
+            dateFormat: 'd-m-Y'
         });
 
         const flatPickrEL = $(".date");
@@ -721,7 +731,7 @@ $configData = Helper::appClasses();
             flatPickrEL.flatpickr({
                 allowInput: true,
                 monthSelectorType: "static",
-                dateFormat: 'Y-m-d'
+                dateFormat: 'd-m-Y'
             });
         }
     }

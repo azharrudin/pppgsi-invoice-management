@@ -91,7 +91,6 @@ class PurchaseOrderController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
-        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
         try {
             $validatePurchaseOrder = $this->PurchaseOrderService->validatePurchaseOrder($request);
             if ($validatePurchaseOrder != "") throw new CustomException($validatePurchaseOrder, 400);
@@ -118,10 +117,9 @@ class PurchaseOrderController extends Controller
 
             return ["data" => $getPurchaseOrder];
         } catch (\Throwable $e) {
+            dd($e->getMessage());
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
-            $out->writeln($e->getMessage());
-            $out->writeln($detail["tax"]);
             DB::rollBack();
 
             if (is_a($e, CustomException::class)) {

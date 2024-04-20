@@ -63,10 +63,7 @@ class PurchaseOrderService{
 
         if($message == ""){
             $vendorExist = $this->CommonService->getDataById("App\Models\Vendor", $request->input("vendor_id"));
-            // $tenantExist = $this->CommonService->getDataById("App\Models\Tenant", $request->input("tenant_id"));
-
             if(is_null($vendorExist)) $message = "Vendor tidak ditemukan";
-            // else if(is_null($tenantExist)) $message = "Tenant tidak ditemukan";
         }
 
         return $message;

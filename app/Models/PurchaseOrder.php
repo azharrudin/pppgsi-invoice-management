@@ -38,17 +38,17 @@ class PurchaseOrder extends Model
     {
         parent::__construct($attributes);
 
-        $this->resetYearlyNumber();
+        // $this->resetYearlyNumber();
     }
 
-    public function resetYearlyNumber()
-    {
-        $year = now()->year;
+    // public function resetYearlyNumber()
+    // {
+    //     $year = now()->year;
 
-        $maxNumberForYear = static::whereYear('created_at', $year)->max('purchase_order_number') ?: 0;
+    //     $maxNumberForYear = static::whereYear('created_at', $year)->max('purchase_order_number') ?: 0;
 
-        $this->purchase_order_number = str_pad($maxNumberForYear + 1, 5, '0', STR_PAD_LEFT);
-    }
+    //     $this->purchase_order_number = str_pad($maxNumberForYear + 1, 5, '0', STR_PAD_LEFT);
+    // }
 
     public function vendor(): BelongsTo
     {
