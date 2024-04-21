@@ -59,8 +59,8 @@ $configData = Helper::appClasses();
                 }
                 let previewRow = '<a href="{{ url("invoice/show")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
                 return `<div class="d-flex align-items-center">
-                                                    ` + sendMailRow + previewRow + `
-                                                    <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a target="_blank" href="{{url('invoice/print')}}/` + data + `" class="dropdown-item">Download</a>${editButton}${deleteButton}</div></div></div>`
+                        ` + sendMailRow + previewRow + `
+                        <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a target="_blank" href="{{url('invoice/print')}}/` + data + `" class="dropdown-item">Download</a>${editButton}${deleteButton}</div></div></div>`
             }
 
         }];

@@ -42,7 +42,7 @@ $configData = Helper::appClasses();
 <!-- Invoice List Table -->
 <div class="card">
     <div class="card-datatable table-responsive pt-0">
-        <table class="invoice-list-table table" width="100%">
+        <table class="purchase-order-table table" width="100%">
         </table>
     </div>
 </div>
@@ -97,7 +97,7 @@ $configData = Helper::appClasses();
     }
 
     $((function() {
-        var a = $(".invoice-list-table");
+        var a = $(".purchase-order-table");
         var e = a.DataTable({
             processing: true,
             serverSide: true,
@@ -106,7 +106,7 @@ $configData = Helper::appClasses();
                 url: "{{ route('data-purchase-order') }}",
                 "data": function(d) {
                     d.start = 0;
-                    d.page = $(".invoice-list-table").DataTable().page.info().page + 1;
+                    d.page = $(".purchase-order-table").DataTable().page.info().page + 1;
                 }
             },
             columns: [{
@@ -186,9 +186,13 @@ $configData = Helper::appClasses();
                 title: "Action",
                 render: function(data, type, row) {
                     let editRow = '';
-                    let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
+                    let sendMailRow = '';
+                    if (row.status == 'Disetujui BM' && account.level.id == 10) {
+                        sendMailRow = `<a href="#" data-bs-toggle="tooltip" class="text-body send-email-po" data-id="${data}" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>`;
+                    }
                     let previewRow = '<a href="{{ url("request/purchase-order/show")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
                     return `<div class="d-flex align-items-center">
+                            `+ sendMailRow +`
                             `  + previewRow + `
                             <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a target="_blank" href="{{ url("request/purchase-order/print")}}/` + data + `" class="dropdown-item">Download</a><a href="{{ url("request/purchase-order/edit")}}/` + data + `" class="dropdown-item">Edit</a>
                             <div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
@@ -241,7 +245,7 @@ $configData = Helper::appClasses();
                     boundary: document.body
                 })
             }))
-        })), $(".invoice-list-table tbody").on("click", ".delete-record", (function() {
+        })), $(".purchase-order-table tbody").on("click", ".delete-record", (function() {
             e.row($(this).parents("tr")).remove().draw()
         })), setTimeout((() => {
             $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(".dataTables_length .form-select").removeClass("form-select-sm")
@@ -249,6 +253,65 @@ $configData = Helper::appClasses();
         $(document).on('change', '#status', function(x) {
             x.stopPropagation();
             e.ajax.url("{{ route('data-purchase-order') }}"+"?status="+$(this).val()).load(); // Memuat ulang data DataTable
+        });
+        $(document).on('click', '.send-email-po', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                icon: 'warning',
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Ya, Kirim!",
+                cancelButtonText: "Batal",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                    cancelButton: "btn fw-bold btn-active-light-primary"
+                }
+            }).then((result) => {
+                if (result.value) {
+                    let id = $(this).data('id');
+                    let datas = {}
+                    datas.status = 'Terkirim';
+                    Swal.fire({
+                        title: 'Memeriksa...',
+                        text: "Harap menunggu",
+                        imageUrl: "{{ asset('waiting.gif') }}",
+                        showConfirmButton: false,
+                        allowOutsideClick: false
+                    });
+                    $.ajax({
+                        url: "{{ env('BASE_URL_API')}}" + '/api/purchase-order/update-status/'+id,
+                        type: "PATCH",
+                        data: JSON.stringify(datas),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response) {
+                            Swal.fire({
+                                title: 'Berhasil',
+                                text: 'Berhasil Mengirim Purchase Order',
+                                icon: 'success',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            }).then((result) => {
+                                $(".purchase-order-table").DataTable().ajax.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text:  xhr?.responseJSON?.message,
+                                icon: 'error',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            })
+                        }
+                    });
+                }
+            });
         });
     }));
 </script>
