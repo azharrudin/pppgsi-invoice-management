@@ -30,6 +30,7 @@ class PurchaseOrder extends Model
         "term_and_conditions",
         "signature",
         "signature_name",
+        "proof_of_payment",
         "deleted_at",
     ];
 
