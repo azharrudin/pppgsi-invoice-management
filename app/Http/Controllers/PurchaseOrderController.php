@@ -370,7 +370,7 @@ class PurchaseOrderController extends Controller
                 $response = json_decode($apiRequest->getBody());
                 $data = $response->data;
 
-                $pdf = PDF::loadView('content.pages.purchase_order.download', ['data' => $data]);
+                $pdf = PDF::loadView('content.pages.purchase-order.download', ['data' => $data]);
                 $to = $purchaseOrder->vendor->email ?? '';
 
                 Mail::send('emails.email-template-purchase-order', ['data' => $dataEmail], function ($message) use ($to, $pdf, $dataEmail) {

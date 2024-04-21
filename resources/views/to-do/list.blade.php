@@ -710,7 +710,7 @@ $configData = Helper::appClasses();
                     allowOutsideClick: false
                 });
                 $.ajax({
-                    url: "{{ env('BASE_URL_API')}}" + '/api/invoice/update-status/'+id,
+                    url: "{{ env('BASE_URL_API')}}" + '/api/purchase-order/update-status/'+id,
                     type: "PATCH",
                     data: JSON.stringify(datas),
                     contentType: "application/json; charset=utf-8",
@@ -718,14 +718,14 @@ $configData = Helper::appClasses();
                     success: function(response) {
                         Swal.fire({
                             title: 'Berhasil',
-                            text: 'Berhasil Mengirim Invoice',
+                            text: 'Berhasil Mengirim Purchase Order',
                             icon: 'success',
                             customClass: {
                                 confirmButton: 'btn btn-primary'
                             },
                             buttonsStyling: false
                         }).then((result) => {
-                            $(".invoice-table").DataTable().ajax.reload();
+                            $(".purchase-order-table").DataTable().ajax.reload();
                         });
                     },
                     error: function(xhr, status, error) {
