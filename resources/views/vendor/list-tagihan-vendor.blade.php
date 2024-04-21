@@ -27,7 +27,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
-                            <h3 class="mb-1">300</h3>
+                            <h3 class="mb-1 count_tenant">0</h3>
                             <p class="mb-0" id="tenant">Tenant</p>
                         </div>
                     </div>
@@ -256,6 +256,8 @@ $configData = Helper::appClasses();
                 }))
             }
         });
+
+        setHeader();
 
         function setHeader() {
             Swal.fire({
