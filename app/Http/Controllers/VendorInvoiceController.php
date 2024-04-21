@@ -39,7 +39,7 @@ class VendorInvoiceController extends Controller
 
             $vendorId = $request->input("vendor_id", null);
 
-            $purchaseOrderQuery = PurchaseOrder::with("vendor")->with("tenant")->where("deleted_at", null)->where('status', 'like', '%disetujui bm%');
+            $purchaseOrderQuery = PurchaseOrder::with("vendor")->with("tenant")->where("deleted_at", null)->where('status', 'like', '%terkirim%');
             if ($value) {
                 $purchaseOrderQuery->where(function ($query) use ($value) {
                     $query->whereHas('vendor', function ($vendorQuery) use ($value) {
