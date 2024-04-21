@@ -1,5 +1,5 @@
 <p>Kepada Yth.<br>
-    Bapak/Ibu Tenant {{ $data["vendorName"] }}<br><br>
+    Bapak/Ibu Vendor {{ $data["vendorName"] }}<br><br>
 
     Hal: Informasi Purchase Order {{ $data["about"] }} <br><br>
 
