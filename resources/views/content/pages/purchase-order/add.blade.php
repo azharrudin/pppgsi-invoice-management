@@ -98,7 +98,24 @@ $configData = Helper::appClasses();
                                     <hr class="my-3 mx-auto">
                                 </div>
 
-                                <div class="row p-0 p-sm-4">
+                                <div class="row p-0">
+                                    <div class="col-md-6 mb-md-0">
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <span class="w-px-100">Total Pajak</span>
+                                                    <span class="fw-medium total_tax">0</span>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row p-0">
                                     <div class="col-md-6 mb-md-0 mb-3">
 
                                     </div>
@@ -107,7 +124,7 @@ $configData = Helper::appClasses();
                                             <div class="col-12">
                                                 <div class="d-flex justify-content-between mb-2">
                                                     <span class="w-px-100">Total</span>
-                                                    <span class="fw-medium grand_total"></span>
+                                                    <span class="fw-medium grand_total">0</span>
                                                 </div>
                                                 <hr>
                                             </div>
@@ -142,7 +159,6 @@ $configData = Helper::appClasses();
                 <div class="card mb-4">
                     <div class="card-body">
                         <button type="submit" id="save" class="btn btn-primary d-grid w-100 mb-2">Simpan</button>
-                        <!-- <button class="btn btn-label-secondary d-grid w-100 mb-2 btn-preview">Preview</button> -->
                         <button type="button" id="batal" class="btn btn-label-secondary btn-cancel d-grid w-100">Kembali</button>
                     </div>
                 </div>
@@ -159,8 +175,8 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
-<script src="{{ asset('assets/vendor/libs/moment/moment.js') }}">
-</script>
+<script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
 <script type="text/javascript">
 
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
@@ -277,6 +293,24 @@ $configData = Helper::appClasses();
                         }
                     });
 
+                    let totalArr = [];
+                    let tempTotal = document.getElementsByClassName('total_pajak');
+                    for (let i = 0; i < tempTotal.length; i++) {
+                        var slipOdd = 0;
+                        if(tempTotal[i].value != ''){
+                            slipOdd = parseFloat(tempTotal[i].value.replaceAll(',', ''));
+                        }
+                        totalArr.push(Number(slipOdd));
+                    }
+
+                    let totalPajak = 0;
+                    for (let i = 0; i < totalArr.length; i++) {
+                        totalPajak += totalArr[i];
+                    }
+                    if(isNaN(totalPajak)){
+                        totalPajak = 0;
+                    }
+
                     let datas = {};
                     datas.details = detail;
                     datas.vendor_id = parseFloat(vendorId);
@@ -287,6 +321,7 @@ $configData = Helper::appClasses();
                     datas.purchase_order_number = purchase_order_number;
                     datas.grand_total_spelled = grandTotalSpelled;
                     datas.term_and_conditions = termAndConditions;
+                    datas.total_tax = totalPajak;
                     datas.note = note;
 
                     $.ajax({
@@ -364,10 +399,18 @@ $configData = Helper::appClasses();
                 dataType: "json",
                 success: function(response) {
                     let data = response.data.value;
+                    let exlusice = response.data.exclusive;
                     let tax = parseFloat(data);
                     tax = tax / 100;
                     let totalPrice = ((price * quantity) * tax) + (price * quantity);
+                    total = (price * quantity) * tax;
+                    if(exlusice == 0){
+                        $(`.total_pajak:eq(` + index + `)`).val(0);
+                    }else{
+                        $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
+                    }
                     $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
+                    getPajakTotal();
                     getTotal();
                 },
                 error: function(errors) {
@@ -388,7 +431,6 @@ $configData = Helper::appClasses();
             $(`.total_price:eq(` + index + `)`).val(isNaN(dataTotal) ? 0 : format(dataTotal));
             getTotal();
         } else {
-            let idtax = 
             $.ajax({
                 url: "{{url('api/tax/get-paper')}}/" + id,
                 type: "get",
@@ -399,8 +441,15 @@ $configData = Helper::appClasses();
                     let tax = parseFloat(data);
                     tax = tax / 100;
                     let totalPrice = ((price * quantity) * tax) + (price * quantity);
-                    console.log(totalPrice);
+                    let exlusice = response.data.exclusive;
+                    total = (price * quantity) * tax;
+                    if(exlusice == 0){
+                        $(`.total_pajak:eq(` + index + `)`).val(0);
+                    }else{
+                        $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
+                    }
                     $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
+                    getPajakTotal();
                     getTotal();
                 },
                 error: function(errors) {
@@ -409,6 +458,27 @@ $configData = Helper::appClasses();
             });
         };
     });
+
+    function getPajakTotal() {
+        let totalArr = [];
+        let tempTotal = document.getElementsByClassName('total_pajak');
+        for (let i = 0; i < tempTotal.length; i++) {
+            var slipOdd = 0;
+            if(tempTotal[i].value != ''){
+                slipOdd = parseFloat(tempTotal[i].value.replaceAll(',', ''));
+            }
+            totalArr.push(Number(slipOdd));
+        }
+
+        let sum = 0;
+        for (let i = 0; i < totalArr.length; i++) {
+            sum += totalArr[i];
+        }
+        if(isNaN(sum)){
+            sum = 0;
+        }
+        $('.total_tax').text(format(sum));
+    }
 
     $(document).on('change', '.tax', function(event) {
         let id = event.currentTarget.value;
@@ -429,6 +499,9 @@ $configData = Helper::appClasses();
                     tax = tax / 100;
                     let totalPrice = ((price * quantity) * tax) + (price * quantity);
                     $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
+                    total = (price * quantity) * tax;
+                    $(`.total_pajak:eq(` + index + `)`).val(isNaN(total) ? 0 : format(total));
+                    getPajakTotal();
                     getTotal();
                 },
                 error: function(errors) {
@@ -566,9 +639,9 @@ $configData = Helper::appClasses();
 
     $(document).keypress(
         function(event){
-            if (event.which == '13') {
-                event.preventDefault();
-            }
+            if (event.which == '13' && event.target.nodeName != "TEXTAREA") {
+            event.preventDefault();
+        }
         }
     );
 
@@ -609,13 +682,14 @@ $configData = Helper::appClasses();
                         <td>
                             <select class="form-control row-input tax" placeholder="" name="tax[]" id="tax-${index}"></select>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
+                            <input type="hidden" class="form-control total_pajak" placeholder="" name="total_pajak[]" style="width: 100px;"/>
                         </td>
                         <td>
                             <input type="text" disabled class="form-control row-input total_price" placeholder="Jumlah" name="total_price[]" required style="width: 200px;" />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
+                            <a role="button" class="btn btn-danger text-center btn-remove-mg text-white ms-4" disabled>
                                 <i class="fas fa-trash"></i>
                             </a>
                         </td>
@@ -701,13 +775,14 @@ $configData = Helper::appClasses();
                         <td>
                             <select class="form-control row-input tax" placeholder="Pajak" name="tax[]" id="tax-0" style="width:200px !important"></select>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
+                            <input type="hidden" class="form-control total_pajak" placeholder="" name="total_pajak[]" style="width: 100px;"/>
                         </td>
                         <td>
                             <input type="text" disabled class="form-control row-input total_price" placeholder="Jumlah" name="total_price[]" required style="width: 200px;" />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
+                            <a role="button" class="btn btn-danger text-center btn-remove-mg text-white ms-4" disabled>
                                 <i class="fas fa-trash"></i>
                             </a>
                         </td>

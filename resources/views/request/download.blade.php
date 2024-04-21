@@ -225,7 +225,7 @@ return $hasil_rupiah;
                     <td style=" border: 1px solid black;">
                         @if(isset($data->purchase_request_signatures[1]->signature))
                         <div style="margin : auto;
-                                    background-image : url({{$data->purchase_request_signatures[0]->signature}});
+                                    background-image : url({{$data->purchase_request_signatures[1]->signature}});
                                     height: 150px;
                                     width: 150px;
                                     background-position: center center;

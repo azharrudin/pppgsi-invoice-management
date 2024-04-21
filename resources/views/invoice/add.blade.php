@@ -344,14 +344,14 @@ $configData = Helper::appClasses();
         var setNote = dataLocal ? dataLocal.notes : '';
 
         ClassicEditor.create(document.querySelector('#notes'), {
-                minHeight: '300px'
-            })
-            .then(editor => {
-                editor.setData(setNote);
-                note = editor;
-            }).catch(error => {
-                console.error(error);
-            });
+            minHeight: '300px'
+        })
+        .then(editor => {
+            editor.setData(setNote);
+            note = editor;
+        }).catch(error => {
+            console.error(error);
+        });
            
 
         window.addEventListener("pageshow", function(event) {
@@ -771,7 +771,6 @@ $configData = Helper::appClasses();
 
         $(document).on('change', '.tax', function(event) {
             let id = event.currentTarget.value;
-            console.log(id);
             let index = $('.tax').index(this);
             let data = 0;
             if (id == '') {
@@ -1093,7 +1092,6 @@ $configData = Helper::appClasses();
 
                         $.ajax({
                             url: "{{ env('BASE_URL_API')}}" + '/api/invoice',
-                            // url: "{{ url('api/invoice')}}",
                             type: "POST",
                             data: JSON.stringify(datas),
                             processData: false,
@@ -1118,7 +1116,6 @@ $configData = Helper::appClasses();
                                 });
                             },
                             error: function(xhr, status, error) {
-                                console.log(error);
                                 Swal.fire({
                                     title: 'Error!',
                                     text: xhr?.responseJSON?.message,

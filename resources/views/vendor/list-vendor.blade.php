@@ -73,15 +73,16 @@
                     </div>
                     <div class="row">
                         <div class="col col-md-6 mb-3">
+                            <label for="nameBackdrop" class="form-label">Nama PIC</label>
+                            <input type="text" id="pic" name="pic" class="form-control"
+                                placeholder="Masukan Nama PIC" required>
+                            <div class="invalid-feedback"> Masukan Nama PIC. </div>
+                        </div>
+                        <div class="col col-md-6 mb-3">
                             <label for="nameBackdrop" class="form-label">Telepon</label>
                             <input type="text" id="phone" name="phone" class="form-control"
                                 placeholder="Masukan Nomor Telepon" required>
                             <div class="invalid-feedback"> Masukan Nomor Telepon. </div>
-                        </div>
-                        <div class="col col-md-6 mb-3">
-                            <label for="nameBackdrop" class="form-label">Alamat</label>
-                            <textarea name="address" id="address" class="form-control" cols="30" rows="3" required></textarea>
-                            <div class="invalid-feedback"> Masukan Alamat. </div>
                         </div>
                         <div class="col mb-3" hidden>
                             <label for="nameBackdrop" class="form-label">Lantai</label>
@@ -91,7 +92,11 @@
                         </div>
                     </div>
                     <div class="row">
-                       
+                        <div class="col col-md-12 mb-3">
+                            <label for="nameBackdrop" class="form-label">Alamat</label>
+                            <textarea name="address" id="address" class="form-control" cols="30" rows="3" required></textarea>
+                            <div class="invalid-feedback"> Masukan Alamat. </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -137,16 +142,18 @@
                         </div>
                         <div class="row">
                             <div class="col mb-3">
+                                <label for="nameBackdrop" class="form-label">Nama PIC</label>
+                                <input type="text" id="edit_pic" name="pic" class="form-control"
+                                    placeholder="Masukan Nama PIC" required>
+                                <div class="invalid-feedback"> Please enter your pic name. </div>
+                            </div>
+                            <div class="col mb-3">
                                 <label for="nameBackdrop" class="form-label">Telepon</label>
                                 <input type="text" id="edit_phone" name="phone" class="form-control"
                                     placeholder="Masukan Telepon" required>
                                 <div class="invalid-feedback"> Please enter your phone. </div>
                             </div>
-                            <div class="col mb-3 col-md-6">
-                                <label for="nameBackdrop" class="form-label">Alamat</label>
-                                <textarea name="address" id="edit_address" cols="30" rows="3" class="form-control" required></textarea>
-                                <div class="invalid-feedback"> Please enter your Address. </div>
-                            </div>
+                           
                             <div class="col mb-3" hidden>
                                 <label for="nameBackdrop" class="form-label">Lantai</label>
                                 <input type="text" id="edit_floor" name="floor" class="form-control"
@@ -155,7 +162,11 @@
                             </div>
                         </div>
                         <div class="row">
-                           
+                            <div class="col mb-3 col-md-12">
+                                <label for="nameBackdrop" class="form-label">Alamat</label>
+                                <textarea name="address" id="edit_address" cols="30" rows="3" class="form-control" required></textarea>
+                                <div class="invalid-feedback"> Please enter your Address. </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -270,6 +281,15 @@
                     name: "Nama Perusahaan",
                     data: "name",
                     title: "Nama Perusahaan",
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        return data;
+                    }
+                },
+                {
+                    name: "PIC",
+                    data: "pic",
+                    title: "PIC",
                     className: 'text-center',
                     render: function(data, type, row) {
                         return data;
@@ -592,6 +612,7 @@
                             .trigger("change");
                         $('#edit_name').val(result.name);
                         $('#edit_email').val(result.email);
+                        $('#edit_pic').val(result.pic);
                         $('#edit_phone').val(result.phone);
                         $('#edit_company').val(result.company);
                         $('#edit_address').val(result.address);

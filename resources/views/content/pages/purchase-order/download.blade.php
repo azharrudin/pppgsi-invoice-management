@@ -63,17 +63,17 @@
                 <tr>
                     <td style="width: 60px;">No</td>
                     <td>:</td>
-                    <td></td>
+                    <td>{{ $data->purchase_order_number }}</td>
                 </tr>
                 <tr>
                     <td>Tanggal</td>
                     <td>:</td>
-                    <td></td>
+                    <td>{{ $data->purchase_order_date }}</td>
                 </tr>
                 <tr>
                     <td>Perihal</td>
                     <td>:</td>
-                    <td></td>
+                    <td>{{ $data->about }}</td>
                 </tr>
             </table>
         </div>
@@ -81,28 +81,22 @@
         <div class="row mt-3">
             <table class="table" style="width:100%;">
                 <tr>
-                    <td>Kepada Yt :</td>
+                    <td>Kepada Yth :</td>
                 </tr>
                 <tr>
-                    <td style="font-weight: bold;">PT. Berca Shidler Lifts</td>
+                    <td style="font-weight: bold;">{{ $data->vendor->name}}</td>
                 </tr>
                 <tr>
-                    <td>Menara Rajawali </td>
+                    <td>{!! nl2br(e($data->vendor->address)) !!} </td>
                 </tr>
                 <tr>
-                    <td>Jl. Mega Kuningan Lot. 51 Kawasan Mega Kuningan Jakarta 12950, Indonesia</td>
-                </tr>
-                <tr>
-                    <td>Telp (62-21) 57572199</td>
-                </tr>
-                <tr>
-                    <td>Fax (62-21) 57572199</td>
+                    <td>{{ $data->vendor->phone }}</td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td style="font-weight: bold;">Up Bpk Priyo Anggodo Satoro</td>
+                    <td style="font-weight: bold;">Up Ibu/Bpk {{ $data->vendor->pic }}</td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
@@ -111,7 +105,7 @@
                     <td>Dengan Hormat,</td>
                 </tr>
                 <tr>
-                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus consequatur quo maiores amet, iste, necessitatibus repudiandae et quaerat suscipit illo aperiam laborum esse aliquid aut. Nihil optio quam voluptates vero.</td>
+                    <td>Sehubungan dengan hasil negosiasi perihal pengadaan {{ $data->about }}, maka dengan ini kami mengajukan nama barang sbb :</td>
                 </tr>
             </table>
         </div>
@@ -120,42 +114,53 @@
             <table class="ta " style="width: 100%;">
                 <thead>
                     <tr>
-                        <td style="text-align:center; padding:10px;border: 0.5px solid black;">No</td>
-                        <td style="text-align:center; padding:10px;border: 0.5px solid black;">NAMA BARANG</td>
-                        <td style="text-align:center; padding:10px;border: 0.5px solid black;">SPESIFIKASI</td>
-                        <td style="text-align:center; padding:10px;border: 0.5px solid black;">QTY</td>
-                        <td style="text-align:center; padding:10px;border: 0.5px solid black;">SAT</td>
-                        <td style="text-align:center; padding:10px;border: 0.5px solid black;">HARGA / SAT Rp.</td>
-                        <td style="text-align:center; padding:10px;border: 0.5px solid black;">JUMLAH Rp.</td>
+                        <td style="text-align:center; padding:10px;border: 1px solid black;">No</td>
+                        <td style="text-align:center; padding:10px;border: 1px solid black;">NAMA BARANG</td>
+                        <td style="text-align:center; padding:10px;border: 1px solid black;">SPESIFIKASI</td>
+                        <td style="text-align:center; padding:10px;border: 1px solid black;">QTY</td>
+                        <td style="text-align:center; padding:10px;border: 1px solid black;">SAT</td>
+                        <td style="text-align:center; padding:10px;border: 1px solid black;">HARGA / SAT Rp.</td>
+                        <td style="text-align:center; padding:10px;border: 1px solid black;">JUMLAH Rp.</td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="border: 0.5px solid black; padding:10px;" class="text-center">a</td>
-                        <td style="border: 0.5px solid black;"></td>
-                        <td style="border: 0.5px solid black;"></td>
-                        <td style="border: 0.5px solid black;"></td>
-                        <td style="border: 0.5px solid black;"></td>
-                        <td style="border: 0.5px solid black;"></td>
-                        <td style="border: 0.5px solid black;"></td>
+                        <td style="border: 1px solid black;" class="text-center"></td>
+                        <td style="border: 1px solid black;"></td>
+                        <td style="border: 1px solid black;"></td>
+                        <td style="border: 1px solid black;"></td>
+                        <td style="border: 1px solid black;"></td>
+                        <td style="border: 1px solid black;"></td>
+                        <td style="border: 1px solid black;"></td>
                     </tr>
+                    @foreach ($data->purchase_order_details as $item)
                     <tr>
-                        <td colspan="6" style="border: 0.5px solid black; padding:10px;" class="text-center">Sub Total</td>
-                        <td style="border: 0.5px solid black; padding:10px;" class="text-center"></td>
+                        <td style="border: 1px solid black; text-align:center; padding:10px;" class="text-center">{{$item->number}}</td>
+                        <td style="border: 1px solid black; text-align:center;">{{$item->name}}</td>
+                        <td style="border: 1px solid black; text-align:center;">{{$item->specification}}</td>
+                        <td style="border: 1px solid black; text-align:center;">{{$item->quantity}}</td>
+                        <td style="border: 1px solid black; text-align:center;">{{$item->units}}</td>
+                        <td style="border: 1px solid black; text-align:center;">Rp. {{ number_format($item->price)}}</td>
+                        <td style="border: 1px solid black; text-align:center;">Rp. {{ number_format($item->price * $item->quantity )}}</td>
                     </tr>
+                    @endforeach
                     <tr>
-                        <td colspan="6" style="border: 0.5px solid black; padding:10px;" class="text-center">PPN 10%</td>
-                        <td style="border: 0.5px solid black; padding:10px;" class="text-center"></td>
+                        <td colspan="6" style="border: 1px solid black; padding:10px;" class="text-center">Total PPN</td>
+                        <td style="border: 1px solid black; padding:10px;text-align:right" class="text-center">Rp. {{ number_format($data->total_tax) }}</td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="6" style="border: 0.5px solid black; padding:10px; font-weight:bold;">Jumlah Net</td>
-                        <td style="border: 0.5px solid black; padding:10px;" class="text-center"></td>
+                        <td style="border: 1px solid black;" colspan="6" class="text-center"></td>
+                        <td style="border: 1px solid black;"></td>
                     </tr>
                     <tr>
-                        <td colspan="6" style="border: 0.5px solid black; padding:10px; font-weight:bold;">Terbilang</td>
-                        <td style="border: 0.5px solid black; padding:10px;" class="text-center"></td>
+                        <td colspan="6" style="border: 1px solid black; padding:10px; font-weight:bold;">Jumlah Net</td>
+                        <td style="border: 1px solid black; padding:10px;text-align:right" class="text-center">Rp. {{  number_format($data->grand_total) }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" style="border: 1px solid black; padding:10px; font-weight:bold;"><i>Terbilang : {{ $data->grand_total_spelled }}</i></td>
+                        <td style="border: 1px solid black; padding:10px;" class="text-center"></td>
                     </tr>
                 </tfoot>
             </table>
@@ -164,13 +169,38 @@
         <div class="row mt-3">
             <table style="width: 100%;">
                 <tr>
-                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et sint necessitatibus nisi ea assumenda mollitia. Voluptatibus iure nulla quam ex sunt impedit, molestias aperiam, amet nobis enim eius sed deleniti!
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque, natus quo ex illum sapiente voluptatum facere maxime provident minima necessitatibus at ea quaerat earum quidem sint inventore. Sequi, ipsam sed.
+                    <td style="width: 200px">Delivery
+                    </td>
+                    <td>
+                        : 1 (Satu) minggu hari kerja setelah PO diterima
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 200px">Cara Pembayaran
+                    </td>
+                    <td>
+                        : 100% setelah material diantar dengan baik dan benar.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 200px">Kelengkapan tagihan
+                    </td>
+                    <td>
+                        : Kwitansi + materai, BA dan copy PO
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 200px">Alamat Pengiriman
+                    </td>
+                    <td>
+                        : Graha Surveyor Indonesia Lt. B2 Jl. Jend Gatot Subroto Kav.56 Jakarta
                     </td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
                 </tr>
+            </table>
+            <table>
                 <tr>
                     <td>Demikian surat pemesanan (PO) ini kami sampaikan, atas perhatian dan kerjasamanya diucapkan terimakasih.</td>
                 </tr>
@@ -182,6 +212,25 @@
                 </tr>
                 <tr>
                     <td>PPP Graha Surveyor Indonesia</td>
+                </tr>
+            </table>
+            <table style="border: none">
+                <tr>
+                    <td>
+                        @if(isset($data->signature))
+                        <div style="
+                                    background-image : url({{$data->signature}});
+                                    height: 150px;
+                                    width: 150px;
+                                    background-position: left;
+                                    background-size: contain;
+                                    background-repeat: no-repeat;">
+                        </div>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ $data->signature_name }}</td>
                 </tr>
             </table>
         </div>
