@@ -100,6 +100,7 @@ class VendorController extends Controller
             'order' => 'id',
             'sort' => 'desc',
             'value' => $request->search['value'],
+            'status' => $request->status,
         ]);
         $response = json_decode($apiRequest->getBody());
         $data = [];

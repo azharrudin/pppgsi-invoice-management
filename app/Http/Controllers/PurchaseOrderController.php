@@ -13,6 +13,9 @@ use App\Services\PurchaseOrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use PDF;
+use Illuminate\Support\Facades\Mail;
 
 class PurchaseOrderController extends Controller
 {
@@ -349,6 +352,34 @@ class PurchaseOrderController extends Controller
             PurchaseOrder::findOrFail($id)->update($dataPayload);
 
             DB::commit();
+
+            if ($request->input("status") == 'Terkirim') {
+                $purchaseOrder = PurchaseOrder::with('purchaseOrderDetails', 'vendor')->where('id', $id)->first();
+                $hariIni = \Carbon\Carbon::now()->locale('id');
+                $bulan = $hariIni->monthName;
+                $tahun = $hariIni->format('Y');
+                $dataEmail["vendorName"] = $purchaseOrder->vendor->name ?? '';
+                $dataEmail["month"] = $bulan;
+                $dataEmail["year"] = $tahun;
+                $dataEmail["about"] = $purchaseOrder->about;
+                $dataEmail["grand_total"] = $purchaseOrder->grand_total;
+                $dataEmail["terbilang"] = $purchaseOrder->grand_total_spelled;
+                $dataEmail["po_number"] = $purchaseOrder->purchase_order_number;
+
+                $apiRequest = Http::get(env('BASE_URL_API') . '/api/purchase-order/' . $id);
+                $response = json_decode($apiRequest->getBody());
+                $data = $response->data;
+
+                $pdf = PDF::loadView('content.pages.purchase_order.download', ['data' => $data]);
+                $to = $purchaseOrder->vendor->email ?? '';
+
+                Mail::send('emails.email-template-purchase-order', ['data' => $dataEmail], function ($message) use ($to, $pdf, $dataEmail) {
+                    $name = "Purchase Order ".$dataEmail['po_number'].".pdf";
+                    $message->to($to)
+                        ->subject('Tanda Terima Pembayaran No Invoice : ' . $dataEmail['po_number'])
+                        ->attachData($pdf->output(), $name);
+                });
+            }
             $getPurchaseOrder =  PurchaseOrder::with("purchaseOrderDetails")->with("vendor")->with("tenant")->where("id", $id)->where("deleted_at", null)->first();
 
             return ["data" => $getPurchaseOrder];
