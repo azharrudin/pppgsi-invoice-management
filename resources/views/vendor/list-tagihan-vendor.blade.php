@@ -25,19 +25,10 @@ $configData = Helper::appClasses();
         <div class="card-body card-widget-separator">
             <div class="row gy-4 gy-sm-1">
                 <div class="col-sm-6 col-lg-4">
-                    <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
-                        <div>
-                            <h3 class="mb-1 count_tenant">0</h3>
-                            <p class="mb-0" id="tenant">Tenant</p>
-                        </div>
-                    </div>
-                    <hr class="d-none d-sm-block d-lg-none me-4">
-                </div>
-                <div class="col-sm-6 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
-                            <h3 class="mb-1">50</h3>
-                            <p class="mb-0" id="tt">Tanda Terima</p>
+                            <h3 class="mb-1 count_receipt">0</h3>
+                            <p class="mb-0" id="total_tagihan">Total Tagihan</p>
                         </div>
                     </div>
                     <hr class="d-none d-sm-block d-lg-none">
@@ -45,7 +36,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
                         <div>
-                            <h3 class="mb-1">Rp. 20.000.000</h3>
+                            <h3 class="mb-1 count_receipt_paid">Rp. 0</h3>
                             <p class="mb-0">Terbayarkan</p>
                         </div>
                     </div>
@@ -268,14 +259,13 @@ $configData = Helper::appClasses();
                 allowEscapeKey: false
             });
             $.ajax({
-                url: "{{ env('BASE_URL_API')}}" +'/api/invoice/report',
+                url: "{{ env('BASE_URL_API')}}" +'/api/vendor-invoice/report',
                 type: "GET",
                 dataType: "json",
                 success: function(res) {
-                    $('.count_tenant').html(res.count_tenant);
-                    $('.count_invoice').html(res.count_invoice);
-                    $('.invoice_paid').html('Rp. '+parseInt(res.invoice_paid).toLocaleString('en-US'));
-                    $('.invoice_not_paid').html('Rp. '+parseInt(res.invoice_not_paid).toLocaleString('en-US'));
+                    console.log(res);
+                    $('.count_receipt').html(res.count_receipt);
+                    $('.count_receipt_paid').html('Rp. '+parseFloat(res.count_receipt_paid).toLocaleString('en-US'));
                     Swal.close();
                 },
                 error: function(errors) {

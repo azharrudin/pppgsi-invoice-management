@@ -183,17 +183,18 @@ class VendorInvoiceController extends Controller
                 $end->setTime(23, 59, 59);
             }
 
-            $countTenant = Tenant::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
-            $countReceipt = Receipt::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
-            $countReceiptPaid = Receipt::where("deleted_at", null)->
+            $countVendorInvoice = 0;
+            $countVendorInvoicePaid = 0;
+
+            $countVendorInvoice = PurchaseOrder::where("deleted_at", null)->whereBetween("created_at", [$start, $end]))->where('status', 'like', '%disetujui bm%')->count();
+            $countVendorInvoicePaid = PurchaseOrder::where("deleted_at", null)->
                 whereBetween("created_at", [$start, $end])->
                 where("status", "like", "%Lunas%")->
                 sum("grand_total");
 
             return [
-                "count_tenant" => $countTenant,
-                "count_receipt" => $countReceipt,
-                "count_receipt_paid" => $countReceiptPaid,
+                "count_purchase_order" => $countVendorInvoice,
+                "count_purchase_order_paid" => $countVendorInvoicePaid,
             ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
