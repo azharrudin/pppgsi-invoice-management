@@ -78,6 +78,7 @@ Route::resource('work-order', WorkOrderController::class);
 
 Route::get("vendor/select", [VendorController::class, "select"]);
 Route::get('vendor/report', [VendorController::class, "report"]);
+Route::post('vendor/email', [VendorController::class, "vendor"]);
 Route::resource('vendor', VendorController::class);
 
 Route::get('material-request/select', [MaterialRequestController::class, "select"]);
