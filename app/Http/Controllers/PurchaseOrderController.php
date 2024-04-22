@@ -397,7 +397,7 @@ class PurchaseOrderController extends Controller
         }
     }
 
-    public function vendor(Request $request)
+    public function vendor(Request $request, $id)
     {
         try {
             [
@@ -405,11 +405,10 @@ class PurchaseOrderController extends Controller
                 "page" => $page,
                 "order" => $order,
                 "sort" => $sort,
-                "vendor_id" => $vendor_id,
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $purchaseOrderQuery = PurchaseOrder::with("vendor")->where("vendor_id", $vendor_id)->where("deleted_at", null);
+            $purchaseOrderQuery = PurchaseOrder::with("vendor")->where("vendor_id", $id)->where("deleted_at", null);
             if ($value) {
                 $purchaseOrderQuery->where(function ($query) use ($value) {
                     $query->whereHas('vendor', function ($vendorQuery) use ($value) {
