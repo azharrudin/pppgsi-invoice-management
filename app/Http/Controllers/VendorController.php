@@ -254,4 +254,12 @@ class VendorController extends Controller
             return response()->json(['message' => $errorMessage], $errorStatusCode);
         }
     }
+
+    public function vendor($email)
+    {
+        $getVendor = Vendor::where("email", $email)->first();
+        if(is_null($getVendor)) throw new CustomException("Vendor tidak ditemukan", 404);
+
+        return ["data" => $getVendor];
+    }
 }
