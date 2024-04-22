@@ -397,7 +397,7 @@ class PurchaseOrderController extends Controller
         }
     }
 
-    public function vendor(Request $request, $id)
+    public function vendor(Request $request)
     {
         try {
             [
