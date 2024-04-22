@@ -255,9 +255,9 @@ class VendorController extends Controller
         }
     }
 
-    public function vendor($email)
+    public function vendor(Request $request)
     {
-        $getVendor = Vendor::where("email", $email)->first();
+        $getVendor = Vendor::where("email", $request->email)->first();
         if(is_null($getVendor)) throw new CustomException("Vendor tidak ditemukan", 404);
 
         return ["data" => $getVendor];
