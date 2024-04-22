@@ -93,6 +93,7 @@ Route::resource('purchase-request', PurchaseRequestController::class);
 
 Route::get("purchase-order/select", [PurchaseOrderController::class, "select"]);
 Route::get("purchase-order/report", [PurchaseOrderController::class, "report"]);
+Route::get("purchase-order-vendor", [PurchaseOrderController::class, "vendor"]);
 Route::patch("purchase-order/update-status/{id}", [PurchaseOrderController::class, "update_status"]);
 Route::resource('purchase-order', PurchaseOrderController::class);
 

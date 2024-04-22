@@ -396,4 +396,58 @@ class PurchaseOrderController extends Controller
             return response()->json(['message' => $errorMessage], $errorStatusCode);
         }
     }
+
+    public function vendor(Request $request, $id)
+    {
+        try {
+            [
+                "perPage" => $perPage,
+                "page" => $page,
+                "order" => $order,
+                "sort" => $sort,
+                "vendor_id" => $vendor_id,
+                "value" => $value
+            ] = $this->CommonService->getQuery($request);
+
+            $purchaseOrderQuery = PurchaseOrder::with("vendor")->where("vendor_id", $vendor_id)->where("deleted_at", null);
+            if ($value) {
+                $purchaseOrderQuery->where(function ($query) use ($value) {
+                    $query->whereHas('vendor', function ($vendorQuery) use ($value) {
+                        $vendorQuery->where('name', 'like', '%' . $value . '%');
+                    })
+                        ->orWhere('purchase_order_number', 'like', '%' . $value . '%')
+                        ->orWhere('about', 'like', '%' . $value . '%')
+                        ->orWhere('grand_total', 'like', '%' . $value . '%')
+                        ->orWhere('purchase_order_date', 'like', '%' . $value . '%')
+                        ->orWhere('status', 'like', '%' . $value . '%');
+                });
+            }
+            $getPurchaseOrder = $purchaseOrderQuery
+                ->select("id", "purchase_order_number", "vendor_id", "about", "grand_total", "purchase_order_date", "status")
+                ->orderBy($order, $sort)
+                ->paginate($perPage);
+            $totalCount = $getPurchaseOrder->total();
+
+            $purchaseOrderArr = $this->CommonService->toArray($getPurchaseOrder);
+
+            return [
+                "data" => $purchaseOrderArr,
+                "per_page" => $perPage,
+                "page" => $page,
+                "size" => $totalCount,
+                "pages" => ceil($totalCount / $perPage)
+            ];
+        } catch (\Exception $e) {
+            dd($e);
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+
+            if (is_a($e, CustomException::class)) {
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
 }
