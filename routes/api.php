@@ -121,6 +121,7 @@ Route::get("scope/select", [ScopeController::class, "select"]);
 Route::resource('scope', ScopeController::class);
 
 Route::get("vendor-invoice/vendor-invoice-report-export", [VendorInvoiceController::class, "vendorInvoiceReportExport"]);
+Route::delete("vendor-invoice/add-attachment/{id}", [VendorInvoiceController::class, "deleteVendorAttachment"]);
 Route::get("vendor-invoice/report", [VendorInvoiceController::class, "report"]);
 Route::post("vendor-invoice/add-attachment/{id}", [VendorInvoiceController::class, "add_attachment"]);
 Route::get("vendor-invoice/", [VendorInvoiceController::class, "index"]);

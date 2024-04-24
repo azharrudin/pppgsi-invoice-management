@@ -121,6 +121,31 @@ class VendorInvoiceController extends Controller
         }
     }
 
+    public function deleteVendorAttachment($id){
+        DB::beginTransaction();
+        try {
+            $id = (int) $id;
+            $vendorAttachmentExist = VendorAttachment::find($id);
+            if (is_null($vendorAttachmentExist)) throw new CustomException("Attachment tidak ditemukan", 404);
+
+            $vendorAttachmentExist->delete();
+
+            DB::commit();
+            return response()->json(['message' => 'Attachment berhasil dihapus'], 200);
+        } catch (\Throwable $e) {
+            $errorMessage = "Internal server error";
+            $errorStatusCode = 500;
+            DB::rollBack();
+
+            if (is_a($e, CustomException::class)) {
+                $errorMessage = $e->getMessage();
+                $errorStatusCode = $e->getStatusCode();
+            }
+
+            return response()->json(['message' => $errorMessage], $errorStatusCode);
+        }
+    }
+
     public function vendorInvoiceReportExport(Request $request)
     {
         try {
@@ -175,6 +200,7 @@ class VendorInvoiceController extends Controller
             [
                 "start" => $start,
                 "end" => $end,
+                "status" => $status,
             ] = $this->CommonService->getQuery($request);
 
             if(is_null($start)) $start = Carbon::now()->firstOfMonth();
@@ -186,7 +212,7 @@ class VendorInvoiceController extends Controller
             $countVendorInvoice = 0;
             $countVendorInvoicePaid = 0;
 
-            $countVendorInvoice = PurchaseOrder::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->where('status', 'like', '%disetujui bm%')->count();
+            $countVendorInvoice = PurchaseOrder::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
             $countVendorInvoicePaid = PurchaseOrder::where("deleted_at", null)->
                 whereBetween("created_at", [$start, $end])->
                 where("status", "like", "%Lunas%")->
