@@ -92,16 +92,22 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col col-md-12 mb-3">
+                        <div class="col col-md-6 mb-3">
+                            <label for="nameBackdrop" class="form-label">Password</label>
+                            <input type="password" id="password" name="password" class="form-control"
+                                placeholder="Masukan Password" required>
+                            <div class="invalid-feedback"> Masukan Password</div>
+                        </div>
+                        <div class="col col-md-6 mb-3">
                             <label for="nameBackdrop" class="form-label">Alamat</label>
-                            <textarea name="address" id="address" class="form-control" cols="30" rows="3" required></textarea>
+                            <textarea name="address" id="address" class="form-control" cols="30" rows="3" required placeholder="Masukan Alamat"></textarea>
                             <div class="invalid-feedback"> Masukan Alamat. </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal"
-                        id="modal_vendor_cancel">Close</button>
+                        id="modal_vendor_add_close">Close</button>
                     <button type="submit" class="btn btn-primary save-vendor">
                         <span class="indicator-label">Simpan</span>
                         <span class="indicator-progress">
@@ -162,7 +168,13 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col mb-3 col-md-12">
+                            <div class="col-md-6 mb-3">
+                                <label for="nameBackdrop" class="form-label">Password</label>
+                                <input type="text" id="edit_passord" name="password" class="form-control"
+                                    placeholder="Masukan Password">
+                                <div class="invalid-feedback"> Please enter your floor. </div>
+                            </div>
+                            <div class="col mb-3 col-md-6">
                                 <label for="nameBackdrop" class="form-label">Alamat</label>
                                 <textarea name="address" id="edit_address" cols="30" rows="3" class="form-control" required></textarea>
                                 <div class="invalid-feedback"> Please enter your Address. </div>
@@ -171,7 +183,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal"
-                            id="modal_vendor_cancel">Close</button>
+                            id="modal_vendor_edit_close">Close</button>
                         <button type="submit" class="btn btn-primary save-vendor">
                             <span class="indicator-label">Simpan</span>
                         </button>
@@ -184,7 +196,7 @@
     {{-- Card Preview --}}
     <div class="modal fade" id="preview-vendor-data" data-bs-backdrop="static" tabindex="-1">
         <div class="modal-dialog">
-            <form class="modal-content edit-vendor" id="edit-vendor" novalidate>
+            <form class="modal-content preview-vendor" id="preview-vendor" novalidate>
                 <input type="hidden" id="preview_id">
                 <div class="modal-header">
                     <h5 class="modal-title" id="backDropModalTitle">Preview Vendor</h5>
@@ -444,22 +456,47 @@
                             processData: false,
                             contentType: false,
                             success: function(response) {
-                                $('.indicator-progress').hide();
-                                $('.indicator-label').show();
-                                document.getElementById("create-vendor").reset();
-                                Swal.fire({
-                                    title: 'Berhasil',
-                                    text: 'Berhasil Menambahkan Vendor',
-                                    icon: 'success',
-                                    customClass: {
-                                        confirmButton: 'btn btn-primary'
-                                    },
-                                    buttonsStyling: false
-                                })
+                                let datas = {}
+                                datas.name = response.name;
+                                datas.email = response.email;
+                                datas.password = $('#password').val();
+                                datas.department_id = 7;
+                                datas.level_id = 11;
+                                datas.status = 'Active';
+                                datas.image = '';
+                                $.ajax({
+                                    url: "{{ env('BASE_URL_API')}}" +'/api/user',
+                                    type: "POST",
+                                    data: datas,
+                                    success: function(response) {
+                                        $('.indicator-progress').hide();
+                                        $('.indicator-label').show();
+                                        Swal.fire({
+                                            title: 'Berhasil',
+                                            text: 'Berhasil Menambahkan Vendor',
+                                            icon: 'success',
+                                            customClass: {
+                                                confirmButton: 'btn btn-primary'
+                                            },
+                                            buttonsStyling: false
+                                        })
 
-                                $('#modal_vendor_cancel').click();
-                                $('#create-vendor')[0].reset();
-                                $(".list-vendor-table").DataTable().ajax.reload();
+                                        $('#create-vendor-data').modal('hide');
+                                        $('#create-vendor').removeClass('was-validated');
+                                        $(".list-vendor-table").DataTable().ajax.reload();
+                                    },
+                                    error: function(xhr, status, error) {
+                                        Swal.fire({
+                                            title: 'Error!',
+                                            text: xhr?.responseJSON?.message,
+                                            icon: 'error',
+                                            customClass: {
+                                                confirmButton: 'btn btn-primary'
+                                            },
+                                            buttonsStyling: false
+                                        })
+                                    }
+                                });
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
@@ -496,7 +533,7 @@
                         Swal.fire({
                             title: 'Memeriksa...',
                             text: "Harap menunggu",
-                            imageUrl: "{{ asset('waiting.gif') }}",
+                            html: sweet_loader + '<h5>Please Wait</h5>',
                             showConfirmButton: false,
                             allowOutsideClick: false
                         });
@@ -511,20 +548,49 @@
                             type: "PATCH",
                             data: data,
                             success: function(response) {
-                                $('.indicator-progress').hide();
-                                $('.indicator-label').show();
-
-                                Swal.fire({
-                                    title: 'Berhasil',
-                                    text: 'Berhasil memperbarui Vendor',
-                                    icon: 'success',
-                                    customClass: {
-                                        confirmButton: 'btn btn-primary'
-                                    },
-                                    buttonsStyling: false
-                                }).then(async function(res) {
-                                    $(".list-vendor-table").DataTable().ajax.reload(); 
-                                })
+                                if( $('#edit_password').val() != ''){
+                                    let datas = {}
+                                    datas.name = response.name;
+                                    datas.email = response.email;
+                                    datas.password = $('#password').val();
+                                    datas.department_id = 7;
+                                    datas.level_id = 11;
+                                    datas.status = 'Active';
+                                    datas.image = '';
+                                    $.ajax({
+                                        url: "{{ env('BASE_URL_API')}}" +'/api/user/'+ id,
+                                        type: "PATCH",
+                                        data: datas,
+                                        success: function(response) {
+                                            $('.indicator-progress').hide();
+                                            $('.indicator-label').show();
+                                            Swal.fire({
+                                                title: 'Berhasil',
+                                                text: 'Berhasil Update Vendor',
+                                                icon: 'success',
+                                                customClass: {
+                                                    confirmButton: 'btn btn-primary'
+                                                },
+                                                buttonsStyling: false
+                                            })
+    
+                                            $('#edit-vendor-data').modal('hide');
+                                            $('#edit-vendor').removeClass('was-validated');
+                                            $(".list-vendor-table").DataTable().ajax.reload();
+                                        },
+                                        error: function(xhr, status, error) {
+                                            Swal.fire({
+                                                title: 'Error!',
+                                                text: xhr?.responseJSON?.message,
+                                                icon: 'error',
+                                                customClass: {
+                                                    confirmButton: 'btn btn-primary'
+                                                },
+                                                buttonsStyling: false
+                                            })
+                                        }
+                                    });
+                                }
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
@@ -693,7 +759,7 @@
                     Swal.fire({
                         title: 'Memeriksa...',
                         text: "Harap menunggu",
-                        imageUrl: "{{ asset('waiting.gif') }}",
+                        html: sweet_loader + '<h5>Please Wait</h5>',
                         showConfirmButton: false,
                         allowOutsideClick: false
                     });

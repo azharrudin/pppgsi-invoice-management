@@ -728,7 +728,7 @@ $configData = Helper::appClasses();
                                             <input type="number" class="form-control row-input" placeholder="Kuantitas" name="quantity[]" required style="width: 200px;" />
                                         </td>
                                         <td>
-                                            <a role="button" class="btn btn-primary text-center btn-remove-mg text-white ms-4" disabled>
+                                            <a role="button" class="btn btn-danger text-center btn-remove-mg text-white ms-4" disabled>
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </td>

@@ -145,7 +145,7 @@ $configData = Helper::appClasses();
                     Swal.fire({
                         title: 'Memeriksa...',
                         text: "Harap menunggu",
-                        imageUrl: "{{ asset('waiting.gif') }}",
+                        html: sweet_loader + '<h5>Please Wait</h5>',
                         showConfirmButton: false,
                         allowOutsideClick: false
                     });
@@ -205,7 +205,7 @@ $configData = Helper::appClasses();
                     Swal.fire({
                         title: 'Memeriksa...',
                         text: "Harap menunggu",
-                        imageUrl: "{{ asset('waiting.gif') }}",
+                        html: sweet_loader + '<h5>Please Wait</h5>',
                         showConfirmButton: false,
                         allowOutsideClick: false
                     });

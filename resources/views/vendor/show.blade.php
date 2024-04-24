@@ -62,9 +62,6 @@ $configData = Helper::appClasses();
 
                         </div>
                     </div>
-                    <div class="row px-3 mb-3">
-                        <span class="form-label" id="note"></span>
-                    </div>
 
                     <div class="row px-3 mb-3 ">
                         <div class="table-responsive border-top">
@@ -85,28 +82,7 @@ $configData = Helper::appClasses();
                                     <tr>
                                         <td colspan="4"></td>
                                         <td colspan="2">
-                                            <p class="">Sub Total</p>
-                                        </td>
-                                        <td colspan="2" style="text-align: right;">
-                                            <p id="subtotal" class=""></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4"></td>
-                                        <td colspan="1">
-                                            <p class="">Pajak</p>
-                                        </td>
-                                        <td colspan="1">
-                                            <p class="" id=""></p>
-                                        </td>
-                                        <td colspan="2" style="text-align: right;">
-                                            <p id="tax" class=""></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4"></td>
-                                        <td colspan="2">
-                                            <p class="">Jumlah Nett</p>
+                                            <p class="">Total</p>
                                         </td>
                                         <td colspan="2" style="text-align: right;">
                                             <p id="grand_total" class=""></p>
@@ -126,29 +102,24 @@ $configData = Helper::appClasses();
                         </div>
                     </div>
                     <div class="row px-3 mb-3">
-                        <div class="col-12">
+                        <div class="col-6">
                             <label for="note" class="form-label fw-medium">Syarat & Ketentuan</label>
                             <br>
                             <span class="form-label" id="term_and_conditions"></span>
                         </div>
-                    </div>
-
-                    <div class="row py-3 px-3">
-                        <div class="col-md-4 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
+                        <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">Tanda Tangan</label>
-                                <div class="form-label">
-                                    25 September 2023
+                                <div class="form-label" id="date">
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <img id="signatture" src="" alt="">
+                                <div id="signatture"></div>
                             </div>
                             <div class="mb-3">
                                 <span class="form-label" id="signature_name">
                                 </span>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -168,7 +139,6 @@ $configData = Helper::appClasses();
             <div class="card mb-4">
                 <div class="card-body">
                     <p class="text-center">Kelengkapan Document</p>
-                    <!-- <button type="button" class="btn  d-grid w-100 mb-2 add-doc" style="color : #fff;background-color : #4EC0D9;"><span class="d-flex align-items-center justify-content-center text-nowrap">+</span></button> -->
                     <ol class="documents" id="documents">
 
                     </ol>
@@ -188,6 +158,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/js/forms-file-upload.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
+<script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
 <script>
     // let account = {!! json_encode(session('data')) !!}
     $.ajaxSetup({
@@ -224,7 +195,6 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
-                console.log(data);
                 $("#floor").text(data.floor);
                 $("#address").text(data.address);
                 $("#name_tenant").text(data.name);
@@ -284,6 +254,7 @@ $configData = Helper::appClasses();
                 $("#grand_total_spelled").text(data.grand_total_spelled);
                 $("#term_and_conditions").text(data.term_and_conditions);
                 $("#signature_name").text(data.signature_name);
+                $("#date").text(moment(data.purchase_order_date, 'YYYY-MM-DD').format('DD-MM-YYYY'));
                 getVendor(data.vendor_id);
                 getDetails(data.purchase_order_details);
                 getAttachments(data.vendor_attachment);
@@ -293,7 +264,7 @@ $configData = Helper::appClasses();
                     $("#signatture").css("height", `200px`);
                     $("#signatture").css("width", `200px`);
                     $("#signatture").css("background-position", `center`);
-                    $("#signatture").css("background-size", `cover`);
+                    $("#signatture").css("background-size", `contain`);
                     $("#signatture").css("background-repeat", `no-repeat`);
                 }
                 Swal.close();
@@ -323,13 +294,11 @@ $configData = Helper::appClasses();
         let getDetail = '';
         let temp = '';
         let openTab = '';
-        console.log(data);
 
         if (data.length > 0) {
             let details = data;
             for (let i = 0; i < details.length; i++) {
-                console.log('a');
-                temp = `<li><a href="javascript:void(0)" class="text-dark" id="attachment-${i}"> ${details[i].uraian}</a></li>`;
+                temp = `<li><a href="javascript:void(0)" class="btn btn-primary text-white d-flex justify-content-between align-items-center" id="attachment-${i}"> ${details[i].uraian} <i class="fas fa-download"></i></a></li>`;
                 getDetail = getDetail + temp;
             }
             $('#documents').prepend(getDetail);
@@ -371,6 +340,7 @@ $configData = Helper::appClasses();
         let getDetail = '';
         let tem = '';
         for (let i = 0; i < details.length; i++) {
+            let pajak = getTax(details[i].tax_id);
             tem = `<tr>
                         <td>` + details[i].number + `</td>
                         <td>` + details[i].name + `</td>
@@ -378,7 +348,7 @@ $configData = Helper::appClasses();
                         <td>` + details[i].quantity + `</td>
                         <td>` + details[i].units + `</td>
                         <td>` + 'Rp. ' + format(details[i].price) + `</td>
-                        <td>` + details[i].tax + `</td>
+                        <td>` + (pajak && pajak.name ? pajak.name : '') + `</td>
                         <td>` + 'Rp. ' + format(details[i].total_price) + `</td>
                     </tr>
             `;
@@ -386,6 +356,26 @@ $configData = Helper::appClasses();
         }
 
         $('#details').prepend(getDetail);
+    }
+
+    function getTax(id) {
+        let dataTax;
+        if(id != null){
+            $.ajax({
+                url: "{{url('api/tax/get-paper')}}/" + id,
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async:false,
+                success: function(response) {
+                    dataTax = response.data;
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
+        }
+        return dataTax;
     }
 </script>
 @endsection

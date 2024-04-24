@@ -325,21 +325,21 @@ $configData = Helper::appClasses();
         // Hapus baris yang ditekan tombol hapus
         let index = $('.price').index(this);
         let total = 0;
-        let price = parseInt($(this).val().replaceAll(',', ''));
-        let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
+        let price = parseFloat($(this).val().replaceAll(',', ''));
+        let id = isNaN(parseFloat($(`.tax:eq(` + index + `)`).val())) ? 0 : parseFloat($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
         if (id == 0) {
             $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(price));
             getTotal();
         } else {
             $.ajax({
-                url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
+                url: "{{ env('BASE_URL_API')}}" + '/api/tax/get-paper/' + id,
                 type: "get",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(response) {
                     let data = response.data.rate;
                     let total = 0;
-                    let tax = parseInt(data);
+                    let tax = parseFloat(data);
                     tax = tax / 100;
                     let totalPrice = price * tax + price;
                     $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
@@ -368,21 +368,21 @@ $configData = Helper::appClasses();
         // Hapus baris yang ditekan tombol hapus
         let index = $('.price').index(this);
         let total = 0;
-        let price = parseInt($(this).val().replaceAll(',', ''));
-        let id = isNaN(parseInt($(`.tax:eq(` + index + `)`).val())) ? 0 : parseInt($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
+        let price = parseFloat($(this).val().replaceAll(',', ''));
+        let id = isNaN(parseFloat($(`.tax:eq(` + index + `)`).val())) ? 0 : parseFloat($(`.tax:eq(` + index + `)`).val().replaceAll(',', ''));
         if (id == 0) {
             $(`.total_price:eq(` + index + `)`).val(isNaN(price) ? 0 : format(price));
             getTotal();
         } else {
             $.ajax({
-                url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
+                url: "{{ env('BASE_URL_API')}}" + '/api/tax/get-paper/' + id,
                 type: "get",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(response) {
                     let data = response.data.rate;
                     let total = 0;
-                    let tax = parseInt(data);
+                    let tax = parseFloat(data);
                     tax = tax / 100;
                     let totalPrice = price * tax + price;
                     $(`.total_price:eq(` + index + `)`).val(isNaN(totalPrice) ? 0 : format(totalPrice));
@@ -424,7 +424,7 @@ $configData = Helper::appClasses();
                     let vendorId = $("#vendor_id").val();
                     let note = $("#note").val();
                     let grandTotalSpelled = $("#grand_total_spelled").val();
-                    let grandTotal = parseInt($(".grand_total").text().replaceAll(',', ''));
+                    let grandTotal = parseFloat($(".grand_total").text().replaceAll(',', ''));
                     let termAndConditions = $("#term_and_conditions").val();
                     let signature = ttdFile.dataURL;
                     let signatureName = $('#signature_name').val();
@@ -435,35 +435,35 @@ $configData = Helper::appClasses();
                         var input_index = Math.floor(index / 8); // Membagi setiap 5 input menjadi satu objek pada array
                         if (index % 8 == 0) {
                             detail[input_index] = {
-                                number: parseInt(input_value)
+                                number: parseFloat(input_value)
                             };
                         } else if (index % 8 == 1) {
                             detail[input_index].name = input_value;
                         } else if (index % 8 == 2) {
                             detail[input_index].specification = input_value;
                         } else if (index % 8 == 3) {
-                            detail[input_index].quantity = parseInt(input_value);
+                            detail[input_index].quantity = parseFloat(input_value);
                         } else if (index % 8 == 4) {
                             detail[input_index].units = input_value;
                         } else if (index % 8 == 5) {
-                            detail[input_index].price = parseInt(input_value.replaceAll(',', ''));
+                            detail[input_index].price = parseFloat(input_value.replaceAll(',', ''));
                         } else if (index % 8 == 6) {
-                            detail[input_index].tax = parseInt(input_value);
+                            detail[input_index].tax = input_value;
                         } else if (index % 8 == 7) {
-                            detail[input_index].total_price = parseInt(input_value.replaceAll(',', ''));
+                            detail[input_index].total_price = parseFloat(input_value.replaceAll(',', ''));
                         }
                     });
 
                     let datas = {};
                     datas.details = detail;
-                    datas.vendor_id = parseInt(vendorId);
+                    datas.vendor_id = parseFloat(vendorId);
                     if (account.level.id == '1') {
                         datas.status = "Disetujui BM";
                     } else {
                         datas.status = "Terbuat";
                     }
                     datas.about = about;
-                    datas.grand_total = parseInt(grandTotal);
+                    datas.grand_total = parseFloat(grandTotal);
                     datas.purchase_order_date = purchaseOrderDate;
                     datas.grand_total_spelled = grandTotalSpelled;
                     datas.term_and_conditions = termAndConditions;
@@ -521,16 +521,16 @@ $configData = Helper::appClasses();
         let index = $('.tax').index(this);
         let data = 0;
         $.ajax({
-            url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + id,
+            url: "{{ env('BASE_URL_API')}}" + '/api/tax/get-paper/' + id,
             type: "get",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(response) {
-                let data = response.data.rate;
-                console.log($(this));
+                let data = response.data.value;
+                let exlusice = response.data.exclusive;
                 let total = 0;
-                let price = parseInt($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
-                let tax = parseInt(data);
+                let price = parseFloat($(`.price:eq(` + index + `)`).val().replaceAll(',', ''));
+                let tax = parseFloat(data);
                 tax = tax / 100;
                 let totalPrice = price * tax + price;
                 // console.log(format(totalPrice));
@@ -547,7 +547,7 @@ $configData = Helper::appClasses();
         let totalArr = [];
         let tempTotal = document.getElementsByClassName('total_price');
         for (let i = 0; i < tempTotal.length; i++) {
-            var slipOdd = parseInt(tempTotal[i].value.replaceAll(',', ''));
+            var slipOdd = parseFloat(tempTotal[i].value.replaceAll(',', ''));
             totalArr.push(Number(slipOdd));
         }
 
@@ -724,7 +724,7 @@ $configData = Helper::appClasses();
             placeholder: 'Pilih',
             allowClear: true,
             ajax: {
-                url: "{{ env('BASE_URL_API')}}" + '/api/tax/select',
+                url: "{{ env('BASE_URL_API')}}" + '/api/tax/select-paper',
                 dataType: 'json',
                 cache: true,
                 data: function(params) {
@@ -754,9 +754,8 @@ $configData = Helper::appClasses();
     function getDetails(details) {
         let tem = "";
         for (let i = 0; i < details.length; i++) {
-            console.log(details[i].specification);
             let specification = details[i].specification ? details[i].specification : '';
-            console.log(specification);
+            let pajak = getTax(details[i].tax_id);
             tem += `
                     <tr class="row-mg">
                         <td>
@@ -780,15 +779,15 @@ $configData = Helper::appClasses();
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <input type="text" class="form-control row-input price" placeholder="Harga Satuan" name="price[]" value="` + details[i].price + `" required style="width: 200px;" />
+                            <input type="text" class="form-control row-input price" placeholder="Harga Satuan" name="price[]" value="` + details[i].price?.toLocaleString() + `" required style="width: 200px;" />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <select class="form-control row-input tax" placeholder="Pajak" name="tax[]" value="` + details[i].tax_id + `" id="tax-${i}"></select>
+                            <select class="form-control row-input tax" placeholder="Pajak" name="tax[]" id="tax-${i}">`+`<option value="` + pajak.uuid + `" selected>` + pajak.name + `</option>`+`</select>
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
-                            <input type="text" disabled class="form-control row-input total_price" placeholder="Jumlah" name="total_price[]"  value="` + details[i].total_price + `" required style="width: 200px;" />
+                            <input type="text" disabled class="form-control row-input total_price" placeholder="Jumlah" name="total_price[]"  value="` + details[i].total_price?.toLocaleString() + `" required style="width: 200px;" />
                             <div class="invalid-feedback">Tidak boleh kosong</div>
                         </td>
                         <td>
@@ -798,20 +797,47 @@ $configData = Helper::appClasses();
                         </td>
                     </tr>`;
 
-            $.ajax({
-                url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + details[i].tax_id,
-                type: "GET",
-                success: function(response) {
+            // let optionTax = `<option value="` + pajak.uuid + `" selected>` + pajak.name + `</option>`;
 
-                    let data = response.data;
-                    let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
-                    $('#tax-' + i).prepend(tem);
-                    console.log();
-                },
-                error: function(xhr, status, error) {
-                    console.log(error);
-                }
-            });
+            // console.log(optionTax);
+            // console.log('#tax-' + i);
+            // $('#tax-' + i).prepend(optionTax);
+            // $('#tax-' + i).prepend(optionTax);
+
+            // $.ajax({
+            //     url: "{{ env('BASE_URL_API')}}" + '/api/tax/' + details[i].tax_id,
+            //     type: "GET",
+            //     success: function(response) {
+
+            //         let data = response.data;
+            //         let tem = `<option value="` + data.id + `" selected>` + data.name + `</option>`;
+            //         $('#tax-' + i).prepend(tem);
+            //         console.log();
+            //     },
+            //     error: function(xhr, status, error) {
+            //         console.log(error);
+            //     }
+            // });
+        }
+
+        function getTax(id) {
+            let dataTax;
+            if(id != null){
+                $.ajax({
+                    url: "{{url('api/tax/get-paper')}}/" + id,
+                    type: "get",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async:false,
+                    success: function(response) {
+                        dataTax = response.data;
+                    },
+                    error: function(errors) {
+                        console.log(errors);
+                    }
+                });
+            }
+            return dataTax;
         }
         let getDetail = `
                 <table class="table">
@@ -836,10 +862,10 @@ $configData = Helper::appClasses();
         for (let i = 0; i < details.length; i++) {
             $("#tax-" + i).select2({
                 width: '100px',
-                placeholder: 'Select Pajak',
+                placeholder: 'Pilh Pajak',
                 allowClear: true,
                 ajax: {
-                    url: "{{ env('BASE_URL_API')}}" + '/api/tax/select',
+                    url: "{{ env('BASE_URL_API')}}" + '/api/tax/select-paper',
                     dataType: 'json',
                     cache: true,
                     data: function(params) {

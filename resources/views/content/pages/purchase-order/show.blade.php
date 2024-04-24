@@ -111,8 +111,7 @@ $configData = Helper::appClasses();
                         <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center data-material">
                             <div class="mb-3">
                                 <label for="note" class="form-label fw-medium">Tanda Tangan</label>
-                                <div class="form-label">
-                                    25 September 2023
+                                <div class="form-label" id="date">
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -158,6 +157,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/js/forms-file-upload.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
+<script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
 <script>
     let account = {!! json_encode(session('data')) !!}
     $.ajaxSetup({
@@ -204,7 +204,7 @@ $configData = Helper::appClasses();
                 Swal.fire({
                     title: 'Memeriksa...',
                     text: "Harap menunggu",
-                    imageUrl: "{{ asset('waiting.gif') }}",
+                    html: sweet_loader + '<h5>Please Wait</h5>',
                     showConfirmButton: false,
                     allowOutsideClick: false
                 });
@@ -258,7 +258,6 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
-                console.log(data);
                 $("#floor").text(data.floor);
                 $("#address").text(data.address);
                 $("#name_tenant").text(data.name);
@@ -292,7 +291,6 @@ $configData = Helper::appClasses();
     function getDataTagihanVendor(id) {
         $.ajax({
             url: "{{env('BASE_URL_API')}}" +'/api/purchase-order/' + id,
-            // url: "{{url('api/purchase-order')}}/" + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
@@ -305,8 +303,22 @@ $configData = Helper::appClasses();
                 });
             },
             success: function(res) {
+                if(account.level_id == 11){
+                    if(account.email != res.data.vendor.email){
+                        return Swal.fire({
+                            title: 'Error!',
+                            text: 'Oops data tidak ditemukan',
+                            icon: 'error',
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        }).then((result) => {
+                            window.location.href = "/";
+                        })
+                    }
+                }
                 let data = res.data;
-                console.log(data);
                 id = data.id;
                 nomorInvoice = data.invoice_number;
                 $("#purchase_order_number").text(data.purchase_order_number);
@@ -319,6 +331,7 @@ $configData = Helper::appClasses();
                 $("#grand_total_spelled").text(data.grand_total_spelled);
                 $("#term_and_conditions").text(data.term_and_conditions);
                 $("#signature_name").text(data.signature_name);
+                $("#date").text(moment(data.purchase_order_date, 'YYYY-MM-DD').format('DD-MM-YYYY'));
                 if (data.signature != null || account.level.id == 1) {
                     $('.data-material').removeClass('d-none');
                 }
@@ -342,15 +355,23 @@ $configData = Helper::appClasses();
                 if (account.level.id == '2' && data.status == 'Terbuat') {
                     $('.disetujui').removeClass('d-none');
                 }
-                console.log(data.status);
                 if ((account.level.id == '10' && data.status == 'Terbuat') || (data.status == 'Disetujui KA' && account.level.id == '1')) {
-                    console.log('aa');
                     $('.edit').removeClass('d-none');
                 }
                 Swal.close();
             },
-            error: function(errors) {
-                console.log(errors);
+            error: function(xhr, errors) {
+                return Swal.fire({
+                    title: 'Error!',
+                    text: xhr?.responseJSON?.message,
+                    icon: 'error',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false
+                }).then((result) => {
+                    window.location.href = "/";
+                })
             }
         });
     }
@@ -405,6 +426,7 @@ $configData = Helper::appClasses();
         let tem = '';
         let specification = ''
         for (let i = 0; i < details.length; i++) {
+            let pajak = getTax(details[i].tax_id);
             specification ? details[i].specification : '';
             tem = `<tr>
                         <td>` + details[i].number + `</td>
@@ -413,7 +435,7 @@ $configData = Helper::appClasses();
                         <td>` + details[i].quantity + `</td>
                         <td>` + details[i].units + `</td>
                         <td>` + 'Rp. ' + format(details[i].price) + `</td>
-                        <td>` + (details[i].tax_id ? details[i].tax_id : '') + `</td>
+                        <td>` + (pajak && pajak.name ? pajak.name : '') + `</td>
                         <td>` + 'Rp. ' + format(details[i].total_price) + `</td>
                     </tr>
             `;
@@ -421,6 +443,27 @@ $configData = Helper::appClasses();
         }
 
         $('#details').prepend(getDetail);
+    }
+
+    function getTax(id) {
+        let dataTax;
+        if(id != null){
+            $.ajax({
+                url: "{{url('api/tax/get-paper')}}/" + id,
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async:false,
+                success: function(response) {
+                    dataTax = response.data;
+                    console.log(dataTax);
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
+        }
+        return dataTax;
     }
 </script>
 @endsection

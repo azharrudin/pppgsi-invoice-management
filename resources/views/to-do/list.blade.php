@@ -4,7 +4,7 @@ $configData = Helper::appClasses();
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'Todo List')
+@section('title', 'To do List')
 
 @section('content')
 
@@ -271,12 +271,21 @@ $configData = Helper::appClasses();
                 if (row.status == 'Disetujui BM' && account.level.id == 10) {
                     sendMailRow = `<a href="#" data-bs-toggle="tooltip" class="text-body send-email-po" data-id="${data}" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>`;
                 }
-                let previewRow = '<a href="{{ url("request/purchase-order/show")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
+                let previewRow = '';
+                let btnDelete = '';
+                let btnEdit = '';
+                if(account.level_id == 11){
+                    previewRow = '<a href="{{ url("vendor/show-tagihan-vendor")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
+                    btnEdit = `<a href="{{ url("vendor/edit-tagihan-vendor")}}/` + data + `" class="dropdown-item">Edit</a>`;
+                }else{
+                    previewRow = '<a href="{{ url("request/purchase-order/show")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
+                    btnDelete = '<div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>';
+                    btnEdit = '<a href="{{ url("request/purchase-order/edit")}}/` + data + `" class="dropdown-item">Edit</a>';
+                }
                 return `<div class="d-flex align-items-center">
                             `+ sendMailRow +`
                             ` + previewRow + `
-                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a target="_blank" href="{{url('request/purchase-order/print')}}/` + data + `" class="dropdown-item">Download</a><a href="{{ url("request/purchase-order/edit")}}/` + data + `" class="dropdown-item">Edit</a>
-                            <div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
+                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a target="_blank" href="{{url('request/purchase-order/print')}}/` + data + `" class="dropdown-item">Download</a>`+btnEdit+``+btnDelete+``
             }
         }];
 
@@ -471,6 +480,20 @@ $configData = Helper::appClasses();
                     Swal.close();
                 }
             });
+        }else if(account.level_id == 11){
+            let vendor = getVendorId(account.email);
+            urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Disetujui BM";
+            let n = 0;
+            urlPurchaseOrder = "{{ url('to-do-list-vendor/purchase-order-vendor') }}/"+vendor.id;
+            tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
+            tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
+            tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
+            $(document).ajaxSuccess(function(){
+                n = n + 1;
+                if(n == 2 ){
+                    Swal.close();
+                }
+            });
         }else{
             urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Disetujui BM"; 
             let n = 0; 
@@ -488,6 +511,35 @@ $configData = Helper::appClasses();
         
 
     }));
+
+    function getVendorId(email) {
+        let result;
+        let datas = {}
+        datas.email = email;
+        $.ajax({
+            url: "{{ env('BASE_URL_API')}}" + '/api/vendor/email',
+            type: "POST",
+            data: JSON.stringify(datas),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function(response) {
+                result = response.data;
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    title: 'Error!',
+                    text:  xhr?.responseJSON?.message,
+                    icon: 'error',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false
+                })
+            }
+        });
+        return result;
+    }
 
     function closeSwall(){
         Swal.close();
@@ -585,7 +637,7 @@ $configData = Helper::appClasses();
                 Swal.fire({
                     title: 'Memeriksa...',
                     text: "Harap menunggu",
-                    imageUrl: "{{ asset('waiting.gif') }}",
+                    html: sweet_loader + '<h5>Please Wait</h5>',
                     showConfirmButton: false,
                     allowOutsideClick: false
                 });
@@ -645,7 +697,7 @@ $configData = Helper::appClasses();
                 Swal.fire({
                     title: 'Memeriksa...',
                     text: "Harap menunggu",
-                    imageUrl: "{{ asset('waiting.gif') }}",
+                    html: sweet_loader + '<h5>Please Wait</h5>',
                     showConfirmButton: false,
                     allowOutsideClick: false
                 });
@@ -705,7 +757,7 @@ $configData = Helper::appClasses();
                 Swal.fire({
                     title: 'Memeriksa...',
                     text: "Harap menunggu",
-                    imageUrl: "{{ asset('waiting.gif') }}",
+                    html: sweet_loader + '<h5>Please Wait</h5>',
                     showConfirmButton: false,
                     allowOutsideClick: false
                 });

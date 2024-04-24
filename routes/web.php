@@ -46,7 +46,6 @@ Route::get('/tes', function () {
 Route::get('/page-2', [Page2::class, 'index'])->name('pages-page-2');
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
-// Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::get('logout', [LoginController::class, 'logout']);
 Route::post('auth/login', [LoginController::class, 'login'])->name('auth.login');
 
@@ -56,6 +55,7 @@ Route::group(['middleware' => 'cekauth'], function () {
     Route::get('/dashboard', [HomePage::class, 'index'])->name('pages-home');
     Route::get('/to-do-list', [TodoListController::class, 'index'])->name('pages-to-do');
     Route::get('/to-do-list/{url?}/{status?}', [TodoListController::class, 'datatable'])->name('pages-to-do-data');
+    Route::get('/to-do-list-vendor/{url?}/{vendorId?}', [TodoListController::class, 'datatableVendor'])->name('pages-to-do-vendor');
 
     Route::prefix('invoice')->group(function () {
         Route::prefix('/')->group(function () {
@@ -160,7 +160,7 @@ Route::group(['middleware' => 'cekauth'], function () {
         Route::get('/edit-tagihan-vendor/{id}', [VendorController::class, 'edit'])->name('pages-list-tagihan-vendor');
         Route::get('/add-tagihan-vendor', [VendorController::class, 'index'])->name('pages-list-tagihan-vendor');
         Route::get('/data-tagihan-vendor', [VendorController::class, 'datatable'])->name('data-tagihan-vendor');
-        Route::get('/data-vendor', [VendorController::class, 'datatableVendor'])->name('data-vendor');
+        Route::get('/data-vendor/{id}', [VendorController::class, 'datatableVendor'])->name('data-vendor');
     });
 
     // Client

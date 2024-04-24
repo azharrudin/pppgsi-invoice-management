@@ -373,7 +373,7 @@ $configData = Helper::appClasses();
         let nameReviewed = '';
 
         let dateReviewed = '';
-        if(account.level.id == '8'){
+        if(account.level.id == '2' || account.level.id == '6' || account.level.id == '9' || account.level.id == '13'){
             nameReviewed = value?.name ? value.name : '';
             dateReviewed = value?.date ? moment(value.date).format('DD-MM-YYYY') : '';
             dropzoneReviewed = 'dz-clickable';
@@ -419,7 +419,7 @@ $configData = Helper::appClasses();
                     <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Nama" style="text-align:center;" id="departement-name" name="name[]" value="${nameReviewed ? nameReviewed : ''}" ${dateReviewedAttr} />
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Jabatan" style="text-align:center;" id="departement-jabatan" name="jabatan[]" value="Chief Departement" disabled />
+                    <input type="text" class="form-control ttd-row tanda-tangan" placeholder="Jabatan" style="text-align:center;" id="departement-jabatan" name="jabatan[]" value="${account.level.name}" disabled />
                 </div>
                 <div class="mb-3">
                     ${imageReviewed}

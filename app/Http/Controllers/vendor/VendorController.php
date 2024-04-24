@@ -56,7 +56,6 @@ class VendorController extends Controller
         if ($response->data) {
             foreach ($response->data as $key => $value) {
                 $data[$key] = $value;
-                $data[$key]->vendor_name = $value->vendor->name;
             }
         }
         return DataTables::of($data)
@@ -65,7 +64,7 @@ class VendorController extends Controller
             ->make(true);
     }
 
-    public function datatableVendor(Request $request)
+    public function datatableVendor(Request $request, $id)
     {
         $searchColumn = array();
         foreach ($request->columns as $column) {
@@ -94,13 +93,14 @@ class VendorController extends Controller
         if ($request->page == null) {
             $request->page = 1;
         }
-        $apiRequest = Http::get(env('BASE_URL_API') . '/api/vendor-invoice/', [
+        $apiRequest = Http::get(env('BASE_URL_API') . '/api/purchase-order-vendor/'.$id, [
             'per_page' => $request->length,
             'page' => $request->page,
             'order' => 'id',
             'sort' => 'desc',
             'value' => $request->search['value'],
             'status' => $request->status,
+            'vendor_id' => $request->vendor_id,
         ]);
         $response = json_decode($apiRequest->getBody());
         $data = [];

@@ -70,34 +70,45 @@ $configData = Helper::appClasses();
     let table = '';
     var buttonAdd = []
     if(account.level_id == '11'){
-        table = "{{ route('data-vendor') }}";
-        buttonAdd = [{
-                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Vendor</span>',
-                className: "btn btn-primary ",
-                action: function(a, e, t, s) {
-                    $.ajax({
-                        url: "{{ env('BASE_URL_API')}}" + '/api/invoice/' + id,
-                        type: "GET",
-                        dataType: "json",
-                        success: function(res) {
-
-                        },
-                        error: function(errors) {
-                            console.log(errors);
-                        }
-                    });
-                    window.location = "{{url('invoice/add-invoice')}}"
-                }
-            }];
+        let vendor = getVendorId(account.email);
+        table = "{{ url('vendor/data-vendor/') }}/"+vendor.id;
     }
     else if(account.level_id == '10'){
-        table = "{{ route('data-vendor') }}";
+        table = "{{ url('vendor/data-tagihan-vendor') }}";
         $("#tenant").html("Total Vendor")
         $("#tt").html("Total Tagihan")
-
     }
     else {
-        table = "{{ route('data-tagihan-vendor') }}";
+        table = "{{ url('vendor/data-tagihan-vendor') }}";
+    }
+
+    function getVendorId(email) {
+        let result;
+        let datas = {}
+        datas.email = email;
+        $.ajax({
+            url: "{{ env('BASE_URL_API')}}" + '/api/vendor/email',
+            type: "POST",
+            data: JSON.stringify(datas),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function(response) {
+                result = response.data;
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    title: 'Error!',
+                    text:  xhr?.responseJSON?.message,
+                    icon: 'error',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false
+                })
+            }
+        });
+        return result;
     }
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
@@ -125,11 +136,11 @@ $configData = Helper::appClasses();
                 }
             }, {
                 name: "Vendor",
-                data: "vendor_name",
+                data: "vendor",
                 title: "Vendor",
                 className: 'text-center',
-                render: function(data, type, row) {
-                    return data;
+                render: function(data, type, row) {;
+                    return data == null ? '' : data.name;
                 }
             }, {
                 name: "Perihal",
@@ -182,23 +193,31 @@ $configData = Helper::appClasses();
                         return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
                     } else if (data == 'Terkirim') {
                         return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
-                    } else if (data == 'Disetujui BM') {
+                    } else if (data == 'Diupload Vendor') {
+                        return '<span class="badge w-100 bg-primary" text-capitalized> Diupload Vendor </span>'
+                    }else if (data == 'Diverifikasi Admin') {
+                        return '<span class="badge w-100 bg-primary" text-capitalized> Diverifikasi Admin </span>'
+                    }else if (data == 'Disetujui BM') {
                         return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
                     }
                 }
             }, {
-                data: "vendor_id",
-                name: "vendor_id",
+                data: "id",
+                name: "id",
                 title: "Action",
                 render: function(data, type, row) {
-                    console.log(data);
                     let editRow = '';
-                    let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
+                    let deleteRow = '<div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>';
                     let previewRow = '<a href="{{ url("vendor/show-tagihan-vendor")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Tagihan Vendor"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
+                    if(account.level_id == '11'){
+                        editRow = `<a href="{{ url("vendor/edit-tagihan-vendor")}}/` + data + `" class="dropdown-item">Edit</a>`;
+                        deleteRow = '';
+                    }
                     return `<div class="d-flex align-items-center">
                             ` + previewRow + `
-                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="{{ url("vendor/edit-tagihan-vendor")}}/` + data + `" class="dropdown-item">Edit</a>
-                            <div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
+                            <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="/request/purchase-order/print/`+data+`" target="_blank" class="dropdown-item">Download</a>
+                                `+editRow+`
+                                `+deleteRow+``
                 }
             }],
             order: [
@@ -263,9 +282,8 @@ $configData = Helper::appClasses();
                 type: "GET",
                 dataType: "json",
                 success: function(res) {
-                    console.log(res);
-                    $('.count_receipt').html(res.count_receipt);
-                    $('.count_receipt_paid').html('Rp. '+parseFloat(res.count_receipt_paid).toLocaleString('en-US'));
+                    $('.count_purchase_order').html(res.count_purchase_order);
+                    $('.count_purchase_order_paid').html('Rp. '+parseFloat(res.count_purchase_order_paid).toLocaleString('en-US'));
                     Swal.close();
                 },
                 error: function(errors) {

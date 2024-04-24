@@ -11,6 +11,9 @@ class LoginController extends Controller
 {
     public function index()
     {
+        if(session('data')){
+            return redirect('/to-do-list');
+        }
         return view('auth.login');
     }
 

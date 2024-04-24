@@ -85,28 +85,7 @@ $configData = Helper::appClasses();
                                         <tr>
                                             <td colspan="4"></td>
                                             <td colspan="2">
-                                                <p class="">Sub Total</p>
-                                            </td>
-                                            <td colspan="2" style="text-align: right;">
-                                                <p id="subtotal" class=""></p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4"></td>
-                                            <td colspan="1">
-                                                <p class="">Pajak</p>
-                                            </td>
-                                            <td colspan="1">
-                                                <p class="" id=""></p>
-                                            </td>
-                                            <td colspan="2" style="text-align: right;">
-                                                <p id="tax" class=""></p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4"></td>
-                                            <td colspan="2">
-                                                <p class="">Jumlah Nett</p>
+                                                <p class="">Total</p>
                                             </td>
                                             <td colspan="2" style="text-align: right;">
                                                 <p id="grand_total" class=""></p>
@@ -125,30 +104,26 @@ $configData = Helper::appClasses();
                                 <hr>
                             </div>
                         </div>
+
                         <div class="row px-3 mb-3">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <label for="note" class="form-label fw-medium">Syarat & Ketentuan</label>
                                 <br>
                                 <span class="form-label" id="term_and_conditions"></span>
                             </div>
-                        </div>
-
-                        <div class="row py-3 px-3">
-                            <div class="col-md-4 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
+                            <div class="col-md-6 mb-md-0 mb-3 d-flex flex-column align-items-center text-center">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Tanda Tangan</label>
-                                    <div class="form-label">
-                                        25 September 2023
+                                    <div class="form-label" id="date">
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <img id="signatture" src="" alt="">
+                                    <div id="signatture"></div>
                                 </div>
                                 <div class="mb-3">
                                     <span class="form-label" id="signature_name">
                                     </span>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -170,27 +145,6 @@ $configData = Helper::appClasses();
                         <p class="text-center">Kelengkapan Document</p>
                         <button type="button" class="btn  d-grid w-100 mb-2 add-doc" style="color : #fff;background-color : #4EC0D9;"><span class="d-flex align-items-center justify-content-center text-nowrap">+</span></button>
                         <div class="documents" id="documents">
-                            <!-- <div class="document">
-                                <div class="mb-3">
-                                    <label for="note" class="form-label fw-medium">Pilih Document</label>
-                                    <select name="document[]" class="form-control row-input" required>
-                                        <option value="">Pilih Document</option>
-                                        <option value="Faktur Pembelian">Faktur Pembelian</option>
-                                        <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
-                                        <option value="Purchase Order">Purchase Order(PO)</option>
-                                        <option value="Delivery Order">Delivery Order(DO)</option>
-                                        <option value="Berita Acara Pembayaran">Berita Acara Pembayaran(BAP)</option>
-                                        <option value="Berita Acara Kemajuan Pekerjaan">Berita Acara Kemajuan Pekerjaan(BAPK)</option>
-                                        <option value="Berita Acara Serah Terima">Berita Acara Serah Terima</option>
-                                        <option value="Progress Kerja">Progress Kerja</option>
-                                        <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
-                                        <option value="Faktur Pajak">Faktur Pajak</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <input type="file" class="form-control row-input" placeholder="Pilih Berkas" name="attachment[]" required>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -267,10 +221,20 @@ $configData = Helper::appClasses();
 
                         let datas = {};
                         datas.attachments = attachments;
-                        console.log(datas);
+                        let datasPo = {};
+                        if (account.level_id == '1') {
+                            datasPo.status = "Disetujui BM";
+                        }else if (account.level_id == '11') {
+                            datasPo.status = "Diupload Vendor";
+                        }else if (account.level_id == '10') {
+                            datasPo.status = "diverifikasi admin";
+                        }else if (account.level_id == '9') {
+                            datasPo.status = "selesai";
+                        } else {
+                            datasPo.status = "Terbuat";
+                        }
                         $.ajax({
                             url: "{{env('BASE_URL_API')}}" +'/api/vendor-invoice/add-attachment/' + id,
-                            // url: "{{url('api/vendor-invoice/add-attachment')}}/" + id,
                             type: "POST",
                             data: JSON.stringify(datas),
                             processData: false,
@@ -278,23 +242,45 @@ $configData = Helper::appClasses();
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function(response) {
-                                $('.indicator-progress').show();
-                                $('.indicator-label').hide();
+                                $.ajax({
+                                    url: "{{env('BASE_URL_API')}}" + '/api/purchase-order/update-status/' + id,
+                                    type: "PATCH",
+                                    data: JSON.stringify(datasPo),
+                                    processData: false,
+                                    contentType: false,
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "json",
+                                    success: function(response) {
+                                        $('.indicator-progress').show();
+                                        $('.indicator-label').hide();
 
-                                Swal.fire({
-                                    title: 'Berhasil',
-                                    text: 'Berhasil memperbarui Purchase Order',
-                                    icon: 'success',
-                                    customClass: {
-                                        confirmButton: 'btn btn-primary'
+                                        Swal.fire({
+                                            title: 'Berhasil',
+                                            text: 'Berhasil memperbarui Tagihan Vendor',
+                                            icon: 'success',
+                                            customClass: {
+                                                confirmButton: 'btn btn-primary'
+                                            },
+                                            buttonsStyling: false
+                                        }).then(function() {
+                                            window.location.href = "/vendor/list-tagihan-vendor";
+                                        });
                                     },
-                                    buttonsStyling: false
-                                }).then(function() {
-                                    window.location.href = "/vendor/list-tagihan-vendor";
+                                    error: function(xhr, status, error) {
+                                        Swal.fire({
+                                            title: 'Error!',
+                                            text: xhr?.responseJSON?.message,
+                                            icon: 'error',
+                                            customClass: {
+                                                confirmButton: 'btn btn-primary'
+                                            },
+                                            buttonsStyling: false
+                                        })
+                                    }
                                 });
+
                             },
                             error: function(xhr, status, error) {
-                                console.log(error);
                                 Swal.fire({
                                     title: 'Error!',
                                     text: xhr?.responseJSON?.message,
@@ -321,7 +307,6 @@ $configData = Helper::appClasses();
             type: "GET",
             success: function(response) {
                 let data = response.data;
-                console.log(data);
                 $("#floor").text(data.floor);
                 $("#address").text(data.address);
                 $("#name_tenant").text(data.name);
@@ -355,7 +340,6 @@ $configData = Helper::appClasses();
     function getDataTagihanVendor(id) {
         $.ajax({
             url: "{{env('BASE_URL_API')}}" +'/api/purchase-order/' + id,
-            // url: "{{url('api/purchase-order')}}/" + id,
             type: "GET",
             dataType: "json",
             beforeSend: function() {
@@ -369,7 +353,6 @@ $configData = Helper::appClasses();
             },
             success: function(res) {
                 let data = res.data;
-                console.log(data);
                 id = data.id;
                 nomorInvoice = data.invoice_number;
                 $("#purchase_order_number").text(data.purchase_order_number);
@@ -378,7 +361,6 @@ $configData = Helper::appClasses();
                 $("#note").text(data.note);
                 $("#grand_total").text('Rp. '+format(data.grand_total));
                 $("#tax").text('Rp. '+format(data.tax));
-                $("#subtotal").text('Rp. '+ format(data.subtotal));
                 $("#grand_total_spelled").text(data.grand_total_spelled);
                 $("#term_and_conditions").text(data.term_and_conditions);
                 $("#signature_name").text(data.signature_name);
@@ -391,7 +373,7 @@ $configData = Helper::appClasses();
                     $("#signatture").css("height", `200px`);
                     $("#signatture").css("width", `200px`);
                     $("#signatture").css("background-position", `center`);
-                    $("#signatture").css("background-size", `cover`);
+                    $("#signatture").css("background-size", `contain`);
                     $("#signatture").css("background-repeat", `no-repeat`);
                 }
                 Swal.close();
@@ -442,7 +424,6 @@ $configData = Helper::appClasses();
 
     function getAttachments(attachments) {
         let data = attachments;
-        console.log(data);
         let getDetail = '';
         let temp = '';
         let details = data;
@@ -450,7 +431,7 @@ $configData = Helper::appClasses();
         if (data.length > 0) {
             for (let i = 0; i < details.length; i++) {
                 temp = `             
-                <div class="document">
+                <div class="document" id="row-document-${details[i].id}">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Pilih Document</label>
                                     <select name="document[]" id="document-${i}" class="form-control row-input" required>
@@ -468,14 +449,14 @@ $configData = Helper::appClasses();
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment-${i}" name="attachment[]" required>
+                                    <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment-${i}" name="attachment[]">
                                 </div>
                                 <div class="mb-3">
                                     <div class="d-flex gap-4">
                                         <a target="_blank" style="width:120px;" href="" id="file-attachment-${i}" class="btn btn-primary btn-sm d-flex justify-content-center align-items-center">
                                             <i class="fas fa-file-pdf"></i>
                                         </a>
-                                        <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
+                                        <a role="button" class="btn btn-danger text-center  text-white btn-remove-file" data-id="${details[i].id}" disabled>
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </div>
@@ -528,7 +509,6 @@ $configData = Helper::appClasses();
     function handleAttachments(details) {
         if (details.length > 0) {
             for (let i = 0; i < details.length; i++) {
-                console.log('ahh');
                 const fileInput = $("#attachment-"+i);
                 const fileInputVal = $("#attachment-val-"+i);
                 // Listen for the change event so we can capture the file
@@ -566,6 +546,66 @@ $configData = Helper::appClasses();
             });
         }
     }
+
+    $(document).on('click', '.btn-remove-file', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                icon: 'warning',
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonText: "Batal",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                    cancelButton: "btn fw-bold btn-active-light-primary"
+                }
+            }).then((result) => {
+                if (result.value) {
+                    let id = $(this).data('id');
+                    let datas = {}
+                    Swal.fire({
+                        title: 'Memeriksa...',
+                        text: "Harap menunggu",
+                        html: sweet_loader + '<h5>Please Wait</h5>',
+                        showConfirmButton: false,
+                        allowOutsideClick: false
+                    });
+
+                    $.ajax({
+                        url: "{{ env('BASE_URL_API')}}" + '/api/vendor-invoice/add-attachment/'+id,
+                        type: "DELETE",
+                        data: JSON.stringify(datas),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response) {
+                            Swal.fire({
+                                title: 'Berhasil',
+                                text: 'Berhasil Menghapus Attahment',
+                                icon: 'success',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            }).then((result) => {
+                                $('#row-document-'+id).remove();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: xhr?.responseJSON?.message,
+                                icon: 'error',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                buttonsStyling: false
+                            })
+                        }
+                    });
+                }
+            });
+        });
 
     $(document).on('click', '.add-doc', function() {
         var index = lastIndex ? lastIndex + 1 : $('.document').length;
@@ -626,17 +666,16 @@ $configData = Helper::appClasses();
         let details = detailItems;
         let getDetail = '';
         let tem = '';
-        let specification='';
         for (let i = 0; i < details.length; i++) {
-            specification ? details[i].specification : '';
+            let pajak = getTax(details[i].tax_id);
             tem = `<tr>
                         <td>` + details[i].number + `</td>
                         <td>` + details[i].name + `</td>
-                        <td>` +  specification+ `</td>
+                        <td>` + details[i].specification + `</td>
                         <td>` + details[i].quantity + `</td>
                         <td>` + details[i].units + `</td>
                         <td>` + 'Rp. ' + format(details[i].price) + `</td>
-                        <td>` + details[i].tax + `</td>
+                        <td>` + (pajak && pajak.name ? pajak.name : '') + `</td>
                         <td>` + 'Rp. ' + format(details[i].total_price) + `</td>
                     </tr>
             `;
@@ -644,6 +683,26 @@ $configData = Helper::appClasses();
         }
 
         $('#details').prepend(getDetail);
+    }
+
+    function getTax(id) {
+        let dataTax;
+        if(id != null){
+            $.ajax({
+                url: "{{url('api/tax/get-paper')}}/" + id,
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async:false,
+                success: function(response) {
+                    dataTax = response.data;
+                },
+                error: function(errors) {
+                    console.log(errors);
+                }
+            });
+        }
+        return dataTax;
     }
 </script>
 @endsection
