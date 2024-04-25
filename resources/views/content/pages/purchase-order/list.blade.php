@@ -119,11 +119,11 @@ $configData = Helper::appClasses();
                 }
             }, {
                 name: "Vendor",
-                data: "vendor_name",
+                data: "vendor",
                 title: "Vendor",
                 className: 'text-center',
                 render: function(data, type, row) {
-                    return data;
+                    return data.name ? data.name : '';
                 }
             }, {
                 name: "Perihal",

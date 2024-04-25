@@ -299,14 +299,14 @@ $configData = Helper::appClasses();
                 }
             }, {
                 name: "Vendor",
-                data: "vendor_name",
+                data: "vendor",
                 title: "Vendor",
                 className: 'text-center',
                 render: function(data, type, row) {
-                    return data;
+                    return data.name ? data.name : '';
                 }
             }, {
-                data: "vendor_id",
+                data: "id",
                 name: "vendor_id",
                 title: "Action",
                 render: function(data, type, row) {
@@ -388,7 +388,7 @@ $configData = Helper::appClasses();
             //Chief Engineering
         } else if(account.level_id == 6){
             let n = 0;
-            urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Terbuat";   
+            urlWorkOrder =  "{{ url('to-do-list') }}"+"/work-order"+"/Terbuat";
             tableSetting('Task Work Order', 'work-order-table', columnWorkOrder, urlWorkOrder)
             $(document).ajaxSuccess(function(){
                 n = n + 1;
@@ -435,6 +435,8 @@ $configData = Helper::appClasses();
             tableSetting('Task Laporan Kerusakan', 'laporan-kerusakan-table', columnLaporanKerusakan, urlLaporanKerusakan);
             tableSetting('Task Purchase Request', 'purchase-request-table', columnPurchaseRequest, urlPurchaseRequest)
             tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
+            urlWorkOrder =  "{{ url('to-do-list/purchase-order/Diverifikasi Admin') }}";
+            tableSetting('Task Tagihan Vendor', 'tagihan-vendor-table', columnTagihanVendor, urlWorkOrder)
             $(document).ajaxSuccess(function(){
                 n = n + 1;
                 if(n == 2 ){
@@ -501,6 +503,8 @@ $configData = Helper::appClasses();
             tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
             tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
             tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
+            urlWorkOrder =  "{{ url('to-do-list/purchase-order/Diupload Vendor') }}";
+            tableSetting('Task Tagihan Vendor', 'tagihan-vendor-table', columnTagihanVendor, urlWorkOrder)
             $(document).ajaxSuccess(function(){
                 n = n + 1;
                 if(n == 2 ){

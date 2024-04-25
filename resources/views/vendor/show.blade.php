@@ -131,6 +131,7 @@ $configData = Helper::appClasses();
         <div class="col-lg-3 col-12 invoice-actions">
             <div class="card mb-4">
                 <div class="card-body">
+                    <button type="button" id="disetujui" class="btn btn-primary d-grid w-100 mb-2">Disetujui</button>
                     <button type="button" id="edit" class="btn btn-primary d-grid w-100 mb-2">Edit</button>
                     <button type="button" id="batal" class="btn btn-label-secondary d-grid w-100">Kembali</button>
                 </div>
@@ -160,7 +161,7 @@ $configData = Helper::appClasses();
 <script src="{{asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
 <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
 <script>
-    // let account = {!! json_encode(session('data')) !!}
+    let account = {!! json_encode(session('data')) !!}
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -183,6 +184,17 @@ $configData = Helper::appClasses();
         event.preventDefault();
         window.location.href = "/vendor/list-tagihan-vendor";
     });
+    
+    if(account.level_id == 11){
+        $('#disetujui').addClass('d-none');
+    }else if(account.level_id == 10){
+        $('#edit').addClass('d-none');
+    }else if(account.level_id == 9){
+        $('#disetujui').addClass('d-none');
+    }else{
+        $('#edit').addClass('d-none');
+        $('#disetujui').addClass('d-none');
+    }
 
     $(document).on('click', '#edit', function(event) {
         event.preventDefault();
@@ -258,6 +270,9 @@ $configData = Helper::appClasses();
                 getVendor(data.vendor_id);
                 getDetails(data.purchase_order_details);
                 getAttachments(data.vendor_attachment);
+                if(data.status == 'Selesai'){
+                    $('#edit').addClass('d-none');
+                }
                 if (data.signature) {
                     $("#signatture").css('background-img', 'black');
                     $("#signatture").css("background-image", `url('` + data.signature + `')`);
@@ -298,7 +313,7 @@ $configData = Helper::appClasses();
         if (data.length > 0) {
             let details = data;
             for (let i = 0; i < details.length; i++) {
-                temp = `<li><a href="javascript:void(0)" class="btn btn-primary text-white d-flex justify-content-between align-items-center" id="attachment-${i}"> ${details[i].uraian} <i class="fas fa-download"></i></a></li>`;
+                temp = `<li class="mb-2"><a href="javascript:void(0)" class="btn btn-primary text-white d-flex justify-content-between align-items-center" id="attachment-${i}"> ${details[i].uraian} <i class="fas fa-download"></i></a></li>`;
                 getDetail = getDetail + temp;
             }
             $('#documents').prepend(getDetail);
@@ -317,7 +332,63 @@ $configData = Helper::appClasses();
         }
     }
 
-
+    $(document).on('click', '#disetujui', function(e) {
+        e.stopPropagation();
+        Swal.fire({
+            text: "Apakah ingin menyetujui tagihan ini  ?",
+            icon: "warning",
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonText: "Yes, send!",
+            cancelButtonText: "No, cancel",
+            customClass: {
+                confirmButton: "btn fw-bold btn-primary",
+                cancelButton: "btn fw-bold btn-active-light-primary"
+            }
+        }).then(async function(result) {
+            if (result.value) {
+                let datas = {};
+                if (account.level_id == 10) {
+                    datas.status = "Diverifikasi Admin";
+                }
+                $.ajax({
+                    url: "{{env('BASE_URL_API')}}" + '/api/purchase-order/update-status/' + id,
+                    type: "PATCH",
+                    data: JSON.stringify(datas),
+                    processData: false,
+                    contentType: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(response) {
+                        $('.indicator-progress').show();
+                        $('.indicator-label').hide();
+                        Swal.fire({
+                            title: 'Berhasil',
+                            text: 'Berhasil memperbarui Tagihan Vendor',
+                            icon: 'success',
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        }).then(function() {
+                            window.location.href = "/vendor/list-tagihan-vendor";
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: xhr?.responseJSON?.message,
+                            icon: 'error',
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        })
+                    }
+                });
+            }
+        });
+    });
 
     $(document).on('click', '.add-doc', function() {
         let documents = $('.documents');

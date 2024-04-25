@@ -227,9 +227,9 @@ $configData = Helper::appClasses();
                         }else if (account.level_id == '11') {
                             datasPo.status = "Diupload Vendor";
                         }else if (account.level_id == '10') {
-                            datasPo.status = "diverifikasi admin";
+                            datasPo.status = "Diverifikasi Admin";
                         }else if (account.level_id == '9') {
-                            datasPo.status = "selesai";
+                            datasPo.status = "Selesai";
                         } else {
                             datasPo.status = "Terbuat";
                         }
@@ -430,11 +430,24 @@ $configData = Helper::appClasses();
 
         if (data.length > 0) {
             for (let i = 0; i < details.length; i++) {
+                let btnTrash = '';
+                let btnPdf = `<a target="_blank" href="" id="file-attachment-${i}" class="btn btn-primary btn-sm d-flex justify-content-center align-items-center w-100 h-2">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </a>`;
+                if(account.level_id == 11){
+                    btnTrash = `<a role="button" class="btn btn-danger text-center  text-white btn-remove-file" data-id="${details[i].id}" disabled>
+                                            <i class="fas fa-trash"></i>
+                                        </a>`;
+
+                    btnPdf = `<a target="_blank" style="width:120px;" href="" id="file-attachment-${i}" class="btn btn-primary btn-sm d-flex justify-content-center align-items-center">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </a>`;
+                }
                 temp = `             
                 <div class="document" id="row-document-${details[i].id}">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Pilih Document</label>
-                                    <select name="document[]" id="document-${i}" class="form-control row-input" required>
+                                    <select name="document[]" id="document-${i}" class="form-control " disabled>
                                         <option value="">Pilih Document</option>
                                         <option value="Faktur Pembelian">Faktur Pembelian</option>
                                         <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
@@ -446,21 +459,15 @@ $configData = Helper::appClasses();
                                         <option value="Progress Kerja">Progress Kerja</option>
                                         <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
                                         <option value="Faktur Pajak">Faktur Pajak</option>
+                                        <option value="Bukti Pembayaran">Bukti Pembayaran</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="file" class="form-control" placeholder="Pilih Berkas" id="attachment-${i}" name="attachment[]">
-                                </div>
-                                <div class="mb-3">
                                     <div class="d-flex gap-4">
-                                        <a target="_blank" style="width:120px;" href="" id="file-attachment-${i}" class="btn btn-primary btn-sm d-flex justify-content-center align-items-center">
-                                            <i class="fas fa-file-pdf"></i>
-                                        </a>
-                                        <a role="button" class="btn btn-danger text-center  text-white btn-remove-file" data-id="${details[i].id}" disabled>
-                                            <i class="fas fa-trash"></i>
-                                        </a>
+                                        ${btnPdf}
+                                        ${btnTrash}
                                     </div>
-                                    <input type="hidden" class="form-control row-input" placeholder="Pilih Berkas" id="attachment-val-${id}" required name="attachment" value="${details[i].attachment}">
+                                    <input type="hidden" class="form-control" placeholder="Pilih Berkas" id="attachment-val-${id}" required name="attachment" value="${details[i].attachment}">
                                 </div>
                             </div>`;
                 getDetail = getDetail + temp;
@@ -474,7 +481,7 @@ $configData = Helper::appClasses();
             <div class="document">
                                 <div class="mb-3">
                                     <label for="note" class="form-label fw-medium">Pilih Document</label>
-                                    <select name="document[]" id="document-0" class="form-control row-input" required>
+                                    <select name="document[]" id="document-0" class="form-control" required>
                                         <option value="">Pilih Document</option>
                                         <option value="Faktur Pembelian">Faktur Pembelian</option>
                                         <option value="Kuintasi/Invoice">Kuintasi/Invoice</option>
@@ -486,6 +493,7 @@ $configData = Helper::appClasses();
                                         <option value="Progress Kerja">Progress Kerja</option>
                                         <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
                                         <option value="Faktur Pajak">Faktur Pajak</option>
+                                        <option value="Bukti Pembayaran">Bukti Pembayaran</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -493,12 +501,11 @@ $configData = Helper::appClasses();
                                 </div>
                                 <div class="mb-3">
                                     <div class="d-flex gap-4">
-                                        
                                         <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </div>
-                                    <input type="hidden" class="form-control row-input" placeholder="Pilih Berkas" id="attachment-val-0" required name="attachment">
+                                    <input type="hidden" class="form-control" placeholder="Pilih Berkas" id="attachment-val-0" required name="attachment">
                                 </div>
                             </div>`;
             $('#documents').prepend(temp);
@@ -627,6 +634,7 @@ $configData = Helper::appClasses();
                                         <option value="Progress Kerja">Progress Kerja</option>
                                         <option value="Surat Perintah Kerja (SPK) / Kontrak Kerja">Surat Perintah Kerja (SPK) / Kontrak Kerja</option>
                                         <option value="Faktur Pajak">Faktur Pajak</option>
+                                        <option value="Bukti Pembayaran">Bukti Pembayaran</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -634,7 +642,6 @@ $configData = Helper::appClasses();
                                 </div>
                                 <div class="mb-3">
                                     <div class="d-flex gap-4">
-                                        
                                         <a role="button" class="btn btn-danger text-center btn-remove-mg text-white" disabled>
                                             <i class="fas fa-trash"></i>
                                         </a>
@@ -645,7 +652,6 @@ $configData = Helper::appClasses();
         documents.append(newRow);
         const fileInput = $("#attachment-" + index);
         const fileInputVal = $("#attachment-val-" + index);
-        console.log(fileInput);
         // Listen for the change event so we can capture the file
         fileInput.change(function(e) {
             // Get a reference to the file

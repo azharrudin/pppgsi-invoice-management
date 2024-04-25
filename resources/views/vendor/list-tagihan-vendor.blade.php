@@ -197,6 +197,8 @@ $configData = Helper::appClasses();
                         return '<span class="badge w-100 bg-primary" text-capitalized> Diupload Vendor </span>'
                     }else if (data == 'Diverifikasi Admin') {
                         return '<span class="badge w-100 bg-primary" text-capitalized> Diverifikasi Admin </span>'
+                    }else if (data == 'Selesai') {
+                        return '<span class="badge w-100 bg-info" text-capitalized> Selesai </span>'
                     }else if (data == 'Disetujui BM') {
                         return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
                     }
