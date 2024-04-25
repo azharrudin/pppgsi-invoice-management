@@ -192,7 +192,11 @@ $configData = Helper::appClasses();
                     } else if (data == 'Lunas') {
                         return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
                     } else if (data == 'Terkirim') {
-                        return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
+                        if(account.level_id == '11'){
+                            return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> PO BARU </span>';
+                        }else{
+                            return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
+                        }
                     } else if (data == 'Diupload Vendor') {
                         return '<span class="badge w-100 bg-primary" text-capitalized> Diupload Vendor </span>'
                     }else if (data == 'Diverifikasi Admin') {
