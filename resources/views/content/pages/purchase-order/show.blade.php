@@ -209,7 +209,6 @@ $configData = Helper::appClasses();
                     allowOutsideClick: false
                 });
                 $.ajax({
-                    // url: "{{url('api/purchase-order/update-status')}}/" + id,
                     url: "{{env('BASE_URL_API')}}" + '/api/purchase-order/update-status/' + id,
                     type: "PATCH",
                     data: JSON.stringify(datas),

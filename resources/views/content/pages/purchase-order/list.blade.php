@@ -178,6 +178,8 @@ $configData = Helper::appClasses();
                         return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
                     } else if (data == 'Disetujui BM') {
                         return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
+                    }else if (data == 'Selesai') {
+                        return '<span class="badge w-100 bg-info" text-capitalized> Selesai </span>'
                     }
                 }
             }, {
