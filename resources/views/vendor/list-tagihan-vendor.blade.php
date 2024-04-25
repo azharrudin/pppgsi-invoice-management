@@ -193,7 +193,7 @@ $configData = Helper::appClasses();
                         return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
                     } else if (data == 'Terkirim') {
                         if(account.level_id == '11'){
-                            return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> PO BARU </span>';
+                            return '<span class="badge w-100 bg-info" text-capitalized> PO BARU </span>';
                         }else{
                             return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
                         }
