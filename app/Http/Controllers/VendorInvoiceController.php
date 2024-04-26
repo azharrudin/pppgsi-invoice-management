@@ -218,7 +218,7 @@ class VendorInvoiceController extends Controller
             $countVendorInvoice = $countVendorInvoice->count();
             $countVendorInvoicePaid = PurchaseOrder::where("deleted_at", null)->
                 whereBetween("created_at", [$start, $end])->
-                where("status", "like", "%Lunas%");
+                where("status", "like", "%Selesai%");
             if(!is_null($request->vendor_id)){
                 $countVendorInvoicePaid = $countVendorInvoicePaid->where("vendor_id", $request->vendor_id);
             }
