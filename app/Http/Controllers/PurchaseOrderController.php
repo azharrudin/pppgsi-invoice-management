@@ -399,6 +399,7 @@ class PurchaseOrderController extends Controller
 
     public function vendor(Request $request, $id)
     {
+        dd('aa');
         try {
             [
                 "perPage" => $perPage,
