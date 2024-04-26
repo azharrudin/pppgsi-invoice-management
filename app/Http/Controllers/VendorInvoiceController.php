@@ -229,6 +229,7 @@ class VendorInvoiceController extends Controller
                 "count_purchase_order_paid" => $countVendorInvoicePaid,
             ];
         } catch (\Throwable $e) {
+            dd($e->getMessage());
             $errorMessage = "Internal server error";
             $errorStatusCode = 500;
 
