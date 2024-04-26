@@ -200,7 +200,6 @@ class VendorInvoiceController extends Controller
             [
                 "start" => $start,
                 "end" => $end,
-                "vendor_id" => $vendor_id,
             ] = $this->CommonService->getQuery($request);
 
             if(is_null($start)) $start = Carbon::now()->firstOfMonth();
@@ -213,15 +212,15 @@ class VendorInvoiceController extends Controller
             $countVendorInvoicePaid = 0;
 
             $countVendorInvoice = PurchaseOrder::where("deleted_at", null)->whereBetween("created_at", [$start, $end]);
-            if(!is_null($vendor_id)){
-                $countVendorInvoice = $countVendorInvoice->where("vendor_id", $vendor_id);
+            if(!is_null($request->vendor_id)){
+                $countVendorInvoice = $countVendorInvoice->where("vendor_id", $request->vendor_id);
             }
             $countVendorInvoice = $countVendorInvoice->count();
             $countVendorInvoicePaid = PurchaseOrder::where("deleted_at", null)->
                 whereBetween("created_at", [$start, $end])->
                 where("status", "like", "%Lunas%");
-            if(!is_null($vendor_id)){
-                $countVendorInvoicePaid = $countVendorInvoicePaid->where("vendor_id", $vendor_id);
+            if(!is_null($request->vendor_id)){
+                $countVendorInvoicePaid = $countVendorInvoicePaid->where("vendor_id", $request->vendor_id);
             }
             $countVendorInvoicePaid = $countVendorInvoicePaid->sum("grand_total");
             return [
