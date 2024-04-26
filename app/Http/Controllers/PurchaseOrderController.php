@@ -408,7 +408,8 @@ class PurchaseOrderController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $purchaseOrderQuery = PurchaseOrder::with("vendor")->where("vendor_id", $id)->where("deleted_at", null);
+            $purchaseOrderQuery = PurchaseOrder::with("vendor")->where("vendor_id", $id)->where("deleted_at", null)->orwhere("status", "like", "%Terkirim%")->orWhere('status', 'like', "%Diupload Vendor%")->orWhere('status', 'like', "%Diverifikasi Admin%")->orWhere('status', 'like', "%Selesai%");
+
             if ($value) {
                 $purchaseOrderQuery->where(function ($query) use ($value) {
                     $query->whereHas('vendor', function ($vendorQuery) use ($value) {
