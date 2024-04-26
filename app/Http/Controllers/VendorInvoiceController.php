@@ -196,7 +196,7 @@ class VendorInvoiceController extends Controller
 
     public function report(Request $request)
     {
-        try{
+        // try{
             [
                 "start" => $start,
                 "end" => $end,
@@ -228,18 +228,17 @@ class VendorInvoiceController extends Controller
                 "count_purchase_order" => $countVendorInvoice,
                 "count_purchase_order_paid" => $countVendorInvoicePaid,
             ];
-        } catch (\Throwable $e) {
-            dd($e->getMessage());
-            $errorMessage = "Internal server error";
-            $errorStatusCode = 500;
+        // } catch (\Throwable $e) {
+        //     $errorMessage = "Internal server error";
+        //     $errorStatusCode = 500;
 
-            if(is_a($e, CustomException::class)){
-                $errorMessage = $e->getMessage();
-                $errorStatusCode = $e->getStatusCode();
-            }
+        //     if(is_a($e, CustomException::class)){
+        //         $errorMessage = $e->getMessage();
+        //         $errorStatusCode = $e->getStatusCode();
+        //     }
 
-            return response()->json(['message' => $errorMessage], $errorStatusCode);
-        }
+        //     return response()->json(['message' => $errorMessage], $errorStatusCode);
+        // }
     }
 
 
