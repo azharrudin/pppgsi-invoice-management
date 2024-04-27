@@ -555,7 +555,8 @@ class InvoiceController extends Controller
             [
                 "start" => $start,
                 "end" => $end,
-                "value" => $value
+                "value" => $value,
+                "status" => $status
             ] = $this->CommonService->getQuery($request);
 
             if (is_null($start)) $start = Carbon::now()->firstOfMonth();
@@ -564,7 +565,7 @@ class InvoiceController extends Controller
                 $end->setTime(23, 59, 59);
             }
 
-            $invoiceQuery = Invoice::with("tenant")->where("deleted_at", null);
+            $invoiceQuery = Invoice::with("tenant")->whereBetween("created_at", [$start, $end])->where("deleted_at", null);
             if ($value) {
                 $invoiceQuery->where(function ($query) use ($value) {
                     $query->whereHas('tenant', function ($tenantQuery) use ($value) {
@@ -577,6 +578,9 @@ class InvoiceController extends Controller
                         ->orWhere('invoice_due_date', 'like', '%' . $value . '%')
                         ->orWhere('status', 'like', '%' . $value . '%');
                 });
+            }
+            if($status){
+                $invoiceQuery->where('status', 'like', '%' . $status . '%');
             }
             $getInvoices = $invoiceQuery->get();
 
