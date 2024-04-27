@@ -399,7 +399,6 @@ class PurchaseOrderController extends Controller
 
     public function vendor(Request $request, $id)
     {
-        dd('aa');
         try {
             [
                 "perPage" => $perPage,
@@ -409,7 +408,12 @@ class PurchaseOrderController extends Controller
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
-            $purchaseOrderQuery = PurchaseOrder::with("vendor")->where("vendor_id", $id)->where("deleted_at", null)->orwhere("status", "like", "%Terkirim%")->orWhere('status', 'like', "%Diupload Vendor%")->orWhere('status', 'like', "%Diverifikasi Admin%")->orWhere('status', 'like', "%Selesai%");
+            $purchaseOrderQuery = PurchaseOrder::with("vendor")->where("vendor_id", $id)->where("deleted_at", null)->where(function ($query) {
+                $query->where('status', 'like', "%Terkirim%")
+                      ->orWhere('status', 'like', "%Diupload Vendor%")
+                      ->orWhere('status', 'like', "%Diverifikasi Admin%")
+                      ->orWhere('status', 'like', "%Selesai%");
+            });
 
             if ($value) {
                 $purchaseOrderQuery->where(function ($query) use ($value) {
