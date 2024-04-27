@@ -328,6 +328,9 @@ class ReceiptController extends Controller
             if ($validateReceipt != "") throw new CustomException($validateReceipt, 400);
 
             $dataPayload = ["status" => $request->input("status")];
+            if ($request->input("status") == 'Terkirim') {
+                $dataPayload["receipt_send_date"] = Carbon::now();
+            }
 
             Receipt::findOrFail($id)->update($dataPayload);
 
