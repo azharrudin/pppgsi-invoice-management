@@ -553,10 +553,6 @@ class InvoiceController extends Controller
     {
         try {
             [
-                // "perPage" => $perPage,
-                // "page" => $page,
-                // "order" => $order,
-                // "sort" => $sort,
                 "start" => $start,
                 "end" => $end,
                 "value" => $value
@@ -582,24 +578,12 @@ class InvoiceController extends Controller
                         ->orWhere('status', 'like', '%' . $value . '%');
                 });
             }
-            $getInvoices = $invoiceQuery
-                ->select("id", "invoice_number", "tenant_id", "grand_total", "invoice_date", "invoice_due_date", "pdf_link", "status")
-                ->get();
-            // $totalCount = $getInvoices->total();
+            $getInvoices = $invoiceQuery->get();
 
             $invoiceArr = $this->CommonService->toArray($getInvoices);
-            // foreach ($invoiceArr as $invoiceObj) {
-            //     $totalPaid = Receipt::where("invoice_id", $invoiceObj["id"])->where("deleted_at", null)->sum("paid");
-            //     $invoiceObj["total_paid"] = $totalPaid;
-            //     $invoiceObj["remaining"] = $invoiceObj["grand_total"] - $totalPaid;
-            // }
 
             return [
                 "data" => $invoiceArr,
-                // "per_page" => $perPage,
-                // "page" => $page,
-                // "size" => $totalCount,
-                // "pages" => ceil($totalCount / $perPage)
             ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
