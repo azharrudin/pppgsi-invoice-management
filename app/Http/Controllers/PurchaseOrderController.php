@@ -405,6 +405,7 @@ class PurchaseOrderController extends Controller
                 "page" => $page,
                 "order" => $order,
                 "sort" => $sort,
+                "status" => $status,
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
@@ -414,6 +415,10 @@ class PurchaseOrderController extends Controller
                       ->orWhere('status', 'like', "%Diverifikasi Admin%")
                       ->orWhere('status', 'like', "%Selesai%");
             });
+
+            if($status){
+                $purchaseOrderQuery->where('status', 'like', "%".$status."%");
+            }
 
             if ($value) {
                 $purchaseOrderQuery->where(function ($query) use ($value) {
