@@ -211,25 +211,27 @@ class VendorInvoiceController extends Controller
             $countVendorInvoice = 0;
             $countVendorInvoicePaid = 0;
 
-            $countVendorInvoice = PurchaseOrder::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->where(function ($query) {
-                $query->where('status', 'like', "%Terkirim%")
-                      ->orWhere('status', 'like', "%Diupload Vendor%")
-                      ->orWhere('status', 'like', "%Diverifikasi Admin%")
-                      ->orWhere('status', 'like', "%Selesai%");
-            });
+            $countVendorInvoice = PurchaseOrder::where("deleted_at", null)->whereBetween("created_at", [$start, $end]);
             if(!is_null($request->vendor_id)){
                 $countVendorInvoice = $countVendorInvoice->where("vendor_id", $request->vendor_id);
+                $countVendorInvoice = $countVendorInvoice->where(function ($query) {
+                    $query->where('status', 'like', "%Terkirim%")
+                          ->orWhere('status', 'like', "%Diupload Vendor%")
+                          ->orWhere('status', 'like', "%Diverifikasi Admin%")
+                          ->orWhere('status', 'like', "%Selesai%");
+                });
             }
             $countVendorInvoice = $countVendorInvoice->count();
             $countVendorInvoicePaid = PurchaseOrder::where("deleted_at", null)->
-                whereBetween("created_at", [$start, $end])->where(function ($query) {
-                $query->where('status', 'like', "%Terkirim%")
-                        ->orWhere('status', 'like', "%Diupload Vendor%")
-                        ->orWhere('status', 'like', "%Diverifikasi Admin%")
-                        ->orWhere('status', 'like', "%Selesai%");
-            });
+                whereBetween("created_at", [$start, $end]);
             if(!is_null($request->vendor_id)){
                 $countVendorInvoicePaid = $countVendorInvoicePaid->where("vendor_id", $request->vendor_id);
+                $countVendorInvoicePaid = $countVendorInvoicePaid->where(function ($query) {
+                    $query->where('status', 'like', "%Terkirim%")
+                            ->orWhere('status', 'like', "%Diupload Vendor%")
+                            ->orWhere('status', 'like', "%Diverifikasi Admin%")
+                            ->orWhere('status', 'like', "%Selesai%");
+                });
             }
             $countVendorInvoicePaid = $countVendorInvoicePaid->sum("grand_total");
             return [
