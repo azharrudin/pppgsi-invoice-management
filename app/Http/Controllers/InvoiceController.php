@@ -67,7 +67,6 @@ class InvoiceController extends Controller
             }
             if(!is_null($start) && !is_null($end)) $invoiceQuery = $invoiceQuery->whereBetween("created_at", [$start, $end]);
             $getInvoices = $invoiceQuery
-                ->select("id", "invoice_number", "tenant_id", "grand_total", "invoice_date", "invoice_due_date", "pdf_link", "status")
                 ->orderBy($order, $sort)
                 ->paginate($perPage);
             $totalCount = $getInvoices->total();
