@@ -32,11 +32,12 @@ class LoginController extends Controller
             ];
 
             $records = CallApiHelpers::storeAPI($data, $params);
-            if ($records) {
+            if (isset($records['data'])) {
                 $this->setUserSession($records);
                 echo json_encode(array("message" => "SUCCESS_LOGIN", "credentials" => $records['data']));
             } else {
-                echo json_encode(array("message" => $records['message'], "error" => $records['status']));
+                echo json_encode(array("message" => $records['message'], "error" => true));
+                return redirect('/')->with('alert-error', $records['message']);
             }
         } catch (RequestException $e) {
             if ($e->hasResponse()) {

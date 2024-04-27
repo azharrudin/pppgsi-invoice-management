@@ -484,15 +484,13 @@ $configData = Helper::appClasses();
             });
         }else if(account.level_id == 11){
             let vendor = getVendorId(account.email);
-            urlInvoice = "{{ url('to-do-list') }}"+"/invoice"+"/Disetujui BM";
             let n = 0;
             urlPurchaseOrder = "{{ url('to-do-list-vendor/purchase-order-vendor') }}/"+vendor.id;
-            tableSetting('Task Invoice', 'invoice-table', columnsInvoice, urlInvoice);
-            tableSetting('Task Tanda Terima', 'tanda-terima-table', columnTandaTerima, urlTandaTerima);
-            tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder)
+            tableSetting('Task Purchase Order', 'purchase-order-table', columnPurchaseOrder, urlPurchaseOrder, 12)
             $(document).ajaxSuccess(function(){
                 n = n + 1;
-                if(n == 2 ){
+                console.log(n);
+                if(n == 1 ){
                     Swal.close();
                 }
             });
@@ -549,9 +547,9 @@ $configData = Helper::appClasses();
         Swal.close();
     }
 
-    function tableSetting(title, table, column, url) {
+    function tableSetting(title, table, column, url, width=6) {
         let temp = `    
-                <div class="col-md-6 mb-3">
+                <div class="col-md-${width} mb-3">
                     <div class="card">
                         <div class="card-datatable table-responsive pt-0">
                             <table class="${table} table">

@@ -11,6 +11,8 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Carbon\Carbon;
+
 
 class ReportInvoiceExport implements FromCollection, WithMapping, ShouldAutoSize, WithHeadings
 {
@@ -35,7 +37,10 @@ class ReportInvoiceExport implements FromCollection, WithMapping, ShouldAutoSize
 
     public function map($data): array
     {
-       
+       $invoiceDate = Carbon::createFromFormat('Y-m-d', $data->invoice_date);
+       $previousMonthStart = $invoiceDate->subMonth()->startOfMonth()->format('d M Y');
+       $previousMonthEnd = $invoiceDate->endOfMonth()->format('d M Y');
+
        $remaining = "Rp. 0";
        if(property_exists($data, "remaining")){
         $remaining = number_format($data->remaining, 0, ',', '.');
@@ -43,12 +48,13 @@ class ReportInvoiceExport implements FromCollection, WithMapping, ShouldAutoSize
         return [
             $this->i++,
             $data->invoice_number,
-            $data->invoice_date,
-            (strtotime(date('Ymd')) -  strtotime($data->invoice_date)) / 86400 +1 .' Hari',
+            date('d F Y', strtotime($data->invoice_date)),
+            strip_tags($data->notes),
             $data->tenant == null ? "" :  $data->tenant->name,
             "Rp " . substr(number_format($data->grand_total, 2, ',', '.'), 0, -3),
-            // "Rp " . number_format($data->remaining, 2, ',', '.'),
-           $remaining
+            $remaining,
+            $previousMonthStart . ' s/d ' . $previousMonthEnd
+
         ];
     }
 
@@ -57,26 +63,12 @@ class ReportInvoiceExport implements FromCollection, WithMapping, ShouldAutoSize
         return [
             'No',
             'Nomor Invoice',
-            'Tanggal Dibuat',
-            'Umur Piutang',
-            'Perusahaan',
-            'Total Invoice',
-            'Sisa Tagihan'
+            'Tanggal Faktur',
+            'Uraian',
+            'Nama Pelanggan',
+            'Total Tagihan',
+            'Sisa Tagihan',
+            'Periode'
         ];
     }
-
-    // public function styles(Worksheet $sheet)
-    // {
-    //     $styleHeader = [
-    //         'borders' => [
-    //             'allBorders' => [
-    //                 'borderStyle' => 'thin',
-    //                 'color' => ['rgb' => '808080']
-    //             ],
-    //         ]
-    //     ];
-    //     $sheet->getStyle('1')->getFont()->setBold(true);
-    //     $sheet->getStyle('1')->getFill()->applyFromArray(['fillType' => 'solid','rotation' => 0, 'color' => ['rgb' => '7EC8E3'],]);
-    //     $sheet->getStyle($sheet->calculateWorksheetDimension())->applyFromArray($styleHeader);
-    // }
 }

@@ -16,9 +16,14 @@ class ReportInvoiceController extends Controller
         return view("report.report-invoice");
     }
 
-    public function fileExport()
+    public function fileExport(Request $request)
     {
-        $apiRequest = Http::get(env('BASE_URL_API') .'/api/invoice/invoice-report-export');
+        $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice/invoice-report-export', [
+            'value' => $request->value,
+            'status' => $request->status,
+            'start' => $request->start,
+            'end' => $request->end,
+        ]);
         $response = json_decode($apiRequest->getBody());
         $data = $response->data;
         return Excel::download(new ReportInvoiceExport($data), 'report-invoice.xlsx');

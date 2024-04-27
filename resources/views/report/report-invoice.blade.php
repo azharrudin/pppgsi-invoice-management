@@ -4,7 +4,7 @@ $configData = Helper::appClasses();
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'Invoice')
+@section('title', 'Report Invoice')
 
 @section('page-style')
 {{-- Page Css files --}}
@@ -103,66 +103,6 @@ $configData = Helper::appClasses();
                             </div>`;
         let account = {!! json_encode(session('data')) !!}
         let buttonAdd = [];
-        if (account.level.id == '10') {
-            /*
-            buttonAdd = [{
-                text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Buat Invoice</span>',
-                className: "btn btn-primary h ",
-                action: function(a, e, t, s) {
-                    $.ajax({
-                        url: "{{ env('BASE_URL_API')}}" + '/api/invoice/' + id,
-                        type: "GET",
-                        dataType: "json",
-                        success: function(res) {
-
-                        },
-                        error: function(errors) {
-                            console.log(errors);
-                        }
-                    });
-                    window.location = "{{url('invoice/add-invoice')}}"
-                }
-            }];
-            */
-        }
-        /* 
-        buttonAdd = [{
-            text: '<i class="ti ti-download me-md-1"></i><span class="d-md-inline-block d-none">Tarik Report .XLSX</span>',
-            className: "btn btn-primary",
-            action: function(a, e, t, s) {
-                 $.ajax({
-                     url: "{{url('api/invoice/invoice-report-export')}}",
-                     type: "GET",
-                     dataType: "json",
-                     success: function(res) {
-                        console.log(res.data);
-                        let data = res.data;
-                        console.log(typeof(data));
-                        let datas = {};
-                        datas.data = data;
-                        $.ajax({
-                            url: "{{url('report/report-invoice/file-export')}}",
-                            type: "POST",
-                            data: JSON.stringify(datas),
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success : function (res){
-                                console.log(res);
-                            },
-                             error: function(errors) {
-                                 console.log(errors);
-                             }
-                         });
-                     },
-                     error: function(errors) {
-                         console.log(errors);
-                     }
-                });
-                console.log('s');
-                window.location = "{{url('report/report-invoice/file-export')}}"
-            }
-        }];
-        */
         setHeader();
        
         function setHeader() {
@@ -340,7 +280,6 @@ $configData = Helper::appClasses();
             dat = 
                 temp
             
-        console.log(dat[0])
         opt = {
             data: dat,
             serverSide: false,
@@ -348,7 +287,6 @@ $configData = Helper::appClasses();
         }
 
         }
-console.log(opt)
         var el = $(".invoice-list-table");
         if (el.length) var e = el.DataTable(Object.assign(opt,{
             responsive: true,
@@ -370,28 +308,26 @@ console.log(opt)
                 className: 'text-center',
                 render: function(data, type, full, meta) {
                     var tanggalAwal = data;
-
                     var bagianTanggal = tanggalAwal.split('-');
                     var tahun = bagianTanggal[0];
                     var bulan = bagianTanggal[1];
                     var hari = bagianTanggal[2];
-
                     var tanggalHasil = hari + '/' + bulan + '/' + tahun;
                     return tanggalHasil;
                 }
-            }, {
+            },
+            {
                 title: "Umur Piutang",
                 data: "invoice_date",
                 className: 'text-center',
                 render: function(data, type, row) {
-
                     let creted = new Date(data);
                     let today = new Date();
                     let diffTime = Math.abs(today - creted);
                     let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                     return diffDays;
                 }
-            }, 
+            },
             {
                 class: "text-center",
                 data: "status",
@@ -399,7 +335,6 @@ console.log(opt)
                 title: "Status",
                 className: 'text-center',
                 render: function(data, type, row) {
-                    console.log(data)
                     if (data == 'Terbuat') {
                         return '<span class="badge w-100" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
                     } else if (data == 'Disetujui KA') {
@@ -415,7 +350,6 @@ console.log(opt)
                     }
                     else {
                         return '<span class="badge w-100" style="background-color : #ff9f43; " text-capitalized> Kurang Bayar </span>';
-                        
                     }
                 }
             },
@@ -427,24 +361,17 @@ console.log(opt)
                 render: function(data, type, row) {
                     return data;
                 }
-            }, 
-            // {
-            //     title: "Nama Tagihan",
-            //     className: 'text-center',
-            // }, 
+            },
             {
                 name: "grand_total",
                 data: "grand_total",
                 title: "Total Invoice",
                 className: 'text-center',
                 render: function(data, type, row) {
-
                     return new Intl.NumberFormat("id-ID", {
                         style: "currency",
                         currency: "IDR",
                         maximumFractionDigits: 0
-                        
-
                     }).format(data)
 
                 }
@@ -471,7 +398,7 @@ console.log(opt)
             language: {
                 sLengthMenu: "Show _MENU_",
                 search: "",
-                searchPlaceholder: "Search Invoice"
+                searchPlaceholder: "Search Invoice",
             },
             buttons: buttonAdd,
             responsive: {
@@ -499,37 +426,55 @@ console.log(opt)
                 this.api().columns(5).every((function() {
                     var a = this,
                         lsp = $(
-                            '<select id="UserRole" class="form-select" style="width: 150px"><option value=""> Select Status </option><option value="disetujui bm"> Disetujui BM </option><option value="dibuat"> Dibuat </option><option value="terkirim"> Terkirim </option><option value="lunas"> Lunas </option></select>'
+                            '<select id="UserRole" class="form-select" style="width: 180px"><option value=""> Semua Status </option><option value="terbuat">Terbuat</option><option value="disetujui ka">Disetujui CA</option><option value="disetujui bm">Disetujui BM</option><option value="terkirim">Terkirim</option><option value="lunas">Lunas</option><option value="kurang bayar">Kurang Bayar</option></select>'
                         ).appendTo(".invoice_status").on("change", (
                             function() {
                                 var e = $.fn.dataTable.util.escapeRegex($(
                                     this).val());
-                                console.log(e);
                                 a.columns(3).search(e)
                                     .draw()
                             })),
                         f =  $(
-                            '<input class="form-select ms-2" type="text" id="date_select" value="Select Date" style="width: 200px"></input>'
+                            '<input class="form-select ms-2" type="text" id="date_select" value="Select Date" style="width: 240px"></input>'
                         ).appendTo(".invoice_status")
                       
                         $('#date_select').daterangepicker({
                             opens: 'left'
                         }, (start, end, label) => {
-                            var start_ = start.format('YYYY-MM-DD')
-                            var end_ = end.format('YYYY-MM-DD') 
-                            $.ajax({url: "https://pppgsi.com/api/invoice?per_page=10&page=1&order=id&sort=desc&value=&start="+start_+"&end="+end_, success: function(result){
-                                load_table(result)
-
-                            }});
-                            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-                            
+                            var start_ = start.format('YYYY-MM-DD');
+                            var end_ = end.format('YYYY-MM-DD');
+                            $.ajax(
+                                {
+                                    url: "https://pppgsi.com/api/invoice?per_page=10&page=1&order=id&sort=desc&value=&start="+start_+"&end="+end_, 
+                                    success: function(result){
+                                        load_table(result)
+                                }
+                            });
                         });
 
                     
-                        gcr =  $(
+                        let gcr =  $(
                            `<button class="btn btn-sm btn-primary ms-2 w-100"><span class="d-md-inline-block d-none">Download .XLSX</span></button>`
                         ).appendTo(".invoice_status").on("click", () => {
-                           window.location.href ="{{url('report/report-invoice/file-export')}}";
+                            let value = $('input[type="search"]').val();
+                            let status = $('#UserRole').val();
+                            let date_range = $('#date_select').val();
+                            let dates = date_range.split(' - ');
+                            let start = moment(dates[0], 'MM/DD/YYYY').format('YYYY-MM-DD');
+                            let end = moment(dates[1], 'MM/DD/YYYY').format('YYYY-MM-DD');
+                            let queryParams = [];
+                            if (status) {
+                                queryParams.push('status=' + encodeURIComponent(status));
+                            }
+                            if (value) {
+                                queryParams.push('value=' + encodeURIComponent(value));
+                            }
+                            queryParams.push('start=' + encodeURIComponent(start));
+                            queryParams.push('end=' + encodeURIComponent(end));
+                            let baseUrl = "{{ url('report/report-invoice/file-export') }}";
+                            let fullUrl = baseUrl + '?' + queryParams.join('&');
+                            window.location.href = fullUrl;
+                        //    window.location.href ="{{url('report/report-invoice/file-export')}}";
                            
                         })
                         $('#date_select').daterangepicker({
@@ -539,11 +484,11 @@ console.log(opt)
                         });
                      
 
-                    a.data().unique().sort().each((function(a, t) {
-                        e.append('<option value="' + a +
-                            '" class="text-capitalize">' + a +
-                            "</option>")
-                    }))
+                    // a.data().unique().sort().each((function(a, t) {
+                    //     t.append('<option value="' + a +
+                    //         '" class="text-capitalize">' + a +
+                    //         "</option>")
+                    // }))
                 }))
             }
         }));

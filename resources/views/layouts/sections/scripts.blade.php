@@ -120,6 +120,7 @@
         aTags[0].parentElement.parentElement.classList.add('d-none');
     }
     if(accountMenu?.level.id == 11){
+        hideDashboard();
         hideMenu("Invoice");
         hideMenu("Request");
         hideMenu("Complain");

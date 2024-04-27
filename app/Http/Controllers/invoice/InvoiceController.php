@@ -146,7 +146,6 @@ class InvoiceController extends Controller
         $data->tax = $pajak;
         $data->total = $total;
         $data->pajakEklusif = $pajakEklusif;
-        // dd($data);
         $pdf = PDF::loadView('invoice.download', ['data' => $data])->setPaper('a4', 'portait');
         return $pdf->stream('invoice-' .$data->invoice_number. '.pdf');
     }

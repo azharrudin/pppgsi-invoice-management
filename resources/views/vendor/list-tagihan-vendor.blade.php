@@ -27,7 +27,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                         <div>
-                            <h3 class="mb-1 count_receipt">0</h3>
+                            <h3 class="mb-1 count_purchase_order">0</h3>
                             <p class="mb-0" id="total_tagihan">Total Tagihan</p>
                         </div>
                     </div>
@@ -36,7 +36,7 @@ $configData = Helper::appClasses();
                 <div class="col-sm-6 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
                         <div>
-                            <h3 class="mb-1 count_receipt_paid">Rp. 0</h3>
+                            <h3 class="mb-1 count_purchase_order_paid">Rp. 0</h3>
                             <p class="mb-0">Terbayarkan</p>
                         </div>
                     </div>
@@ -72,16 +72,10 @@ $configData = Helper::appClasses();
     if(account.level_id == '11'){
         let vendor = getVendorId(account.email);
         table = "{{ url('vendor/data-vendor/') }}/"+vendor.id;
-    }
-    else if(account.level_id == '10'){
-        table = "{{ url('vendor/data-tagihan-vendor') }}";
-        $("#tenant").html("Total Vendor")
-        $("#tt").html("Total Tagihan")
-    }
-    else {
+    } else {
         table = "{{ url('vendor/data-tagihan-vendor') }}";
     }
-
+    
     function getVendorId(email) {
         let result;
         let datas = {}
@@ -193,7 +187,7 @@ $configData = Helper::appClasses();
                         return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
                     } else if (data == 'Terkirim') {
                         if(account.level_id == '11'){
-                            return '<span class="badge w-100 bg-info" text-capitalized> PO BARU </span>';
+                            return '<span class="badge w-100 bg-info" text-capitalized> Purchase Order Baru </span>';
                         }else{
                             return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
                         }
@@ -263,13 +257,38 @@ $configData = Helper::appClasses();
                         e = $(
                             '<select id="status" class="form-select"><option value=""> Select Status </option></select>'
                         ).appendTo(".tagihan_status").on("change");
-                            var optionsHtml =   '<option value="terbuat">Terbuat</option>' +
-                                                '<option value="disetujui ka">Disetujui CA</option>' +
+                            let optionsHtml =   '<option value="Terbuat">Terbuat</option>' +
+                                                '<option value="disetujui ka">Disetujui KA</option>' +
                                                 '<option value="disetujui bm">Disetujui BM</option>' +
                                                 '<option value="terkirim">Terkirim</option>'+
-                                                '<option value="lunas">Lunas</option>';
+                                                '<option value="di upload vendor">Diupload Vendor</option>'+
+                                                '<option value="Diverifikasi Admin">Diverifikasi Admin</option>' +
+                                                '<option value="selesai">Selesai</option>';
+                            if(account.level_id == '11'){
+                                optionsHtml =   '<option value="terkirim">Purchase Order Baru</option>'+
+                                                '<option value="di upload vendor">Diupload Vendor</option>'+
+                                                '<option value="Diverifikasi Admin">Diverifikasi Admin</option>' +
+                                                '<option value="selesai">Selesai</option>';
+                            }
                             e.append(optionsHtml);
                 }))
+            }
+        });
+
+        $(document).on('change', '#status', function(x) {
+            x.stopPropagation();
+            if(account.level_id == '11'){
+                let vendor = getVendorId(account.email);
+                e.ajax.url("{{ url('vendor/data-vendor') }}/"+vendor.id+"?status="+$(this).val()).load(); // Memuat ulang data DataTable
+            }
+            else if(account.level_id == '10'){
+                table = "{{ url('vendor/data-tagihan-vendor') }}";
+                e.ajax.url("{{ url('vendor/data-tagihan-vendor') }}/"+"?status="+$(this).val()).load(); // Memuat ulang data DataTable
+                $("#tenant").html("Total Vendor")
+                $("#tt").html("Total Tagihan")
+            }
+            else {
+                e.ajax.url("{{ url('vendor/data-tagihan-vendor') }}/"+"?status="+$(this).val()).load(); // Memuat ulang data DataTable
             }
         });
 
@@ -283,8 +302,13 @@ $configData = Helper::appClasses();
                 allowOutsideClick: false,
                 allowEscapeKey: false
             });
+            let param = '';
+            if(account.level_id == 11){
+                let dataVendorId = getVendorId(account.email);
+                param = '?vendor_id='+dataVendorId.id;
+            }
             $.ajax({
-                url: "{{ env('BASE_URL_API')}}" +'/api/vendor-invoice/report',
+                url: "{{ env('BASE_URL_API')}}" +'/api/vendor-invoice/report'+param,
                 type: "GET",
                 dataType: "json",
                 success: function(res) {
@@ -297,6 +321,36 @@ $configData = Helper::appClasses();
                 }
             });
         }
+
+        function getVendorId(email) {
+            let result;
+            let datas = {}
+            datas.email = email;
+            $.ajax({
+                url: "{{ env('BASE_URL_API')}}" + '/api/vendor/email',
+                type: "POST",
+                data: JSON.stringify(datas),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function(response) {
+                    result = response.data;
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text:  xhr?.responseJSON?.message,
+                        icon: 'error',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                        buttonsStyling: false
+                    })
+                }
+            });
+            return result;
+        }
+
         a.on("draw.dt", (function() {
             [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((
                 function(a) {
