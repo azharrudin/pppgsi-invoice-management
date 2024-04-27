@@ -238,32 +238,24 @@ $configData = Helper::appClasses();
                 title: "Tanggal Tanda Terima",
                 render: function(data, type, full, meta) {
                     var tanggalAwal = data;
-
                     var bagianTanggal = tanggalAwal.split('-');
                     var tahun = bagianTanggal[0];
                     var bulan = bagianTanggal[1];
                     var hari = bagianTanggal[2];
-
                     var tanggalHasil = hari + '/' + bulan + '/' + tahun;
-
                     return tanggalHasil;
                 }
             },{
                 class: "text-center",
-                data: "receipt_date",
+                data: "receipt_send_date",
                 name: "receipt_send_date",
                 title: "Tanggal Kirim",
                 render: function(data, type, full, meta) {
-                    var tanggalAwal = data;
-
-                    var bagianTanggal = tanggalAwal.split('-');
-                    var tahun = bagianTanggal[0];
-                    var bulan = bagianTanggal[1];
-                    var hari = bagianTanggal[2];
-
-                    var tanggalHasil = hari + '/' + bulan + '/' + tahun;
-
-                    return tanggalHasil;
+                    if(data == null){
+                        return '';
+                    }else{
+                        return moment(data).format('D MMMM YYYY');
+                    }
                 }
             }, {
                 class: "text-center",
@@ -341,7 +333,7 @@ $configData = Helper::appClasses();
                 this.api().columns(5).every((function() {
                     var a = this,
                         e = $(
-                            '<select id="UserRole" class="form-select"  style="width: 200px"><option value=""> Select Status </option></select>'
+                            '<select id="UserRole" class="form-select"  style="width: 180px"><option value=""> Select Status </option><option value="terbuat">Terbuat</option><option value="disetujui ka">Disetujui CA</option><option value="disetujui bm">Disetujui BM</option><option value="terkirim">Terkirim</option></select>'
                         ).appendTo(".invoice_status").on("change", (
                             function() {
                                 var e = $.fn.dataTable.util.escapeRegex($(
@@ -350,25 +342,16 @@ $configData = Helper::appClasses();
                                     .draw()
                             })),
                             s =  $(
-                            '<input class="form-select ms-2" type="text" id="date_select" value="Select Date" style="width: 200px"></input>'
+                            '<input class="form-select ms-2" type="text" id="date_select" value="Select Date" style="width: 240px"></input>'
                         ).appendTo(".invoice_status")
                       
                         $('#date_select').daterangepicker({
+                            startDate: moment().startOf('month'),
+                            endDate: moment().endOf('month'),
                             opens: 'left',
-                            startDate: moment().format("MM/01/YYYY") ,
-                            endDate: moment().format("MM/30/YYYY") ,
-                        }, (start, end, label) => {
-                            var start_ = moment( start.format('YYYY-MM-DD'))
-                            var end_ = moment(end.format('YYYY-MM-DD') )
-                            
-                            var dates_ = getDaysBetweenDates(start_, end_)
-                            console.log(RegExp($.fn.dataTable.util.escapeRegex(dates_.join(":")).split(":").join("|"), "g"))
-                                a.columns(3).search($.fn.dataTable.util.escapeRegex(dates_.join(":")).split(":").join("|"), true, false)
-                                    .draw()
-
-                          console.log(dates_)
-                            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-                            
+                            locale: {
+                                format: 'DD/MM/YYYY'
+                            }
                         });
                        $(
                            `<button class="btn btn-sm btn-primary ms-2 w-100"><span class="d-md-inline-block d-none">Download .XLSX</span></button>`

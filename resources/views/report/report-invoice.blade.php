@@ -95,12 +95,11 @@ $configData = Helper::appClasses();
         }
     });
    load_table(null)
-    function load_table(datax) { 
+    function load_table(datax) {
         $((function() {
           
-        var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>`;
+        var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status"><span class="sr-only">Loading...</span></div>`;
+        
         let account = {!! json_encode(session('data')) !!}
         let buttonAdd = [];
         setHeader();
@@ -249,13 +248,22 @@ $configData = Helper::appClasses();
                 }
             });
         });
+
         var aj = null
         var dat = null
         var opt = {
             ajax: null,
             data: dat
         }
-        if(datax == null){
+        if(datax != null){
+            aj =  {
+                url: datax,
+                "data": function(d) {
+                    d.start = 0;
+                    d.page = $(".invoice-list-table").DataTable().page.info().page + 1;
+                }
+            }
+        }else{
             aj =  {
                 url: "{{ url('invoice/data-invoice') }}",
                 "data": function(d) {
@@ -263,30 +271,12 @@ $configData = Helper::appClasses();
                     d.page = $(".invoice-list-table").DataTable().page.info().page + 1;
                 }
             }
-            opt = {
-                ajax: aj,
-            serverSide: true,
-
-            }
         }
-        else {
-            var xt = datax["data"]
-            var temp = []
-            xt.forEach((valz)=>{
-                valz["tenant_name"] = "doha"
-                temp.push(valz)
-                
-            })
-            dat = 
-                temp
-            
         opt = {
-            data: dat,
-            serverSide: false,
-
+            ajax: aj,
+            serverSide: true,
         }
 
-        }
         var el = $(".invoice-list-table");
         if (el.length) var e = el.DataTable(Object.assign(opt,{
             responsive: true,
@@ -315,8 +305,7 @@ $configData = Helper::appClasses();
                     var tanggalHasil = hari + '/' + bulan + '/' + tahun;
                     return tanggalHasil;
                 }
-            },
-            {
+            }, {
                 title: "Umur Piutang",
                 data: "invoice_date",
                 className: 'text-center',
@@ -325,10 +314,30 @@ $configData = Helper::appClasses();
                     let today = new Date();
                     let diffTime = Math.abs(today - creted);
                     let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    return diffDays;
+                    return diffDays+' Hari';
                 }
-            },
-            {
+            }, {
+                name: "tenant_name",
+                data: "tenant_name",
+                title: "Perusahaan",
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return data;
+                }
+            }, {
+                name: "grand_total",
+                data: "grand_total",
+                title: "Total Invoice",
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return new Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                        maximumFractionDigits: 0
+                    }).format(data)
+
+                }
+            }, {
                 class: "text-center",
                 data: "status",
                 name: "status",
@@ -352,29 +361,6 @@ $configData = Helper::appClasses();
                         return '<span class="badge w-100" style="background-color : #ff9f43; " text-capitalized> Kurang Bayar </span>';
                     }
                 }
-            },
-            {
-                name: "tenant_name",
-                data: "tenant_name",
-                title: "Perusahaan",
-                className: 'text-center',
-                render: function(data, type, row) {
-                    return data;
-                }
-            },
-            {
-                name: "grand_total",
-                data: "grand_total",
-                title: "Total Invoice",
-                className: 'text-center',
-                render: function(data, type, row) {
-                    return new Intl.NumberFormat("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                        maximumFractionDigits: 0
-                    }).format(data)
-
-                }
             }, {
                 title: "Sisa Tagihan",
                 name: "remaining",
@@ -392,7 +378,7 @@ $configData = Helper::appClasses();
 
             }],
             order: [
-                [3, "desc"]
+                [6, "desc"]
             ],
             dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end  flex-md-row pe-3 gap-md-3"f<"invoice_status d-flex mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><" col-sm-12 col-md-6"p>>',
             language: {
@@ -437,20 +423,32 @@ $configData = Helper::appClasses();
                         f =  $(
                             '<input class="form-select ms-2" type="text" id="date_select" value="Select Date" style="width: 240px"></input>'
                         ).appendTo(".invoice_status")
-                      
-                        $('#date_select').daterangepicker({
-                            opens: 'left'
-                        }, (start, end, label) => {
-                            var start_ = start.format('YYYY-MM-DD');
-                            var end_ = end.format('YYYY-MM-DD');
-                            $.ajax(
-                                {
-                                    url: "https://pppgsi.com/api/invoice?per_page=10&page=1&order=id&sort=desc&value=&start="+start_+"&end="+end_, 
-                                    success: function(result){
-                                        load_table(result)
-                                }
-                            });
-                        });
+
+                        $(document).on('click', '.applyBtn', function(e) {
+                            e.stopPropagation();
+                            let value = $('input[type="search"]').val();
+                            let status = $('#UserRole').val();
+                            let date_range = $('#date_select').val();
+                            console.log(date_range);
+                            let dates = date_range.split(' - ');
+                            let start = moment(dates[0], 'MM/DD/YYYY').format('YYYY-MM-DD');
+                            console.log(start);
+                            let end = moment(dates[1], 'MM/DD/YYYY').format('YYYY-MM-DD');
+                            console.log(end);
+                            let queryParams = [];
+                            if (status) {
+                                queryParams.push('status=' + encodeURIComponent(status));
+                            }
+                            if (value) {
+                                queryParams.push('value=' + encodeURIComponent(value));
+                            }
+                            queryParams.push('start=' + start);
+                            queryParams.push('end=' + end);
+                            let baseUrl = "{{ url('invoice/data-invoice') }}";
+                            let fullUrl = baseUrl + '?' + queryParams.join('&');
+                            console.log(fullUrl);
+                            load_table(fullUrl);
+                        })
 
                     
                         let gcr =  $(
@@ -474,21 +472,16 @@ $configData = Helper::appClasses();
                             let baseUrl = "{{ url('report/report-invoice/file-export') }}";
                             let fullUrl = baseUrl + '?' + queryParams.join('&');
                             window.location.href = fullUrl;
-                        //    window.location.href ="{{url('report/report-invoice/file-export')}}";
                            
                         })
                         $('#date_select').daterangepicker({
-                             startDate: moment().format("MM/01/YYYY") ,
-                            endDate: moment().format("MM/30/YYYY") ,
-                            opens: 'left'
+                            startDate: moment().startOf('month'),
+                            endDate: moment().endOf('month'),
+                            opens: 'left',
+                            locale: {
+                                format: 'DD/MM/YYYY'
+                            }
                         });
-                     
-
-                    // a.data().unique().sort().each((function(a, t) {
-                    //     t.append('<option value="' + a +
-                    //         '" class="text-capitalize">' + a +
-                    //         "</option>")
-                    // }))
                 }))
             }
         }));
@@ -506,7 +499,8 @@ $configData = Helper::appClasses();
             $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(
                 ".dataTables_length .form-select").removeClass("form-select-sm")
         }), 300)
-    }))};
+    })
+    )};
 </script>
 
 

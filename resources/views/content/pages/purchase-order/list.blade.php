@@ -234,11 +234,13 @@ $configData = Helper::appClasses();
                         e = $(
                             '<select id="status" class="form-select"><option value=""> Select Status </option></select>'
                         ).appendTo(".invoice_status").on("change");
-                            var optionsHtml =   '<option value="terbuat">Terbuat</option>' +
-                                                '<option value="disetujui ka">Disetujui CA</option>' +
+                            var optionsHtml =   '<option value="Terbuat">Terbuat</option>' +
+                                                '<option value="disetujui ka">Disetujui KA</option>' +
                                                 '<option value="disetujui bm">Disetujui BM</option>' +
-                                                '<option value="terkirim">Terkirim</option>' +
-                                                '<option value="lunas">Lunas</option>';
+                                                '<option value="terkirim">Terkirim</option>'+
+                                                '<option value="di upload vendor">Diupload Vendor</option>'+
+                                                '<option value="Diverifikasi Admin">Diverifikasi Admin</option>' +
+                                                '<option value="selesai">Selesai</option>';
                             e.append(optionsHtml);
                 }))
             }

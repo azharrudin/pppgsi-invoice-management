@@ -66,6 +66,8 @@ class InvoiceController extends Controller
             'sort' => 'desc',
             'value' => $request->search['value'],
             'status' => $request->status,
+            'start' => $request->start,
+            'end' => $request->end,
         ]);
         $response = json_decode($apiRequest->getBody());
         $data = [];

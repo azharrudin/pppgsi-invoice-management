@@ -65,7 +65,7 @@ class InvoiceController extends Controller
             if ($status) {
                 $invoiceQuery->where('status', 'like', '%' . $status . '%');
             }
-            if(!is_null($start) && !is_null($end)) $invoiceQuery = $invoiceQuery->whereBetween("created_at", [$start, $end]);
+            if(!is_null($start) && !is_null($end)) $invoiceQuery = $invoiceQuery->whereBetween("invoice_date", [$start, $end]);
             $getInvoices = $invoiceQuery
                 ->orderBy($order, $sort)
                 ->paginate($perPage);

@@ -86,7 +86,6 @@ $configData = Helper::appClasses();
 
     let account = {!! json_encode(session('data')) !!}
     let table = '';
-    console.log(account);
     var getDaysBetweenDates = function(startDate, endDate) {
         var now = startDate.clone(), dates = [];
   
@@ -97,15 +96,12 @@ $configData = Helper::appClasses();
         }
         return dates;
     };
-    if(account.level_id == '11'){
-        table = "{{ route('data-vendor') }}";
-    }else{
-        table = "{{ route('data-tagihan-vendor') }}";
-    }
+    table = "{{ url('vendor/data-tagihan-vendor') }}";
     var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>`;
     $((function() {
+        let buttonAdd = [];
         var a = $(".list-vendor-table");
         if (a.length) var e = a.DataTable({
             processing: true,
@@ -146,11 +142,11 @@ $configData = Helper::appClasses();
             }, 
             {
                 name: "vendor_name",
-                data: "vendor_name",
+                data: "vendor",
                 title: "Perusahaan",
                 className: 'text-center',
                 render: function(data, type, row) {
-                    return data;
+                    return data.name ? data.name : '';
                 }
             }, {
                 name: "Perihal",
@@ -171,63 +167,28 @@ $configData = Helper::appClasses();
                         currency: "IDR"
                     }).format(data)
                 }
-            }, 
-         
-            // {
-            //     class: "text-center",
-            //     data: "status",
-            //     name: "status",
-            //     title: "Status",
-            //     className: 'text-center',
-            //     render: function(data, type, row) {
-            //         if (data == 'Terbuat') {
-            //             return '<span class="badge w-100" style="background-color : #BFBFBF; " text-capitalized> Terbuat </span>';
-            //         } else if (data == 'Disetujui KA') {
-            //             return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized> Disetujui KA </span>';
-            //         } else if (data == 'Lunas') {
-            //             return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized> Lunas </span>';
-            //         } else if (data == 'Terkirim') {
-            //             return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized> Terkirim </span>';
-            //         } else if (data == 'Disetujui BM') {
-            //             return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized> Disetujui BM </span>';
-            //         }
-            //     }
-            // }, 
-            // {
-            //     data: "vendor_id",
-            //     name: "vendor_id",
-            //     title: "Action",
-            //     render: function(data, type, row) {
-            //         console.log(data);
-            //         let editRow = '';
-            //         let sendMailRow = '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>';
-            //         let previewRow = '<a href="{{ url("vendor/show-tagihan-vendor")}}/' + data + '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Tagihan Vendor"><i class="ti ti-eye mx-2 ti-sm"></i></a>';
-            //         return `<div class="d-flex align-items-center">
-            //                 ` + previewRow + `
-            //                 <div class="dropdown"><a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a><div class="dropdown-menu dropdown-menu-end"><a href="javascript:;" class="dropdown-item">Download</a><a href="{{ url("vendor/edit-tagihan-vendor")}}/` + data + `" class="dropdown-item">Edit</a>
-            //                 <div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a></div></div></div>`
-            //     }
-            // }
+            },
         ],
             order: [
                 [0, "desc"]
             ],
-            dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"invoice_status d-flex mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            dom: '<"row mx-1"<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>><"col-12 col-md-6 d-flex align-items-center justify-content-end  flex-md-row pe-3 gap-md-3"f<"invoice_status d-flex mb-3 mb-md-0">>>t<"row mx-2"<"col-sm-12 col-md-6"i><" col-sm-12 col-md-6"p>>',
             language: {
                 sLengthMenu: "Show _MENU_",
                 search: "",
-                searchPlaceholder: "Search Tanda Terima"
+                searchPlaceholder: "Search Invoice",
             },
-            buttons: [],
+            buttons: buttonAdd,
             responsive: {
                 details: {
                     display: $.fn.dataTable.Responsive.display.modal({
                         header: function(a) {
-                            return "Details of " + a.data().full_name
+                            return "Detail"
                         }
                     }),
                     type: "column",
                     renderer: function(a, e, t) {
+
                         var s = $.map(t, (function(a, e) {
                             return "" !== a.title ? '<tr data-dt-row="' + a
                                 .rowIndex + '" data-dt-column="' + a
@@ -239,46 +200,77 @@ $configData = Helper::appClasses();
                 }
             },
             initComplete: function() {
-                this.api().columns(0).every((function() {
+                this.api().columns(5).every((function() {
                     var a = this,
                         e = $(
-                            '<select id="UserRole" class="form-select" style="width: 200px;"><option value=""> Select Status </option></select>'
-                        ).appendTo(".purchase_status").on("change", (
-                            function() {
-                                var e = $.fn.dataTable.util.escapeRegex($(
-                                    this).val());
-                                a.search(e ? "^" + e + "$" : "", !0, !1)
-                                    .draw()
-                            })),
-                            f =  $(
-                            '<input class="form-select ms-2" type="text" id="date_select" value="Select Date" style="width: 200px"></input>'
+                            '<select id="status" class="form-select" style="width:180px"><option value=""> Select Status </option></select>'
+                        ).appendTo(".invoice_status").on("change");
+                            var optionsHtml =   '<option value="Terbuat">Terbuat</option>' +
+                                                '<option value="disetujui ka">Disetujui KA</option>' +
+                                                '<option value="disetujui bm">Disetujui BM</option>' +
+                                                '<option value="terkirim">Terkirim</option>'+
+                                                '<option value="di upload vendor">Diupload Vendor</option>'+
+                                                '<option value="Diverifikasi Admin">Diverifikasi Admin</option>' +
+                                                '<option value="selesai">Selesai</option>';
+                            e.append(optionsHtml);
+                        let f =  $(
+                            '<input class="form-select ms-2" type="text" id="date_select" value="Select Date" style="width: 240px"></input>'
                         ).appendTo(".invoice_status")
-                      
-                        $('#date_select').daterangepicker({
-                            opens: 'left'
-                        }, (start, end, label) => {
-                            var start_ = moment( start.format('YYYY-MM-DD'))
-                            var end_ = moment(end.format('YYYY-MM-DD') )
-                            
-                            var dates_ = getDaysBetweenDates(start_, end_)
-                            console.log(RegExp($.fn.dataTable.util.escapeRegex(dates_.join(":")).split(":").join("|"), "g"))
-                                a.columns(2).search($.fn.dataTable.util.escapeRegex(dates_.join(":")).split(":").join("|"), true, false)
-                                    .draw()
 
-                            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-                  
-                            
-                        });
+                        $(document).on('click', '.applyBtn', function(e) {
+                            e.stopPropagation();
+                            let value = $('input[type="search"]').val();
+                            let status = $('#UserRole').val();
+                            let date_range = $('#date_select').val();
+                            let dates = date_range.split(' - ');
+                            let start = moment(dates[0], 'MM/DD/YYYY').format('YYYY-MM-DD');
+                            let end = moment(dates[1], 'MM/DD/YYYY').format('YYYY-MM-DD');
+                            let queryParams = [];
+                            if (status) {
+                                queryParams.push('status=' + encodeURIComponent(status));
+                            }
+                            if (value) {
+                                queryParams.push('value=' + encodeURIComponent(value));
+                            }
+                            queryParams.push('start=' + start);
+                            queryParams.push('end=' + end);
+                            let baseUrl = "{{ url('invoice/data-invoice') }}";
+                            let fullUrl = baseUrl + '?' + queryParams.join('&');
+                            load_table(fullUrl);
+                        })
 
                     
-
+                        let gcr =  $(
+                           `<button class="btn btn-sm btn-primary ms-2 w-100"><span class="d-md-inline-block d-none">Download .XLSX</span></button>`
+                        ).appendTo(".invoice_status").on("click", () => {
+                            let value = $('input[type="search"]').val();
+                            let status = $('#UserRole').val();
+                            let date_range = $('#date_select').val();
+                            let dates = date_range.split(' - ');
+                            let start = moment(dates[0], 'MM/DD/YYYY').format('YYYY-MM-DD');
+                            let end = moment(dates[1], 'MM/DD/YYYY').format('YYYY-MM-DD');
+                            let queryParams = [];
+                            if (status) {
+                                queryParams.push('status=' + encodeURIComponent(status));
+                            }
+                            if (value) {
+                                queryParams.push('value=' + encodeURIComponent(value));
+                            }
+                            queryParams.push('start=' + encodeURIComponent(start));
+                            queryParams.push('end=' + encodeURIComponent(end));
+                            let baseUrl = "{{ url('report/report-invoice/file-export') }}";
+                            let fullUrl = baseUrl + '?' + queryParams.join('&');
+                            window.location.href = fullUrl;
                            
-                        
-                    a.data().unique().sort().each((function(a, t) {
-                        e.append('<option value="' + a +
-                            '" class="text-capitalize">' + a +
-                            "</option>")
-                    }))
+                        })
+                        $('#date_select').daterangepicker({
+                            startDate: moment().startOf('month'),
+                            endDate: moment().endOf('month'),
+                            opens: 'left',
+                            locale: {
+                                format: 'DD/MM/YYYY'
+                            }
+                        });
                 }))
             }
         });
