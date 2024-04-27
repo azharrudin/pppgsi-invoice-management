@@ -223,15 +223,9 @@ class VendorInvoiceController extends Controller
             }
             $countVendorInvoice = $countVendorInvoice->count();
             $countVendorInvoicePaid = PurchaseOrder::where("deleted_at", null)->
-                whereBetween("created_at", [$start, $end]);
+                whereBetween("created_at", [$start, $end])->where('status', 'like', "%Selesai%");
             if(!is_null($request->vendor_id)){
                 $countVendorInvoicePaid = $countVendorInvoicePaid->where("vendor_id", $request->vendor_id);
-                $countVendorInvoicePaid = $countVendorInvoicePaid->where(function ($query) {
-                    $query->where('status', 'like', "%Terkirim%")
-                            ->orWhere('status', 'like', "%Diupload Vendor%")
-                            ->orWhere('status', 'like', "%Diverifikasi Admin%")
-                            ->orWhere('status', 'like', "%Selesai%");
-                });
             }
             $countVendorInvoicePaid = $countVendorInvoicePaid->sum("grand_total");
             return [
