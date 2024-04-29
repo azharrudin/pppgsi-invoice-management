@@ -11,7 +11,6 @@ use App\Http\Controllers\request\PurchaseRequestController;
 use App\Http\Controllers\settings\ListBankController;
 use App\Http\Controllers\settings\ListUserController;
 use App\Http\Controllers\settings\ListDepartmentController;
-
 use App\Http\Controllers\settings\TaxRatesController;
 use App\Http\Controllers\vendor\VendorController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +25,7 @@ use App\Http\Controllers\pages\LaporanKerusakanController;
 use App\Http\Controllers\pages\MaterialRequestController;
 use App\Http\Controllers\pages\TandaTerimaController;
 use App\Http\Controllers\pages\WorkOrderController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TodoListController;
 
 /*
@@ -226,6 +226,10 @@ Route::group(['middleware' => 'cekauth'], function () {
             Route::get('/show/{id}', [TaxRatesController::class, 'show'])->name('pages-show-tax');
         });
     });
+
+
+    //Profile
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 
     // locale
     Route::get('lang/{locale}', [LanguageController::class, 'swap']);

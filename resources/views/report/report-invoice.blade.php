@@ -94,177 +94,50 @@ $configData = Helper::appClasses();
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-   load_table(null)
-    function load_table(datax) {
-        $((function() {
-          
-        var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status"><span class="sr-only">Loading...</span></div>`;
-        
-        let account = {!! json_encode(session('data')) !!}
-        let buttonAdd = [];
-        setHeader();
-       
-        function setHeader() {
-            Swal.fire({
-                title: '<h2>Loading...</h2>',
-                html: sweet_loader + '<h5>Please Wait</h5>',
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                allowEscapeKey: false
-            });
-            $.ajax({
-                url: "{{ env('BASE_URL_API')}}" + '/api/invoice/report',
-                type: "GET",
-                dataType: "json",
-                success: function(res) {
-                    $('.count_tenant').html(res.count_tenant);
-                    $('.count_invoice').html(res.count_invoice);
-                    $('.invoice_paid').html('Rp. ' + parseInt(res.invoice_paid).toLocaleString('en-US'));
-                    $('.invoice_not_paid').html('Rp. ' + parseInt(res.invoice_not_paid).toLocaleString('en-US'));
-                    Swal.close();
-                },
-                error: function(errors) {
-                    console.log(errors);
-                }
-            });
-        }
 
-        $(document).on('click', '.send-email', function(event) {
-            event.preventDefault();
-            Swal.fire({
-                title: 'Apakah anda yakin?',
-                icon: 'warning',
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Ya, Kirim!",
-                cancelButtonText: "Batal",
-                customClass: {
-                    confirmButton: "btn fw-bold btn-primary",
-                    cancelButton: "btn fw-bold btn-active-light-primary"
-                }
-            }).then((result) => {
-                if (result.value) {
-                    let id = $(this).data('id');
-                    let datas = {}
-                    datas.status = 'Terkirim';
-                    Swal.fire({
-                        title: 'Memeriksa...',
-                        text: "Harap menunggu",
-                        html: sweet_loader + '<h5>Please Wait</h5>',
-                        showConfirmButton: false,
-                        allowOutsideClick: false
-                    });
-                    $.ajax({
-                        url: "{{ env('BASE_URL_API')}}" + '/api/invoice/update-status/' + id,
-                        type: "PATCH",
-                        data: JSON.stringify(datas),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function(response) {
-                            Swal.fire({
-                                title: 'Berhasil',
-                                text: 'Berhasil Mengirim Invoice',
-                                icon: 'success',
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                                buttonsStyling: false
-                            }).then((result) => {
-                                $('.invoice-list-table').DataTable().ajax.reload();
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            Swal.fire({
-                                title: 'Error!',
-                                text: xhr?.responseJSON?.message,
-                                icon: 'error',
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                                buttonsStyling: false
-                            })
-                        }
-                    });
-                }
-            });
+    var sweet_loader = `<div class="spinner-border mb-8 text-primary" style="width: 5rem; height: 5rem;" role="status"><span class="sr-only">Loading...</span></div>`;
+
+    let account = {!! json_encode(session('data')) !!}
+    let buttonAdd = [];
+    setHeader();
+    function setHeader() {
+        Swal.fire({
+            title: '<h2>Loading...</h2>',
+            html: sweet_loader + '<h5>Please Wait</h5>',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false
         });
-
-        $(document).on('click', '.delete-record', function(event) {
-            event.preventDefault();
-            Swal.fire({
-                title: 'Apakah anda yakin?',
-                icon: 'warning',
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Ya, Hapus!",
-                cancelButtonText: "Batal",
-                customClass: {
-                    confirmButton: "btn fw-bold btn-primary",
-                    cancelButton: "btn fw-bold btn-active-light-primary"
-                }
-            }).then((result) => {
-                if (result.value) {
-                    let id = $(this).data('id');
-                    let datas = {}
-                    datas.status = 'Terkirim';
-                    Swal.fire({
-                        title: 'Memeriksa...',
-                        text: "Harap menunggu",
-                        html: sweet_loader + '<h5>Please Wait</h5>',
-                        showConfirmButton: false,
-                        allowOutsideClick: false
-                    });
-                    $.ajax({
-                        url: "{{ env('BASE_URL_API')}}" + '/api/invoice/' + id,
-                        type: "DELETE",
-                        data: JSON.stringify(datas),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function(response) {
-                            Swal.fire({
-                                title: 'Berhasil',
-                                text: 'Berhasil Menghapus Invoice',
-                                icon: 'success',
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                                buttonsStyling: false
-                            }).then((result) => {
-                                $('.invoice-list-table').DataTable().ajax.reload();
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            Swal.fire({
-                                title: 'Error!',
-                                text: xhr?.responseJSON?.message,
-                                icon: 'error',
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                                buttonsStyling: false
-                            })
-                        }
-                    });
-                }
-            });
+        $.ajax({
+            url: "{{ env('BASE_URL_API')}}" + '/api/invoice/report',
+            type: "GET",
+            dataType: "json",
+            success: function(res) {
+                $('.count_tenant').html(res.count_tenant);
+                $('.count_invoice').html(res.count_invoice);
+                $('.invoice_paid').html('Rp. ' + parseInt(res.invoice_paid).toLocaleString('en-US'));
+                $('.invoice_not_paid').html('Rp. ' + parseInt(res.invoice_not_paid).toLocaleString('en-US'));
+                Swal.close();
+            },
+            error: function(errors) {
+                console.log(errors);
+            }
         });
+    }
 
-        var aj = null
-        var dat = null
-        var opt = {
-            ajax: null,
-            data: dat
-        }
-        if(datax != null){
-            aj =  {
-                url: datax,
+    table();
+    function table(param){
+        let url = '';
+        if(param){
+            url =  {
+                url: param,
                 "data": function(d) {
                     d.start = 0;
                     d.page = $(".invoice-list-table").DataTable().page.info().page + 1;
                 }
             }
         }else{
-            aj =  {
+            url =  {
                 url: "{{ url('invoice/data-invoice') }}",
                 "data": function(d) {
                     d.start = 0;
@@ -272,13 +145,13 @@ $configData = Helper::appClasses();
                 }
             }
         }
-        opt = {
-            ajax: aj,
+        let opt = {
+            ajax: url,
             serverSide: true,
         }
 
         var el = $(".invoice-list-table");
-        if (el.length) var e = el.DataTable(Object.assign(opt,{
+        var e = el.DataTable(Object.assign(opt,{
             responsive: true,
             bDestroy: true,
             processing: true,
@@ -415,11 +288,26 @@ $configData = Helper::appClasses();
                             '<select id="UserRole" class="form-select" style="width: 180px"><option value=""> Semua Status </option><option value="terbuat">Terbuat</option><option value="disetujui ka">Disetujui CA</option><option value="disetujui bm">Disetujui BM</option><option value="terkirim">Terkirim</option><option value="lunas">Lunas</option><option value="kurang bayar">Kurang Bayar</option></select>'
                         ).appendTo(".invoice_status").on("change", (
                             function() {
-                                var e = $.fn.dataTable.util.escapeRegex($(
-                                    this).val());
-                                a.columns(3).search(e)
-                                    .draw()
-                            })),
+                                let value = $('input[type="search"]').val();
+                                let status = $(this).val();
+                                let date_range = $('#date_select').val();
+                                let dates = date_range.split(' - ');
+                                let start = moment(dates[0], 'DD/MM/YYYY').format('YYYY-MM-DD');
+                                let end = moment(dates[1], 'DD/MM/YYYY').format('YYYY-MM-DD');
+                                let queryParams = [];
+                                if (status) {
+                                    queryParams.push('status=' + encodeURIComponent(status));
+                                }
+                                if (value) {
+                                    queryParams.push('value=' + encodeURIComponent(value));
+                                }
+                                queryParams.push('start_date=' + start);
+                                queryParams.push('end_date=' + end);
+                                let baseUrl = "{{ url('invoice/data-invoice') }}";
+                                let fullUrl = baseUrl + '?' + queryParams.join('&');
+                                table(fullUrl);
+                            })
+                        ),
                         f =  $(
                             '<input class="form-select ms-2" type="text" id="date_select" value="Select Date" style="width: 240px"></input>'
                         ).appendTo(".invoice_status")
@@ -429,12 +317,9 @@ $configData = Helper::appClasses();
                             let value = $('input[type="search"]').val();
                             let status = $('#UserRole').val();
                             let date_range = $('#date_select').val();
-                            console.log(date_range);
                             let dates = date_range.split(' - ');
-                            let start = moment(dates[0], 'MM/DD/YYYY').format('YYYY-MM-DD');
-                            console.log(start);
-                            let end = moment(dates[1], 'MM/DD/YYYY').format('YYYY-MM-DD');
-                            console.log(end);
+                            let start = moment(dates[0], 'DD/MM/YYYY').format('YYYY-MM-DD');
+                            let end = moment(dates[1], 'DD/MM/YYYY').format('YYYY-MM-DD');
                             let queryParams = [];
                             if (status) {
                                 queryParams.push('status=' + encodeURIComponent(status));
@@ -442,12 +327,12 @@ $configData = Helper::appClasses();
                             if (value) {
                                 queryParams.push('value=' + encodeURIComponent(value));
                             }
-                            queryParams.push('start=' + start);
-                            queryParams.push('end=' + end);
+                            queryParams.push('start_date=' + start);
+                            queryParams.push('end_date=' + end);
                             let baseUrl = "{{ url('invoice/data-invoice') }}";
                             let fullUrl = baseUrl + '?' + queryParams.join('&');
                             console.log(fullUrl);
-                            load_table(fullUrl);
+                            table(fullUrl);
                         })
 
                     
@@ -458,8 +343,8 @@ $configData = Helper::appClasses();
                             let status = $('#UserRole').val();
                             let date_range = $('#date_select').val();
                             let dates = date_range.split(' - ');
-                            let start = moment(dates[0], 'MM/DD/YYYY').format('YYYY-MM-DD');
-                            let end = moment(dates[1], 'MM/DD/YYYY').format('YYYY-MM-DD');
+                            let start = moment(dates[0], 'DD/MM/YYYY').format('YYYY-MM-DD');
+                            let end = moment(dates[1], 'DD/MM/YYYY').format('YYYY-MM-DD');
                             let queryParams = [];
                             if (status) {
                                 queryParams.push('status=' + encodeURIComponent(status));
@@ -474,33 +359,40 @@ $configData = Helper::appClasses();
                             window.location.href = fullUrl;
                            
                         })
-                        $('#date_select').daterangepicker({
-                            startDate: moment().startOf('month'),
-                            endDate: moment().endOf('month'),
-                            opens: 'left',
-                            locale: {
-                                format: 'DD/MM/YYYY'
-                            }
-                        });
+                        let urlParams = '';
+                        let status = '';
+                        let start_date = '';
+                        let end_date = '';
+                        if(param != null) {
+                            urlParams = new URLSearchParams(param.split('?')[1]);
+                            status = urlParams.get('status');
+                            start_date = urlParams.get('start_date');
+                            end_date = urlParams.get('end_date');
+                        }
+                        $('#UserRole').val(status);
+                        if (start_date != '') {
+                            $('#date_select').daterangepicker({
+                                startDate: moment(start_date, 'YYYY-MM-DD').format('DD/MM/YYYY'),
+                                endDate: moment(end_date, 'YYYY-MM-DD').format('DD/MM/YYYY'),
+                                opens: 'left',
+                                locale: {
+                                    format: 'DD/MM/YYYY'
+                                }
+                            });
+                        }else{
+                            $('#date_select').daterangepicker({
+                                startDate: moment().startOf('month'),
+                                endDate: moment().endOf('month'),
+                                opens: 'left',
+                                locale: {
+                                    format: 'DD/MM/YYYY'
+                                }
+                            });
+                        }
                 }))
             }
         }));
-       
-        el.on("draw.dt", (function() {
-            [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((
-                function(a) {
-                    return new bootstrap.Tooltip(a, {
-                        boundary: document.body
-                    })
-                }))
-        })), $(".invoice-list-table tbody").on("click", ".delete-record", (function() {
-            e.row($(this).parents("tr")).remove().draw()
-        })), setTimeout((() => {
-            $(".dataTables_filter .form-control").removeClass("form-control-sm"), $(
-                ".dataTables_length .form-select").removeClass("form-select-sm")
-        }), 300)
-    })
-    )};
+    }
 </script>
 
 

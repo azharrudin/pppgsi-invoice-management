@@ -59,6 +59,7 @@ class InvoiceController extends Controller
         if ($request->page == null) {
             $request->page = 1;
         }
+        // dd($request->all());
         $apiRequest = Http::get(env('BASE_URL_API') . '/api/invoice', [
             'per_page' => $request->length,
             'page' => $request->page,
@@ -66,9 +67,10 @@ class InvoiceController extends Controller
             'sort' => 'desc',
             'value' => $request->search['value'],
             'status' => $request->status,
-            'start' => $request->start,
-            'end' => $request->end,
+            'start' => $request->start_date,
+            'end' => $request->end_date,
         ]);
+        // dd($apiRequest);
         $response = json_decode($apiRequest->getBody());
         $data = [];
         if ($response->data) {
