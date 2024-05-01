@@ -125,7 +125,14 @@ $configData = Helper::appClasses();
         });
     }
 
-    table();
+    const startDefault = moment().startOf('month').format('YYYY-MM-DD');
+    const endDefault = moment().endOf('month').format('YYYY-MM-DD');
+    let queryParamsDefault = [];
+    queryParamsDefault.push('start_date=' + startDefault);
+    queryParamsDefault.push('end_date=' + endDefault);
+    let baseUrlDefault = "{{ url('invoice/data-invoice') }}";
+    let fullUrlDefault = baseUrlDefault + '?' + queryParamsDefault.join('&');
+    table(fullUrlDefault);
     function table(param){
         let url = '';
         if(param){

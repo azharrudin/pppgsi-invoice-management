@@ -40,6 +40,8 @@ class ReceiptController extends Controller
                 "order" => $order,
                 "sort" => $sort,
                 "status" => $status,
+                "start" => $start,
+                "end" => $end,
                 "value" => $value
             ] = $this->CommonService->getQuery($request);
 
@@ -60,6 +62,7 @@ class ReceiptController extends Controller
             if($status){
                 $receiptQuery->where('status', 'like', '%' . $status . '%');
             }
+            if(!is_null($start) && !is_null($end)) $receiptQuery = $receiptQuery->whereBetween("receipt_date", [$start, $end]);
             $getReceipts = $receiptQuery
                 ->select("id", "receipt_number", "tenant_id", "invoice_id", "bank_id", "grand_total", "receipt_date", "receipt_send_date", "status", "paid")
                 ->orderBy($order, $sort)

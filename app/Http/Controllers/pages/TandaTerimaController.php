@@ -81,6 +81,8 @@ class TandaTerimaController extends Controller
             'sort' => 'desc',
             'value' => $request->search['value'],
             'status' => $request->status,
+            'start' => $request->start_date,
+            'end' => $request->end_date,
         ]);
         $response = json_decode($apiRequest->getBody());
         $data = [];

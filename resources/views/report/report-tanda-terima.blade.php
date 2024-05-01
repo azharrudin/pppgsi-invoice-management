@@ -32,37 +32,27 @@ $configData = Helper::appClasses();
     <div class="card-widget-separator-wrapper">
         <div class="card-body card-widget-separator">
             <div class="row gy-4 gy-sm-1">
-                <div class="col-sm-6 col-lg-3">
+                <div class="col-sm-4 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
                             <h3 class="mb-1 count_tenant">0</h3>
                             <p class="mb-0">Tenant</p>
                         </div>
                     </div>
-                    <hr class="d-none d-sm-block d-lg-none me-4">
                 </div>
-                <div class="col-sm-6 col-lg-3">
-                    <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
+                <div class="col-sm-4 col-lg-4">
+                    <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                         <div>
-                            <h3 class="mb-1 count_invoice">0</h3>
-                            <p class="mb-0">Invoice</p>
-                        </div>
-                    </div>
-                    <hr class="d-none d-sm-block d-lg-none">
-                </div>
-                <div class="col-sm-6 col-lg-3">
-                    <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
-                        <div>
-                            <h3 class="mb-1 invoice_paid">0</h3>
-                            <p class="mb-0">Terbayarkan</p>
+                            <h3 class="mb-1 count_receipt_sent">0</h3>
+                            <p class="mb-0">Tanda Terima Terkirim</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-3">
+                <div class="col-sm-4 col-lg-4">
                     <div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
                         <div>
-                            <h3 class="mb-1 invoice_not_paid">0</h3>
-                            <p class="mb-0">Belum Dibayarkan</p>
+                            <h3 class="mb-1 count_receipt_not_sent">0</h3>
+                            <p class="mb-0">Tanda Terima Belum Terkirim</p>
                         </div>
                     </div>
                 </div>
@@ -125,7 +115,14 @@ $configData = Helper::appClasses();
         });
     }
 
-    table();
+    const startDefault = moment().startOf('month').format('YYYY-MM-DD');
+    const endDefault = moment().endOf('month').format('YYYY-MM-DD');
+    let queryParamsDefault = [];
+    queryParamsDefault.push('start_date=' + startDefault);
+    queryParamsDefault.push('end_date=' + endDefault);
+    let baseUrlDefault = "{{ url('invoice/tanda-terima/data-tanda-terima') }}";
+    let fullUrlDefault = baseUrlDefault + '?' + queryParamsDefault.join('&');
+    table(fullUrlDefault);
     function table(param){
         let url = '';
         if(param){
@@ -138,7 +135,7 @@ $configData = Helper::appClasses();
             }
         }else{
             url =  {
-                url: "{{ url('report/report-tanda-terima/data-tanda-terima') }}",
+                url: "{{ url('invoice/tanda-terima/data-tanda-terima') }}",
                 "data": function(d) {
                     d.start = 0;
                     d.page = $(".invoice-list-table").DataTable().page.info().page + 1;
@@ -218,10 +215,17 @@ $configData = Helper::appClasses();
                 name: "status",
                 title: "Status",
                 render: function(data, type, full, meta) {
-                    if (data == "Yes") {
-                        return '<span class="badge w-100" style="background-color : #74D94E; " text-capitalized>Terkirim</span>'
-                    }else{
-                        return '<span class="badge w-100" style="background-color : #FF4747; " text-capitalized>Belum Terkirim</span>'
+                    if (data == "Disetujui KA") {
+                        return '<span class="badge w-100" style="background-color : #4EC0D9; " text-capitalized>Disetujui CA</span>'
+                    } else if (data == "Disetujui BM") {
+                        return '<span class="badge w-100" style="background-color : #4E6DD9; " text-capitalized>' + data +
+                            '</span>'
+                    } else if (data == "Terbuat") {
+                        return '<span class="badge w-100" style="background-color : #BFBFBF; " text-capitalized>' + data +
+                            '</span>'
+                    } else if (data == "Terkirim") {
+                        return '<span class="badge w-100" style="background-color : #FF87A7; " text-capitalized>' + data +
+                            '</span>'
                     }
                 }
             }],
