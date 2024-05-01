@@ -63,7 +63,6 @@ class PurchaseOrderController extends Controller
             }
             if(!is_null($start) && !is_null($end)) $purchaseOrderQuery = $purchaseOrderQuery->whereBetween("purchase_order_date", [$start, $end]);
             $getPurchaseOrder = $purchaseOrderQuery
-                ->select("id", "purchase_order_number", "vendor_id", "about", "grand_total", "purchase_order_date", "status")
                 ->orderBy($order, $sort)
                 ->paginate($perPage);
             $totalCount = $getPurchaseOrder->total();
