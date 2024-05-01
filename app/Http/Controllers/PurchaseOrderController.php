@@ -316,11 +316,13 @@ class PurchaseOrderController extends Controller
             }
 
             $countTenant = Tenant::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
-            $countPurchaseOrder = PurchaseOrder::where("deleted_at", null)->whereBetween("created_at", [$start, $end])->count();
+            $countPurchaseOrder = PurchaseOrder::where("deleted_at", null)->whereBetween("purchase_order_date", [$start, $end])->count();
+            $countPurchaseOrderPaid = PurchaseOrder::where("deleted_at", null)->whereBetween("purchase_order_date", [$start, $end])->where('status', 'Selesai')->sum('grand_total');
 
             return [
                 "count_vendor" => $countTenant,
                 "count_purchase_order" => $countPurchaseOrder,
+                "count_purchase_order_paid" => $countPurchaseOrderPaid,
             ];
         } catch (\Throwable $e) {
             $errorMessage = "Internal server error";
