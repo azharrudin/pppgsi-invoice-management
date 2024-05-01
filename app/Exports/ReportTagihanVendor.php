@@ -35,9 +35,10 @@ class ReportTagihanVendor implements FromCollection, WithMapping, ShouldAutoSize
              $this->i++,
              $data->purchase_order_number,
              $data->purchase_order_date,
-             $data->vendor_name,
+             $data->vendor->name,
              $data->about,
-             $data->grand_total,
+             "Rp " . substr(number_format($data->grand_total, 2, ',', '.'), 0, -3),
+
          ];
      }
  
@@ -50,7 +51,6 @@ class ReportTagihanVendor implements FromCollection, WithMapping, ShouldAutoSize
              'Perusahaan',
              'Perihal',
              'Total Tagihan',
-            
          ];
      }
 }

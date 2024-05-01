@@ -282,7 +282,7 @@ $configData = Helper::appClasses();
                                 }
                                 queryParams.push('start_date=' + start);
                                 queryParams.push('end_date=' + end);
-                                let baseUrl = "{{ url('invoice/data-invoice') }}";
+                                let baseUrl = "{{ url('invoice/tanda-terima/data-tanda-terima') }}";
                                 let fullUrl = baseUrl + '?' + queryParams.join('&');
                                 table(fullUrl);
                             })
@@ -308,9 +308,8 @@ $configData = Helper::appClasses();
                             }
                             queryParams.push('start_date=' + start);
                             queryParams.push('end_date=' + end);
-                            let baseUrl = "{{ url('invoice/data-invoice') }}";
+                            let baseUrl = "{{ url('invoice/tanda-terima/data-tanda-terima') }}";
                             let fullUrl = baseUrl + '?' + queryParams.join('&');
-                            console.log(fullUrl);
                             table(fullUrl);
                         })
 
@@ -322,8 +321,22 @@ $configData = Helper::appClasses();
                             let status = $('#UserRole').val();
                             let date_range = $('#date_select').val();
                             let dates = date_range.split(' - ');
-                            let start = moment(dates[0], 'DD/MM/YYYY').format('YYYY-MM-DD');
-                            let end = moment(dates[1], 'DD/MM/YYYY').format('YYYY-MM-DD');
+                            let start_date = moment(dates[0], 'DD/MM/YYYY');
+                            let end_date = moment(dates[1], 'DD/MM/YYYY');
+                            let diffDays = end_date.diff(start_date, 'days');
+                            if (diffDays > 31) {
+                                return Swal.fire({
+                                    title: 'Oops',
+                                    text: 'Maximum download report 30 hari',
+                                    icon: 'error',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                }).then(async function(res) {
+                                    Swal.close();
+                                });
+                            }
                             let queryParams = [];
                             if (status) {
                                 queryParams.push('status=' + encodeURIComponent(status));
@@ -331,9 +344,11 @@ $configData = Helper::appClasses();
                             if (value) {
                                 queryParams.push('value=' + encodeURIComponent(value));
                             }
+                            let start = moment(dates[0], 'DD/MM/YYYY').format('YYYY-MM-DD');
+                            let end = moment(dates[1], 'DD/MM/YYYY').format('YYYY-MM-DD');
                             queryParams.push('start=' + encodeURIComponent(start));
                             queryParams.push('end=' + encodeURIComponent(end));
-                            let baseUrl = "{{ url('report/report-invoice/file-export') }}";
+                            let baseUrl = "{{ url('report/report-tanda-terima/file-export') }}";
                             let fullUrl = baseUrl + '?' + queryParams.join('&');
                             window.location.href = fullUrl;
                            

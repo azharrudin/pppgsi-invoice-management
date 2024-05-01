@@ -74,9 +74,14 @@ class ReportTandaTerimaController extends Controller
             ->make(true);
     }
 
-    public function fileExport()
+    public function fileExport(Request $request)
     {
-        $apiRequest = Http::get(env('BASE_URL_API') .'/api/receipt/receipt-report-export');
+        $apiRequest = Http::get(env('BASE_URL_API') . '/api/receipt', [
+            'value' => $request->value,
+            'status' => $request->status,
+            'start' => $request->start,
+            'end' => $request->end,
+        ]);
         $response = json_decode($apiRequest->getBody());
         $data = $response->data;
         return Excel::download(new ReportTandaTerimaExport($data), 'report-tanda-terima.xlsx');

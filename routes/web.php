@@ -195,6 +195,7 @@ Route::group(['middleware' => 'cekauth'], function () {
         // Report Tagihan
         Route::prefix('/report-tagihan')->group(function () {
             Route::get('/', [ReportTagihanController::class, 'index'])->name('pages-report-tagihan');
+            Route::get('/file-export', [ReportTagihanController::class, 'fileExport']);
         });
     });
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\report;
 
-use App\Exports\ReportTandaTerimaExport;
+use App\Exports\ReportTagihanVendor;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportTagihanController extends Controller
 {
@@ -13,12 +15,17 @@ class ReportTagihanController extends Controller
         return view("report.report-tagihan");
     }
 
-    public function fileExport()
+    public function fileExport(Request $request)
     {
-        $apiRequest = Http::get(env('BASE_URL_API') .'/api/vendor-invoice/vendor-invoice-report-export');
+        $apiRequest = Http::get(env('BASE_URL_API') . '/api/purchase-order', [
+            'value' => $request->value,
+            'status' => $request->status,
+            'start' => $request->start,
+            'end' => $request->end,
+        ]);
         $response = json_decode($apiRequest->getBody());
         $data = $response->data;
-        return Excel::download(new ReportTandaTerimaExport($data), 'report-tagihan.xlsx');
+        return Excel::download(new ReportTagihanVendor($data), 'report-tagihan.xlsx');
     }
 
 

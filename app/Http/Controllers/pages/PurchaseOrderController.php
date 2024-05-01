@@ -62,6 +62,8 @@ class PurchaseOrderController extends Controller
             'order' => 'id',
             'sort' => 'desc',
             'status' => $request->status,
+            'start' => $request->start_date,
+            'end' => $request->end_date,
             'value' => $request->search['value'],
         ]);
         $response = json_decode($apiRequest->getBody());

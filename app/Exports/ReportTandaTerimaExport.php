@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Carbon\Carbon;
 
 class ReportTandaTerimaExport implements FromCollection, WithMapping, ShouldAutoSize, WithHeadings
 {
@@ -31,22 +32,14 @@ class ReportTandaTerimaExport implements FromCollection, WithMapping, ShouldAuto
  
      public function map($data): array
      {
-        $status ='';
-
-        if($data->status =='Terkirim'){
-            $status = 'Terkirim';
-        }else{
-            $status = 'Belum Terkirim';
-        }
-       
          return [
              $this->i++,
              $data->receipt_number,
              $data->tenant != null ? $data->tenant->name : "",
-             $data->invoice->grand_total,
-             $data->receipt_date,
-             $data->receipt_send_date,
-             $status
+             "Rp " . substr(number_format($data->paid, 2, ',', '.'), 0, -3),
+             Carbon::parse($data->receipt_date)->format('d F Y'),
+             Carbon::parse($data->receipt_send_date)->format('d F Y'),
+             $data->status
          ];
      }
  
