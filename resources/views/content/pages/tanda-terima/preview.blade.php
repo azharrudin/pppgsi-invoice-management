@@ -8,7 +8,7 @@ $configData = Helper::appClasses();
 
 @section('page-style')
 {{-- Page Css files --}}
-<link rel="stylesheet" href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/dropzone/dropzone.css">
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/dropzone/dropzone.css')}}">
 @endsection
 
 @section('content')
@@ -163,11 +163,11 @@ $configData = Helper::appClasses();
 @endsection
 
 @section('page-script')
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/dropzone/dropzone.js">
+<script src="{{asset('assets/vendor/libs/dropzone/dropzone.js')}}">
 </script>
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/js/forms-file-upload.js">
+<script src="{{asset('assets/js/forms-file-upload.js')}}">
 </script>
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
+<script src="{{asset('assets/vendor/libs/moment/moment.js')}}">
 </script>
 <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script>

@@ -10,7 +10,7 @@
 <script src="{{ asset(mix('assets/vendor/js/menu.js')) }}"></script>
 <script src="{{ asset(mix('assets/vendor/libs/jquery-repeater/jquery-repeater.js')) }}"></script>
 <script src="{{ asset(mix('assets/vendor/libs/dropzone/dropzone.js')) }}"></script>
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="{{ asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')}}"></script>
 <script>
     let accountMenu = {!!json_encode(session('data')) !!}
     //BM

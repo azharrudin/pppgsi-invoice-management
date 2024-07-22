@@ -45,7 +45,7 @@ $configData = Helper::appClasses();
                     <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
                         <span class="d-flex align-items-center justify-content-center text-nowrap">Simpan</span>
                     </button>
-                    <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
+                    <a href="#" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
                     <button type="button" class="btn btn-label-secondary d-grid w-100">Kembali</button>
                 </div>
             </div>

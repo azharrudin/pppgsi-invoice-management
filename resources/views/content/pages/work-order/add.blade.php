@@ -236,9 +236,9 @@ $configData = Helper::appClasses();
 <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script src="{{ asset('assets/js/forms-file-upload.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/flatpickr/flatpickr.js">
+<script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}">
 </script>
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
+<script src="{{asset('assets/vendor/libs/moment/moment.js')}}">
 </script>
 <script>
     "use strict";

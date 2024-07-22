@@ -9,7 +9,7 @@
 @section('page-style')
     {{-- Page Css files --}}
     <link rel="stylesheet"
-        href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/flatpickr/flatpickr.css">
+        href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}">
 @endsection
 
 @section('content')
@@ -216,9 +216,9 @@
 @section('page-script')
     <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script
-        src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/flatpickr/flatpickr.js">
+        src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}">
     </script>
-    <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
+    <script src="{{asset('assets/vendor/libs/moment/moment.js')}}">
     </script>
     <script>
         $(document).ready(function() {

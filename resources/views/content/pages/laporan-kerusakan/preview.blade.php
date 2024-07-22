@@ -8,8 +8,8 @@ $configData = Helper::appClasses();
 
 @section('page-style')
 {{-- Page Css files --}}
-<link rel="stylesheet" href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/dropzone/dropzone.css">
-<link rel="stylesheet" href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/flatpickr/flatpickr.css">
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/dropzone/dropzone.css')}}">
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}">
 @endsection
 
 @section('content')
@@ -159,7 +159,7 @@ $configData = Helper::appClasses();
                     <div class="card-body">
                         {{-- <button type="submit" id="edit"
                                 class="btn btn-primary d-grid w-100 mb-2">Update</button> --}}
-                        {{-- <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/app/invoice/preview"
+                        {{-- <a href="1/app/invoice/preview"
                                 class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a> --}}
                         <a href="/complain/laporan-kerusakan/add" class="btn btn-label-secondary btn-cancel d-grid w-100">Kembali</a>
                     </div>
@@ -178,9 +178,9 @@ $configData = Helper::appClasses();
 <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script src="{{ asset('assets/js/forms-file-upload.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/flatpickr/flatpickr.js">
+<script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}">
 </script>
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
+<script src="assets/vendor/libs/moment/moment.js">
 </script>
 <script>
     "use strict";

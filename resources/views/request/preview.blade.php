@@ -9,9 +9,9 @@
 @section('page-style')
     {{-- Page Css files --}}
     <link rel="stylesheet"
-        href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/dropzone/dropzone.css">
+        href="{{ asset('assets/vendor/libs/dropzone/dropzone.css')}}">
     <link rel="stylesheet"
-        href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/flatpickr/flatpickr.css">
+        href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css')}}">
 @endsection
 
 @section('content')
@@ -419,9 +419,9 @@
     <script src="{{ asset('assets/js/forms-file-upload.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
     <script
-        src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/flatpickr/flatpickr.js">
+        src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js')}}">
     </script>
-    <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/libs/moment/moment.js">
+    <script src="{{ asset('assets/vendor/libs/moment/moment.js')}}">
     </script>
     <script>
         $(document).ready(function() {
