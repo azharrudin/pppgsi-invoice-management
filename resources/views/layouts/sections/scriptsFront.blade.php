@@ -1,4 +1,3 @@
-
 <!-- BEGIN: Vendor JS-->
 <script src="{{asset('assets/vendor/js/dropdown-hover.js')}}"></script>
 <script src="{{asset('assets/vendor/js/mega-dropdown.js')}}"></script>

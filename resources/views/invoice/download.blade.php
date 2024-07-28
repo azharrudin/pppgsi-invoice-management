@@ -133,7 +133,7 @@ return $hasil_rupiah;
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <div class="" style="margin-top: 10px;"><b>Graha Surveyor Indonesia</b></div>
+                        <div class="" style="margin-top: 10px;"><b>Graha Surveyor Indonesia</b>Graha Surveyor Indonesia, Jl. Gatot Subroto No.Kav. 56, RT.1/RW.4 Kelurahan Kuningan Timur, Kecamatan Setiabudi, Kota Jakarta Selatan, DKI Jakarta 12950</div>
                     </td>
                     <td colspan="1"></td>
                     <td colspan="3">
@@ -142,7 +142,7 @@ return $hasil_rupiah;
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <div class="" style="margin-top: 20px;">Phone :</div>
+                        <div class="" style="margin-top: 20px;">Phone :  0215265388</div>
                     </td>
                     <td colspan="1"></td>
                     <td colspan="3">
@@ -151,7 +151,7 @@ return $hasil_rupiah;
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <div class="">Email :</div>
+                        <div class="">Email : finance@pppgsi.com</div>
                     </td>
                     <td colspan="1"></td>
                     <td colspan="3">

@@ -429,6 +429,7 @@ class InvoiceController extends Controller
         if ($status == "disetujui bm" && !isset($getInvoice["paper_id"])) {
             $getTenant = Tenant::where("deleted_at", null)->where("id", $getInvoice["tenant_id"])->first();
             $getInvoiceDetail = InvoiceDetail::where("deleted_at", null)->where("invoice_id", $getInvoice["id"])->get();
+
             $invoiceDetailArr = $this->CommonService->toArray($getInvoiceDetail);
 
             $createSaleInvoice = $this->PaperIdService->createSalesInvoice($getInvoice, $invoiceDetailArr, $getTenant);
@@ -436,7 +437,7 @@ class InvoiceController extends Controller
                 $createSaleInvoice &&
                 isset($createSaleInvoice["data"]) &&
                 isset($createSaleInvoice["data"]["id"])
-            ) Invoice::findOrFail($id)->update(["paper_id" => $createSaleInvoice["data"]["id"]]);
+            ) { Invoice::findOrFail($id)->update(["paper_id" => $createSaleInvoice["data"]["id"]]); }
             else throw new CustomException("Failed to create sales invoice", 400);
         }
 

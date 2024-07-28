@@ -79,6 +79,7 @@ class InvoiceController extends Controller
                 $data[$key]->tenant_name = $value->tenant->company ?? '';
             }
         }
+
         return DataTables::of($data)
             ->setFilteredRecords($response->size)
             ->setTotalRecords($response->size)

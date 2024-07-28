@@ -10,7 +10,12 @@
 <script src="{{ asset(mix('assets/vendor/js/menu.js')) }}"></script>
 <script src="{{ asset(mix('assets/vendor/libs/jquery-repeater/jquery-repeater.js')) }}"></script>
 <script src="{{ asset(mix('assets/vendor/libs/dropzone/dropzone.js')) }}"></script>
-<script src="{{ asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')}}"></script>
+<script src="https://cdn.datatables.net/2.1.2/js/dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.1.0/js/dataTables.buttons.min.js"></script>
+
+<script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.min.js"></script>
+
+
 <script>
     let accountMenu = {!!json_encode(session('data')) !!}
     //BM
@@ -120,7 +125,6 @@
         aTags[0].parentElement.parentElement.classList.add('d-none');
     }
     if(accountMenu?.level.id == 11){
-        hideDashboard();
         hideMenu("Invoice");
         hideMenu("Request");
         hideMenu("Complain");

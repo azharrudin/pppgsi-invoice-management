@@ -109,8 +109,8 @@ class PaperIdService{
             "number" => $invoice["invoice_number"],
             "customer" => [
                 "id" => (string) $tenant["id"],
-                "name" => $tenant["name"],
-                "email" => $tenant["email"],
+                "name" => $tenant["name"] ,
+                "email" => $tenant["email"] ?? "mail@gmail.com",
                 "phone" => $tenant["phone"]
             ],
             "items" => $invoiceItem,
@@ -127,10 +127,10 @@ class PaperIdService{
 
         $url = $this->baseUrl . "/api/v1/store-invoice";
         $callApi = Http::withHeaders($this->headers)->post($url, $payload);
-
-        if($callApi->successful()) $callApiJson = $callApi->json();
-        else $callApiJson = [];
-
+// dd($callApi->json());
+     //   if($callApi->successful()) $callApiJson = $callApi->json();
+       //  else $callApiJson = [];
+        $callApiJson = $callApi->json();
         return $callApiJson;
     }
 
